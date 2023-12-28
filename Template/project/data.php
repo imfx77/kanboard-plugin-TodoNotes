@@ -239,7 +239,8 @@ foreach($data as $u){
     if ($readonlyNotes && $last_project_id != $u['project_id']){
         $last_project_id = $u['project_id'];
         print '<h2><a href="';
-        print '/?controller=BoardNotesController&action=boardNotesShowAll&plugin=BoardNotes&user_id='.$user_id.'&tab_id='.$projectsTabsById[ $last_project_id ]['tab_id'];
+        print '/?controller=BoardNotesController&action=boardNotesShowAll&plugin=BoardNotes';
+        print '&user_id='.$user_id.'&tab_id='.$projectsTabsById[ $last_project_id ]['tab_id'];
         print '">'.$projectsTabsById[ $last_project_id ]['name'].'</a></h2>';
     }
 

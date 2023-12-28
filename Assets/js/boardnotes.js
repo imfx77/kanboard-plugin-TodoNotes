@@ -193,7 +193,7 @@
     });
     $.ajax({
       type: "POST",
-      url: '/kanboard/?controller=BoardNotesController&action=boardNotesTransferNote&plugin=BoardNotes'
+      url: '/?controller=BoardNotesController&action=boardNotesTransferNote&plugin=BoardNotes'
             + '&project_cus_id=' + project_id
             + '&user_id=' + user_id
             + '&note_id=' + note_id
@@ -220,7 +220,7 @@
     });
     $.ajax({
       type: "POST",
-      url: '/kanboard/?controller=BoardNotesController&action=boardNotesUpdateNote&plugin=BoardNotes'
+      url: '/?controller=BoardNotesController&action=boardNotesUpdateNote&plugin=BoardNotes'
             + '&project_cus_id=' + project_id
             + '&user_id=' + user_id
             + '&note_id=' + note_id
@@ -256,7 +256,7 @@
     });
     $.ajax({
       type: "POST",
-      url: '/kanboard/?controller=BoardNotesController&action=boardNotesAddNote&plugin=BoardNotes'
+      url: '/?controller=BoardNotesController&action=boardNotesAddNote&plugin=BoardNotes'
             + '&project_cus_id=' + project_id
             + '&user_id=' + user_id
             + '&is_active=' + is_active
@@ -279,7 +279,7 @@
     });
     $.ajax({
       type: "POST",
-      url: '/kanboard/?controller=BoardNotesController&action=boardNotesDeleteNote&plugin=BoardNotes'
+      url: '/?controller=BoardNotesController&action=boardNotesDeleteNote&plugin=BoardNotes'
             + '&project_cus_id=' + project_id
             + '&user_id=' + user_id
             + '&note_id=' + note_id,
@@ -299,7 +299,7 @@
     });
     $.ajax({
       type: "POST",
-      url: '/kanboard/?controller=BoardNotesController&action=boardNotesDeleteAllDoneNotes&plugin=BoardNotes'
+      url: '/?controller=BoardNotesController&action=boardNotesDeleteAllDoneNotes&plugin=BoardNotes'
             + '&project_cus_id=' + project_id
             + '&user_id=' + user_id,
       success: function(response) {
@@ -318,7 +318,7 @@
       cache: false
     });
     var ajax_load = '<img src="http://automobiles.honda.com/images/current-offers/small-loading.gif" alt="loading..." />';
-    var loadUrl = '/kanboard/?controller=BoardNotesController&action=boardNotesRefreshProject&plugin=BoardNotes'
+    var loadUrl = '/?controller=BoardNotesController&action=boardNotesRefreshProject&plugin=BoardNotes'
                 + '&project_cus_id=' + project_id
                 + '&user_id=' + user_id;
     setTimeout(function() {
@@ -518,7 +518,7 @@
           var removeNote = $('#removeNoteP' + project_id).is(":checked");
 
           var ajax_load = '<img src="http://automobiles.honda.com/images/current-offers/small-loading.gif" alt="loading..." />';
-          var loadUrl = '/kanboard/?controller=BoardNotesController&action=boardNotesToTask&plugin=BoardNotes'
+          var loadUrl = '/?controller=BoardNotesController&action=boardNotesToTask&plugin=BoardNotes'
                         + '&project_cus_id=' + project_id
                         + '&user_id=' + user_id
                         + '&task_title=' + title
@@ -593,7 +593,7 @@
         cache: false
     });
     var ajax_load = '<img src="http://automobiles.honda.com/images/current-offers/small-loading.gif" alt="loading..." />';
-    var loadUrl = '/kanboard/?controller=BoardNotesController&action=boardNotesAnalytics&plugin=BoardNotes'
+    var loadUrl = '/?controller=BoardNotesController&action=boardNotesAnalytics&plugin=BoardNotes'
                 + '&project_cus_id=' + project_id
                 + '&user_id=' + user_id;
     $('#dialogAnalyticsInside').html(ajax_load).load(loadUrl);
@@ -737,7 +737,7 @@
         Ok: function() {
           var category = $('#reportCatP' + project_id + ' option:selected').text();
           var ajax_load = '<img src="http://automobiles.honda.com/images/current-offers/small-loading.gif" alt="loading..." />';
-          var loadUrl = "/kanboard/?controller=BoardNotesController&action=boardNotesReport&plugin=BoardNotes"
+          var loadUrl = "/?controller=BoardNotesController&action=boardNotesReport&plugin=BoardNotes"
                         + "&project_cus_id=" + project_id
                         + "&user_id=" + user_id
                         + "&category=" + category;
@@ -757,7 +757,7 @@
     });
     $.ajax({
       type: "POST",
-      url: '/kanboard/?controller=BoardNotesController&action=boardNotesUpdatePosition&plugin=BoardNotes'
+      url: '/?controller=BoardNotesController&action=boardNotesUpdatePosition&plugin=BoardNotes'
         + '&project_cus_id=' + project_id
         + '&user_id=' + user_id
         + '&order=' + order

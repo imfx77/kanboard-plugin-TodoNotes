@@ -25,7 +25,6 @@
 <?= $this->asset->js('plugins/BoardNotes/Assets/js/load_dashboard.js') ?>
 
 <?php
-
     $num = 0;
     $tab_id = 0; // by default => no tab selected => show all notes of all projects
     if (!empty($_GET['tab_id'])) {
@@ -48,7 +47,8 @@
         print '" data-id="';
         print $num;
         print '" data-project="0"><a href="';
-        print '/?controller=BoardNotesController&action=boardNotesShowAll&plugin=BoardNotes&user_id='.$user_id.'&tab_id='.$num;
+        print '/?controller=BoardNotesController&action=boardNotesShowAll&plugin=BoardNotes';
+        print '&user_id='.$user_id.'&tab_id='.$num;
         print '">All</a></li>';
         $num++;
 
@@ -61,7 +61,8 @@
             print '" data-project="';
             print $o['project_id'];
             print '"><a href="';
-            print '/?controller=BoardNotesController&action=boardNotesShowAll&plugin=BoardNotes&user_id='.$user_id.'&tab_id='.$num;
+            print '/?controller=BoardNotesController&action=boardNotesShowAll&plugin=BoardNotes';
+            print '&user_id='.$user_id.'&tab_id='.$num;
             print '">';
             print $o['project_name'];
             print '</a></li>';
