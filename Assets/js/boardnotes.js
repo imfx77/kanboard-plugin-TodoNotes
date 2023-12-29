@@ -664,6 +664,15 @@
   });
 
   $(function() {
+    $( "#settingsSortByState" ).click(function() {
+        toggleSessionOption('boardnotesSortByState');
+        var project_id = $(this).attr('data-project');
+        var user_id = $(this).attr('data-user');
+        sqlRefreshNotes(project_id, user_id);
+    });
+  });
+
+  $(function() {
     $( "#settingsCategoryColors" ).click(function() {
         showCategoryColors = !showCategoryColors;
         refreshCategoryColors();

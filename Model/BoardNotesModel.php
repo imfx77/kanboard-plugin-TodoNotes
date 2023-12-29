@@ -28,35 +28,64 @@ class BoardNotesModel extends Base
     }
 
     // Show all notes related to project
-    public function boardNotesShowProject($project_id, $user_id)
+    public function boardNotesShowProject($project_id, $user_id, $doSortByState)
     {
-        return $this->db->table(self::TABLEnotes)
-            ->eq('user_id', $user_id)
-            ->eq('project_id', $project_id)
-            ->desc('is_active')
-            ->desc('position')
-            ->findAll();
+        $result = $this->db->table(self::TABLEnotes);
+        $result = $result->eq('user_id', $user_id);
+        if ($project_id > 0)
+        {
+            $result = $result->eq('project_id', $project_id);
+        }
+        $result = $result->desc('project_id');
+        if ($doSortByState)
+        {
+            $result = $result->desc('is_active');
+        }
+        $result = $result->desc('position');
+        $result = $result->findAll();
+
+        return $result;
+    }
+
+    // Show all notes
+    public function boardNotesShowAll($projectsAccess, $user_id, $doSortByState)
+    {
+        foreach ($projectsAccess as $u) $uids[] = $u['project_id'];
+        $projectsAccess = implode(", ", $uids);
+        substr_replace($projectsAccess, "", -2);
+        $projectsAccess = explode(', ', $projectsAccess);
+
+        $result = $this->db->table(self::TABLEnotes);
+        $result = $result->eq('user_id', $user_id);
+        $result = $result->in(self::TABLEnotes.'.project_id', $projectsAccess);
+        $result = $result->desc('project_id');
+        if ($doSortByState)
+        {
+            $result = $result->desc('is_active');
+        }
+        $result = $result->desc('position');
+        $result = $result->findAll();
+
+        return $result;
     }
 
     // Show report
-    public function boardNotesReport($project_id, $user_id, $category)
+    public function boardNotesReport($project_id, $user_id, $doSortByState, $category)
     {
-        if (empty($category)) {
-            return $this->db->table(self::TABLEnotes)
-                ->eq('user_id', $user_id)
-                ->eq('project_id', $project_id)
-                ->desc('is_active')
-                ->desc('position')
-                ->findAll();
-        } else {
-            return $this->db->table(self::TABLEnotes)
-                ->eq('user_id', $user_id)
-                ->eq('project_id', $project_id)
-                ->eq('category', $category)
-                ->desc('is_active')
-                ->desc('position')
-                ->findAll();
+        $result = $this->db->table(self::TABLEnotes);
+        $result = $result->eq('user_id', $user_id);
+        $result = $result->eq('project_id', $project_id);
+        if (!empty($category)) {
+            $result = $result->eq('category', $category);
         }
+        if ($doSortByState)
+        {
+            $result = $result->desc('is_active');
+        }
+        $result = $result->desc('position');
+        $result = $result->findAll();
+
+        return $result;
     }
 
     // Get project data by project_id
@@ -138,23 +167,6 @@ class BoardNotesModel extends Base
             ->findAll();
 
         return $swimlanes;
-    }
-
-    // Show all notes
-    public function boardNotesShowAll($projectsAccess, $user_id)
-    {
-        foreach ($projectsAccess as $u) $uids[] = $u['project_id'];
-        $projectsAccess = implode(", ", $uids);
-        substr_replace($projectsAccess, "", -2);
-        $projectsAccess = explode(', ', $projectsAccess);
-
-        return $this->db->table(self::TABLEnotes)
-            ->eq('user_id', $user_id)
-            ->in(self::TABLEnotes.'.project_id', $projectsAccess)
-            ->desc('project_id')
-            ->desc('is_active')
-            ->desc('position')
-            ->findAll();
     }
 
     // Delete note

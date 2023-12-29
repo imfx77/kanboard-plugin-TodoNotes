@@ -166,8 +166,16 @@ if (!$readonlyNotes) {
     // add some space between button groups
     print '<div class="toolbarButton">&nbsp;</div>';
 
+    // Toggle sort by state
+    print '<button id="settingsSortByState" class="toolbarButton" title="Toggle sort by state" data-id="0" data-project="';
+    print $project_id;
+    print '" data-user="';
+    print $user_id;
+    print '"><i class="fa fa-sort" aria-hidden="true"></i>';
+    print '</button>';
+
     // Toggle category colors
-    print '<button id="settingsCategoryColors" class="toolbarButton" title="Colorize by category" data-id="0" data-project="';
+    print '<button id="settingsCategoryColors" class="toolbarButton" title="Toggle colorize by category" data-id="0" data-project="';
     print $project_id;
     print '" data-user="';
     print $user_id;
