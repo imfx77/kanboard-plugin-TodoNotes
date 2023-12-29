@@ -5,7 +5,7 @@ function updateNotesTabs() {
     $( "#singleTab" + tab_id ).addClass( 'active' );
     $( "#myNotesHeader h2" ).text( 'My notes > ' + $( "#singleTab" + tab_id ).text());
 
-    var numTabs = $( "#tabs li" ).length;
+    var numTabs = $( "#tabs li" ).length + 1; // add +1 because of the separator lines
     var tabHeight = $( "#tabs li:eq(0)" ).outerHeight();
     $( "#tabs" ).height(numTabs * tabHeight);
 }

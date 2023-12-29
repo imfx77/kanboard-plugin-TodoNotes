@@ -686,7 +686,7 @@ if (!$is_refresh) { // print only once per project !!!
   print '<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>';
   print ' Bear in mind that the target project may NOT have the category that is assigned to the note!';
   print '<br>';
-  print ' It will be ignored until a valid value from the target project is set.';
+  print ' If so, the category will be displayed greyed and will be ignored until a valid one from the target project is set.';
   print '<br>';
   print ' Continue?';
   print '</p>';
