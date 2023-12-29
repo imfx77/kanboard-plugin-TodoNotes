@@ -50,14 +50,12 @@ class BoardNotesModel extends Base
     // Show all notes
     public function boardNotesShowAll($projectsAccess, $user_id, $doSortByState)
     {
-        foreach ($projectsAccess as $u) $uids[] = $u['project_id'];
-        $projectsAccess = implode(", ", $uids);
-        substr_replace($projectsAccess, "", -2);
-        $projectsAccess = explode(', ', $projectsAccess);
+        $projectsAccessList = array();
+        foreach ($projectsAccess as $u) $projectsAccessList[] = $u['project_id'];
 
         $result = $this->db->table(self::TABLEnotes);
         $result = $result->eq('user_id', $user_id);
-        $result = $result->in(self::TABLEnotes.'.project_id', $projectsAccess);
+        $result = $result->in(self::TABLEnotes.'.project_id', $projectsAccessList);
         $result = $result->desc('project_id');
         if ($doSortByState)
         {
