@@ -211,6 +211,10 @@ label {
     padding-left: 5px;
 }
 
+.toolbarButtonToggled {
+    color: #933;
+}
+
 .checkDone {
     appearance: none;
     -webkit-appearance: none;

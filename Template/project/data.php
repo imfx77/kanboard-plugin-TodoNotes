@@ -92,10 +92,15 @@ if (!$is_refresh) { // print only once per project !!!
     print $this->asset->js('plugins/BoardNotes/Assets/js/boardnotes.js');
     print $this->asset->js('plugins/BoardNotes/Assets/js/load_project.js');
 
-    // evaluate showCategoryColors option from session and forward it to JS
+    // evaluate optionShowCategoryColors option from session and forward it to JS
     if (!array_key_exists('boardnotesShowCategoryColors', $_SESSION)) $_SESSION['boardnotesShowCategoryColors'] = false;
     $showCategoryColors = $_SESSION['boardnotesShowCategoryColors'];
-    print '<script>var showCategoryColors = ' . ($showCategoryColors ? 'true' : 'false'). ';</script>';
+    print '<script>var optionShowCategoryColors = ' . ($showCategoryColors ? 'true' : 'false'). ';</script>';
+
+    // evaluate optionSortByState option from session and forward it to JS
+    if (!array_key_exists('boardnotesSortByState', $_SESSION)) $_SESSION['boardnotesSortByState'] = false;
+    $optionSortByState = $_SESSION['boardnotesSortByState'];
+    print '<script>var optionSortByState = ' . ($optionSortByState ? 'true' : 'false'). ';</script>';
 
 //----------------------------------------
 

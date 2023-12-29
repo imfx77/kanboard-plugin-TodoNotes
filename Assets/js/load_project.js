@@ -22,7 +22,9 @@ function prepareDocument(){
     var user_id = $('#refProjectId').attr('data-user');
     var isMobile = IsMobile();
 
-    if (project_id != 0) {
+    // notes reordering is disabled in Overview Mode (ALL projrcts tab)
+    // ot when explicitly sorted by state
+    if (project_id != 0 && !optionSortByState) {
         // handle notes reordering
         function updateNotesOrder(event, ui) {
             var order = $(this).sortable('toArray');
@@ -65,6 +67,7 @@ function prepareDocument(){
 
     adjustAllNotesPlaceholders();
     refreshCategoryColors();
+    refreshSortByState();
 
     // prepare method for dashboard view if embedded
     if ( $.isFunction(prepareDocumentQ) ) {

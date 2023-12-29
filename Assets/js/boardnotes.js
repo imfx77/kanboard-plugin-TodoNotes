@@ -660,17 +660,27 @@
     });
   });
 
+  // Refresh sort by state
+  function refreshSortByState() {
+    if (optionSortByState) {
+        $( "#settingsSortByState" ).addClass( 'toolbarButtonToggled' );
+    } else {
+        $( "#settingsSortByState" ).removeClass( 'toolbarButtonToggled' );
+    }
+  }
+
   $(function() {
     $( "#settingsCategoryColors" ).click(function() {
-        showCategoryColors = !showCategoryColors;
+        optionShowCategoryColors = !optionShowCategoryColors;
         refreshCategoryColors();
         toggleSessionOption('boardnotesShowCategoryColors');
     });
   });
 
-  // Toggle category colors
+  // Refresh category colors
   function refreshCategoryColors() {
-    if (showCategoryColors) {
+    if (optionShowCategoryColors) {
+        $( "#settingsCategoryColors" ).addClass( 'toolbarButtonToggled' );
         $( ".trReport" ).addClass( 'task-board' );
         $( ".liNote" ).addClass( 'task-board' );
         // avoid the ugly empty category label boxes
@@ -679,6 +689,7 @@
                 $(this).addClass( 'task-board-category' );
         });
     } else {
+        $( "#settingsCategoryColors" ).removeClass( 'toolbarButtonToggled' );
         $( ".trReport" ).removeClass( 'task-board' );
         $( ".liNote" ).removeClass( 'task-board' );
         $( ".catLabel" ).removeClass( 'task-board-category' );
@@ -714,11 +725,10 @@
 
             updateCategoryColors(project_id, id, old_category, new_category);
             // avoid the ugly empty category label boxes
-            var showCategoryColors = sessionStorage.getItem('boardnotesShowCategoryColors');
-            if (new_category && showCategoryColors == "show") {
+            if (new_category && optionShowCategoryColors) {
                 $("#noteCatLabelP" + project_id + "-" + id).addClass( 'task-board-category' );
             }
-            if (!new_category || !showCategoryColors || showCategoryColors == "hide") {
+            if (!new_category || !optionShowCategoryColors) {
                 $("#noteCatLabelP" + project_id + "-" + id).removeClass( 'task-board-category' );
             }
 
