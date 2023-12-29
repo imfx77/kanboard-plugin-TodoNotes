@@ -327,6 +327,24 @@
   }
 
 
+  function toggleSessionOption(session_option){
+    $.ajaxSetup ({
+        cache: false
+    });
+    $.ajax({
+      type: "POST",
+      url: '/?controller=BoardNotesController&action=boardNotesToggleSessionOption&plugin=BoardNotes'
+            + '&session_option=' + session_option,
+      success: function(response) {
+      },
+      error: function(xhr,textStatus,e) {
+        alert(e);
+      }
+    });
+    return false;
+  }
+
+
   // Show input or label visuals for titles of existing notes
   function showTitleInput(project_id, id, show_input) {
     $noteTitleLabel = $("#noteTitleLabelP" + project_id + "-" + id);

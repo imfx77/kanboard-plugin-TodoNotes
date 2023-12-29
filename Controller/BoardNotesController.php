@@ -166,6 +166,25 @@ class BoardNotesController extends BaseController
         )));
     }
 
+    public function boardNotesToggleSessionOption()
+    {
+        $session_option = $this->request->getStringParam('session_option');
+        if (empty($session_option)) return false;
+
+        // toggle options are expected to be boolean i.e. to only have values of 'true' of 'false'
+        if (   !array_key_exists($session_option, $_SESSION)    // key not exist
+            || !is_bool($_SESSION[$session_option]) )           // value not bool
+        {
+            // set initial value
+            $_SESSION[$session_option] = false;
+            return true;
+        }
+
+        // toggle option
+        $_SESSION[$session_option] = !$_SESSION[$session_option];
+        return true;
+    }
+
     public function boardNotesDeleteNote()
     {
     	$user_id = $this->resolveUserId();
