@@ -18,8 +18,7 @@ function prepareDocumentReport() {
         updateCategoryColors(project_id, id, category, category)
     });
 
-    toggleCategoryColors();
-    toggleCategoryColors();
+    refreshCategoryColors();
 }
 
 window.onload = prepareDocumentReport;

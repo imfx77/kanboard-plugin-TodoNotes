@@ -1,6 +1,15 @@
-<?= $this->asset->css('plugins/BoardNotes/Assets/css/style.css') ?>
-<?= $this->asset->js('plugins/BoardNotes/Assets/js/boardnotes.js') ?>
-<?= $this->asset->js('plugins/BoardNotes/Assets/js/load_report.js') ?>
+<?php
+
+print $this->asset->css('plugins/BoardNotes/Assets/css/style.css');
+print $this->asset->js('plugins/BoardNotes/Assets/js/boardnotes.js');
+print $this->asset->js('plugins/BoardNotes/Assets/js/load_report.js');
+
+// evaluate showCategoryColors option from session and forward it to JS
+if (!array_key_exists('boardnotesShowCategoryColors', $_SESSION)) $_SESSION['boardnotesShowCategoryColors'] = false;
+$showCategoryColors = $_SESSION['boardnotesShowCategoryColors'];
+print '<script>var showCategoryColors = ' . ($showCategoryColors ? 'true' : 'false'). ';</script>';
+
+?>
 
 <table class="tableReport">
 <thead class="theadReport">

@@ -64,8 +64,7 @@ function prepareDocument(){
     }
 
     adjustAllNotesPlaceholders();
-    toggleCategoryColors();
-    toggleCategoryColors();
+    refreshCategoryColors();
 
     // prepare method for dashboard view if embedded
     if ( $.isFunction(prepareDocumentQ) ) {

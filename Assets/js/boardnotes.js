@@ -665,14 +665,15 @@
 
   $(function() {
     $( "#settingsCategoryColors" ).click(function() {
-        toggleCategoryColors();
+        showCategoryColors = !showCategoryColors;
+        refreshCategoryColors();
+        toggleSessionOption('boardnotesShowCategoryColors');
     });
   });
 
   // Toggle category colors
-  function toggleCategoryColors() {
-    var showCategoryColors = sessionStorage.getItem('boardnotesShowCategoryColors');
-    if (!showCategoryColors || showCategoryColors == "hide") {
+  function refreshCategoryColors() {
+    if (showCategoryColors) {
         $( ".trReport" ).addClass( 'task-board' );
         $( ".liNote" ).addClass( 'task-board' );
         // avoid the ugly empty category label boxes
@@ -680,12 +681,10 @@
             if ($(this).html())
                 $(this).addClass( 'task-board-category' );
         });
-        sessionStorage.setItem('boardnotesShowCategoryColors', "show");
     } else {
         $( ".trReport" ).removeClass( 'task-board' );
         $( ".liNote" ).removeClass( 'task-board' );
         $( ".catLabel" ).removeClass( 'task-board-category' );
-        sessionStorage.setItem('boardnotesShowCategoryColors', "hide");
     }
   }
 
