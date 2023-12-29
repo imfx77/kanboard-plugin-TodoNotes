@@ -7,7 +7,6 @@
 <tr>
 <th class="thReport thReportNr">#</th>
 <th class="thReport">Info</th>
-<th class="thReport thReportResponsible">Responsible</th>
 <th class="thReport thReportStatus">Status</th>
 </tr>
 </thead>
@@ -99,28 +98,8 @@ foreach($data as $u){
         print '</span>';
     }
 
-    // Project_id (hidden, for reference)
-    print '<div id="project_id';
-    print $num;
-    print '" data-id="';
-    print $u['project_id'];
-    print '" class="hideMe">';
-    print '</div>';
+    print '</td>'; // report info
 
-    // Note_id (hidden, for reference)
-    print '<div id="note_idP';
-    print $u['project_id'];
-    print '-';
-    print $num;
-    print '" data-id="';
-    print $u['id'];
-    print '" class="hideMe">';
-    print '</div>';
-
-    print '</td>';
-
-    print '<td class="tdReport tdReportResponsible reportTitle">';
-    print '</td>';
     print '<td class="tdReport tdReportStatus reportTitle">';
         if($u['is_active'] == "2"){
             print '<i class="fa fa-spinner fa-spin" aria-hidden="true"></i>';

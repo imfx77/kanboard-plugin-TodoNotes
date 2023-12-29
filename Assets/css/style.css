@@ -318,7 +318,6 @@ textarea::selection {
     border: 0;
     background: transparent;
     padding: 5px 5px 5px 5px;
-    margin-right: 15px;
 }
 
 .reportDescriptionClass {
@@ -350,8 +349,8 @@ textarea::selection {
 }
 
 .thReportNr {
-   padding-left: 60px;
-   width: 80px;
+   padding-left: 35px;
+   width: 25px;
 }
 
 .thReportStatus {
@@ -359,11 +358,8 @@ textarea::selection {
     width: 45px;
 }
 
-.thReportResponsible {
-    width: 45px;
-}
-
 .textareaReportDescription {
+    width: 95%;
     display: inline-block;
     margin-left: 10px;
     padding: 10px 10px 10px 10px;
@@ -379,7 +375,7 @@ textarea::selection {
 
 .tdReportNr {
     border-left: none;
-    padding-left: 10px;
+    padding-left: 5px;
     font-weight: 600;
 }
 
@@ -388,11 +384,8 @@ textarea::selection {
     padding-left: 0;
 }
 
-.tdReportResponsible {
-    border-left:none;
-}
-
 .tdReportStatus {
+    text-align : center;
     border-left:none;
     border-right: 1px solid #ccc;;
 }
