@@ -188,10 +188,8 @@
 
   // SQL note transfer (to another project)
   function sqlTransferNote(project_id, user_id, note_id, target_project_id){
-    $.ajaxSetup ({
-        cache: false
-    });
     $.ajax({
+      cache: false,
       type: "POST",
       url: '/?controller=BoardNotesController&action=boardNotesTransferNote&plugin=BoardNotes'
             + '&project_cus_id=' + project_id
@@ -215,10 +213,8 @@
     var category = $('#catP' + project_id + "-" + id + ' option:selected').text();
     var description = $('#noteTextareaDescriptionP' + project_id + "-" + id).val().replace(/\n/g, '<br >');
 
-    $.ajaxSetup ({
-        cache: false
-    });
     $.ajax({
+      cache: false,
       type: "POST",
       url: '/?controller=BoardNotesController&action=boardNotesUpdateNote&plugin=BoardNotes'
             + '&project_cus_id=' + project_id
@@ -251,10 +247,8 @@
     $('.inputNewNote').val("");
     var category = $('#catP' + project_id + ' option:selected').text();
 
-    $.ajaxSetup ({
-        cache: false
-    });
     $.ajax({
+      cache: false,
       type: "POST",
       url: '/?controller=BoardNotesController&action=boardNotesAddNote&plugin=BoardNotes'
             + '&project_cus_id=' + project_id
@@ -274,10 +268,8 @@
 
 
   function sqlDeleteNote(project_id, user_id, note_id){
-    $.ajaxSetup ({
-        cache: false
-    });
     $.ajax({
+      cache: false,
       type: "POST",
       url: '/?controller=BoardNotesController&action=boardNotesDeleteNote&plugin=BoardNotes'
             + '&project_cus_id=' + project_id
@@ -294,10 +286,8 @@
 
 
   function sqlDeleteAllDoneNotes(project_id, user_id){
-    $.ajaxSetup ({
-        cache: false
-    });
     $.ajax({
+      cache: false,
       type: "POST",
       url: '/?controller=BoardNotesController&action=boardNotesDeleteAllDoneNotes&plugin=BoardNotes'
             + '&project_cus_id=' + project_id
@@ -328,10 +318,8 @@
 
 
   function toggleSessionOption(session_option){
-    $.ajaxSetup ({
-        cache: false
-    });
     $.ajax({
+      cache: false,
       type: "POST",
       url: '/?controller=BoardNotesController&action=boardNotesToggleSessionOption&plugin=BoardNotes'
             + '&session_option=' + session_option,
@@ -778,10 +766,8 @@
 
   // SQL update positions
   function sqlNotesUpdatePosition(project_id, user_id, order, nrNotes){
-    $.ajaxSetup ({
-        cache: false
-    });
     $.ajax({
+      cache: false,
       type: "POST",
       url: '/?controller=BoardNotesController&action=boardNotesUpdatePosition&plugin=BoardNotes'
         + '&project_cus_id=' + project_id
