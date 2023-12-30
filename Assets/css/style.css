@@ -44,7 +44,6 @@
 input[type="text"] {
     display: inline-block;
     width: 80%;
-    font-size: 16px;
     border: none;
     color: #000 !important;
     background-color: #777 !important;
@@ -120,11 +119,13 @@ label {
 .liNote {
     padding: 5px 10px 12px 15px!important;
     background-color: rgba(246, 246, 246, 0.7);
+    font-size: 1em !important;
 }
 
 .liNewNote {
     padding: 5px 10px 12px 15px!important;
     background-color: rgba(246, 246, 246, 0.9);
+    font-size: 1em !important;
 }
 
 .labelNewNote {
@@ -151,7 +152,6 @@ label {
 .noteDescriptionClass {
     padding: 5px 10px 0 40px;
     color: #7a7a7a;
-    font-size: 15px;
     min-height: 16px;
 }
 
@@ -164,7 +164,7 @@ label {
     background: transparent;
     padding-left: 15px;
     padding-right: 10px;
-    font-size: 16px;
+    font-size: 1.5em !important;
 }
 
 .showDetails {
@@ -293,16 +293,11 @@ textarea::selection {
     border-radius: 5px;
     color: #1f1f1f;
     background: #999;
+    font-size: 1em !important;
 }
 
 
 /* Style for report.php */
-
-.page-headerName {
- font-family: 'Helvetica', Arial, sans-serif;
- font-size: 50px;
- line-height: 55px;
-}
 
 .reportTitleLabel {
     margin-top: 0;
@@ -327,7 +322,7 @@ textarea::selection {
 .reportDescriptionClass {
     padding: 5px 10px 0 20px;
     color: #7a7a7a;
-    font-size: 12px;
+    font-size: 0.9em !important;
     min-height: 16px;
 }
 
@@ -340,7 +335,6 @@ textarea::selection {
 
 .theadReport {
    font-family: 'Helvetica', Arial, sans-serif;
-   font-size: 14px;
    line-height: 16px;
 }
 
@@ -354,7 +348,7 @@ textarea::selection {
 
 .thReportNr {
    padding-left: 35px;
-   width: 25px;
+   width: 30px;
 }
 
 .thReportStatus {
@@ -374,7 +368,8 @@ textarea::selection {
 
 
 .tdReport {
-   background-color: rgba(92, 92, 92, 0.50);
+    background-color: rgba(92, 92, 92, 0.50);
+    font-size: 12px !important;
 }
 
 .tdReportNr {
@@ -392,23 +387,6 @@ textarea::selection {
     text-align : center;
     border-left:none;
     border-right: 1px solid #ccc;;
-}
-
-
-/* Tabs jquery */
-
-.ui-tabs .ui-tabs-nav .ui-tabs-anchor {
-    padding: 4.5px 4px 1px 5px;
-    font-size: 13px;
-}
-
-.ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active {
-    height: 25px;
-    margin: 0 -1px .2em 0;
-}
-.ui-tabs-vertical .ui-tabs-nav li {
-    height: 25px;
-    overflow:hidden;
 }
 
 
