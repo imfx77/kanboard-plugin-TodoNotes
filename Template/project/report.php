@@ -102,8 +102,7 @@ foreach($data as $u){
         } else {
             print '" class="textareaReportDescription reportTitle">';
         }
-        $description = str_ireplace("<br >", "\r\n", $u['description']);
-        print $description;
+        print $u['description'];
         print '</span>';
     }
 

@@ -496,8 +496,7 @@ foreach($data as $u){
     print '" data-user="';
     print $user_id;
     print '">';
-    $description = str_ireplace("<br >", "\r\n", $u['description']); 
-    print $description;
+    print $u['description'];
     print '</textarea>';
 
     print '<p class="categories">';

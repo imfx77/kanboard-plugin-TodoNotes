@@ -208,10 +208,17 @@
   // SQL note update (title etc. and done)
   function sqlUpdateNote(project_id, user_id, id){
     var note_id = $('#note_idP' + project_id + "-" + id).attr('data-id');
-    var is_active = $('#noteDoneCheckmarkP' + project_id + "-" + id).attr('data-id');
-    var title = $('#noteTitleInputP' + project_id + "-" + id).val();
+    var title = $('#noteTitleInputP' + project_id + "-" + id).val().trim();
+    var description = $('#noteTextareaDescriptionP' + project_id + "-" + id).val();
     var category = $('#catP' + project_id + "-" + id + ' option:selected').text();
-    var description = $('#noteTextareaDescriptionP' + project_id + "-" + id).val().replace(/\n/g, '<br >');
+    var is_active = $('#noteDoneCheckmarkP' + project_id + "-" + id).attr('data-id');
+
+    if (!title){
+        alert('Note title is empty !\nKeeping the current one !');
+        title = $("#noteTitleLabelP" + project_id + "-" + id).html();
+        $('#noteTitleInputP' + project_id + "-" + id).val(title);
+    }
+    $("#noteTitleLabelP" + project_id + "-" + id).html(title);
 
     $.ajax({
       cache: false,
@@ -220,10 +227,10 @@
             + '&project_cus_id=' + project_id
             + '&user_id=' + user_id
             + '&note_id=' + note_id
-            + '&is_active=' + is_active
-            + '&title=' + title
-            + '&description=' + description
-            + '&category=' + category,
+            + '&title=' + encodeURIComponent(title)
+            + '&description=' + encodeURIComponent(description)
+            + '&category=' + encodeURIComponent(category)
+            + '&is_active=' + is_active,
       success: function(response) {
       },
       error: function(xhr,textStatus,e) {
@@ -235,17 +242,15 @@
 
 
   function sqlAddNote(project_id, user_id){
-    var descriptionQ = $('#textareaNewNote' + project_id).val();
-    if (descriptionQ) {
-      var description = $('#textareaNewNote' + project_id).val().replace(/\n/g, '<br >');
-    }
-    if (!descriptionQ) {
-      var description = "";
-    }
-    var is_active = "1";
-    var title = $('#newNote' +  project_id).val();
-    $('.inputNewNote').val("");
+    var title = $('#newNote' +  project_id).val().trim();
+    var description = $('#textareaNewNote' + project_id).val();
     var category = $('#catP' + project_id + ' option:selected').text();
+    var is_active = "1";
+
+    if (!title){
+        alert('Note title is empty !');
+        return false;
+    }
 
     $.ajax({
       cache: false,
@@ -253,10 +258,10 @@
       url: '/?controller=BoardNotesController&action=boardNotesAddNote&plugin=BoardNotes'
             + '&project_cus_id=' + project_id
             + '&user_id=' + user_id
-            + '&is_active=' + is_active
-            + '&title=' + title
-            + '&description=' + description
-            + '&category=' + category,
+            + '&title=' + encodeURIComponent(title)
+            + '&description=' + encodeURIComponent(description)
+            + '&category=' + encodeURIComponent(category)
+            + '&is_active=' + is_active,
       success: function(response) {
       },
       error: function(xhr,textStatus,e) {
@@ -400,8 +405,6 @@
       var user_id = $(this).attr('data-user');
       var id = $(this).attr('data-id');
       if (event.keyCode == 13) {
-        var title = $('#noteTitleInputP' + project_id + "-" + id).val(); //attr('value');
-        $("#noteTitleLabelP" + project_id + "-" + id).html(title);
         showTitleInput(project_id, id, false);
         showDescriptionInput(project_id, id, false);
         sqlUpdateNote(project_id, user_id, id);
@@ -498,21 +501,21 @@
       var project_id = $(this).attr('data-project');
       var user_id = $(this).attr('data-user');
       var note_id = $(this).attr('data-note');
+      var title = $('#noteTitleLabelP' + project_id + "-" + id).val().trim();
+      var description = $('#noteTextareaDescriptionP' + project_id + "-" + id).val();
+      var category_id = $('#catP' + project_id + "-" + id + ' option:selected').val();
       var is_active = $('#noteDoneCheckmarkP' + project_id + "-" + id).attr('data-id');
-      var title = encodeURIComponent($('#noteTitleLabelP' + project_id + "-" + id).text());
-      var description = encodeURIComponent($('#noteTextareaDescriptionP' + project_id + "-" + id).val().replace(/\n/g, '<br >'));
-      var category_val = $('#catP' + project_id + "-" + id + ' option:selected').val();
-      modalNoteToTask(project_id, user_id, note_id, is_active, title, description, category_val);
+      modalNoteToTask(project_id, user_id, note_id, is_active, title, description, category_id);
     });
   });
 
-  function modalNoteToTask(project_id, user_id, note_id, is_active, title, description, category_val) {
+  function modalNoteToTask(project_id, user_id, note_id, is_active, title, description, category_id) {
     $.ajaxSetup ({
       cache: false
     });
     $('#dialogToTaskParams').removeClass( 'hideMe' );
     $('#deadloading').addClass( 'hideMe' );
-    $('#listCatToTaskP' + project_id).val(category_val).change();
+    $('#listCatToTaskP' + project_id).val(category_id).change();
     $("#dialogToTaskP" + project_id).removeClass( 'hideMe' );
     $("#dialogToTaskP" + project_id).dialog({
       title: 'Create task from note?',
@@ -527,8 +530,8 @@
           var loadUrl = '/?controller=BoardNotesController&action=boardNotesToTask&plugin=BoardNotes'
                         + '&project_cus_id=' + project_id
                         + '&user_id=' + user_id
-                        + '&task_title=' + title
-                        + '&task_description=' + description
+                        + '&task_title=' + encodeURIComponent(title)
+                        + '&task_description=' + encodeURIComponent(description)
                         + '&category_id=' + categoryToTask
                         + '&column_id=' + columnToTask
                         + '&swimlane_id=' + swimlaneToTask;
@@ -736,7 +739,6 @@
             showDescriptionInput(project_id, id, false);
             sqlUpdateNote(project_id, user_id, id);
             blinkNote(project_id, id);
-
         }
       }
     });
@@ -764,7 +766,7 @@
           var loadUrl = "/?controller=BoardNotesController&action=boardNotesReport&plugin=BoardNotes"
                         + "&project_cus_id=" + project_id
                         + "&user_id=" + user_id
-                        + "&category=" + category;
+                        + "&category=" + encodeURIComponent(category);
           $("#result" + project_id).html(ajax_load).load(loadUrl);
           $( this ).dialog( "close" );
         }
