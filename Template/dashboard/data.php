@@ -141,7 +141,7 @@
         'project_id' => $project['id'],
         'user' => $user,
         'user_id' => $user_id,
-        'is_refresh' => False,
+        'is_refresh' => false,
         'is_dashboard_view' => 1,
         'data' => $data,
         'categories' => $categories,

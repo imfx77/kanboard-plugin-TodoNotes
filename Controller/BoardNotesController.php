@@ -56,13 +56,13 @@ class BoardNotesController extends BaseController
         if ($projectAccess['is_custom'])
         {
             // assemble a fake custom project
-            return array("id" => $project_id, "name" => $projectAccess['project_name'], "is_custom" => True);
+            return array("id" => $project_id, "name" => $projectAccess['project_name'], "is_custom" => true);
         }
         else
         {
             // get all the data of existing project and mark it as NOT custom
             $project = $this->boardNotesModel->boardNotesGetProjectById($project_id);
-            $project['is_custom'] = False;
+            $project['is_custom'] = false;
             return $project;
         }
     }
@@ -79,7 +79,7 @@ class BoardNotesController extends BaseController
         else
         {
             $project = $this->getProject();
-            $project['is_custom'] = False;
+            $project['is_custom'] = false;
         }
         $project_id = $project['id'];
 
@@ -120,12 +120,12 @@ class BoardNotesController extends BaseController
 
     public function boardNotesShowProject()
     {
-        $this->boardNotesShowProject_Internal(False);
+        $this->boardNotesShowProject_Internal(false);
     }
 
     public function boardNotesRefreshProject()
     {
-        $this->boardNotesShowProject_Internal(True);
+        $this->boardNotesShowProject_Internal(true);
     }
 
     public function boardNotesShowAll()
