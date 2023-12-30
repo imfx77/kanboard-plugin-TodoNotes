@@ -120,6 +120,8 @@ if ($readonlyNotes) {
     print '<label class="labelNewNote" for="textinput">Create New Note</label>';
 }
 
+    print '<div class="containerNoWrap containerFloatRight disableDblClickPropagation">';
+
 // exclude when readonlyNotes
 if (!$readonlyNotes) {
 
@@ -187,12 +189,14 @@ if (!$readonlyNotes) {
     print '"><i class="fa fa-paint-brush" aria-hidden="true"></i>';
     print '</button>';
 
+    print '</div>';
+
 // exclude when readonlyNotes
 if (!$readonlyNotes) {
     // Newline after heading and top settings
     print '<br>';
 
-    print '<div class="containerNoWrap containerFloatRight">';
+    print '<div class="containerNoWrap containerFloatRight disableDblClickPropagation">';
 
     // Show details button
     print '<button id="showDetailsNew" class="showDetailsNew" data-id="0" data-project="';
@@ -213,7 +217,7 @@ if (!$readonlyNotes) {
     // Input line
     print '<input id="newNote';
     print $project_id;
-    print '" name="newNote" type="text" placeholder="What needs to be done" class="inputNewNote" data-project="';
+    print '" name="newNote" type="text" placeholder="What needs to be done" class="inputNewNote disableDblClickPropagation" data-project="';
     print $project_id;
     print '" data-user="';
     print $user_id;
@@ -225,10 +229,10 @@ if (!$readonlyNotes) {
     print '" data-id="0" class="hideMe details containerFloatClear noteDescriptionClass ui-corner-all">';
     print '<textarea id="textareaNewNote';
     print $project_id;
-    print '" class="textareaNewNote"></textarea>';
+    print '" class="textareaNewNote disableDblClickPropagation"></textarea>';
 
     // Print category select menu
-    print '<p class="categories">';
+    print '<p class="categories disableDblClickPropagation">';
     print '<label for="cat">Category</label><br>';
     print '<select name="cat" id="catP';
     print $project_id;
@@ -279,7 +283,7 @@ foreach($data as $u){
     print '">';
 
     // Here goes the icon bar for all note buttons
-    print '<div class="containerNoWrap containerFloatRight">';
+    print '<div class="containerNoWrap containerFloatRight disableDblClickPropagation">';
 
     // explicit reorder handle for mobile
     print '<div class="hideMe sortableHandle"><i class="fa fa-arrows-alt" aria-hidden="true"></i></div>';
@@ -382,7 +386,7 @@ foreach($data as $u){
     print '</div>';
 
     // Here goes the title row with checkbox
-    print '<div class="containerNoWrap containerFloatLeft">';
+    print '<div class="containerNoWrap containerFloatLeft disableDblClickPropagation">';
 
     // Checkbox for done note
     print '<button id="checkDone';
@@ -481,9 +485,9 @@ foreach($data as $u){
     print '<textarea title="Press tab to save changes" ';
     if ($readonlyNotes) print 'disabled ';
     if($u['is_active'] == "0"){
-        print '" class="textareaDescription noteDoneDesignTextarea"';
+        print '" class="disableDblClickPropagation textareaDescription noteDoneDesignTextarea"';
     } else {
-        print '" class="textareaDescription"';
+        print '" class="disableDblClickPropagation textareaDescription"';
     }
     print ' id="noteTextareaDescriptionP';
     print $u['project_id'];
@@ -499,7 +503,7 @@ foreach($data as $u){
     print $u['description'];
     print '</textarea>';
 
-    print '<p class="categories">';
+    print '<p class="categories disableDblClickPropagation">';
     print '<label for="cat">Category</label><br>';
     print '<select ';
     if ($readonlyNotes) print 'disabled ';

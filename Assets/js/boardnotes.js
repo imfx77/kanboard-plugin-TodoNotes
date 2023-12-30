@@ -61,6 +61,10 @@
       toggleDetails(project_id, id);
     });
   });
+  // BUT disable dblclick propagation for all marked sub-elements
+  $('.disableDblClickPropagation').dblclick(function (event) {
+     event.stopPropagation();
+  });
 
   // Show details for note by menu button
   $(function() {
