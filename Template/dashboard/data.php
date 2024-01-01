@@ -55,11 +55,11 @@
         print '&user_id='.$user_id.'&tab_id='.$num;
         print '">All</a>';
 
-        print '<button title="New custom project" id="customProjectNewP';
-        print $num;
-        print '" class="toolbarButton customProjectNew" data-user="';
-        print $user_id;
-        print '"><a><i class="fa fa-file-o" aria-hidden="true"></i></a></button>';
+//         print '<button title="New custom project" id="customProjectNewP';
+//         print $num;
+//         print '" class="toolbarButton customProjectNew" data-user="';
+//         print $user_id;
+//         print '"><a><i class="fa fa-file-o" aria-hidden="true"></i></a></button>';
 
         print '</li>';
         $num++;
@@ -95,24 +95,24 @@
             print $o['project_name'];
             print '</a>';
 
-            // edit buttons for custom projects ONLY
-            if ($o['is_custom']) {
-                print '<button title="Delete custom project" id="customProjectDeleteP';
-                print $o['project_id'];
-                print '" class="toolbarButton customProjectDelete" data-project="';
-                print $o['project_id'];
-                print '" data-user="';
-                print $user_id;
-                print '"><a><i class="fa fa-trash-o" aria-hidden="true"></i></a></button>';
-
-                print '<button title="Rename custom project" id="customProjectRenameP';
-                print $o['project_id'];
-                print '" class="toolbarButton customProjectRename" data-project="';
-                print $o['project_id'];
-                print '" data-user="';
-                print $user_id;
-                print '"><a><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></button>';
-            }
+//             // edit buttons for custom projects ONLY
+//             if ($o['is_custom']) {
+//                 print '<button title="Delete custom project" id="customProjectDeleteP';
+//                 print $o['project_id'];
+//                 print '" class="toolbarButton customProjectDelete" data-project="';
+//                 print $o['project_id'];
+//                 print '" data-user="';
+//                 print $user_id;
+//                 print '"><a><i class="fa fa-trash-o" aria-hidden="true"></i></a></button>';
+//
+//                 print '<button title="Rename custom project" id="customProjectRenameP';
+//                 print $o['project_id'];
+//                 print '" class="toolbarButton customProjectRename" data-project="';
+//                 print $o['project_id'];
+//                 print '" data-user="';
+//                 print $user_id;
+//                 print '"><a><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></button>';
+//             }
 
             print'</li>';
             $num++;
