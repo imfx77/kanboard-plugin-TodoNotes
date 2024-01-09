@@ -167,40 +167,19 @@ label {
     font-size: 1.5em !important;
 }
 
-.showDetails {
+.toolbarSeparator {
     float: right;
     appearance: none;
     -webkit-appearance: none;
     outline: none;
     border: 0;
     background: transparent;
-    padding-left: 5px;
     padding-right: 5px;
+    padding-left: 5px;
+    cursor: default;
 }
 
-.showDetailsNew {
-    float: right;
-    appearance: none;
-    -webkit-appearance: none;
-    outline: none;
-    border: 0;
-    background: transparent;
-    padding-left: 5px;
-    padding-right: 5px;
-}
-
-.saveNewNote {
-    float: right;
-    appearance: none;
-    -webkit-appearance: none;
-    outline: none;
-    border: 0;
-    background: transparent;
-    padding-left: 5px;
-    padding-right: 5px;
-}
-
-.toolbarButton  {
+.toolbarButton {
     float: right;
     appearance: none;
     -webkit-appearance: none;
@@ -209,6 +188,7 @@ label {
     background: transparent;
     padding-right: 5px;
     padding-left: 5px;
+    cursor: pointer;
 }
 
 .toolbarButtonToggled {
@@ -224,6 +204,7 @@ label {
     padding-left: 10px;
     padding-right: 10px;
     color: #1f1f1f;
+    cursor: cell;
 }
 
 .noteDoneDesignText {
@@ -294,6 +275,7 @@ textarea::selection {
     color: #1f1f1f;
     background: #999;
     font-size: 1em !important;
+    cursor: pointer;
 }
 
 

@@ -133,7 +133,7 @@ if (!$readonlyNotes) {
     print '"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
 
     // add some space between button groups
-    print '<div class="toolbarButton">&nbsp;</div>';
+    print '<div class="toolbarSeparator">&nbsp;</div>';
 
     // Settings analytics
     print '<button id="settingsAnalytics" class="toolbarButton" title="Show analytics" data-id="0" data-project="';
@@ -151,7 +151,7 @@ if (!$readonlyNotes) {
     print '</button>';
 
     // add some space between button groups
-    print '<div class="toolbarButton">&nbsp;</div>';
+    print '<div class="toolbarSeparator">&nbsp;</div>';
 } // end exclude
 
     // Collapse all
@@ -171,7 +171,7 @@ if (!$readonlyNotes) {
     print '</button>';
 
     // add some space between button groups
-    print '<div class="toolbarButton">&nbsp;</div>';
+    print '<div class="toolbarSeparator">&nbsp;</div>';
 
     // Toggle sort by state
     print '<button id="settingsSortByState" class="toolbarButton" title="Toggle sort by state" data-id="0" data-project="';
@@ -199,14 +199,14 @@ if (!$readonlyNotes) {
     print '<div class="containerNoWrap containerFloatRight disableDblClickPropagation">';
 
     // Show details button
-    print '<button id="showDetailsNew" class="showDetailsNew" data-id="0" data-project="';
+    print '<button title="Toggle Details" id="showDetailsNew" class="showDetailsNew toolbarButton" data-id="0" data-project="';
     print $project_id;
     print '" data-user="';
     print $user_id;
     print '"><i class="fa fa-angle-double-down" aria-hidden="true"></i></button>';
 
     // Save button
-    print '<button class="hideMe saveNewNote" id="saveNewNote" title="Save note" data-project="';
+    print '<button class="hideMe saveNewNote toolbarButton" id="saveNewNote" title="Save note" data-project="';
     print $project_id;
     print '" data-user="';
     print $user_id;
@@ -289,11 +289,11 @@ foreach($data as $u){
     print '<div class="hideMe sortableHandle"><i class="fa fa-arrows-alt" aria-hidden="true"></i></div>';
 
     // Show details button
-    print '<button id="showDetails';
+    print '<button title="Toggle Details" id="showDetails';
     print $u['project_id'];
     print '-';
     print $num;
-    print '" class="showDetails" data-id="';
+    print '" class="showDetails toolbarButton" data-id="';
     print $num;
     print '" data-project="';
     print $u['project_id'];
@@ -331,7 +331,7 @@ foreach($data as $u){
         print '"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>';
 
         // add some space between button groups
-        print '<div class="toolbarButton">&nbsp;</div>';
+        print '<div class="toolbarSeparator">&nbsp;</div>';
 
         // Transfer button (in detailed view)
         print '<button title="Move note to project" id="singleNoteTransferP';
@@ -389,7 +389,7 @@ foreach($data as $u){
     print '<div class="containerNoWrap containerFloatLeft disableDblClickPropagation">';
 
     // Checkbox for done note
-    print '<button id="checkDone';
+    print '<button title="Switch State" id="checkDone';
     print $u['project_id'];
     print '-';
     print $num;
@@ -439,7 +439,7 @@ foreach($data as $u){
     // Note title label - visual. Changes on click to input
     print '<label ';
     if ($readonlyNotes) print 'data-disabled="true" ';
-    print 'id="noteTitleLabelP';
+    print 'title="Edit Title" id="noteTitleLabelP';
     print $u['project_id'];
     print '-';
     print $num;
