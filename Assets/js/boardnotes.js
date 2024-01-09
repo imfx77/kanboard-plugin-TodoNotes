@@ -184,6 +184,19 @@
     });
   });
 
+  // Click on category label to auto open details and change category
+  $(function() {
+    $( "label" + ".catLabel" ).click(function() {
+      var project_id = $(this).attr('data-project');
+      var id = $(this).attr('data-id');
+      toggleDetails(project_id, id);
+
+      setTimeout(function() {
+        $("#catP" + project_id + "-" + id + "-button").trigger('click');
+      }, 100);
+    });
+  });
+
   //------------------------------------------------
   // Note State routines & handlers
   //------------------------------------------------

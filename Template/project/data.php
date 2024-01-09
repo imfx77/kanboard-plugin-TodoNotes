@@ -375,10 +375,16 @@ foreach($data as $u){
             print ' color-' . $category_color;
         }
     }
-    print '" id="noteCatLabelP';
+    print '" title="Change Category" id="noteCatLabelP';
     print $u['project_id'];
     print '-';
     print $num;
+    print '" data-id="';
+    print $num;
+    print '" data-project="';
+    print $u['project_id'];
+    print '" data-user="';
+    print $user_id;
     print '">';
     print $u['category'];
     print '</label>';
