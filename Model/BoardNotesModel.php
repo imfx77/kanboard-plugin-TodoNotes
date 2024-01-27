@@ -20,12 +20,19 @@ class BoardNotesModel extends Base
     const TABLE_categories      = CategoryModel::TABLE;
     const TABLE_access          = ProjectUserRoleModel::TABLE;
 
-    // Show single note
-    public function boardNotesShowNote($note_id)
+    // Check unique note
+    private function boardNotesIsUniqueNote($project_id, $user_id, $note_id)
     {
-        return $this->db->table(self::TABLE_notes)
-            ->eq('id', $note_id)
-            ->findAll();
+        $result = $this->db->table(self::TABLE_notes);
+        $result = $result->eq('id', $note_id);
+        $result = $result->eq('user_id', $user_id);
+        $result = $result->eq('project_id', $project_id);
+        $result = $result->gte('is_active', "0"); // -1 == deleted
+        $result = $result->findAll();
+
+        if (!$result) return false;
+        if (count($result) != 1) return false;
+        return true;
     }
 
     // Show all notes related to project
@@ -38,6 +45,7 @@ class BoardNotesModel extends Base
             $result = $result->eq('project_id', $project_id);
         }
         $result = $result->desc('project_id');
+        $result = $result->gte('is_active', "0"); // -1 == deleted
         if ($doSortByState)
         {
             $result = $result->desc('is_active');
@@ -58,6 +66,7 @@ class BoardNotesModel extends Base
         $result = $result->eq('user_id', $user_id);
         $result = $result->in('project_id', $projectsAccessList);
         $result = $result->desc('project_id');
+        $result = $result->gte('is_active', "0"); // -1 == deleted
         if ($doSortByState)
         {
             $result = $result->desc('is_active');
@@ -77,6 +86,7 @@ class BoardNotesModel extends Base
         if (!empty($category)) {
             $result = $result->eq('category', $category);
         }
+        $result = $result->gte('is_active', "0"); // -1 == deleted
         if ($doSortByState)
         {
             $result = $result->desc('is_active');
@@ -168,23 +178,78 @@ class BoardNotesModel extends Base
         return $swimlanes;
     }
 
-    // Delete note
-    public function boardNotesDeleteNote($project_id, $user_id, $note_id)
+    // Get last modified timestamp
+    public function boardNotesGetLastModifiedTimestamp($project_id, $user_id)
     {
-        return $this->db->table(self::TABLE_notes)
-            ->eq('id', $note_id)
-            ->eq('project_id', $project_id)
-            ->eq('user_id', $user_id)
-            ->remove();
+        $result = $this->db->table(self::TABLE_notes);
+        $result = $result->columns('date_modified');
+        $result = $result->eq('user_id', $user_id);
+        if ($project_id > 0)
+        {
+            $result = $result->eq('project_id', $project_id);
+        }
+        // including 'is_active' == -1 i.e. lately deleted notes
+        $result = $result->desc('date_modified');
+        $result = $result->findOne();
+
+        return $result;
     }
 
     // Delete note
+    public function boardNotesDeleteNote($project_id, $user_id, $note_id)
+    {
+        // purge previously marked as deleted notes
+        $purged = $this->boardNotesPurgeNotes($project_id, $user_id);
+
+        // Get current unixtime
+        $timestamp = time();
+
+        $values = array(
+            'is_active' => -1,
+            'date_modified' => $timestamp,
+        );
+
+        // mark note as deleted
+        $deleted = $this->db->table(self::TABLE_notes)
+            ->eq('id', $note_id)
+            ->eq('project_id', $project_id)
+            ->eq('user_id', $user_id)
+            ->update($values);
+
+        return $purged && $deleted;
+    }
+
+    // Delete ALL done notes
     public function boardNotesDeleteAllDoneNotes($project_id, $user_id)
+    {
+        // purge previously marked as deleted notes
+        $purged = $this->boardNotesPurgeNotes($project_id, $user_id);
+
+        // Get current unixtime
+        $timestamp = time();
+
+        $values = array(
+            'is_active' => -1,
+            'date_modified' => $timestamp,
+        );
+
+        // mark done notes as deleted
+        $deleted = $this->db->table(self::TABLE_notes)
+            ->eq('project_id', $project_id)
+            ->eq('user_id', $user_id)
+            ->eq('is_active', "0")
+            ->update($values);
+
+        return $purged && $deleted;
+    }
+
+    // Actually PURGE the notes marked as deleted
+    private function boardNotesPurgeNotes($project_id, $user_id)
     {
         return $this->db->table(self::TABLE_notes)
             ->eq('project_id', $project_id)
             ->eq('user_id', $user_id)
-            ->eq('is_active', "0")
+            ->eq('is_active', "-1") // previously marked as deleted
             ->remove();
     }
 
@@ -194,6 +259,7 @@ class BoardNotesModel extends Base
         // Get last position number
         $lastPosition = $this->db->table(self::TABLE_notes)
             ->eq('project_id', $project_id)
+            ->gte('is_active', "0") // -1 == deleted
             ->desc('position')
             ->findOneColumn('position');
 
@@ -205,7 +271,7 @@ class BoardNotesModel extends Base
         $lastPosition++;
 
         // Get current unixtime
-        $t = time();
+        $timestamp = time();
 
         // Define values
         $values = array(
@@ -215,8 +281,8 @@ class BoardNotesModel extends Base
             'is_active' => $is_active,
             'title' => $title,
             'description' => $description,
-            'date_created' => $t,
-            'date_modified' => $t,
+            'date_created' => $timestamp,
+            'date_modified' => $timestamp,
             'category' => $category,
         );
 
@@ -228,8 +294,12 @@ class BoardNotesModel extends Base
     public function boardNotesTransferNote($project_id, $user_id, $note_id, $target_project_id)
     {
         // Get current unixtime
-        $t = time();
-        $values = array('project_id' => $target_project_id, 'date_modified' => $t,);
+        $timestamp = time();
+
+        $values = array(
+            'project_id' => $target_project_id,
+            'date_modified' => $timestamp,
+        );
 
         return $this->db->table(self::TABLE_notes)
             ->eq('id', $note_id)
@@ -241,9 +311,19 @@ class BoardNotesModel extends Base
     // Update note
     public function boardNotesUpdateNote($project_id, $user_id, $note_id, $is_active, $title, $description, $category)
     {
+        $is_unique = $this->boardNotesIsUniqueNote($project_id, $user_id, $note_id);
+        if (!$is_unique) return false;
+
         // Get current unixtime
-        $t = time();
-        $values = array('is_active' => $is_active, 'title' => $title, 'description' => $description, 'category' => $category, 'date_modified' => $t,);
+        $timestamp = time();
+
+        $values = array(
+            'is_active' => $is_active,
+            'title' => $title,
+            'description' => $description,
+            'category' => $category,
+            'date_modified' => $timestamp,
+        );
 
         return $this->db->table(self::TABLE_notes)
             ->eq('id', $note_id)
@@ -272,17 +352,19 @@ class BoardNotesModel extends Base
                 ->eq('project_id', $project_id)
                 ->eq('user_id', $user_id)
                 ->eq('id', $row)
+                ->gte('is_active', "0") // -1 == deleted
                 ->update($values);
             $num--;
         }
     }
 
-    // Delete note ???
+    // Get Notes for Analytics
     public function boardNotesAnalytics($project_id, $user_id)
     {
         return $this->db->table(self::TABLE_notes)
             ->eq('project_id', $project_id)
             ->eq('user_id', $user_id)
+            ->gte('is_active', "0") // -1 == deleted
             ->findAll();
     }
 }

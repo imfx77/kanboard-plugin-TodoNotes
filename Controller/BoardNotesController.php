@@ -6,7 +6,6 @@ use Kanboard\Controller\BaseController;
 
 class BoardNotesController extends BaseController
 {
-
     private function resolveUserId()
     {
         $user_id = ''; // init empty string
@@ -191,6 +190,20 @@ class BoardNotesController extends BaseController
         return true;
     }
 
+    public function boardNotesGetLastModifiedTimestamp()
+    {
+    	$user_id = $this->resolveUserId();
+        $project = $this->resolveProject($user_id);
+        $project_id = $project['id'];
+
+        $validation = $this->boardNotesModel->boardNotesGetLastModifiedTimestamp($project_id, $user_id);
+
+        $lastTimestamp = (!$validation) ? 0 : $validation['date_modified'];
+        print($lastTimestamp);
+
+        return $validation;
+    }
+
     public function boardNotesDeleteNote()
     {
     	$user_id = $this->resolveUserId();
@@ -255,6 +268,8 @@ class BoardNotesController extends BaseController
     	$category = $this->request->getStringParam('category');
 
         $validation = $this->boardNotesModel->boardNotesUpdateNote($project_id, $user_id, $note_id, $is_active, $title, $description, $category);
+        print $validation ? time() : 0;
+
         return $validation;
     }
 
