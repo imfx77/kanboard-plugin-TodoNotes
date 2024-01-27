@@ -278,6 +278,13 @@ textarea::selection {
     cursor: pointer;
 }
 
+.boardnotesBusyIcon
+{
+     position: fixed;
+     bottom: 0;
+     right: 0;
+     font-size: 2em !important;
+}
 
 /* Style for report.php */
 

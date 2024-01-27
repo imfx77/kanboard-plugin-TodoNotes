@@ -215,9 +215,9 @@ if (!$readonlyNotes) {
     print '</div>';
 
     // Input line
-    print '<input id="newNote';
+    print '<input id="inputNewNote';
     print $project_id;
-    print '" name="newNote" type="text" placeholder="What needs to be done" class="inputNewNote disableDblClickPropagation" data-project="';
+    print '" name="inputNewNote" type="text" placeholder="What needs to be done" class="inputNewNote disableDblClickPropagation" data-project="';
     print $project_id;
     print '" data-user="';
     print $user_id;
@@ -600,7 +600,12 @@ print ' data-project="';
 print $project_id;
 print '" data-user="';
 print $user_id;
+print '" data-timestamp="';
+print time();
 print '"></div>';
+
+print '<span id="boardnotesBusyIcon" class="boardnotesBusyIcon hideMe">&nbsp;<i class="fa fa-spinner fa-spin" title="Pending data changes ... Waiting for the new note to be submitted!"></i></span>';
+
 
 //----------------------------------------
 // ACTUAL CONTENT ENDS HERE !!!

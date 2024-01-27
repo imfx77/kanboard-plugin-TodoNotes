@@ -32,7 +32,7 @@ function prepareDocument(){
             var regex = new RegExp('item-', 'g');
             order = order.replace(regex, '');
             var order = order.split(',');
-            sqlNotesUpdatePosition(project_id, user_id, order, nrNotes);
+            sqlUpdatePosition(project_id, user_id, order, nrNotes);
         }
 
         if (isMobile){

@@ -84,14 +84,14 @@
   // Show details menu for new note (toggle class)
   function toggleDetailsNew(project_id) {
     if ( !$('#noteDescriptionP' + project_id).hasClass( 'hideMe' ) ) {
-        $("#newNote" + project_id).width( $('#textareaNewNote' + project_id).width() );
+        $("#inputNewNote" + project_id).width( $('#textareaNewNote' + project_id).width() );
     }
 
     $("#noteDescriptionP" + project_id).toggleClass( "hideMe" );
     $("#saveNewNote").toggleClass( "hideMe" );
 
     if ( !$('#noteDescriptionP' + project_id).hasClass( 'hideMe' ) ) {
-        $("#newNote" + project_id).width( $('#textareaNewNote' + project_id).width() );
+        $("#inputNewNote" + project_id).width( $('#textareaNewNote' + project_id).width() );
     }
 
     $("#showDetailsNew").find('i').toggleClass( "fa-angle-double-down" );
@@ -722,6 +722,13 @@
             + '&category=' + encodeURIComponent(category)
             + '&is_active=' + is_active,
       success: function(response) {
+        var lastModifiedTimestamp = parseInt(response);
+        if (lastModifiedTimestamp > 0) {
+            $('#refProjectId').attr('data-timestamp', lastModifiedTimestamp);
+        } else {
+            alert('The note you are trying to update is INVALID !\nThe page will forcefully refresh now !');
+            sqlRefreshNotes(project_id, user_id);
+        }
       },
       error: function(xhr,textStatus,e) {
         alert(e);
@@ -733,7 +740,7 @@
   //------------------------------------------------
 
   function sqlAddNote(project_id, user_id){
-    var title = $('#newNote' +  project_id).val().trim();
+    var title = $('#inputNewNote' +  project_id).val().trim();
     var description = $('#textareaNewNote' + project_id).val();
     var category = $('#catP' + project_id + ' option:selected').text();
     var is_active = "1";
@@ -827,7 +834,7 @@
   }
 
   // SQL update positions
-  function sqlNotesUpdatePosition(project_id, user_id, order, nrNotes){
+  function sqlUpdatePosition(project_id, user_id, order, nrNotes){
     $.ajax({
       cache: false,
       type: "POST",
@@ -843,6 +850,76 @@
       }
     });
     return false;
+  }
+
+  // SQL get last modified timestamp
+  function sqlGetLastModifiedTimestamp(project_id, user_id){
+    $.ajax({
+      cache: false,
+      type: "POST",
+      url: '/?controller=BoardNotesController&action=boardNotesGetLastModifiedTimestamp&plugin=BoardNotes'
+        + '&project_cus_id=' + project_id
+        + '&user_id=' + user_id,
+      success: function(response) {
+        var lastModifiedTimestamp = parseInt(response);
+        CheckAndTriggerRefresh(lastModifiedTimestamp);
+      },
+      error: function(xhr,textStatus,e) {
+        alert(e);
+      }
+    });
+    return false;
+  }
+
+  //------------------------------------------------
+  // AUTO-Refresh routines
+  //------------------------------------------------
+
+  function ShowBusyIcon() {
+    $("#boardnotesBusyIcon").removeClass('hideMe');
+  };
+
+  function HideBusyIcon() {
+    $("#boardnotesBusyIcon").addClass('hideMe');
+  };
+
+  // start the recursive check sequence on load page
+  $(function() {
+    ScheduleCheckModifications();
+  });
+
+  // schedule check for modifications every 15 sec
+  function ScheduleCheckModifications() {
+    setTimeout(function() {
+      ShowBusyIcon();
+      var project_id = $('#refProjectId').attr('data-project');
+      var user_id = $('#refProjectId').attr('data-user');
+      sqlGetLastModifiedTimestamp(project_id, user_id);
+    }, 15 * 1000); // 15 sec
+  }
+
+  // check if page refresh is necessary
+  function CheckAndTriggerRefresh(lastModifiedTimestamp) {
+    var project_id = $('#refProjectId').attr('data-project');
+    var user_id = $('#refProjectId').attr('data-user');
+
+    var title = $('#inputNewNote' +  project_id).val().trim();
+    var description = $('#textareaNewNote' + project_id).val();
+
+    // check if page not visible, or if new note has pending changes
+    if (!KB.utils.isVisible() || title!="" || description!="") {
+        ScheduleCheckModifications();
+        return;
+    }
+
+    // check if page needs refreshing
+    var lastRefreshedTimestamp = $('#refProjectId').attr('data-timestamp');
+    if (lastRefreshedTimestamp < lastModifiedTimestamp) {
+        sqlRefreshNotes(project_id, user_id);
+    }
+
+    ScheduleCheckModifications();
+    HideBusyIcon();
   }
 
   //------------------------------------------------
