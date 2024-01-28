@@ -604,7 +604,7 @@ print '" data-timestamp="';
 print time();
 print '"></div>';
 
-print '<span id="boardnotesBusyIcon" class="boardnotesBusyIcon hideMe">&nbsp;<i class="fa fa-spinner fa-spin" title="Pending data changes ... Waiting for the new note to be submitted!"></i></span>';
+print '<span id="boardnotesBusyIcon" class="boardnotesBusyIcon hideMe">&nbsp;<i class="fa fa-spinner fa-spin" title="Polling data changes ...&#13Might be waiting for an unsubmitted New Note data input!"></i></span>';
 
 
 //----------------------------------------

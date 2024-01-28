@@ -689,6 +689,7 @@
       success: function(response) {
       },
       error: function(xhr,textStatus,e) {
+        alert('sqlTransferNote');
         alert(e);
       }
     });
@@ -731,6 +732,7 @@
         }
       },
       error: function(xhr,textStatus,e) {
+        alert('sqlUpdateNote');
         alert(e);
       }
     });
@@ -763,6 +765,7 @@
       success: function(response) {
       },
       error: function(xhr,textStatus,e) {
+        alert('sqlAddNote');
         alert(e);
       }
      });
@@ -780,6 +783,7 @@
       success: function(response) {
       },
       error: function(xhr,textStatus,e) {
+        alert('sqlDeleteNote');
         alert(e);
       }
     });
@@ -796,6 +800,7 @@
       success: function(response) {
       },
       error: function(xhr,textStatus,e) {
+        alert('sqlDeleteAllDoneNotes');
         alert(e);
       }
     });
@@ -827,6 +832,7 @@
       success: function(response) {
       },
       error: function(xhr,textStatus,e) {
+        alert('sqlToggleSessionOption');
         alert(e);
       }
     });
@@ -846,6 +852,7 @@
       success: function(response) {
       },
       error: function(xhr,textStatus,e) {
+        alert('sqlUpdatePosition');
         alert(e);
       }
     });
@@ -865,6 +872,7 @@
         CheckAndTriggerRefresh(lastModifiedTimestamp);
       },
       error: function(xhr,textStatus,e) {
+        alert('sqlGetLastModifiedTimestamp');
         alert(e);
       }
     });
@@ -892,29 +900,29 @@
   function ScheduleCheckModifications() {
     setTimeout(function() {
       ShowBusyIcon();
+
       var project_id = $('#refProjectId').attr('data-project');
       var user_id = $('#refProjectId').attr('data-user');
+      var title = $('#inputNewNote' +  project_id).val().trim();
+      var description = $('#textareaNewNote' + project_id).val();
+
+      // skip SQL query if page not visible, or if new note has pending changes
+      if (!KB.utils.isVisible() || title!="" || description!="") {
+          ScheduleCheckModifications();
+          return;
+      }
+
       sqlGetLastModifiedTimestamp(project_id, user_id);
     }, 15 * 1000); // 15 sec
   }
 
   // check if page refresh is necessary
   function CheckAndTriggerRefresh(lastModifiedTimestamp) {
-    var project_id = $('#refProjectId').attr('data-project');
-    var user_id = $('#refProjectId').attr('data-user');
-
-    var title = $('#inputNewNote' +  project_id).val().trim();
-    var description = $('#textareaNewNote' + project_id).val();
-
-    // check if page not visible, or if new note has pending changes
-    if (!KB.utils.isVisible() || title!="" || description!="") {
-        ScheduleCheckModifications();
-        return;
-    }
-
-    // check if page needs refreshing
     var lastRefreshedTimestamp = $('#refProjectId').attr('data-timestamp');
+
     if (lastRefreshedTimestamp < lastModifiedTimestamp) {
+        var project_id = $('#refProjectId').attr('data-project');
+        var user_id = $('#refProjectId').attr('data-user');
         sqlRefreshNotes(project_id, user_id);
     }
 
