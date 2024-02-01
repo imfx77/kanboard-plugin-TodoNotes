@@ -268,7 +268,7 @@
 
   // POST UPDATE when enter on title
   $(function() {
-    $(document).on('keypress', '.noteTitle', function(e) {
+    $('.noteTitle').keydown(function(event) {
       var project_id = $(this).attr('data-project');
       var user_id = $(this).attr('data-user');
       var id = $(this).attr('data-id');
