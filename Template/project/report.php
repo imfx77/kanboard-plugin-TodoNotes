@@ -110,7 +110,7 @@ foreach($data as $u){
 
     print '<td class="tdReport tdReportStatus reportTitle">';
         if($u['is_active'] == "2"){
-            print '<i class="fa fa-spinner fa-spin" aria-hidden="true"></i>';
+            print '<i class="fa fa-spinner fa-pulse" aria-hidden="true"></i>';
         }
         //if($u['is_active'] == "1"){
         //    print '<i class="fa fa-circle-thin" aria-hidden="true"></i>';

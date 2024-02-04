@@ -413,7 +413,7 @@ foreach($data as $u){
     print $u['is_active'];
     print '" ';
         if($u['is_active'] == "2"){
-            print 'class="fa fa-spinner fa-spin" aria-hidden="true"></i>';
+            print 'class="fa fa-spinner fa-pulse" aria-hidden="true"></i>';
         }
         if($u['is_active'] == "1"){
             print 'class="fa fa-circle-thin" aria-hidden="true"></i>';
@@ -604,7 +604,7 @@ print '" data-timestamp="';
 print time();
 print '"></div>';
 
-print '<span id="boardnotesBusyIcon" class="boardnotesBusyIcon hideMe">&nbsp;<i class="fa fa-spinner fa-spin" title="Polling data changes ...&#13Might be waiting for an unsubmitted New Note data input!"></i></span>';
+print '<span id="boardnotesBusyIcon" class="boardnotesBusyIcon hideMe">&nbsp;<i class="fa fa-refresh fa-spin" title="Polling data changes ...&#13Might be waiting for an unsubmitted New Note data input!"></i></span>';
 
 
 //----------------------------------------

@@ -208,11 +208,11 @@
       // cycle through states
       if ($checkDone.hasClass( "fa-circle-thin" )) {
         $checkDone.removeClass( "fa-circle-thin" );
-        $checkDone.addClass( "fa-spinner fa-spin" );
+        $checkDone.addClass( "fa-spinner fa-pulse" );
         return;
       }
-      if ($checkDone.hasClass( "fa-spinner fa-spin" )) {
-        $checkDone.removeClass( "fa-spinner fa-spin" );
+      if ($checkDone.hasClass( "fa-spinner fa-pulse" )) {
+        $checkDone.removeClass( "fa-spinner fa-pulse" );
         $checkDone.addClass( "fa-check" );
         return;
       }
@@ -239,7 +239,7 @@
       $noteDescription.removeClass( "noteDoneDesignTextarea" );
       $noteDoneCheckmark.attr('data-id', '1');
     }
-    if( $noteDoneCheckmark.hasClass( "fa-spinner fa-spin" ) ){
+    if( $noteDoneCheckmark.hasClass( "fa-spinner fa-pulse" ) ){
       $noteTitleLabel.removeClass( "noteDoneDesignText" );
       $noteDescription.removeClass( "noteDoneDesignTextarea" );
       $noteDoneCheckmark.attr('data-id', '2');

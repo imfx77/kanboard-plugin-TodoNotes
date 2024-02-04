@@ -201,8 +201,6 @@ label {
     outline: none;
     border: 0;
     background: transparent;
-    padding-left: 10px;
-    padding-right: 10px;
     color: #1f1f1f;
     cursor: cell;
 }
