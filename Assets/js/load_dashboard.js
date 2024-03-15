@@ -10,7 +10,7 @@ function updateNotesTabs() {
     $( "#tabs" ).height(numTabs * tabHeight);
 }
 
-function prepareDocumentQ() {
+function prepareDocumentForDashboard() {
     var isMobile = IsMobile();
 
     if(isMobile) {

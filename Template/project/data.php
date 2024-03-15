@@ -1,7 +1,10 @@
 <?php
 
-if (!$is_refresh) { // load CSS only once per project !!!
+if (!$is_refresh) { // load CSS and JS only once per project !!!
     print $this->asset->css('plugins/BoardNotes/Assets/css/style.css');
+    print $this->asset->js('plugins/BoardNotes/Assets/js/boardnotes.js');
+    print $this->asset->js('plugins/BoardNotes/Assets/js/load_project.js');
+    print $this->asset->js('plugins/BoardNotes/Assets/js/load_report.js');
 }
 
 //----------------------------------------
@@ -87,12 +90,7 @@ if (!$is_refresh) { // print only once per project !!!
 // it shall be regenerated both on initial page load and on every refresh
 //----------------------------------------
 
-    // scrips should be reloaded each time the contents is regenerated
-    // hence, placing them in the 'result' section which is refreshable
-    print $this->asset->js('plugins/BoardNotes/Assets/js/boardnotes.js');
-    print $this->asset->js('plugins/BoardNotes/Assets/js/load_project.js');
-
-    // evaluate optionShowCategoryColors option from session and forward it to JS
+    // evaluate optionShowCategoryColors option from session
     if (!array_key_exists('boardnotesShowCategoryColors', $_SESSION)) $_SESSION['boardnotesShowCategoryColors'] = false;
     $optionShowCategoryColors = $_SESSION['boardnotesShowCategoryColors'];
     // evaluate optionSortByState option from session

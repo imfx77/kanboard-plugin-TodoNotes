@@ -1,5 +1,4 @@
-// On mobile: Hide InputTitle (show label), hide sidebar and define class for view (normal or mobile)
-function prepareDocumentReport() {
+function prepareDocumentForReport() {
     $('.noteTitleInput').hide();
 
     var isMobile = false; // initiate as false
@@ -24,5 +23,5 @@ function prepareDocumentReport() {
     refreshCategoryColors();
 }
 
-window.onload = prepareDocumentReport;
-$( document ).ready( prepareDocumentReport );
+window.onload = prepareDocumentForReport;
+$( document ).ready( prepareDocumentForReport );

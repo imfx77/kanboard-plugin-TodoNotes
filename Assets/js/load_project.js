@@ -16,7 +16,7 @@ function adjustAllNotesPlaceholders(){
     })
 }
 
-function prepareDocument(){
+function prepareDocumentForProject(){
     optionShowCategoryColors = ($('#session_vars').attr('data-optionShowCategoryColors') == 'true') ? true : false;
     optionSortByState = ($('#session_vars').attr('data-optionSortByState') == 'true') ? true : false;
 
@@ -62,7 +62,6 @@ function prepareDocument(){
           });
         }
     }
-
     if(isMobile) {
       // choose mobile view
       $('#mainholderP' + project_id).removeClass('mainholder').addClass('mainholderMobile');
@@ -73,11 +72,11 @@ function prepareDocument(){
     refreshSortByState();
 
     // prepare method for dashboard view if embedded
-    if ( $.isFunction(prepareDocumentQ) ) {
-        prepareDocumentQ();
+    if ( $.isFunction(prepareDocumentForDashboard) ) {
+        prepareDocumentForDashboard();
     }
 }
 
 window.onresize = adjustAllNotesPlaceholders;
-window.onload = prepareDocument;
-$( document ).ready( prepareDocument );
+window.onload = prepareDocumentForProject;
+$( document ).ready( prepareDocumentForProject );

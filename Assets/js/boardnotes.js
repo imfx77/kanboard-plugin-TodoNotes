@@ -627,7 +627,11 @@
                         + "&project_cus_id=" + project_id
                         + "&user_id=" + user_id
                         + "&category=" + encodeURIComponent(category);
-          $("#result" + project_id).html(ajax_load).load(loadUrl);
+          $("#result" + project_id).html(ajax_load).load(loadUrl,
+            function(response, status, xhr) {
+                attachAllHandlers();
+                prepareDocumentForReport();
+            });
           $( this ).dialog( "close" );
         }
       }
@@ -782,7 +786,11 @@
                 + '&project_cus_id=' + project_id
                 + '&user_id=' + user_id;
     setTimeout(function() {
-        $("#result" + project_id).html(ajax_load).load(loadUrl);
+        $("#result" + project_id).html(ajax_load).load(loadUrl,
+            function(response, status, xhr) {
+                attachAllHandlers();
+                prepareDocumentForProject();
+            });
     }, 100);
   }
 
