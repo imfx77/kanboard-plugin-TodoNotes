@@ -6,10 +6,7 @@
     background: #ff7f0e;
     border: 2px solid #1f1f1f;
     margin-left: 5px;
-    padding-right: 5px;
-    padding-left: 5px;
-    padding-top: 2px;
-    padding-bottom: 2px;
+    padding: 2px 5px 2px 5px;
 }
 
 .statProgress {
@@ -18,10 +15,7 @@
     background: #1f77b4;
     border: 2px solid #1f1f1f;
     margin-left: 5px;
-    padding-right: 5px;
-    padding-left: 5px;
-    padding-top: 2px;
-    padding-bottom: 2px;
+    padding: 2px 5px 2px 5px;
 }
 
 .statDone {
@@ -30,10 +24,11 @@
     background: #2ca02c;
     border: 2px solid #1f1f1f;
     margin-left: 5px;
-    padding-right: 5px;
-    padding-left: 5px;
-    padding-top: 2px;
-    padding-bottom: 2px;
+    padding: 2px 5px 2px 5px;
+}
+
+i.fa {
+    padding: 0px;
 }
 
 </style>
@@ -47,9 +42,9 @@
         $statsData = $this->model->boardNotesModel->boardNotesStats($project['id'], $user_id);
 
         $statsText = '';
-        $statsText .= '<span class="statDone" title="'.t('Done').'"><i style="color:#f7f7f7" class="fa fa-check" aria-hidden="true"></i>' . $statsData['statDone'] . '</span>';
-        $statsText .= '<span class="statProgress" title="'.t('Progress').'"><i style="color:#f7f7f7" class="fa fa-spinner fa-pulse" aria-hidden="true"></i>' . $statsData['statProgress'] . '</span>';
-        $statsText .= '<span class="statOpen" title="'.t('Open').'"><i style="color:#f7f7f7" class="fa fa-circle-thin" aria-hidden="true"></i>' . $statsData['statOpen'] . '</span>';
+        $statsText .= '<span class="statProgress" title="'.t('Progress').'"><i style="color:#f7f7f7" class="fa fa-fw fa-spinner fa-pulse" aria-hidden="true"></i>&nbsp; ' . $statsData['statProgress'] . '</span>';
+        $statsText .= '<span class="statDone" title="'.t('Done').'"><i style="color:#f7f7f7" class="fa fa-fw fa-check" aria-hidden="true"></i>&nbsp;' . $statsData['statDone'] . '</span>';
+        $statsText .= '<span class="statOpen" title="'.t('Open').'"><i style="color:#f7f7f7" class="fa fa-fw fa-circle-thin" aria-hidden="true"></i>&nbsp;' . $statsData['statOpen'] . '</span>';
     ?>
 
     <?= $this->url->icon('wpforms', t('Notes') . $statsText, 'BoardNotesController', 'boardNotesShowProject', array(
