@@ -8,7 +8,6 @@ class Plugin extends Base
 {
     public function initialize()
     {
-        $this->setContentSecurityPolicy(array('default-src' => '* \'unsafe-inline\' \'unsafe-eval\''));
         $this->template->hook->attach('template:dashboard:sidebar', 'BoardNotes:dashboard/sidebar');
         $this->template->hook->attach('template:project:dropdown', 'BoardNotes:project/dropdown');
         $this->template->hook->attach('template:project-header:view-switcher', 'BoardNotes:project/header');
