@@ -5,6 +5,7 @@ if (!$is_refresh) { // load CSS and JS only once per project !!!
     print $this->asset->js('plugins/BoardNotes/Assets/js/boardnotes.js');
     print $this->asset->js('plugins/BoardNotes/Assets/js/load_project.js');
     print $this->asset->js('plugins/BoardNotes/Assets/js/load_report.js');
+    print $this->asset->js('plugins/BoardNotes/Assets/js/load_stats.js');
 }
 
 //----------------------------------------
@@ -139,8 +140,8 @@ if (!$readonlyNotes) {
     // add some space between button groups
     print '<div class="toolbarSeparator">&nbsp;</div>';
 
-    // Settings analytics
-    print '<button id="settingsAnalytics" class="toolbarButton" title="Show analytics" data-id="0" data-project="';
+    // Settings stats
+    print '<button id="settingsStats" class="toolbarButton" title="Show stats" data-id="0" data-project="';
     print $project_id;
     print '" data-user="';
     print $user_id;
@@ -633,8 +634,8 @@ if (!$is_refresh) { // print only once per project !!!
   print '</p>';
   print '</div>';
 
-  print '<div class="hideMe" id="dialogAnalytics" title="Notes Analytics">';
-  print '<div id="dialogAnalyticsInside"></div>';
+  print '<div class="hideMe" id="dialogStats" title="Notes Stats">';
+  print '<div id="dialogStatsInside"></div>';
   print '</div>';
 
   //---------------------------------------------

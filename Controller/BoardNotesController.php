@@ -273,17 +273,17 @@ class BoardNotesController extends BaseController
         return $validation;
     }
 
-    public function boardNotesAnalytics()
+    public function boardNotesStats()
     {
     	$user_id = $this->resolveUserId();
         $project = $this->resolveProject($user_id);
         $project_id = $project['id'];
 
-        $analyticsData = $this->boardNotesModel->boardNotesAnalytics($project_id, $user_id);
+        $statsData = $this->boardNotesModel->boardNotesStats($project_id, $user_id);
 
-        return $this->response->html($this->helper->layout->app('BoardNotes:project/analytics', array(
-            //'title' => t('Analytics'),
-            'analyticsData' => $analyticsData
+        return $this->response->html($this->helper->layout->app('BoardNotes:project/stats', array(
+            //'title' => t('Stats'),
+            'statsData' => $statsData
         )));
     }
 

@@ -394,11 +394,11 @@
       modalDeleteAllDoneNotes(project_id, user_id);
     });
 
-    // POST analytics
-    $( "#settingsAnalytics" ).click(function() {
+    // POST stats
+    $( "#settingsStats" ).click(function() {
       var project_id = $(this).attr('data-project');
       var user_id = $(this).attr('data-user');
-      modalAnalytics(project_id, user_id);
+      modalStats(project_id, user_id);
     });
 
     // Sort and filter for report
@@ -593,18 +593,21 @@
     });
   };
 
-  function modalAnalytics(project_id, user_id) {
+  function modalStats(project_id, user_id) {
     $.ajaxSetup ({
         cache: false
     });
     var ajax_load = '<i class="fa fa-spinner fa-pulse" aria-hidden="true" alt="loading..."></i>';
-    var loadUrl = '/?controller=BoardNotesController&action=boardNotesAnalytics&plugin=BoardNotes'
+    var loadUrl = '/?controller=BoardNotesController&action=boardNotesStats&plugin=BoardNotes'
                 + '&project_cus_id=' + project_id
                 + '&user_id=' + user_id;
-    $('#dialogAnalyticsInside').html(ajax_load).load(loadUrl);
+    $('#dialogStatsInside').html(ajax_load).load(loadUrl,
+        function(response, status, xhr) {
+            prepareDocumentForStats();
+        });
 
-    $( "#dialogAnalytics" ).removeClass( 'hideMe' );
-    $( "#dialogAnalytics" ).dialog({
+    $( "#dialogStats" ).removeClass( 'hideMe' );
+    $( "#dialogStats" ).dialog({
       buttons: {
         Ok: function() {
           $( this ).dialog( "close" );
