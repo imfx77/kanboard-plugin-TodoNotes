@@ -94,13 +94,19 @@ if (!$is_refresh) { // print only once per project !!!
 
     // evaluate optionShowCategoryColors option from session and forward it to JS
     if (!array_key_exists('boardnotesShowCategoryColors', $_SESSION)) $_SESSION['boardnotesShowCategoryColors'] = false;
-    $showCategoryColors = $_SESSION['boardnotesShowCategoryColors'];
-    print '<script>var optionShowCategoryColors = ' . ($showCategoryColors ? 'true' : 'false'). ';</script>';
-
-    // evaluate optionSortByState option from session and forward it to JS
+    $optionShowCategoryColors = $_SESSION['boardnotesShowCategoryColors'];
+    // evaluate optionSortByState option from session
     if (!array_key_exists('boardnotesSortByState', $_SESSION)) $_SESSION['boardnotesSortByState'] = false;
     $optionSortByState = $_SESSION['boardnotesSortByState'];
-    print '<script>var optionSortByState = ' . ($optionSortByState ? 'true' : 'false'). ';</script>';
+
+    // session_vars (hidden reference for options)
+    print '<div id="session_vars';
+    print '" data-optionShowCategoryColors="';
+    print $optionShowCategoryColors ? 'true' : 'false';
+    print '" data-optionSortByState="';
+    print $optionSortByState ? 'true' : 'false';
+    print '" class="hideMe">';
+    print '</div>';
 
 //----------------------------------------
 
@@ -613,7 +619,7 @@ print '<span id="boardnotesBusyIcon" class="boardnotesBusyIcon hideMe">&nbsp;<i 
 //----------------------------------------
 
 if (!$is_refresh) { // print only once per project !!!
-    print '</div>'; // id="result'
+    print '</div>'; // id='result'
 }
 
 //----------------------------------------

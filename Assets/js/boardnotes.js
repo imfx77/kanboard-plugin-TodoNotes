@@ -2,6 +2,13 @@
   // Global vars for options
   //------------------------------------------------
 
+  var optionShowCategoryColors = false;
+  var optionSortByState = false;
+
+  //------------------------------------------------
+  // Note Details routines
+  //------------------------------------------------
+
   // Adjust notePlaceholderDescription container
   function adjustNotePlaceholders(project_id, id) {
     var offsetCheck = $("#checkDone" + project_id + "-" + id).offset().top;

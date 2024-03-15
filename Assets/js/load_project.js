@@ -17,6 +17,9 @@ function adjustAllNotesPlaceholders(){
 }
 
 function prepareDocument(){
+    optionShowCategoryColors = ($('#session_vars').attr('data-optionShowCategoryColors') == 'true') ? true : false;
+    optionSortByState = ($('#session_vars').attr('data-optionSortByState') == 'true') ? true : false;
+
     var nrNotes = $('#nrNotes').attr('data-id');
     var project_id = $('#refProjectId').attr('data-project');
     var user_id = $('#refProjectId').attr('data-user');
