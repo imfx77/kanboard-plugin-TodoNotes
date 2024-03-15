@@ -579,7 +579,7 @@
           var swimlaneToTask = $('#listSwimToTaskP' + project_id + ' option:selected').val();
           var removeNote = $('#removeNoteP' + project_id).is(":checked");
 
-          var ajax_load = '<img src="http://automobiles.honda.com/images/current-offers/small-loading.gif" alt="loading..." />';
+          var ajax_load = '<i class="fa fa-spinner fa-pulse" aria-hidden="true" alt="loading..."></i>';
           var loadUrl = '/?controller=BoardNotesController&action=boardNotesToTask&plugin=BoardNotes'
                         + '&project_cus_id=' + project_id
                         + '&user_id=' + user_id
@@ -634,7 +634,7 @@
     $.ajaxSetup ({
         cache: false
     });
-    var ajax_load = '<img src="http://automobiles.honda.com/images/current-offers/small-loading.gif" alt="loading..." />';
+    var ajax_load = '<i class="fa fa-spinner fa-pulse" aria-hidden="true" alt="loading..."></i>';
     var loadUrl = '/?controller=BoardNotesController&action=boardNotesAnalytics&plugin=BoardNotes'
                 + '&project_cus_id=' + project_id
                 + '&user_id=' + user_id;
@@ -659,7 +659,7 @@
       buttons: {
         Ok: function() {
           var category = $('#reportCatP' + project_id + ' option:selected').text();
-          var ajax_load = '<img src="http://automobiles.honda.com/images/current-offers/small-loading.gif" alt="loading..." />';
+          var ajax_load = '<i class="fa fa-spinner fa-pulse" aria-hidden="true" alt="loading..."></i>';
           var loadUrl = "/?controller=BoardNotesController&action=boardNotesReport&plugin=BoardNotes"
                         + "&project_cus_id=" + project_id
                         + "&user_id=" + user_id
@@ -814,7 +814,7 @@
     $.ajaxSetup ({
       cache: false
     });
-    var ajax_load = '<img src="http://automobiles.honda.com/images/current-offers/small-loading.gif" alt="loading..." />';
+    var ajax_load = '<i class="fa fa-spinner fa-pulse" aria-hidden="true" alt="loading..."></i>';
     var loadUrl = '/?controller=BoardNotesController&action=boardNotesRefreshProject&plugin=BoardNotes'
                 + '&project_cus_id=' + project_id
                 + '&user_id=' + user_id;
