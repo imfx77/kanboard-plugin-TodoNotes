@@ -240,7 +240,7 @@
   };
 
   function NoteStateHandlers() {
-    //Checkmark done
+    //Checkmark done handler
     $( "button" + ".checkDone" ).click(function() {
       var project_id = $(this).attr('data-project');
       var user_id = $(this).attr('data-user');
