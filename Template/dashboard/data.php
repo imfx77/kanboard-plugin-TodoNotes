@@ -1,5 +1,5 @@
 <style>
-.mainholderQ {
+.mainholderDashboard {
     width: 750px;
     font: 16px 'Helvetica Neue', Helvetica, Arial, sans-serif;
     color: #4d4d4d;
@@ -8,13 +8,18 @@
     font-weight: 300;
 }
 
-.mainholderMobileQ {
+.mainholderMobileDashboard {
     width: auto;
     font: 16px 'Helvetica Neue', Helvetica, Arial, sans-serif;
     color: #4d4d4d;
     -webkit-font-smoothing: antialiased;
     position: relative;
     font-weight: 300;
+}
+
+.sidebar {
+    max-width: 50%;
+    min-width: 350px;
 }
 
 .hrTabs {
@@ -38,7 +43,7 @@
 
 <div id="myNotesHeader" class="page-header"><h2>My notes > All</h2></div>
 
-<section id="mainholderQ" class="mainholderQ sidebar-container">
+<section id="mainholderDashboard" class="mainholderDashboard sidebar-container">
 
 <div id="tabs" class="sidebar">
   <ul>
@@ -55,6 +60,12 @@
         print '&user_id='.$user_id.'&tab_id='.$num;
         print '">All</a>';
 
+        print '<div class="toolbarSeparator">&nbsp;</div>';
+        $stats_project_id = 0;
+        require(__DIR__.'/../widgets/stats.php');
+        print $statsWidget;
+
+//         print '<div class="toolbarSeparator">&nbsp;</div>';
 //         print '<button title="New custom project" id="customProjectNewP';
 //         print $num;
 //         print '" class="toolbarButton customProjectNew" data-user="';
@@ -95,7 +106,13 @@
             print $o['project_name'];
             print '</a>';
 
+            print '<div class="toolbarSeparator">&nbsp;</div>';
+            $stats_project_id = $o['project_id'];
+            require(__DIR__.'/../widgets/stats.php');
+            print $statsWidget;
+
 //             // edit buttons for custom projects ONLY
+//             print '<div class="toolbarSeparator">&nbsp;</div>';
 //             if ($o['is_custom']) {
 //                 print '<button title="Delete custom project" id="customProjectDeleteP';
 //                 print $o['project_id'];
