@@ -387,3 +387,41 @@ textarea::selection {
         font-weight: 300;
     }
 }
+
+/* Style for stat boxes (e.g. in dropdown.php) */
+
+.statOpen {
+    float: right;
+    color: #f7f7f7;
+    background: #cd650a;
+    border: 2px solid #1f1f1f;
+    margin-left: 4px;
+    padding: 2px 4px 2px 4px;
+    line-height: 16px;
+}
+
+.statProgress {
+    float: right;
+    color: #f7f7f7;
+    background: #1f77b4;
+    border: 2px solid #1f1f1f;
+    margin-left: 4px;
+    padding: 2px 4px 2px 4px;
+    line-height: 16px;
+}
+
+.statDone {
+    float: right;
+    color: #f7f7f7;
+    background: #2ca02c;
+    border: 2px solid #1f1f1f;
+    margin-left: 4px;
+    padding: 2px 4px 2px 4px;
+    line-height: 16px;
+}
+
+.statOpen i.fa, .statProgress i.fa, .statDone i.fa {
+    padding: 0px !important;
+    color:#f7f7f7 !important;
+    margin-right: 4px !important;
+}

@@ -358,19 +358,17 @@ class BoardNotesModel extends Base
         }
     }
 
-    // Get Notes for Stats
-    private function boardNotesStats_Internal($project_id, $user_id)
-    {
-        return $this->db->table(self::TABLE_notes)
-            ->eq('project_id', $project_id)
-            ->eq('user_id', $user_id)
-            ->gte('is_active', "0") // -1 == deleted
-            ->findAll();
-    }
-
+    // Get Stats for Notes
     public function boardNotesStats($project_id, $user_id)
     {
-        $statsData = $this->boardNotesStats_Internal($project_id, $user_id);
+        $statsData = $this->db->table(self::TABLE_notes);
+        if ($project_id > 0)
+        {
+            $statsData = $statsData->eq('project_id', $project_id);
+        }
+        $statsData = $statsData->eq('user_id', $user_id);
+        $statsData = $statsData->gte('is_active', "0"); // -1 == deleted
+        $statsData = $statsData->findAll();
 
         $statDone = 0;
         $statOpen = 0;

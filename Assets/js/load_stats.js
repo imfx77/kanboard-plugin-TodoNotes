@@ -6,7 +6,7 @@ function prepareDocumentForStats() {
             type: "donut"
         },
         color: {
-            pattern: ['#ff7f0e', '#2ca02c', '#1f77b4']
+            pattern: ['#cd650a', '#2ca02c', '#1f77b4']
         }
     });
 }
