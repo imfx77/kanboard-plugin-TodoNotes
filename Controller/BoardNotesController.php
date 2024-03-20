@@ -127,6 +127,17 @@ class BoardNotesController extends BaseController
         $this->boardNotesShowProject_Internal(true);
     }
 
+    public function boardNotesRefreshTabs()
+    {
+        $user_id = $this->resolveUserId();
+        $projectsAccess = $this->boardNotesModel->boardNotesGetAllProjectIds($user_id);
+
+        return $this->response->html($this->helper->layout->app('BoardNotes:dashboard/tabs', array(
+            'user_id' => $user_id,
+            'projectsAccess' => $projectsAccess,
+        )));
+    }
+
     public function boardNotesShowAll()
     {
         $user = $this->getUser();

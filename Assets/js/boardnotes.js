@@ -779,6 +779,21 @@
 
   //------------------------------------------------
 
+  function sqlRefreshTabs(user_id){
+    if ($("#tabs").length === 0) return; // ONLY if dashboard tabs are present in page
+
+    // don't cache ajax or content won't be fresh
+    $.ajaxSetup ({
+      cache: false
+    });
+    var ajax_load = '<i class="fa fa-spinner fa-pulse" aria-hidden="true" alt="loading..."></i>';
+    var loadUrl = '/?controller=BoardNotesController&action=boardNotesRefreshTabs&plugin=BoardNotes'
+                + '&user_id=' + user_id;
+    setTimeout(function() {
+        $("#tabs").html(ajax_load).load(loadUrl);
+    }, 50);
+  }
+
   function sqlRefreshNotes(project_id, user_id){
     // don't cache ajax or content won't be fresh
     $.ajaxSetup ({
@@ -897,6 +912,7 @@
     if (lastRefreshedTimestamp < lastModifiedTimestamp) {
         var project_id = $('#refProjectId').attr('data-project');
         var user_id = $('#refProjectId').attr('data-user');
+        sqlRefreshTabs(user_id);
         sqlRefreshNotes(project_id, user_id);
     }
 

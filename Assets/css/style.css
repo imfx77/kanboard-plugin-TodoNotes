@@ -278,10 +278,11 @@ textarea::selection {
 
 .boardnotesBusyIcon
 {
-     position: fixed;
-     bottom: 0;
-     right: 0;
-     font-size: 2em !important;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    font-size: 2em !important;
+    color:#f7f7f7 !important;
 }
 
 /* Style for report.php */
