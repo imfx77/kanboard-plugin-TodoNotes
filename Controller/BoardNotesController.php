@@ -138,6 +138,14 @@ class BoardNotesController extends BaseController
         )));
     }
 
+    public function boardNotesRefreshStatsWidget()
+    {
+        $stats_project_id = $this->request->getIntegerParam('stats_project_id');
+        return $this->response->html($this->helper->layout->app('BoardNotes:widgets/stats', array(
+            'stats_project_id' => $stats_project_id,
+        )));
+    }
+
     public function boardNotesShowAll()
     {
         $user = $this->getUser();
