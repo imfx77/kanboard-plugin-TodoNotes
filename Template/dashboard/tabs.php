@@ -13,9 +13,9 @@
     print '">All</a>';
 
     print '<div class="toolbarSeparator">&nbsp;</div>';
-    $stats_project_id = 0;
-    require(__DIR__.'/../widgets/stats.php');
-    print $statsWidget;
+    print $this->render('BoardNotes:widgets/stats', array(
+         'stats_project_id' => 0,
+    ));
 
 //     print '<div class="toolbarSeparator">&nbsp;</div>';
 //     print '<button title="New custom project" id="customProjectNewP';
@@ -59,9 +59,9 @@
         print '</a>';
 
         print '<div class="toolbarSeparator">&nbsp;</div>';
-        $stats_project_id = $o['project_id'];
-        require(__DIR__.'/../widgets/stats.php');
-        print $statsWidget;
+        print $this->render('BoardNotes:widgets/stats', array(
+             'stats_project_id' => $o['project_id'],
+        ));
 
 //         // edit buttons for custom projects ONLY
 //         print '<div class="toolbarSeparator">&nbsp;</div>';

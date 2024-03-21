@@ -1,7 +1,11 @@
 <li class="">
     <?php
-        $stats_project_id = $project['id'];
-        require(__DIR__.'/../widgets/stats.php');
+        $statsWidget = '';
+        $statsWidget .= '<span class="BoardNotes_ProjectDropdown_StatsWidget" data-project="';
+        $statsWidget .= $project['id'];
+        $statsWidget .= '">';
+        $statsWidget .= $this->render('BoardNotes:widgets/stats', array('stats_project_id' => $project['id']));
+        $statsWidget .= '</span>';
     ?>
 
     <?= $this->url->icon('wpforms', t('Notes') . $statsWidget, 'BoardNotesController', 'boardNotesShowProject', array(

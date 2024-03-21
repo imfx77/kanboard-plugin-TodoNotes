@@ -5,8 +5,8 @@ function updateProjectsStats_OnCheckDoneHandler() {
       var id = $(this).attr('data-id');
 
       $checkDone = $("#noteDoneCheckmarkP" + project_id + "-" + id);
-      $statsWidgetAll = $("#statsWidgetP0");
-      $statsWidgetCurrent = $("#statsWidgetP" + project_id);
+      $statsWidgetAll = $("#BoarNotes_StatsWidget_P0");
+      $statsWidgetCurrent = $("#BoarNotes_StatsWidget_P" + project_id);
 
       // cycle through states
       if ($checkDone.hasClass( "fa-circle-thin" )) {
