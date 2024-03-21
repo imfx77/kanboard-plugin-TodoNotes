@@ -109,9 +109,9 @@ if (!$is_refresh) { // print only once per project !!!
 
 //----------------------------------------
 
-    print '<ul id="sortable" class="sortableRef';
+    print '<ul id="sortableRef';
     print $project_id;
-    print '">';
+    print '" class="sortableRef">';
 
 //----------------------------------------
 
@@ -265,10 +265,16 @@ foreach($data as $u){
 
     if ($readonlyNotes && $last_project_id != $u['project_id']){
         $last_project_id = $u['project_id'];
+        print '</ul>';
+
         print '<h2><a href="';
         print '/?controller=BoardNotesController&action=boardNotesShowAll&plugin=BoardNotes';
         print '&user_id='.$user_id.'&tab_id='.$projectsTabsById[ $last_project_id ]['tab_id'];
         print '">'.$projectsTabsById[ $last_project_id ]['name'].'</a></h2>';
+
+        print '<ul id="sortableRef';
+        print $last_project_id;
+        print '" class="sortableRef">';
     }
 
     print '<li id="item';

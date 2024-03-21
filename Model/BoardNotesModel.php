@@ -344,9 +344,14 @@ class BoardNotesModel extends Base
         //  Explode all positions
         $note_ids = explode(',', $notePositions);
 
+        $timestamp = time();
+
         // Loop through all positions
         foreach ($note_ids as $row) {
-            $values = array('position' => $num);
+            $values = array(
+                'position' => $num,
+                'date_modified' => $timestamp,
+            );
 
             $this->db->table(self::TABLE_notes)
                 ->eq('project_id', $project_id)

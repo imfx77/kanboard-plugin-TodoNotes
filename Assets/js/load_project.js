@@ -25,9 +25,9 @@ function prepareDocumentForProject(){
     var user_id = $('#refProjectId').attr('data-user');
     var isMobile = IsMobile();
 
-    // notes reordering is disabled in Overview Mode (ALL projrcts tab)
+    // notes reordering is disabled in Overview Mode (ALL projects tab)
     // ot when explicitly sorted by state
-    if (project_id != 0 && !optionSortByState) {
+    if (!optionSortByState) {
         // handle notes reordering
         function updateNotesOrder(event, ui) {
             var order = $(this).sortable('toArray');
@@ -42,23 +42,23 @@ function prepareDocumentForProject(){
           // show explicit reorder handles for mobile
           $( '.sortableHandle').removeClass( "hideMe" );
           $(function() {
-            $( '#sortable').sortable({
+            $( '#sortableRef' + project_id ).sortable({
               handle: '.sortableHandle',
               placeholder: "ui-state-highlight",
               update: updateNotesOrder
             });
-            $( "#sortable" ).disableSelection();
+            $( '#sortableRef' + project_id ).disableSelection();
           });
         }
         else{
           // drag entire notes for non-mobile
-          $( '.sortableRef' + project_id ).sortable({ items: 'li[id!=item-0]' });
+          $( '#sortableRef' + project_id ).sortable({ items: 'li.liNote' });
           $(function() {
-            $( '.sortableRef' + project_id ).sortable({
+            $( '#sortableRef' + project_id ).sortable({
               placeholder: "ui-state-highlight",
               update: updateNotesOrder
             });
-            $( "#sortable" ).disableSelection();
+            $( '#sortableRef' + project_id ).disableSelection();
           });
         }
     }
