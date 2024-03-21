@@ -11,5 +11,4 @@ function prepareDocumentForStats() {
     });
 }
 
-window.onload = prepareDocumentForStats;
 $( document ).ready( prepareDocumentForStats );

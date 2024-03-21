@@ -78,5 +78,4 @@ function prepareDocumentForProject(){
 }
 
 window.onresize = adjustAllNotesPlaceholders;
-window.onload = prepareDocumentForProject;
 $( document ).ready( prepareDocumentForProject );

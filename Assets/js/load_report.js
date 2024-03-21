@@ -14,5 +14,4 @@ function prepareDocumentForReport() {
     refreshCategoryColors();
 }
 
-window.onload = prepareDocumentForReport;
 $( document ).ready( prepareDocumentForReport );
