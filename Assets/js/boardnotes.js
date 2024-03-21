@@ -788,7 +788,7 @@
 
   function sqlRefreshTabs(user_id){
     // refresh ONLY if notes are viewed via dashboard and project tabs are present
-    if ($("#tabs").length === 0) return;
+    if ($("#tabs").length == 0) return;
 
     // don't cache ajax or content won't be fresh
     $.ajaxSetup ({
@@ -900,8 +900,8 @@
 
       var project_id = $('#refProjectId').attr('data-project');
       var user_id = $('#refProjectId').attr('data-user');
-      var title = $('#inputNewNote' +  project_id).val().trim();
-      var description = $('#textareaNewNote' + project_id).val();
+      var title = (project_id != 0) ? $('#inputNewNote' +  project_id).val().trim() : "";
+      var description = (project_id != 0) ? $('#textareaNewNote' + project_id).val() : "";
 
       // skip SQL query if page not visible, or if new note has pending changes
       if (!KB.utils.isVisible() || title!="" || description!="") {
