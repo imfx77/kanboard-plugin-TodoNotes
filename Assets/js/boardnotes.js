@@ -306,6 +306,7 @@
 	      var user_id = $(this).attr('data-user');
 	      $('.inputNewNote').blur();
 	      sqlAddNote(project_id, user_id);
+	      sqlRefreshTabs(user_id);
 	      sqlRefreshNotes(project_id, user_id);
       }
     });
@@ -316,6 +317,7 @@
       var user_id = $(this).attr('data-user');
       $('.inputNewNote').blur();
       sqlAddNote(project_id, user_id);
+      sqlRefreshTabs(user_id);
       sqlRefreshNotes(project_id, user_id);
     });
 
@@ -327,6 +329,7 @@
       var user_id = $(this).attr('data-user');
       var note_id = $(this).attr('data-id');
       sqlDeleteNote(project_id, user_id, note_id);
+      sqlRefreshTabs(user_id);
       sqlRefreshNotes(project_id, user_id);
     });
 
@@ -515,6 +518,7 @@
           var target_project_id = $('#listNoteProjectP' + project_id + ' option:selected').val();
           sqlTransferNote(project_id, user_id, note_id, target_project_id);
           $( this ).dialog( "close" );
+	      sqlRefreshTabs(user_id);
           sqlRefreshNotes(project_id, user_id);
         },
         Cancel: function() {
@@ -563,6 +567,7 @@
           $('#deadloading').html(ajax_load).load(loadUrl);
           if (removeNote) {
             sqlDeleteNote(project_id, user_id, note_id);
+	        sqlRefreshTabs(user_id);
             sqlRefreshNotes(project_id, user_id);
           }
         },
@@ -584,6 +589,7 @@
         "Delete all done notes!": function() {
           sqlDeleteAllDoneNotes(project_id, user_id);
           $( this ).dialog( "close" );
+	      sqlRefreshTabs(user_id);
           sqlRefreshNotes(project_id, user_id);
         },
         Cancel: function() {
@@ -698,6 +704,7 @@
             $('#refProjectId').attr('data-timestamp', lastModifiedTimestamp);
         } else {
             alert('The note you are trying to update is INVALID !\nThe page will forcefully refresh now !');
+	        sqlRefreshTabs(user_id);
             sqlRefreshNotes(project_id, user_id);
         }
       },
@@ -780,7 +787,8 @@
   //------------------------------------------------
 
   function sqlRefreshTabs(user_id){
-    if ($("#tabs").length === 0) return; // ONLY if dashboard tabs are present in page
+    // refresh ONLY if notes are viewed via dashboard and project tabs are present
+    if ($("#tabs").length === 0) return;
 
     // don't cache ajax or content won't be fresh
     $.ajaxSetup ({

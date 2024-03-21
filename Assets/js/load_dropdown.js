@@ -1,8 +1,9 @@
 function prepareDocumentFor_BoardNotes_ProjectDropdown() {
 
     function BoardNotes_ProjectDropdown_StatsWidget_Refresh() {
-        if ( ($(".BoardNotes_ProjectDropdown_StatsWidget").length === 2) &&        // ONLY if the opened dropdown has stats widget
-             ($(".BoardNotes_ProjectDropdown_StatsWidget:last").is(":visible")) ) { // ONLY if the stats widget is visible
+        // refresh ONLY if the opened dropdown has stats widget and it is visible
+        if ( ($(".BoardNotes_ProjectDropdown_StatsWidget").length === 2) &&
+             ($(".BoardNotes_ProjectDropdown_StatsWidget:last").is(":visible")) ) {
 
             var project_id = $(".BoardNotes_ProjectDropdown_StatsWidget:last").attr('data-project');
 
@@ -16,6 +17,7 @@ function prepareDocumentFor_BoardNotes_ProjectDropdown() {
             $(".BoardNotes_ProjectDropdown_StatsWidget:last").html(ajax_load).load(loadUrl);
         }
 
+        // re-schedule
         setTimeout(function() {
             BoardNotes_ProjectDropdown_StatsWidget_Refresh();
         }, 15 * 1000); // 15 sec
