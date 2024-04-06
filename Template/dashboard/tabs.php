@@ -7,11 +7,9 @@
     print $num;
     print '" data-id="';
     print $num;
-    print '" data-project="0"><a href="';
-    print '/?controller=BoardNotesController&action=boardNotesShowAll&plugin=BoardNotes';
-    print '&user_id='.$user_id.'&tab_id='.$num;
-    print '">All</a>';
-
+    print '" data-project="0">';
+    print $this->url->link('All', 'BoardNotesController', 'boardNotesShowAll',
+                            array('plugin' => 'BoardNotes', 'user_id' => $user_id, 'tab_id' => $num));
     print '<div class="toolbarSeparator">&nbsp;</div>';
     print $this->render('BoardNotes:widgets/stats', array(
          'stats_project_id' => 0,
@@ -51,12 +49,9 @@
         print $num;
         print '" data-project="';
         print $o['project_id'];
-        print '"><a href="';
-        print '/?controller=BoardNotesController&action=boardNotesShowAll&plugin=BoardNotes';
-        print '&user_id='.$user_id.'&tab_id='.$num;
         print '">';
-        print $o['project_name'];
-        print '</a>';
+        print $this->url->link($o['project_name'], 'BoardNotesController', 'boardNotesShowAll',
+                                array('plugin' => 'BoardNotes', 'user_id' => $user_id, 'tab_id' => $num));
 
         print '<div class="toolbarSeparator">&nbsp;</div>';
         print $this->render('BoardNotes:widgets/stats', array(

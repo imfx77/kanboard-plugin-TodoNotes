@@ -49,11 +49,6 @@
 <div id="content" class="sidebar-content">
 
     <?php
-        $tab_id = 0; // by default => no tab selected => show all notes of all projects
-        if (!empty($_GET['tab_id'])) {
-            $tab_id = intval($_GET['tab_id']);
-        }
-
         $project = array('id' => 0, 'name' => 'All');
         if ($tab_id > 0) {
             $projectAccess = $projectsAccess[$tab_id - 1];

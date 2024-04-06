@@ -151,10 +151,11 @@ class BoardNotesController extends BaseController
         $user = $this->getUser();
         $user_id = $this->resolveUserId();
 
-        $tab_id = $this->request->getIntegerParam('tab_id');
-        if (empty($tab_id))
-        {
+        $tab_id = $this->request->getStringParam('tab_id');
+        if (empty($tab_id)) {
             $tab_id = 0;
+        } else {
+            $tab_id = intval($tab_id);
         }
 
         $projectsAccess = $this->boardNotesModel->boardNotesGetAllProjectIds($user_id);
@@ -181,6 +182,7 @@ class BoardNotesController extends BaseController
             'title' => t('Notes overview for %s', $this->helper->user->getFullname($user)),
             'user' => $user,
             'user_id' => $user_id,
+            'tab_id' => $tab_id,
             'projectsAccess' => $projectsAccess,
 
             'categories' => $categories,

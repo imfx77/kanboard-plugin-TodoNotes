@@ -267,10 +267,10 @@ foreach($data as $u){
         $last_project_id = $u['project_id'];
         print '</ul>';
 
-        print '<h2><a href="';
-        print '/?controller=BoardNotesController&action=boardNotesShowAll&plugin=BoardNotes';
-        print '&user_id='.$user_id.'&tab_id='.$projectsTabsById[ $last_project_id ]['tab_id'];
-        print '">'.$projectsTabsById[ $last_project_id ]['name'].'</a></h2>';
+        print '<h2>';
+        print $this->url->link($projectsTabsById[ $last_project_id ]['name'], 'BoardNotesController', 'boardNotesShowAll',
+                                array('plugin' => 'BoardNotes', 'user_id' => $user_id, 'tab_id' => $projectsTabsById[ $last_project_id ]['tab_id']));
+        print '</h2>';
 
         print '<ul id="sortableRef';
         print $last_project_id;
