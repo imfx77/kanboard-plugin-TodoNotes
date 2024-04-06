@@ -9,9 +9,9 @@ updates:
     schedule:
       # Check for updates to GitHub Actions every week
       interval: "weekly"
-      time: "09:00"
-      # Use Greenwich Mean Time (UTC +01:00)
-      timezone: "Europe/London"
+      time: "07:00"
+      # Use Greenwich Mean Time (UTC +02:00)
+      timezone: "Europe/Sofia"
     # Add assignees
     assignees:
-      - "aljawaid"
+      - "imfx77"
