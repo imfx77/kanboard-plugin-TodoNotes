@@ -8,7 +8,7 @@
 
 
     $statsWidget = '<span class="BoarNotes_StatsWidget" id="BoarNotes_StatsWidget_P' . $stats_project_id . '">';
-    $statsWidget .= '<span class="statProgress" title="'.t('Progress').'"><i class="fa fa-fw fa-spinner ';
+    $statsWidget .= '<span class="statProgress" title="'.t('In progress').'"><i class="fa fa-fw fa-spinner ';
     $statsWidget .= ($statsData['statProgress'] > 0) ? 'fa-pulse' : '';
     $statsWidget .= '" aria-hidden="true"></i><b>' . $statsData['statProgress'] . '</b></span>';
     $statsWidget .= '<span class="statDone" title="'.t('Done').'"><i class="fa fa-fw fa-check" aria-hidden="true"></i><b>' . $statsData['statDone'] . '</b></span>';

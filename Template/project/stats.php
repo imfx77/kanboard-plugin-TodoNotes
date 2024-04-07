@@ -18,15 +18,15 @@ $statProgress_Percent = (($statProgress/$statTotal)*100);
 $statProgress_Percent = number_format((float)$statProgress_Percent, 2, '.', '');
 
 $chart_metrics = '[';
-$chart_metrics .= '{"column_title":"Open","nb_tasks":' . $statOpen . ',"percentage":' . $statOpen_Percent . '},';
-$chart_metrics .= '{"column_title":"Done","nb_tasks":' . $statDone . ',"percentage":' . $statDone_Percent . '},';
-$chart_metrics .= '{"column_title":"Progress","nb_tasks":' . $statProgress . ',"percentage":' . $statProgress_Percent . '}';
+$chart_metrics .= '{"column_title":"' . t('Open') . '","nb_tasks":' . $statOpen . ',"percentage":' . $statOpen_Percent . '},';
+$chart_metrics .= '{"column_title":"' . t('Done') . '","nb_tasks":' . $statDone . ',"percentage":' . $statDone_Percent . '},';
+$chart_metrics .= '{"column_title":"' . t('In progress') . '","nb_tasks":' . $statProgress . ',"percentage":' . $statProgress_Percent . '}';
 $chart_metrics .= ']';
 ?>
 
-<p><strong>Open: <?php print $statOpen; ?></strong></p>
-<p><strong>Done: <?php print $statDone; ?></strong></p>
-<p><strong>Progress: <?php print $statProgress; ?></strong></p>
+<p><strong><?= t('Open') ?>: <?php print $statOpen; ?></strong></p>
+<p><strong><?= t('Done') ?>: <?php print $statDone; ?></strong></p>
+<p><strong><?= t('In progress') ?>: <?php print $statProgress; ?></strong></p>
 <section class="analytic-task-repartition">
 <div id="chart" class="c3" data-metrics='<?php print $chart_metrics; ?>'></div>
 
