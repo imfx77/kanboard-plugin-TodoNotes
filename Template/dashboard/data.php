@@ -2,7 +2,7 @@
 .mainholderDashboard {
     width: 750px;
     font: 16px 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    color: #4d4d4d;
+    color: #4D4D4D;
     -webkit-font-smoothing: antialiased;
     position: relative;
     font-weight: 300;
@@ -11,7 +11,7 @@
 .mainholderMobileDashboard {
     width: auto;
     font: 16px 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    color: #4d4d4d;
+    color: #4D4D4D;
     -webkit-font-smoothing: antialiased;
     position: relative;
     font-weight: 300;
@@ -80,5 +80,5 @@
 
 <?php
     // tab_id (hidden, for reference) -->
-    print '<div id="tab_id" class="hideMe" data="'.$tab_id.'">';
+    print '<div id="tab_id" class="hideMe" data="' . $tab_id.'">';
 ?>

@@ -14,8 +14,8 @@ if (!$is_refresh) { // load CSS and JS only once per project !!!
 //----------------------------------------
 
 if (!$is_refresh && !$is_dashboard_view) {
-  // show project header only when initially viewing notes from project
-  print $this->projectHeader->render($project, 'BoardNotesController', 'boardNotesShowProject', false, 'BoardNotes');
+    // show project header only when initially viewing notes from project
+    print $this->projectHeader->render($project, 'BoardNotesController', 'boardNotesShowProject', false, 'BoardNotes');
 }
 
 //----------------------------------------
@@ -24,7 +24,7 @@ $readonlyNotes = ($project_id == 0);
 
 $tab_id = 1;
 $projectsTabsById = array();
-foreach($projectsAccess as $projectAccess) {
+foreach ($projectsAccess as $projectAccess) {
     $projectsTabsById[ $projectAccess['project_id'] ] = array('tab_id' => $tab_id, 'name' => $projectAccess['project_name']);
     $tab_id++;
 }
@@ -32,48 +32,48 @@ foreach($projectsAccess as $projectAccess) {
 
 $listCategoriesById = '';
 $mapCategoryColorByName = array();
-if(!empty($categories)) {
-  foreach($categories as $cat) {
-    // list by id
-    $listCategoriesById .= '<option value="';
-    $listCategoriesById .= $cat['id'];
-    $listCategoriesById .= '">';
-    $listCategoriesById .= $cat['name'];
-    $listCategoriesById .= '</option>';
-    // map color by name
-    $mapCategoryColorByName[ $cat['name'] ] = $cat['color_id'];
-    // category color hidden reference
-    if (!$is_refresh) { // generate only once per project !!!
-      print '<div id="category-';
-      print $cat['name'];
-      print '" data-color="';
-      print $cat['color_id'];
-      print '" class="hideMe">';
-      print '</div>';
+if (!empty($categories)) {
+    foreach ($categories as $cat) {
+        // list by id
+        $listCategoriesById .= '<option value="';
+        $listCategoriesById .= $cat['id'];
+        $listCategoriesById .= '">';
+        $listCategoriesById .= $cat['name'];
+        $listCategoriesById .= '</option>';
+        // map color by name
+        $mapCategoryColorByName[ $cat['name'] ] = $cat['color_id'];
+        // category color hidden reference
+        if (!$is_refresh) { // generate only once per project !!!
+            print '<div id="category-';
+            print $cat['name'];
+            print '" data-color="';
+            print $cat['color_id'];
+            print '" class="hideMe">';
+            print '</div>';
+        }
     }
-  }
 }
 
 $listColumnsById = '';
 if(!empty($columns)) {
-  foreach($columns as $col) {
-    $listColumnsById .= '<option value="';
-    $listColumnsById .= $col['id'];
-    $listColumnsById .= '">';
-    $listColumnsById .= $col['title'];
-    $listColumnsById .= '</option>';
-  }
+    foreach ($columns as $col) {
+        $listColumnsById .= '<option value="';
+        $listColumnsById .= $col['id'];
+        $listColumnsById .= '">';
+        $listColumnsById .= $col['title'];
+        $listColumnsById .= '</option>';
+    }
 }
 
 $listSwimlanesById = '';
 if(!empty($swimlanes)) {
-  foreach($swimlanes as $swim) {
-    $listSwimlanesById .= '<option value="';
-    $listSwimlanesById .= $swim['id'];
-    $listSwimlanesById .= '">';
-    $listSwimlanesById .= $swim['name'];
-    $listSwimlanesById .= '</option>';
-  }
+    foreach ($swimlanes as $swim) {
+        $listSwimlanesById .= '<option value="';
+        $listSwimlanesById .= $swim['id'];
+        $listSwimlanesById .= '">';
+        $listSwimlanesById .= $swim['name'];
+        $listSwimlanesById .= '</option>';
+    }
 }
 
 //----------------------------------------
@@ -95,10 +95,14 @@ if (!$is_refresh) { // print only once per project !!!
 //----------------------------------------
 
     // evaluate optionShowCategoryColors option from session
-    if (!array_key_exists('boardnotesShowCategoryColors', $_SESSION)) $_SESSION['boardnotesShowCategoryColors'] = false;
+    if (!array_key_exists('boardnotesShowCategoryColors', $_SESSION)) {
+        $_SESSION['boardnotesShowCategoryColors'] = false;
+    }
     $optionShowCategoryColors = $_SESSION['boardnotesShowCategoryColors'];
     // evaluate optionSortByState option from session
-    if (!array_key_exists('boardnotesSortByState', $_SESSION)) $_SESSION['boardnotesSortByState'] = false;
+    if (!array_key_exists('boardnotesSortByState', $_SESSION)) {
+        $_SESSION['boardnotesSortByState'] = false;
+    }
     $optionSortByState = $_SESSION['boardnotesSortByState'];
 
     // session_vars (hidden reference for options)
@@ -265,7 +269,7 @@ if (!$readonlyNotes) {
 
 $num = "1";
 $last_project_id = 0;
-foreach($data as $u){
+foreach ($data as $u){
     if (!empty($project_id) && $u['project_id'] != $project_id) continue;
 
     if ($readonlyNotes && $last_project_id != $u['project_id']){
@@ -555,7 +559,7 @@ foreach($data as $u){
         }
         if (!$emptyCat && !$emptyCatList){
             print '<option></option>'; // add an empty category option
-            foreach($categories as $cat) { // detect the selected category
+            foreach ($categories as $cat) { // detect the selected category
                 if ($cat['name'] == $u['category']){
                     print '<option value="'.$cat['id'].'" selected="selected">';
                 }else{
@@ -699,7 +703,7 @@ if (!$is_refresh) { // print only once per project !!!
   print '<select name="listNoteProject" id="listNoteProjectP';
   print $project_id;
   print '">';
-  foreach($projectsTabsById as $key => $projectTab) {
+  foreach ($projectsTabsById as $key => $projectTab) {
     if ($key != $project_id){
       print '<option value="';
       print $key;

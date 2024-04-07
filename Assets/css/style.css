@@ -1,11 +1,11 @@
 /* General */
 
 .button a {
-    border-bottom: 1px solid #777;
-    border-left: 1px solid #000;
-    border-right: 1px solid #333;
-    border-top: 1px solid #000;
-    color: #000;
+    border-bottom: 1px solid #777777;
+    border-left: 1px solid #000000;
+    border-right: 1px solid #333333;
+    border-top: 1px solid #000000;
+    color: #000000;
     display: block;
     height: 2.5em;
     padding: 0 1em;
@@ -15,8 +15,8 @@
 
 .mainholder {
     width: 700px;
-    font: 13px 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    color: #999;
+    font: 13px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #999999;
     -webkit-font-smoothing: antialiased;
     position: relative;
     font-weight: 300;
@@ -24,8 +24,8 @@
 
 .mainholderMobile {
     width: auto;
-    font: 11px 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    color: #4d4d4d;
+    font: 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #4D4D4D;
     -webkit-font-smoothing: antialiased;
     position: relative;
     font-weight: 300;
@@ -34,9 +34,9 @@
 .view {
     height: 35px;
     line-height: 35px;
-    border-bottom: 1px solid #ededed;
-    border-left: 1px solid #ededed;
-    border-right: 1px solid #ededed;
+    border-bottom: 1px solid #EDEDED;
+    border-left: 1px solid #EDEDED;
+    border-right: 1px solid #EDEDED;
     padding-left: 10px;
     padding-right: 10px;
 }
@@ -45,8 +45,8 @@ input[type="text"] {
     display: inline-block;
     width: 80%;
     border: none;
-    color: #000 !important;
-    background-color: #777 !important;
+    color: #000000 !important;
+    background-color: #777777 !important;
     padding: 0 0;
     margin-top: 0;
     height: auto;
@@ -54,12 +54,12 @@ input[type="text"] {
     text-decoration: none;
 }
 
-input[type=text]::selection {
+input[type="text"]::selection {
   background: rgba(82,168,236,.8);
 }
 
-input[type=text]:focus {
-    color: #fff !important;
+input[type="text"]:focus {
+    color: #FFFFFF !important;
     border-color: rgba(82,168,236,.8);
     outline: 0;
     border-bottom: 1px solid gray;
@@ -68,7 +68,7 @@ input[type=text]:focus {
 }
 
 input::placeholder {
-  color: #bbb !important;
+  color: #BBBBBB !important;
 }
 
 label {
@@ -83,7 +83,7 @@ label {
 
 .sortableRef li {
   margin: 0 3px 3px 3px;
-  padding: 0.4em;
+  padding: .4em;
   border-radius: 3px;
   min-height: 16px;
 }
@@ -118,40 +118,40 @@ label {
 
 .liNote {
     padding: 5px 10px 12px 15px!important;
-    background-color: rgba(246, 246, 246, 0.7);
+    background-color: rgba(246, 246, 246, .7);
     font-size: 1em !important;
 }
 
 .liNewNote {
     padding: 5px 10px 12px 15px!important;
-    background-color: rgba(246, 246, 246, 0.9);
+    background-color: rgba(246, 246, 246, .9);
     font-size: 1em !important;
 }
 
 .labelNewNote {
-    font-weight: 700;
+    font-weight: bold;
     padding-bottom: 5px;
 }
 
 .textareaNewNote {
     display: inline-block;
-    color: #999;
+    color: #999999;
 }
 
 .noteTitle {
-    color: #1f1f1f;
+    color: #1F1F1F;
 }
 
 .noteTitleLabel {
     margin-top: 0;
     padding-left: 10px;
     height: 20px;
-    border: 0px !important;
+    border: 0 !important;
 }
 
 .noteDescriptionClass {
     padding: 5px 10px 0 40px;
-    color: #7a7a7a;
+    color: #7A7A7A;
     min-height: 16px;
 }
 
@@ -192,7 +192,7 @@ label {
 }
 
 .toolbarButtonToggled {
-    color: #933;
+    color: #993333;
 }
 
 .checkDone {
@@ -201,18 +201,18 @@ label {
     outline: none;
     border: 0;
     background: transparent;
-    color: #1f1f1f;
+    color: #1F1F1F;
     cursor: cell;
 }
 
 .noteDoneDesignText {
-    color: #555;
+    color: #555555;
     text-decoration: line-through;
 }
 
 .noteDoneDesignTextarea {
-    color: #555;
-    border: 1px solid #555 !important;
+    color: #555555;
+    border: 1px solid #555555 !important;
     text-decoration: line-through;
 }
 
@@ -224,7 +224,7 @@ label {
     display: inline-block;
     vertical-align: top;
     margin-left: 20px;
-    color: #1f1f1f;
+    color: #1F1F1F;
 }
 
 textarea {
@@ -234,7 +234,7 @@ textarea {
     height: 50px;
     width: 320px;
     padding: 5px;
-    color: #1f1f1f;
+    color: #1F1F1F;
     margin-top: 5px;
 }
 
@@ -245,19 +245,19 @@ textarea::selection {
 .textareaDescription {
     display: inline-block;
     background: none;
-    border: 1px solid #1f1f1f;
+    border: 1px solid #1F1F1F;
     white-space:pre-wrap;
 }
 
 .textareaDescriptionSelected {
     display: inline-block;
-    color: #000 !important;
-    background-color: #777;
+    color: #000000 !important;
+    background-color: #777777;
     text-decoration: none;
 }
 
 .textareaDescriptionSelected:focus {
-    color: #fff !important;
+    color: #FFFFFF !important;
 }
 
 .catSelector {
@@ -270,8 +270,8 @@ textarea::selection {
     margin-top: 0;
     padding: 0 5px 0 5px;
     border-radius: 5px;
-    color: #1f1f1f;
-    background: #999;
+    color: #1F1F1F;
+    background: #999999;
     font-size: 1em !important;
 }
 
@@ -285,7 +285,7 @@ textarea::selection {
     bottom: 0;
     right: 0;
     font-size: 2em !important;
-    color:#f7f7f7 !important;
+    color:#F7F7F7 !important;
 }
 
 /* Style for report.php */
@@ -297,7 +297,7 @@ textarea::selection {
 }
 
 .reportTitle {
-    color: #ddd;
+    color: #DDDDDD;
 }
 
 .singleReportHide {
@@ -312,29 +312,29 @@ textarea::selection {
 
 .reportDescriptionClass {
     padding: 5px 10px 0 20px;
-    color: #7a7a7a;
-    font-size: 0.9em !important;
+    color: #7A7A7A;
+    font-size: .9em !important;
     min-height: 16px;
 }
 
 .tableReport {
     border-bottom: none;
-    border-left: 1px solid #ccc;
+    border-left: 1px solid #CCCCCC;
     border-right: none;
     border-top: none;
 }
 
 .theadReport {
-   font-family: 'Helvetica', Arial, sans-serif;
+   font-family: Helvetica, Arial, sans-serif;
    line-height: 16px;
 }
 
 .thReport {
-   border-top: 1px solid #ccc;
+   border-top: 1px solid #CCCCCC;
    padding-left: 10px;
    border-left: none;
-   border-bottom: 1px solid #ccc;
-   background-color: rgba(37, 37, 37, 0.75);
+   border-bottom: 1px solid #CCCCCC;
+   background-color: rgba(37, 37, 37, .75);
 }
 
 .thReportNr {
@@ -343,7 +343,7 @@ textarea::selection {
 }
 
 .thReportStatus {
-    border-right: 1px solid #ccc;
+    border-right: 1px solid #CCCCCC;
     width: 45px;
 }
 
@@ -352,14 +352,14 @@ textarea::selection {
     display: inline-block;
     margin-left: 10px;
     padding: 10px 10px 10px 10px;
-    background-color: #555;
-    border: 0px;
+    background-color: #555555;
+    border: 0;
     white-space:pre-wrap;
 }
 
 
 .tdReport {
-    background-color: rgba(92, 92, 92, 0.50);
+    background-color: rgba(92, 92, 92, .50);
     font-size: 12px !important;
 }
 
@@ -377,15 +377,15 @@ textarea::selection {
 .tdReportStatus {
     text-align : center;
     border-left:none;
-    border-right: 1px solid #ccc;;
+    border-right: 1px solid #CCCCCC;
 }
 
 
 @media (max-width : 751px) {
     .mainholder {
         width: auto;
-        font: 12px 'Helvetica Neue', Helvetica, Arial, sans-serif;
-        color: #999;
+        font: 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
+        color: #999999;
         -webkit-font-smoothing: antialiased;
         position: relative;
         font-weight: 300;
@@ -396,9 +396,9 @@ textarea::selection {
 
 .statOpen {
     float: right;
-    color: #f7f7f7;
-    background: #cd650a;
-    border: 2px solid #1f1f1f;
+    color: #F7F7F7;
+    background: #CD650A;
+    border: 2px solid #1F1F1F;
     margin-left: 4px;
     padding: 2px 4px 2px 4px;
     line-height: 16px;
@@ -406,9 +406,9 @@ textarea::selection {
 
 .statProgress {
     float: right;
-    color: #f7f7f7;
-    background: #1f77b4;
-    border: 2px solid #1f1f1f;
+    color: #F7F7F7;
+    background: #1F77B4;
+    border: 2px solid #1F1F1F;
     margin-left: 4px;
     padding: 2px 4px 2px 4px;
     line-height: 16px;
@@ -416,16 +416,16 @@ textarea::selection {
 
 .statDone {
     float: right;
-    color: #f7f7f7;
-    background: #2ca02c;
-    border: 2px solid #1f1f1f;
+    color: #F7F7F7;
+    background: #2CA02C;
+    border: 2px solid #1F1F1F;
     margin-left: 4px;
     padding: 2px 4px 2px 4px;
     line-height: 16px;
 }
 
 .statOpen i.fa, .statProgress i.fa, .statDone i.fa {
-    padding: 0px !important;
-    color:#f7f7f7 !important;
+    padding: 0 !important;
+    color:#F7F7F7 !important;
     margin-right: 4px !important;
 }

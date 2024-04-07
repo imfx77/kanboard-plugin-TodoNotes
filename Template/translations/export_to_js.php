@@ -1,4 +1,5 @@
 <?php
+
     // list here ALL the required translationTextIds for use with JS
     $translationTextIds = array(
         'BoardNotes_DASHBOARD_MY_NOTES',

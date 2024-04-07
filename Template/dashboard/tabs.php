@@ -8,8 +8,12 @@
     print '" data-id="';
     print $num;
     print '" data-project="0">';
-    print $this->url->link(t('BoardNotes_DASHBOARD_ALL_TAB'), 'BoardNotesController', 'boardNotesShowAll',
-                            array('plugin' => 'BoardNotes', 'user_id' => $user_id, 'tab_id' => $num));
+    print $this->url->link(
+        t('BoardNotes_DASHBOARD_ALL_TAB'),
+        'BoardNotesController',
+        'boardNotesShowAll',
+        array('plugin' => 'BoardNotes', 'user_id' => $user_id, 'tab_id' => $num)
+    );
     print '<div class="toolbarSeparator">&nbsp;</div>';
     print $this->render('BoardNotes:widgets/stats', array(
          'stats_project_id' => 0,
@@ -28,7 +32,7 @@
     $separatorPlacedCustom = false;
     $separatorPlacedNormal = false;
     // Loop through all projects
-    foreach($projectsAccess as $o){
+    foreach ($projectsAccess as $o) {
 
         // separator for custom projects
         if (!$separatorPlacedCustom && $o['is_custom']) {
@@ -50,8 +54,12 @@
         print '" data-project="';
         print $o['project_id'];
         print '">';
-        print $this->url->link($o['project_name'], 'BoardNotesController', 'boardNotesShowAll',
-                                array('plugin' => 'BoardNotes', 'user_id' => $user_id, 'tab_id' => $num));
+        print $this->url->link(
+            $o['project_name'],
+            'BoardNotesController',
+            'boardNotesShowAll',
+            array('plugin' => 'BoardNotes', 'user_id' => $user_id, 'tab_id' => $num)
+        );
 
         print '<div class="toolbarSeparator">&nbsp;</div>';
         print $this->render('BoardNotes:widgets/stats', array(

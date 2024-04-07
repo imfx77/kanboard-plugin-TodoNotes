@@ -18,7 +18,7 @@ class TranslationsExportToJSHelper extends Base
     public function export(array $textIds)
     {
         $translations = array();
-        foreach($textIds as $textId){
+        foreach ($textIds as $textId) {
             $translations[$textId] = t($textId);
         }
         return json_encode($translations);

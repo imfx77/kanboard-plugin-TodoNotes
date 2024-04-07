@@ -28,7 +28,7 @@ print $this->asset->js('plugins/BoardNotes/Assets/js/load_report.js');
 <?php
 $num = "1";
 
-foreach($data as $u){
+foreach ($data as $u) {
     print '<tr class="trReport" id="trReportNr';
     print $num;
     print '">';
@@ -37,7 +37,7 @@ foreach($data as $u){
      // Hide button
     print '<button id="singleReportHide" class="singleReportHide" data-id="';
     print $num;
-    print '"><i class="fa fa-minus-square-o" style="color:#CCC" aria-hidden="true"';
+    print '"><i class="fa fa-minus-square-o" style="color:#CCCCCC" aria-hidden="true"';
     print ' title="' . t('BoardNotes_REPORT_HIDE_ROW') . '"></i></button>';
     // Report #
     print '<span class="fa-stack fa-lg">';
@@ -75,7 +75,7 @@ foreach($data as $u){
     print $u['project_id'];
     print '" name="reportTitleLabel';
     print $num;
-    if($u['is_active'] == "0"){
+    if ($u['is_active'] == "0") {
         print '" class="reportTitleLabel reportTitle noteDoneDesignText" value="">';
     } else {
         print '" class="reportTitleLabel reportTitle" value="">';
@@ -84,7 +84,7 @@ foreach($data as $u){
     print '</label>';
 
     // Detailed view
-    if(!empty($u['description'])) {
+    if (!empty($u['description'])) {
         print '<div id="noteDescriptionP';
         print $u['project_id'];
         print '-';
@@ -103,7 +103,7 @@ foreach($data as $u){
         print $num;
         print '" data-project="';
         print $u['project_id'];
-        if($u['is_active'] == "0"){
+        if ($u['is_active'] == "0") {
             print '" class="textareaReportDescription reportTitle noteDoneDesignTextarea">';
         } else {
             print '" class="textareaReportDescription reportTitle">';
@@ -115,15 +115,17 @@ foreach($data as $u){
     print '</td>'; // report info
 
     print '<td class="tdReport tdReportStatus reportTitle">';
-        if($u['is_active'] == "2"){
-            print '<i class="fa fa-spinner fa-pulse" aria-hidden="true"></i>';
-        }
-        //if($u['is_active'] == "1"){
-        //    print '<i class="fa fa-circle-thin" aria-hidden="true"></i>';
-        //}
-        if($u['is_active'] == "0"){
-            print '<i class="fa fa-check" aria-hidden="true"></i>';
-        }
+
+    if ($u['is_active'] == "2") {
+        print '<i class="fa fa-spinner fa-pulse" aria-hidden="true"></i>';
+    }
+    //if ($u['is_active'] == "1") {
+    //    print '<i class="fa fa-circle-thin" aria-hidden="true"></i>';
+    //}
+    if ($u['is_active'] == "0") {
+        print '<i class="fa fa-check" aria-hidden="true"></i>';
+    }
+
     print '</td>';
 
     print '</tr>';

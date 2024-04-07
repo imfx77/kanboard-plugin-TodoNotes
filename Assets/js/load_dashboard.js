@@ -3,7 +3,7 @@ let _BoardNotes_Dashboard_ = {}; // namespace
 _BoardNotes_Dashboard_.updateProjectsStats_OnCheckDoneHandler = function() {
     $( "button" + ".checkDone" ).click(function() {
       var project_id = $(this).attr('data-project');
-      var user_id = $(this).attr('data-user');
+      //var user_id = $(this).attr('data-user');
       var id = $(this).attr('data-id');
 
       $checkDone = $("#noteDoneCheckmarkP" + project_id + "-" + id);

@@ -12,42 +12,44 @@ use Kanboard\Model\CategoryModel;
 
 class BoardNotesModel extends Base
 {
-    const TABLE_notes           = 'boardnotes';
-    const TABLE_notes_custom    = 'boardnotes_cus';
-    const TABLE_projects        = ProjectModel::TABLE;
-    const TABLE_columns         = ColumnModel::TABLE;
-    const TABLE_swimlanes       = SwimlaneModel::TABLE;
-    const TABLE_categories      = CategoryModel::TABLE;
-    const TABLE_access          = ProjectUserRoleModel::TABLE;
+    private const TABLE_NOTES           = 'boardnotes';
+    private const TABLE_NOTES_CUSTOM    = 'boardnotes_cus';
+    private const TABLE_PROJECTS        = ProjectModel::TABLE;
+    private const TABLE_COLUMNS         = ColumnModel::TABLE;
+    private const TABLE_SWIMLANES       = SwimlaneModel::TABLE;
+    private const TABLE_CATEGORIES      = CategoryModel::TABLE;
+    private const TABLE_ACCESS          = ProjectUserRoleModel::TABLE;
 
     // Check unique note
     private function boardNotesIsUniqueNote($project_id, $user_id, $note_id)
     {
-        $result = $this->db->table(self::TABLE_notes);
+        $result = $this->db->table(self::TABLE_NOTES);
         $result = $result->eq('id', $note_id);
         $result = $result->eq('user_id', $user_id);
         $result = $result->eq('project_id', $project_id);
         $result = $result->gte('is_active', "0"); // -1 == deleted
         $result = $result->findAll();
 
-        if (!$result) return false;
-        if (count($result) != 1) return false;
+        if (!$result) {
+            return false;
+        }
+        if (count($result) != 1) {
+            return false;
+        }
         return true;
     }
 
     // Show all notes related to project
     public function boardNotesShowProject($project_id, $user_id, $doSortByState)
     {
-        $result = $this->db->table(self::TABLE_notes);
+        $result = $this->db->table(self::TABLE_NOTES);
         $result = $result->eq('user_id', $user_id);
-        if ($project_id > 0)
-        {
+        if ($project_id > 0) {
             $result = $result->eq('project_id', $project_id);
         }
         $result = $result->desc('project_id');
         $result = $result->gte('is_active', "0"); // -1 == deleted
-        if ($doSortByState)
-        {
+        if ($doSortByState) {
             $result = $result->desc('is_active');
         }
         $result = $result->desc('position');
@@ -60,15 +62,16 @@ class BoardNotesModel extends Base
     public function boardNotesShowAll($projectsAccess, $user_id, $doSortByState)
     {
         $projectsAccessList = array();
-        foreach ($projectsAccess as $u) $projectsAccessList[] = $u['project_id'];
+        foreach ($projectsAccess as $u) {
+            $projectsAccessList[] = $u['project_id'];
+        }
 
-        $result = $this->db->table(self::TABLE_notes);
+        $result = $this->db->table(self::TABLE_NOTES);
         $result = $result->eq('user_id', $user_id);
         $result = $result->in('project_id', $projectsAccessList);
         $result = $result->desc('project_id');
         $result = $result->gte('is_active', "0"); // -1 == deleted
-        if ($doSortByState)
-        {
+        if ($doSortByState) {
             $result = $result->desc('is_active');
         }
         $result = $result->desc('position');
@@ -80,15 +83,14 @@ class BoardNotesModel extends Base
     // Show report
     public function boardNotesReport($project_id, $user_id, $doSortByState, $category)
     {
-        $result = $this->db->table(self::TABLE_notes);
+        $result = $this->db->table(self::TABLE_NOTES);
         $result = $result->eq('user_id', $user_id);
         $result = $result->eq('project_id', $project_id);
         if (!empty($category)) {
             $result = $result->eq('category', $category);
         }
         $result = $result->gte('is_active', "0"); // -1 == deleted
-        if ($doSortByState)
-        {
+        if ($doSortByState) {
             $result = $result->desc('is_active');
         }
         $result = $result->desc('position');
@@ -100,7 +102,7 @@ class BoardNotesModel extends Base
     // Get project data by project_id
     public function boardNotesGetProjectById($project_id)
     {
-        return $this->db->table(self::TABLE_projects)
+        return $this->db->table(self::TABLE_PROJECTS)
             ->eq('id', $project_id)
             ->findOne();
     }
@@ -108,23 +110,27 @@ class BoardNotesModel extends Base
     // Get all project_id where user has assigned access
     public function boardNotesGetProjectIds($user_id)
     {
-        $projectIds = $this->db->table(self::TABLE_access)
-            ->columns(self::TABLE_access.'.project_id', 'alias_projects_table.name AS project_name')
+        $projectIds = $this->db->table(self::TABLE_ACCESS)
+            ->columns(self::TABLE_ACCESS . '.project_id', 'alias_projects_table.name AS project_name')
             ->eq('user_id', $user_id)
-            ->left(self::TABLE_projects, 'alias_projects_table', 'id', self::TABLE_access, 'project_id')
+            ->left(self::TABLE_PROJECTS, 'alias_projects_table', 'id', self::TABLE_ACCESS, 'project_id')
             ->asc('project_name')
             ->findAll();
-        foreach($projectIds as &$projectId){ $projectId['is_custom'] = false; }
+        foreach ($projectIds as &$projectId) {
+            $projectId['is_custom'] = false;
+        }
         return $projectIds;
     }
 
     // Get all project_id where user has custom access
     public function boardNotesGetCustomProjectIds()
     {
-        $projectIds = $this->db->table(self::TABLE_notes_custom)
+        $projectIds = $this->db->table(self::TABLE_NOTES_CUSTOM)
             ->columns('project_id', 'project_name')
             ->findAll();
-        foreach($projectIds as &$projectId){ $projectId['is_custom'] = true; }
+        foreach ($projectIds as &$projectId) {
+            $projectId['is_custom'] = true;
+        }
         return $projectIds;
     }
 
@@ -140,7 +146,7 @@ class BoardNotesModel extends Base
     // Get a list of all categories in project
     public function boardNotesGetCategories($project_id)
     {
-        return $this->db->table(self::TABLE_categories)
+        return $this->db->table(self::TABLE_CATEGORIES)
             ->columns('id', 'name', 'project_id', 'color_id')
             ->eq('project_id', $project_id)
             ->asc('name')
@@ -150,7 +156,7 @@ class BoardNotesModel extends Base
     // Get a list of ALL categories
     public function boardNotesGetAllCategories()
     {
-        return $this->db->table(self::TABLE_categories)
+        return $this->db->table(self::TABLE_CATEGORIES)
             ->columns('id', 'name', 'project_id', 'color_id')
             ->asc('name')
             ->findAll();
@@ -159,7 +165,7 @@ class BoardNotesModel extends Base
     // Get a list of all columns in project
     public function boardNotesGetColumns($project_id)
     {
-        return $this->db->table(self::TABLE_columns)
+        return $this->db->table(self::TABLE_COLUMNS)
             ->columns('id', 'title')
             ->eq('project_id', $project_id)
             ->asc('position')
@@ -169,7 +175,7 @@ class BoardNotesModel extends Base
     // Get a list of all swimlanes in project
     public function boardNotesGetSwimlanes($project_id)
     {
-        $swimlanes = $this->db->table(self::TABLE_swimlanes)
+        $swimlanes = $this->db->table(self::TABLE_SWIMLANES)
             ->columns('id', 'name')
             ->eq('project_id', $project_id)
             ->asc('position')
@@ -181,11 +187,10 @@ class BoardNotesModel extends Base
     // Get last modified timestamp
     public function boardNotesGetLastModifiedTimestamp($project_id, $user_id)
     {
-        $result = $this->db->table(self::TABLE_notes);
+        $result = $this->db->table(self::TABLE_NOTES);
         $result = $result->columns('date_modified');
         $result = $result->eq('user_id', $user_id);
-        if ($project_id > 0)
-        {
+        if ($project_id > 0) {
             $result = $result->eq('project_id', $project_id);
         }
         // including 'is_active' == -1 i.e. lately deleted notes
@@ -210,7 +215,7 @@ class BoardNotesModel extends Base
         );
 
         // mark note as deleted
-        $deleted = $this->db->table(self::TABLE_notes)
+        $deleted = $this->db->table(self::TABLE_NOTES)
             ->eq('id', $note_id)
             ->eq('project_id', $project_id)
             ->eq('user_id', $user_id)
@@ -234,7 +239,7 @@ class BoardNotesModel extends Base
         );
 
         // mark done notes as deleted
-        $deleted = $this->db->table(self::TABLE_notes)
+        $deleted = $this->db->table(self::TABLE_NOTES)
             ->eq('project_id', $project_id)
             ->eq('user_id', $user_id)
             ->eq('is_active', "0")
@@ -246,7 +251,7 @@ class BoardNotesModel extends Base
     // Actually PURGE the notes marked as deleted
     private function boardNotesPurgeNotes($project_id, $user_id)
     {
-        return $this->db->table(self::TABLE_notes)
+        return $this->db->table(self::TABLE_NOTES)
             ->eq('project_id', $project_id)
             ->eq('user_id', $user_id)
             ->eq('is_active', "-1") // previously marked as deleted
@@ -257,7 +262,7 @@ class BoardNotesModel extends Base
     public function boardNotesAddNote($project_id, $user_id, $is_active, $title, $description, $category)
     {
         // Get last position number
-        $lastPosition = $this->db->table(self::TABLE_notes)
+        $lastPosition = $this->db->table(self::TABLE_NOTES)
             ->eq('project_id', $project_id)
             ->gte('is_active', "0") // -1 == deleted
             ->desc('position')
@@ -286,7 +291,7 @@ class BoardNotesModel extends Base
             'category' => $category,
         );
 
-        return $this->db->table(self::TABLE_notes)
+        return $this->db->table(self::TABLE_NOTES)
             ->insert($values);
     }
 
@@ -301,7 +306,7 @@ class BoardNotesModel extends Base
             'date_modified' => $timestamp,
         );
 
-        return $this->db->table(self::TABLE_notes)
+        return $this->db->table(self::TABLE_NOTES)
             ->eq('id', $note_id)
             ->eq('project_id', $project_id)
             ->eq('user_id', $user_id)
@@ -312,7 +317,9 @@ class BoardNotesModel extends Base
     public function boardNotesUpdateNote($project_id, $user_id, $note_id, $is_active, $title, $description, $category)
     {
         $is_unique = $this->boardNotesIsUniqueNote($project_id, $user_id, $note_id);
-        if (!$is_unique) return false;
+        if (!$is_unique) {
+            return false;
+        }
 
         // Get current unixtime
         $timestamp = time();
@@ -325,7 +332,7 @@ class BoardNotesModel extends Base
             'date_modified' => $timestamp,
         );
 
-        return $this->db->table(self::TABLE_notes)
+        return $this->db->table(self::TABLE_NOTES)
             ->eq('id', $note_id)
             ->eq('project_id', $project_id)
             ->eq('user_id', $user_id)
@@ -353,7 +360,7 @@ class BoardNotesModel extends Base
                 'date_modified' => $timestamp,
             );
 
-            $this->db->table(self::TABLE_notes)
+            $this->db->table(self::TABLE_NOTES)
                 ->eq('project_id', $project_id)
                 ->eq('user_id', $user_id)
                 ->eq('id', $row)
@@ -366,9 +373,8 @@ class BoardNotesModel extends Base
     // Get Stats for Notes
     public function boardNotesStats($project_id, $user_id)
     {
-        $statsData = $this->db->table(self::TABLE_notes);
-        if ($project_id > 0)
-        {
+        $statsData = $this->db->table(self::TABLE_NOTES);
+        if ($project_id > 0) {
             $statsData = $statsData->eq('project_id', $project_id);
         }
         $statsData = $statsData->eq('user_id', $user_id);
@@ -381,16 +387,16 @@ class BoardNotesModel extends Base
         $statTotal = 0;
 
         foreach ($statsData as $qq) {
-          if ($qq['is_active'] == "0") {
-            $statDone++;
-          }
-          if ($qq['is_active'] == "1") {
-            $statOpen++;
-          }
-          if ($qq['is_active'] == "2") {
-            $statProgress++;
-          }
-          $statTotal++;
+            if ($qq['is_active'] == "0") {
+                $statDone++;
+            }
+            if ($qq['is_active'] == "1") {
+                $statOpen++;
+            }
+            if ($qq['is_active'] == "2") {
+                $statProgress++;
+            }
+            $statTotal++;
         }
 
         return array(

@@ -11,7 +11,7 @@ _BoardNotes_Stats_.prepareDocument = function() {
             type: "donut"
         },
         color: {
-            pattern: ['#cd650a', '#2ca02c', '#1f77b4']
+            pattern: ['#CD650A', '#2CA02C', '#1F77B4']
         }
     });
 }

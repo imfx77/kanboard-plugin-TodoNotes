@@ -10,6 +10,16 @@ _BoardNotes_Project_.adjustAllNotesPlaceholders = function() {
 }
 
 _BoardNotes_Project_.prepareDocument = function() {
+    // handle notes reordering
+    function updateNotesOrder() {
+        var order = $(this).sortable('toArray');
+        order = order.join(",");
+        var regex = new RegExp('item-', 'g');
+        order = order.replace(regex, '');
+        var order = order.split(',');
+        _BoardNotes_.sqlUpdatePosition(project_id, user_id, order, nrNotes);
+    }
+
     _BoardNotes_.optionShowCategoryColors = ($('#session_vars').attr('data-optionShowCategoryColors') == 'true') ? true : false;
     _BoardNotes_.optionSortByState = ($('#session_vars').attr('data-optionSortByState') == 'true') ? true : false;
 
@@ -21,16 +31,6 @@ _BoardNotes_Project_.prepareDocument = function() {
     // notes reordering is disabled in Overview Mode (ALL projects tab)
     // ot when explicitly sorted by state
     if (!_BoardNotes_.optionSortByState) {
-        // handle notes reordering
-        function updateNotesOrder(event, ui) {
-            var order = $(this).sortable('toArray');
-            order = order.join(",");
-            var regex = new RegExp('item-', 'g');
-            order = order.replace(regex, '');
-            var order = order.split(',');
-            _BoardNotes_.sqlUpdatePosition(project_id, user_id, order, nrNotes);
-        }
-
         if (isMobile){
           // show explicit reorder handles for mobile
           $( '.sortableHandle').removeClass( "hideMe" );

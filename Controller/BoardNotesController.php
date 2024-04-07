@@ -11,18 +11,18 @@ class BoardNotesController extends BaseController
         $user_id = ''; // init empty string
         $use_cached = $this->request->getStringParam('use_cached');
 
-        if (!empty($use_cached) && isset($_SESSION['cached_user_id'])) // use cached
-        {
+        // use cached
+        if (!empty($use_cached) && isset($_SESSION['cached_user_id'])) {
             $user_id = $_SESSION['cached_user_id'];
         }
 
-        if (empty($user_id)) // try get param from URL
-        {
+        // try get param from URL
+        if (empty($user_id)) {
             $user_id = $this->request->getStringParam('user_id');
         }
 
-        if (empty($user_id)) // as last resort get the current user
-        {
+        // as last resort get the current user
+        if (empty($user_id)) {
             $user_id = $this->getUser()['id'];
         }
 
@@ -34,31 +34,25 @@ class BoardNotesController extends BaseController
     private function resolveProject($user_id)
     {
         $project_id = $this->request->getIntegerParam('project_cus_id');
-        if (empty($project_id))
-        {
+        if (empty($project_id)) {
             $project_id = $this->request->getIntegerParam('project_id');
         }
         $projectsAccess = $this->boardNotesModel->boardNotesGetAllProjectIds($user_id);
 
         // search requested project VS access
-        foreach($projectsAccess as $projectAccess)
-        {
+        foreach ($projectsAccess as $projectAccess) {
             if ($projectAccess['project_id'] == $project_id) break;
         }
 
         // if we didn't find the requested project, switch by default to the first one (i.e. General custom)
-        if ($projectAccess['project_id'] != $project_id)
-        {
+        if ($projectAccess['project_id'] != $project_id) {
             $projectAccess = $projectsAccess[0];
         }
 
-        if ($projectAccess['is_custom'])
-        {
+        if ($projectAccess['is_custom']) {
             // assemble a fake custom project
             return array("id" => $project_id, "name" => $projectAccess['project_name'], "is_custom" => true);
-        }
-        else
-        {
+        } else {
             // get all the data of existing project and mark it as NOT custom
             $project = $this->boardNotesModel->boardNotesGetProjectById($project_id);
             $project['is_custom'] = false;
@@ -71,12 +65,9 @@ class BoardNotesController extends BaseController
         $user = $this->getUser();
         $user_id = $this->resolveUserId();
 
-        if ($is_refresh)
-        {
+        if ($is_refresh) {
             $project = $this->resolveProject($user_id);
-        }
-        else
-        {
+        } else {
             $project = $this->getProject();
             $project['is_custom'] = false;
         }
@@ -84,18 +75,17 @@ class BoardNotesController extends BaseController
 
         $projectsAccess = $this->boardNotesModel->boardNotesGetAllProjectIds($user_id);
 
-    	if ($project['is_custom'])
-    	{
+        if ($project['is_custom']) {
             $categories = $this->boardNotesModel->boardNotesGetAllCategories();
-    	}
-    	else
-    	{
+        } else {
             $categories = $this->boardNotesModel->boardNotesGetCategories($project_id);
-    	}
+        }
         $columns = $this->boardNotesModel->boardNotesGetColumns($project_id);
-    	$swimlanes = $this->boardNotesModel->boardNotesGetSwimlanes($project_id);
+        $swimlanes = $this->boardNotesModel->boardNotesGetSwimlanes($project_id);
 
-        if (!array_key_exists('boardnotesSortByState', $_SESSION)) $_SESSION['boardnotesSortByState'] = false;
+        if (!array_key_exists('boardnotesSortByState', $_SESSION)) {
+            $_SESSION['boardnotesSortByState'] = false;
+        }
         $doSortByState = $_SESSION['boardnotesSortByState'];
         $data = $this->boardNotesModel->boardNotesShowProject($project_id, $user_id, $doSortByState);
 
@@ -160,21 +150,20 @@ class BoardNotesController extends BaseController
 
         $projectsAccess = $this->boardNotesModel->boardNotesGetAllProjectIds($user_id);
 
-    	if ($tab_id > 0 && !$projectsAccess[$tab_id - 1]['is_custom'])
-    	{
-    	    $project_id = $projectsAccess[$tab_id - 1]['project_id'];
+        if ($tab_id > 0 && !$projectsAccess[$tab_id - 1]['is_custom']) {
+            $project_id = $projectsAccess[$tab_id - 1]['project_id'];
             $categories = $this->boardNotesModel->boardNotesGetCategories($project_id);
             $columns  = $this->boardNotesModel->boardNotesGetColumns($project_id);
             $swimlanes  = $this->boardNotesModel->boardNotesGetSwimlanes($project_id);
-    	}
-    	else
-    	{
+        } else {
             $categories = $this->boardNotesModel->boardNotesGetAllCategories();
-        	$columns  = array();
-        	$swimlanes  = array();
-    	}
+            $columns  = array();
+            $swimlanes  = array();
+        }
 
-        if (!array_key_exists('boardnotesSortByState', $_SESSION)) $_SESSION['boardnotesSortByState'] = false;
+        if (!array_key_exists('boardnotesSortByState', $_SESSION)) {
+            $_SESSION['boardnotesSortByState'] = false;
+        }
         $doSortByState = $_SESSION['boardnotesSortByState'];
         $data = $this->boardNotesModel->boardNotesShowAll($projectsAccess, $user_id, $doSortByState);
 
@@ -195,12 +184,13 @@ class BoardNotesController extends BaseController
     public function boardNotesToggleSessionOption()
     {
         $session_option = $this->request->getStringParam('session_option');
-        if (empty($session_option)) return false;
+        if (empty($session_option)) {
+            return false;
+        }
 
         // toggle options are expected to be boolean i.e. to only have values of 'true' of 'false'
-        if (   !array_key_exists($session_option, $_SESSION)    // key not exist
-            || !is_bool($_SESSION[$session_option]) )           // value not bool
-        {
+        if ( !array_key_exists($session_option, $_SESSION) ||   // key not exist
+             !is_bool($_SESSION[$session_option]) ) {           // value not bool
             // set initial value
             $_SESSION[$session_option] = false;
             return true;
@@ -213,7 +203,7 @@ class BoardNotesController extends BaseController
 
     public function boardNotesGetLastModifiedTimestamp()
     {
-    	$user_id = $this->resolveUserId();
+        $user_id = $this->resolveUserId();
         $project = $this->resolveProject($user_id);
         $project_id = $project['id'];
 
@@ -227,7 +217,7 @@ class BoardNotesController extends BaseController
 
     public function boardNotesDeleteNote()
     {
-    	$user_id = $this->resolveUserId();
+        $user_id = $this->resolveUserId();
         $project = $this->resolveProject($user_id);
         $project_id = $project['id'];
 
@@ -239,7 +229,7 @@ class BoardNotesController extends BaseController
 
     public function boardNotesDeleteAllDoneNotes()
     {
-    	$user_id = $this->resolveUserId();
+        $user_id = $this->resolveUserId();
         $project = $this->resolveProject($user_id);
         $project_id = $project['id'];
 
@@ -249,27 +239,27 @@ class BoardNotesController extends BaseController
 
     public function boardNotesAddNote()
     {
-    	$user_id = $this->resolveUserId();
+        $user_id = $this->resolveUserId();
         $project = $this->resolveProject($user_id);
         $project_id = $project['id'];
 
-    	$is_active = $this->request->getStringParam('is_active'); // Not needed when new is added
-    	$title = $this->request->getStringParam('title');
-    	$description = $this->request->getStringParam('description');
-    	$category = $this->request->getStringParam('category');
+        $is_active = $this->request->getStringParam('is_active'); // Not needed when new is added
+        $title = $this->request->getStringParam('title');
+        $description = $this->request->getStringParam('description');
+        $category = $this->request->getStringParam('category');
 
-    	$validation = $this->boardNotesModel->boardNotesAddNote($project_id, $user_id, $is_active, $title, $description, $category);
+        $validation = $this->boardNotesModel->boardNotesAddNote($project_id, $user_id, $is_active, $title, $description, $category);
         return $validation;
     }
 
     public function boardNotesTransferNote()
     {
-    	$user_id = $this->resolveUserId();
+        $user_id = $this->resolveUserId();
         $project = $this->resolveProject($user_id);
         $project_id = $project['id'];
 
-    	$note_id = $this->request->getStringParam('note_id');
-    	$target_project_id = $this->request->getStringParam('target_project_id');
+        $note_id = $this->request->getStringParam('note_id');
+        $target_project_id = $this->request->getStringParam('target_project_id');
 
         $validation = $this->boardNotesModel->boardNotesTransferNote($project_id, $user_id, $note_id, $target_project_id);
         return $validation;
@@ -277,16 +267,16 @@ class BoardNotesController extends BaseController
 
     public function boardNotesUpdateNote()
     {
-    	$user_id = $this->resolveUserId();
+        $user_id = $this->resolveUserId();
         $project = $this->resolveProject($user_id);
         $project_id = $project['id'];
 
-    	$note_id = $this->request->getStringParam('note_id');
+        $note_id = $this->request->getStringParam('note_id');
 
-    	$is_active = $this->request->getStringParam('is_active');
-    	$title = $this->request->getStringParam('title');
-    	$description = $this->request->getStringParam('description');
-    	$category = $this->request->getStringParam('category');
+        $is_active = $this->request->getStringParam('is_active');
+        $title = $this->request->getStringParam('title');
+        $description = $this->request->getStringParam('description');
+        $category = $this->request->getStringParam('category');
 
         $validation = $this->boardNotesModel->boardNotesUpdateNote($project_id, $user_id, $note_id, $is_active, $title, $description, $category);
         print $validation ? time() : 0;
@@ -296,7 +286,7 @@ class BoardNotesController extends BaseController
 
     public function boardNotesStats()
     {
-    	$user_id = $this->resolveUserId();
+        $user_id = $this->resolveUserId();
         $project = $this->resolveProject($user_id);
         $project_id = $project['id'];
 
@@ -310,7 +300,7 @@ class BoardNotesController extends BaseController
 
     public function boardNotesToTask()
     {
-    	$user_id = $this->resolveUserId();
+        $user_id = $this->resolveUserId();
         $project = $this->resolveProject($user_id);
         $project_id = $project['id'];
 
@@ -331,7 +321,7 @@ class BoardNotesController extends BaseController
             'swimlane_id' => $swimlane_id,
         ));
 
-    	return $this->response->html($this->helper->layout->app('BoardNotes:project/post', array(
+        return $this->response->html($this->helper->layout->app('BoardNotes:project/post', array(
             //'title' => t('Post'),
             'task_id' => $task_id,
             'project_name' => $this->projectModel->getById($project_id)["name"],
@@ -346,7 +336,7 @@ class BoardNotesController extends BaseController
 
     public function boardNotesUpdatePosition()
     {
-    	$user_id = $this->resolveUserId();
+        $user_id = $this->resolveUserId();
         $project = $this->resolveProject($user_id);
         $project_id = $project['id'];
 
@@ -363,7 +353,9 @@ class BoardNotesController extends BaseController
         $project = $this->resolveProject($user_id);
         $project_id = $project['id'];
 
-        if (!array_key_exists('boardnotesSortByState', $_SESSION)) $_SESSION['boardnotesSortByState'] = false;
+        if (!array_key_exists('boardnotesSortByState', $_SESSION)) {
+            $_SESSION['boardnotesSortByState'] = false;
+        }
         $doSortByState = $_SESSION['boardnotesSortByState'];
         $category = $this->request->getStringParam('category');
         $data = $this->boardNotesModel->boardNotesReport($project_id, $user_id, $doSortByState, $category);
