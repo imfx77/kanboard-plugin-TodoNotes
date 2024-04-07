@@ -282,8 +282,8 @@ foreach ($data as $u) {
             $projectsTabsById[ $last_project_id ]['name'],
             'BoardNotesController',
             'boardNotesShowAll',
-            array('plugin' => 'BoardNotes', 'user_id' => $user_id, 'tab_id' => $projectsTabsById[ $last_project_id ]['tab_id']
-        ));
+            array('plugin' => 'BoardNotes', 'user_id' => $user_id, 'tab_id' => $projectsTabsById[ $last_project_id ]['tab_id']),
+        );
         print '</h2>';
 
         print '<ul id="sortableRef';
@@ -293,7 +293,7 @@ foreach ($data as $u) {
 
     print '<li id="item';
     print '-';
-    print $u['id']; 
+    print $u['id'];
     print '" class="ui-state-default liNote';
     if (!empty($u['category']) && array_key_exists($u['category'], $mapCategoryColorByName)) {
         $category_color = $mapCategoryColorByName[ $u['category'] ];
@@ -452,7 +452,9 @@ foreach ($data as $u) {
 
     // Note title input - typing. Changes after submit to label below.
     print '<input ';
-    if ($readonlyNotes) print 'disabled ';
+    if ($readonlyNotes) {
+        print 'disabled ';
+    }
     print 'title="' . t('BoardNotes_PROJECT_NOTE_TITLE_SAVE_HINT') . '" id="noteTitleInputP';
     print $u['project_id'];
     print '-';
@@ -471,7 +473,9 @@ foreach ($data as $u) {
 
     // Note title label - visual. Changes on click to input
     print '<label ';
-    if ($readonlyNotes) print 'data-disabled="true" ';
+    if ($readonlyNotes) {
+        print 'data-disabled="true" ';
+    }
     print 'title="' . t('BoardNotes_PROJECT_NOTE_EDIT_HINT') . '" id="noteTitleLabelP';
     print $u['project_id'];
     print '-';
@@ -559,7 +563,7 @@ foreach ($data as $u) {
 
     if ($readonlyNotes) {
         // just preserve the existing category data from the note
-        print '<option selected="selected">'.$u['category'].'</option>';
+        print '<option selected="selected">' . $u['category'] . '</option>';
     } else {
         $emptyCatList = empty($listCategoriesById);
         $emptyCat = empty($u['category']);
@@ -571,9 +575,9 @@ foreach ($data as $u) {
             print '<option></option>'; // add an empty category option
             foreach ($categories as $cat) { // detect the selected category
                 if ($cat['name'] == $u['category']) {
-                    print '<option value="'.$cat['id'].'" selected="selected">';
+                    print '<option value="' . $cat['id'] . '" selected="selected">';
                 } else {
-                    print '<option value="'.$cat['id'].'">';
+                    print '<option value="' . $cat['id'] . '">';
                 }
                 print $cat['name'];
                 print '</option>';
@@ -650,7 +654,6 @@ if (!$is_refresh) { // print only once per project !!!
 //----------------------------------------
 
 if (!$is_refresh) { // print only once per project !!!
-
     print '<div class="hideMe" id="dialogDeleteAllDone" title="' . t('BoardNotes_PROJECT_DELETE_ALL_DONE_NOTES') . '">';
     print '<p style="white-space: pre-wrap;">';
     print t('BoardNotes_DELETEALLDONE_DIALOG_MSG');
@@ -756,7 +759,5 @@ if (!$is_refresh) { // print only once per project !!!
 
     print '</section>';
     print '</div>';
-
 } // if (!$is_refresh)
 
-?>

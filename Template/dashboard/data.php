@@ -51,13 +51,15 @@
 <div id="content" class="sidebar-content">
 
 <?php
-    $project = array('id' => 0, 'name' => t('BoardNotes_DASHBOARD_ALL_TAB'));
-    if ($tab_id > 0) {
-        $projectAccess = $projectsAccess[$tab_id - 1];
-        $project = array('id' => $projectAccess['project_id'],
-                         'name' => $projectAccess['project_name'],
-                         'is_custom' => $projectAccess['is_custom']);
-    }
+
+$project = array('id' => 0, 'name' => t('BoardNotes_DASHBOARD_ALL_TAB'));
+if ($tab_id > 0) {
+    $projectAccess = $projectsAccess[$tab_id - 1];
+    $project = array('id' => $projectAccess['project_id'],
+                     'name' => $projectAccess['project_name'],
+                     'is_custom' => $projectAccess['is_custom']);
+}
+
 ?>
 
 <?= $this->render('BoardNotes:project/data', array(
@@ -79,6 +81,7 @@
 </section>
 
 <?php
-    // tab_id (hidden, for reference) -->
-    print '<div id="tab_id" class="hideMe" data="' . $tab_id . '">';
-?>
+
+// tab_id (hidden, for reference) -->
+print '<div id="tab_id" class="hideMe" data="' . $tab_id . '">';
+

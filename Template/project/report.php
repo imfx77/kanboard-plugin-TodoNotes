@@ -4,18 +4,19 @@ print $this->asset->css('plugins/BoardNotes/Assets/css/style.css');
 print $this->asset->js('plugins/BoardNotes/Assets/js/boardnotes.js');
 print $this->asset->js('plugins/BoardNotes/Assets/js/load_report.js');
 
-    // evaluate optionShowCategoryColors option from session
-    if (!array_key_exists('boardnotesShowCategoryColors', $_SESSION)) {
-        $_SESSION['boardnotesShowCategoryColors'] = false;
-    }
-    $optionShowCategoryColors = $_SESSION['boardnotesShowCategoryColors'];
+// evaluate optionShowCategoryColors option from session
+if (!array_key_exists('boardnotesShowCategoryColors', $_SESSION)) {
+    $_SESSION['boardnotesShowCategoryColors'] = false;
+}
+$optionShowCategoryColors = $_SESSION['boardnotesShowCategoryColors'];
 
-    // session_vars (hidden reference for options)
-    print '<div id="session_vars';
-    print '" data-optionShowCategoryColors="';
-    print $optionShowCategoryColors ? 'true' : 'false';
-    print '" class="hideMe">';
-    print '</div>';
+// session_vars (hidden reference for options)
+print '<div id="session_vars';
+print '" data-optionShowCategoryColors="';
+print $optionShowCategoryColors ? 'true' : 'false';
+print '" class="hideMe">';
+print '</div>';
+
 ?>
 
 <table class="tableReport">
@@ -27,7 +28,9 @@ print $this->asset->js('plugins/BoardNotes/Assets/js/load_report.js');
 </tr>
 </thead>
 <tbody>
+
 <?php
+
 $num = "1";
 
 foreach ($data as $u) {
@@ -135,6 +138,8 @@ foreach ($data as $u) {
     // #
     $num++;
 }
+
 ?>
+
 </tbody>
 </table>
