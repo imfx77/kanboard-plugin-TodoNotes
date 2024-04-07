@@ -7,14 +7,15 @@ table {
 <?php
 
 if ($task_id > 0) {
-    print '<strong>Success!</strong>';
+    print '<strong>' . t('BoardNotes_POST_DIALOG_SUCCESS_TITLE') . '</strong>';
     print '<br>';
-    print 'Created task <a target="_blank" title="' . t('Opens in a new window') . ' ⇗" href="task/' . $task_id . '">';
+    print t('BoardNotes_POST_DIALOG_SUCCESS_TEXT');
+    print '<a target="_blank" title="' . t('Opens in a new window') . ' ⇗" href="/task/' . $task_id . '">';
     print '<strong> #' . $task_id . ' </strong><i class="fa fa-external-link" aria-hidden="true"></i></a> as:';
 } else {
-    print '<strong>Ooops, something went wrong ;/</strong>';
+    print '<strong>' . t('BoardNotes_POST_DIALOG_FAILURE_TITLE') . '</strong>';
     print '<br>';
-    print 'The task could not be created for:';
+    print t('BoardNotes_POST_DIALOG_FAILURE_TEXT');
 }
 
     print '<br>';

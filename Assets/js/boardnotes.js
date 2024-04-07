@@ -376,7 +376,7 @@ _BoardNotes_.NoteActionHandlers = function() {
         var project_id = $(this).attr('data-project');
         var user_id = $(this).attr('data-user');
         var note_id = $(this).attr('data-note');
-        var title = $('#noteTitleLabelP' + project_id + "-" + id).val().trim();
+        var title = $('#noteTitleLabelP' + project_id + "-" + id).html();
         var description = $('#noteTextareaDescriptionP' + project_id + "-" + id).val();
         var category_id = $('#catP' + project_id + "-" + id + ' option:selected').val();
         var is_active = $('#noteDoneCheckmarkP' + project_id + "-" + id).attr('data-id');
@@ -594,10 +594,13 @@ _BoardNotes_.modalNoteToTask = function(project_id, user_id, note_id, is_active,
                                 + '&swimlane_id=' + swimlaneToTask;
 
                     $("#dialogToTaskP" + project_id).dialog({
-                        title: 'Result ...',
-                        buttons: {
-                            Close: function() { $( this ).dialog( "close" ); }
-                        }
+                        title: _BoardNotes_.getTranslationExportToJS('BoardNotes_JS_DIALOG_RESULT_TITLE'),
+                        buttons: [
+                            {
+                                text : _BoardNotes_.getTranslationExportToJS('BoardNotes_JS_DIALOG_CLOSE_BTN'),
+                                click: function() { $( this ).dialog( "close" ); }
+                            },
+                        ]
                     });
                     $('#dialogToTaskParams').addClass( 'hideMe' );
                     $('#deadloading').removeClass( 'hideMe' );

@@ -11,6 +11,7 @@
         'BoardNotes_JS_DIALOG_MOVE_BTN',
         'BoardNotes_JS_DIALOG_CREATE_BTN',
         'BoardNotes_JS_DIALOG_DELETE_BTN',
+        'BoardNotes_JS_DIALOG_RESULT_TITLE',
     );
 ?>
 

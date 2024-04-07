@@ -15,6 +15,13 @@ return array(
     'BoardNotes_DASHBOARD_MY_NOTES' => 'My notes',
     'BoardNotes_DASHBOARD_ALL_TAB' => 'All',
     //
+    // Template dialogs
+    //
+    'BoardNotes_POST_DIALOG_SUCCESS_TITLE' => 'Success!',
+    'BoardNotes_POST_DIALOG_FAILURE_TITLE' => 'Ooops, something went wrong ;/',
+    'BoardNotes_POST_DIALOG_SUCCESS_TEXT' => 'Created task',
+    'BoardNotes_POST_DIALOG_FAILURE_TEXT' => 'The task could not be created for:',
+    //
     // Specific EXPORTS FOR JS
     //
     'BoardNotes_JS_LOADING_MSG' => 'Loading ...',
@@ -25,4 +32,5 @@ return array(
     'BoardNotes_JS_DIALOG_MOVE_BTN' => '⚠ Move',
     'BoardNotes_JS_DIALOG_CREATE_BTN' => 'Create',
     'BoardNotes_JS_DIALOG_DELETE_BTN' => '⚠ Delete',
+    'BoardNotes_JS_DIALOG_RESULT_TITLE' => 'Result ...',
 );
