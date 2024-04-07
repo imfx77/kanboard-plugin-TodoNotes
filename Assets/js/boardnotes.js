@@ -739,7 +739,7 @@ _BoardNotes_.sqlUpdateNote = function(project_id, user_id, id){
     var is_active = $('#noteDoneCheckmarkP' + project_id + "-" + id).attr('data-id');
 
     if (!title){
-        alert( _BoardNotes_.getTranslationExportToJS('BoardNotes_JS_NOTE_TITLE_EMPTY_MSG') );
+        alert( _BoardNotes_.getTranslationExportToJS('BoardNotes_JS_NOTE_UPDATE_TITLE_EMPTY_MSG') );
         title = $("#noteTitleLabelP" + project_id + "-" + id).html();
         $('#noteTitleInputP' + project_id + "-" + id).val(title);
     }
@@ -783,7 +783,7 @@ _BoardNotes_.sqlAddNote = function(project_id, user_id){
     var is_active = "1";
 
     if (!title){
-        alert('Note title is empty !');
+        alert( _BoardNotes_.getTranslationExportToJS('BoardNotes_JS_NOTE_ADD_TITLE_EMPTY_MSG') );
         return false;
     }
 

@@ -22,7 +22,8 @@ return array(
     // Specific EXPORTS FOR JS
     //
     'BoardNotes_JS_LOADING_MSG' => 'Loading ...',
-    'BoardNotes_JS_NOTE_TITLE_EMPTY_MSG' => '⚠\nNote title is empty !\nKeeping the current one !',
+    'BoardNotes_JS_NOTE_ADD_TITLE_EMPTY_MSG' => '⚠\nNote title is empty !\nSkipping note addition !',
+    'BoardNotes_JS_NOTE_UPDATE_TITLE_EMPTY_MSG' => '⚠\nNote title is empty !\nKeeping the current one !',
     'BoardNotes_JS_NOTE_UPDATE_INVALID_MSG' => '⚠\nThe note you are trying to update is INVALID !\nThe page will forcefully refresh now !',
     'BoardNotes_JS_DIALOG_CANCEL_BTN' => 'Cancel',
     'BoardNotes_JS_DIALOG_CLOSE_BTN' => 'Close',
