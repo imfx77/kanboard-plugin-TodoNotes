@@ -20,8 +20,8 @@ print $this->asset->js('plugins/BoardNotes/Assets/js/load_report.js');
 <thead class="theadReport">
 <tr>
 <th class="thReport thReportNr">#</th>
-<th class="thReport">Info</th>
-<th class="thReport thReportStatus">Status</th>
+<th class="thReport"><?= t('Information') ?></th>
+<th class="thReport thReportStatus"><?= t('Status') ?></th>
 </tr>
 </thead>
 <tbody>
