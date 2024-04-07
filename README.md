@@ -1,57 +1,68 @@
+<h1 name="user-content-readme-top" align="center">BoardNotes plugin for Kanboard</h1>
+
+<p align="center">
+    <a href="https://github.com/imfx77/kanboard-plugin-BoardNotes/releases">
+        <img src="https://img.shields.io/github/v/release/imfx77/kanboard-plugin-BoardNotes?style=for-the-badge&color=brightgreen" alt="GitHub Latest Release (by date)" title="GitHub Latest Release (by date)">
+    </a>
+    <a href="https://github.com/imfx77/kanboard-plugin-BoardNotes/blob/master/LICENSE" title="Read License">
+        <img src="https://img.shields.io/github/license/imfx77/kanboard-plugin-BoardNotes?style=for-the-badge" alt="kanboard-plugin-BoardNotes">
+    </a>
+</p>
+<p align="center">
+    <a href="https://github.com/imfx77/kanboard-plugin-BoardNotes/releases">
+        <img src="https://img.shields.io/github/downloads/imfx77/kanboard-plugin-BoardNotes/total?style=for-the-badge&color=orange" alt="GitHub All Releases" title="GitHub All Downloads">
+    </a>
+    <a href="https://github.com/imfx77/kanboard-plugin-BoardNotes/releases">
+        <img src="https://img.shields.io/github/directory-file-count/imfx77/kanboard-plugin-BoardNotes?style=for-the-badge&color=orange" alt="GitHub Repository File Count" title="GitHub Repository File Count">
+    </a>
+    <a href="https://github.com/imfx77/kanboard-plugin-BoardNotes/releases">
+        <img src="https://img.shields.io/github/repo-size/imfx77/kanboard-plugin-BoardNotes?style=for-the-badge&color=orange" alt="GitHub Repository Size" title="GitHub Repository Size">
+    </a>
+    <a href="https://github.com/imfx77/kanboard-plugin-BoardNotes/releases">
+        <img src="https://img.shields.io/github/languages/code-size/imfx77/kanboard-plugin-BoardNotes?style=for-the-badge&color=orange" alt="GitHub Code Size" title="GitHub Code Size">
+    </a>
+</p>
+<p align="center">
+    <a href="https://github.com/imfx77/kanboard-plugin-BoardNotes/stargazers" title="View Stargazers">
+        <img src="https://img.shields.io/github/stars/imfx77/kanboard-plugin-BoardNotes?logo=github&style=for-the-badge" alt="kanboard-plugin-BoardNotes">
+    </a>
+    <a href="https://github.com/imfx77/kanboard-plugin-BoardNotes/discussions">
+        <img src="https://img.shields.io/github/discussions/imfx77/kanboard-plugin-BoardNotes?style=for-the-badge&color=blue" alt="GitHub Discussions" title="Read Discussions">
+    </a>
+    <a href="https://github.com/imfx77/kanboard-plugin-BoardNotes/compare">
+        <img src="https://img.shields.io/github/commits-since/imfx77/kanboard-plugin-BoardNotes/latest?include_prereleases&style=for-the-badge&color=blue" alt="GitHub Commits Since Last Release" title="GitHub Commits Since Last Release">
+    </a>
+    <a href="https://github.com/imfx77/kanboard-plugin-BoardNotes/compare">
+        <img src="https://img.shields.io/github/commit-activity/m/imfx77/kanboard-plugin-BoardNotes?style=for-the-badge&color=blue" alt="GitHub Commit Monthly Activity" title="GitHub Commit Monthly Activity">
+    </a>
+</p>
+<p align="center">
+    <a href="https://github.com/kanboard/kanboard" title="Kanboard - Kanban Project Management Software">
+        <img src="https://img.shields.io/badge/Plugin%20for-kanboard-D40000?style=for-the-badge&labelColor=000000" alt="Kanboard">
+    </a>
+</p>
+
+---
 
 # -= UNDER DEVELOPMENT =-
 
-**⚠ This README is out of date ! ⚠**
+**⚠ This README is still out of date ! ⚠**
 
-## Kanboard Plugin for TODO-style notes
-
-Plugin for [Kanboard](https://github.com/fguillot/kanboard)
+## TODO-style Notes for Kanboard
 
 The plugin allows to keep TODO-style notes on every KB project and as standalone lists.
 The notes that may appear unsuitable for creating board tasks are totally fine on the custom TODO list.
 They are easy and fast to create, change and rearrange, with convenient visual aids.
 Every user can privately see and operate ONLY his own notes, even if notes of multiple users are are bound to the same project.
 
-## Authors & Contributors
+<p align="right">[<a href="#user-content-readme-bottom">&#8595; Bottom</a>] [<a href="#user-content-readme-top">&#8593; Top</a>]</p>
 
-- [Im[F(x)]](https://github.com/imfx77) - Author
-- Contributors welcome _for translations_ !
+## Features, Issues, Todo
 
-## License
+<details>
+    <summary><strong>Features</strong></summary>
 
-- This project is distributed under the [MIT License](LICENSE "Read The MIT license")
-
-## Installation
-
-- Decompress the archive in the `plugins` folder
-
-or
-
-- Create a folder **plugins/BoardNotes**
-- Copy all files under this directory
-
-or
-
-- Clone folder with git
-
-AND
-
-- Add your api (settings -> api) in the post.php.config file
-- Add your kanboard url in the post.php.config file
-- Rename the post.php.config to post.php (mv post.php.config post.php)
-
-## Requirements
-
-All of the links are pointing to kanboard/ which means, that your Kanboard installations need to be here: 127.0.0.1/kanboard.
-
-## Use
-
-Take notes on the fly. Developed to easily take project specific notes. The purpose of the notes is not to be tasks, but for keeping information - a flexible alternative to metadata.
-I'm using Kanboard as projectmanagement tool for managing construction projects, where I often need to take notes regarding specific installations, during site-visits or phonemeetings.
-
-The notes is accessible from the project dropdown, where only the project specific notes will be shown. On the dashboard there's a link in the sidebar to view all notes, the notes will be separated in tabs.
-
-## Features
+```TODO: update```
 
 - Take notes quickly. Write the note title and press ENTER to save.
 - Press TAB in the new note title to show the detailed menu
@@ -69,15 +80,11 @@ The notes is accessible from the project dropdown, where only the project specif
 - Generate report for printing notes.
 - Filter report on category
 
-## Todo
+</details>
+<details>
+    <summary><strong>Issues</strong></summary>
 
-- Implement fault procedures (verify it is number, etc.)
-- Adding possibility to attach image from mobile
-- Finish exporting notes to task in specific swimlane and with category
-- Update styling for a more simplicity view
-- Better overview of multiple projects with tabs
-
-## Issues
+```TODO: update```
 
 - Focus on description textarea when pressing TAB on new notes title is not working
 - Category is saved as text in database and does not have foreing key to the projects real category table
@@ -95,12 +102,110 @@ The notes is accessible from the project dropdown, where only the project specif
 - Functions in controller (BoardNotesController) missing variables in () - needed?
 - Markups as Kanboard
 
-## Tested on
+</details>
+<details>
+    <summary><strong>Todo</strong></summary>
 
-- Application version: 1.0.30 / 1.0.32
-- PHP version: 5.5.9-1ubuntu4.17
-- PHP SAPI: apache2handler
-- OS version: Linux 3.13.0-74-generic
-- Database driver: sqlite
-- Database version: 3.8.2
-- Browser: Chromium 51.0.2704.106 (64-bit)
+```TODO: update```
+
+- Implement fault procedures (verify it is number, etc.)
+- Adding possibility to attach image from mobile
+- Finish exporting notes to task in specific swimlane and with category
+- Update styling for a more simplicity view
+- Better overview of multiple projects with tabs
+
+</details>
+
+<p align="right">[<a href="#user-content-readme-bottom">&#8595; Bottom</a>] [<a href="#user-content-readme-top">&#8593; Top</a>]</p>
+
+## Screenshots
+```TODO: update```
+
+<p align="right">[<a href="#user-content-readme-bottom">&#8595; Bottom</a>] [<a href="#user-content-readme-top">&#8593; Top</a>]</p>
+
+## Usage
+```TODO: update```
+
+Take notes on the fly. Developed to easily take project specific notes. The purpose of the notes is not to be tasks, but for keeping information - a flexible alternative to metadata.
+I'm using Kanboard as projectmanagement tool for managing construction projects, where I often need to take notes regarding specific installations, during site-visits or phonemeetings.
+
+The notes is accessible from the project dropdown, where only the project specific notes will be shown. On the dashboard there's a link in the sidebar to view all notes, the notes will be separated in tabs.
+
+<p align="right">[<a href="#user-content-readme-bottom">&#8595; Bottom</a>] [<a href="#user-content-readme-top">&#8593; Top</a>]</p>
+
+## Installation & Compatibility
+
+<details>
+    <summary><strong>Installation</strong></summary>
+
+- Install via the **Kanboard Plugin Directory** or see [INSTALL.md](INSTALL.md)
+- Read the full [**Changelog**](changelog.md "See changes") to see the latest updates
+
+</details>
+<details>
+    <summary><strong>Compatibility</strong></summary>
+
+- Requires [Kanboard](https://github.com/kanboard/kanboard "Kanboard - Kanban Project Management Software") ≥`1.2.33`
+- **Other Plugins & Action Plugins**
+  - _No known issues_
+- **Core Files & Templates**
+  - `0` Template override
+  - _No database changes_
+
+</details>
+<details>
+    <summary><strong>Translations</strong></summary>
+
+- _Translation for `en_US` is the default_, currently there are no other translation packs.
+
+</details>
+
+<p align="right">[<a href="#user-content-readme-bottom">&#8595; Bottom</a>] [<a href="#user-content-readme-top">&#8593; Top</a>]</p>
+
+## Authors & Contributors
+
+- [Im[F(x)]](https://github.com/imfx77) - Author
+- Contributors welcome _for translations_ !
+
+<p align="right">[<a href="#user-content-readme-bottom">&#8595; Bottom</a>] [<a href="#user-content-readme-top">&#8593; Top</a>]</p>
+
+## Credits & References
+
+- [TTJ](https://github.com/ThomasTJdev) (c) 2016-2023
+- [aljawaid](https://github.com/aljawaid) (c) 2023
+
+<p align="right">[<a href="#user-content-readme-bottom">&#8595; Bottom</a>] [<a href="#user-content-readme-top">&#8593; Top</a>]</p>
+
+## License
+
+- This project is distributed under the [MIT License](LICENSE "Read The MIT license")
+
+<p align="right">[<a href="#user-content-readme-top">&#8593; Top</a>]</p>
+
+---
+
+<p align="center">
+    <a href="https://github.com/imfx77/kanboard-plugin-BoardNotes/stargazers" title="View Stargazers">
+        <img src="https://img.shields.io/github/stars/imfx77/kanboard-plugin-BoardNotes?logo=github&style=flat-square" alt="kanboard-plugin-BoardNotes">
+    </a>
+    <a href="https://github.com/imfx77/kanboard-plugin-BoardNotes/forks" title="See Forks">
+        <img src="https://img.shields.io/github/forks/imfx77/kanboard-plugin-BoardNotes?logo=github&style=flat-square" alt="kanboard-plugin-BoardNotes">
+    </a>
+    <a href="https://github.com/imfx77/kanboard-plugin-BoardNotes/blob/master/LICENSE" title="Read License">
+        <img src="https://img.shields.io/github/license/imfx77/kanboard-plugin-BoardNotes?style=flat-square" alt="kanboard-plugin-BoardNotes">
+    </a>
+    <a href="https://github.com/imfx77/kanboard-plugin-BoardNotes/issues" title="Open Issues">
+        <img src="https://img.shields.io/github/issues-raw/imfx77/kanboard-plugin-BoardNotes?style=flat-square" alt="kanboard-plugin-BoardNotes">
+    </a>
+    <a href="https://github.com/imfx77/kanboard-plugin-BoardNotes/issues?q=is%3Aissue+is%3Aclosed" title="Closed Issues">
+        <img src="https://img.shields.io/github/issues-closed/imfx77/kanboard-plugin-BoardNotes?style=flat-square" alt="kanboard-plugin-BoardNotes">
+    </a>
+    <a href="https://github.com/imfx77/kanboard-plugin-BoardNotes/discussions" title="Read Discussions">
+        <img src="https://img.shields.io/github/discussions/imfx77/kanboard-plugin-BoardNotes?style=flat-square" alt="kanboard-plugin-BoardNotes">
+    </a>
+    <a href="https://github.com/imfx77/kanboard-plugin-BoardNotes/compare/" title="Latest Commits">
+        <img alt="GitHub commits since latest release (by date)" src="https://img.shields.io/github/commits-since/imfx77/kanboard-plugin-BoardNotes/latest?style=flat-square">
+    </a>
+</p>
+
+<a name="user-content-readme-bottom"></a>

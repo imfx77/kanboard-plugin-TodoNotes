@@ -33,3 +33,7 @@ _(most recent changes are listed on top):_
 ## v0.0.1
 
 * Initial release
+
+`---
+
+Read the full [**Changelog**](changelog.md "See changes") or view the [**README**](README.md "View README")
