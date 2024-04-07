@@ -12,6 +12,10 @@ return array(
     'BoardNotes_DASHBOARD_MY_NOTES' => 'My notes',
     'BoardNotes_DASHBOARD_ALL_TAB' => 'All',
     //
+    // Template/report
+    //
+    'BoardNotes_REPORT_HIDE_ROW' => 'Hide this Row',
+    //
     // Template dialogs
     //
     'BoardNotes_POST_DIALOG_SUCCESS_TITLE' => 'Success!',

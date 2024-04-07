@@ -37,7 +37,8 @@ foreach($data as $u){
      // Hide button
     print '<button id="singleReportHide" class="singleReportHide" data-id="';
     print $num;
-    print '"><i class="fa fa-minus-square-o" style="color:#CCC" aria-hidden="true" title="Hide"></i></button>';
+    print '"><i class="fa fa-minus-square-o" style="color:#CCC" aria-hidden="true"';
+    print ' title="' . t('BoardNotes_REPORT_HIDE_ROW') . '"></i></button>';
     // Report #
     print '<span class="fa-stack fa-lg">';
     print '<i class="fa fa-circle-thin fa-stack-2x"></i>';
