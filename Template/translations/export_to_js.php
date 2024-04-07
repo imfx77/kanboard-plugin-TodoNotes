@@ -5,6 +5,6 @@
     );
 ?>
 
-<textarea id="BoardNotes_TranslationsExportToJS" style="display: none">
+<textarea id="_BoardNotes_TranslationsExportToJS" style="display: none">
 <?= $this->helper->translationsExportToJSHelper->export($translationTextIds) ?>
 </textarea>

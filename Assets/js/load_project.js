@@ -5,13 +5,13 @@ _BoardNotes_Project_.adjustAllNotesPlaceholders = function() {
     $('button' + '.checkDone').each(function() {
         var project_id = $(this).attr('data-project');
         var id = $(this).attr('data-id');
-        adjustNotePlaceholders(project_id, id);
+        _BoardNotes_.adjustNotePlaceholders(project_id, id);
     })
 }
 
 _BoardNotes_Project_.prepareDocument = function() {
-    optionShowCategoryColors = ($('#session_vars').attr('data-optionShowCategoryColors') == 'true') ? true : false;
-    optionSortByState = ($('#session_vars').attr('data-optionSortByState') == 'true') ? true : false;
+    _BoardNotes_.optionShowCategoryColors = ($('#session_vars').attr('data-optionShowCategoryColors') == 'true') ? true : false;
+    _BoardNotes_.optionSortByState = ($('#session_vars').attr('data-optionSortByState') == 'true') ? true : false;
 
     var nrNotes = $('#nrNotes').attr('data-id');
     var project_id = $('#refProjectId').attr('data-project');
@@ -20,7 +20,7 @@ _BoardNotes_Project_.prepareDocument = function() {
 
     // notes reordering is disabled in Overview Mode (ALL projects tab)
     // ot when explicitly sorted by state
-    if (!optionSortByState) {
+    if (!_BoardNotes_.optionSortByState) {
         // handle notes reordering
         function updateNotesOrder(event, ui) {
             var order = $(this).sortable('toArray');
@@ -28,7 +28,7 @@ _BoardNotes_Project_.prepareDocument = function() {
             var regex = new RegExp('item-', 'g');
             order = order.replace(regex, '');
             var order = order.split(',');
-            sqlUpdatePosition(project_id, user_id, order, nrNotes);
+            _BoardNotes_.sqlUpdatePosition(project_id, user_id, order, nrNotes);
         }
 
         if (isMobile){
@@ -62,8 +62,8 @@ _BoardNotes_Project_.prepareDocument = function() {
     }
 
     _BoardNotes_Project_.adjustAllNotesPlaceholders();
-    refreshCategoryColors();
-    refreshSortByState();
+    _BoardNotes_.refreshCategoryColors();
+    _BoardNotes_.refreshSortByState();
 
     // prepare method for dashboard view if embedded
     if ( $.isFunction(_BoardNotes_Dashboard_.prepareDocument) ) {

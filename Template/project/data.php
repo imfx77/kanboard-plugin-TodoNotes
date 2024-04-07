@@ -636,8 +636,7 @@ if (!$is_refresh) { // print only once per project !!!
 
   print '<div class="hideMe" id="dialogDeleteAllDone" title="Delete all done notes?">';
   print '<p>';
-  print '<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>';
-  print ' These items will be permanently deleted and cannot be recovered!';
+  print '⚠ These items will be permanently deleted and cannot be recovered!';
   print '<br>';
   print ' Are you sure?';
   print '</p>';
@@ -711,8 +710,7 @@ if (!$is_refresh) { // print only once per project !!!
   print '</select>';
   print '<p>';
   print '<br>';
-  print '<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>';
-  print ' Bear in mind that the target project may NOT have the category that is assigned to the note!';
+  print '⚠ Bear in mind that the target project may NOT have the category that is assigned to the note!';
   print '<br>';
   print ' If so, the category will be displayed greyed and will be ignored until a valid one from the target project is set.';
   print '<br>';
