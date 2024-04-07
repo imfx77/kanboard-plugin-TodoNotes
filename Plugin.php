@@ -33,8 +33,7 @@ class Plugin extends Base
 
         if (file_exists($filename)) {
             Translator::load($language, $path);
-        }
-        else {
+        } else {
             Translator::load('en_US', $path);
         }
     }
@@ -44,26 +43,30 @@ class Plugin extends Base
         return array(
             'Plugin\BoardNotes\Model' => array(
                 'BoardNotesModel'
-             )
-         );
+            )
+        );
     }
 
     public function getPluginName()
     {
         return 'BoardNotes';
     }
+
     public function getPluginAuthor()
     {
         return 'Im[F(x)]';
     }
+
     public function getPluginVersion()
     {
         return '0.0.6';
     }
+
     public function getPluginDescription()
     {
         return t('BoardNotes_PLUGIN_DESCRIPTION');
     }
+
     public function getPluginHomepage()
     {
         return '';

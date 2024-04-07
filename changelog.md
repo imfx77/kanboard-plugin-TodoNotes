@@ -5,10 +5,10 @@
 
 _(most recent changes are listed on top):_  
 
->  As of v0.6.0 Im[F(x)] took an active development over a fork of the project.
->  Which is already quite different from the original!
->  Multiple features have been added, fixes and code refactorings have been done.
->  The list is quite long and the change log will not reflect it until an actual release is due.
+> As of v0.6.0 Im[F(x)] took an active development over a fork of the project.
+> Which is already quite different from the original!
+> Multiple features have been added, fixes and code refactorings have been done.
+> The list is quite long and the change log will not reflect it until an actual release is due.
 
 
 ## v0.0.5
