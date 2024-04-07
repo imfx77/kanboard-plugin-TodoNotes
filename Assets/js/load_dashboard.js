@@ -1,4 +1,6 @@
-function updateProjectsStats_OnCheckDoneHandler() {
+let _BoardNotes_Dashboard_ = {}; // namespace
+
+_BoardNotes_Dashboard_.updateProjectsStats_OnCheckDoneHandler = function() {
     $( "button" + ".checkDone" ).click(function() {
       var project_id = $(this).attr('data-project');
       var user_id = $(this).attr('data-user');
@@ -33,7 +35,7 @@ function updateProjectsStats_OnCheckDoneHandler() {
     });
 }
 
-function updateNotesTabs() {
+_BoardNotes_Dashboard_.updateNotesTabs = function() {
     var tab_id = $( "#tab_id" ).attr('data');
 
     $( ".singleTab" ).removeClass( 'active' );
@@ -43,19 +45,17 @@ function updateNotesTabs() {
     var numTabs = $( "#tabs li" ).length + 1; // add +1 because of the separator lines
     var tabHeight = $( "#tabs li:eq(0)" ).outerHeight();
     $( "#tabs" ).height(numTabs * tabHeight);
-
-    // TODO: reload stats data for all tabs !!!
 }
 
-function prepareDocumentForDashboard() {
-    var isMobile = IsMobile();
+_BoardNotes_Dashboard_.prepareDocument = function() {
+    var isMobile = _BoardNotes_.isMobile();
 
     if(isMobile) {
         // choose mobile view
         $('#mainholderDashboard').removeClass('mainholderDashboard').addClass('mainholderMobileDashboard');
     }
 
-    updateProjectsStats_OnCheckDoneHandler();
+    _BoardNotes_Dashboard_.updateProjectsStats_OnCheckDoneHandler();
 
-    updateNotesTabs();
+    _BoardNotes_Dashboard_.updateNotesTabs();
 }

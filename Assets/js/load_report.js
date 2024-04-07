@@ -1,4 +1,6 @@
-function prepareDocumentForReport() {
+let _BoardNotes_Report_ = {}; // namespace
+
+_BoardNotes_Report_.prepareDocument = function() {
     $('.noteTitleInput').hide();
 
     optionShowCategoryColors = ($('#session_vars').attr('data-optionShowCategoryColors') == 'true') ? true : false;
@@ -14,4 +16,4 @@ function prepareDocumentForReport() {
     refreshCategoryColors();
 }
 
-$( document ).ready( prepareDocumentForReport );
+$( document ).ready( _BoardNotes_Report_.prepareDocument );
