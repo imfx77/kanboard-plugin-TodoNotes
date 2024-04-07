@@ -40,7 +40,10 @@ _BoardNotes_Dashboard_.updateNotesTabs = function() {
 
     $( ".singleTab" ).removeClass( 'active' );
     $( "#singleTab" + tab_id ).addClass( 'active' );
-    $( "#myNotesHeader h2" ).text( 'My notes > ' + $( "#singleTab" + tab_id + " a" ).text());
+    $( "#myNotesHeader h2" ).text(
+        _BoardNotes_.getTranslationExportToJS('BoardNotes_DASHBOARD_MY_NOTES')
+        + ' > ' + $( "#singleTab" + tab_id + " a" ).text()
+    );
 
     var numTabs = $( "#tabs li" ).length + 1; // add +1 because of the separator lines
     var tabHeight = $( "#tabs li:eq(0)" ).outerHeight();

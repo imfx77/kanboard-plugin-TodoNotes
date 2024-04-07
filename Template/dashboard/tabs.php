@@ -8,7 +8,7 @@
     print '" data-id="';
     print $num;
     print '" data-project="0">';
-    print $this->url->link('All', 'BoardNotesController', 'boardNotesShowAll',
+    print $this->url->link(t('BoardNotes_DASHBOARD_ALL_TAB'), 'BoardNotesController', 'boardNotesShowAll',
                             array('plugin' => 'BoardNotes', 'user_id' => $user_id, 'tab_id' => $num));
     print '<div class="toolbarSeparator">&nbsp;</div>';
     print $this->render('BoardNotes:widgets/stats', array(

@@ -33,7 +33,9 @@
 
 <?= $this->asset->js('plugins/BoardNotes/Assets/js/load_dashboard.js') ?>
 
-<div id="myNotesHeader" class="page-header"><h2>My notes > All</h2></div>
+<div id="myNotesHeader" class="page-header"><h2>
+<?= t('BoardNotes_DASHBOARD_MY_NOTES')?> > <?= t('BoardNotes_DASHBOARD_ALL_TAB') ?>
+</h2></div>
 
 <section id="mainholderDashboard" class="mainholderDashboard sidebar-container">
 
@@ -49,7 +51,7 @@
 <div id="content" class="sidebar-content">
 
     <?php
-        $project = array('id' => 0, 'name' => 'All');
+        $project = array('id' => 0, 'name' => t('BoardNotes_DASHBOARD_ALL_TAB'));
         if ($tab_id > 0) {
             $projectAccess = $projectsAccess[$tab_id - 1];
             $project = array('id' => $projectAccess['project_id'],

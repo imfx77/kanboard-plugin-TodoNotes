@@ -104,8 +104,6 @@ _BoardNotes_.showDescriptionInput = function(project_id, id, show_input) {
 
 // Show details for existing notes (toggle class)
 _BoardNotes_.toggleDetails = function(project_id, id) {
-    //alert(_BoardNotes_.getTranslationExportToJS('BoardNotes_JS_TEST_STRING'));
-
     $("#noteDescriptionP" + project_id + "-" + id).toggleClass( "hideMe" );
     $("#singleNoteDeleteP" + project_id + "-" + id).toggleClass( "hideMe" );
     $("#singleNoteSaveP" + project_id + "-" + id).toggleClass( "hideMe" );
@@ -544,18 +542,24 @@ _BoardNotes_.updateCategoryColors = function(project_id, id, old_category, new_c
 _BoardNotes_.modalTransferNote = function(project_id, user_id, note_id) {
     $("#dialogTransferP" + project_id).removeClass( 'hideMe' );
     $("#dialogTransferP" + project_id).dialog({
-        buttons: {
-            Move: function() {
-                var target_project_id = $('#listNoteProjectP' + project_id + ' option:selected').val();
-                _BoardNotes_.sqlTransferNote(project_id, user_id, note_id, target_project_id);
-                $( this ).dialog( "close" );
-                _BoardNotes_.sqlRefreshTabs(user_id);
-                _BoardNotes_.sqlRefreshNotes(project_id, user_id);
+        buttons: [
+            {
+                text : _BoardNotes_.getTranslationExportToJS('BoardNotes_JS_DIALOG_MOVE_BTN'),
+                click : function() {
+                    var target_project_id = $('#listNoteProjectP' + project_id + ' option:selected').val();
+                    _BoardNotes_.sqlTransferNote(project_id, user_id, note_id, target_project_id);
+                    $( this ).dialog( "close" );
+                    _BoardNotes_.sqlRefreshTabs(user_id);
+                    _BoardNotes_.sqlRefreshNotes(project_id, user_id);
+                },
             },
-            Cancel: function() {
-                $( this ).dialog( "close" );
-            }
-        }
+            {
+                text : _BoardNotes_.getTranslationExportToJS('BoardNotes_JS_DIALOG_CANCEL_BTN'),
+                click : function() {
+                    $( this ).dialog( "close" );
+                }
+            },
+        ]
     });
     return false;
   };
@@ -569,41 +573,47 @@ _BoardNotes_.modalNoteToTask = function(project_id, user_id, note_id, is_active,
     $('#listCatToTaskP' + project_id).val(category_id).change();
     $("#dialogToTaskP" + project_id).removeClass( 'hideMe' );
     $("#dialogToTaskP" + project_id).dialog({
-        title: 'Create task from note?',
-        buttons: {
-            Create: function() {
-                var categoryToTask = $('#listCatToTaskP' + project_id + ' option:selected').val();
-                var columnToTask = $('#listColToTaskP' + project_id + ' option:selected').val();
-                var swimlaneToTask = $('#listSwimToTaskP' + project_id + ' option:selected').val();
-                var removeNote = $('#removeNoteP' + project_id).is(":checked");
+        buttons: [
+            {
+                text : _BoardNotes_.getTranslationExportToJS('BoardNotes_JS_DIALOG_CREATE_BTN'),
+                click: function() {
+                    var categoryToTask = $('#listCatToTaskP' + project_id + ' option:selected').val();
+                    var columnToTask = $('#listColToTaskP' + project_id + ' option:selected').val();
+                    var swimlaneToTask = $('#listSwimToTaskP' + project_id + ' option:selected').val();
+                    var removeNote = $('#removeNoteP' + project_id).is(":checked");
 
-                var ajax_load = '<i class="fa fa-spinner fa-pulse" aria-hidden="true" alt="loading..."></i>';
-                var loadUrl = '/?controller=BoardNotesController&action=boardNotesToTask&plugin=BoardNotes'
-                            + '&project_cus_id=' + project_id
-                            + '&user_id=' + user_id
-                            + '&task_title=' + encodeURIComponent(title)
-                            + '&task_description=' + encodeURIComponent(description)
-                            + '&category_id=' + categoryToTask
-                            + '&column_id=' + columnToTask
-                            + '&swimlane_id=' + swimlaneToTask;
+                    var ajax_load = '<i class="fa fa-spinner fa-pulse" aria-hidden="true" '
+                                + 'alt="' + _BoardNotes_.getTranslationExportToJS('BoardNotes_JS_LOADING_MSG') + '"></i>';
+                    var loadUrl = '/?controller=BoardNotesController&action=boardNotesToTask&plugin=BoardNotes'
+                                + '&project_cus_id=' + project_id
+                                + '&user_id=' + user_id
+                                + '&task_title=' + encodeURIComponent(title)
+                                + '&task_description=' + encodeURIComponent(description)
+                                + '&category_id=' + categoryToTask
+                                + '&column_id=' + columnToTask
+                                + '&swimlane_id=' + swimlaneToTask;
 
-                $("#dialogToTaskP" + project_id).dialog({
-                    title: 'Result ...',
-                    buttons: {
-                        Close: function() { $( this ).dialog( "close" ); }
+                    $("#dialogToTaskP" + project_id).dialog({
+                        title: 'Result ...',
+                        buttons: {
+                            Close: function() { $( this ).dialog( "close" ); }
+                        }
+                    });
+                    $('#dialogToTaskParams').addClass( 'hideMe' );
+                    $('#deadloading').removeClass( 'hideMe' );
+                    $('#deadloading').html(ajax_load).load(loadUrl);
+                    if (removeNote) {
+                        _BoardNotes_.sqlDeleteNote(project_id, user_id, note_id);
+                        _BoardNotes_.sqlRefreshTabs(user_id);
+                        _BoardNotes_.sqlRefreshNotes(project_id, user_id);
                     }
-                });
-                $('#dialogToTaskParams').addClass( 'hideMe' );
-                $('#deadloading').removeClass( 'hideMe' );
-                $('#deadloading').html(ajax_load).load(loadUrl);
-                if (removeNote) {
-                    _BoardNotes_.sqlDeleteNote(project_id, user_id, note_id);
-                    _BoardNotes_.sqlRefreshTabs(user_id);
-                    _BoardNotes_.sqlRefreshNotes(project_id, user_id);
-                }
+                },
             },
-            Cancel: function() { $( this ).dialog( "close" ); }
-        }
+            {
+                text : _BoardNotes_.getTranslationExportToJS('BoardNotes_JS_DIALOG_CANCEL_BTN'),
+                click: function() { $( this ).dialog( "close" ); }
+            },
+        ]
     });
     return false;
 };
@@ -616,17 +626,21 @@ _BoardNotes_.modalDeleteAllDoneNotes = function(project_id, user_id) {
         resizable: false,
         height: "auto",
         modal: true,
-        buttons: {
-            "Delete all done notes!": function() {
-                _BoardNotes_.sqlDeleteAllDoneNotes(project_id, user_id);
-                $( this ).dialog( "close" );
-                _BoardNotes_.sqlRefreshTabs(user_id);
-                _BoardNotes_.sqlRefreshNotes(project_id, user_id);
+        buttons: [
+            {
+                text : _BoardNotes_.getTranslationExportToJS('BoardNotes_JS_DIALOG_DELETE_BTN'),
+                click: function() {
+                    _BoardNotes_.sqlDeleteAllDoneNotes(project_id, user_id);
+                    $( this ).dialog( "close" );
+                    _BoardNotes_.sqlRefreshTabs(user_id);
+                    _BoardNotes_.sqlRefreshNotes(project_id, user_id);
+                },
             },
-            Cancel: function() {
-                $( this ).dialog( "close" );
-            }
-        }
+            {
+                text : _BoardNotes_.getTranslationExportToJS('BoardNotes_JS_DIALOG_CANCEL_BTN'),
+                click: function() { $( this ).dialog( "close" ); }
+            },
+        ]
     });
 };
 
@@ -634,7 +648,8 @@ _BoardNotes_.modalStats = function(project_id, user_id) {
     $.ajaxSetup ({
         cache: false
     });
-    var ajax_load = '<i class="fa fa-spinner fa-pulse" aria-hidden="true" alt="loading..."></i>';
+    var ajax_load = '<i class="fa fa-spinner fa-pulse" aria-hidden="true" '
+                + 'alt="' + _BoardNotes_.getTranslationExportToJS('BoardNotes_JS_LOADING_MSG') + '"></i>';
     var loadUrl = '/?controller=BoardNotesController&action=boardNotesStats&plugin=BoardNotes'
                 + '&project_cus_id=' + project_id
                 + '&user_id=' + user_id;
@@ -645,11 +660,12 @@ _BoardNotes_.modalStats = function(project_id, user_id) {
 
     $( "#dialogStats" ).removeClass( 'hideMe' );
     $( "#dialogStats" ).dialog({
-        buttons: {
-            Ok: function() {
-                $( this ).dialog( "close" );
-            }
-        }
+        buttons: [
+            {
+                text : _BoardNotes_.getTranslationExportToJS('BoardNotes_JS_DIALOG_CLOSE_BTN'),
+                click: function() { $( this ).dialog( "close" ); }
+            },
+        ]
     });
 };
 
@@ -659,22 +675,30 @@ _BoardNotes_.modalReport = function(project_id, user_id) {
     });
     $( "#dialogReportP" + project_id ).removeClass( 'hideMe' );
     $( "#dialogReportP" + project_id ).dialog({
-        buttons: {
-            Ok: function() {
-                var category = $('#reportCatP' + project_id + ' option:selected').text();
-                var ajax_load = '<i class="fa fa-spinner fa-pulse" aria-hidden="true" alt="loading..."></i>';
-                var loadUrl = "/?controller=BoardNotesController&action=boardNotesReport&plugin=BoardNotes"
-                            + "&project_cus_id=" + project_id
-                            + "&user_id=" + user_id
-                            + "&category=" + encodeURIComponent(category);
-                $("#result" + project_id).html(ajax_load).load(loadUrl,
-                    function(response, status, xhr) {
-                        _BoardNotes_.attachAllHandlers();
-                        _BoardNotes_Report_.prepareDocument();
-                    });
-                $( this ).dialog( "close" );
-            }
-        }
+        buttons: [
+            {
+                text : _BoardNotes_.getTranslationExportToJS('BoardNotes_JS_DIALOG_CREATE_BTN'),
+                click: function() {
+                    var category = $('#reportCatP' + project_id + ' option:selected').text();
+                    var ajax_load = '<i class="fa fa-spinner fa-pulse" aria-hidden="true" '
+                                + 'alt="' + _BoardNotes_.getTranslationExportToJS('BoardNotes_JS_LOADING_MSG') + '"></i>';
+                    var loadUrl = "/?controller=BoardNotesController&action=boardNotesReport&plugin=BoardNotes"
+                                + "&project_cus_id=" + project_id
+                                + "&user_id=" + user_id
+                                + "&category=" + encodeURIComponent(category);
+                    $("#result" + project_id).html(ajax_load).load(loadUrl,
+                        function(response, status, xhr) {
+                            _BoardNotes_.attachAllHandlers();
+                            _BoardNotes_Report_.prepareDocument();
+                        });
+                    $( this ).dialog( "close" );
+                }
+            },
+            {
+                text : _BoardNotes_.getTranslationExportToJS('BoardNotes_JS_DIALOG_CANCEL_BTN'),
+                click: function() { $( this ).dialog( "close" ); }
+            },
+        ]
     });
     return true;
 };
@@ -712,7 +736,7 @@ _BoardNotes_.sqlUpdateNote = function(project_id, user_id, id){
     var is_active = $('#noteDoneCheckmarkP' + project_id + "-" + id).attr('data-id');
 
     if (!title){
-        alert('Note title is empty !\nKeeping the current one !');
+        alert( _BoardNotes_.getTranslationExportToJS('BoardNotes_JS_NOTE_TITLE_EMPTY_MSG') );
         title = $("#noteTitleLabelP" + project_id + "-" + id).html();
         $('#noteTitleInputP' + project_id + "-" + id).val(title);
     }
@@ -734,7 +758,7 @@ _BoardNotes_.sqlUpdateNote = function(project_id, user_id, id){
             if (lastModifiedTimestamp > 0) {
                 $('#refProjectId').attr('data-timestamp', lastModifiedTimestamp);
             } else {
-                alert('The note you are trying to update is INVALID !\nThe page will forcefully refresh now !');
+                alert( _BoardNotes_.getTranslationExportToJS('BoardNotes_JS_NOTE_UPDATE_INVALID_MSG') );
                 _BoardNotes_.sqlRefreshTabs(user_id);
                 _BoardNotes_.sqlRefreshNotes(project_id, user_id);
             }
@@ -825,7 +849,8 @@ _BoardNotes_.sqlRefreshTabs = function(user_id){
     $.ajaxSetup ({
         cache: false
     });
-    var ajax_load = '<i class="fa fa-spinner fa-pulse" aria-hidden="true" alt="loading..."></i>';
+    var ajax_load = '<i class="fa fa-spinner fa-pulse" aria-hidden="true" '
+                + 'alt="' + _BoardNotes_.getTranslationExportToJS('BoardNotes_JS_LOADING_MSG') + '"></i>';
     var loadUrl = '/?controller=BoardNotesController&action=boardNotesRefreshTabs&plugin=BoardNotes'
                 + '&user_id=' + user_id;
     setTimeout(function() {
@@ -838,7 +863,8 @@ _BoardNotes_.sqlRefreshNotes = function(project_id, user_id){
     $.ajaxSetup ({
         cache: false
     });
-    var ajax_load = '<i class="fa fa-spinner fa-pulse" aria-hidden="true" alt="loading..."></i>';
+    var ajax_load = '<i class="fa fa-spinner fa-pulse" aria-hidden="true" '
+                + 'alt="' + _BoardNotes_.getTranslationExportToJS('BoardNotes_JS_LOADING_MSG') + '"></i>';
     var loadUrl = '/?controller=BoardNotesController&action=boardNotesRefreshProject&plugin=BoardNotes'
                 + '&project_cus_id=' + project_id
                 + '&user_id=' + user_id;

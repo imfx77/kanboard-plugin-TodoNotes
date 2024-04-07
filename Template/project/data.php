@@ -692,7 +692,7 @@ if (!$is_refresh) { // print only once per project !!!
 
   //---------------------------------------------
 
-  print '<div class="hideMe" id="dialogTransferP'.$project_id.'" title="Move note to project">';
+  print '<div class="hideMe" id="dialogTransferP'.$project_id.'" title="Move note to project?">';
 
   print '<label for="listNoteProject">Target project : &nbsp;</label>';
   print '<select name="listNoteProject" id="listNoteProjectP';
@@ -721,7 +721,7 @@ if (!$is_refresh) { // print only once per project !!!
 
   //---------------------------------------------
 
-  print '<div class="hideMe" id="dialogReportP'.$project_id.'" title="Create report">';
+  print '<div class="hideMe" id="dialogReportP'.$project_id.'" title="Create report?">';
   print '<div id="">';
   print '<label for="reportCat">Filter by category :</label><br>';
   print '<select name="reportCat" id="reportCatP';
