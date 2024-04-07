@@ -11,7 +11,7 @@
         $statsWidget .= '</span>';
     ?>
 
-    <?= $this->url->icon('wpforms', t('Notes') . $statsWidget, 'BoardNotesController', 'boardNotesShowProject', array(
+    <?= $this->url->icon('wpforms', t('BoardNotes_PROJECT_TITLE') . $statsWidget, 'BoardNotesController', 'boardNotesShowProject', array(
         'project_id' => $project['id'],
         'use_cached' => '1',
         'plugin' => 'BoardNotes',

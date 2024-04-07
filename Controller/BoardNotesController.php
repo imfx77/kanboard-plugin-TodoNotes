@@ -179,7 +179,7 @@ class BoardNotesController extends BaseController
         $data = $this->boardNotesModel->boardNotesShowAll($projectsAccess, $user_id, $doSortByState);
 
         return $this->response->html($this->helper->layout->dashboard('BoardNotes:dashboard/data', array(
-            'title' => t('Notes overview for %s', $this->helper->user->getFullname($user)),
+            'title' => t('BoardNotes_DASHBOARD_TITLE', $this->helper->user->getFullname($user)),
             'user' => $user,
             'user_id' => $user_id,
             'tab_id' => $tab_id,
