@@ -273,6 +273,9 @@ textarea::selection {
     color: #1f1f1f;
     background: #999;
     font-size: 1em !important;
+}
+
+.catLabelClickable {
     cursor: pointer;
 }
 

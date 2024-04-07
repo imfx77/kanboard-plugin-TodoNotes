@@ -382,7 +382,7 @@ foreach($data as $u){
     }
 
     // Category label (in simple view)
-    print '<label class="catLabel';
+    print '<label class="catLabel catLabelClickable';
     if (!empty($u['category']) && array_key_exists($u['category'], $mapCategoryColorByName)) {
         $category_color = $mapCategoryColorByName[ $u['category'] ];
         if (!empty($category_color)) {

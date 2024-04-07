@@ -208,7 +208,7 @@ _BoardNotes_.NoteDetailsHandlers = function() {
     });
 
     // Click on category label to auto open details and change category
-    $( "label" + ".catLabel" ).click(function() {
+    $( "label" + ".catLabelClickable" ).click(function() {
         var project_id = $(this).attr('data-project');
         var id = $(this).attr('data-id');
         _BoardNotes_.toggleDetails(project_id, id);
