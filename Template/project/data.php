@@ -638,10 +638,8 @@ if (!$is_refresh) { // print only once per project !!!
 if (!$is_refresh) { // print only once per project !!!
 
   print '<div class="hideMe" id="dialogDeleteAllDone" title="' . t('BoardNotes_PROJECT_DELETE_ALL_DONE_NOTES') . '">';
-  print '<p>';
-  print '⚠ These items will be permanently deleted and cannot be recovered!';
-  print '<br>';
-  print ' Are you sure?';
+  print '<p style="white-space: pre-wrap;">';
+  print t('BoardNotes_DELETEALLDONE_DIALOG_MSG');
   print '</p>';
   print '</div>';
 
@@ -686,7 +684,7 @@ if (!$is_refresh) { // print only once per project !!!
   print '<input type="checkbox" checked name="removeNote" id="removeNoteP';
   print $project_id;
   print '">';
-  print '<label for="removeNote"> Remove the note</label>';
+  print '<label for="removeNote">&nbsp;&nbsp;' . t('BoardNotes_CREATETASK_CHECKBOX_REMOVE_TASK') . '</label>';
 
   print '</div>';
 
@@ -697,7 +695,7 @@ if (!$is_refresh) { // print only once per project !!!
 
   print '<div class="hideMe" id="dialogTransferP'.$project_id.'" title="' . t('BoardNotes_PROJECT_NOTE_MOVE_TO_PROJECT') . '">';
 
-  print '<label for="listNoteProject">Target project : &nbsp;</label>';
+  print '<label for="listNoteProject">' . t('BoardNotes_TRANSFERNOTE_DIALOG_TARGET_PROJECT') . ' : &nbsp&nbsp;</label>';
   print '<select name="listNoteProject" id="listNoteProjectP';
   print $project_id;
   print '">';
@@ -711,13 +709,9 @@ if (!$is_refresh) { // print only once per project !!!
     }
   }
   print '</select>';
-  print '<p>';
-  print '<br>';
-  print '⚠ Bear in mind that the target project may NOT have the category that is assigned to the note!';
-  print '<br>';
-  print ' If so, the category will be displayed greyed and will be ignored until a valid one from the target project is set.';
-  print '<br>';
-  print ' Continue?';
+  print '<br><br>';
+  print '<p style="white-space: pre-wrap;">';
+  print t('BoardNotes_TRANSFERNOTE_DIALOG_MSG');
   print '</p>';
 
   print '</div>';
@@ -726,7 +720,7 @@ if (!$is_refresh) { // print only once per project !!!
 
   print '<div class="hideMe" id="dialogReportP'.$project_id.'" title="' . t('BoardNotes_PROJECT_CREATE_REPORT') . '">';
   print '<div id="">';
-  print '<label for="reportCat">Filter by category :</label><br>';
+  print '<label for="reportCat">' . t('BoardNotes_REPOSR_DIALOG_CATEGORY_FILTER') . ' :</label><br>';
   print '<select name="reportCat" id="reportCatP';
   print $project_id;
   print '" data-project="';

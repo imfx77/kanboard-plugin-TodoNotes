@@ -40,6 +40,14 @@ Might be waiting for an unsubmitted New Note data input!',
     //
     // Template dialogs
     //
+    'BoardNotes_DELETEALLDONE_DIALOG_MSG' => '⚠ These items will be permanently deleted and cannot be recovered!
+&#10;Are you sure?',
+    'BoardNotes_CREATETASK_CHECKBOX_REMOVE_TASK' => '⚠ Remove the Note',
+    'BoardNotes_TRANSFERNOTE_DIALOG_TARGET_PROJECT' => 'Target Project',
+    'BoardNotes_TRANSFERNOTE_DIALOG_MSG' => '⚠ Bear in mind that the target project may NOT have the category that is assigned to the note!
+&#10;If so, the category will be displayed greyed and will be ignored until a valid one from the target project is set.
+&#10;Continue?',
+    'BoardNotes_REPOSR_DIALOG_CATEGORY_FILTER' => 'Filter by Category',
     'BoardNotes_POST_DIALOG_SUCCESS_TITLE' => 'Success!',
     'BoardNotes_POST_DIALOG_FAILURE_TITLE' => 'Ooops, something went wrong ;/',
     'BoardNotes_POST_DIALOG_SUCCESS_TEXT' => 'Created task',
@@ -60,7 +68,7 @@ The page will forcefully refresh now !',
     'BoardNotes_JS_DIALOG_CANCEL_BTN' => 'Cancel',
     'BoardNotes_JS_DIALOG_CLOSE_BTN' => 'Close',
     'BoardNotes_JS_DIALOG_MOVE_BTN' => '⚠ Move',
-    'BoardNotes_JS_DIALOG_CREATE_BTN' => 'Create',
+    'BoardNotes_JS_DIALOG_CREATE_BTN' => '✔ Create',
     'BoardNotes_JS_DIALOG_DELETE_BTN' => '⚠ Delete',
     'BoardNotes_JS_DIALOG_RESULT_TITLE' => 'Result ...',
 );
