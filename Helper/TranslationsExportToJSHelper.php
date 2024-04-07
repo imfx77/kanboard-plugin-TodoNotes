@@ -21,6 +21,6 @@ class TranslationsExportToJSHelper extends Base
         foreach($textIds as $textId){
             $translations[$textId] = t($textId);
         }
-        return str_replace( "\\\\", "\\", json_encode($translations) );
+        return json_encode($translations);
     }
 }
