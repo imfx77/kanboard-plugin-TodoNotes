@@ -54,7 +54,7 @@ class Plugin extends Base
     }
     public function getPluginAuthor()
     {
-        return 'TTJ';
+        return 'Im[F(x)]';
     }
     public function getPluginVersion()
     {
@@ -62,7 +62,7 @@ class Plugin extends Base
     }
     public function getPluginDescription()
     {
-        return 'Keep notes on every single projects. Notes which is not suitable for creating board tasks.';
+        return t('BoardNotes_PLUGIN_DESCRIPTION');
     }
     public function getPluginHomepage()
     {

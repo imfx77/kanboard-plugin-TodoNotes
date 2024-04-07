@@ -1,20 +1,25 @@
-# NOT MAINTAINED
+# -= UNDER DEVELOPMENT =-
+**⚠ This README is out of date ! ⚠**
 
-Kanboard Plugin for notes
-==========================
-
-This plugin adds a GUI for notes.
+## Kanboard Plugin for TODO-style notes
 
 Plugin for [Kanboard](https://github.com/fguillot/kanboard)
 
-Author
-------
+The plugin allows to keep TODO-style notes on every KB project and as standalone lists.
+The notes that may appear unsuitable for creating board tasks are totally fine on the custom TODO list.
+They are easy and fast to create, change and rearrange, with convenient visual aids.
+Every user can privately see and operate ONLY his own notes, even if notes of multiple users are are bound to the same project.
 
-- [TTJ](https://gitlab.com/u/ThomasTJ)
-- License MIT
+## Authors & Contributors
 
-Installation
-------------
+- [Im[F(x)]](https://github.com/imfx77) - Author
+- Contributors welcome _for translations_ !
+
+## License
+
+- This project is distributed under the [MIT License](LICENSE "Read The MIT license")
+
+## Installation
 
 - Decompress the archive in the `plugins` folder
 
@@ -27,27 +32,24 @@ or
 
 - Clone folder with git
 
-# AND #
+AND
 
 - Add your api (settings -> api) in the post.php.config file
 - Add your kanboard url in the post.php.config file
 - Rename the post.php.config to post.php (mv post.php.config post.php)
 
-Requirements
-------------
+## Requirements
 
 All of the links are pointing to kanboard/ which means, that your Kanboard installations need to be here: 127.0.0.1/kanboard.
 
-Use
----
+## Use
 
 Take notes on the fly. Developed to easily take project specific notes. The purpose of the notes is not to be tasks, but for keeping information - a flexible alternative to metadata.
 I'm using Kanboard as projectmanagement tool for managing construction projects, where I often need to take notes regarding specific installations, during site-visits or phonemeetings.
 
 The notes is accessible from the project dropdown, where only the project specific notes will be shown. On the dashboard there's a link in the sidebar to view all notes, the notes will be separated in tabs.
 
-Features
---------
+## Features
 
 - Take notes quickly. Write the note title and press ENTER to save.
 - Press TAB in the new note title to show the detailed menu
@@ -65,8 +67,7 @@ Features
 - Generate report for printing notes.
 - Filter report on category
 
-Todo
-----
+## Todo
 
 - Implement fault procedures (verify it is number, etc.)
 - Adding possibility to attach image from mobile
@@ -74,8 +75,7 @@ Todo
 - Update styling for a more simplicity view
 - Better overview of multiple projects with tabs
 
-Issues
-------------------------
+## Issues
 
 - Focus on description textarea when pressing TAB on new notes title is not working
 - Category is saved as text in database and does not have foreing key to the projects real category table
@@ -93,8 +93,7 @@ Issues
 - Functions in controller (BoardNotesController) missing variables in () - needed?
 - Markups as Kanboard
 
-Tested on
----------
+## Tested on
 
 - Application version: 1.0.30 / 1.0.32
 - PHP version: 5.5.9-1ubuntu4.17
