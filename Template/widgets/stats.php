@@ -17,4 +17,3 @@
     $statsWidget .= '</span>';
 
     print $statsWidget;
-?>

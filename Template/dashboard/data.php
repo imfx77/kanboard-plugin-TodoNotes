@@ -50,29 +50,29 @@
 
 <div id="content" class="sidebar-content">
 
-    <?php
-        $project = array('id' => 0, 'name' => t('BoardNotes_DASHBOARD_ALL_TAB'));
-        if ($tab_id > 0) {
-            $projectAccess = $projectsAccess[$tab_id - 1];
-            $project = array('id' => $projectAccess['project_id'],
-                             'name' => $projectAccess['project_name'],
-                             'is_custom' => $projectAccess['is_custom']);
-        }
-    ?>
+<?php
+    $project = array('id' => 0, 'name' => t('BoardNotes_DASHBOARD_ALL_TAB'));
+    if ($tab_id > 0) {
+        $projectAccess = $projectsAccess[$tab_id - 1];
+        $project = array('id' => $projectAccess['project_id'],
+                         'name' => $projectAccess['project_name'],
+                         'is_custom' => $projectAccess['is_custom']);
+    }
+?>
 
-    <?= $this->render('BoardNotes:project/data', array(
-        'projectsAccess' => $projectsAccess,
-        'project' => $project,
-        'project_id' => $project['id'],
-        'user' => $user,
-        'user_id' => $user_id,
-        'is_refresh' => false,
-        'is_dashboard_view' => 1,
-        'data' => $data,
-        'categories' => $categories,
-        'columns' => $columns,
-        'swimlanes' => $swimlanes,
-    )) ?>
+<?= $this->render('BoardNotes:project/data', array(
+    'projectsAccess' => $projectsAccess,
+    'project' => $project,
+    'project_id' => $project['id'],
+    'user' => $user,
+    'user_id' => $user_id,
+    'is_refresh' => false,
+    'is_dashboard_view' => 1,
+    'data' => $data,
+    'categories' => $categories,
+    'columns' => $columns,
+    'swimlanes' => $swimlanes,
+)) ?>
 
 </div>
 
@@ -80,5 +80,5 @@
 
 <?php
     // tab_id (hidden, for reference) -->
-    print '<div id="tab_id" class="hideMe" data="' . $tab_id.'">';
+    print '<div id="tab_id" class="hideMe" data="' . $tab_id . '">';
 ?>

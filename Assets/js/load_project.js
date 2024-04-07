@@ -16,7 +16,7 @@ _BoardNotes_Project_.prepareDocument = function() {
         order = order.join(",");
         var regex = new RegExp('item-', 'g');
         order = order.replace(regex, '');
-        var order = order.split(',');
+        order = order.split(',');
         _BoardNotes_.sqlUpdatePosition(project_id, user_id, order, nrNotes);
     }
 

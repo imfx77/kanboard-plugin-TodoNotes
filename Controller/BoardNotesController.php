@@ -41,7 +41,9 @@ class BoardNotesController extends BaseController
 
         // search requested project VS access
         foreach ($projectsAccess as $projectAccess) {
-            if ($projectAccess['project_id'] == $project_id) break;
+            if ($projectAccess['project_id'] == $project_id) {
+                break;
+            }
         }
 
         // if we didn't find the requested project, switch by default to the first one (i.e. General custom)
@@ -60,7 +62,7 @@ class BoardNotesController extends BaseController
         }
     }
 
-    private function boardNotesShowProject_Internal($is_refresh)
+    private function boardNotesShowProjectWithRefresh($is_refresh)
     {
         $user = $this->getUser();
         $user_id = $this->resolveUserId();
@@ -109,12 +111,12 @@ class BoardNotesController extends BaseController
 
     public function boardNotesShowProject()
     {
-        $this->boardNotesShowProject_Internal(false);
+        $this->boardNotesShowProjectWithRefresh(false);
     }
 
     public function boardNotesRefreshProject()
     {
-        $this->boardNotesShowProject_Internal(true);
+        $this->boardNotesShowProjectWithRefresh(true);
     }
 
     public function boardNotesRefreshTabs()

@@ -5,7 +5,9 @@ print $this->asset->js('plugins/BoardNotes/Assets/js/boardnotes.js');
 print $this->asset->js('plugins/BoardNotes/Assets/js/load_report.js');
 
     // evaluate optionShowCategoryColors option from session
-    if (!array_key_exists('boardnotesShowCategoryColors', $_SESSION)) $_SESSION['boardnotesShowCategoryColors'] = false;
+    if (!array_key_exists('boardnotesShowCategoryColors', $_SESSION)) {
+        $_SESSION['boardnotesShowCategoryColors'] = false;
+    }
     $optionShowCategoryColors = $_SESSION['boardnotesShowCategoryColors'];
 
     // session_vars (hidden reference for options)

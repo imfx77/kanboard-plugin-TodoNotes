@@ -55,7 +55,7 @@ if (!empty($categories)) {
 }
 
 $listColumnsById = '';
-if(!empty($columns)) {
+if (!empty($columns)) {
     foreach ($columns as $col) {
         $listColumnsById .= '<option value="';
         $listColumnsById .= $col['id'];
@@ -66,7 +66,7 @@ if(!empty($columns)) {
 }
 
 $listSwimlanesById = '';
-if(!empty($swimlanes)) {
+if (!empty($swimlanes)) {
     foreach ($swimlanes as $swim) {
         $listSwimlanesById .= '<option value="';
         $listSwimlanesById .= $swim['id'];
@@ -94,37 +94,37 @@ if (!$is_refresh) { // print only once per project !!!
 // it shall be regenerated both on initial page load and on every refresh
 //----------------------------------------
 
-    // evaluate optionShowCategoryColors option from session
-    if (!array_key_exists('boardnotesShowCategoryColors', $_SESSION)) {
-        $_SESSION['boardnotesShowCategoryColors'] = false;
-    }
-    $optionShowCategoryColors = $_SESSION['boardnotesShowCategoryColors'];
-    // evaluate optionSortByState option from session
-    if (!array_key_exists('boardnotesSortByState', $_SESSION)) {
-        $_SESSION['boardnotesSortByState'] = false;
-    }
-    $optionSortByState = $_SESSION['boardnotesSortByState'];
+// evaluate optionShowCategoryColors option from session
+if (!array_key_exists('boardnotesShowCategoryColors', $_SESSION)) {
+    $_SESSION['boardnotesShowCategoryColors'] = false;
+}
+$optionShowCategoryColors = $_SESSION['boardnotesShowCategoryColors'];
+// evaluate optionSortByState option from session
+if (!array_key_exists('boardnotesSortByState', $_SESSION)) {
+    $_SESSION['boardnotesSortByState'] = false;
+}
+$optionSortByState = $_SESSION['boardnotesSortByState'];
 
-    // session_vars (hidden reference for options)
-    print '<div id="session_vars';
-    print '" data-optionShowCategoryColors="';
-    print $optionShowCategoryColors ? 'true' : 'false';
-    print '" data-optionSortByState="';
-    print $optionSortByState ? 'true' : 'false';
-    print '" class="hideMe">';
-    print '</div>';
-
-//----------------------------------------
-
-    print '<ul id="sortableRef';
-    print $project_id;
-    print '" class="sortableRef">';
+// session_vars (hidden reference for options)
+print '<div id="session_vars';
+print '" data-optionShowCategoryColors="';
+print $optionShowCategoryColors ? 'true' : 'false';
+print '" data-optionSortByState="';
+print $optionSortByState ? 'true' : 'false';
+print '" class="hideMe">';
+print '</div>';
 
 //----------------------------------------
 
-    print '<li id="item-0" class="ui-state-default liNewNote" data-id="0" data-project="';
-    print $project_id;
-    print '">';
+print '<ul id="sortableRef';
+print $project_id;
+print '" class="sortableRef">';
+
+//----------------------------------------
+
+print '<li id="item-0" class="ui-state-default liNewNote" data-id="0" data-project="';
+print $project_id;
+print '">';
 
 if ($readonlyNotes) {
     print '<label class="labelNewNote">' . t('BoardNotes_PROJECT_OVERVIEW_MODE_TITLE') . '</label> ' . t('BoardNotes_PROJECT_OVERVIEW_MODE_TEXT');
@@ -132,11 +132,10 @@ if ($readonlyNotes) {
     print '<label class="labelNewNote" for="textinput">' . t('BoardNotes_PROJECT_CREATE_NEW_NOTE') . '</label>';
 }
 
-    print '<div class="containerNoWrap containerFloatRight disableDblClickPropagation">';
+print '<div class="containerNoWrap containerFloatRight disableDblClickPropagation">';
 
 // exclude when readonlyNotes
 if (!$readonlyNotes) {
-
     // Settings delete all done
     print '<button id="settingsDeleteAllDone" class="toolbarButton" title="' . t('BoardNotes_PROJECT_DELETE_ALL_DONE_NOTES') . '" data-id="0" data-project="';
     print $project_id;
@@ -166,42 +165,42 @@ if (!$readonlyNotes) {
     print '<div class="toolbarSeparator">&nbsp;</div>';
 } // end exclude
 
-    // Collapse all
-    print '<button id="settingsCollapseAll" class="toolbarButton" title="' . t('BoardNotes_PROJECT_COLLAPSE_ALL_NOTES') . '" data-id="0" data-project="';
-    print $project_id;
-    print '" data-user="';
-    print $user_id;
-    print '"><i class="fa fa-minus-square" aria-hidden="true"></i>';
-    print '</button>';
+// Collapse all
+print '<button id="settingsCollapseAll" class="toolbarButton" title="' . t('BoardNotes_PROJECT_COLLAPSE_ALL_NOTES') . '" data-id="0" data-project="';
+print $project_id;
+print '" data-user="';
+print $user_id;
+print '"><i class="fa fa-minus-square" aria-hidden="true"></i>';
+print '</button>';
 
-    // Expand all
-    print '<button id="settingsExpandAll" class="toolbarButton" title="' . t('BoardNotes_PROJECT_EXPAND_ALL_NOTES') . '" data-id="0" data-project="';
-    print $project_id;
-    print '" data-user="';
-    print $user_id;
-    print '"><i class="fa fa-plus-square" aria-hidden="true"></i>';
-    print '</button>';
+// Expand all
+print '<button id="settingsExpandAll" class="toolbarButton" title="' . t('BoardNotes_PROJECT_EXPAND_ALL_NOTES') . '" data-id="0" data-project="';
+print $project_id;
+print '" data-user="';
+print $user_id;
+print '"><i class="fa fa-plus-square" aria-hidden="true"></i>';
+print '</button>';
 
-    // add some space between button groups
-    print '<div class="toolbarSeparator">&nbsp;</div>';
+// add some space between button groups
+print '<div class="toolbarSeparator">&nbsp;</div>';
 
-    // Toggle sort by state
-    print '<button id="settingsSortByState" class="toolbarButton" title="' . t('BoardNotes_PROJECT_TOGGLE_SORT_BY_STATE') . '" data-id="0" data-project="';
-    print $project_id;
-    print '" data-user="';
-    print $user_id;
-    print '"><i class="fa fa-sort" aria-hidden="true"></i>';
-    print '</button>';
+// Toggle sort by state
+print '<button id="settingsSortByState" class="toolbarButton" title="' . t('BoardNotes_PROJECT_TOGGLE_SORT_BY_STATE') . '" data-id="0" data-project="';
+print $project_id;
+print '" data-user="';
+print $user_id;
+print '"><i class="fa fa-sort" aria-hidden="true"></i>';
+print '</button>';
 
-    // Toggle category colors
-    print '<button id="settingsCategoryColors" class="toolbarButton" title="' . t('BoardNotes_PROJECT_TOGGLE_SORT_BY_CATEGORY') . '" data-id="0" data-project="';
-    print $project_id;
-    print '" data-user="';
-    print $user_id;
-    print '"><i class="fa fa-paint-brush" aria-hidden="true"></i>';
-    print '</button>';
+// Toggle category colors
+print '<button id="settingsCategoryColors" class="toolbarButton" title="' . t('BoardNotes_PROJECT_TOGGLE_SORT_BY_CATEGORY') . '" data-id="0" data-project="';
+print $project_id;
+print '" data-user="';
+print $user_id;
+print '"><i class="fa fa-paint-brush" aria-hidden="true"></i>';
+print '</button>';
 
-    print '</div>';
+print '</div>';
 
 // exclude when readonlyNotes
 if (!$readonlyNotes) {
@@ -263,22 +262,28 @@ if (!$readonlyNotes) {
     print '</div>';
 } // end exclude
 
-    print '</li>';
+print '</li>';
 
 //----------------------------------------
 
 $num = "1";
 $last_project_id = 0;
-foreach ($data as $u){
-    if (!empty($project_id) && $u['project_id'] != $project_id) continue;
+foreach ($data as $u) {
+    if (!empty($project_id) && $u['project_id'] != $project_id) {
+        continue;
+    }
 
-    if ($readonlyNotes && $last_project_id != $u['project_id']){
+    if ($readonlyNotes && $last_project_id != $u['project_id']) {
         $last_project_id = $u['project_id'];
         print '</ul>';
 
         print '<h2>';
-        print $this->url->link($projectsTabsById[ $last_project_id ]['name'], 'BoardNotesController', 'boardNotesShowAll',
-                                array('plugin' => 'BoardNotes', 'user_id' => $user_id, 'tab_id' => $projectsTabsById[ $last_project_id ]['tab_id']));
+        print $this->url->link(
+            $projectsTabsById[ $last_project_id ]['name'],
+            'BoardNotesController',
+            'boardNotesShowAll',
+            array('plugin' => 'BoardNotes', 'user_id' => $user_id, 'tab_id' => $projectsTabsById[ $last_project_id ]['tab_id']
+        ));
         print '</h2>';
 
         print '<ul id="sortableRef';
@@ -323,7 +328,7 @@ foreach ($data as $u){
 
     // hide all the utility buttons when viewing notes as readonly
     // just allow for check/uncheck note
-    if (!$readonlyNotes){
+    if (!$readonlyNotes) {
         // Delete button viewed (in detailed view)
         print '<button title="' . t('BoardNotes_PROJECT_NOTE_DELETE') . '" id="singleNoteDeleteP';
         print $u['project_id'];
@@ -432,15 +437,17 @@ foreach ($data as $u){
     print '" data-id="';
     print $u['is_active'];
     print '" ';
-        if($u['is_active'] == "2"){
-            print 'class="fa fa-spinner fa-pulse" aria-hidden="true"></i>';
-        }
-        if($u['is_active'] == "1"){
-            print 'class="fa fa-circle-thin" aria-hidden="true"></i>';
-        }
-        if($u['is_active'] == "0"){
-            print 'class="fa fa-check" aria-hidden="true"></i>';
-        }
+
+    if ($u['is_active'] == "2") {
+        print 'class="fa fa-spinner fa-pulse" aria-hidden="true"></i>';
+    }
+    if ($u['is_active'] == "1") {
+        print 'class="fa fa-circle-thin" aria-hidden="true"></i>';
+    }
+    if ($u['is_active'] == "0") {
+        print 'class="fa fa-check" aria-hidden="true"></i>';
+    }
+
     print '</button>';
 
     // Note title input - typing. Changes after submit to label below.
@@ -477,7 +484,7 @@ foreach ($data as $u){
     print $user_id;
     print '" name="noteTitleLabel';
     print $num;
-    if($u['is_active'] == "0"){
+    if ($u['is_active'] == "0") {
         print '" class="noteTitleLabel noteTitle noteDoneDesignText" value="">';
     } else {
         print '" class="noteTitleLabel noteTitle" value="">';
@@ -509,8 +516,10 @@ foreach ($data as $u){
     print '" ';
     print 'class="hideMe details containerFloatClear noteDescriptionClass ui-corner-all">';
     print '<textarea title="' . t('BoardNotes_PROJECT_NOTE_DESCR_SAVE_HINT') . '" ';
-    if ($readonlyNotes) print 'disabled ';
-    if($u['is_active'] == "0"){
+    if ($readonlyNotes) {
+        print 'disabled ';
+    }
+    if ($u['is_active'] == "0") {
         print '" class="disableDblClickPropagation textareaDescription noteDoneDesignTextarea"';
     } else {
         print '" class="disableDblClickPropagation textareaDescription"';
@@ -532,7 +541,9 @@ foreach ($data as $u){
     print '<p class="categories disableDblClickPropagation">';
     print '<label for="cat">' . t('Category') . '</label><br>';
     print '<select ';
-    if ($readonlyNotes) print 'disabled ';
+    if ($readonlyNotes) {
+        print 'disabled ';
+    }
     print 'name="cat" class="catSelector ui-selectmenu-button ui-selectmenu-button-closed ui-corner-all ui-button ui-widget"';
     print ' id="catP';
     print $u['project_id'];
@@ -546,30 +557,29 @@ foreach ($data as $u){
     print $user_id;
     print '">';
 
-    if ($readonlyNotes){
+    if ($readonlyNotes) {
         // just preserve the existing category data from the note
         print '<option selected="selected">'.$u['category'].'</option>';
-    }
-    else{
+    } else {
         $emptyCatList = empty($listCategoriesById);
         $emptyCat = empty($u['category']);
 
-        if ($emptyCatList || $emptyCat){ // If no categories available or none selected
+        if ($emptyCatList || $emptyCat) { // If no categories available or none selected
             print '<option selected="selected"></option>'; // None category selected
         }
-        if (!$emptyCat && !$emptyCatList){
+        if (!$emptyCat && !$emptyCatList) {
             print '<option></option>'; // add an empty category option
             foreach ($categories as $cat) { // detect the selected category
-                if ($cat['name'] == $u['category']){
+                if ($cat['name'] == $u['category']) {
                     print '<option value="'.$cat['id'].'" selected="selected">';
-                }else{
+                } else {
                     print '<option value="'.$cat['id'].'">';
                 }
                 print $cat['name'];
                 print '</option>';
             }
         }
-        if ($emptyCat && !$emptyCatList){
+        if ($emptyCat && !$emptyCatList) {
             print $listCategoriesById;
         }
     }
@@ -641,111 +651,111 @@ if (!$is_refresh) { // print only once per project !!!
 
 if (!$is_refresh) { // print only once per project !!!
 
-  print '<div class="hideMe" id="dialogDeleteAllDone" title="' . t('BoardNotes_PROJECT_DELETE_ALL_DONE_NOTES') . '">';
-  print '<p style="white-space: pre-wrap;">';
-  print t('BoardNotes_DELETEALLDONE_DIALOG_MSG');
-  print '</p>';
-  print '</div>';
+    print '<div class="hideMe" id="dialogDeleteAllDone" title="' . t('BoardNotes_PROJECT_DELETE_ALL_DONE_NOTES') . '">';
+    print '<p style="white-space: pre-wrap;">';
+    print t('BoardNotes_DELETEALLDONE_DIALOG_MSG');
+    print '</p>';
+    print '</div>';
 
-  print '<div class="hideMe" id="dialogStats" title="' . t('BoardNotes_PROJECT_NOTES_STATS') . '">';
-  print '<div id="dialogStatsInside"></div>';
-  print '</div>';
+    print '<div class="hideMe" id="dialogStats" title="' . t('BoardNotes_PROJECT_NOTES_STATS') . '">';
+    print '<div id="dialogStatsInside"></div>';
+    print '</div>';
 
-  //---------------------------------------------
+    //---------------------------------------------
 
-  print '<div class="hideMe" id="dialogToTaskP'.$project_id.'" title="' . t('BoardNotes_PROJECT_NOTE_CREATE_TASK') . '">';
+    print '<div class="hideMe" id="dialogToTaskP' . $project_id . '" title="' . t('BoardNotes_PROJECT_NOTE_CREATE_TASK') . '">';
 
-  print '<div id="dialogToTaskParams">';
+    print '<div id="dialogToTaskParams">';
 
-  print '<label for="listCatToTask">' . t('Category') . ' : &nbsp;</label>';
-  print '<select name="listCatToTask" id="listCatToTaskP';
-  print $project_id;
-  print '">';
-  // Only allow blank select if there's other selectable options
-  if (!empty($listCategoriesById)){
-    print '<option></option>';
-  }
-  print $listCategoriesById;
-  print '</select>';
-  print '<br>';
-
-  print '<label for="listColToTask">' . t('Column') . ' : &nbsp;</label>';
-  print '<select name="listColToTask" id="listColToTaskP';
-  print $project_id;
-  print '">';
-  print $listColumnsById;
-  print '</select>';
-  print '<br>';
-
-  print '<label for="listSwimToTask">' . t('Swimlane') . ' : &nbsp;</label>';
-  print '<select name="listSwimToTask" id="listSwimToTaskP';
-  print $project_id;
-  print '">';
-  print $listSwimlanesById;
-  print '</select>';
-  print '<br>';
-
-  print '<input type="checkbox" checked name="removeNote" id="removeNoteP';
-  print $project_id;
-  print '">';
-  print '<label for="removeNote">&nbsp;&nbsp;' . t('BoardNotes_CREATETASK_CHECKBOX_REMOVE_TASK') . '</label>';
-
-  print '</div>';
-
-  print '<div id="deadloading" class="hideMe"></div>';
-  print '</div>';
-
-  //---------------------------------------------
-
-  print '<div class="hideMe" id="dialogTransferP'.$project_id.'" title="' . t('BoardNotes_PROJECT_NOTE_MOVE_TO_PROJECT') . '">';
-
-  print '<label for="listNoteProject">' . t('BoardNotes_TRANSFERNOTE_DIALOG_TARGET_PROJECT') . ' : &nbsp&nbsp;</label>';
-  print '<select name="listNoteProject" id="listNoteProjectP';
-  print $project_id;
-  print '">';
-  foreach ($projectsTabsById as $key => $projectTab) {
-    if ($key != $project_id){
-      print '<option value="';
-      print $key;
-      print '">';
-      print $projectTab['name'];
-      print '</option>';
+    print '<label for="listCatToTask">' . t('Category') . ' : &nbsp;</label>';
+    print '<select name="listCatToTask" id="listCatToTaskP';
+    print $project_id;
+    print '">';
+    // Only allow blank select if there's other selectable options
+    if (!empty($listCategoriesById)) {
+        print '<option></option>';
     }
-  }
-  print '</select>';
-  print '<br><br>';
-  print '<p style="white-space: pre-wrap;">';
-  print t('BoardNotes_TRANSFERNOTE_DIALOG_MSG');
-  print '</p>';
+    print $listCategoriesById;
+    print '</select>';
+    print '<br>';
 
-  print '</div>';
+    print '<label for="listColToTask">' . t('Column') . ' : &nbsp;</label>';
+    print '<select name="listColToTask" id="listColToTaskP';
+    print $project_id;
+    print '">';
+    print $listColumnsById;
+    print '</select>';
+    print '<br>';
 
-  //---------------------------------------------
+    print '<label for="listSwimToTask">' . t('Swimlane') . ' : &nbsp;</label>';
+    print '<select name="listSwimToTask" id="listSwimToTaskP';
+    print $project_id;
+    print '">';
+    print $listSwimlanesById;
+    print '</select>';
+    print '<br>';
 
-  print '<div class="hideMe" id="dialogReportP'.$project_id.'" title="' . t('BoardNotes_PROJECT_CREATE_REPORT') . '">';
-  print '<div id="">';
-  print '<label for="reportCat">' . t('BoardNotes_REPOSR_DIALOG_CATEGORY_FILTER') . ' :</label><br>';
-  print '<select name="reportCat" id="reportCatP';
-  print $project_id;
-  print '" data-project="';
-  print $project_id;
-  print '" data-user="';
-  print $user_id;
-  print '">';
-  
-  print '<option></option>'; // add an empty category option
-  if (!empty($listCategoriesById)){
-      print $listCategoriesById;
-  }
+    print '<input type="checkbox" checked name="removeNote" id="removeNoteP';
+    print $project_id;
+    print '">';
+    print '<label for="removeNote">&nbsp;&nbsp;' . t('BoardNotes_CREATETASK_CHECKBOX_REMOVE_TASK') . '</label>';
 
-  print '</select>';
-  print '</div>';
-  print '</div>';
+    print '</div>';
 
-  //---------------------------------------------
+    print '<div id="deadloading" class="hideMe"></div>';
+    print '</div>';
 
-  print '</section>';
-  print '</div>';
+    //---------------------------------------------
+
+    print '<div class="hideMe" id="dialogTransferP' . $project_id . '" title="' . t('BoardNotes_PROJECT_NOTE_MOVE_TO_PROJECT') . '">';
+
+    print '<label for="listNoteProject">' . t('BoardNotes_TRANSFERNOTE_DIALOG_TARGET_PROJECT') . ' : &nbsp&nbsp;</label>';
+    print '<select name="listNoteProject" id="listNoteProjectP';
+    print $project_id;
+    print '">';
+    foreach ($projectsTabsById as $key => $projectTab) {
+        if ($key != $project_id) {
+            print '<option value="';
+            print $key;
+            print '">';
+            print $projectTab['name'];
+            print '</option>';
+        }
+    }
+    print '</select>';
+    print '<br><br>';
+    print '<p style="white-space: pre-wrap;">';
+    print t('BoardNotes_TRANSFERNOTE_DIALOG_MSG');
+    print '</p>';
+
+    print '</div>';
+
+    //---------------------------------------------
+
+    print '<div class="hideMe" id="dialogReportP' . $project_id . '" title="' . t('BoardNotes_PROJECT_CREATE_REPORT') . '">';
+    print '<div id="">';
+    print '<label for="reportCat">' . t('BoardNotes_REPOSR_DIALOG_CATEGORY_FILTER') . ' :</label><br>';
+    print '<select name="reportCat" id="reportCatP';
+    print $project_id;
+    print '" data-project="';
+    print $project_id;
+    print '" data-user="';
+    print $user_id;
+    print '">';
+
+    print '<option></option>'; // add an empty category option
+    if (!empty($listCategoriesById)) {
+        print $listCategoriesById;
+    }
+
+    print '</select>';
+    print '</div>';
+    print '</div>';
+
+    //---------------------------------------------
+
+    print '</section>';
+    print '</div>';
 
 } // if (!$is_refresh)
 

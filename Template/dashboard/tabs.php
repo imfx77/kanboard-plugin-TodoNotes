@@ -31,9 +31,9 @@
 
     $separatorPlacedCustom = false;
     $separatorPlacedNormal = false;
+
     // Loop through all projects
     foreach ($projectsAccess as $o) {
-
         // separator for custom projects
         if (!$separatorPlacedCustom && $o['is_custom']) {
             print '<hr class="hrTabs">';
@@ -66,28 +66,29 @@
              'stats_project_id' => $o['project_id'],
         ));
 
-//         // edit buttons for custom projects ONLY
-//         print '<div class="toolbarSeparator">&nbsp;</div>';
-//         if ($o['is_custom']) {
-//             print '<button title="Delete custom project" id="customProjectDeleteP';
-//             print $o['project_id'];
-//             print '" class="toolbarButton customProjectDelete" data-project="';
-//             print $o['project_id'];
-//             print '" data-user="';
-//             print $user_id;
-//             print '"><a><i class="fa fa-trash-o" aria-hidden="true"></i></a></button>';
-//
-//             print '<button title="Rename custom project" id="customProjectRenameP';
-//             print $o['project_id'];
-//             print '" class="toolbarButton customProjectRename" data-project="';
-//             print $o['project_id'];
-//             print '" data-user="';
-//             print $user_id;
-//             print '"><a><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></button>';
-//         }
+        // // edit buttons for custom projects ONLY
+        // print '<div class="toolbarSeparator">&nbsp;</div>';
+        // if ($o['is_custom']) {
+        //     print '<button title="Delete custom project" id="customProjectDeleteP';
+        //     print $o['project_id'];
+        //     print '" class="toolbarButton customProjectDelete" data-project="';
+        //     print $o['project_id'];
+        //     print '" data-user="';
+        //     print $user_id;
+        //     print '"><a><i class="fa fa-trash-o" aria-hidden="true"></i></a></button>';
+        //
+        //     print '<button title="Rename custom project" id="customProjectRenameP';
+        //     print $o['project_id'];
+        //     print '" class="toolbarButton customProjectRename" data-project="';
+        //     print $o['project_id'];
+        //     print '" data-user="';
+        //     print $user_id;
+        //     print '"><a><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></button>';
+        // }
 
         print'</li>';
         $num++;
     }
+
 ?>
 </ul>

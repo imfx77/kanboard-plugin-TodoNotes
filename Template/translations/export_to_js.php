@@ -15,6 +15,7 @@
         'BoardNotes_JS_DIALOG_DELETE_BTN',
         'BoardNotes_JS_DIALOG_RESULT_TITLE',
     );
+
 ?>
 
 <textarea id="_BoardNotes_TranslationsExportToJS" style="display: none">
