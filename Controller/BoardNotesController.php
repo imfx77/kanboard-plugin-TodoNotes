@@ -194,7 +194,7 @@ class BoardNotesController extends BaseController
         if (
             !array_key_exists($session_option, $_SESSION) ||    // key not exist
             !is_bool($_SESSION[$session_option])                // value not bool
-         ) {
+        ) {
             // set initial value
             $_SESSION[$session_option] = false;
             return true;

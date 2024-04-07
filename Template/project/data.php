@@ -760,4 +760,3 @@ if (!$is_refresh) { // print only once per project !!!
     print '</section>';
     print '</div>';
 } // if (!$is_refresh)
-
