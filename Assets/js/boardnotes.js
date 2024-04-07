@@ -20,6 +20,21 @@ _BoardNotes_.isMobile = function() {
   var optionSortByState = false;
 
   //------------------------------------------------
+  // Translation Export to JS
+  //------------------------------------------------
+
+  var translationsExportToJS = null;
+
+  function getTranslationExportToJS(textId) {
+    // lazy init the translations ONCE
+    if (translationsExportToJS == null) {
+        translationsExportToJS = JSON.parse( $("#BoardNotes_TranslationsExportToJS").html() );
+        $("#BoardNotes_TranslationsExportToJS").remove();
+    }
+    return translationsExportToJS[textId];
+  }
+
+  //------------------------------------------------
   // Note Details routines
   //------------------------------------------------
 
@@ -90,6 +105,8 @@ _BoardNotes_.isMobile = function() {
 
   // Show details for existing notes (toggle class)
   function toggleDetails(project_id, id) {
+    //alert(getTranslationExportToJS('BoardNotes_JS_TEST_STRING'));
+
     $("#noteDescriptionP" + project_id + "-" + id).toggleClass( "hideMe" );
     $("#singleNoteDeleteP" + project_id + "-" + id).toggleClass( "hideMe" );
     $("#singleNoteSaveP" + project_id + "-" + id).toggleClass( "hideMe" );
@@ -623,7 +640,7 @@ _BoardNotes_.isMobile = function() {
                 + '&user_id=' + user_id;
     $('#dialogStatsInside').html(ajax_load).load(loadUrl,
         function(response, status, xhr) {
-            prepareDocumentForStats();
+            _BoardNotes_Stats_.prepareDocument();
         });
 
     $( "#dialogStats" ).removeClass( 'hideMe' );
@@ -653,7 +670,7 @@ _BoardNotes_.isMobile = function() {
           $("#result" + project_id).html(ajax_load).load(loadUrl,
             function(response, status, xhr) {
                 attachAllHandlers();
-                prepareDocumentForReport();
+                _BoardNotes_Report_.prepareDocument();
             });
           $( this ).dialog( "close" );
         }
@@ -829,7 +846,7 @@ _BoardNotes_.isMobile = function() {
         $("#result" + project_id).html(ajax_load).load(loadUrl,
             function(response, status, xhr) {
                 attachAllHandlers();
-                prepareDocumentForProject();
+                _BoardNotes_Project_.prepareDocument();
             });
     }, 100);
   }

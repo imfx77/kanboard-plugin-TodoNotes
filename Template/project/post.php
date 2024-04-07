@@ -9,7 +9,7 @@ table {
 if ($task_id > 0) {
     print '<strong>Success!</strong>';
     print '<br>';
-    print 'Created task <a target="_blank" title="Opens in a new window ⇗" href="task/' . $task_id . '">';
+    print 'Created task <a target="_blank" title="' . t('Opens in a new window') . ' ⇗" href="task/' . $task_id . '">';
     print '<strong> #' . $task_id . ' </strong><i class="fa fa-external-link" aria-hidden="true"></i></a> as:';
 } else {
     print '<strong>Ooops, something went wrong ;/</strong>';

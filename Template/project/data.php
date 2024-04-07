@@ -1,5 +1,8 @@
 <?php
 
+// export translations to JS
+print $this->render('BoardNotes:translations/export_to_js');
+
 if (!$is_refresh) { // load CSS and JS only once per project !!!
     print $this->asset->css('plugins/BoardNotes/Assets/css/style.css');
     print $this->asset->js('plugins/BoardNotes/Assets/js/boardnotes.js');
