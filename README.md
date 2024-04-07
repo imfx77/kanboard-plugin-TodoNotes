@@ -119,11 +119,13 @@ Every user can privately see and operate ONLY his own notes, even if notes of mu
 <p align="right">[<a href="#user-content-readme-bottom">&#8595; Bottom</a>] [<a href="#user-content-readme-top">&#8593; Top</a>]</p>
 
 ## Screenshots
+
 ```TODO: update```
 
 <p align="right">[<a href="#user-content-readme-bottom">&#8595; Bottom</a>] [<a href="#user-content-readme-top">&#8593; Top</a>]</p>
 
 ## Usage
+
 ```TODO: update```
 
 Take notes on the fly. Developed to easily take project specific notes. The purpose of the notes is not to be tasks, but for keeping information - a flexible alternative to metadata.
