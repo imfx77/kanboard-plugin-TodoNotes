@@ -1,12 +1,14 @@
 let _BoardNotes_Project_ = {}; // namespace
 
 _BoardNotes_Project_.adjustAllNotesPlaceholders = function() {
-    // adjust notePlaceholderDescription containers where not needed
-    $('button' + '.checkDone').each(function() {
-        var project_id = $(this).attr('data-project');
-        var id = $(this).attr('data-id');
-        _BoardNotes_.adjustNotePlaceholders(project_id, id);
-    })
+    setTimeout(function() {
+        // adjust notePlaceholderDescription containers where not needed
+        $('button' + '.checkDone').each(function() {
+            var project_id = $(this).attr('data-project');
+            var id = $(this).attr('data-id');
+            _BoardNotes_.adjustNotePlaceholders(project_id, id);
+        })
+    }, 100);
 }
 
 _BoardNotes_Project_.prepareDocument = function() {
