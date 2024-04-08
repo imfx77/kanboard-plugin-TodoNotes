@@ -212,9 +212,7 @@ if ($readonlyNotes) {
 print '</div>';
 
 // here goes the space Placeholder
-print '<div id="notePlaceholderNew" class="containerFloatClear hideMe">';
-print '&nbsp';
-print '</div>';
+print '<div id="notePlaceholderNew" class="containerFloatClear hideMe"></div>';
 
 // exclude when in Overview Mode
 if (!$readonlyNotes) {
@@ -222,7 +220,7 @@ if (!$readonlyNotes) {
     print '<br>';
 
     // here goes the Detailed View
-    print '<div class="containerNoWrap containerFloatClear disableDblClickPropagation">';
+    print '<div class="containerNoWrap containerFloatClear">';
 
     // Show details button
     print '<button title="' . t('BoardNotes_PROJECT_NOTE_TOGGLE_DETAILS') . '" id="showDetailsNew" class="showDetailsNew toolbarButton" data-id="0" data-project="';
@@ -238,8 +236,6 @@ if (!$readonlyNotes) {
     print $user_id;
     print '"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>';
 
-    print '</div>';
-
     // Input line
     print '<input id="inputNewNote';
     print $project_id;
@@ -250,6 +246,8 @@ if (!$readonlyNotes) {
     print '" data-user="';
     print $user_id;
     print '">';
+
+    print '</div>';
 
     // Detailed view
     print '<div id="noteDescriptionP';
@@ -523,9 +521,7 @@ foreach ($data as $u) {
     print $u['project_id'];
     print '-';
     print $num;
-    print '" class="containerFloatClear hideMe">';
-    print '&nbsp';
-    print '</div>';
+    print '" class="containerFloatClear hideMe"></div>';
 
     // here goes the Detailed View
     print '<div id="noteDescriptionP';

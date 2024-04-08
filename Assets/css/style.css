@@ -109,8 +109,7 @@ label {
 }
 
 .containerFloatClear {
-    clear: left;
-    clear: right;
+    clear: both !important;
 }
 
 
