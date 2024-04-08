@@ -2,7 +2,8 @@ let _BoardNotes_Project_ = {}; // namespace
 
 _BoardNotes_Project_.adjustAllNotesPlaceholders = function() {
     setTimeout(function() {
-        // adjust notePlaceholderDescription containers where not needed
+        // adjust notePlaceholder containers where not needed
+        _BoardNotes_.adjustNotePlaceholders(0, 0);
         $('button' + '.checkDone').each(function() {
             var project_id = $(this).attr('data-project');
             var id = $(this).attr('data-id');

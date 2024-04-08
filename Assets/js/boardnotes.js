@@ -38,15 +38,26 @@ _BoardNotes_.getTranslationExportToJS = function(textId) {
 // Note Details routines
 //------------------------------------------------
 
-// Adjust notePlaceholderDescription container
+// Adjust notePlaceholder container
 _BoardNotes_.adjustNotePlaceholders = function(project_id, id) {
-    var offsetCheck = $("#checkDone" + project_id + "-" + id).offset().top;
-    var offsetDetails = $("#showDetails" + project_id + "-" + id).offset().top;
-    if (offsetCheck == offsetDetails) {
-        $("#notePlaceholderDescriptionP" + project_id + "-" + id).addClass( 'hideMe' );
-    }
-    else {
-        $("#notePlaceholderDescriptionP" + project_id + "-" + id).removeClass( 'hideMe' );
+    var isTitle = (project_id == 0 && id == 0);
+    if (isTitle) {
+        var offsetTitle = $(".labelNewNote").offset().top;
+        var offsetButtons = $("#settingsSortByState").offset().top;
+        offsetButtons += $("#settingsSortByState").outerHeight();
+        if (offsetTitle > offsetButtons) {
+            $("#notePlaceholderNew").removeClass( 'hideMe' );
+        } else {
+            $("#notePlaceholderNew").addClass( 'hideMe' );
+        }
+    } else {
+        var offsetCheck = $("#checkDone" + project_id + "-" + id).offset().top;
+        var offsetDetails = $("#showDetails" + project_id + "-" + id).offset().top;
+        if (offsetCheck == offsetDetails) {
+            $("#notePlaceholderP" + project_id + "-" + id).addClass( 'hideMe' );
+        } else {
+            $("#notePlaceholderP" + project_id + "-" + id).removeClass( 'hideMe' );
+        }
     }
 }
 

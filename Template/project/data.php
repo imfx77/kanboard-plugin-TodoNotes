@@ -20,7 +20,7 @@ if (!$is_refresh && !$is_dashboard_view) {
 
 //----------------------------------------
 
-$readonlyNotes = ($project_id == 0);
+$readonlyNotes = ($project_id == 0); // Overview Mode
 
 $tab_id = 1;
 $projectsTabsById = array();
@@ -122,19 +122,18 @@ print '" class="sortableRef">';
 
 //----------------------------------------
 
+//////////////////////////////////////////
+////    NEW NOTE / OVERVIEW MODE TITLE
+//////////////////////////////////////////
+
 print '<li id="item-0" class="ui-state-default liNewNote" data-id="0" data-project="';
 print $project_id;
 print '">';
 
-if ($readonlyNotes) {
-    print '<label class="labelNewNote">' . t('BoardNotes_PROJECT_OVERVIEW_MODE_TITLE') . '</label> ' . t('BoardNotes_PROJECT_OVERVIEW_MODE_TEXT');
-} else {
-    print '<label class="labelNewNote" for="textinput">' . t('BoardNotes_PROJECT_CREATE_NEW_NOTE') . '</label>';
-}
-
+// here goes the Button Toolbar
 print '<div class="containerNoWrap containerFloatRight disableDblClickPropagation">';
 
-// exclude when readonlyNotes
+// exclude when in Overview Mode
 if (!$readonlyNotes) {
     // Settings delete all done
     print '<button id="settingsDeleteAllDone" class="toolbarButton" title="' . t('BoardNotes_PROJECT_DELETE_ALL_DONE_NOTES') . '" data-id="0" data-project="';
@@ -202,12 +201,28 @@ print '</button>';
 
 print '</div>';
 
-// exclude when readonlyNotes
+// here goes the Title row
+print '<div class="containerNoWrap containerFloatLeft disableDblClickPropagation">';
+if ($readonlyNotes) {
+    print '<label class="labelNewNote">' . t('BoardNotes_PROJECT_OVERVIEW_MODE_TITLE') . '</label>';
+    print t('BoardNotes_PROJECT_OVERVIEW_MODE_TEXT');
+} else {
+    print '<label class="labelNewNote" for="textinput">' . t('BoardNotes_PROJECT_CREATE_NEW_NOTE') . '</label>';
+}
+print '</div>';
+
+// here goes the space Placeholder
+print '<div id="notePlaceholderNew" class="containerFloatClear hideMe">';
+print '&nbsp';
+print '</div>';
+
+// exclude when in Overview Mode
 if (!$readonlyNotes) {
     // Newline after heading and top settings
     print '<br>';
 
-    print '<div class="containerNoWrap containerFloatRight disableDblClickPropagation">';
+    // here goes the Detailed View
+    print '<div class="containerNoWrap containerFloatClear disableDblClickPropagation">';
 
     // Show details button
     print '<button title="' . t('BoardNotes_PROJECT_NOTE_TOGGLE_DETAILS') . '" id="showDetailsNew" class="showDetailsNew toolbarButton" data-id="0" data-project="';
@@ -273,6 +288,7 @@ foreach ($data as $u) {
         continue;
     }
 
+    // show project name links in Overview Mode
     if ($readonlyNotes && $last_project_id != $u['project_id']) {
         $last_project_id = $u['project_id'];
         print '</ul>';
@@ -291,6 +307,10 @@ foreach ($data as $u) {
         print '" class="sortableRef">';
     }
 
+    //////////////////////////////////////////
+    ////    PROJECT NOTE
+    //////////////////////////////////////////
+
     print '<li id="item';
     print '-';
     print $u['id'];
@@ -307,7 +327,7 @@ foreach ($data as $u) {
     print $u['project_id'];
     print '">';
 
-    // Here goes the icon bar for all note buttons
+    // here goes the Button Toolbar
     print '<div class="containerNoWrap containerFloatRight disableDblClickPropagation">';
 
     // explicit reorder handle for mobile
@@ -416,7 +436,7 @@ foreach ($data as $u) {
 
     print '</div>';
 
-    // Here goes the title row with checkbox
+    // here goes the Title row with Checkbox
     print '<div class="containerNoWrap containerFloatLeft disableDblClickPropagation">';
 
     // Checkbox for done note
@@ -498,8 +518,8 @@ foreach ($data as $u) {
 
     print '</div>';
 
-    // Here goes the detailed view
-    print '<div id="notePlaceholderDescriptionP';
+    // here goes the space Placeholder
+    print '<div id="notePlaceholderP';
     print $u['project_id'];
     print '-';
     print $num;
@@ -507,6 +527,7 @@ foreach ($data as $u) {
     print '&nbsp';
     print '</div>';
 
+    // here goes the Detailed View
     print '<div id="noteDescriptionP';
     print $u['project_id'];
     print '-';
