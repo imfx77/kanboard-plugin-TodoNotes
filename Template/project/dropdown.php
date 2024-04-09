@@ -1,5 +1,12 @@
-<?= $this->asset->css('plugins/BoardNotes/Assets/css/style.css') ?>
-<?= $this->asset->js('plugins/BoardNotes/Assets/js/load_dropdown.js') ?>
+<?php
+
+print $this->asset->css('plugins/BoardNotes/Assets/css/style.css');
+print $this->asset->js('plugins/BoardNotes/Assets/js/load_dropdown.js');
+
+// export translations to JS
+print $this->render('BoardNotes:translations/export_to_js');
+
+?>
 
 <li class="">
     <?php

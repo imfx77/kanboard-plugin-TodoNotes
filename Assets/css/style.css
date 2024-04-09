@@ -109,8 +109,7 @@ label {
 }
 
 .containerFloatClear {
-    clear: left;
-    clear: right;
+    clear: both !important;
 }
 
 
@@ -131,6 +130,13 @@ label {
 .labelNewNote {
     font-weight: bold;
     padding-bottom: 5px;
+    padding-right: 10px;
+    cursor: default;
+}
+
+.textNewNote {
+    color: #CD650A;
+    cursor: default;
 }
 
 .textareaNewNote {
@@ -294,10 +300,12 @@ textarea::selection {
     margin-top: 0;
     padding-left: 10px;
     max-width: 90%;
+    cursor: default;
 }
 
 .reportTitle {
     color: #DDDDDD;
+    cursor: default;
 }
 
 .singleReportHide {
@@ -308,6 +316,7 @@ textarea::selection {
     border: 0;
     background: transparent;
     padding: 5px 5px 5px 5px;
+    cursor: pointer;
 }
 
 .reportDescriptionClass {

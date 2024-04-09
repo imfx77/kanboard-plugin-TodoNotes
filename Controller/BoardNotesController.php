@@ -85,11 +85,11 @@ class BoardNotesController extends BaseController
         $columns = $this->boardNotesModel->boardNotesGetColumns($project_id);
         $swimlanes = $this->boardNotesModel->boardNotesGetSwimlanes($project_id);
 
-        if (!array_key_exists('boardnotesSortByState', $_SESSION)) {
-            $_SESSION['boardnotesSortByState'] = false;
+        if (!array_key_exists('boardnotesSortByStatus', $_SESSION)) {
+            $_SESSION['boardnotesSortByStatus'] = false;
         }
-        $doSortByState = $_SESSION['boardnotesSortByState'];
-        $data = $this->boardNotesModel->boardNotesShowProject($project_id, $user_id, $doSortByState);
+        $doSortByStatus = $_SESSION['boardnotesSortByStatus'];
+        $data = $this->boardNotesModel->boardNotesShowProject($project_id, $user_id, $doSortByStatus);
 
         return $this->response->html($this->helper->layout->app('BoardNotes:project/data', array(
             'title' => $project['name'], // rather keep the project name as title
@@ -163,11 +163,11 @@ class BoardNotesController extends BaseController
             $swimlanes  = array();
         }
 
-        if (!array_key_exists('boardnotesSortByState', $_SESSION)) {
-            $_SESSION['boardnotesSortByState'] = false;
+        if (!array_key_exists('boardnotesSortByStatus', $_SESSION)) {
+            $_SESSION['boardnotesSortByStatus'] = false;
         }
-        $doSortByState = $_SESSION['boardnotesSortByState'];
-        $data = $this->boardNotesModel->boardNotesShowAll($projectsAccess, $user_id, $doSortByState);
+        $doSortByStatus = $_SESSION['boardnotesSortByStatus'];
+        $data = $this->boardNotesModel->boardNotesShowAll($projectsAccess, $user_id, $doSortByStatus);
 
         return $this->response->html($this->helper->layout->dashboard('BoardNotes:dashboard/data', array(
             'title' => t('BoardNotes_DASHBOARD_TITLE', $this->helper->user->getFullname($user)),
@@ -357,12 +357,12 @@ class BoardNotesController extends BaseController
         $project = $this->resolveProject($user_id);
         $project_id = $project['id'];
 
-        if (!array_key_exists('boardnotesSortByState', $_SESSION)) {
-            $_SESSION['boardnotesSortByState'] = false;
+        if (!array_key_exists('boardnotesSortByStatus', $_SESSION)) {
+            $_SESSION['boardnotesSortByStatus'] = false;
         }
-        $doSortByState = $_SESSION['boardnotesSortByState'];
+        $doSortByStatus = $_SESSION['boardnotesSortByStatus'];
         $category = $this->request->getStringParam('category');
-        $data = $this->boardNotesModel->boardNotesReport($project_id, $user_id, $doSortByState, $category);
+        $data = $this->boardNotesModel->boardNotesReport($project_id, $user_id, $doSortByStatus, $category);
 
         return $this->response->html($this->helper->layout->app('BoardNotes:project/report', array(
             'title' => $project['name'], // rather keep the project name as title

@@ -57,7 +57,7 @@ foreach ($data as $u) {
     print '<td class="tdReport tdReportInfo">';
 
     // Category label
-    print '<label class="catLabel" id="noteCatLabelP';
+    print '<label class="catLabel" id="noteCatLabel-P';
     print $u['project_id'];
     print '-';
     print $num;
@@ -90,7 +90,7 @@ foreach ($data as $u) {
 
     // Detailed view
     if (!empty($u['description'])) {
-        print '<div id="noteDescriptionP';
+        print '<div id="noteDescription-P';
         print $u['project_id'];
         print '-';
         print $num;
@@ -100,7 +100,7 @@ foreach ($data as $u) {
         print $u['project_id'];
         print '" class="details reportDescriptionClass ui-corner-all">';
 
-        print '<span id="noteTextareaDescriptionP';
+        print '<span id="noteTextareaDescription-P';
         print $u['project_id'];
         print '-';
         print $num;
