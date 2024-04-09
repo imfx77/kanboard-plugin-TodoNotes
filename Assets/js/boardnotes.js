@@ -952,6 +952,13 @@ $(function() {
 // schedule check for modifications every 15 sec
 _BoardNotes_.ScheduleCheckModifications = function() {
     setTimeout(function() {
+        if ($(".liNewNote").length == 0) {
+            // this means the page no longer displays notes list(s)
+            // most probably we are showing the report page
+            // the scheduled check is no longer relevant => so abort it
+            return;
+        }
+
         _BoardNotes_.ShowBusyIcon();
 
         var project_id = $("#refProjectId").attr('data-project');
