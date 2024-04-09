@@ -41,7 +41,7 @@ _BoardNotes_Dashboard_.updateNotesTabs = function() {
     $(".singleTab").removeClass( 'active' );
     $("#singleTab" + tab_id).addClass( 'active' );
     $("#myNotesHeader h2").text(
-        get_BoardNotes_Translations().getTranslationExportToJS('BoardNotes_DASHBOARD_MY_NOTES')
+        _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_DASHBOARD_MY_NOTES')
         + ' > ' + $("#singleTab" + tab_id + " a").text()
     );
 

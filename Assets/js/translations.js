@@ -1,25 +1,24 @@
-function get_BoardNotes_Translations() {
-
+class _BoardNotes_Translations_ {
 //================================================
-
-let _BoardNotes_Translations_ = {}; // namespace
 
 //------------------------------------------------
 // Translation Export to JS
 //------------------------------------------------
 
-_BoardNotes_Translations_.translationsExportToJS = null;
+static #translationsExportToJS = null;
 
-_BoardNotes_Translations_.getTranslationExportToJS = function(textId) {
+static initialize() {
     // lazy init the translations ONCE
-    if (_BoardNotes_Translations_.translationsExportToJS == null) {
-        _BoardNotes_Translations_.translationsExportToJS = JSON.parse( $("#_BoardNotes_TranslationsExportToJS").html() );
-        $("#BoardNotes_TranslationsExportToJS").remove();
-    }
-    return _BoardNotes_Translations_.translationsExportToJS[textId];
+    if (this.#translationsExportToJS !== null) return;
+
+    this.#translationsExportToJS = JSON.parse( $("#_BoardNotes_TranslationsExportToJS_").html() );
+    $("#_BoardNotes_TranslationsExportToJS_").remove();
+}
+
+static getTranslationExportToJS(textId) {
+    _BoardNotes_Translations_.initialize();
+    return this.#translationsExportToJS[textId];
 }
 
 //================================================
-
-return _BoardNotes_Translations_;
 }

@@ -1,15 +1,15 @@
 <?php
 
-// export translations to JS
-print $this->render('BoardNotes:translations/export_to_js');
-
-if (!$is_refresh) { // load CSS and JS only once per project !!!
+if (!$is_refresh) { // load CSS and JS and translations only once per project !!!
     print $this->asset->css('plugins/BoardNotes/Assets/css/style.css');
     print $this->asset->js('plugins/BoardNotes/Assets/js/translations.js');
     print $this->asset->js('plugins/BoardNotes/Assets/js/boardnotes.js');
     print $this->asset->js('plugins/BoardNotes/Assets/js/load_project.js');
     print $this->asset->js('plugins/BoardNotes/Assets/js/load_report.js');
     print $this->asset->js('plugins/BoardNotes/Assets/js/load_stats.js');
+
+    // export translations to JS
+    print $this->render('BoardNotes:translations/export_to_js');
 }
 
 //----------------------------------------

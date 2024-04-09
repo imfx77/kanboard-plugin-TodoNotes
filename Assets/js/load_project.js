@@ -55,12 +55,14 @@ _BoardNotes_Project_.prepareDocument = function() {
         $("#mainholderP" + project_id).removeClass('mainholder').addClass('mainholderMobile');
     }
 
+    _BoardNotes_Translations_.initialize();
+
     _BoardNotes_Project_.adjustAllNotesPlaceholders();
     _BoardNotes_.refreshCategoryColors();
     _BoardNotes_.refreshSortByState();
 
     // prepare method for dashboard view if embedded
-    if ( $.isFunction(_BoardNotes_Dashboard_.prepareDocument) ) {
+    if (typeof _BoardNotes_Dashboard_ !== 'undefined') {
         _BoardNotes_Dashboard_.prepareDocument();
     }
 }

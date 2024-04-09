@@ -16,8 +16,4 @@ $translationTextIds = array(
     'BoardNotes_JS_DIALOG_RESULT_TITLE',
 );
 
-?>
-
-<textarea id="_BoardNotes_TranslationsExportToJS" style="display: none">
-<?= $this->helper->translationsExportToJSHelper->export($translationTextIds) ?>
-</textarea>
+$this->helper->translationsExportToJSHelper->export($translationTextIds);
