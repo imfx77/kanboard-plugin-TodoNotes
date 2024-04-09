@@ -2,7 +2,6 @@
 
 if (!$is_refresh) { // load CSS and JS and translations only once per project !!!
     print $this->asset->css('plugins/BoardNotes/Assets/css/style.css');
-    print $this->asset->js('plugins/BoardNotes/Assets/js/translations.js');
     print $this->asset->js('plugins/BoardNotes/Assets/js/boardnotes.js');
     print $this->asset->js('plugins/BoardNotes/Assets/js/load_project.js');
     print $this->asset->js('plugins/BoardNotes/Assets/js/load_report.js');
