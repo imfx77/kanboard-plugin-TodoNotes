@@ -1,6 +1,7 @@
-let _BoardNotes_Project_ = {}; // namespace
+class _BoardNotes_Project_ {
 
-_BoardNotes_Project_.adjustAllNotesPlaceholders = function() {
+//------------------------------------------------
+static adjustAllNotesPlaceholders() {
     setTimeout(function() {
         // adjust notePlaceholder containers where not needed
         _BoardNotes_.adjustNotePlaceholders(0, 0);
@@ -12,7 +13,8 @@ _BoardNotes_Project_.adjustAllNotesPlaceholders = function() {
     }, 100);
 }
 
-_BoardNotes_Project_.prepareDocument = function() {
+//------------------------------------------------
+static prepareDocument() {
     _BoardNotes_.optionShowCategoryColors = ($("#session_vars").attr('data-optionShowCategoryColors') == 'true') ? true : false;
     _BoardNotes_.optionSortByStatus = ($("#session_vars").attr('data-optionSortByStatus') == 'true') ? true : false;
 
@@ -73,5 +75,10 @@ _BoardNotes_Project_.prepareDocument = function() {
     }
 }
 
+//------------------------------------------------
+
+} // class _BoardNotes_Project_
+
+//////////////////////////////////////////////////
 window.onresize = _BoardNotes_Project_.adjustAllNotesPlaceholders;
 $( document ).ready( _BoardNotes_Project_.prepareDocument );
