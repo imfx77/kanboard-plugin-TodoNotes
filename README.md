@@ -84,12 +84,12 @@ Every user can privately see and operate ONLY his own notes, even if notes of mu
 
 **New Take**
 
-* There are custom lists available only to you, and project lists which are automatically defined by the projects you have access to. Even though, notes on a project list are per user - i.e. your notes are visible and manageable only to and by you.
-* Editing of the same lists is possible from multiple devices (and users if they have access to the same project), and the lists auto update on 15sec interval. If there are clashes between local and remote changes, the locals are discarded.
-* Stat counts are available for every list. those also auto update upon clicking the items as open/in progress/done. Remote change of notes status get updated every 15secs.
-* Main list toolbar and each note personal toolbar provide numerous actions, including transfer of notes btw lists and creating a KB board task from note, sorting and colorizing as visuals.
-* Useful keyboard shortcuts (for desktop) to create and edit notes fast and easy. Click note checkbox to change its status.  DblClick note to show/hide details. Reordering of notes using drag.
-* Finally, all the above functionalities and visualizations are swiftly adapted to work on mobile devices, considering smaller screen and touch input.
+- There are custom lists available only to you, and project lists which are automatically defined by the projects you have access to. Even though, notes on a project list are per user - i.e. your notes are visible and manageable only to and by you.
+- Editing of the same lists is possible from multiple devices (and users if they have access to the same project), and the lists auto update on 15sec interval. If there are clashes between local and remote changes, the locals are discarded.
+- Stat counts are available for every list. those also auto update upon clicking the items as open/in progress/done. Remote change of notes status get updated every 15secs.
+- Main list toolbar and each note personal toolbar provide numerous actions, including transfer of notes btw lists and creating a KB board task from note, sorting and colorizing as visuals.
+- Useful keyboard shortcuts (for desktop) to create and edit notes fast and easy. Click note checkbox to change its status.  DblClick note to show/hide details. Reordering of notes using drag.
+- Finally, all the above functionalities and visualizations are swiftly adapted to work on mobile devices, considering smaller screen and touch input.
 
 </details>
 <details>
@@ -138,11 +138,11 @@ Might you excuse my custom dark theme, the cyrillic texts on my board, and the r
 
 ### (temporary pic of) Project View
 
-![](https://private-user-images.githubusercontent.com/76657062/320924221-e80af11f-4e20-4fbb-9821-7d0648faa2f2.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MTI2OTEwMTcsIm5iZiI6MTcxMjY5MDcxNywicGF0aCI6Ii83NjY1NzA2Mi8zMjA5MjQyMjEtZTgwYWYxMWYtNGUyMC00ZmJiLTk4MjEtN2QwNjQ4ZmFhMmYyLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDA0MDklMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQwNDA5VDE5MjUxN1omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTM2ZjdkMmU1OTAxZDIzOTgxNzdhNzBiMWZkNjgyYzdhN2VmZjJlMDk4YjhmNzk5Yjk1Yzc1NDBiYzQyZGI4YWYmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.BqeiK8prfA6UghjZ0q_Wn_v_FG0jG45IoY1u-qHxgAY)
+![(temporary pic of) Project View](https://private-user-images.githubusercontent.com/76657062/320924221-e80af11f-4e20-4fbb-9821-7d0648faa2f2.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MTI2OTEwMTcsIm5iZiI6MTcxMjY5MDcxNywicGF0aCI6Ii83NjY1NzA2Mi8zMjA5MjQyMjEtZTgwYWYxMWYtNGUyMC00ZmJiLTk4MjEtN2QwNjQ4ZmFhMmYyLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDA0MDklMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQwNDA5VDE5MjUxN1omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTM2ZjdkMmU1OTAxZDIzOTgxNzdhNzBiMWZkNjgyYzdhN2VmZjJlMDk4YjhmNzk5Yjk1Yzc1NDBiYzQyZGI4YWYmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.BqeiK8prfA6UghjZ0q_Wn_v_FG0jG45IoY1u-qHxgAY)
 
 ### (temporary pic of) Dashboard View
 
-![](https://private-user-images.githubusercontent.com/76657062/320925693-06ebd609-5c77-458c-96c5-873914326d40.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MTI2OTEwMTcsIm5iZiI6MTcxMjY5MDcxNywicGF0aCI6Ii83NjY1NzA2Mi8zMjA5MjU2OTMtMDZlYmQ2MDktNWM3Ny00NThjLTk2YzUtODczOTE0MzI2ZDQwLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDA0MDklMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQwNDA5VDE5MjUxN1omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTI5OTA0NzIwZDYwZTI5ZWEzOTZlNzRmNWRjZmY0ODhiYjJiYWNlM2EwMWViMWEwNzMwMmU3MmQ0NjJmMTVmZTMmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.C0NoZH7kxEcFvbUBkq_sOq3qOa0Pv7ePf-1pClFpqjU)
+![(temporary pic of) Dashboard View](https://private-user-images.githubusercontent.com/76657062/320925693-06ebd609-5c77-458c-96c5-873914326d40.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MTI2OTEwMTcsIm5iZiI6MTcxMjY5MDcxNywicGF0aCI6Ii83NjY1NzA2Mi8zMjA5MjU2OTMtMDZlYmQ2MDktNWM3Ny00NThjLTk2YzUtODczOTE0MzI2ZDQwLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDA0MDklMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQwNDA5VDE5MjUxN1omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTI5OTA0NzIwZDYwZTI5ZWEzOTZlNzRmNWRjZmY0ODhiYjJiYWNlM2EwMWViMWEwNzMwMmU3MmQ0NjJmMTVmZTMmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.C0NoZH7kxEcFvbUBkq_sOq3qOa0Pv7ePf-1pClFpqjU)
 
 <p align="right">[<a href="#user-content-readme-bottom">&#8595; Bottom</a>] [<a href="#user-content-readme-top">&#8593; Top</a>]</p>
 
