@@ -12,7 +12,7 @@ _BoardNotes_Dropdown_.refreshStatsWidget = function() {
           cache: false
         });
         var ajax_load = '<i class="fa fa-refresh fa-spin" aria-hidden="true" '
-                    + 'alt="' + _BoardNotes_.getTranslationExportToJS('BoardNotes_JS_LOADING_MSG') + '"></i>';
+                    + 'alt="' + get_BoardNotes_Translations().getTranslationExportToJS('BoardNotes_JS_LOADING_MSG') + '"></i>';
         var loadUrl = '/?controller=BoardNotesController&action=boardNotesRefreshStatsWidget&plugin=BoardNotes'
                     + '&stats_project_id=' + project_id;
         $(".BoardNotes_ProjectDropdown_StatsWidget:last").html(ajax_load).load(loadUrl);
