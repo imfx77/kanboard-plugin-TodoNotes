@@ -61,8 +61,8 @@ static prepareDocument() {
         $("#mainholderDashboard").removeClass('mainholderDashboard').addClass('mainholderMobileDashboard');
     }
 
-    this.#updateProjectsStats_OnCheckDoneHandler();
-    this.#updateNotesTabs();
+    _BoardNotes_Dashboard_.#updateProjectsStats_OnCheckDoneHandler();
+    _BoardNotes_Dashboard_.#updateNotesTabs();
 }
 
 //------------------------------------------------
