@@ -46,13 +46,13 @@ class BoardNotesController extends BaseController
             }
         }
 
-        // if we didn't find the requested project, switch by default to the first one (i.e. General custom)
+        // if we didn't find the requested project, switch by default to the first one (i.e. General custom list)
         if ($projectAccess['project_id'] != $project_id) {
             $projectAccess = $projectsAccess[0];
         }
 
         if ($projectAccess['is_custom']) {
-            // assemble a fake custom project
+            // assemble a fake custom list
             return array("id" => $project_id, "name" => $projectAccess['project_name'], "is_custom" => true);
         } else {
             // get all the data of existing project and mark it as NOT custom

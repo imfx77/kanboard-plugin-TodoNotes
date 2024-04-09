@@ -410,7 +410,7 @@ foreach ($data as $u) {
         print $user_id;
         print '"><i class="fa fa-exchange" aria-hidden="true"></i></button>';
 
-        // custom notes projects obviously CANNOT create tasks from notes
+        // notes from custom lists obviously CANNOT create tasks from notes
         if (!$project['is_custom']) {
             // Add note to tasks table (in detailed view)
             print '<button title="' . t('BoardNotes_PROJECT_NOTE_CREATE_TASK') . '" id="singleNoteToTask-P';

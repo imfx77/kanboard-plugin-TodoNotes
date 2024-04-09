@@ -9,9 +9,18 @@ table {
 if ($task_id > 0) {
     print '<strong>' . t('BoardNotes_POST_DIALOG_SUCCESS_TITLE') . '</strong>';
     print '<br>';
-    print t('BoardNotes_POST_DIALOG_SUCCESS_TEXT');
-    print '<a target="_blank" title="' . t('Opens in a new window') . ' ⇗" href="/task/' . $task_id . '">';
-    print '<strong> #' . $task_id . ' </strong><i class="fa fa-external-link" aria-hidden="true"></i></a> as:';
+    print t('BoardNotes_POST_DIALOG_SUCCESS_TEXT') . ' : ';
+    print $this->url->icon(
+        'external-link',
+        '<strong>#' . $task_id . '</strong>',
+        'TaskViewController',
+        'show',
+        array('task_id' => $task_id),
+        false,
+        '',
+        t('Opens in a new window') . ' ⇗',
+        true
+    );
 } else {
     print '<strong>' . t('BoardNotes_POST_DIALOG_FAILURE_TITLE') . '</strong>';
     print '<br>';
