@@ -8,7 +8,7 @@
     $statsData = $this->model->boardNotesModel->boardNotesStats($stats_project_id, $stats_user_id);
 
 
-    $statsWidget = '<span class="BoarNotes_StatsWidget" id="BoarNotes_StatsWidget_P' . $stats_project_id . '">';
+    $statsWidget = '<span id="BoardNotes-StatsWidget-P' . $stats_project_id . '">';
     $statsWidget .= '<span class="statProgress" title="' . t('In progress') . '"><i class="fa fa-fw fa-spinner ';
     $statsWidget .= ($statsData['statProgress'] > 0) ? 'fa-pulse' : '';
     $statsWidget .= '" aria-hidden="true"></i><b>' . $statsData['statProgress'] . '</b></span>';

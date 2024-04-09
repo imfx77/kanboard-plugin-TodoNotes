@@ -6,9 +6,9 @@ _BoardNotes_Dashboard_.updateProjectsStats_OnCheckDoneHandler = function() {
         //var user_id = $(this).attr('data-user');
         var id = $(this).attr('data-id');
 
-        $checkDone = $("#noteDoneCheckmarkP" + project_id + "-" + id);
-        $statsWidgetAll = $("#BoarNotes_StatsWidget_P0");
-        $statsWidgetCurrent = $("#BoarNotes_StatsWidget_P" + project_id);
+        $checkDone = $("#noteDoneCheckmark-P" + project_id + "-" + id);
+        $statsWidgetAll = $("#BoardNotes-StatsWidget-P0");
+        $statsWidgetCurrent = $("#BoardNotes-StatsWidget-P" + project_id);
 
         // cycle through states
         if ($checkDone.hasClass( "fa-circle-thin" )) {

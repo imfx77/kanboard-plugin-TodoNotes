@@ -51,12 +51,12 @@ _BoardNotes_.adjustNotePlaceholders = function(project_id, id) {
             $("#notePlaceholderNew").addClass( 'hideMe' );
         }
     } else {
-        var offsetCheck = $("#checkDone" + project_id + "-" + id).offset().top;
-        var offsetDetails = $("#showDetails" + project_id + "-" + id).offset().top;
+        var offsetCheck = $("#checkDone-P" + project_id + "-" + id).offset().top;
+        var offsetDetails = $("#showDetails-P" + project_id + "-" + id).offset().top;
         if (offsetCheck == offsetDetails) {
-            $("#notePlaceholderP" + project_id + "-" + id).addClass( 'hideMe' );
+            $("#notePlaceholder-P" + project_id + "-" + id).addClass( 'hideMe' );
         } else {
-            $("#notePlaceholderP" + project_id + "-" + id).removeClass( 'hideMe' );
+            $("#notePlaceholder-P" + project_id + "-" + id).removeClass( 'hideMe' );
         }
     }
 }
@@ -65,10 +65,10 @@ _BoardNotes_.adjustNotePlaceholders = function(project_id, id) {
 
 // Show input or label visuals for titles of existing notes
 _BoardNotes_.showTitleInput = function(project_id, id, show_input) {
-    $noteTitleLabel = $("#noteTitleLabelP" + project_id + "-" + id);
-    $noteTitleInput = $("#noteTitleInputP" + project_id + "-" + id);
-    $noteDescription = $("#noteDescriptionP" + project_id + "-" + id);
-    $textareaDescription = $("#noteTextareaDescriptionP" + project_id + "-" + id);
+    $noteTitleLabel = $("#noteTitleLabel-P" + project_id + "-" + id);
+    $noteTitleInput = $("#noteTitleInput-P" + project_id + "-" + id);
+    $noteDescription = $("#noteDescription-P" + project_id + "-" + id);
+    $textareaDescription = $("#noteTextareaDescription-P" + project_id + "-" + id);
 
     if (show_input) {
         $noteTitleLabel.addClass( 'hideMe' );
@@ -98,7 +98,7 @@ _BoardNotes_.showTitleInput = function(project_id, id, show_input) {
 
 // Show input or textarea visuals for descriptions of existing notes
 _BoardNotes_.showDescriptionInput = function(project_id, id, show_input) {
-    $textareaDescription = $("#noteTextareaDescriptionP" + project_id + "-" + id);
+    $textareaDescription = $("#noteTextareaDescription-P" + project_id + "-" + id);
     if (show_input) {
         $textareaDescription.addClass( "textareaDescriptionSelected" );
         $textareaDescription.removeClass( "textareaDescription" );
@@ -115,28 +115,28 @@ _BoardNotes_.showDescriptionInput = function(project_id, id, show_input) {
 
 // Show details for existing notes (toggle class)
 _BoardNotes_.toggleDetails = function(project_id, id) {
-    $("#noteDescriptionP" + project_id + "-" + id).toggleClass( 'hideMe' );
-    $("#singleNoteDeleteP" + project_id + "-" + id).toggleClass( 'hideMe' );
-    $("#singleNoteSaveP" + project_id + "-" + id).toggleClass( 'hideMe' );
-    $("#singleNoteTransferP" + project_id + "-" + id).toggleClass( 'hideMe' );
-    $("#singleNoteToTaskP" + project_id + "-" + id).toggleClass( 'hideMe' );
-    $("#noteCatLabelP" + project_id + "-" + id).toggleClass( 'hideMe' );
+    $("#noteDescription-P" + project_id + "-" + id).toggleClass( 'hideMe' );
+    $("#singleNoteDelete-P" + project_id + "-" + id).toggleClass( 'hideMe' );
+    $("#singleNoteSave-P" + project_id + "-" + id).toggleClass( 'hideMe' );
+    $("#singleNoteTransfer-P" + project_id + "-" + id).toggleClass( 'hideMe' );
+    $("#singleNoteToTask-P" + project_id + "-" + id).toggleClass( 'hideMe' );
+    $("#noteCatLabel-P" + project_id + "-" + id).toggleClass( 'hideMe' );
 
-    $("#showDetails" + project_id + "-" + id).find('i').toggleClass( "fa-angle-double-down" );
-    $("#showDetails" + project_id + "-" + id).find('i').toggleClass( "fa-angle-double-up" );
+    $("#showDetails-P" + project_id + "-" + id).find('i').toggleClass( "fa-angle-double-down" );
+    $("#showDetails-P" + project_id + "-" + id).find('i').toggleClass( "fa-angle-double-up" );
     _BoardNotes_.adjustNotePlaceholders(project_id, id);
 };
 
 // Show details menu for new note (toggle class)
 _BoardNotes_.toggleDetailsNew = function(project_id) {
-    if ( !$("#noteDescriptionP" + project_id).hasClass( 'hideMe' ) ) {
+    if ( !$("#noteDescription-P" + project_id).hasClass( 'hideMe' ) ) {
         $("#inputNewNote" + project_id).width( $("#textareaNewNote" + project_id).width() );
     }
 
-    $("#noteDescriptionP" + project_id).toggleClass( 'hideMe' );
+    $("#noteDescription-P" + project_id).toggleClass( 'hideMe' );
     $("#saveNewNote").toggleClass( 'hideMe' );
 
-    if ( !$("#noteDescriptionP" + project_id).hasClass( 'hideMe' ) ) {
+    if ( !$("#noteDescription-P" + project_id).hasClass( 'hideMe' ) ) {
         $("#inputNewNote" + project_id).width( $("#textareaNewNote" + project_id).width() );
     }
 
@@ -148,7 +148,7 @@ _BoardNotes_.toggleDetailsNew = function(project_id) {
 
 // Blink note
 _BoardNotes_.blinkNote = function(project_id, id){
-    var note_id = $("#note_idP" + project_id + "-" + id).attr('data-id');
+    var note_id = $("#noteId-P" + project_id + "-" + id).attr('data-id');
     setTimeout(function() { $("#item-" + note_id).addClass( 'blurMe' ); }, 0);
     setTimeout(function() { _BoardNotes_.toggleDetails(project_id, id); }, 100);
     setTimeout(function() { _BoardNotes_.toggleDetails(project_id, id); }, 200);
@@ -225,7 +225,7 @@ _BoardNotes_.NoteDetailsHandlers = function() {
         _BoardNotes_.toggleDetails(project_id, id);
 
         setTimeout(function() {
-            $("#catP" + project_id + "-" + id + "-button").trigger('click');
+            $("#cat-P" + project_id + "-" + id + "-button").trigger('click');
         }, 100);
     });
 }
@@ -236,7 +236,7 @@ _BoardNotes_.NoteDetailsHandlers = function() {
 
 // Switch note done state
 _BoardNotes_.switchNoteDoneState = function(project_id, id){
-    $checkDone = $("#noteDoneCheckmarkP" + project_id + "-" + id);
+    $checkDone = $("#noteDoneCheckmark-P" + project_id + "-" + id);
 
     // cycle through states
     if ($checkDone.hasClass( "fa-circle-thin" )) {
@@ -258,9 +258,9 @@ _BoardNotes_.switchNoteDoneState = function(project_id, id){
 
 // Update note done checkmark
 _BoardNotes_.updateNoteDoneCheckmark = function(project_id, id){
-    $noteDoneCheckmark = $("#noteDoneCheckmarkP" + project_id + "-" + id);
-    $noteTitleLabel = $("#noteTitleLabelP" + project_id + "-" + id);
-    $noteDescription = $("#noteTextareaDescriptionP" + project_id + "-" + id);
+    $noteDoneCheckmark = $("#noteDoneCheckmark-P" + project_id + "-" + id);
+    $noteTitleLabel = $("#noteTitleLabel-P" + project_id + "-" + id);
+    $noteDescription = $("#noteTextareaDescription-P" + project_id + "-" + id);
 
     if( $noteDoneCheckmark.hasClass( "fa-check" ) ){
         $noteTitleLabel.addClass( "noteDoneDesignText" );
@@ -387,10 +387,10 @@ _BoardNotes_.NoteActionHandlers = function() {
         var project_id = $(this).attr('data-project');
         var user_id = $(this).attr('data-user');
         var note_id = $(this).attr('data-note');
-        var title = $("#noteTitleLabelP" + project_id + "-" + id).html();
-        var description = $("#noteTextareaDescriptionP" + project_id + "-" + id).val();
-        var category_id = $("#catP" + project_id + "-" + id + " option:selected").val();
-        var is_active = $("#noteDoneCheckmarkP" + project_id + "-" + id).attr('data-id');
+        var title = $("#noteTitleLabel-P" + project_id + "-" + id).html();
+        var description = $("#noteTextareaDescription-P" + project_id + "-" + id).val();
+        var category_id = $("#cat-P" + project_id + "-" + id + " option:selected").val();
+        var is_active = $("#noteDoneCheckmark-P" + project_id + "-" + id).attr('data-id');
         _BoardNotes_.modalNoteToTask(project_id, user_id, note_id, is_active, title, description, category_id);
     });
 
@@ -403,17 +403,17 @@ _BoardNotes_.NoteActionHandlers = function() {
             if (id > 0) { // exclude handling the category drop down for new note
                 var project_id = $(this).attr('data-project');
                 var user_id = $(this).attr('data-user');
-                var old_category = $("#noteCatLabelP" + project_id + "-" + id).html();
-                var new_category = $("#catP" + project_id + "-" + id + " option:selected").text();
-                $("#noteCatLabelP" + project_id + "-" + id).html(new_category);
+                var old_category = $("#noteCatLabel-P" + project_id + "-" + id).html();
+                var new_category = $("#cat-P" + project_id + "-" + id + " option:selected").text();
+                $("#noteCatLabel-P" + project_id + "-" + id).html(new_category);
 
                 _BoardNotes_.updateCategoryColors(project_id, id, old_category, new_category);
                 // avoid the ugly empty category label boxes
                 if (new_category && _BoardNotes_.optionShowCategoryColors) {
-                    $("#noteCatLabelP" + project_id + "-" + id).addClass( 'task-board-category' );
+                    $("#noteCatLabel-P" + project_id + "-" + id).addClass( 'task-board-category' );
                 }
                 if (!new_category || !_BoardNotes_.optionShowCategoryColors) {
-                    $("#noteCatLabelP" + project_id + "-" + id).removeClass( 'task-board-category' );
+                    $("#noteCatLabel-P" + project_id + "-" + id).removeClass( 'task-board-category' );
                 }
 
                 _BoardNotes_.showTitleInput(project_id, id, false);
@@ -533,17 +533,17 @@ _BoardNotes_.refreshCategoryColors = function() {
 
 // Update category colors
 _BoardNotes_.updateCategoryColors = function(project_id, id, old_category, new_category) {
-    var note_id = $("#note_idP" + project_id + "-" + id).attr('data-id');
+    var note_id = $("#noteId-P" + project_id + "-" + id).attr('data-id');
     $old_color = $("#category-" + old_category).attr('data-color');
     $new_color = $("#category-" + new_category).attr('data-color');
 
     $("#trReportNr" + id).removeClass( 'color-' + $old_color );
     $("#item-" + note_id).removeClass( 'color-' + $old_color );
-    $("#noteCatLabelP" + project_id + "-" + id).removeClass( 'color-' + $old_color );
+    $("#noteCatLabel-P" + project_id + "-" + id).removeClass( 'color-' + $old_color );
 
     $("#trReportNr" + id).addClass( 'color-' + $new_color );
     $("#item-" + note_id).addClass( 'color-' + $new_color );
-    $("#noteCatLabelP" + project_id + "-" + id).addClass( 'color-' + $new_color);
+    $("#noteCatLabel-P" + project_id + "-" + id).addClass( 'color-' + $new_color);
 }
 
 //------------------------------------------------
@@ -551,13 +551,13 @@ _BoardNotes_.updateCategoryColors = function(project_id, id, old_category, new_c
 //------------------------------------------------
 
 _BoardNotes_.modalTransferNote = function(project_id, user_id, note_id) {
-    $("#dialogTransferP" + project_id).removeClass( 'hideMe' );
-    $("#dialogTransferP" + project_id).dialog({
+    $("#dialogTransfer-P" + project_id).removeClass( 'hideMe' );
+    $("#dialogTransfer-P" + project_id).dialog({
         buttons: [
             {
                 text : _BoardNotes_.getTranslationExportToJS('BoardNotes_JS_DIALOG_MOVE_BTN'),
                 click : function() {
-                    var target_project_id = $("#listNoteProjectP" + project_id + " option:selected").val();
+                    var target_project_id = $("#listNoteProject-P" + project_id + " option:selected").val();
                     _BoardNotes_.sqlTransferNote(project_id, user_id, note_id, target_project_id);
                     $( this ).dialog( "close" );
                     _BoardNotes_.sqlRefreshTabs(user_id);
@@ -581,17 +581,17 @@ _BoardNotes_.modalNoteToTask = function(project_id, user_id, note_id, is_active,
     });
     $("#dialogToTaskParams").removeClass( 'hideMe' );
     $("#deadloading").addClass( 'hideMe' );
-    $("#listCatToTaskP" + project_id).val(category_id).change();
-    $("#dialogToTaskP" + project_id).removeClass( 'hideMe' );
-    $("#dialogToTaskP" + project_id).dialog({
+    $("#listCatToTask-P" + project_id).val(category_id).change();
+    $("#dialogToTask-P" + project_id).removeClass( 'hideMe' );
+    $("#dialogToTask-P" + project_id).dialog({
         buttons: [
             {
                 text : _BoardNotes_.getTranslationExportToJS('BoardNotes_JS_DIALOG_CREATE_BTN'),
                 click: function() {
-                    var categoryToTask = $("#listCatToTaskP" + project_id + " option:selected").val();
-                    var columnToTask = $("#listColToTaskP" + project_id + " option:selected").val();
-                    var swimlaneToTask = $("#listSwimToTaskP" + project_id + " option:selected").val();
-                    var removeNote = $("#removeNoteP" + project_id).is(":checked");
+                    var categoryToTask = $("#listCatToTask-P" + project_id + " option:selected").val();
+                    var columnToTask = $("#listColToTask-P" + project_id + " option:selected").val();
+                    var swimlaneToTask = $("#listSwimToTask-P" + project_id + " option:selected").val();
+                    var removeNote = $("#removeNote-P" + project_id).is(":checked");
 
                     var ajax_load = '<i class="fa fa-spinner fa-pulse" aria-hidden="true" '
                                 + 'alt="' + _BoardNotes_.getTranslationExportToJS('BoardNotes_JS_LOADING_MSG') + '"></i>';
@@ -604,7 +604,7 @@ _BoardNotes_.modalNoteToTask = function(project_id, user_id, note_id, is_active,
                                 + '&column_id=' + columnToTask
                                 + '&swimlane_id=' + swimlaneToTask;
 
-                    $("#dialogToTaskP" + project_id).dialog({
+                    $("#dialogToTask-P" + project_id).dialog({
                         title: _BoardNotes_.getTranslationExportToJS('BoardNotes_JS_DIALOG_RESULT_TITLE'),
                         buttons: [
                             {
@@ -687,13 +687,13 @@ _BoardNotes_.modalReport = function(project_id, user_id) {
     $.ajaxSetup ({
         cache: false
     });
-    $("#dialogReportP" + project_id).removeClass( 'hideMe' );
-    $("#dialogReportP" + project_id).dialog({
+    $("#dialogReport-P" + project_id).removeClass( 'hideMe' );
+    $("#dialogReport-P" + project_id).dialog({
         buttons: [
             {
                 text : _BoardNotes_.getTranslationExportToJS('BoardNotes_JS_DIALOG_CREATE_BTN'),
                 click: function() {
-                    var category = $("#reportCatP" + project_id + " option:selected").text();
+                    var category = $("#reportCat-P" + project_id + " option:selected").text();
                     var ajax_load = '<i class="fa fa-spinner fa-pulse" aria-hidden="true" '
                                 + 'alt="' + _BoardNotes_.getTranslationExportToJS('BoardNotes_JS_LOADING_MSG') + '"></i>';
                     var loadUrl = "/?controller=BoardNotesController&action=boardNotesReport&plugin=BoardNotes"
@@ -743,18 +743,18 @@ _BoardNotes_.sqlTransferNote = function(project_id, user_id, note_id, target_pro
 
 // SQL note update (title etc. and done)
 _BoardNotes_.sqlUpdateNote = function(project_id, user_id, id){
-    var note_id = $("#note_idP" + project_id + "-" + id).attr('data-id');
-    var title = $("#noteTitleInputP" + project_id + "-" + id).val().trim();
-    var description = $("#noteTextareaDescriptionP" + project_id + "-" + id).val();
-    var category = $("#catP" + project_id + "-" + id + " option:selected").text();
-    var is_active = $("#noteDoneCheckmarkP" + project_id + "-" + id).attr('data-id');
+    var note_id = $("#noteId-P" + project_id + "-" + id).attr('data-id');
+    var title = $("#noteTitleInput-P" + project_id + "-" + id).val().trim();
+    var description = $("#noteTextareaDescription-P" + project_id + "-" + id).val();
+    var category = $("#cat-P" + project_id + "-" + id + " option:selected").text();
+    var is_active = $("#noteDoneCheckmark-P" + project_id + "-" + id).attr('data-id');
 
     if (!title){
         alert( _BoardNotes_.getTranslationExportToJS('BoardNotes_JS_NOTE_UPDATE_TITLE_EMPTY_MSG') );
-        title = $("#noteTitleLabelP" + project_id + "-" + id).html();
-        $("#noteTitleInputP" + project_id + "-" + id).val(title);
+        title = $("#noteTitleLabel-P" + project_id + "-" + id).html();
+        $("#noteTitleInput-P" + project_id + "-" + id).val(title);
     }
-    $("#noteTitleLabelP" + project_id + "-" + id).html(title);
+    $("#noteTitleLabel-P" + project_id + "-" + id).html(title);
 
     $.ajax({
         cache: false,
@@ -790,7 +790,7 @@ _BoardNotes_.sqlUpdateNote = function(project_id, user_id, id){
 _BoardNotes_.sqlAddNote = function(project_id, user_id){
     var title = $("#inputNewNote" +  project_id).val().trim();
     var description = $("#textareaNewNote" + project_id).val();
-    var category = $("#catP" + project_id + " option:selected").text();
+    var category = $("#cat-P" + project_id + " option:selected").text();
     var is_active = "1";
 
     if (!title){
