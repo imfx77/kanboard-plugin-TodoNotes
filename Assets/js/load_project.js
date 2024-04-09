@@ -44,7 +44,7 @@ static prepareDocument() {
                 }
             });
 
-            if (isMobile){
+            if (isMobile) {
                 // bind explicit reorder handles for mobile
                 $("#sortableRef-P" + sortable_project_id).sortable({
                     handle: ".sortableHandle",
@@ -52,7 +52,7 @@ static prepareDocument() {
             }
         });
 
-        if (isMobile){
+        if (isMobile) {
             // show explicit reorder handles for mobile
             $(".sortableHandle").removeClass( 'hideMe' );
         }
