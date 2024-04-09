@@ -40,7 +40,7 @@ class BoardNotesModel extends Base
     }
 
     // Show all notes related to project
-    public function boardNotesShowProject($project_id, $user_id, $doSortByState)
+    public function boardNotesShowProject($project_id, $user_id, $doSortByStatus)
     {
         $result = $this->db->table(self::TABLE_NOTES);
         $result = $result->eq('user_id', $user_id);
@@ -49,7 +49,7 @@ class BoardNotesModel extends Base
         }
         $result = $result->desc('project_id');
         $result = $result->gte('is_active', "0"); // -1 == deleted
-        if ($doSortByState) {
+        if ($doSortByStatus) {
             $result = $result->desc('is_active');
         }
         $result = $result->desc('position');
@@ -59,7 +59,7 @@ class BoardNotesModel extends Base
     }
 
     // Show all notes
-    public function boardNotesShowAll($projectsAccess, $user_id, $doSortByState)
+    public function boardNotesShowAll($projectsAccess, $user_id, $doSortByStatus)
     {
         $projectsAccessList = array();
         foreach ($projectsAccess as $u) {
@@ -71,7 +71,7 @@ class BoardNotesModel extends Base
         $result = $result->in('project_id', $projectsAccessList);
         $result = $result->desc('project_id');
         $result = $result->gte('is_active', "0"); // -1 == deleted
-        if ($doSortByState) {
+        if ($doSortByStatus) {
             $result = $result->desc('is_active');
         }
         $result = $result->desc('position');
@@ -81,7 +81,7 @@ class BoardNotesModel extends Base
     }
 
     // Show report
-    public function boardNotesReport($project_id, $user_id, $doSortByState, $category)
+    public function boardNotesReport($project_id, $user_id, $doSortByStatus, $category)
     {
         $result = $this->db->table(self::TABLE_NOTES);
         $result = $result->eq('user_id', $user_id);
@@ -90,7 +90,7 @@ class BoardNotesModel extends Base
             $result = $result->eq('category', $category);
         }
         $result = $result->gte('is_active', "0"); // -1 == deleted
-        if ($doSortByState) {
+        if ($doSortByStatus) {
             $result = $result->desc('is_active');
         }
         $result = $result->desc('position');

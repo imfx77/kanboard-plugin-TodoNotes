@@ -70,7 +70,7 @@ Every user can privately see and operate ONLY his own notes, even if notes of mu
 - Add a category to notes. The category is the same as the projects categories. (Please see the section for bugs)
 - Get pie analytic on open and done notes
 - Delete all done notes
-- One-click for editing notes status (open/done)
+- One-click for editing notes status (open/in progress/done)
 - Edit note title. Click on title, edit and press ENTER
 - Press the show more button on a note to see the note details
 - Edit an existing notes description. Click on the description, type, press TAB to save

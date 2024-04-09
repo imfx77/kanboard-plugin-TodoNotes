@@ -10,7 +10,7 @@ _BoardNotes_Dashboard_.updateProjectsStats_OnCheckDoneHandler = function() {
         $statsWidgetAll = $("#BoardNotes-StatsWidget-P0");
         $statsWidgetCurrent = $("#BoardNotes-StatsWidget-P" + project_id);
 
-        // cycle through states
+        // cycle through statuses
         if ($checkDone.hasClass( "fa-circle-thin" )) {
             // open++, done--
             $statsWidgetAll.find(".statOpen b").text(parseInt($statsWidgetAll.find(".statOpen b").text()) + 1)

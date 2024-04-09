@@ -99,18 +99,18 @@ if (!array_key_exists('boardnotesShowCategoryColors', $_SESSION)) {
     $_SESSION['boardnotesShowCategoryColors'] = false;
 }
 $optionShowCategoryColors = $_SESSION['boardnotesShowCategoryColors'];
-// evaluate optionSortByState option from session
-if (!array_key_exists('boardnotesSortByState', $_SESSION)) {
-    $_SESSION['boardnotesSortByState'] = false;
+// evaluate optionSortByStatus option from session
+if (!array_key_exists('boardnotesSortByStatus', $_SESSION)) {
+    $_SESSION['boardnotesSortByStatus'] = false;
 }
-$optionSortByState = $_SESSION['boardnotesSortByState'];
+$optionSortByStatus = $_SESSION['boardnotesSortByStatus'];
 
 // session_vars (hidden reference for options)
 print '<div id="session_vars';
 print '" data-optionShowCategoryColors="';
 print $optionShowCategoryColors ? 'true' : 'false';
-print '" data-optionSortByState="';
-print $optionSortByState ? 'true' : 'false';
+print '" data-optionSortByStatus="';
+print $optionSortByStatus ? 'true' : 'false';
 print '" class="hideMe">';
 print '</div>';
 
@@ -185,8 +185,8 @@ print '</button>';
 // add some space between button groups
 print '<div class="toolbarSeparator">&nbsp;</div>';
 
-// Toggle sort by state
-print '<button id="settingsSortByState" class="toolbarButton" title="' . t('BoardNotes_PROJECT_TOGGLE_SORT_BY_STATE') . '" data-id="0" data-project="';
+// Toggle sort by status
+print '<button id="settingsSortByStatus" class="toolbarButton" title="' . t('BoardNotes_PROJECT_TOGGLE_SORT_BY_STATUS') . '" data-id="0" data-project="';
 print $project_id;
 print '" data-user="';
 print $user_id;
@@ -194,7 +194,7 @@ print '"><i class="fa fa-sort" aria-hidden="true"></i>';
 print '</button>';
 
 // Toggle category colors
-print '<button id="settingsCategoryColors" class="toolbarButton" title="' . t('BoardNotes_PROJECT_TOGGLE_SORT_BY_CATEGORY') . '" data-id="0" data-project="';
+print '<button id="settingsCategoryColors" class="toolbarButton" title="' . t('BoardNotes_PROJECT_TOGGLE_COLORIZE_BY_CATEGORY') . '" data-id="0" data-project="';
 print $project_id;
 print '" data-user="';
 print $user_id;
@@ -207,9 +207,18 @@ print '</div>';
 print '<div class="containerNoWrap containerFloatLeft disableDblClickPropagation">';
 if ($readonlyNotes) {
     print '<label class="labelNewNote">' . t('BoardNotes_PROJECT_OVERVIEW_MODE_TITLE') . '</label>';
-    print t('BoardNotes_PROJECT_OVERVIEW_MODE_TEXT');
+    if ($optionSortByStatus) {
+        print '<span class="textNewNote">' . t('BoardNotes_PROJECT_OVERVIEW_MODE_TEXT_REORDERING_DISABLED') . '</label>';
+    } else {
+        print '<span class="textNewNote">' . t('BoardNotes_PROJECT_OVERVIEW_MODE_TEXT') . '</label>';
+    }
 } else {
-    print '<label class="labelNewNote" for="textinput">' . t('BoardNotes_PROJECT_CREATE_NEW_NOTE') . '</label>';
+    print '<label class="labelNewNote" for="textinput">' . t('BoardNotes_PROJECT_NEW_NOTE_LABEL') . '</label>';
+    if ($optionSortByStatus) {
+        print '<span class="textNewNote">' . t('BoardNotes_PROJECT_NEW_NOTE_TEXT_REORDERING_DISABLED') . '</span>';
+    } else {
+        print '<span class="textNewNote"></span>';
+    }
 }
 print '</div>';
 
@@ -448,7 +457,7 @@ foreach ($data as $u) {
     print '<div class="containerNoWrap containerFloatLeft disableDblClickPropagation">';
 
     // Checkbox for done note
-    print '<button title="' . t('BoardNotes_PROJECT_NOTE_SWITCH_STATE') . '" id="checkDone-P';
+    print '<button title="' . t('BoardNotes_PROJECT_NOTE_SWITCH_STATUS') . '" id="checkDone-P';
     print $u['project_id'];
     print '-';
     print $num;

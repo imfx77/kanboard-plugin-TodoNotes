@@ -14,15 +14,15 @@ _BoardNotes_Project_.adjustAllNotesPlaceholders = function() {
 
 _BoardNotes_Project_.prepareDocument = function() {
     _BoardNotes_.optionShowCategoryColors = ($("#session_vars").attr('data-optionShowCategoryColors') == 'true') ? true : false;
-    _BoardNotes_.optionSortByState = ($("#session_vars").attr('data-optionSortByState') == 'true') ? true : false;
+    _BoardNotes_.optionSortByStatus = ($("#session_vars").attr('data-optionSortByStatus') == 'true') ? true : false;
 
     var project_id = $("#refProjectId").attr('data-project');
     var user_id = $("#refProjectId").attr('data-user');
     var isMobile = _BoardNotes_.isMobile();
 
     // notes reordering is disabled in Overview Mode (ALL projects tab)
-    // or when explicitly sorted by state
-    if (!_BoardNotes_.optionSortByState) {
+    // or when explicitly sorted by Status
+    if (!_BoardNotes_.optionSortByStatus) {
         $(".sortableRef").each(function() {
             var sortable_project_id = $(this).attr('data-project');
             var sortable_notes_number = $("#nrNotes").attr('data-id');
@@ -65,7 +65,7 @@ _BoardNotes_Project_.prepareDocument = function() {
 
     _BoardNotes_Project_.adjustAllNotesPlaceholders();
     _BoardNotes_.refreshCategoryColors();
-    _BoardNotes_.refreshSortByState();
+    _BoardNotes_.refreshSortByStatus();
 
     // prepare method for dashboard view if embedded
     if (typeof _BoardNotes_Dashboard_ !== 'undefined') {

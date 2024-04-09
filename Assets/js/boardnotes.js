@@ -17,7 +17,7 @@ _BoardNotes_.isMobile = function() {
 //------------------------------------------------
 
 _BoardNotes_.optionShowCategoryColors = false;
-_BoardNotes_.optionSortByState = false;
+_BoardNotes_.optionSortByStatus = false;
 
 //------------------------------------------------
 // Note Details routines
@@ -28,8 +28,8 @@ _BoardNotes_.adjustNotePlaceholders = function(project_id, id) {
     var isTitle = (project_id == 0 && id == 0);
     if (isTitle) {
         var offsetTitle = $(".labelNewNote").offset().top;
-        var offsetButtons = $("#settingsSortByState").offset().top;
-        offsetButtons += $("#settingsSortByState").outerHeight();
+        var offsetButtons = $("#settingsSortByStatus").offset().top;
+        offsetButtons += $("#settingsSortByStatus").outerHeight();
         if (offsetTitle > offsetButtons) {
             $("#notePlaceholderNew").removeClass( 'hideMe' );
         } else {
@@ -216,14 +216,14 @@ _BoardNotes_.NoteDetailsHandlers = function() {
 }
 
 //------------------------------------------------
-// Note State routines & handlers
+// Note Status routines & handlers
 //------------------------------------------------
 
-// Switch note done state
-_BoardNotes_.switchNoteDoneState = function(project_id, id){
+// Switch note done status
+_BoardNotes_.switchNoteDoneStatus = function(project_id, id){
     $checkDone = $("#noteDoneCheckmark-P" + project_id + "-" + id);
 
-    // cycle through states
+    // cycle through statuses
     if ($checkDone.hasClass( "fa-circle-thin" )) {
         $checkDone.removeClass( "fa-circle-thin" );
         $checkDone.addClass( "fa-spinner fa-pulse" );
@@ -264,14 +264,14 @@ _BoardNotes_.updateNoteDoneCheckmark = function(project_id, id){
     }
 };
 
-_BoardNotes_.NoteStateHandlers = function() {
+_BoardNotes_.NoteStatusHandlers = function() {
     //Checkmark done handler
     $("button" + ".checkDone").click(function() {
         var project_id = $(this).attr('data-project');
         var user_id = $(this).attr('data-user');
         var id = $(this).attr('data-id');
 
-        _BoardNotes_.switchNoteDoneState(project_id, id);
+        _BoardNotes_.switchNoteDoneStatus(project_id, id);
         _BoardNotes_.updateNoteDoneCheckmark(project_id, id);
         _BoardNotes_.showTitleInput(project_id, id, false);
         _BoardNotes_.showDescriptionInput(project_id, id, false);
@@ -462,8 +462,8 @@ _BoardNotes_.SettingsHandlers = function() {
 
     //------------------------------------------------
 
-    $("#settingsSortByState").click(function() {
-        _BoardNotes_.sqlToggleSessionOption('boardnotesSortByState');
+    $("#settingsSortByStatus").click(function() {
+        _BoardNotes_.sqlToggleSessionOption('boardnotesSortByStatus');
         var project_id = $(this).attr('data-project');
         var user_id = $(this).attr('data-user');
         _BoardNotes_.sqlRefreshNotes(project_id, user_id);
@@ -488,12 +488,12 @@ _BoardNotes_.SettingsHandlers = function() {
 // Refresh sort/colorizing routines
 //------------------------------------------------
 
-// Refresh sort by state
-_BoardNotes_.refreshSortByState = function() {
-    if (_BoardNotes_.optionSortByState) {
-        $("#settingsSortByState").addClass( 'toolbarButtonToggled' );
+// Refresh sort by Status
+_BoardNotes_.refreshSortByStatus = function() {
+    if (_BoardNotes_.optionSortByStatus) {
+        $("#settingsSortByStatus").addClass( 'toolbarButtonToggled' );
     } else {
-        $("#settingsSortByState").removeClass( 'toolbarButtonToggled' );
+        $("#settingsSortByStatus").removeClass( 'toolbarButtonToggled' );
     }
 }
 
@@ -1000,7 +1000,7 @@ $(function() {
 
 _BoardNotes_.attachAllHandlers = function() {
     _BoardNotes_.NoteDetailsHandlers();
-    _BoardNotes_.NoteStateHandlers();
+    _BoardNotes_.NoteStatusHandlers();
     _BoardNotes_.NoteActionHandlers();
     _BoardNotes_.SettingsHandlers();
 }

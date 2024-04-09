@@ -134,6 +134,11 @@ label {
     cursor: default;
 }
 
+.textNewNote {
+    color: #CD650A;
+    cursor: default;
+}
+
 .textareaNewNote {
     display: inline-block;
     color: #999999;
