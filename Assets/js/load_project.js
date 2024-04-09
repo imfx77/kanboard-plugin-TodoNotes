@@ -4,7 +4,7 @@ _BoardNotes_Project_.adjustAllNotesPlaceholders = function() {
     setTimeout(function() {
         // adjust notePlaceholder containers where not needed
         _BoardNotes_.adjustNotePlaceholders(0, 0);
-        $('button' + '.checkDone').each(function() {
+        $("button" + ".checkDone").each(function() {
             var project_id = $(this).attr('data-project');
             var id = $(this).attr('data-id');
             _BoardNotes_.adjustNotePlaceholders(project_id, id);
@@ -23,28 +23,19 @@ _BoardNotes_Project_.prepareDocument = function() {
         _BoardNotes_.sqlUpdatePosition(project_id, user_id, order, nrNotes);
     }
 
-    _BoardNotes_.optionShowCategoryColors = ($('#session_vars').attr('data-optionShowCategoryColors') == 'true') ? true : false;
-    _BoardNotes_.optionSortByState = ($('#session_vars').attr('data-optionSortByState') == 'true') ? true : false;
+    _BoardNotes_.optionShowCategoryColors = ($("#session_vars").attr('data-optionShowCategoryColors') == 'true') ? true : false;
+    _BoardNotes_.optionSortByState = ($("#session_vars").attr('data-optionSortByState') == 'true') ? true : false;
 
-    var nrNotes = $('#nrNotes').attr('data-id');
-    var project_id = $('#refProjectId').attr('data-project');
-    var user_id = $('#refProjectId').attr('data-user');
+    var project_id = $("#refProjectId").attr('data-project');
+    var user_id = $("#refProjectId").attr('data-user');
     var isMobile = _BoardNotes_.isMobile();
 
     // notes reordering is disabled in Overview Mode (ALL projects tab)
-    // ot when explicitly sorted by state
+    // or when explicitly sorted by state
     if (!_BoardNotes_.optionSortByState) {
         if (isMobile){
-          // show explicit reorder handles for mobile
-          $( '.sortableHandle').removeClass( "hideMe" );
-          $(function() {
-            $( '#sortableRef' + project_id ).sortable({
-              handle: '.sortableHandle',
-              placeholder: "ui-state-highlight",
-              update: updateNotesOrder
-            });
-            $( '#sortableRef' + project_id ).disableSelection();
-          });
+            // show explicit reorder handles for mobile
+            $(".sortableHandle").removeClass( 'hideMe' );
         }
         else{
           // drag entire notes for non-mobile
@@ -60,8 +51,8 @@ _BoardNotes_Project_.prepareDocument = function() {
     }
 
     if(isMobile) {
-      // choose mobile view
-      $('#mainholderP' + project_id).removeClass('mainholder').addClass('mainholderMobile');
+        // choose mobile view
+        $("#mainholderP" + project_id).removeClass('mainholder').addClass('mainholderMobile');
     }
 
     _BoardNotes_Project_.adjustAllNotesPlaceholders();
