@@ -1,6 +1,7 @@
-let _BoardNotes_Report_ = {}; // namespace
+class _BoardNotes_Report_ {
 
-_BoardNotes_Report_.prepareDocument = function() {
+//------------------------------------------------
+static prepareDocument() {
     $(".noteTitleInput").hide();
 
     _BoardNotes_.optionShowCategoryColors = ($("#session_vars").attr('data-optionShowCategoryColors') == 'true') ? true : false;
@@ -16,4 +17,9 @@ _BoardNotes_Report_.prepareDocument = function() {
     _BoardNotes_.refreshCategoryColors();
 }
 
+//------------------------------------------------
+
+} // class _BoardNotes_Report_
+
+//////////////////////////////////////////////////
 $( document ).ready( _BoardNotes_Report_.prepareDocument );

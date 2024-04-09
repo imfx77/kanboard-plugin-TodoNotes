@@ -1,10 +1,16 @@
-let _BoardNotes_Stats_ = {}; // namespace
+class _BoardNotes_Stats_ {
 
-_BoardNotes_Stats_.prepareDocument = function() {
+//------------------------------------------------
+static prepareDocument() {
     var t = $("#chart").data("metrics");
     if (!t) return;
 
-    for (t, e = [], a = 0; a < t.length; a++) e.push([t[a].column_title, t[a].nb_tasks]);
+    var e = [];
+    var a = 0;
+    for (t; a < t.length; a++) {
+        e.push([t[a].column_title, t[a].nb_tasks]);
+    }
+
     c3.generate({
         data: {
             columns: e,
@@ -16,4 +22,9 @@ _BoardNotes_Stats_.prepareDocument = function() {
     });
 }
 
+//------------------------------------------------
+
+} // class _BoardNotes_Stats_
+
+//////////////////////////////////////////////////
 $( document ).ready( _BoardNotes_Stats_.prepareDocument );
