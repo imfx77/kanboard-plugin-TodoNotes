@@ -21,5 +21,11 @@ static getTranslationExportToJS(textId) {
 }
 
 //------------------------------------------------
+static _dummy_() {}
+
+//------------------------------------------------
 
 } // class _BoardNotes_Translations_
+
+//////////////////////////////////////////////////
+$( document ).ready( _BoardNotes_Translations_._dummy_ );

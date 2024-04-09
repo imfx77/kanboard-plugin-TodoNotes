@@ -66,5 +66,11 @@ static prepareDocument() {
 }
 
 //------------------------------------------------
+static _dummy_() {}
+
+//------------------------------------------------
 
 } // class _BoardNotes_Dashboard_
+
+//////////////////////////////////////////////////
+$( document ).ready( _BoardNotes_Dashboard_._dummy_ );
