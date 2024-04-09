@@ -118,6 +118,8 @@ print '</div>';
 
 print '<ul id="sortableRef';
 print $project_id;
+print '" data-project="';
+print $project_id;
 print '" class="sortableRef">';
 
 //----------------------------------------
@@ -279,8 +281,9 @@ print '</li>';
 
 //----------------------------------------
 
-$num = "1";
-$last_project_id = 0;
+$num = 1;
+$last_project_id = $project_id;
+$last_num_notes = 0;
 foreach ($data as $u) {
     if (!empty($project_id) && $u['project_id'] != $project_id) {
         continue;
@@ -288,9 +291,13 @@ foreach ($data as $u) {
 
     // show project name links in Overview Mode
     if ($readonlyNotes && $last_project_id != $u['project_id']) {
-        $last_project_id = $u['project_id'];
         print '</ul>';
 
+        // reset project and number of notes
+        $last_project_id = $u['project_id'];
+        $last_num_notes = 0;
+
+        // project name link
         print '<h2>';
         print $this->url->link(
             $projectsTabsById[ $last_project_id ]['name'],
@@ -300,7 +307,10 @@ foreach ($data as $u) {
         );
         print '</h2>';
 
+        // sortable list by project
         print '<ul id="sortableRef';
+        print $last_project_id;
+        print '" data-project="';
         print $last_project_id;
         print '" class="sortableRef">';
     }
@@ -610,14 +620,6 @@ foreach ($data as $u) {
 
     print '</div>';
 
-    // Project_id (hidden reference for each note)
-    print '<div id="project_id';
-    print $num;
-    print '" data-id="';
-    print $u['project_id'];
-    print '" class="hideMe">';
-    print '</div>';
-
     // Note_id (hidden reference for each note)
     print '<div id="noteId-P';
     print $u['project_id'];
@@ -630,19 +632,26 @@ foreach ($data as $u) {
 
     print '</li>';
 
+    $last_num_notes++;
+
     // Id
     $num++;
 }
 
 print '</ul>';
 
+// hidden reference for number of notes by project
+print '<div class="hideMe" id="nrNotes-P';
+print $last_project_id;
+print '" data-id="';
+print $last_num_notes;
+print '"></div>';
+
 //----------------------------------------
 
-// hidden reference for number of notes
-print '<div id="nrNotes" class="hideMe"';
-print ' data-id="';
-$num = --$num;
-print $num;
+// hidden reference for total number of notes
+print '<div class="hideMe" id="nrNotes" data-id="';
+print ($num - 1);
 print '"></div>';
 
 // hidden reference for project_id and user_id of the currently active page

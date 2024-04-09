@@ -13,16 +13,6 @@ _BoardNotes_Project_.adjustAllNotesPlaceholders = function() {
 }
 
 _BoardNotes_Project_.prepareDocument = function() {
-    // handle notes reordering
-    function updateNotesOrder() {
-        var order = $(this).sortable('toArray');
-        order = order.join(",");
-        var regex = new RegExp('item-', 'g');
-        order = order.replace(regex, '');
-        order = order.split(',');
-        _BoardNotes_.sqlUpdatePosition(project_id, user_id, order, nrNotes);
-    }
-
     _BoardNotes_.optionShowCategoryColors = ($("#session_vars").attr('data-optionShowCategoryColors') == 'true') ? true : false;
     _BoardNotes_.optionSortByState = ($("#session_vars").attr('data-optionSortByState') == 'true') ? true : false;
 
@@ -33,20 +23,36 @@ _BoardNotes_Project_.prepareDocument = function() {
     // notes reordering is disabled in Overview Mode (ALL projects tab)
     // or when explicitly sorted by state
     if (!_BoardNotes_.optionSortByState) {
+        $(".sortableRef").each(function() {
+            var sortable_project_id = $(this).attr('data-project');
+            var sortable_notes_number = $("#nrNotes").attr('data-id');
+
+            $("#sortableRef" + sortable_project_id).disableSelection();
+
+            $("#sortableRef" + sortable_project_id).sortable({
+                placeholder: "ui-state-highlight",
+                update: function() {
+                    // handle notes reordering
+                    var order = $(this).sortable('toArray');
+                    order = order.join(",");
+                    var regex = new RegExp('item-', 'g');
+                    order = order.replace(regex, '');
+                    order = order.split(',');
+                    _BoardNotes_.sqlUpdatePosition(sortable_project_id, user_id, order, sortable_notes_number);
+                }
+            });
+
+            if (isMobile){
+                // bind explicit reorder handles for mobile
+                $("#sortableRef" + sortable_project_id).sortable({
+                    handle: ".sortableHandle",
+                });
+            }
+        });
+
         if (isMobile){
             // show explicit reorder handles for mobile
             $(".sortableHandle").removeClass( 'hideMe' );
-        }
-        else{
-          // drag entire notes for non-mobile
-          $( '#sortableRef' + project_id ).sortable({ items: 'li.liNote' });
-          $(function() {
-            $( '#sortableRef' + project_id ).sortable({
-              placeholder: "ui-state-highlight",
-              update: updateNotesOrder
-            });
-            $( '#sortableRef' + project_id ).disableSelection();
-          });
         }
     }
 

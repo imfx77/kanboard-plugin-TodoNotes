@@ -13,7 +13,7 @@ return array(
     //
     'BoardNotes_PROJECT_TITLE' => 'Notes',
     'BoardNotes_PROJECT_OVERVIEW_MODE_TITLE' => 'Overview Mode',
-    'BoardNotes_PROJECT_OVERVIEW_MODE_TEXT' => '(can ONLY change note status)',
+    'BoardNotes_PROJECT_OVERVIEW_MODE_TEXT' => '(can ONLY change note status and order)',
     'BoardNotes_PROJECT_CREATE_NEW_NOTE' => 'Create New Note',
     'BoardNotes_PROJECT_NEW_NOTE_TITLE_PLACEHOLDER' => 'What needs to be done',
     'BoardNotes_PROJECT_DELETE_ALL_DONE_NOTES' => 'Delete ALL Done Notes',
