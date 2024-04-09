@@ -27,9 +27,9 @@ _BoardNotes_Project_.prepareDocument = function() {
             var sortable_project_id = $(this).attr('data-project');
             var sortable_notes_number = $("#nrNotes").attr('data-id');
 
-            $("#sortableRef" + sortable_project_id).disableSelection();
+            $("#sortableRef-P" + sortable_project_id).disableSelection();
 
-            $("#sortableRef" + sortable_project_id).sortable({
+            $("#sortableRef-P" + sortable_project_id).sortable({
                 placeholder: "ui-state-highlight",
                 update: function() {
                     // handle notes reordering
@@ -44,7 +44,7 @@ _BoardNotes_Project_.prepareDocument = function() {
 
             if (isMobile){
                 // bind explicit reorder handles for mobile
-                $("#sortableRef" + sortable_project_id).sortable({
+                $("#sortableRef-P" + sortable_project_id).sortable({
                     handle: ".sortableHandle",
                 });
             }

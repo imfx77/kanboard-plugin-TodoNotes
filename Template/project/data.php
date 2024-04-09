@@ -116,7 +116,7 @@ print '</div>';
 
 //----------------------------------------
 
-print '<ul id="sortableRef';
+print '<ul id="sortableRef-P';
 print $project_id;
 print '" data-project="';
 print $project_id;
@@ -308,7 +308,7 @@ foreach ($data as $u) {
         print '</h2>';
 
         // sortable list by project
-        print '<ul id="sortableRef';
+        print '<ul id="sortableRef-P';
         print $last_project_id;
         print '" data-project="';
         print $last_project_id;
