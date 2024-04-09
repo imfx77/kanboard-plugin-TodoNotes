@@ -1,12 +1,11 @@
 class _BoardNotes_Translations_ {
-//================================================
 
 //------------------------------------------------
 // Translation Export to JS
 //------------------------------------------------
-
 static #translationsExportToJS = null;
 
+//------------------------------------------------
 static initialize() {
     // lazy init the translations ONCE
     if (this.#translationsExportToJS !== null) return;
@@ -15,10 +14,12 @@ static initialize() {
     $("#_BoardNotes_TranslationsExportToJS_").remove();
 }
 
+//------------------------------------------------
 static getTranslationExportToJS(textId) {
     _BoardNotes_Translations_.initialize();
     return this.#translationsExportToJS[textId];
 }
 
-//================================================
-}
+//------------------------------------------------
+
+} // class _BoardNotes_Translations_

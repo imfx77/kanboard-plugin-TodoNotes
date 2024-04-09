@@ -1,14 +1,15 @@
-let _BoardNotes_Dashboard_ = {}; // namespace
+class _BoardNotes_Dashboard_ {
 
-_BoardNotes_Dashboard_.updateProjectsStats_OnCheckDoneHandler = function() {
+//------------------------------------------------
+static #updateProjectsStats_OnCheckDoneHandler() {
     $("button" + ".checkDone").click(function() {
         var project_id = $(this).attr('data-project');
         //var user_id = $(this).attr('data-user');
         var id = $(this).attr('data-id');
 
-        $checkDone = $("#noteDoneCheckmark-P" + project_id + "-" + id);
-        $statsWidgetAll = $("#BoardNotes-StatsWidget-P0");
-        $statsWidgetCurrent = $("#BoardNotes-StatsWidget-P" + project_id);
+        var $checkDone = $("#noteDoneCheckmark-P" + project_id + "-" + id);
+        var $statsWidgetAll = $("#BoardNotes-StatsWidget-P0");
+        var $statsWidgetCurrent = $("#BoardNotes-StatsWidget-P" + project_id);
 
         // cycle through statuses
         if ($checkDone.hasClass( "fa-circle-thin" )) {
@@ -35,7 +36,8 @@ _BoardNotes_Dashboard_.updateProjectsStats_OnCheckDoneHandler = function() {
     });
 }
 
-_BoardNotes_Dashboard_.updateNotesTabs = function() {
+//------------------------------------------------
+static #updateNotesTabs() {
     var tab_id = $("#tab_id").attr('data');
 
     $(".singleTab").removeClass( 'active' );
@@ -50,7 +52,8 @@ _BoardNotes_Dashboard_.updateNotesTabs = function() {
     $("#tabs").height(numTabs * tabHeight);
 }
 
-_BoardNotes_Dashboard_.prepareDocument = function() {
+//------------------------------------------------
+static prepareDocument() {
     var isMobile = _BoardNotes_.isMobile();
 
     if(isMobile) {
@@ -58,7 +61,10 @@ _BoardNotes_Dashboard_.prepareDocument = function() {
         $("#mainholderDashboard").removeClass('mainholderDashboard').addClass('mainholderMobileDashboard');
     }
 
-    _BoardNotes_Dashboard_.updateProjectsStats_OnCheckDoneHandler();
-
-    _BoardNotes_Dashboard_.updateNotesTabs();
+    this.#updateProjectsStats_OnCheckDoneHandler();
+    this.#updateNotesTabs();
 }
+
+//------------------------------------------------
+
+} // class _BoardNotes_Dashboard_
