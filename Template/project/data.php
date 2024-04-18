@@ -138,28 +138,36 @@ print '<div class="containerNoWrap containerFloatRight disableDblClickPropagatio
 // exclude when in Overview Mode
 if (!$readonlyNotes) {
     // Settings delete all done
-    print '<button id="settingsDeleteAllDone" class="toolbarButton" title="' . t('BoardNotes_PROJECT_DELETE_ALL_DONE_NOTES') . '" data-id="0" data-project="';
-    print $project_id;
-    print '" data-user="';
-    print $user_id;
-    print '"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
+    print '<button id="settingsDeleteAllDone" class="toolbarButton"';
+    print ' title="' . t('BoardNotes_PROJECT_DELETE_ALL_DONE_NOTES') . '"';
+    print ' data-id="0"';
+    print ' data-project="' . $project_id . '"';
+    print ' data-user="' . $user_id . '"';
+    print '>';
+    print '<i class="fa fa-trash-o" aria-hidden="true"></i>';
+    print'</button>';
 
     // add some space between button groups
     print '<div class="toolbarSeparator">&nbsp;</div>';
 
     // Settings stats
-    print '<button id="settingsStats" class="toolbarButton" title="' . t('BoardNotes_PROJECT_NOTES_STATS') . '" data-id="0" data-project="';
-    print $project_id;
-    print '" data-user="';
-    print $user_id;
-    print '"><i class="fa fa-bar-chart" aria-hidden="true"></i></button>';
+    print '<button id="settingsStats" class="toolbarButton"';
+    print ' title="' . t('BoardNotes_PROJECT_NOTES_STATS') . '"';
+    print ' data-id="0"';
+    print ' data-project="' . $project_id . '"';
+    print ' data-user="' . $user_id . '"';
+    print '>';
+    print '<i class="fa fa-bar-chart" aria-hidden="true"></i>';
+    print '</button>';
 
     // Open report
-    print '<button id="settingsReport" class="toolbarButton" title="' . t('BoardNotes_PROJECT_CREATE_REPORT') . '" data-id="0" data-project="';
-    print $project_id;
-    print '" data-user="';
-    print $user_id;
-    print '"><i class="fa fa-file-text-o" aria-hidden="true"></i>';
+    print '<button id="settingsReport" class="toolbarButton"';
+    print ' title="' . t('BoardNotes_PROJECT_CREATE_REPORT') . '"';
+    print ' data-id="0"';
+    print ' data-project="' . $project_id . '"';
+    print ' data-user="' . $user_id . '"';
+    print '>';
+    print '<i class="fa fa-file-text-o" aria-hidden="true"></i>';
     print '</button>';
 
     // add some space between button groups
@@ -167,38 +175,46 @@ if (!$readonlyNotes) {
 } // end exclude
 
 // Collapse all
-print '<button id="settingsCollapseAll" class="toolbarButton" title="' . t('BoardNotes_PROJECT_COLLAPSE_ALL_NOTES') . '" data-id="0" data-project="';
-print $project_id;
-print '" data-user="';
-print $user_id;
-print '"><i class="fa fa-minus-square" aria-hidden="true"></i>';
+print '<button id="settingsCollapseAll" class="toolbarButton"';
+print ' title="' . t('BoardNotes_PROJECT_COLLAPSE_ALL_NOTES') . '"';
+print ' data-id="0"';
+print ' data-project="' . $project_id . '"';
+print ' data-user="' . $user_id . '"';
+print '>';
+print '<i class="fa fa-minus-square" aria-hidden="true"></i>';
 print '</button>';
 
 // Expand all
-print '<button id="settingsExpandAll" class="toolbarButton" title="' . t('BoardNotes_PROJECT_EXPAND_ALL_NOTES') . '" data-id="0" data-project="';
-print $project_id;
-print '" data-user="';
-print $user_id;
-print '"><i class="fa fa-plus-square" aria-hidden="true"></i>';
+print '<button id="settingsExpandAll" class="toolbarButton"';
+print ' title="' . t('BoardNotes_PROJECT_EXPAND_ALL_NOTES') . '"';
+print ' data-id="0"';
+print ' data-project="' . $project_id . '"';
+print ' data-user="' . $user_id . '"';
+print '>';
+print '<i class="fa fa-plus-square" aria-hidden="true"></i>';
 print '</button>';
 
 // add some space between button groups
 print '<div class="toolbarSeparator">&nbsp;</div>';
 
 // Toggle sort by status
-print '<button id="settingsSortByStatus" class="toolbarButton" title="' . t('BoardNotes_PROJECT_TOGGLE_SORT_BY_STATUS') . '" data-id="0" data-project="';
-print $project_id;
-print '" data-user="';
-print $user_id;
-print '"><i class="fa fa-sort" aria-hidden="true"></i>';
+print '<button id="settingsSortByStatus" class="toolbarButton"';
+print ' title="' . t('BoardNotes_PROJECT_TOGGLE_SORT_BY_STATUS') . '"';
+print ' data-id="0"';
+print ' data-project="' . $project_id . '"';
+print ' data-user="' . $user_id . '"';
+print '>';
+print '<i class="fa fa-sort" aria-hidden="true"></i>';
 print '</button>';
 
 // Toggle category colors
-print '<button id="settingsCategoryColors" class="toolbarButton" title="' . t('BoardNotes_PROJECT_TOGGLE_COLORIZE_BY_CATEGORY') . '" data-id="0" data-project="';
-print $project_id;
-print '" data-user="';
-print $user_id;
-print '"><i class="fa fa-paint-brush" aria-hidden="true"></i>';
+print '<button id="settingsCategoryColors" class="toolbarButton"';
+print ' title="' . t('BoardNotes_PROJECT_TOGGLE_COLORIZE_BY_CATEGORY') . '"';
+print ' data-id="0"';
+print ' data-project="' . $project_id . '"';
+print ' data-user="' .  $user_id . '"';
+print '>';
+print '<i class="fa fa-paint-brush" aria-hidden="true"></i>';
 print '</button>';
 
 print '</div>';
@@ -213,7 +229,7 @@ if ($readonlyNotes) {
         print '<span class="textNewNote">' . t('BoardNotes_PROJECT_OVERVIEW_MODE_TEXT') . '</label>';
     }
 } else {
-    print '<label class="labelNewNote" for="textinput">' . t('BoardNotes_PROJECT_NEW_NOTE_LABEL') . '</label>';
+    print '<label class="labelNewNote">' . t('BoardNotes_PROJECT_NEW_NOTE_LABEL') . '</label>';
     if ($optionSortByStatus) {
         print '<span class="textNewNote">' . t('BoardNotes_PROJECT_NEW_NOTE_TEXT_REORDERING_DISABLED') . '</span>';
     } else {
