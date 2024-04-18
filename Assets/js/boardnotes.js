@@ -102,10 +102,10 @@ static #showDescriptionInput(project_id, id, show_input) {
 // Show details for existing notes (toggle class)
 static #toggleDetails(project_id, id) {
     $("#noteDescription-P" + project_id + "-" + id).toggleClass( 'hideMe' );
-    $("#singleNoteDelete-P" + project_id + "-" + id).toggleClass( 'hideMe' );
-    $("#singleNoteSave-P" + project_id + "-" + id).toggleClass( 'hideMe' );
-    $("#singleNoteTransfer-P" + project_id + "-" + id).toggleClass( 'hideMe' );
-    $("#singleNoteToTask-P" + project_id + "-" + id).toggleClass( 'hideMe' );
+    $("#noteDelete-P" + project_id + "-" + id).toggleClass( 'hideMe' );
+    $("#noteSave-P" + project_id + "-" + id).toggleClass( 'hideMe' );
+    $("#noteTransfer-P" + project_id + "-" + id).toggleClass( 'hideMe' );
+    $("#noteToTask-P" + project_id + "-" + id).toggleClass( 'hideMe' );
     $("#noteCatLabel-P" + project_id + "-" + id).toggleClass( 'hideMe' );
 
     $("#showDetails-P" + project_id + "-" + id).find('i').toggleClass( "fa-angle-double-down" );
@@ -115,28 +115,26 @@ static #toggleDetails(project_id, id) {
 
 //------------------------------------------------
 // Show details menu for new note (toggle class)
-static #toggleDetailsNew(project_id) {
-    if ( !$("#noteDescription-P" + project_id).hasClass( 'hideMe' ) ) {
-        $("#inputNewNote" + project_id).width( $("#textareaNewNote" + project_id).width() );
+static #toggleDetailsNewNote() {
+    if ( !$("#detailsNewNote").hasClass( 'hideMe' ) ) {
         $("#inputNewNote").width( $("#textareaNewNote").width() );
     }
 
     $("#noteDescription-P" + project_id).toggleClass( 'hideMe' );
     $("#saveNewNote").toggleClass( 'hideMe' );
 
-    if ( !$("#noteDescription-P" + project_id).hasClass( 'hideMe' ) ) {
-        $("#inputNewNote" + project_id).width( $("#textareaNewNote" + project_id).width() );
+    if ( !$("#detailsNewNote").hasClass( 'hideMe' ) ) {
         $("#inputNewNote").width( $("#textareaNewNote").width() );
     }
 
-    $("#showDetailsNew").find('i').toggleClass( "fa-angle-double-down" );
-    $("#showDetailsNew").find('i').toggleClass( "fa-angle-double-up" );
+    $("#showDetailsNewNote").find('i').toggleClass( "fa-angle-double-down" );
+    $("#showDetailsNewNote").find('i').toggleClass( "fa-angle-double-up" );
 }
 
 //------------------------------------------------
 // Blink note
 static #blinkNote(project_id, id) {
-    var note_id = $("#noteId-P" + project_id + "-" + id).attr('data-id');
+    var note_id = $("#noteId-P" + project_id + "-" + id).attr('data-note-id');
     setTimeout(function() { $("#item-" + note_id).addClass( 'blurMe' ); }, 0);
     setTimeout(function() { _BoardNotes_.#toggleDetails(project_id, id); }, 100);
     setTimeout(function() { _BoardNotes_.#toggleDetails(project_id, id); }, 200);
@@ -293,7 +291,68 @@ static #NoteStatusHandlers() {
 
 //------------------------------------------------
 static #NoteActionHandlers() {
-    // POST UPDATE when enter on title
+    // On TAB key open detailed view
+    $(".inputNewNote").keydown(function(event) {
+        if (event.keyCode == 9) {
+            if ($("#detailsNewNote").hasClass( 'hideMe' )) {
+                _BoardNotes_.#toggleDetailsNewNote();
+            }
+            setTimeout(function() {
+                $("#textareaNewNote").focus();
+            }, 100);
+        }
+    });
+
+    // POST ADD when ENTER key on New Note title
+    $(".inputNewNote").keypress(function(event) {
+        if (event.keyCode == 13) { // ENTER
+            var project_id = $(this).attr('data-project');
+            var user_id = $(this).attr('data-user');
+            $(".inputNewNote").blur();
+            _BoardNotes_.#sqlAddNote(project_id, user_id);
+            _BoardNotes_.#sqlRefreshTabs(user_id);
+            _BoardNotes_.#sqlRefreshNotes(project_id, user_id);
+        }
+    });
+
+    // POST ADD when TAB key on New Note description
+    $(".textareaNewNote").keydown(function(event) {
+        if (event.keyCode == 9) {
+            var project_id = $(this).attr('data-project');
+            var user_id = $(this).attr('data-user');
+            _BoardNotes_.#sqlAddNote(project_id, user_id);
+            _BoardNotes_.#sqlRefreshTabs(user_id);
+            _BoardNotes_.#sqlRefreshNotes(project_id, user_id);
+        }
+    });
+
+    // POST ADD on save button for New Note
+    $("button" + ".saveNewNote").click(function() {
+        var project_id = $(this).attr('data-project');
+        var user_id = $(this).attr('data-user');
+        $(".inputNewNote").blur();
+        _BoardNotes_.#sqlAddNote(project_id, user_id);
+        _BoardNotes_.#sqlRefreshTabs(user_id);
+        _BoardNotes_.#sqlRefreshNotes(project_id, user_id);
+    });
+
+    //------------------------------------------------
+
+    // On TAB key open detailed view
+    $(".noteTitle").keydown(function(event) {
+        if (event.keyCode == 9) { // TAB
+            var project_id = $(this).attr('data-project');
+            var id = $(this).attr('data-id');
+            if ($("#noteDetails-P" + project_id + "-" + id).hasClass( 'hideMe' )) {
+                _BoardNotes_.#toggleDetails(project_id, id);
+            }
+            setTimeout(function() {
+                $("#noteTextareaDescription-P" + project_id + "-" + id).focus();
+            }, 100);
+    }
+    });
+
+    // POST UPDATE when ENTER on title
     $(".noteTitle").keydown(function(event) {
         var project_id = $(this).attr('data-project');
         var user_id = $(this).attr('data-user');
@@ -320,7 +379,7 @@ static #NoteActionHandlers() {
     });
 
     // POST UPDATE on save button for existing notes
-    $("button" + ".singleNoteSave").click(function() {
+    $("button" + ".noteSave").click(function() {
         var project_id = $(this).attr('data-project');
         var user_id = $(this).attr('data-user');
         var id = $(this).attr('data-id');
@@ -357,34 +416,33 @@ static #NoteActionHandlers() {
     //------------------------------------------------
 
     // POST delete on delete button
-    $("button" + ".singleNoteDelete").click(function() {
+    $("button" + ".noteDelete").click(function() {
         var project_id = $(this).attr('data-project');
         var user_id = $(this).attr('data-user');
-        var note_id = $(this).attr('data-id');
-        _BoardNotes_.#sqlDeleteNote(project_id, user_id, note_id);
+        var id = $(this).attr('data-id');
+        _BoardNotes_.#sqlDeleteNote(project_id, user_id, id);
         _BoardNotes_.#sqlRefreshTabs(user_id);
         _BoardNotes_.#sqlRefreshNotes(project_id, user_id);
     });
 
     // POST transfer note to list
-    $("button" + ".singleNoteTransfer").click(function() {
+    $("button" + ".noteTransfer").click(function() {
         var project_id = $(this).attr('data-project');
         var user_id = $(this).attr('data-user');
-        var note_id = $(this).attr('data-note');
-        _BoardNotes_.#modalTransferNote(project_id, user_id, note_id);
+        var id = $(this).attr('data-id');
+        _BoardNotes_.#modalTransferNote(project_id, user_id, id);
     });
 
     // POST export note as task
-    $("button" + ".singleNoteToTask").click(function() {
-        var id = $(this).attr('data-id');
+    $("button" + ".noteToTask").click(function() {
         var project_id = $(this).attr('data-project');
         var user_id = $(this).attr('data-user');
-        var note_id = $(this).attr('data-note');
+        var id = $(this).attr('data-id');
         var title = $("#noteTitleLabel-P" + project_id + "-" + id).html();
         var description = $("#noteTextareaDescription-P" + project_id + "-" + id).val();
         var category_id = $("#cat-P" + project_id + "-" + id + " option:selected").val();
         var is_active = $("#noteDoneCheckmark-P" + project_id + "-" + id).attr('data-id');
-        _BoardNotes_.#modalNoteToTask(project_id, user_id, note_id, is_active, title, description, category_id);
+        _BoardNotes_.#modalNoteToTask(project_id, user_id, id, is_active, title, description, category_id);
     });
 
     //------------------------------------------------
@@ -529,7 +587,7 @@ static refreshCategoryColors() {
 
 // Update category colors
 static updateCategoryColors(project_id, id, old_category, new_category) {
-    var note_id = $("#noteId-P" + project_id + "-" + id).attr('data-id');
+    var note_id = $("#noteId-P" + project_id + "-" + id).attr('data-note-id');
     var $old_color = $("#category-" + old_category).attr('data-color');
     var $new_color = $("#category-" + new_category).attr('data-color');
 
@@ -547,7 +605,7 @@ static updateCategoryColors(project_id, id, old_category, new_category) {
 //------------------------------------------------
 
 //------------------------------------------------
-static #modalTransferNote(project_id, user_id, note_id) {
+static #modalTransferNote(project_id, user_id, id) {
     $("#dialogTransfer-P" + project_id).removeClass( 'hideMe' );
     $("#dialogTransfer-P" + project_id).dialog({
         buttons: [
@@ -555,7 +613,7 @@ static #modalTransferNote(project_id, user_id, note_id) {
                 text : _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_MOVE_BTN'),
                 click : function() {
                     var target_project_id = $("#listNoteProject-P" + project_id + " option:selected").val();
-                    _BoardNotes_.#sqlTransferNote(project_id, user_id, note_id, target_project_id);
+                    _BoardNotes_.#sqlTransferNote(project_id, user_id, id, target_project_id);
                     $( this ).dialog( "close" );
                     _BoardNotes_.#sqlRefreshTabs(user_id);
                     _BoardNotes_.#sqlRefreshNotes(project_id, user_id);
@@ -573,7 +631,7 @@ static #modalTransferNote(project_id, user_id, note_id) {
 }
 
 //------------------------------------------------
-static #modalNoteToTask(project_id, user_id, note_id, is_active, title, description, category_id) {
+static #modalNoteToTask(project_id, user_id, id, is_active, title, description, category_id) {
     $.ajaxSetup ({
         cache: false
     });
@@ -615,7 +673,7 @@ static #modalNoteToTask(project_id, user_id, note_id, is_active, title, descript
                     $("#deadloading").removeClass( 'hideMe' );
                     $("#deadloading").html(ajax_load).load(loadUrl);
                     if (removeNote) {
-                        _BoardNotes_.#sqlDeleteNote(project_id, user_id, note_id);
+                        _BoardNotes_.#sqlDeleteNote(project_id, user_id, id);
                         _BoardNotes_.#sqlRefreshTabs(user_id);
                         _BoardNotes_.#sqlRefreshNotes(project_id, user_id);
                     }
@@ -722,7 +780,8 @@ static #modalReport(project_id, user_id) {
 
 //------------------------------------------------
 // SQL note transfer (to another project)
-static #sqlTransferNote(project_id, user_id, note_id, target_project_id) {
+static #sqlTransferNote(project_id, user_id, id, target_project_id) {
+    var note_id = $("#noteId-P" + project_id + "-" + id).attr('data-note-id');
     $.ajax({
         cache: false,
         type: "POST",
@@ -744,7 +803,7 @@ static #sqlTransferNote(project_id, user_id, note_id, target_project_id) {
 //------------------------------------------------
 // SQL note update (title etc. and done)
 static #sqlUpdateNote(project_id, user_id, id) {
-    var note_id = $("#noteId-P" + project_id + "-" + id).attr('data-id');
+    var note_id = $("#noteId-P" + project_id + "-" + id).attr('data-note-id');
     var title = $("#noteTitleInput-P" + project_id + "-" + id).val().trim();
     var description = $("#noteTextareaDescription-P" + project_id + "-" + id).val();
     var category = $("#cat-P" + project_id + "-" + id + " option:selected").text();
@@ -819,7 +878,8 @@ static #sqlAddNote(project_id, user_id) {
 }
 
 //------------------------------------------------
-static #sqlDeleteNote(project_id, user_id, note_id) {
+static #sqlDeleteNote(project_id, user_id, id) {
+    var note_id = $("#noteId-P" + project_id + "-" + id).attr('data-note-id');
     $.ajax({
         cache: false,
         type: "POST",

@@ -257,10 +257,10 @@ if (!$readonlyNotes) {
 
     print '</div>';
 
-    // Detailed view
-    print '<div id="noteDescription-P';
-    print $project_id;
-    print '" data-id="0" class="hideMe details containerFloatClear noteDescriptionClass ui-corner-all">';
+    // here goes the Detailed View
+    print '<div id="detailsNewNote" class="hideMe details containerFloatClear noteDetails ui-corner-all"';
+    print ' data-id="0"';
+    print '>';
 
     //-----------------------
 
@@ -377,65 +377,53 @@ foreach ($data as $u) {
     // just allow for check/uncheck note
     if (!$readonlyNotes) {
         // Delete button viewed (in detailed view)
-        print '<button title="' . t('BoardNotes_PROJECT_NOTE_DELETE') . '" id="singleNoteDelete-P';
-        print $u['project_id'];
-        print '-';
-        print $num;
-        print '" class="hideMe toolbarButton singleNoteDelete" data-id="';
-        print $u['id'];
-        print '" data-project="';
-        print $u['project_id'];
-        print '" data-user="';
-        print $user_id;
-        print '"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
+        print '<button id="noteDelete-P' . $u['project_id'] . '-' . $num . '"';
+        print ' class="hideMe toolbarButton noteDelete"';
+        print ' title="' . t('BoardNotes_PROJECT_NOTE_DELETE') . '"';
+        print ' data-id="' . $num . '"';
+        print ' data-project="' . $u['project_id'] . '"';
+        print ' data-user="' . $user_id . '"';
+        print '>';
+        print '<i class="fa fa-trash-o" aria-hidden="true"></i>';
+        print '</button>';
 
         // Save button (in detailed view)
-        print '<button title="' . t('BoardNotes_PROJECT_NOTE_SAVE') . '" id="singleNoteSave-P';
-        print $u['project_id'];
-        print '-';
-        print $num;
-        print '" class="hideMe toolbarButton singleNoteSave" data-id="';
-        print $num;
-        print '" data-project="';
-        print $u['project_id'];
-        print '" data-user="';
-        print $user_id;
-        print '"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>';
+        print '<button id="noteSave-P' . $u['project_id'] . '-' . $num . '"';
+        print ' class="hideMe toolbarButton noteSave"';
+        print ' title="' . t('BoardNotes_PROJECT_NOTE_SAVE')  . '"';
+        print ' data-id="' . $num . '"';
+        print ' data-project="' . $u['project_id'] . '"';
+        print ' data-user="' . $user_id . '"';
+        print '>';
+        print '<i class="fa fa-floppy-o" aria-hidden="true"></i>';
+        print '</button>';
 
         // add some space between button groups
         print '<div class="toolbarSeparator">&nbsp;</div>';
 
         // Transfer button (in detailed view)
-        print '<button title="' . t('BoardNotes_PROJECT_NOTE_MOVE_TO_PROJECT') . '" id="singleNoteTransfer-P';
-        print $u['project_id'];
-        print '-';
-        print $num;
-        print '" class="hideMe toolbarButton singleNoteTransfer" data-id="';
-        print $num;
-        print '" data-note="';
-        print $u['id'];
-        print '" data-project="';
-        print $u['project_id'];
-        print '" data-user="';
-        print $user_id;
-        print '"><i class="fa fa-exchange" aria-hidden="true"></i></button>';
+        print '<button id="noteTransfer-P' . $u['project_id'] . '-' . $num . '"';
+        print ' class="hideMe toolbarButton noteTransfer"';
+        print ' title="' . t('BoardNotes_PROJECT_NOTE_MOVE_TO_PROJECT') . '"';
+        print ' data-id="' . $num . '"';
+        print ' data-project="' . $u['project_id'] . '"';
+        print ' data-user="' . $user_id . '"';
+        print '>';
+        print '<i class="fa fa-exchange" aria-hidden="true"></i>';
+        print '</button>';
 
         // notes from custom lists obviously CANNOT create tasks from notes
         if (!$project['is_custom']) {
             // Add note to tasks table (in detailed view)
-            print '<button title="' . t('BoardNotes_PROJECT_NOTE_CREATE_TASK') . '" id="singleNoteToTask-P';
-            print $u['project_id'];
-            print '-';
-            print $num;
-            print '" class="hideMe toolbarButton singleNoteToTask" data-id="';
-            print $num;
-            print '" data-note="';
-            print $u['id'];
-            print '" data-project="';
-            print $u['project_id'];
-            print '" data-user="';
-            print $user_id;
-            print '"><i class="fa fa-share-square-o" aria-hidden="true"></i></button>';
+            print '<button id="noteToTask-P' . $u['project_id'] . '-' . $num . '"';
+            print ' class="hideMe toolbarButton noteToTask"';
+            print ' title="' . t('BoardNotes_PROJECT_NOTE_CREATE_TASK') . '"';
+            print ' data-id="' . $num . '"';
+            print ' data-project="' . $u['project_id'] . '"';
+            print ' data-user="' . $user_id . '"';
+            print '>';
+            print '<i class="fa fa-share-square-o" aria-hidden="true"></i>';
+            print '</button>';
         }
     }
 
@@ -636,13 +624,9 @@ foreach ($data as $u) {
     print '</div>';
 
     // Note_id (hidden reference for each note)
-    print '<div id="noteId-P';
-    print $u['project_id'];
-    print '-';
-    print $num;
-    print '" data-id="';
-    print $u['id'];
-    print '" class="hideMe">';
+    print '<div class="hideMe" id="noteId-P' .  $u['project_id'] . '-' . $num . '"';
+    print ' data-note-id="' . $u['id'] . '"';
+    print ' >';
     print '</div>';
 
     print '</li>';
