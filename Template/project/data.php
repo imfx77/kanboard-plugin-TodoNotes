@@ -223,7 +223,7 @@ if ($readonlyNotes) {
 print '</div>';
 
 // here goes the space Placeholder
-print '<div id="notePlaceholderNew" class="containerFloatClear hideMe"></div>';
+print '<div class="hideMe containerFloatClear" id="placeholderNewNote"></div>';
 
 // exclude when in Overview Mode
 if (!$readonlyNotes) {
@@ -541,11 +541,7 @@ foreach ($data as $u) {
     print '</div>';
 
     // here goes the space Placeholder
-    print '<div id="notePlaceholder-P';
-    print $u['project_id'];
-    print '-';
-    print $num;
-    print '" class="containerFloatClear hideMe"></div>';
+    print '<div class="hideMe containerFloatClear" id="notePlaceholder-P' . $u['project_id'] . '-' . $num . '"></div>';
 
     // here goes the Detailed View
     print '<div id="noteDescription-P';

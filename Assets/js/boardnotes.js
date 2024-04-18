@@ -32,9 +32,9 @@ static adjustNotePlaceholders(project_id, id) {
         var offsetButtons = $("#settingsSortByStatus").offset().top;
         offsetButtons += $("#settingsSortByStatus").outerHeight();
         if (offsetTitle > offsetButtons) {
-            $("#notePlaceholderNew").removeClass( 'hideMe' );
+            $("#placeholderNewNote").removeClass( 'hideMe' );
         } else {
-            $("#notePlaceholderNew").addClass( 'hideMe' );
+            $("#placeholderNewNote").addClass( 'hideMe' );
         }
     } else {
         var offsetCheck = $("#checkDone-P" + project_id + "-" + id).offset().top;
