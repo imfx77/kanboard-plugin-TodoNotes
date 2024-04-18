@@ -170,22 +170,12 @@ static #NoteDetailsHandlers() {
 
     // Show details for new note by dblclick the new note
     $(".liNewNote").dblclick(function() {
-        var project_id = $(this).attr('data-project');
-        _BoardNotes_.#toggleDetailsNew(project_id);
+        _BoardNotes_.#toggleDetailsNewNote();
     });
 
     // Show details for new note by menu button
-    $("button" + ".showDetailsNew").click(function() {
-        var project_id = $(this).attr('data-project');
-        _BoardNotes_.#toggleDetailsNew(project_id);
-    });
-
-    // On TAB key open detailed view
-    $(".inputNewNote").keydown(function(event) {
-        if (event.keyCode == 9) {
-            var project_id = $(this).attr('data-project');
-            _BoardNotes_.#toggleDetailsNew(project_id);
-        }
+    $("button" + ".showDetailsNewNote").click(function() {
+        _BoardNotes_.#toggleDetailsNewNote();
     });
 
     //------------------------------------------------
@@ -357,7 +347,7 @@ static #NoteActionHandlers() {
         var project_id = $(this).attr('data-project');
         var user_id = $(this).attr('data-user');
         var id = $(this).attr('data-id');
-        if (event.keyCode == 13) {
+        if (event.keyCode == 13) { // ENTER
             _BoardNotes_.#showTitleInput(project_id, id, false);
             _BoardNotes_.#showDescriptionInput(project_id, id, false);
             _BoardNotes_.#sqlUpdateNote(project_id, user_id, id);
@@ -387,30 +377,6 @@ static #NoteActionHandlers() {
         _BoardNotes_.#showDescriptionInput(project_id, id, false);
         _BoardNotes_.#sqlUpdateNote(project_id, user_id, id);
         _BoardNotes_.#blinkNote(project_id, id);
-    });
-
-    //------------------------------------------------
-
-    // POST ADD when enter on title
-    $(".inputNewNote").keypress(function(event) {
-        if (event.keyCode == 13) {
-            var project_id = $(this).attr('data-project');
-            var user_id = $(this).attr('data-user');
-            $(".inputNewNote").blur();
-            _BoardNotes_.#sqlAddNote(project_id, user_id);
-            _BoardNotes_.#sqlRefreshTabs(user_id);
-            _BoardNotes_.#sqlRefreshNotes(project_id, user_id);
-        }
-    });
-
-    // POST ADD on save button for new notes
-    $("button" + ".saveNewNote").click(function() {
-        var project_id = $(this).attr('data-project');
-        var user_id = $(this).attr('data-user');
-        $(".inputNewNote").blur();
-        _BoardNotes_.#sqlAddNote(project_id, user_id);
-        _BoardNotes_.#sqlRefreshTabs(user_id);
-        _BoardNotes_.#sqlRefreshNotes(project_id, user_id);
     });
 
     //------------------------------------------------
