@@ -155,7 +155,7 @@ label {
     border: 0 !important;
 }
 
-.noteDescriptionClass {
+.noteDetails {
     padding: 5px 10px 0 40px;
     color: #7A7A7A;
     min-height: 16px;
@@ -222,7 +222,7 @@ label {
     text-decoration: line-through;
 }
 
-#item-0 .noteDescriptionClass {
+#item-0 .noteDetails {
     padding: 5px 10px 0 40px;
 }
 

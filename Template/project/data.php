@@ -537,18 +537,12 @@ foreach ($data as $u) {
     print '<div class="hideMe containerFloatClear" id="notePlaceholder-P' . $u['project_id'] . '-' . $num . '"></div>';
 
     // here goes the Detailed View
-    print '<div id="noteDescription-P';
-    print $u['project_id'];
-    print '-';
-    print $num;
-    print '" data-id="';
-    print $num;
-    print '" data-project="';
-    print $u['project_id'];
-    print '" data-user="';
-    print $user_id;
-    print '" ';
-    print 'class="hideMe details containerFloatClear noteDescriptionClass ui-corner-all">';
+    print '<div id="noteDetails-P' . $u['project_id'] . '-' . $num . '"';
+    print ' class="hideMe details containerFloatClear noteDetails ui-corner-all"';
+    print ' data-id="' . $num . '"';
+    print ' data-project="' . $u['project_id'] . '"';
+    print ' data-user="' . $user_id . '"';
+    print '>';
 
     //-----------------------
 
@@ -616,9 +610,12 @@ foreach ($data as $u) {
     }
 
     print '</select>';
-    print '</p>';
-
     print '</div>';
+    print '<br>';
+
+    //-----------------------
+
+    print '</div>'; // Detailed View
 
     // Note_id (hidden reference for each note)
     print '<div class="hideMe" id="noteId-P' .  $u['project_id'] . '-' . $num . '"';

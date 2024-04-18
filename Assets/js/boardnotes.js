@@ -52,7 +52,7 @@ static adjustNotePlaceholders(project_id, id) {
 static #showTitleInput(project_id, id, show_input) {
     var $noteTitleLabel = $("#noteTitleLabel-P" + project_id + "-" + id);
     var $noteTitleInput = $("#noteTitleInput-P" + project_id + "-" + id);
-    var $noteDescription = $("#noteDescription-P" + project_id + "-" + id);
+    var $noteDetails = $("#noteDetails-P" + project_id + "-" + id);
     var $textareaDescription = $("#noteTextareaDescription-P" + project_id + "-" + id);
 
     if (show_input) {
@@ -65,10 +65,10 @@ static #showTitleInput(project_id, id, show_input) {
 
         // get current width of the description textarea
         var inputWidth = $textareaDescription.width();
-        if ( $noteDescription.hasClass( 'hideMe' ) ) {
-            $noteDescription.toggleClass( 'hideMe' );
+        if ( $noteDetails.hasClass( 'hideMe' ) ) {
+            $noteDetails.toggleClass( 'hideMe' );
             inputWidth = $textareaDescription.width();
-            $noteDescription.toggleClass( 'hideMe' );
+            $noteDetails.toggleClass( 'hideMe' );
         }
 
         $noteTitleInput.width( inputWidth );
@@ -120,7 +120,7 @@ static #toggleDetailsNewNote() {
         $("#inputNewNote").width( $("#textareaNewNote").width() );
     }
 
-    $("#noteDescription-P" + project_id).toggleClass( 'hideMe' );
+    $("#detailsNewNote").toggleClass( 'hideMe' );
     $("#saveNewNote").toggleClass( 'hideMe' );
 
     if ( !$("#detailsNewNote").hasClass( 'hideMe' ) ) {
