@@ -70,51 +70,31 @@ foreach ($data as $u) {
     print '</label>';
 
     // Note title label
-    print '<label id="reportTitleLabelP';
-    print $u['project_id'];
-    print '-';
-    print $num;
-    print '" type="text" placeholder="" data-id="';
-    print $num;
-    print '" data-project="';
-    print $u['project_id'];
-    print '" name="reportTitleLabel';
-    print $num;
+    print '<label id="reportTitleLabel-P' . $u['project_id'] . '-' . $num . '"';
     if ($u['is_active'] == "0") {
-        print '" class="reportTitleLabel reportTitle noteDoneDesignText" value="">';
+        print ' class="reportTitleLabel reportTitle noteDoneText">';
     } else {
-        print '" class="reportTitleLabel reportTitle" value="">';
+        print ' class="reportTitleLabel reportTitle">';
     }
     print $u['title'];
     print '</label>';
 
-    // Detailed view
+    // Note details
     if (!empty($u['description'])) {
-        print '<div id="noteDescription-P';
-        print $u['project_id'];
-        print '-';
-        print $num;
-        print '" data-id="';
-        print $num;
-        print '" data-project="';
-        print $u['project_id'];
-        print '" class="details reportDescriptionClass ui-corner-all">';
+        print '<div id="noteDetails-P' . $u['project_id'] . '-' . $num . '"';
+        print ' class="details reportDetails ui-corner-all">';
 
-        print '<span id="noteTextareaDescription-P';
-        print $u['project_id'];
-        print '-';
-        print $num;
-        print '" data-id="';
-        print $num;
-        print '" data-project="';
-        print $u['project_id'];
+        print '<span id="noteTextareaDescription-P' . $u['project_id'] . '-' . $num . '"';
         if ($u['is_active'] == "0") {
-            print '" class="textareaReportDescription reportTitle noteDoneDesignTextarea">';
+            print ' class="textareaReportDescription reportTitle noteDoneTextarea"';
         } else {
-            print '" class="textareaReportDescription reportTitle">';
+            print ' class="textareaReportDescription reportTitle"';
         }
+        print '>';
         print $u['description'];
         print '</span>';
+
+        print '</div>';
     }
 
     print '</td>'; // report info

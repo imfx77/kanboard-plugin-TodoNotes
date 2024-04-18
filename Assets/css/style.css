@@ -211,12 +211,12 @@ label {
     cursor: cell;
 }
 
-.noteDoneDesignText {
+.noteDoneText {
     color: #555555;
     text-decoration: line-through;
 }
 
-.noteDoneDesignTextarea {
+.noteDoneTextarea {
     color: #555555;
     border: 1px solid #555555 !important;
     text-decoration: line-through;
@@ -319,7 +319,7 @@ textarea::selection {
     cursor: pointer;
 }
 
-.reportDescriptionClass {
+.reportDetails {
     padding: 5px 10px 0 20px;
     color: #7A7A7A;
     font-size: .9em !important;

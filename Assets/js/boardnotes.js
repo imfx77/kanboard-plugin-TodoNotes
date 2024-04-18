@@ -101,7 +101,7 @@ static #showDescriptionInput(project_id, id, show_input) {
 //------------------------------------------------
 // Show details for existing notes (toggle class)
 static #toggleDetails(project_id, id) {
-    $("#noteDescription-P" + project_id + "-" + id).toggleClass( 'hideMe' );
+    $("#noteDetails-P" + project_id + "-" + id).toggleClass( 'hideMe' );
     $("#noteDelete-P" + project_id + "-" + id).toggleClass( 'hideMe' );
     $("#noteSave-P" + project_id + "-" + id).toggleClass( 'hideMe' );
     $("#noteTransfer-P" + project_id + "-" + id).toggleClass( 'hideMe' );
@@ -252,18 +252,18 @@ static #updateNoteDoneCheckmark(project_id, id) {
     var $noteDescription = $("#noteTextareaDescription-P" + project_id + "-" + id);
 
     if( $noteDoneCheckmark.hasClass( "fa-check" ) ) {
-        $noteTitleLabel.addClass( "noteDoneDesignText" );
-        $noteDescription.addClass( "noteDoneDesignTextarea" );
+        $noteTitleLabel.addClass( "noteDoneText" );
+        $noteDescription.addClass( "noteDoneTextarea" );
         $noteDoneCheckmark.attr('data-id', '0');
     }
     if( $noteDoneCheckmark.hasClass( "fa-circle-thin" ) ) {
-        $noteTitleLabel.removeClass( "noteDoneDesignText" );
-        $noteDescription.removeClass( "noteDoneDesignTextarea" );
+        $noteTitleLabel.removeClass( "noteDoneText" );
+        $noteDescription.removeClass( "noteDoneTextarea" );
         $noteDoneCheckmark.attr('data-id', '1');
     }
     if( $noteDoneCheckmark.hasClass( "fa-spinner fa-pulse" ) ) {
-        $noteTitleLabel.removeClass( "noteDoneDesignText" );
-        $noteDescription.removeClass( "noteDoneDesignTextarea" );
+        $noteTitleLabel.removeClass( "noteDoneText" );
+        $noteDescription.removeClass( "noteDoneTextarea" );
         $noteDoneCheckmark.attr('data-id', '2');
     }
 }
