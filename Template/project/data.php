@@ -246,18 +246,23 @@ if (!$readonlyNotes) {
     print '<div class="containerNoWrap containerFloatClear">';
 
     // Show details button
-    print '<button title="' . t('BoardNotes_PROJECT_NOTE_TOGGLE_DETAILS') . '" id="showDetailsNew" class="showDetailsNew toolbarButton" data-id="0" data-project="';
-    print $project_id;
-    print '" data-user="';
-    print $user_id;
-    print '"><i class="fa fa-angle-double-down" aria-hidden="true"></i></button>';
+    print '<button id="showDetailsNewNote" class="showDetailsNewNote toolbarButton"';
+    print ' title="' . t('BoardNotes_PROJECT_NOTE_TOGGLE_DETAILS') . '"';
+    print ' data-id="0"';
+    print ' data-project="' . $project_id . '"';
+    print ' data-user="' . $user_id . '"';
+    print '>';
+    print '<i class="fa fa-angle-double-down" aria-hidden="true"></i>';
+    print '</button>';
 
     // Save button
-    print '<button class="hideMe saveNewNote toolbarButton" id="saveNewNote" title="' . t('BoardNotes_PROJECT_NOTE_SAVE') . '" data-project="';
-    print $project_id;
-    print '" data-user="';
-    print $user_id;
-    print '"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>';
+    print '<button id="saveNewNote" class="hideMe saveNewNote toolbarButton"';
+    print ' title="' . t('BoardNotes_PROJECT_NOTE_SAVE') . '"';
+    print ' data-project="' . $project_id . '"';
+    print ' data-user="' . $user_id . '"';
+    print '>';
+    print '<i class="fa fa-floppy-o" aria-hidden="true"></i>';
+    print '</button>';
 
     // Input line
     print '<input class="inputNewNote disableDblClickPropagation" id="inputNewNote"';
@@ -368,17 +373,15 @@ foreach ($data as $u) {
     print '<div class="hideMe sortableHandle"><i class="fa fa-arrows-alt" aria-hidden="true"></i></div>';
 
     // Show details button
-    print '<button title="' . t('BoardNotes_PROJECT_NOTE_TOGGLE_DETAILS') . '" id="showDetails-P';
-    print $u['project_id'];
-    print '-';
-    print $num;
-    print '" class="showDetails toolbarButton" data-id="';
-    print $num;
-    print '" data-project="';
-    print $u['project_id'];
-    print '" data-user="';
-    print $user_id;
-    print '"><i class="fa fa-angle-double-down" aria-hidden="true"></i></button>';
+    print '<button id="showDetails-P' . $u['project_id'] . '-' . $num . '"';
+    print ' class="showDetails toolbarButton"';
+    print ' title="' . t('BoardNotes_PROJECT_NOTE_TOGGLE_DETAILS') . '"';
+    print ' data-id="' . $num  . '"';
+    print ' data-project="' . $u['project_id'] . '"';
+    print ' data-user="' . $user_id . '"';
+    print '>';
+    print '<i class="fa fa-angle-double-down" aria-hidden="true"></i>';
+    print '</button>';
 
     // hide all the utility buttons when viewing notes as readonly
     // just allow for check/uncheck note
