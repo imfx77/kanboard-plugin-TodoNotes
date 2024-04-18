@@ -118,6 +118,7 @@ static #toggleDetails(project_id, id) {
 static #toggleDetailsNew(project_id) {
     if ( !$("#noteDescription-P" + project_id).hasClass( 'hideMe' ) ) {
         $("#inputNewNote" + project_id).width( $("#textareaNewNote" + project_id).width() );
+        $("#inputNewNote").width( $("#textareaNewNote").width() );
     }
 
     $("#noteDescription-P" + project_id).toggleClass( 'hideMe' );
@@ -125,12 +126,11 @@ static #toggleDetailsNew(project_id) {
 
     if ( !$("#noteDescription-P" + project_id).hasClass( 'hideMe' ) ) {
         $("#inputNewNote" + project_id).width( $("#textareaNewNote" + project_id).width() );
+        $("#inputNewNote").width( $("#textareaNewNote").width() );
     }
 
     $("#showDetailsNew").find('i').toggleClass( "fa-angle-double-down" );
     $("#showDetailsNew").find('i').toggleClass( "fa-angle-double-up" );
-
-    setTimeout(function() { $("#textareaNewNote" + project_id).focus(); }, 0);
 }
 
 //------------------------------------------------
@@ -156,7 +156,7 @@ static #NoteDetailsHandlers() {
         _BoardNotes_.#toggleDetails(project_id, id);
     });
 
-    // BUT disable dblclick propagation for all marked sub-elements
+    // disable dblclick propagation for all marked sub-elements
     $(".disableDblClickPropagation").dblclick(function (event) {
         event.stopPropagation();
     });
@@ -788,9 +788,9 @@ static #sqlUpdateNote(project_id, user_id, id) {
 
 //------------------------------------------------
 static #sqlAddNote(project_id, user_id) {
-    var title = $("#inputNewNote" +  project_id).val().trim();
-    var description = $("#textareaNewNote" + project_id).val();
-    var category = $("#cat-P" + project_id + " option:selected").text();
+    var title = $("#inputNewNote").val().trim();
+    var description = $("#textareaNewNote").val();
+    var category = $("#catNewNote" + " option:selected").text();
     var is_active = "1";
 
     if (!title) {
@@ -981,8 +981,8 @@ static ScheduleCheckModifications() {
 
         var project_id = $("#refProjectId").attr('data-project');
         var user_id = $("#refProjectId").attr('data-user');
-        var title = (project_id != 0) ? $("#inputNewNote" +  project_id).val().trim() : "";
-        var description = (project_id != 0) ? $("#textareaNewNote" + project_id).val() : "";
+        var title = (project_id != 0) ? $("#inputNewNote").val().trim() : "";
+        var description = (project_id != 0) ? $("#textareaNewNote").val() : "";
 
         // skip SQL query if page not visible, or if new note has pending changes
         if (!KB.utils.isVisible() || title!="" || description!="") {

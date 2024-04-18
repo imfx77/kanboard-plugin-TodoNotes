@@ -248,15 +248,12 @@ if (!$readonlyNotes) {
     print '"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>';
 
     // Input line
-    print '<input id="inputNewNote';
-    print $project_id;
-    print '" name="inputNewNote" type="text" placeholder="' . t('BoardNotes_PROJECT_NEW_NOTE_TITLE_PLACEHOLDER');
-    print '" title="' . t('BoardNotes_PROJECT_NOTE_TITLE_SAVE_HINT');
-    print '" class="inputNewNote disableDblClickPropagation" data-project="';
-    print $project_id;
-    print '" data-user="';
-    print $user_id;
-    print '">';
+    print '<input class="inputNewNote disableDblClickPropagation" id="inputNewNote"';
+    print ' type="text" placeholder="' . t('BoardNotes_PROJECT_NEW_NOTE_TITLE_PLACEHOLDER') . '"';
+    print ' title="' . t('BoardNotes_PROJECT_NOTE_TITLE_SAVE_HINT') . '"';
+    print ' data-project="' . $project_id . '"';
+    print ' data-user="' . $user_id . '"';
+    print '>';
 
     print '</div>';
 
@@ -264,26 +261,34 @@ if (!$readonlyNotes) {
     print '<div id="noteDescription-P';
     print $project_id;
     print '" data-id="0" class="hideMe details containerFloatClear noteDescriptionClass ui-corner-all">';
-    print '<textarea id="textareaNewNote';
-    print $project_id;
-    print '" class="textareaNewNote disableDblClickPropagation"></textarea>';
 
-    // Print category select menu
-    print '<p class="categories disableDblClickPropagation">';
-    print '<label for="cat">' . t('Category') . '</label><br>';
-    print '<select name="cat" id="cat-P';
-    print $project_id;
-    print '" data-id="0" data-project="';
-    print $project_id;
-    print '" data-user="';
-    print $user_id;
-    print '" class="catSelector ui-selectmenu-button ui-selectmenu-button-closed ui-corner-all ui-button ui-widget">';
+    //-----------------------
+
+    print '<textarea id="textareaNewNote" class="textareaNewNote disableDblClickPropagation"';
+    print ' title="' . t('BoardNotes_PROJECT_NOTE_DESCR_SAVE_HINT') . '"';
+    print ' data-project="' .  $project_id . '"';
+    print ' data-user="' . $user_id . '"';
+    print '"></textarea>';
+
+    //-----------------------
+
+    print '<div class="categories disableDblClickPropagation">';
+    print '<label for="catNewNote">' . t('Category') . '</label> : &nbsp;&nbsp;';
+    print '<select id="catNewNote"';
+    print ' class="catSelector ui-selectmenu-button ui-selectmenu-button-closed ui-corner-all ui-button ui-widget"';
+    print ' data-id="0"';
+    print ' data-project="' . $project_id . '"';
+    print ' data-user="' . $user_id . '"';
+    print '>';
     print '<option selected="selected"></option>'; // Insert empty line for keeping non category by default
     print $listCategoriesById;
     print '</select>';
-    print '</p>';
-
     print '</div>';
+    print '<br>';
+
+    //-----------------------
+
+    print '</div>'; // Detailed View
 } // end exclude
 
 print '</li>';
