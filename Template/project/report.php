@@ -34,22 +34,21 @@ print '</div>';
 $num = "1";
 
 foreach ($data as $u) {
-    print '<tr class="trReport" id="trReportNr';
-    print $num;
-    print '">';
+    print '<tr class="trReport" id="trReportNr' . $num . '">';
 
     print '<td class="tdReport tdReportNr">';
      // Hide button
-    print '<button id="singleReportHide" class="singleReportHide" data-id="';
-    print $num;
-    print '"><i class="fa fa-minus-square-o" style="color:#CCCCCC" aria-hidden="true"';
-    print ' title="' . t('BoardNotes_REPORT_HIDE_ROW') . '"></i></button>';
+    print '<button id="reportHide" class="reportHide"';
+    print ' data-id="' .  $num . '"';
+    print '>';
+    print '<i class="fa fa-minus-square-o" style="color:#CCCCCC" aria-hidden="true"';
+    print ' title="' . t('BoardNotes_REPORT_HIDE_ROW') . '">';
+    print '</i>';
+    print '</button>';
     // Report #
     print '<span class="fa-stack fa-lg">';
     print '<i class="fa fa-circle-thin fa-stack-2x"></i>';
-    print '<i class="fa fa-inverse fa-stack-1x">';
-    print $num;
-    print '</i>';
+    print '<i class="fa fa-inverse fa-stack-1x">'.  $num . '</i>';
     print '</span>';
     print '</td>';
 
@@ -57,15 +56,11 @@ foreach ($data as $u) {
     print '<td class="tdReport tdReportInfo">';
 
     // Category label
-    print '<label class="catLabel" id="noteCatLabel-P';
-    print $u['project_id'];
-    print '-';
-    print $num;
-    print '" data-id="';
-    print $num;
-    print '" data-project="';
-    print $u['project_id'];
-    print '">';
+    print '<label class="catLabel"';
+    print ' id="noteCatLabel-P' . $u['project_id'] . '-' . $num . '"';
+    print ' data-id="' . $num . '"';
+    print ' data-project="' . $u['project_id'] . '"';
+    print '>';
     print $u['category'];
     print '</label>';
 

@@ -308,7 +308,7 @@ textarea::selection {
     cursor: default;
 }
 
-.singleReportHide {
+.reportHide {
     float: left;
     appearance: none;
     -webkit-appearance: none;

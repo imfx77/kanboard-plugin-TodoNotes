@@ -545,7 +545,7 @@ static #SettingsHandlers() {
     //------------------------------------------------
 
     // Hide note in report view
-    $("button" + "#singleReportHide").click(function() {
+    $("button" + "#reportHide").click(function() {
         var id = $(this).attr('data-id');
         $("#trReportNr" + id).addClass( 'hideMe' );
     });
