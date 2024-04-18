@@ -23,20 +23,25 @@ print $this->render('BoardNotes:widgets/stats', array(
 // buttons for ALL tab
 //----------------------------------------
 print '<div class="toolbarSeparator">&nbsp;</div>';
-print '<button title="New custom list" id="customListNew-P' . $num . '"';
+
+print '<button id="customListNew"';
 print ' class="toolbarButton customListNew"';
+print ' title="' . t('New custom list') . '"';
 print ' data-user="' . $user_id . '"';
 print '>';
 print '<a><i class="fa fa-fw fa-wpforms" aria-hidden="true"></i></a>';
 print '</button>';
 
-print '<div class="toolbarSeparator">&nbsp;</div>';
-print '<button title="Reindex Notes and Lists" id="reindexNotesAndLists-P' . $num . '"';
-print ' class="toolbarButton reindexNotesAndLists"';
-print ' data-user="' . $user_id . '"';
-print '>';
-print '<a><i class="fa fa-fw fa-recycle" aria-hidden="true"></i></a>';
-print '</button>';
+if ($this->user->isAdmin()) {
+    // show the system button to Admins ONLY !
+    print '<button id="reindexNotesAndLists"';
+    print ' class="toolbarButton toolbarButtonToggled reindexNotesAndLists"';
+    print ' title="' . t('⚠ Reindex Notes and Lists!') . '"';
+    print ' data-user="' . $user_id . '"';
+    print '>';
+    print '<i class="fa fa-fw fa-recycle" aria-hidden="true"></i>';
+    print '</button>';
+}
 //----------------------------------------
 
 print '</li>';
@@ -84,16 +89,18 @@ foreach ($projectsAccess as $o) {
     if ($o['is_custom']) {
         // edit buttons for custom lists ONLY
         //----------------------------------------
-        print '<button title="Delete custom list" id="customListDelete-P' . $o['project_id'] . '"';
+        print '<button id="customListDelete-P' . $o['project_id'] . '"';
         print ' class="toolbarButton customListDelete"';
+        print ' title="' . t('Delete custom list') . '"';
         print ' data-project="' . $o['project_id'] . '"';
         print ' data-user="' . $user_id . '"';
         print '>';
         print '<a><i class="fa fa-trash-o" aria-hidden="true"></i></a>';
         print '</button>';
 
-        print '<button title="Rename custom list" id="customListRenameP' . $o['project_id'] . '"';
+        print '<button id="customListRenameP' . $o['project_id'] . '"';
         print ' class="toolbarButton customListRename"';
+        print ' title="' . t('Rename custom list') . '"';
         print ' data-project="' . $o['project_id'] . '"';
         print ' data-user="' . $user_id . '"';
         print '>';
@@ -105,6 +112,7 @@ foreach ($projectsAccess as $o) {
         //----------------------------------------
         print '<button id="gotoProjectTasks-P' . $o['project_id'] . '"';
         print ' class="toolbarButton gotoProjectTasks"';
+        print ' title="' . t('List') . ' ⇗' . '"';
         print ' data-project="' . $o['project_id'] . '"';
         print ' data-user="' . $user_id . '"';
         print '>';
@@ -113,6 +121,7 @@ foreach ($projectsAccess as $o) {
 
         print '<button id="gotoProjectBoard-P' . $o['project_id'] . '"';
         print ' class="toolbarButton gotoProjectBoard"';
+        print ' title="' . t('Board') . ' ⇗' . '"';
         print ' data-project="' . $o['project_id'] . '"';
         print ' data-user="' . $user_id . '"';
         print '>';
