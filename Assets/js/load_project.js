@@ -30,9 +30,9 @@ static prepareDocument() {
             var sortable_notes_number = $("#nrNotes-P" + sortable_project_id).attr('data-num');
 
             $("#sortableRef-P" + sortable_project_id).disableSelection();
-
             $("#sortableRef-P" + sortable_project_id).sortable({
                 placeholder: "ui-state-highlight",
+                items: 'li.liNote', // exclude the NewNote
                 update: function() {
                     // handle notes reordering
                     var order = $(this).sortable('toArray');

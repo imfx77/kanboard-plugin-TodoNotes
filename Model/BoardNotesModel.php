@@ -372,10 +372,6 @@ class BoardNotesModel extends Base
 
         // Loop through all positions
         foreach ($note_ids as $row_id) {
-            if ($row_id <= 0) {
-                continue; // ignore note_id==0
-            }
-
             $values = array(
                 'position' => $num,
                 'date_modified' => $timestamp,
