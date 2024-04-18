@@ -549,26 +549,23 @@ foreach ($data as $u) {
     print $user_id;
     print '" ';
     print 'class="hideMe details containerFloatClear noteDescriptionClass ui-corner-all">';
-    print '<textarea title="' . t('BoardNotes_PROJECT_NOTE_DESCR_SAVE_HINT') . '" ';
-    if ($readonlyNotes) {
-        print 'disabled ';
-    }
+
+    //-----------------------
+
+    print '<textarea id="noteTextareaDescription-P' . $u['project_id'] . '-' . $num . '"';
     if ($u['is_active'] == "0") {
-        print '" class="disableDblClickPropagation textareaDescription noteDoneDesignTextarea"';
+        print ' class="disableDblClickPropagation textareaDescription noteDoneTextarea"';
     } else {
-        print '" class="disableDblClickPropagation textareaDescription"';
+        print ' class="disableDblClickPropagation textareaDescription"';
     }
-    print ' id="noteTextareaDescription-P';
-    print $u['project_id'];
-    print '-';
-    print $num;
-    print '" data-id="';
-    print $num;
-    print '" data-project="';
-    print $u['project_id'];
-    print '" data-user="';
-    print $user_id;
-    print '">';
+    print' title="' . t('BoardNotes_PROJECT_NOTE_DESCR_SAVE_HINT') . '"';
+    print ' data-id="' . $num . '"';
+    print ' data-project="' . $u['project_id'] . '"';
+    print ' data-user="' . $user_id . '"';
+    if ($readonlyNotes) {
+        print ' disabled';
+    }
+    print '>';
     print $u['description'];
     print '</textarea>';
 
