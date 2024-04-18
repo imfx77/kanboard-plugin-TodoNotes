@@ -302,6 +302,11 @@ foreach ($data as $u) {
     if ($readonlyNotes && $last_project_id != $u['project_id']) {
         print '</ul>';
 
+        // hidden reference for number of notes by project
+        print '<div class="hideMe" id="nrNotes-P' . $last_project_id . '"';
+        print ' data-num="' . $last_num_notes . '"';
+        print '></div>';
+
         // reset project and number of notes
         $last_project_id = $u['project_id'];
         $last_num_notes = 0;
@@ -650,18 +655,16 @@ foreach ($data as $u) {
 print '</ul>';
 
 // hidden reference for number of notes by project
-print '<div class="hideMe" id="nrNotes-P';
-print $last_project_id;
-print '" data-id="';
-print $last_num_notes;
-print '"></div>';
+print '<div class="hideMe" id="nrNotes-P' . $last_project_id . '"';
+print ' data-num="' . $last_num_notes . '"';
+print '></div>';
 
 //----------------------------------------
 
 // hidden reference for total number of notes
-print '<div class="hideMe" id="nrNotes" data-id="';
-print ($num - 1);
-print '"></div>';
+print '<div class="hideMe" id="nrNotes"';
+print ' data-id="' . ($num - 1) . '"';
+print '></div>';
 
 // hidden reference for project_id and user_id of the currently active page
 print '<div id="refProjectId" class="hideMe"';

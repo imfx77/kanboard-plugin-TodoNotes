@@ -27,7 +27,7 @@ static prepareDocument() {
     if (!_BoardNotes_.optionSortByStatus) {
         $(".sortableRef").each(function() {
             var sortable_project_id = $(this).attr('data-project');
-            var sortable_notes_number = $("#nrNotes").attr('data-id');
+            var sortable_notes_number = $("#nrNotes-P" + sortable_project_id).attr('data-num');
 
             $("#sortableRef-P" + sortable_project_id).disableSelection();
 
