@@ -195,6 +195,7 @@ label {
     padding-right: 5px;
     padding-left: 5px;
     cursor: pointer;
+    color: #1F1F1F;
 }
 
 .toolbarButtonToggled {
@@ -229,7 +230,7 @@ label {
 .categories {
     display: inline-block;
     vertical-align: top;
-    margin-left: 20px;
+    margin-bottom: 10px;
     color: #1F1F1F;
 }
 

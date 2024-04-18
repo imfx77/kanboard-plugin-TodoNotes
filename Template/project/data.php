@@ -116,11 +116,9 @@ print '</div>';
 
 //----------------------------------------
 
-print '<ul id="sortableRef-P';
-print $project_id;
-print '" data-project="';
-print $project_id;
-print '" class="sortableRef">';
+print '<ul class="sortableRef" id="sortableRef-P' . $project_id . '"';
+print ' data-project="' . $project_id . '"';
+print '>';
 
 //----------------------------------------
 
@@ -128,9 +126,7 @@ print '" class="sortableRef">';
 ////    NEW NOTE / OVERVIEW MODE TITLE
 //////////////////////////////////////////
 
-print '<li id="item-0" class="ui-state-default liNewNote" data-id="0" data-project="';
-print $project_id;
-print '">';
+print '<li id="item-0" class="ui-state-default liNewNote" data-id="0" data-project="' . $project_id . '">';
 
 // here goes the Button Toolbar
 print '<div class="containerNoWrap containerFloatRight disableDblClickPropagation">';
@@ -246,7 +242,7 @@ if (!$readonlyNotes) {
     // Newline after heading and top settings
     print '<br>';
 
-    // here goes the Detailed View
+    // here goes the Input line
     print '<div class="containerNoWrap containerFloatClear">';
 
     // Show details button
@@ -343,32 +339,27 @@ foreach ($data as $u) {
         print '</h2>';
 
         // sortable list by project
-        print '<ul id="sortableRef-P';
-        print $last_project_id;
-        print '" data-project="';
-        print $last_project_id;
-        print '" class="sortableRef">';
+        print '<ul class="sortableRef" id="sortableRef-P' . $last_project_id . '"';
+        print ' data-project="' . $last_project_id . '"';
+        print '>';
     }
 
     //////////////////////////////////////////
     ////    PROJECT NOTE
     //////////////////////////////////////////
 
-    print '<li id="item';
-    print '-';
-    print $u['id'];
-    print '" class="ui-state-default liNote';
+    print '<li id="item' . '-' . $u['id'] . '"';
+    print ' class="ui-state-default liNote';
     if (!empty($u['category']) && array_key_exists($u['category'], $mapCategoryColorByName)) {
         $category_color = $mapCategoryColorByName[ $u['category'] ];
         if (!empty($category_color)) {
-            print ' color-' . $category_color;
+            print ' color-' . $category_color; // append category color class
         }
     }
-    print '" data-id="';
-    print $num;
-    print '" data-project="';
-    print $u['project_id'];
-    print '">';
+    print '"';
+    print ' data-id="' . $num . '"';
+    print ' data-project="' . $u['project_id'] . '"';
+    print '>';
 
     // here goes the Button Toolbar
     print '<div class="containerNoWrap containerFloatRight disableDblClickPropagation">';
@@ -444,24 +435,20 @@ foreach ($data as $u) {
     }
 
     // Category label (in simple view)
-    print '<label class="catLabel catLabelClickable';
+    print '<label id="noteCatLabel-P' . $u['project_id'] . '-' . $num . '"';
+    print ' class="catLabel catLabelClickable';
     if (!empty($u['category']) && array_key_exists($u['category'], $mapCategoryColorByName)) {
         $category_color = $mapCategoryColorByName[ $u['category'] ];
         if (!empty($category_color)) {
-            print ' color-' . $category_color;
+            print ' color-' . $category_color; // append category color class
         }
     }
-    print '" title="' . t('Change category') . '" id="noteCatLabel-P';
-    print $u['project_id'];
-    print '-';
-    print $num;
-    print '" data-id="';
-    print $num;
-    print '" data-project="';
-    print $u['project_id'];
-    print '" data-user="';
-    print $user_id;
-    print '">';
+    print '"';
+    print ' title="' . t('Change category') . '"';
+    print ' data-id="' . $num . '"';
+    print ' data-project="' . $u['project_id'] . '"';
+    print ' data-user="' . $user_id . '"';
+    print '>';
     print $u['category'];
     print '</label>';
 
@@ -471,83 +458,58 @@ foreach ($data as $u) {
     print '<div class="containerNoWrap containerFloatLeft disableDblClickPropagation">';
 
     // Checkbox for done note
-    print '<button title="' . t('BoardNotes_PROJECT_NOTE_SWITCH_STATUS') . '" id="checkDone-P';
-    print $u['project_id'];
-    print '-';
-    print $num;
-    print '" data-id="';
-    print $num;
-    print '" data-project="';
-    print $u['project_id'];
-    print '" data-user="';
-    print $user_id;
-    print '" class="checkDone"><i id="noteDoneCheckmark-P';
-    print $u['project_id'];
-    print '-';
-    print $num;
-    print '" data-id="';
-    print $u['is_active'];
-    print '" ';
-
+    print '<button class="checkDone" id="checkDone-P' . $u['project_id'] . '-' . $num . '"';
+    print ' title="' . t('BoardNotes_PROJECT_NOTE_SWITCH_STATUS') . '"';
+    print ' data-id="' . $num . '"';
+    print ' data-project="' . $u['project_id'] . '"';
+    print ' data-user="' . $user_id . '"';
+    print '>';
+    print '<i id="noteDoneCheckmark-P' . $u['project_id'] . '-' . $num . '"';
+    print ' data-id="' . $u['is_active'] . '"';
     if ($u['is_active'] == "2") {
-        print 'class="fa fa-spinner fa-pulse" aria-hidden="true"></i>';
+        print ' class="fa fa-spinner fa-pulse" aria-hidden="true"';
     }
     if ($u['is_active'] == "1") {
-        print 'class="fa fa-circle-thin" aria-hidden="true"></i>';
+        print ' class="fa fa-circle-thin" aria-hidden="true"';
     }
     if ($u['is_active'] == "0") {
-        print 'class="fa fa-check" aria-hidden="true"></i>';
+        print ' class="fa fa-check" aria-hidden="true"';
     }
-
+    print '></i>';
     print '</button>';
 
     // Note title input - typing. Changes after submit to label below.
-    print '<input ';
+    print '<input class="hideMe noteTitle" id="noteTitleInput-P' . $u['project_id'] . '-' . $num . '"';
+    print ' type="text" placeholder=""';
+    print ' title="' . t('BoardNotes_PROJECT_NOTE_TITLE_SAVE_HINT') . '"';
+    print ' value="' . $u['title'] . '"';
+    print ' data-id="' . $num . '"';
+    print ' data-project="' . $u['project_id'] . '"';
+    print ' data-user="' . $user_id . '"';
     if ($readonlyNotes) {
-        print 'disabled ';
+        print ' disabled';
     }
-    print 'title="' . t('BoardNotes_PROJECT_NOTE_TITLE_SAVE_HINT') . '" id="noteTitleInput-P';
-    print $u['project_id'];
-    print '-';
-    print $num;
-    print '" type="text" placeholder="" data-id="';
-    print $num;
-    print '" data-project="';
-    print $u['project_id'];
-    print '" data-user="';
-    print $user_id;
-    print '" name="noteTitle';
-    print $num;
-    print '" class="hideMe noteTitle" value="';
-    print $u['title'];
-    print '">';
+    print '>';
 
     // Note title label - visual. Changes on click to input
-    print '<label ';
-    if ($readonlyNotes) {
-        print 'data-disabled="true" ';
-    }
-    print 'title="' . t('BoardNotes_PROJECT_NOTE_EDIT_HINT') . '" id="noteTitleLabel-P';
-    print $u['project_id'];
-    print '-';
-    print $num;
-    print '" type="text" placeholder="" data-id="';
-    print $num;
-    print '" data-project="';
-    print $u['project_id'];
-    print '" data-user="';
-    print $user_id;
-    print '" name="noteTitleLabel';
-    print $num;
+    print '<label id="noteTitleLabel-P' . $u['project_id'] . '-' . $num . '"';
     if ($u['is_active'] == "0") {
-        print '" class="noteTitleLabel noteTitle noteDoneDesignText" value="">';
+        print ' class="noteTitleLabel noteTitle noteDoneText"';
     } else {
-        print '" class="noteTitleLabel noteTitle" value="">';
+        print ' class="noteTitleLabel noteTitle"';
     }
+    print ' title="' . t('BoardNotes_PROJECT_NOTE_EDIT_HINT') . '"';
+    print ' data-id="' . $num . '"';
+    print ' data-project="' . $u['project_id'] . '"';
+    print ' data-user="' . $user_id . '"';
+    if ($readonlyNotes) {
+        print ' data-disabled="true"';
+    }
+    print '>';
     print $u['title'];
     print '</label>';
 
-    print '</div>';
+    print '</div>'; // Title row with Checkbox
 
     // here goes the space Placeholder
     print '<div class="hideMe containerFloatClear" id="notePlaceholder-P' . $u['project_id'] . '-' . $num . '"></div>';
@@ -579,24 +541,19 @@ foreach ($data as $u) {
     print $u['description'];
     print '</textarea>';
 
-    print '<p class="categories disableDblClickPropagation">';
-    print '<label for="cat">' . t('Category') . '</label><br>';
-    print '<select ';
+    //-----------------------
+
+    print '<div class="categories disableDblClickPropagation">';
+    print '<label for="cat-P' . $u['project_id'] . '-' . $num . '">' . t('Category') . '</label> : &nbsp;&nbsp;';
+    print '<select id="cat-P' . $u['project_id'] . '-' . $num . '"';
+    print ' class="catSelector ui-selectmenu-button ui-selectmenu-button-closed ui-corner-all ui-button ui-widget"';
+    print ' data-id="' . $num . '"';
+    print ' data-project="' . $u['project_id'] . '"';
+    print ' data-user="' . $user_id . '"';
     if ($readonlyNotes) {
-        print 'disabled ';
+        print ' disabled';
     }
-    print 'name="cat" class="catSelector ui-selectmenu-button ui-selectmenu-button-closed ui-corner-all ui-button ui-widget"';
-    print ' id="cat-P';
-    print $u['project_id'];
-    print '-';
-    print $num;
-    print '" data-id="';
-    print $num;
-    print '" data-project="';
-    print $u['project_id'];
-    print '" data-user="';
-    print $user_id;
-    print '">';
+    print '>';
 
     if ($readonlyNotes) {
         // just preserve the existing category data from the note
@@ -662,14 +619,11 @@ print ' data-id="' . ($num - 1) . '"';
 print '></div>';
 
 // hidden reference for project_id and user_id of the currently active page
-print '<div id="refProjectId" class="hideMe"';
-print ' data-project="';
-print $project_id;
-print '" data-user="';
-print $user_id;
-print '" data-timestamp="';
-print time();
-print '"></div>';
+print '<div class="hideMe" id="refProjectId"';
+print ' data-project="' . $project_id . '"';
+print ' data-user="' . $user_id . '"';
+print ' data-timestamp="' . time() . '"';
+print '></div>';
 
 print '<span id="boardnotesBusyIcon" class="boardnotesBusyIcon hideMe">';
 print '&nbsp;<i class="fa fa-refresh fa-spin" title="' . t('BoardNotes_PROJECT_NOTE_BUSY_ICON_HINT') . '"></i></span>';
