@@ -281,14 +281,6 @@ if (!$readonlyNotes) {
 
     //-----------------------
 
-    print '<textarea id="textareaNewNote" class="textareaNewNote disableDblClickPropagation"';
-    print ' title="' . t('BoardNotes_PROJECT_NOTE_DESCR_SAVE_HINT') . '"';
-    print ' data-project="' .  $project_id . '"';
-    print ' data-user="' . $user_id . '"';
-    print '"></textarea>';
-
-    //-----------------------
-
     print '<div class="categories disableDblClickPropagation">';
     print '<label for="catNewNote">' . t('Category') . '</label> : &nbsp;&nbsp;';
     print '<select id="catNewNote"';
@@ -302,6 +294,14 @@ if (!$readonlyNotes) {
     print '</select>';
     print '</div>';
     print '<br>';
+
+    //-----------------------
+
+    print '<textarea id="textareaNewNote" class="textareaNewNote disableDblClickPropagation"';
+    print ' title="' . t('BoardNotes_PROJECT_NOTE_DESCR_SAVE_HINT') . '"';
+    print ' data-project="' .  $project_id . '"';
+    print ' data-user="' . $user_id . '"';
+    print '"></textarea>';
 
     //-----------------------
 
@@ -527,25 +527,6 @@ foreach ($data as $u) {
 
     //-----------------------
 
-    print '<textarea id="noteTextareaDescription-P' . $u['project_id'] . '-' . $num . '"';
-    if ($u['is_active'] == "0") {
-        print ' class="disableDblClickPropagation textareaDescription noteDoneTextarea"';
-    } else {
-        print ' class="disableDblClickPropagation textareaDescription"';
-    }
-    print' title="' . t('BoardNotes_PROJECT_NOTE_DESCR_SAVE_HINT') . '"';
-    print ' data-id="' . $num . '"';
-    print ' data-project="' . $u['project_id'] . '"';
-    print ' data-user="' . $user_id . '"';
-    if ($readonlyNotes) {
-        print ' disabled';
-    }
-    print '>';
-    print $u['description'];
-    print '</textarea>';
-
-    //-----------------------
-
     print '<div class="categories disableDblClickPropagation">';
     print '<label for="cat-P' . $u['project_id'] . '-' . $num . '">' . t('Category') . '</label> : &nbsp;&nbsp;';
     print '<select id="cat-P' . $u['project_id'] . '-' . $num . '"';
@@ -588,6 +569,25 @@ foreach ($data as $u) {
     print '</select>';
     print '</div>';
     print '<br>';
+
+    //-----------------------
+
+    print '<textarea id="noteTextareaDescription-P' . $u['project_id'] . '-' . $num . '"';
+    if ($u['is_active'] == "0") {
+        print ' class="disableDblClickPropagation textareaDescription noteDoneTextarea"';
+    } else {
+        print ' class="disableDblClickPropagation textareaDescription"';
+    }
+    print' title="' . t('BoardNotes_PROJECT_NOTE_DESCR_SAVE_HINT') . '"';
+    print ' data-id="' . $num . '"';
+    print ' data-project="' . $u['project_id'] . '"';
+    print ' data-user="' . $user_id . '"';
+    if ($readonlyNotes) {
+        print ' disabled';
+    }
+    print '>';
+    print $u['description'];
+    print '</textarea>';
 
     //-----------------------
 
