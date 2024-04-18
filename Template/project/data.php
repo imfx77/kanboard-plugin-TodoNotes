@@ -703,10 +703,8 @@ if (!$is_refresh) { // print only once per project !!!
 
     print '<div id="dialogToTaskParams">';
 
-    print '<label for="listCatToTask">' . t('Category') . ' : &nbsp;</label>';
-    print '<select name="listCatToTask" id="listCatToTask-P';
-    print $project_id;
-    print '">';
+    print '<label for="listCatToTask-P' . $project_id . '">' . t('Category') . ' : &nbsp;</label>';
+    print '<select id="listCatToTask-P' . $project_id . '">';
     // Only allow blank select if there's other selectable options
     if (!empty($listCategoriesById)) {
         print '<option></option>';
@@ -715,26 +713,20 @@ if (!$is_refresh) { // print only once per project !!!
     print '</select>';
     print '<br>';
 
-    print '<label for="listColToTask">' . t('Column') . ' : &nbsp;</label>';
-    print '<select name="listColToTask" id="listColToTask-P';
-    print $project_id;
-    print '">';
+    print '<label for="listColToTask-P' . $project_id . '">' . t('Column') . ' : &nbsp;</label>';
+    print '<select id="listColToTask-P' . $project_id . '">';
     print $listColumnsById;
     print '</select>';
     print '<br>';
 
-    print '<label for="listSwimToTask">' . t('Swimlane') . ' : &nbsp;</label>';
-    print '<select name="listSwimToTask" id="listSwimToTask-P';
-    print $project_id;
-    print '">';
+    print '<label for="listSwimToTask-P' . $project_id . '">' . t('Swimlane') . ' : &nbsp;</label>';
+    print '<select id="listSwimToTask-P' . $project_id . '">';
     print $listSwimlanesById;
     print '</select>';
     print '<br>';
 
-    print '<input type="checkbox" checked name="removeNote" id="removeNote-P';
-    print $project_id;
-    print '">';
-    print '<label for="removeNote">&nbsp;&nbsp;' . t('BoardNotes_CREATETASK_CHECKBOX_REMOVE_TASK') . '</label>';
+    print '<input type="checkbox" checked id="removeNote-P' . $project_id . '">';
+    print '<label for="removeNote-P' . $project_id . '">&nbsp;&nbsp;' . t('BoardNotes_CREATETASK_CHECKBOX_REMOVE_TASK') . '</label>';
 
     print '</div>';
 
@@ -745,10 +737,8 @@ if (!$is_refresh) { // print only once per project !!!
 
     print '<div class="hideMe" id="dialogTransfer-P' . $project_id . '" title="' . t('BoardNotes_PROJECT_NOTE_MOVE_TO_PROJECT') . '">';
 
-    print '<label for="listNoteProject">' . t('BoardNotes_TRANSFERNOTE_DIALOG_TARGET_PROJECT') . ' : &nbsp&nbsp;</label>';
-    print '<select name="listNoteProject" id="listNoteProject-P';
-    print $project_id;
-    print '">';
+    print '<label for="listNoteProject-P' . $project_id . '">' . t('BoardNotes_TRANSFERNOTE_DIALOG_TARGET_PROJECT') . ' : &nbsp&nbsp;</label>';
+    print '<select id="listNoteProject-P' . $project_id . '">';
     foreach ($projectsTabsById as $key => $projectTab) {
         if ($key != $project_id) {
             print '<option value="';
@@ -770,14 +760,8 @@ if (!$is_refresh) { // print only once per project !!!
 
     print '<div class="hideMe" id="dialogReport-P' . $project_id . '" title="' . t('BoardNotes_PROJECT_CREATE_REPORT') . '">';
     print '<div id="">';
-    print '<label for="reportCat">' . t('BoardNotes_REPOSR_DIALOG_CATEGORY_FILTER') . ' :</label><br>';
-    print '<select name="reportCat" id="reportCat-P';
-    print $project_id;
-    print '" data-project="';
-    print $project_id;
-    print '" data-user="';
-    print $user_id;
-    print '">';
+    print '<label for="catReport-P' . $project_id . '">' . t('BoardNotes_REPOSR_DIALOG_CATEGORY_FILTER') . ' :</label><br>';
+    print '<select id="catReport-P' . $project_id . '">';
 
     print '<option></option>'; // add an empty category option
     if (!empty($listCategoriesById)) {

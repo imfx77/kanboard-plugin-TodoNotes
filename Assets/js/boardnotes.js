@@ -750,7 +750,7 @@ static #modalReport(project_id, user_id) {
             {
                 text : _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_CREATE_BTN'),
                 click: function() {
-                    var category = $("#reportCat-P" + project_id + " option:selected").text();
+                    var category = $("#catReport-P" + project_id + " option:selected").text();
                     var ajax_load = '<i class="fa fa-spinner fa-pulse" aria-hidden="true" '
                                 + 'alt="' + _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_LOADING_MSG') + '"></i>';
                     var loadUrl = "/?controller=BoardNotesController&action=boardNotesReport&plugin=BoardNotes"
