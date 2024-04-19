@@ -10,31 +10,28 @@ static msgLoadingSpinner;
 //------------------------------------------------
 static initialize() {
     // lazy init the translations ONCE
-    if (this.#translationsExportToJS) return;
+    if (_BoardNotes_Translations_.#translationsExportToJS) return;
 
-    this.#translationsExportToJS = JSON.parse( $("#_BoardNotes_TranslationsExportToJS_").html() );
+    _BoardNotes_Translations_.#translationsExportToJS = JSON.parse( $("#_BoardNotes_TranslationsExportToJS_").html() );
     $("#_BoardNotes_TranslationsExportToJS_").remove();
 
-    this.msgLoadingSpinner = this.getSpinnerMsg('BoardNotes_JS_LOADING_MSG');
+    _BoardNotes_Translations_.msgLoadingSpinner = _BoardNotes_Translations_.getSpinnerMsg('BoardNotes_JS_LOADING_MSG');
 }
 
 //------------------------------------------------
 static getTranslationExportToJS(textId) {
-    return this.#translationsExportToJS[textId];
+    return _BoardNotes_Translations_.#translationsExportToJS[textId];
 }
 
 //------------------------------------------------
 static getSpinnerMsg(textId) {
-    var msg = this.getTranslationExportToJS(textId);
+    var msg = _BoardNotes_Translations_.getTranslationExportToJS(textId);
     return '<i class="fa fa-spinner fa-pulse" aria-hidden="true" alt="' + msg + '"></i> ' + msg;
 }
-
-//------------------------------------------------
-static _dummy_() {}
 
 //------------------------------------------------
 
 } // class _BoardNotes_Translations_
 
 //////////////////////////////////////////////////
-$( document ).ready( _BoardNotes_Translations_._dummy_ );
+$( document ).ready( _BoardNotes_Translations_.initialize );
