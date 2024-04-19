@@ -65,6 +65,8 @@ static prepareDocument() {
 
     _BoardNotes_Dashboard_.#updateProjectsStats_OnCheckDoneHandler();
     _BoardNotes_Dashboard_.#updateNotesTabs();
+
+    _BoardNotes_Tabs_.attachAllHandlers();
 }
 
 //------------------------------------------------

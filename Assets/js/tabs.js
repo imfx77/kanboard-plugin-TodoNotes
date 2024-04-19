@@ -34,9 +34,7 @@ static #sqlReindexNotesAndLists(user_id) {
                 + '&tab_id=' + tab_id;
     setTimeout(function() {
         $("#result" + project_id).html(_BoardNotes_Translations_.getSpinnerMsg('BoardNotes_JS_REINDEXING_MSG'));
-        setTimeout(function() {
-            location.replace(loadUrl);
-        }, 10000);
+        location.replace(loadUrl);
     }, 50);
 }
 
@@ -50,11 +48,11 @@ static attachAllHandlers() {
 }
 
 //------------------------------------------------
+static _dummy_() {}
+
+//------------------------------------------------
 
 } // class _BoardNotes_Tabs_
 
 //////////////////////////////////////////////////
-$(function() {
-    // attach all handlers on load page
-    _BoardNotes_Tabs_.attachAllHandlers();
-});
+$( document ).ready( _BoardNotes_Tabs_._dummy_ );

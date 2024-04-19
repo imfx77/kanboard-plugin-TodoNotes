@@ -42,6 +42,9 @@ Might be waiting for an unsubmitted New Note data input!',
     'BoardNotes_DASHBOARD_TITLE' => 'Notes overview for %s',
     'BoardNotes_DASHBOARD_MY_NOTES' => 'My notes',
     'BoardNotes_DASHBOARD_ALL_TAB' => 'All',
+    'BoardNotes_DASHBOARD_REINDEX_SUCCESS' => 'Reindexing Notes and Lists finished successfully.',
+    'BoardNotes_DASHBOARD_REINDEX_FAILURE' => '⚠ Reindexing Notes and Lists failed!',
+    'BoardNotes_DASHBOARD_REINDEX_METHOD_NOT_IMPLEMENTED' => 'Schema version method is NOT implemented!',
     //
     // Template/report
     //

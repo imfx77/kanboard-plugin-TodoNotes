@@ -287,10 +287,10 @@ class BoardNotesModel extends Base
             'position' => $lastPosition,
             'is_active' => $is_active,
             'title' => $title,
+            'category' => $category,
             'description' => $description,
             'date_created' => $timestamp,
             'date_modified' => $timestamp,
-            'category' => $category,
         );
 
         return $this->db->table(self::TABLE_NOTES)

@@ -48,7 +48,7 @@ foreach ($data as $u) {
     // Report #
     print '<span class="fa-stack fa-lg">';
     print '<i class="fa fa-circle-thin fa-stack-2x"></i>';
-    print '<i class="fa fa-inverse fa-stack-1x">'.  $num . '</i>';
+    print '<i class="fa fa-inverse fa-stack-1x">' .  $num . '</i>';
     print '</span>';
     print '</td>';
 
