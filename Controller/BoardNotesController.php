@@ -372,4 +372,18 @@ class BoardNotesController extends BaseController
             'data' => $data,
         )));
     }
+
+    public function reindexNotesAndLists()
+    {
+        $user_id = $this->resolveUserId();
+        $tab_id = $this->request->getStringParam('tab_id');
+
+        $this->flash->success(t('Reindexing Notes and Lists finished successfully.'));
+
+        $this->response->redirect($this->helper->url->to('BoardNotesController', 'boardNotesShowAll', array(
+            'plugin' => 'BoardNotes',
+            'user_id' => $user_id,
+            'tab_id' => $tab_id,
+        )));
+    }
 }

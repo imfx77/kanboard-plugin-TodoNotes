@@ -134,7 +134,7 @@ static #toggleDetailsNewNote() {
 //------------------------------------------------
 // Blink note
 static #blinkNote(project_id, id) {
-    var note_id = $("#noteId-P" + project_id + "-" + id).attr('data-note-id');
+    var note_id = $("#noteId-P" + project_id + "-" + id).attr('data-note');
     setTimeout(function() { $("#item-" + note_id).addClass( 'blurMe' ); }, 0);
     setTimeout(function() { _BoardNotes_.#toggleDetails(project_id, id); }, 100);
     setTimeout(function() { _BoardNotes_.#toggleDetails(project_id, id); }, 200);
@@ -553,7 +553,7 @@ static refreshCategoryColors() {
 
 // Update category colors
 static updateCategoryColors(project_id, id, old_category, new_category) {
-    var note_id = $("#noteId-P" + project_id + "-" + id).attr('data-note-id');
+    var note_id = $("#noteId-P" + project_id + "-" + id).attr('data-note');
     var $old_color = $("#category-" + old_category).attr('data-color');
     var $new_color = $("#category-" + new_category).attr('data-color');
 
@@ -741,7 +741,7 @@ static #modalReport(project_id, user_id) {
 //------------------------------------------------
 // SQL note transfer (to another project)
 static #sqlTransferNote(project_id, user_id, id, target_project_id) {
-    var note_id = $("#noteId-P" + project_id + "-" + id).attr('data-note-id');
+    var note_id = $("#noteId-P" + project_id + "-" + id).attr('data-note');
     $.ajax({
         cache: false,
         type: "POST",
@@ -763,7 +763,7 @@ static #sqlTransferNote(project_id, user_id, id, target_project_id) {
 //------------------------------------------------
 // SQL note update (title etc. and done)
 static #sqlUpdateNote(project_id, user_id, id) {
-    var note_id = $("#noteId-P" + project_id + "-" + id).attr('data-note-id');
+    var note_id = $("#noteId-P" + project_id + "-" + id).attr('data-note');
     var title = $("#noteTitleInput-P" + project_id + "-" + id).val().trim();
     var description = $("#noteTextareaDescription-P" + project_id + "-" + id).val();
     var category = $("#cat-P" + project_id + "-" + id + " option:selected").text();
@@ -839,7 +839,7 @@ static #sqlAddNote(project_id, user_id) {
 
 //------------------------------------------------
 static #sqlDeleteNote(project_id, user_id, id) {
-    var note_id = $("#noteId-P" + project_id + "-" + id).attr('data-note-id');
+    var note_id = $("#noteId-P" + project_id + "-" + id).attr('data-note');
     $.ajax({
         cache: false,
         type: "POST",

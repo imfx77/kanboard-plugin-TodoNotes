@@ -26,6 +26,7 @@ static #refreshStatsWidget() {
 //------------------------------------------------
 static prepareDocument() {
     _BoardNotes_Translations_.initialize();
+
     _BoardNotes_Dropdown_.#refreshStatsWidget();
 }
 

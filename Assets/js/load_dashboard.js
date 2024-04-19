@@ -38,7 +38,7 @@ static #updateProjectsStats_OnCheckDoneHandler() {
 
 //------------------------------------------------
 static #updateNotesTabs() {
-    var tab_id = $("#tab_id").attr('data');
+    var tab_id = $("#tabId").attr('data-tab');
 
     $(".singleTab").removeClass( 'active' );
     $("#singleTab" + tab_id).addClass( 'active' );

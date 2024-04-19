@@ -593,11 +593,10 @@ foreach ($data as $u) {
 
     print '</div>'; // Detailed View
 
-    // Note_id (hidden reference for each note)
+    // noteId (hidden reference for each note)
     print '<div class="hideMe" id="noteId-P' .  $u['project_id'] . '-' . $num . '"';
-    print ' data-note-id="' . $u['id'] . '"';
-    print ' >';
-    print '</div>';
+    print ' data-note="' . $u['id'] . '"';
+    print ' ></div>';
 
     print '</li>';
 

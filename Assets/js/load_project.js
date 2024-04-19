@@ -66,6 +66,7 @@ static prepareDocument() {
     _BoardNotes_Translations_.initialize();
 
     _BoardNotes_Project_.adjustAllNotesPlaceholders();
+
     _BoardNotes_.refreshCategoryColors();
     _BoardNotes_.refreshSortByStatus();
 

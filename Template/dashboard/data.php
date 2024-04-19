@@ -31,6 +31,7 @@
 }
 </style>
 
+<?= $this->asset->js('plugins/BoardNotes/Assets/js/tabs.js') ?>
 <?= $this->asset->js('plugins/BoardNotes/Assets/js/load_dashboard.js') ?>
 
 <div id="myNotesHeader" class="page-header"><h2>
@@ -82,6 +83,9 @@ if ($tab_id > 0) {
 
 <?php
 
-// tab_id (hidden, for reference) -->
-print '<div id="tab_id" class="hideMe" data="' . $tab_id . '">';
+// tabId (hidden reference for tabs)
+print '<div class="hideMe" id="tabId"';
+print ' data-tab="' . $tab_id  . '"';
+print ' data-project="' . $project['id'] . '"';
+print '></div>';
 

@@ -65,6 +65,7 @@ Might be waiting for an unsubmitted New Note data input!',
     // Specific EXPORTS FOR JS
     //
     'BoardNotes_JS_LOADING_MSG' => 'Loading ...',
+    'BoardNotes_JS_REINDEXING_MSG' => 'Reindexing ...',
     'BoardNotes_JS_NOTE_ADD_TITLE_EMPTY_MSG' => '⚠
 Note title is empty !
 Skipping note addition !',

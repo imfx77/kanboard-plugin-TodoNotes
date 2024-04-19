@@ -5,6 +5,7 @@ $translationTextIds = array(
     'BoardNotes_DASHBOARD_MY_NOTES',
     'BoardNotes_DASHBOARD_ALL_TAB',
     'BoardNotes_JS_LOADING_MSG',
+    'BoardNotes_JS_REINDEXING_MSG',
     'BoardNotes_JS_NOTE_ADD_TITLE_EMPTY_MSG',
     'BoardNotes_JS_NOTE_UPDATE_TITLE_EMPTY_MSG',
     'BoardNotes_JS_NOTE_UPDATE_INVALID_MSG',
