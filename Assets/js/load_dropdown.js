@@ -12,11 +12,9 @@ static #refreshStatsWidget() {
         $.ajaxSetup ({
           cache: false
         });
-        var ajax_load = '<i class="fa fa-refresh fa-spin" aria-hidden="true" '
-                    + 'alt="' + _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_LOADING_MSG') + '"></i>';
         var loadUrl = '/?controller=BoardNotesController&action=boardNotesRefreshStatsWidget&plugin=BoardNotes'
                     + '&stats_project_id=' + project_id;
-        $(".BoardNotes_ProjectDropdown_StatsWidget:last").html(ajax_load).load(loadUrl);
+        $(".BoardNotes_ProjectDropdown_StatsWidget:last").html(_BoardNotes_Translations_.msgLoadingSpinner).load(loadUrl);
     }
 
     // re-schedule
