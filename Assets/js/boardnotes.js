@@ -116,23 +116,28 @@ static #toggleDetails(project_id, id) {
 //------------------------------------------------
 // Show details menu for new note (toggle class)
 static #toggleDetailsNewNote() {
-    if ( !$("#detailsNewNote").hasClass( 'hideMe' ) ) {
-        $("#inputNewNote").width( $('[name="editorMarkdownDescriptionNewNote"]').width() );
-        $('[name="editorMarkdownDescriptionNewNote"]').prop('title',
-            _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_PROJECT_NOTE_DESCR_SAVE_HINT'));
-    }
+    var details = $("#detailsNewNote");
+    var wrapper = $('#noteMarkdownDescriptionNewNote_Editor');
+    var editor = $('[name="editorMarkdownDescriptionNewNote"]');
+    var inputWidth = editor.width();
 
-    $("#detailsNewNote").toggleClass( 'hideMe' );
+    details.toggleClass( 'hideMe' );
     $("#saveNewNote").toggleClass( 'hideMe' );
-
-    if ( !$("#detailsNewNote").hasClass( 'hideMe' ) ) {
-        $("#inputNewNote").width( $('[name="editorMarkdownDescriptionNewNote"]').width() );
-        $('[name="editorMarkdownDescriptionNewNote"]').prop('title',
-            _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_PROJECT_NOTE_DESCR_SAVE_HINT'));
-    }
-
     $("#showDetailsNewNote").find('i').toggleClass( "fa-angle-double-down" );
     $("#showDetailsNewNote").find('i').toggleClass( "fa-angle-double-up" );
+
+    if (!details.hasClass( 'hideMe' )) {
+        if (!wrapper.hasClass( 'hideMe' )) {
+            inputWidth = editor.width();
+        } else {
+            wrapper.removeClass( 'hideMe' );
+            inputWidth = editor.width();
+            wrapper.addClass( 'hideMe' );
+        }
+
+        $("#inputNewNote").width(inputWidth);
+        editor.prop('title', _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_PROJECT_NOTE_DESCR_SAVE_HINT'));
+    }
 }
 
 //------------------------------------------------
