@@ -79,14 +79,14 @@ foreach ($data as $u) {
         print '<div id="noteDetails-P' . $u['project_id'] . '-' . $num . '"';
         print ' class="details reportDetails ui-corner-all">';
 
-        print '<span id="noteTextareaDescription-P' . $u['project_id'] . '-' . $num . '"';
+        print '<span id="`noteMarkdownDescription-P`' . $u['project_id'] . '-' . $num . '"';
         if ($u['is_active'] == "0") {
-            print ' class="textareaReportDescription reportTitle noteDoneTextarea"';
+            print ' class="markdown markdownReportDescription reportTitle noteDoneMarkdown"';
         } else {
-            print ' class="textareaReportDescription reportTitle"';
+            print ' class="markdown markdownReportDescription reportTitle"';
         }
         print '>';
-        print $u['description'];
+        print $this->helper->text->markdown($u['description']);
         print '</span>';
 
         print '</div>';

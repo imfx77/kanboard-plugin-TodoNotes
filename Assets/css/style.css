@@ -208,15 +208,17 @@ label {
 }
 
 .noteDoneText {
-    color: #555555;
+    color: #444444;
     text-decoration: line-through;
 }
 
+/*
 .noteDoneTextarea {
     color: #555555;
     border: 1px solid #555555 !important;
     text-decoration: line-through;
 }
+*/
 
 .markdownDescription {
     display: inline-block;
@@ -373,12 +375,12 @@ textarea::selection {
     width: 45px;
 }
 
-.textareaReportDescription {
+.markdownReportDescription {
     width: 95%;
     display: inline-block;
     margin-left: 10px;
     padding: 10px 10px 10px 10px;
-    background-color: #555555;
+    background-color: rgba(0, 0, 0, .3);
     border: 0;
     white-space:pre-wrap;
 }
