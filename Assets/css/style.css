@@ -139,11 +139,6 @@ label {
     cursor: default;
 }
 
-.textareaNewNote {
-    display: inline-block;
-    color: #999999;
-}
-
 .noteTitle {
     color: #1F1F1F;
 }
@@ -221,6 +216,27 @@ label {
     color: #555555;
     border: 1px solid #555555 !important;
     text-decoration: line-through;
+}
+
+.markdownDescription {
+    display: inline-block;
+    background-color: rgba(0, 0, 0, .3);
+    border: 0;
+    color: #BBBBBB;
+    width: 100%;
+}
+
+.noteEditorMarkdown {
+    background-color: rgba(0, 0, 0, .5) !important;
+    color: #DDDDDD !important;
+}
+
+.noteDoneMarkdown {
+    background-color: rgba(0, 0, 0, .1) !important;
+}
+
+.noteEmptyMarkdown {
+    cursor: pointer !important;
 }
 
 #item-0 .noteDetails {

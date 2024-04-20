@@ -15,6 +15,7 @@ $translationTextIds = array(
     'BoardNotes_JS_DIALOG_CREATE_BTN',
     'BoardNotes_JS_DIALOG_DELETE_BTN',
     'BoardNotes_JS_DIALOG_RESULT_TITLE',
+    'BoardNotes_PROJECT_NOTE_DESCR_SAVE_HINT',
 );
 
 $this->helper->translationsExportToJSHelper->export($translationTextIds);

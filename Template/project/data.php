@@ -297,11 +297,24 @@ if (!$readonlyNotes) {
 
     //-----------------------
 
-    print '<textarea id="textareaNewNote" class="textareaNewNote disableDblClickPropagation"';
-    print ' title="' . t('BoardNotes_PROJECT_NOTE_DESCR_SAVE_HINT') . '"';
-    print ' data-project="' .  $project_id . '"';
+    print '<div id="noteMarkdownDescriptionNewNote_Preview"';
+    print ' class="markdown markdownDescription noteEmptyMarkdown disableEventsPropagation"';
+    print ' title="' . t('BoardNotes_PROJECT_NOTE_DESCR_EDIT_HINT') . '"';
+    print ' data-id="0"';
+    print ' data-project="' . $project_id . '"';
     print ' data-user="' . $user_id . '"';
-    print '"></textarea>';
+    print '>';
+    print t('BoardNotes_PROJECT_NOTE_DESCR_EMPTY_HINT');
+    print '</div>';
+
+    print '<div id="noteMarkdownDescriptionNewNote_Editor"';
+    print ' class="hideMe markdownDescription noteEditorMarkdown disableEventsPropagation"';
+    print ' data-id="0"';
+    print ' data-project="' . $project_id . '"';
+    print ' data-user="' . $user_id . '"';
+    print '>';
+    print $this->form->textEditor('editorMarkdownDescriptionNewNote');
+    print '</div>';
 
     //-----------------------
 

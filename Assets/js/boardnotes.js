@@ -117,14 +117,18 @@ static #toggleDetails(project_id, id) {
 // Show details menu for new note (toggle class)
 static #toggleDetailsNewNote() {
     if ( !$("#detailsNewNote").hasClass( 'hideMe' ) ) {
-        $("#inputNewNote").width( $("#textareaNewNote").width() );
+        $("#inputNewNote").width( $('[name="editorMarkdownDescriptionNewNote"]').width() );
+        $('[name="editorMarkdownDescriptionNewNote"]').prop('title',
+            _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_PROJECT_NOTE_DESCR_SAVE_HINT'));
     }
 
     $("#detailsNewNote").toggleClass( 'hideMe' );
     $("#saveNewNote").toggleClass( 'hideMe' );
 
     if ( !$("#detailsNewNote").hasClass( 'hideMe' ) ) {
-        $("#inputNewNote").width( $("#textareaNewNote").width() );
+        $("#inputNewNote").width( $('[name="editorMarkdownDescriptionNewNote"]').width() );
+        $('[name="editorMarkdownDescriptionNewNote"]').prop('title',
+            _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_PROJECT_NOTE_DESCR_SAVE_HINT'));
     }
 
     $("#showDetailsNewNote").find('i').toggleClass( "fa-angle-double-down" );
@@ -299,13 +303,24 @@ static #NoteActionHandlers() {
     // On TAB key open detailed view
     $(".inputNewNote").keydown(function(event) {
         if (event.keyCode == 9) {
+            $("#noteMarkdownDescriptionNewNote_Preview").addClass( 'hideMe' );
+            $("#noteMarkdownDescriptionNewNote_Editor").removeClass( 'hideMe' );
             if ($("#detailsNewNote").hasClass( 'hideMe' )) {
                 _BoardNotes_.#toggleDetailsNewNote();
             }
             setTimeout(function() {
-                $("#textareaNewNote").focus();
+                $('[name="editorMarkdownDescriptionNewNote"]').focus();
             }, 100);
         }
+    });
+
+    // On click Preview for NewNote
+    $("#noteMarkdownDescriptionNewNote_Preview").click(function() {
+        $("#noteMarkdownDescriptionNewNote_Preview").addClass( 'hideMe' );
+        $("#noteMarkdownDescriptionNewNote_Editor").removeClass( 'hideMe' );
+        setTimeout(function() {
+            $('[name="editorMarkdownDescriptionNewNote"]').focus();
+        }, 100);
     });
 
     // POST ADD when ENTER key on New Note title
@@ -321,7 +336,7 @@ static #NoteActionHandlers() {
     });
 
     // POST ADD when TAB key on New Note description
-    $(".textareaNewNote").keydown(function(event) {
+    $('[name="editorMarkdownDescriptionNewNote"]').keydown(function(event) {
         if (event.keyCode == 9) {
             var project_id = $(this).attr('data-project');
             var user_id = $(this).attr('data-user');
@@ -825,7 +840,7 @@ static #sqlUpdateNote(project_id, user_id, id) {
 //------------------------------------------------
 static #sqlAddNote(project_id, user_id) {
     var title = $("#inputNewNote").val().trim();
-    var description = $("#textareaNewNote").val();
+    var description = $('[name="editorMarkdownDescriptionNewNote"]').val();
     var category = $("#catNewNote" + " option:selected").text();
     var is_active = "1";
 
@@ -1015,7 +1030,7 @@ static ScheduleCheckModifications() {
         var project_id = $("#refProjectId").attr('data-project');
         var user_id = $("#refProjectId").attr('data-user');
         var title = (project_id != 0) ? $("#inputNewNote").val().trim() : "";
-        var description = (project_id != 0) ? $("#textareaNewNote").val() : "";
+        var description = (project_id != 0) ? $('[name="editorMarkdownDescriptionNewNote"]').val() : "";
 
         // skip SQL query if page not visible, or if new note has pending changes
         if (!KB.utils.isVisible() || title!="" || description!="") {
