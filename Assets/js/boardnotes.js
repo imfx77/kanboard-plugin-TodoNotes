@@ -148,7 +148,7 @@ static #blinkNote(project_id, id) {
 //------------------------------------------------
 static #NoteDetailsHandlers() {
     // disable dblclick propagation for all marked sub-elements
-    $(".disableDblClickPropagation").dblclick(function (event) {
+    $(".disableEventsPropagation").dblclick(function (event) {
         event.stopPropagation();
     });
 

@@ -129,7 +129,7 @@ print '>';
 print '<li id="item-0" class="ui-state-default liNewNote" data-id="0" data-project="' . $project_id . '">';
 
 // here goes the Button Toolbar
-print '<div class="containerNoWrap containerFloatRight disableDblClickPropagation">';
+print '<div class="containerNoWrap containerFloatRight disableEventsPropagation">';
 
 // exclude when in Overview Mode
 if (!$readonlyNotes) {
@@ -216,7 +216,7 @@ print '</button>';
 print '</div>';
 
 // here goes the Title row
-print '<div class="containerNoWrap containerFloatLeft disableDblClickPropagation">';
+print '<div class="containerNoWrap containerFloatLeft disableEventsPropagation">';
 if ($readonlyNotes) {
     print '<label class="labelNewNote">' . t('BoardNotes_PROJECT_OVERVIEW_MODE_TITLE') . '</label>';
     if ($optionSortByStatus) {
@@ -265,7 +265,7 @@ if (!$readonlyNotes) {
     print '</button>';
 
     // Input line
-    print '<input class="inputNewNote disableDblClickPropagation" id="inputNewNote"';
+    print '<input class="inputNewNote disableEventsPropagation" id="inputNewNote"';
     print ' type="text" placeholder="' . t('BoardNotes_PROJECT_NEW_NOTE_TITLE_PLACEHOLDER') . '"';
     print ' title="' . t('BoardNotes_PROJECT_NOTE_TITLE_SAVE_HINT') . '"';
     print ' data-project="' . $project_id . '"';
@@ -281,7 +281,7 @@ if (!$readonlyNotes) {
 
     //-----------------------
 
-    print '<div class="categories disableDblClickPropagation">';
+    print '<div class="categories disableEventsPropagation">';
     print '<label for="catNewNote">' . t('Category') . '</label> : &nbsp;&nbsp;';
     print '<select id="catNewNote"';
     print ' class="catSelector ui-selectmenu-button ui-selectmenu-button-closed ui-corner-all ui-button ui-widget"';
@@ -366,11 +366,11 @@ foreach ($data as $u) {
     print ' data-project="' . $u['project_id'] . '"';
     print '>';
 
-    // here goes the Button Toolbar
-    print '<div class="containerNoWrap containerFloatRight disableDblClickPropagation">';
-
     // explicit reorder handle for mobile
-    print '<div class="hideMe sortableHandle"><i class="fa fa-arrows-alt" aria-hidden="true"></i></div>';
+    print '<div class="hideMe sortableHandle containerNoWrap containerFloatRight"><i class="fa fa-arrows-alt" aria-hidden="true"></i></div>';
+
+    // here goes the Button Toolbar
+    print '<div class="containerNoWrap containerFloatRight disableEventsPropagation">';
 
     // Show details button
     print '<button id="showDetails-P' . $u['project_id'] . '-' . $num . '"';
@@ -472,7 +472,7 @@ foreach ($data as $u) {
     print '</div>';
 
     // here goes the Title row with Checkbox
-    print '<div class="containerNoWrap containerFloatLeft disableDblClickPropagation">';
+    print '<div class="containerNoWrap containerFloatLeft disableEventsPropagation">';
 
     // Checkbox for done note
     print '<button class="checkDone" id="checkDone-P' . $u['project_id'] . '-' . $num . '"';
@@ -541,7 +541,7 @@ foreach ($data as $u) {
 
     //-----------------------
 
-    print '<div class="categories disableDblClickPropagation">';
+    print '<div class="categories disableEventsPropagation">';
     print '<label for="cat-P' . $u['project_id'] . '-' . $num . '">' . t('Category') . '</label> : &nbsp;&nbsp;';
     print '<select id="cat-P' . $u['project_id'] . '-' . $num . '"';
     print ' class="catSelector ui-selectmenu-button ui-selectmenu-button-closed ui-corner-all ui-button ui-widget"';
@@ -588,9 +588,9 @@ foreach ($data as $u) {
 
     print '<textarea id="noteTextareaDescription-P' . $u['project_id'] . '-' . $num . '"';
     if ($u['is_active'] == "0") {
-        print ' class="disableDblClickPropagation textareaDescription noteDoneTextarea"';
+        print ' class="textareaDescription noteDoneTextarea disableEventsPropagation"';
     } else {
-        print ' class="disableDblClickPropagation textareaDescription"';
+        print ' class="textareaDescription disableEventsPropagation"';
     }
     print' title="' . t('BoardNotes_PROJECT_NOTE_DESCR_SAVE_HINT') . '"';
     print ' data-id="' . $num . '"';
