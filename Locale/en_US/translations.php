@@ -26,6 +26,7 @@ return array(
     'BoardNotes_PROJECT_TOGGLE_SORT_BY_STATUS' => 'Toggle sort by Status',
     'BoardNotes_PROJECT_TOGGLE_COLORIZE_BY_CATEGORY' => 'Toggle Colorize by Category',
     'BoardNotes_PROJECT_NOTE_TOGGLE_DETAILS' => 'Toggle Details',
+    'BoardNotes_PROJECT_NOTE_REFRESH_ORDER' => 'Refresh Order',
     'BoardNotes_PROJECT_NOTE_SAVE' => 'Save Note',
     'BoardNotes_PROJECT_NOTE_DELETE' => 'Delete Note',
     'BoardNotes_PROJECT_NOTE_MOVE_TO_PROJECT' => 'Move Note to Project',

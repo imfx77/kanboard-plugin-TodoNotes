@@ -147,23 +147,9 @@ static #blinkNote(project_id, id) {
 
 //------------------------------------------------
 static #NoteDetailsHandlers() {
-    // Show details for note by dblclick the note
-    $(".liNote").dblclick(function() {
-        var project_id = $(this).attr('data-project');
-        var id = $(this).attr('data-id');
-        _BoardNotes_.#toggleDetails(project_id, id);
-    });
-
     // disable dblclick propagation for all marked sub-elements
     $(".disableDblClickPropagation").dblclick(function (event) {
         event.stopPropagation();
-    });
-
-    // Show details for note by menu button
-    $("button" + ".showDetails").click(function() {
-        var project_id = $(this).attr('data-project');
-        var id = $(this).attr('data-id');
-        _BoardNotes_.#toggleDetails(project_id, id);
     });
 
     //------------------------------------------------
@@ -176,6 +162,31 @@ static #NoteDetailsHandlers() {
     // Show details for new note by menu button
     $("button" + ".showDetailsNewNote").click(function() {
         _BoardNotes_.#toggleDetailsNewNote();
+    });
+
+    //------------------------------------------------
+
+    // Show details for note by dblclick the note
+    $(".liNote").dblclick(function() {
+        var project_id = $(this).attr('data-project');
+        var id = $(this).attr('data-id');
+        _BoardNotes_.#toggleDetails(project_id, id);
+    });
+
+    // Show details for note by menu button
+    $("button" + ".showDetails").click(function() {
+        var project_id = $(this).attr('data-project');
+        var id = $(this).attr('data-id');
+        _BoardNotes_.#toggleDetails(project_id, id);
+    });
+
+    //------------------------------------------------
+
+    // Refresh notes order by explicit conditional button
+    $("button" + ".noteRefreshOrder").click(function() {
+        var project_id = $(this).attr('data-project');
+        var user_id = $(this).attr('data-user');
+        _BoardNotes_.#sqlRefreshNotes(project_id, user_id);
     });
 
     //------------------------------------------------
@@ -272,6 +283,10 @@ static #NoteStatusHandlers() {
         _BoardNotes_.#showDescriptionInput(project_id, id, false);
         _BoardNotes_.#sqlUpdateNote(project_id, user_id, id);
         _BoardNotes_.#blinkNote(project_id, id);
+
+        if (_BoardNotes_.optionSortByStatus) {
+            $("#noteRefreshOrder-P" + project_id + "-" + id).removeClass( 'hideMe' );
+        }
     });
 }
 

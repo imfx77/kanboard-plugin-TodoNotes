@@ -455,6 +455,20 @@ foreach ($data as $u) {
     print $u['category'];
     print '</label>';
 
+    // add some space between button groups
+    print '<div class="toolbarSeparator">&nbsp;</div>';
+
+    // Refresh order button (shown on changed status in SortByStatus mode only)
+    print '<button id="noteRefreshOrder-P' . $u['project_id'] . '-' . $num . '"';
+    print ' class="hideMe toolbarButton toolbarButtonToggled noteRefreshOrder"';
+    print ' title="' . t('BoardNotes_PROJECT_NOTE_REFRESH_ORDER') . '"';
+    print ' data-id="' . $num  . '"';
+    print ' data-project="' . $u['project_id'] . '"';
+    print ' data-user="' . $user_id . '"';
+    print '>';
+    print '<i class="fa fa-refresh fa-spin fa-spin-reverse" aria-hidden="true" style="font-size: 1.5em"></i>';
+    print '</button>';
+
     print '</div>';
 
     // here goes the Title row with Checkbox
