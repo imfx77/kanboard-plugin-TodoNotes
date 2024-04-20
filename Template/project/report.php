@@ -79,11 +79,11 @@ foreach ($data as $u) {
         print '<div id="noteDetails-P' . $u['project_id'] . '-' . $num . '"';
         print ' class="details reportDetails ui-corner-all">';
 
-        print '<span id="`noteMarkdownDescription-P`' . $u['project_id'] . '-' . $num . '"';
+        print '<span id="noteMarkdownDetails-P' . $u['project_id'] . '-' . $num . '"';
         if ($u['is_active'] == "0") {
-            print ' class="markdown markdownReportDescription reportTitle noteDoneMarkdown"';
+            print ' class="markdown markdownReportDetails reportTitle noteDoneMarkdown"';
         } else {
-            print ' class="markdown markdownReportDescription reportTitle"';
+            print ' class="markdown markdownReportDetails reportTitle"';
         }
         print '>';
         print $this->helper->text->markdown($u['description']);

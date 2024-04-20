@@ -293,27 +293,46 @@ if (!$readonlyNotes) {
     print $listCategoriesById;
     print '</select>';
     print '</div>';
+
+    //-----------------------
+
+    // here go the Note Edit Buttons
+    print '<div class="containerNoWrap containerFloatRight disableEventsPropagation">';
+
+    // Edit details button
+    print '<button id="editDetailsNewNote"';
+    print ' class="editDetailsNewNote toolbarButton toolbarButtonBig"';
+    print ' title="' . t('BoardNotes_PROJECT_NOTE_EDIT_DETAILS') . '"';
+    print ' data-id="0"';
+    print ' data-project="' . $project_id . '"';
+    print ' data-user="' . $user_id . '"';
+    print '>';
+    print '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>';
+    print '</button>';
+
+    // Confirm details button
+    print '<button id="confirmDetailsNewNote"';
+    print ' class="hideMe confirmDetailsNewNote toolbarButton toolbarButtonBig"';
+    print ' title="' . t('BoardNotes_PROJECT_NOTE_CONFIRM_DETAILS') . '"';
+    print ' data-id="0"';
+    print ' data-project="' . $project_id . '"';
+    print ' data-user="' . $user_id . '"';
+    print '>';
+    print '<i class="fa fa-check-square-o" aria-hidden="true"></i>';
+    print '</button>';
+
+    print '</div>';
     print '<br>';
 
     //-----------------------
 
-    print '<div id="noteMarkdownDescriptionNewNote_Preview"';
-    print ' class="markdown markdownDescription noteEmptyMarkdown disableEventsPropagation"';
-    print ' title="' . t('BoardNotes_PROJECT_NOTE_DESCR_EDIT_HINT') . '"';
+    print '<div id="noteMarkdownDetailsNewNote"';
+    print ' class="hideMe noteDetailsMarkdown noteEditorMarkdown disableEventsPropagation"';
     print ' data-id="0"';
     print ' data-project="' . $project_id . '"';
     print ' data-user="' . $user_id . '"';
     print '>';
-    print t('BoardNotes_PROJECT_NOTE_DESCR_EMPTY_HINT');
-    print '</div>';
-
-    print '<div id="noteMarkdownDescriptionNewNote_Editor"';
-    print ' class="hideMe markdownDescription noteEditorMarkdown disableEventsPropagation"';
-    print ' data-id="0"';
-    print ' data-project="' . $project_id . '"';
-    print ' data-user="' . $user_id . '"';
-    print '>';
-    print $this->form->textEditor('editorMarkdownDescriptionNewNote');
+    print $this->form->textEditor('editorMarkdownDetailsNewNote');
     print '</div>';
 
     //-----------------------
@@ -473,7 +492,7 @@ foreach ($data as $u) {
 
     // Refresh order button (shown on changed status in SortByStatus mode only)
     print '<button id="noteRefreshOrder-P' . $u['project_id'] . '-' . $num . '"';
-    print ' class="hideMe toolbarButton toolbarButtonToggled noteRefreshOrder"';
+    print ' class="hideMe toolbarButton toolbarButtonToggled toolbarButtonBig noteRefreshOrder"';
     print ' title="' . t('BoardNotes_PROJECT_NOTE_REFRESH_ORDER') . '"';
     print ' data-id="' . $num  . '"';
     print ' data-project="' . $u['project_id'] . '"';
@@ -528,7 +547,7 @@ foreach ($data as $u) {
     } else {
         print ' class="noteTitleLabel noteTitle"';
     }
-    print ' title="' . t('BoardNotes_PROJECT_NOTE_EDIT_HINT') . '"';
+    print ' title="' . t('BoardNotes_PROJECT_NOTE_TITLE_EDIT_HINT') . '"';
     print ' data-id="' . $num . '"';
     print ' data-project="' . $u['project_id'] . '"';
     print ' data-user="' . $user_id . '"';
@@ -595,26 +614,65 @@ foreach ($data as $u) {
 
     print '</select>';
     print '</div>';
+
+    //-----------------------
+
+    // here go the Note Edit Buttons
+    print '<div class="containerNoWrap containerFloatRight disableEventsPropagation">';
+
+    // Edit details button
+    print '<button id="editDetails-P' . $u['project_id'] . '-' . $num . '"';
+    print ' class="editDetails toolbarButton toolbarButtonBig"';
+    print ' title="' . t('BoardNotes_PROJECT_NOTE_EDIT_DETAILS') . '"';
+    print ' data-id="' . $num  . '"';
+    print ' data-project="' . $u['project_id'] . '"';
+    print ' data-user="' . $user_id . '"';
+    print '>';
+    print '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>';
+    print '</button>';
+
+    // Confirm details button
+    print '<button id="confirmDetails-P' . $u['project_id'] . '-' . $num . '"';
+    print ' class="hideMe confirmDetails toolbarButton toolbarButtonBig"';
+    print ' title="' . t('BoardNotes_PROJECT_NOTE_CONFIRM_DETAILS') . '"';
+    print ' data-id="' . $num  . '"';
+    print ' data-project="' . $u['project_id'] . '"';
+    print ' data-user="' . $user_id . '"';
+    print '>';
+    print '<i class="fa fa-check-square-o" aria-hidden="true"></i>';
+    print '</button>';
+
+    print '</div>';
     print '<br>';
 
     //-----------------------
 
-    print '<textarea id="noteTextareaDescription-P' . $u['project_id'] . '-' . $num . '"';
-    if ($u['is_active'] == "0") {
-        print ' class="textareaDescription noteDoneTextarea disableEventsPropagation"';
-    } else {
-        print ' class="textareaDescription disableEventsPropagation"';
+    if (!empty($u['description'])) {
+        print '<div id="noteMarkdownDetails-P' . $u['project_id'] . '-' . $num . '_Preview"';
+        print ' class="markdown noteDetailsMarkdown disableEventsPropagation';
+        if ($u['is_active'] == "0") {
+            print ' noteDoneMarkdown';
+        }
+        print '"';
+        print ' data-id="' . $num . '"';
+        print ' data-project="' . $u['project_id'] . '"';
+        print ' data-user="' . $user_id . '"';
+        print '>';
+        print $this->helper->text->markdown($u['description']);
+        print '</div>';
     }
-    print' title="' . t('BoardNotes_PROJECT_NOTE_DESCR_SAVE_HINT') . '"';
-    print ' data-id="' . $num . '"';
-    print ' data-project="' . $u['project_id'] . '"';
-    print ' data-user="' . $user_id . '"';
-    if ($readonlyNotes) {
-        print ' disabled';
+
+    if (!$readonlyNotes) {
+        print '<div id="noteMarkdownDetails-P' . $u['project_id'] . '-' . $num . '_Editor"';
+        print ' class="hideMe noteDetailsMarkdown noteEditorMarkdown disableEventsPropagation"';
+        print ' data-id="0"';
+        print ' data-project="' . $project_id . '"';
+        print ' data-user="' . $user_id . '"';
+        print '>';
+        $textEditorName = 'editorMarkdownDetails-P' . $u['project_id'] . '-' . $num;
+        print $this->form->textEditor($textEditorName, array($textEditorName => $u['description']));
+        print '</div>';
     }
-    print '>';
-    print $u['description'];
-    print '</textarea>';
 
     //-----------------------
 

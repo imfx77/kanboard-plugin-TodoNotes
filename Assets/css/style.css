@@ -197,6 +197,10 @@ label {
     color: #993333;
 }
 
+.toolbarButtonBig {
+    font-size: 2em;
+}
+
 .checkDone {
     appearance: none;
     -webkit-appearance: none;
@@ -212,15 +216,7 @@ label {
     text-decoration: line-through;
 }
 
-/*
-.noteDoneTextarea {
-    color: #555555;
-    border: 1px solid #555555 !important;
-    text-decoration: line-through;
-}
-*/
-
-.markdownDescription {
+.noteDetailsMarkdown {
     display: inline-block;
     background-color: rgba(0, 0, 0, .3);
     border: 0;
@@ -237,10 +233,6 @@ label {
     background-color: rgba(0, 0, 0, .1) !important;
 }
 
-.noteEmptyMarkdown {
-    cursor: pointer !important;
-}
-
 #item-0 .noteDetails {
     padding: 5px 10px 0 40px;
 }
@@ -252,6 +244,7 @@ label {
     color: #1F1F1F;
 }
 
+/*
 textarea {
     resize: vertical;
     min-height: 50px;
@@ -284,6 +277,7 @@ textarea::selection {
 .textareaDescriptionSelected:focus {
     color: #FFFFFF !important;
 }
+*/
 
 .catSelector {
     margin-top: 3px;
@@ -375,7 +369,7 @@ textarea::selection {
     width: 45px;
 }
 
-.markdownReportDescription {
+.markdownReportDetails {
     width: 95%;
     display: inline-block;
     margin-left: 10px;
