@@ -16,8 +16,8 @@ static isMobile() {
 // Global vars for options
 //------------------------------------------------
 
-static #optionShowCategoryColors = false;
-static #optionSortByStatus = false;
+static optionShowCategoryColors = false;
+static optionSortByStatus = false;
 
 //------------------------------------------------
 // Note Details routines
@@ -497,15 +497,17 @@ static #SettingsHandlers() {
 
     $("#settingsSortByStatus").click(function() {
         _BoardNotes_.#sqlToggleSessionOption('boardnotesSortByStatus');
+
         var project_id = $(this).attr('data-project');
         var user_id = $(this).attr('data-user');
         _BoardNotes_.#sqlRefreshNotes(project_id, user_id);
     });
 
     $("#settingsCategoryColors").click(function() {
+        _BoardNotes_.#sqlToggleSessionOption('boardnotesShowCategoryColors');
+
         _BoardNotes_.optionShowCategoryColors = !_BoardNotes_.optionShowCategoryColors;
         _BoardNotes_.refreshCategoryColors();
-        _BoardNotes_.#sqlToggleSessionOption('boardnotesShowCategoryColors');
     });
 
     //------------------------------------------------

@@ -6,13 +6,11 @@ class _BoardNotes_Tabs_ {
 
 //------------------------------------------------
 static #TabActionHandlers() {
-
     // start DB optimization routine on system reindex button
     $("button" + ".reindexNotesAndLists").click(function() {
         var user_id = $(this).attr('data-user');
         _BoardNotes_Tabs_.#sqlReindexNotesAndLists(user_id);
     });
-
 }
 
 //------------------------------------------------
