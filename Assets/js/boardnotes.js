@@ -721,8 +721,8 @@ static #modalReport(project_id, user_id) {
                                 + "&category=" + encodeURIComponent(category);
                     $("#result" + project_id).html(_BoardNotes_Translations_.msgLoadingSpinner).load(loadUrl,
                         function() {
-                            _BoardNotes_.attachAllHandlers();
                             _BoardNotes_Report_.prepareDocument();
+                            _BoardNotes_.attachAllHandlers();
                         });
                     $( this ).dialog( "close" );
                 }
@@ -905,8 +905,8 @@ static #sqlRefreshNotes(project_id, user_id) {
     setTimeout(function() {
         $("#result" + project_id).html(_BoardNotes_Translations_.msgLoadingSpinner).load(loadUrl,
             function() {
-                _BoardNotes_.attachAllHandlers();
                 _BoardNotes_Project_.prepareDocument();
+                _BoardNotes_.attachAllHandlers();
             });
     }, 100);
 }

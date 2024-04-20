@@ -74,6 +74,9 @@ static prepareDocument() {
     if (typeof _BoardNotes_Dashboard_ !== 'undefined') {
         _BoardNotes_Dashboard_.prepareDocument();
     }
+
+    // force render all KB elements
+    KB.render();
 }
 
 //------------------------------------------------
