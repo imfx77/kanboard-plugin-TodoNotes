@@ -343,8 +343,8 @@ static #NoteActionHandlers() {
     // POST ADD when TAB key on New Note description
     $('[name="editorMarkdownDescriptionNewNote"]').keydown(function(event) {
         if (event.keyCode == 9) {
-            var project_id = $(this).attr('data-project');
-            var user_id = $(this).attr('data-user');
+            var project_id = $("#noteMarkdownDescriptionNewNote_Editor").attr('data-project');
+            var user_id = $("#noteMarkdownDescriptionNewNote_Editor").attr('data-user');
             _BoardNotes_.#sqlAddNote(project_id, user_id);
             _BoardNotes_.#sqlRefreshTabs(user_id);
             _BoardNotes_.#sqlRefreshNotes(project_id, user_id);

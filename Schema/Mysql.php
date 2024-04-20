@@ -56,7 +56,9 @@ function reindexNotesAndLists_1(PDO $pdo)
         `date_modified` INT
     ) ENGINE=InnoDB CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci');
 
-    $pdo->exec('INSERT INTO `boardnotes_NOPK` SELECT * FROM `boardnotes` WHERE `is_active` >= 0');
+    $pdo->exec('INSERT INTO `boardnotes_NOPK`
+                SELECT * FROM `boardnotes`
+                WHERE `project_id` > 0 AND `user_id` > 0 AND `position` > 0 AND `is_active` >= 0');
 
     $pdo->exec('DROP TABLE boardnotes');
     $pdo->exec('CREATE TABLE IF NOT EXISTS boardnotes (
