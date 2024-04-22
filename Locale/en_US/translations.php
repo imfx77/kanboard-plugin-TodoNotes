@@ -36,6 +36,7 @@ return array(
     'BoardNotes_PROJECT_NOTE_SWITCH_STATUS' => 'Switch Status',
     'BoardNotes_PROJECT_NOTE_TITLE_EDIT_HINT' => 'Edit Title',
     'BoardNotes_PROJECT_NOTE_TITLE_SAVE_HINT' => 'Press ENTER to save changes, or Press TAB to edit details',
+    'BoardNotes_PROJECT_NOTE_DETAILS_EDIT_HINT' => '... add Note details here ...',
     'BoardNotes_PROJECT_NOTE_DETAILS_SAVE_HINT' => 'Press TAB to save changes',
     'BoardNotes_PROJECT_NOTE_BUSY_ICON_HINT' => 'Polling data changes ...
 Might be waiting for an unsubmitted New Note data input!',

@@ -55,7 +55,7 @@ input[type="text"] {
 }
 
 input[type="text"]::selection {
-  background: rgba(82,168,236,.8);
+    background: rgba(82,168,236,.8);
 }
 
 input[type="text"]:focus {
@@ -68,7 +68,7 @@ input[type="text"]:focus {
 }
 
 input::placeholder {
-  color: #BBBBBB !important;
+    color: #BBBBBB !important;
 }
 
 label {
@@ -76,16 +76,16 @@ label {
 }
 
 .sortableRef {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 
 .sortableRef li {
-  margin: 0 3px 3px 3px;
-  padding: .4em;
-  border-radius: 3px;
-  min-height: 16px;
+    margin: 0 3px 3px 3px;
+    padding: .4em;
+    border-radius: 3px;
+    min-height: 16px;
 }
 
 .hideMe {
@@ -110,6 +110,12 @@ label {
 
 .containerFloatClear {
     clear: both !important;
+}
+
+.containerLeft {
+    position: absolute;
+    left: 20px;
+    margin-top: -5px;
 }
 
 
@@ -197,8 +203,8 @@ label {
     color: #993333;
 }
 
-.toolbarButtonBig {
-    font-size: 2em;
+.toolbarButtonBigger {
+    font-size: 1.5em;
 }
 
 .checkDone {
@@ -220,21 +226,27 @@ label {
     display: inline-block;
     background-color: rgba(0, 0, 0, .3);
     border: 0;
-    color: #BBBBBB;
+    color: #CCCCCC;
     width: 100%;
 }
 
 .noteEditorMarkdown {
+    background-color: rgba(0, 0, 0, .2) !important;
+    color: #EEEEEE !important;
+}
+
+.noteEditorMarkdownNewNote {
     background-color: rgba(0, 0, 0, .5) !important;
-    color: #DDDDDD !important;
+    color: #EEEEEE !important;
+}
+
+.noteEditorTextarea {
+    resize: vertical;
+    padding: 4px;
 }
 
 .noteDoneMarkdown {
     background-color: rgba(0, 0, 0, .1) !important;
-}
-
-#item-0 .noteDetails {
-    padding: 5px 10px 0 40px;
 }
 
 .categories {
@@ -244,41 +256,6 @@ label {
     color: #1F1F1F;
 }
 
-/*
-textarea {
-    resize: vertical;
-    min-height: 50px;
-    max-height: 350px;
-    height: 50px;
-    width: 320px;
-    padding: 5px;
-    color: #1F1F1F;
-    margin-top: 5px;
-}
-
-textarea::selection {
-    background: rgba(82,168,236,.8);
-}
-
-.textareaDescription {
-    display: inline-block;
-    background: none;
-    border: 1px solid #1F1F1F;
-    white-space:pre-wrap;
-}
-
-.textareaDescriptionSelected {
-    display: inline-block;
-    color: #000000 !important;
-    background-color: #777777;
-    text-decoration: none;
-}
-
-.textareaDescriptionSelected:focus {
-    color: #FFFFFF !important;
-}
-*/
-
 .catSelector {
     margin-top: 3px;
 }
@@ -286,7 +263,7 @@ textarea::selection {
 .catLabel {
     float: right;
     cursor: default;
-    margin-top: 0;
+    margin-top: 5px;
     padding: 0 5px 0 5px;
     border-radius: 5px;
     color: #1F1F1F;
@@ -347,21 +324,21 @@ textarea::selection {
 }
 
 .theadReport {
-   font-family: Helvetica, Arial, sans-serif;
-   line-height: 16px;
+    font-family: Helvetica, Arial, sans-serif;
+    line-height: 16px;
 }
 
 .thReport {
-   border-top: 1px solid #CCCCCC;
-   padding-left: 10px;
-   border-left: none;
-   border-bottom: 1px solid #CCCCCC;
-   background-color: rgba(37, 37, 37, .75);
+    border-top: 1px solid #CCCCCC;
+    padding-left: 10px;
+    border-left: none;
+    border-bottom: 1px solid #CCCCCC;
+    background-color: rgba(37, 37, 37, .75);
 }
 
 .thReportNr {
-   padding-left: 35px;
-   width: 30px;
+    padding-left: 35px;
+    width: 30px;
 }
 
 .thReportStatus {
