@@ -23,8 +23,7 @@ static prepareDocument() {
     var isMobile = _BoardNotes_.isMobile();
     var readonlyNotes = (project_id == 0); // Overview Mode
 
-    // notes reordering is disabled in Overview Mode (ALL projects tab)
-    // or when explicitly sorted by Status
+    // notes reordering is disabled when explicitly sorted by Status
     if (!_BoardNotes_.optionSortByStatus) {
         $(".sortableRef").each(function() {
             var sortable_project_id = $(this).attr('data-project');

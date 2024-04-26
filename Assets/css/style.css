@@ -151,7 +151,6 @@ label {
 
 .noteTitleLabel {
     margin-top: 0;
-    padding-left: 10px;
     height: 20px;
     border: 0 !important;
 }
@@ -160,18 +159,6 @@ label {
     padding: 5px 10px 0 40px;
     color: #7A7A7A;
     min-height: 16px;
-}
-
-.sortableHandle {
-    float: right;
-    appearance: none;
-    -webkit-appearance: none;
-    outline: none;
-    border: 0;
-    background: transparent;
-    padding-left: 15px;
-    padding-right: 10px;
-    font-size: 1.5em !important;
 }
 
 .toolbarSeparator {
@@ -205,12 +192,15 @@ label {
 
 .toolbarButtonBigger {
     font-size: 1.5em;
+    padding-right: 15px;
+    padding-left: 15px;
 }
 
 .checkDone {
     appearance: none;
     -webkit-appearance: none;
     outline: none;
+    padding-right: 10px;
     border: 0;
     background: transparent;
     color: #1F1F1F;
@@ -263,7 +253,8 @@ label {
 .catLabel {
     float: right;
     cursor: default;
-    margin-top: 5px;
+    margin-top: 3px;
+    margin-right: 5px;
     padding: 0 5px 0 5px;
     border-radius: 5px;
     color: #1F1F1F;
@@ -287,8 +278,9 @@ label {
 /* Style for report.php */
 
 .reportTitleLabel {
-    margin-top: 0;
     padding-left: 10px;
+    padding-top: 5px;
+    margin-top: 0;
     max-width: 90%;
     cursor: default;
 }

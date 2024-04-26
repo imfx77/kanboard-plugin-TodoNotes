@@ -128,8 +128,8 @@ print '>';
 
 print '<li id="item-0" class="ui-state-default liNewNote" data-id="0" data-project="' . $project_id . '">';
 
-// here goes the Button Toolbar
-print '<div class="containerNoWrap containerFloatRight disableEventsPropagation">';
+// here goes the Settings Button Toolbar
+print '<div class="toolbarSettingsButtons containerNoWrap containerFloatRight disableEventsPropagation">';
 
 // exclude when in Overview Mode
 if (!$readonlyNotes) {
@@ -397,11 +397,11 @@ foreach ($data as $u) {
     print ' data-project="' . $u['project_id'] . '"';
     print '>';
 
-    // explicit reorder handle for mobile
-    print '<div class="hideMe sortableHandle containerNoWrap containerFloatRight"><i class="fa fa-arrows-alt" aria-hidden="true"></i></div>';
+    // here goes the Note Header Toolbar
+    print '<div class="toolbarNoteHeader containerNoWrap containerFloatRight">';
 
-    // here goes the Button Toolbar
-    print '<div class="containerNoWrap containerFloatRight disableEventsPropagation">';
+    // here goes the Note Button Toolbar
+    print '<div class="toolbarNoteButtons containerNoWrap containerFloatRight disableEventsPropagation">';
 
     // Show details button
     print '<button id="showDetails-P' . $u['project_id'] . '-' . $num . '"';
@@ -417,17 +417,6 @@ foreach ($data as $u) {
     // hide all the utility buttons when viewing notes as readonly
     // just allow for check/uncheck note
     if (!$readonlyNotes) {
-        // Delete button viewed (in detailed view)
-        print '<button id="noteDelete-P' . $u['project_id'] . '-' . $num . '"';
-        print ' class="hideMe toolbarButton noteDelete"';
-        print ' title="' . t('BoardNotes_PROJECT_NOTE_DELETE') . '"';
-        print ' data-id="' . $num . '"';
-        print ' data-project="' . $u['project_id'] . '"';
-        print ' data-user="' . $user_id . '"';
-        print '>';
-        print '<i class="fa fa-trash-o" aria-hidden="true"></i>';
-        print '</button>';
-
         // Save button (in detailed view)
         print '<button id="noteSave-P' . $u['project_id'] . '-' . $num . '"';
         print ' class="hideMe toolbarButton noteSave"';
@@ -437,6 +426,17 @@ foreach ($data as $u) {
         print ' data-user="' . $user_id . '"';
         print '>';
         print '<i class="fa fa-floppy-o" aria-hidden="true"></i>';
+        print '</button>';
+
+        // Delete button viewed (in detailed view)
+        print '<button id="noteDelete-P' . $u['project_id'] . '-' . $num . '"';
+        print ' class="hideMe toolbarButton noteDelete"';
+        print ' title="' . t('BoardNotes_PROJECT_NOTE_DELETE') . '"';
+        print ' data-id="' . $num . '"';
+        print ' data-project="' . $u['project_id'] . '"';
+        print ' data-user="' . $user_id . '"';
+        print '>';
+        print '<i class="fa fa-trash-o" aria-hidden="true"></i>';
         print '</button>';
 
         // add some space between button groups
@@ -470,9 +470,27 @@ foreach ($data as $u) {
         }
     }
 
+    print '</div>'; // Note Button Toolbar
+
+    // explicit reorder handle for mobile
+    print '<button class="hideMe toolbarButton toolbarButtonBigger sortableHandle">';
+    print '<i class="fa fa-arrows-alt" aria-hidden="true"></i>';
+    print '</button>';
+
+    // Refresh order button (shown on changed status in SortByStatus mode only)
+    print '<button id="noteRefreshOrder-P' . $u['project_id'] . '-' . $num . '"';
+    print ' class="hideMe toolbarButton toolbarButtonToggled toolbarButtonBigger disableEventsPropagation noteRefreshOrder"';
+    print ' title="' . t('BoardNotes_PROJECT_NOTE_REFRESH_ORDER') . '"';
+    print ' data-id="' . $num  . '"';
+    print ' data-project="' . $u['project_id'] . '"';
+    print ' data-user="' . $user_id . '"';
+    print '>';
+    print '<i class="fa fa-refresh fa-spin fa-spin-reverse" aria-hidden="true"></i>';
+    print '</button>';
+
     // Category label (in simple view)
     print '<label id="noteCatLabel-P' . $u['project_id'] . '-' . $num . '"';
-    print ' class="catLabel catLabelClickable';
+    print ' class="catLabel catLabelClickable disableEventsPropagation';
     if (!empty($u['category']) && array_key_exists($u['category'], $mapCategoryColorByName)) {
         $category_color = $mapCategoryColorByName[ $u['category'] ];
         if (!empty($category_color)) {
@@ -488,21 +506,7 @@ foreach ($data as $u) {
     print $u['category'];
     print '</label>';
 
-    // add some space between button groups
-    print '<div class="toolbarSeparator">&nbsp;</div>';
-
-    // Refresh order button (shown on changed status in SortByStatus mode only)
-    print '<button id="noteRefreshOrder-P' . $u['project_id'] . '-' . $num . '"';
-    print ' class="hideMe toolbarButton toolbarButtonToggled toolbarButtonBigger noteRefreshOrder"';
-    print ' title="' . t('BoardNotes_PROJECT_NOTE_REFRESH_ORDER') . '"';
-    print ' data-id="' . $num  . '"';
-    print ' data-project="' . $u['project_id'] . '"';
-    print ' data-user="' . $user_id . '"';
-    print '>';
-    print '<i class="fa fa-refresh fa-spin fa-spin-reverse" aria-hidden="true"></i>';
-    print '</button>';
-
-    print '</div>';
+    print '</div>'; // Note Header Toolbar
 
     // here goes the Title row with Checkbox
     print '<div class="containerNoWrap containerFloatLeft disableEventsPropagation">';
