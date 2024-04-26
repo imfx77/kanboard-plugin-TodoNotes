@@ -160,20 +160,63 @@ static #blinkNote(project_id, id) {
 //------------------------------------------------
 
 //------------------------------------------------
-static #NoteDetailsHandlers() {
+static #noteDetailsDblclickHandlersInitialized = false;
+
+static #noteDetailsDblclickHandlers() {
     //------------------------------------------------
 
-    // disable dblclick propagation for all marked sub-elements
-    $(".disableEventsPropagation").dblclick(function (event) {
-        event.stopPropagation();
-    });
-
-    //------------------------------------------------
+    if (_BoardNotes_.#noteDetailsDblclickHandlersInitialized) return;
 
     // Show details for new note by dblclick the New Note
     $(".liNewNote").dblclick(function() {
         _BoardNotes_.#toggleDetailsNewNote();
     });
+
+    // Show details for note by dblclick the Note
+    $(".liNote").dblclick(function() {
+        var project_id = $(this).attr('data-project');
+        var id = $(this).attr('data-id');
+        _BoardNotes_.#toggleDetails(project_id, id);
+    });
+
+    _BoardNotes_.#noteDetailsDblclickHandlersInitialized = true;
+
+    //------------------------------------------------
+}
+
+static #noteDetailsDblclickHandlersDisable() {
+    //------------------------------------------------
+
+    $(".liNewNote").off('dblclick');
+    $(".liNote").off('dblclick');
+
+    _BoardNotes_.#noteDetailsDblclickHandlersInitialized = false;
+
+    //------------------------------------------------
+}
+
+//------------------------------------------------
+static #noteDetailsHandlers() {
+    //------------------------------------------------
+
+    // disable click & dblclick propagation for all marked sub-elements
+    $(".disableEventsPropagation").click(function (event) {
+        event.stopPropagation();
+
+        _BoardNotes_.#noteDetailsDblclickHandlersDisable();
+
+        setTimeout(function() {
+            _BoardNotes_.#noteDetailsDblclickHandlers();
+        }, 500);
+    });
+
+    $(".disableEventsPropagation").dblclick(function (event) {
+        event.stopPropagation();
+    });
+
+    _BoardNotes_.#noteDetailsDblclickHandlers();
+
+    //------------------------------------------------
 
     // Show details for New Note by menu button
     $("button" + ".showDetailsNewNote").click(function() {
@@ -211,13 +254,6 @@ static #NoteDetailsHandlers() {
     });
 
     //------------------------------------------------
-
-    // Show details for note by dblclick the Note
-    $(".liNote").dblclick(function() {
-        var project_id = $(this).attr('data-project');
-        var id = $(this).attr('data-id');
-        _BoardNotes_.#toggleDetails(project_id, id);
-    });
 
     // Show details for Note by menu button
     $("button" + ".showDetails").click(function() {
@@ -344,7 +380,7 @@ static #updateNoteDoneCheckmark(project_id, id) {
 }
 
 //------------------------------------------------
-static #NoteStatusHandlers() {
+static #noteStatusHandlers() {
     //------------------------------------------------
 
     //Checkmark done handler
@@ -373,7 +409,7 @@ static #NoteStatusHandlers() {
 //------------------------------------------------
 
 //------------------------------------------------
-static #NoteActionHandlers() {
+static #noteActionHandlers() {
     //------------------------------------------------
 
     // POST ADD when ENTER key on New Note title
@@ -475,7 +511,6 @@ static #NoteActionHandlers() {
         var user_id = $(this).attr('data-user');
         var id = $(this).attr('data-id');
         var title = $("#noteTitleLabel-P" + project_id + "-" + id).html();
-//        var description = $("#noteTextareaDescription-P" + project_id + "-" + id).val();
         var category_id = $("#cat-P" + project_id + "-" + id + " option:selected").val();
         var is_active = $("#noteDoneCheckmark-P" + project_id + "-" + id).attr('data-id');
         _BoardNotes_.#modalNoteToTask(project_id, user_id, id, is_active, title, description, category_id);
@@ -519,7 +554,7 @@ static #NoteActionHandlers() {
 //------------------------------------------------
 
 //------------------------------------------------
-static #SettingsHandlers() {
+static #settingsHandlers() {
     //------------------------------------------------
 
     // POST delete all done
@@ -982,6 +1017,7 @@ static #sqlRefreshNotes(project_id, user_id) {
         $("#result" + project_id).html(_BoardNotes_Translations_.msgLoadingSpinner).load(loadUrl,
             function() {
                 _BoardNotes_Project_.prepareDocument();
+                _BoardNotes_.#noteDetailsDblclickHandlersDisable();
                 _BoardNotes_.attachAllHandlers();
             });
     }, 100);
@@ -1036,7 +1072,7 @@ static #sqlGetLastModifiedTimestamp(project_id, user_id) {
             + '&user_id=' + user_id,
         success: function(response) {
             var lastModifiedTimestamp = parseInt(response);
-            _BoardNotes_.#CheckAndTriggerRefresh(lastModifiedTimestamp);
+            _BoardNotes_.#checkAndTriggerRefresh(lastModifiedTimestamp);
         },
         error: function(xhr,textStatus,e) {
             alert('sqlGetLastModifiedTimestamp');
@@ -1051,18 +1087,18 @@ static #sqlGetLastModifiedTimestamp(project_id, user_id) {
 //------------------------------------------------
 
 //------------------------------------------------
-static #ShowBusyIcon() {
+static #showBusyIcon() {
     $("#boardnotesBusyIcon").removeClass( 'hideMe' );
 }
 
 //------------------------------------------------
-static #HideBusyIcon( ) {
+static #hideBusyIcon( ) {
     $("#boardnotesBusyIcon").addClass( 'hideMe' );
 }
 
 //------------------------------------------------
 // schedule check for modifications every 15 sec
-static ScheduleCheckModifications() {
+static scheduleCheckModifications() {
     setTimeout(function() {
         if ($(".liNewNote").length == 0) {
             // this means the page no longer displays notes list(s)
@@ -1071,7 +1107,7 @@ static ScheduleCheckModifications() {
             return;
         }
 
-        _BoardNotes_.#ShowBusyIcon();
+        _BoardNotes_.#showBusyIcon();
 
         var project_id = $("#refProjectId").attr('data-project');
         var user_id = $("#refProjectId").attr('data-user');
@@ -1080,7 +1116,7 @@ static ScheduleCheckModifications() {
 
         // skip SQL query if page not visible, or if new note has pending changes
         if (!KB.utils.isVisible() || title!="" || description!="") {
-            _BoardNotes_.ScheduleCheckModifications();
+            _BoardNotes_.scheduleCheckModifications();
             return;
         }
 
@@ -1090,7 +1126,7 @@ static ScheduleCheckModifications() {
 
 //------------------------------------------------
 // check if page refresh is necessary
-static #CheckAndTriggerRefresh(lastModifiedTimestamp) {
+static #checkAndTriggerRefresh(lastModifiedTimestamp) {
     var lastRefreshedTimestamp = $("#refProjectId").attr('data-timestamp');
 
     if (lastRefreshedTimestamp < lastModifiedTimestamp) {
@@ -1100,8 +1136,8 @@ static #CheckAndTriggerRefresh(lastModifiedTimestamp) {
         _BoardNotes_.#sqlRefreshNotes(project_id, user_id);
     }
 
-    _BoardNotes_.ScheduleCheckModifications();
-    _BoardNotes_.#HideBusyIcon();
+    _BoardNotes_.scheduleCheckModifications();
+    _BoardNotes_.#hideBusyIcon();
 }
 
 //------------------------------------------------
@@ -1110,10 +1146,10 @@ static #CheckAndTriggerRefresh(lastModifiedTimestamp) {
 
 //------------------------------------------------
 static attachAllHandlers() {
-    _BoardNotes_.#NoteDetailsHandlers();
-    _BoardNotes_.#NoteStatusHandlers();
-    _BoardNotes_.#NoteActionHandlers();
-    _BoardNotes_.#SettingsHandlers();
+    _BoardNotes_.#noteDetailsHandlers();
+    _BoardNotes_.#noteStatusHandlers();
+    _BoardNotes_.#noteActionHandlers();
+    _BoardNotes_.#settingsHandlers();
 }
 
 //------------------------------------------------
@@ -1126,5 +1162,5 @@ $(function() {
     _BoardNotes_.attachAllHandlers();
 
     // start the recursive check sequence on load page
-    _BoardNotes_.ScheduleCheckModifications();
+    _BoardNotes_.scheduleCheckModifications();
 });
