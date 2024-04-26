@@ -61,7 +61,7 @@ static #showTitleInput(project_id, id, show_title_input) {
     var noteTitleLabel = $("#noteTitleLabel-P" + project_id + "-" + id);
     var noteTitleInput = $("#noteTitleInput-P" + project_id + "-" + id);
     var noteDetails = $("#noteDetails-P" + project_id + "-" + id);
-    var editorDetails = $('[name="editorMarkdownDetails-P' + project_id + '-' + id + '"]');
+    var previewDetails = $("#noteMarkdownDetails-P" + project_id + "-" + id + "_Preview");
 
     if (show_title_input) {
         noteTitleLabel.addClass( 'hideMe' );
@@ -70,15 +70,31 @@ static #showTitleInput(project_id, id, show_title_input) {
         noteTitleInput[0].selectionStart = 0;
         noteTitleInput[0].selectionEnd = 0;
 
-        // get current width of the description textarea
-        var inputWidth = 0.7 * editorDetails.width();
+        var inputWidth = previewDetails.width();
         if ( noteDetails.hasClass( 'hideMe' ) ) {
             noteDetails.toggleClass( 'hideMe' );
-            inputWidth = 0.7 * editorDetails.width();
+            inputWidth = previewDetails.width();
+            if ( previewDetails.hasClass( 'hideMe' ) ) {
+                previewDetails.toggleClass( 'hideMe' );
+                inputWidth = previewDetails.width();
+                previewDetails.toggleClass( 'hideMe' );
+            }
             noteDetails.toggleClass( 'hideMe' );
+        } else {
+            inputWidth = previewDetails.width();
+            if ( previewDetails.hasClass( 'hideMe' ) ) {
+                previewDetails.toggleClass( 'hideMe' );
+                inputWidth = previewDetails.width();
+                previewDetails.toggleClass( 'hideMe' );
+            }
         }
 
-        noteTitleInput.width( inputWidth );
+        if (_BoardNotes_.isMobile()) {
+            noteTitleInput.width( inputWidth );
+        } else {
+            var toolbarHeader = noteDetails.parent().find(".toolbarNoteHeader");
+            noteTitleInput.width( inputWidth - toolbarHeader.width());
+        }
     } else {
         noteTitleInput.blur();
         noteTitleInput.addClass( 'hideMe' );
@@ -116,38 +132,57 @@ static #toggleDetails(project_id, id) {
     $("#noteToTask-P" + project_id + "-" + id).toggleClass( 'hideMe' );
     $("#noteCatLabel-P" + project_id + "-" + id).toggleClass( 'hideMe' );
 
+    _BoardNotes_.#showTitleInput(project_id, id, !$("#noteTitleInput-P" + project_id + "-" + id).hasClass( 'hideMe' ));
+
     $("#showDetails-P" + project_id + "-" + id).find('i').toggleClass( "fa-angle-double-down" );
     $("#showDetails-P" + project_id + "-" + id).find('i').toggleClass( "fa-angle-double-up" );
+
     _BoardNotes_.adjustNotePlaceholders(project_id, id);
 }
 
 //------------------------------------------------
-// Show details menu for new note (toggle class)
-static #toggleDetailsNewNote() {
-    var details = $("#detailsNewNote");
-    var wrapper = $("#noteMarkdownDetailsNewNote_Editor");
+// Show input or label visuals for title of NewNote
+static showTitleInputNewNote() {
+    var noteDetails = $("#detailsNewNote");
+    var previewDetails = $("#noteMarkdownDetailsNewNote_Preview");
     var editor = $('[name="editorMarkdownDetailsNewNote"]');
-    var inputWidth = editor.width();
 
-    details.toggleClass( 'hideMe' );
+    if (!noteDetails[0]) return;
+
+    var inputWidth = previewDetails.width();
+    if ( noteDetails.hasClass( 'hideMe' ) ) {
+        noteDetails.toggleClass( 'hideMe' );
+        inputWidth = previewDetails.width();
+        if ( previewDetails.hasClass( 'hideMe' ) ) {
+            previewDetails.toggleClass( 'hideMe' );
+            inputWidth = previewDetails.width();
+            previewDetails.toggleClass( 'hideMe' );
+        }
+        noteDetails.toggleClass( 'hideMe' );
+    } else {
+        inputWidth = previewDetails.width();
+        if ( previewDetails.hasClass( 'hideMe' ) ) {
+            previewDetails.toggleClass( 'hideMe' );
+            inputWidth = previewDetails.width();
+            previewDetails.toggleClass( 'hideMe' );
+        }
+    }
+
+    $("#inputNewNote").width( inputWidth - noteDetails.parent().find(".saveNewNote").width() );
+    editor.prop('title', _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_PROJECT_NOTE_DETAILS_SAVE_HINT'));
+}
+
+//------------------------------------------------
+// Show details menu for NewNote (toggle class)
+static #toggleDetailsNewNote() {
+    $("#detailsNewNote").toggleClass( 'hideMe' );
     if (!_BoardNotes_.isMobile()) {
         $("#saveNewNote").toggleClass( 'hideMe' );
     }
     $("#showDetailsNewNote").find('i').toggleClass( "fa-angle-double-down" );
     $("#showDetailsNewNote").find('i').toggleClass( "fa-angle-double-up" );
 
-    if (!details.hasClass( 'hideMe' )) {
-        if (!wrapper.hasClass( 'hideMe' )) {
-            inputWidth = editor.width();
-        } else {
-            wrapper.removeClass( 'hideMe' );
-            inputWidth = editor.width();
-            wrapper.addClass( 'hideMe' );
-        }
-
-        $("#inputNewNote").width(inputWidth);
-        editor.prop('title', _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_PROJECT_NOTE_DETAILS_SAVE_HINT'));
-    }
+    _BoardNotes_.showTitleInputNewNote();
 }
 
 //------------------------------------------------

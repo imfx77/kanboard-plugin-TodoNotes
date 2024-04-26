@@ -83,6 +83,10 @@ static prepareDocument() {
 
     // force render all KB elements
     KB.render();
+
+    setTimeout(function() {
+        _BoardNotes_.showTitleInputNewNote();
+    }, 100);
 }
 
 //------------------------------------------------
