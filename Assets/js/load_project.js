@@ -21,6 +21,7 @@ static prepareDocument() {
     var project_id = $("#refProjectId").attr('data-project');
     var user_id = $("#refProjectId").attr('data-user');
     var isMobile = _BoardNotes_.isMobile();
+    var readonlyNotes = (project_id == 0); // Overview Mode
 
     // notes reordering is disabled in Overview Mode (ALL projects tab)
     // or when explicitly sorted by Status
@@ -61,6 +62,12 @@ static prepareDocument() {
     if(isMobile) {
         // choose mobile view
         $("#mainholderP" + project_id).removeClass('mainholder').addClass('mainholderMobile');
+
+        // show all Save buttons
+        if (!readonlyNotes ) { // if NOT in Overview Mode
+            $(".saveNewNote").removeClass( 'hideMe' );
+            $(".noteSave").removeClass( 'hideMe' );
+        }
     }
 
     _BoardNotes_Translations_.initialize();

@@ -108,7 +108,10 @@ static #showDetailsInput(project_id, id, show_details_input) {
 static #toggleDetails(project_id, id) {
     $("#noteDetails-P" + project_id + "-" + id).toggleClass( 'hideMe' );
     $("#noteDelete-P" + project_id + "-" + id).toggleClass( 'hideMe' );
-    $("#noteSave-P" + project_id + "-" + id).toggleClass( 'hideMe' );
+    if (!_BoardNotes_.isMobile()) {
+        $("#noteSave-P" + project_id + "-" + id).toggleClass( 'hideMe' );
+    }
+    $("#toolbarSeparator-P" + project_id + "-" + id).toggleClass( 'hideMe' );
     $("#noteTransfer-P" + project_id + "-" + id).toggleClass( 'hideMe' );
     $("#noteToTask-P" + project_id + "-" + id).toggleClass( 'hideMe' );
     $("#noteCatLabel-P" + project_id + "-" + id).toggleClass( 'hideMe' );
@@ -127,7 +130,9 @@ static #toggleDetailsNewNote() {
     var inputWidth = editor.width();
 
     details.toggleClass( 'hideMe' );
-    $("#saveNewNote").toggleClass( 'hideMe' );
+    if (!_BoardNotes_.isMobile()) {
+        $("#saveNewNote").toggleClass( 'hideMe' );
+    }
     $("#showDetailsNewNote").find('i').toggleClass( "fa-angle-double-down" );
     $("#showDetailsNewNote").find('i').toggleClass( "fa-angle-double-up" );
 

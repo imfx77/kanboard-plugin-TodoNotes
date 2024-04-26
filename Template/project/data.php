@@ -303,7 +303,7 @@ if (!$readonlyNotes) {
 
     // Edit details button
     print '<button id="editDetailsNewNote"';
-    print ' class="editDetailsNewNote toolbarButton toolbarButtonBigger"';
+    print ' class="editDetailsNewNote toolbarButton toolbarButtonBigger disableEventsPropagation"';
     print ' title="' . t('BoardNotes_PROJECT_NOTE_EDIT_DETAILS') . '"';
     print ' data-id="0"';
     print ' data-project="' . $project_id . '"';
@@ -440,7 +440,9 @@ foreach ($data as $u) {
         print '</button>';
 
         // add some space between button groups
-        print '<div class="toolbarSeparator">&nbsp;</div>';
+        print '<div id="toolbarSeparator-P' . $u['project_id'] . '-' . $num . '"';
+        print ' class="hideMe toolbarSeparator"';
+        print '>&nbsp;</div>';
 
         // Transfer button (in detailed view)
         print '<button id="noteTransfer-P' . $u['project_id'] . '-' . $num . '"';
@@ -618,21 +620,23 @@ foreach ($data as $u) {
 
     //-----------------------
 
-    // here go the Note Edit Buttons
-    print '<div class="containerNoWrap containerLeft disableEventsPropagation">';
+    if (!$readonlyNotes) {
+        // here go the Note Edit Buttons
+        print '<div class="containerNoWrap containerLeft disableEventsPropagation">';
 
-    // Edit details button
-    print '<button id="editDetails-P' . $u['project_id'] . '-' . $num . '"';
-    print ' class="editDetails toolbarButton toolbarButtonBigger"';
-    print ' title="' . t('BoardNotes_PROJECT_NOTE_EDIT_DETAILS') . '"';
-    print ' data-id="' . $num  . '"';
-    print ' data-project="' . $u['project_id'] . '"';
-    print ' data-user="' . $user_id . '"';
-    print '>';
-    print '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>';
-    print '</button>';
+        // Edit details button
+        print '<button id="editDetails-P' . $u['project_id'] . '-' . $num . '"';
+        print ' class="editDetails toolbarButton toolbarButtonBigger"';
+        print ' title="' . t('BoardNotes_PROJECT_NOTE_EDIT_DETAILS') . '"';
+        print ' data-id="' . $num  . '"';
+        print ' data-project="' . $u['project_id'] . '"';
+        print ' data-user="' . $user_id . '"';
+        print '>';
+        print '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>';
+        print '</button>';
 
-    print '</div>';
+        print '</div>';
+    }
 
     //-----------------------
 
