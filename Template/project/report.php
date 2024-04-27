@@ -44,6 +44,8 @@ foreach ($data as $u) {
     print '<tr class="trReport" id="trReportNr' . $num . '">';
 
     print '<td class="tdReport tdReportNr">';
+    print '<div class="reportBkgr"></div>';
+
      // Hide button
     print '<button id="reportHide" class="reportHide"';
     print ' data-id="' .  $num . '"';
@@ -61,6 +63,7 @@ foreach ($data as $u) {
 
     // Report Info
     print '<td class="tdReport tdReportInfo">';
+    print '<div class="reportBkgr"></div>';
 
     // Category label
     print '<label class="catLabel"';
@@ -102,6 +105,7 @@ foreach ($data as $u) {
     print '</td>'; // report info
 
     print '<td class="tdReport tdReportStatus reportTitle">';
+    print '<div class="reportBkgr"></div>';
 
     if ($u['is_active'] == "2") {
         print '<i class="fa fa-spinner fa-pulse" aria-hidden="true"></i>';

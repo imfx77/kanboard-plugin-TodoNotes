@@ -134,14 +134,41 @@ label {
 
 .liNote {
     padding: 5px 10px 12px 15px!important;
-    background-color: rgba(246, 246, 246, .7);
     font-size: 1em !important;
+    position: relative;
+    z-index: 100;
+}
+
+.liNoteBkgr {
+    background-color: rgba(246, 246, 246, .7);
+    border: 1px solid;
+    border-radius: 6px;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: -100;
 }
 
 .liNewNote {
     padding: 5px 10px 12px 15px!important;
-    background-color: rgba(246, 246, 246, .9);
     font-size: 1em !important;
+    position: relative;
+    z-index: 100;
+}
+
+.liNewNoteBkgr {
+    background-color: rgba(246, 246, 246, .9);
+    border: 1px solid;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: -100;
 }
 
 .labelNewNote {
@@ -225,28 +252,15 @@ label {
 
 .noteDetailsMarkdown {
     display: inline-block;
-    background-color: rgba(0, 0, 0, .3);
+    background-color: rgba(0, 0, 0, .5);
     padding: 5px 0 0 10px;
     border: 0;
     color: #CCCCCC;
     width: 100%;
 }
 
-.noteDetailsMarkdown a {
-    color: var(--link-color-primary) !important;
-}
-
-.noteDetailsMarkdown a:hover {
-    color: revert !important;
-    text-decoration: revert !important;
-}
-
-.noteDetailsMarkdown pre, .noteDetailsMarkdown code {
-    background-color: #555 !important;
-}
-
 .noteEditorMarkdown {
-    background-color: rgba(0, 0, 0, .2) !important;
+    background-color: rgba(0, 0, 0, .25) !important;
     color: #EEEEEE !important;
 }
 
@@ -261,7 +275,7 @@ label {
 }
 
 .noteDoneMarkdown {
-    background-color: rgba(0, 0, 0, .1) !important;
+    background-color: rgba(0, 0, 0, .25) !important;
 }
 
 .categories {
@@ -333,6 +347,21 @@ label {
     min-height: 16px;
 }
 
+.reportBkgr {
+    background-image: linear-gradient(rgba(92, 92, 92, .75) 0 0) !important;
+    background-color: rgba(92, 92, 92, .50);
+    border-color: rgba(92, 92, 92, .50) !important;
+    border: 1px solid;
+    border-radius: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: -100;
+}
+
 .tableReport {
     border-bottom: none;
     border-left: 1px solid #CCCCCC;
@@ -376,8 +405,10 @@ label {
 
 
 .tdReport {
-    background-color: rgba(92, 92, 92, .50);
     font-size: 12px !important;
+    padding: 0;
+    position: relative;
+    z-index: 100;
 }
 
 .tdReportNr {

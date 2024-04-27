@@ -133,7 +133,8 @@ print '>';
 ////    NEW NOTE / OVERVIEW MODE TITLE
 //////////////////////////////////////////
 
-print '<li id="item-0" class="ui-state-default liNewNote" data-id="0" data-project="' . $project_id . '">';
+print '<li id="item-0" class="liNewNote" data-id="0" data-project="' . $project_id . '">';
+print '<div class="liNewNoteBkgr"></div>';
 
 // here goes the Settings Button Toolbar
 print '<div class="toolbarSettingsButtons containerNoWrap containerFloatRight disableEventsPropagation">';
@@ -401,18 +402,15 @@ foreach ($data as $u) {
     ////    PROJECT NOTE
     //////////////////////////////////////////
 
-    print '<li id="item' . '-' . $u['id'] . '"';
-    print ' class="ui-state-default liNote';
+    print '<li id="item' . '-' . $u['id'] . '" class="liNote" data-id="' . $num . '" data-project="' . $u['project_id'] . '">';
+    print '<div class="liNoteBkgr';
     if (!empty($u['category']) && array_key_exists($u['category'], $mapCategoryColorByName)) {
         $category_color = $mapCategoryColorByName[ $u['category'] ];
         if (!empty($category_color)) {
             print ' color-' . $category_color; // append category color class
         }
     }
-    print '"';
-    print ' data-id="' . $num . '"';
-    print ' data-project="' . $u['project_id'] . '"';
-    print '>';
+    print '"></div>';
 
     // here goes the Note Header Toolbar
     print '<div class="toolbarNoteHeader containerNoWrap containerFloatRight">';

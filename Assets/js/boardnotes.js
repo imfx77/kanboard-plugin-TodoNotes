@@ -748,17 +748,18 @@ static refreshSortByStatus() {
 static refreshCategoryColors() {
     if (_BoardNotes_.optionShowCategoryColors) {
         $("#settingsCategoryColors").addClass( 'toolbarButtonToggled' );
-        $(".trReport").addClass( 'task-board' );
-        $(".liNote").addClass( 'task-board' );
+        $(".tdReport .reportBkgr").addClass( 'task-board' );
+        $(".liNote .liNoteBkgr").addClass( 'task-board' );
         // avoid the ugly empty category label boxes
         $(".catLabel").each(function() {
-            if ($(this).html())
+            if ($(this).html()) {
                 $(this).addClass( 'task-board-category' );
+            }
         });
     } else {
         $("#settingsCategoryColors").removeClass( 'toolbarButtonToggled' );
-        $(".trReport").removeClass( 'task-board' );
-        $(".liNote").removeClass( 'task-board' );
+        $(".tdReport .reportBkgr").removeClass( 'task-board' );
+        $(".liNote .liNoteBkgr").removeClass( 'task-board' );
         $(".catLabel").removeClass( 'task-board-category' );
     }
 }
@@ -769,12 +770,12 @@ static updateCategoryColors(project_id, id, old_category, new_category) {
     var old_color = $("#category-" + old_category).attr('data-color');
     var new_color = $("#category-" + new_category).attr('data-color');
 
-    $("#trReportNr" + id).removeClass( 'color-' + old_color );
-    $("#item-" + note_id).removeClass( 'color-' + old_color );
+    $("#trReportNr" + id + " .reportBkgr").removeClass( 'color-' + old_color );
+    $("#item-" + note_id + " .liNoteBkgr").removeClass( 'color-' + old_color );
     $("#noteCatLabel-P" + project_id + "-" + id).removeClass( 'color-' + old_color );
 
-    $("#trReportNr" + id).addClass( 'color-' + new_color );
-    $("#item-" + note_id).addClass( 'color-' + new_color );
+    $("#trReportNr" + id + " .reportBkgr").addClass( 'color-' + new_color );
+    $("#item-" + note_id + " .liNoteBkgr").addClass( 'color-' + new_color );
     $("#noteCatLabel-P" + project_id + "-" + id).addClass( 'color-' + new_color);
 }
 
