@@ -429,11 +429,20 @@ static #noteStatusHandlers() {
         var user_id = $(this).attr('data-user');
         var id = $(this).attr('data-id');
 
+        var ref_project_id = $("#refProjectId").attr('data-project');
+        var readonlyNotes = (ref_project_id == 0); // Overview Mode
+
         _BoardNotes_.#switchNoteDoneStatus(project_id, id);
         _BoardNotes_.#updateNoteDoneCheckmark(project_id, id);
-        _BoardNotes_.#showTitleInput(project_id, id, false);
-        _BoardNotes_.#showDetailsInput(project_id, id, false);
-        _BoardNotes_.#sqlUpdateNote(project_id, user_id, id);
+
+        if (readonlyNotes) {
+            _BoardNotes_.#sqlUpdateNoteStatus(project_id, user_id, id);
+        } else {
+            _BoardNotes_.#showTitleInput(project_id, id, false);
+            _BoardNotes_.#showDetailsInput(project_id, id, false);
+            _BoardNotes_.#sqlUpdateNote(project_id, user_id, id);
+        }
+
         _BoardNotes_.#blinkNote(project_id, id);
 
         if (_BoardNotes_.optionSortByStatus) {
@@ -932,7 +941,7 @@ static #sqlTransferNote(project_id, user_id, id, target_project_id) {
 }
 
 //------------------------------------------------
-// SQL note update (title etc. and done)
+// SQL note update (title, description, category and status)
 static #sqlUpdateNote(project_id, user_id, id) {
     var note_id = $("#noteId-P" + project_id + "-" + id).attr('data-note');
     var title = $("#noteTitleInput-P" + project_id + "-" + id).val().trim();
@@ -974,6 +983,38 @@ static #sqlUpdateNote(project_id, user_id, id) {
         },
         error: function(xhr,textStatus,e) {
             alert('sqlUpdateNote');
+            alert(e);
+        }
+    });
+    return false;
+}
+
+//------------------------------------------------
+// SQL note update Status only!
+static #sqlUpdateNoteStatus(project_id, user_id, id) {
+    var note_id = $("#noteId-P" + project_id + "-" + id).attr('data-note');
+    var is_active = $("#noteDoneCheckmark-P" + project_id + "-" + id).attr('data-id');
+
+    $.ajax({
+        cache: false,
+        type: "POST",
+        url: '/?controller=BoardNotesController&action=boardNotesUpdateNoteStatus&plugin=BoardNotes'
+            + '&project_cus_id=' + project_id
+            + '&user_id=' + user_id
+            + '&note_id=' + note_id
+            + '&is_active=' + is_active,
+        success: function(response) {
+            var lastModifiedTimestamp = parseInt(response);
+            if (lastModifiedTimestamp > 0) {
+                $("#refProjectId").attr('data-timestamp', lastModifiedTimestamp);
+            } else {
+                alert( _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_NOTE_UPDATE_INVALID_MSG') );
+                _BoardNotes_.#sqlRefreshTabs(user_id);
+                _BoardNotes_.#sqlRefreshNotes(project_id, user_id);
+            }
+        },
+        error: function(xhr,textStatus,e) {
+            alert('sqlUpdateNoteStatus');
             alert(e);
         }
     });

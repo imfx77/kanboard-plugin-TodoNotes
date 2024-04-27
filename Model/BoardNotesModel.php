@@ -356,6 +356,29 @@ class BoardNotesModel extends Base
             ->update($values);
     }
 
+    // Update note Status
+    public function boardNotesUpdateNoteStatus($project_id, $user_id, $note_id, $is_active)
+    {
+        $is_unique = $this->boardNotesIsUniqueNote($project_id, $user_id, $note_id);
+        if (!$is_unique) {
+            return false;
+        }
+
+        // Get current unixtime
+        $timestamp = time();
+
+        $values = array(
+            'is_active' => $is_active,
+            'date_modified' => $timestamp,
+        );
+
+        return $this->db->table(self::TABLE_NOTES)
+            ->eq('id', $note_id)
+            ->eq('project_id', $project_id)
+            ->eq('user_id', $user_id)
+            ->update($values);
+    }
+
     // Update note positions
     public function boardNotesUpdatePosition($project_id, $user_id, $notePositions, $nrNotes)
     {

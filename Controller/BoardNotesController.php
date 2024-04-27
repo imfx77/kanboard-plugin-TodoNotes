@@ -297,6 +297,22 @@ class BoardNotesController extends BaseController
         return $validation;
     }
 
+    public function boardNotesUpdateNoteStatus()
+    {
+        $user_id = $this->resolveUserId();
+        $project = $this->resolveProject($user_id);
+        $project_id = $project['id'];
+
+        $note_id = $this->request->getStringParam('note_id');
+
+        $is_active = $this->request->getStringParam('is_active');
+
+        $validation = $this->boardNotesModel->boardNotesUpdateNoteStatus($project_id, $user_id, $note_id, $is_active);
+        print $validation ? time() : 0;
+
+        return $validation;
+    }
+
     public function boardNotesStats()
     {
         $user_id = $this->resolveUserId();
