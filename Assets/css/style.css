@@ -13,10 +13,21 @@
     text-decoration: none;       
 }
 
+@media (max-width : 768px) {
+    .mainholder {
+        width: auto;
+        font: 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
+        color: #4D4D4D;
+        -webkit-font-smoothing: antialiased;
+        position: relative;
+        font-weight: 300;
+    }
+}
+
 .mainholder {
-    width: 700px;
+    width: 720px;
     font: 13px "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #999999;
+    color: #4D4D4D;
     -webkit-font-smoothing: antialiased;
     position: relative;
     font-weight: 300;
@@ -335,10 +346,11 @@ label {
 }
 
 .thReport {
-    border-top: 1px solid #CCCCCC;
     padding-left: 10px;
     border-left: none;
+    border-top: 1px solid #CCCCCC;
     border-bottom: 1px solid #CCCCCC;
+    color: #999999;
     background-color: rgba(37, 37, 37, .75);
 }
 
@@ -385,17 +397,6 @@ label {
     border-right: 1px solid #CCCCCC;
 }
 
-
-@media (max-width : 751px) {
-    .mainholder {
-        width: auto;
-        font: 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
-        color: #999999;
-        -webkit-font-smoothing: antialiased;
-        position: relative;
-        font-weight: 300;
-    }
-}
 
 /* Style for stat boxes (e.g. in dropdown.php) */
 

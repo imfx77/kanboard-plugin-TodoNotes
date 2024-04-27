@@ -134,13 +134,13 @@ print '<div class="toolbarSettingsButtons containerNoWrap containerFloatRight di
 // exclude when in Overview Mode
 if (!$readonlyNotes) {
     // Settings delete all done
-    print '<button id="settingsDeleteAllDone" class="toolbarButton"';
+    print '<button id="settingsDeleteAllDone" class="toolbarButton toolbarButtonToggled"';
     print ' title="' . t('BoardNotes_PROJECT_DELETE_ALL_DONE_NOTES') . '"';
     print ' data-id="0"';
     print ' data-project="' . $project_id . '"';
     print ' data-user="' . $user_id . '"';
     print '>';
-    print '<i class="fa fa-trash-o" aria-hidden="true"></i>';
+    print '<i class="fa fa-trash" aria-hidden="true"></i>';
     print'</button>';
 
     // add some space between button groups

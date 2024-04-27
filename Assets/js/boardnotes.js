@@ -374,19 +374,19 @@ static #switchNoteDoneStatus(project_id, id) {
     var checkDone = $("#noteDoneCheckmark-P" + project_id + "-" + id);
 
     // cycle through statuses
-    if (checkDone.hasClass( "fa-circle-thin" )) {
-        checkDone.removeClass( "fa-circle-thin" );
-        checkDone.addClass( "fa-spinner fa-pulse" );
+    if (checkDone.hasClass( 'fa-circle-thin' )) {
+        checkDone.removeClass( 'fa-circle-thin' );
+        checkDone.addClass( 'fa-spinner fa-pulse' );
         return;
     }
-    if (checkDone.hasClass( "fa-spinner fa-pulse" )) {
-        checkDone.removeClass( "fa-spinner fa-pulse" );
-        checkDone.addClass( "fa-check" );
+    if (checkDone.hasClass( 'fa-spinner fa-pulse' )) {
+        checkDone.removeClass( 'fa-spinner fa-pulse' );
+        checkDone.addClass( 'fa-check' );
         return;
     }
-    if (checkDone.hasClass( "fa-check" )) {
-        checkDone.removeClass( "fa-check" );
-        checkDone.addClass( "fa-circle-thin" );
+    if (checkDone.hasClass( 'fa-check' )) {
+        checkDone.removeClass( 'fa-check' );
+        checkDone.addClass( 'fa-circle-thin' );
         return;
     }
 }
@@ -399,22 +399,22 @@ static #updateNoteDoneCheckmark(project_id, id) {
     var noteMarkdownDetailsPreview = $("#noteMarkdownDetails-P" + project_id + "-" + id + "_Preview");
     var noteMarkdownDetailsEditor = $("#noteMarkdownDetails-P" + project_id + "-" + id + "_Editor");
 
-    if( noteDoneCheckmark.hasClass( "fa-check" ) ) {
-        noteTitleLabel.addClass( "noteDoneText" );
-        noteMarkdownDetailsPreview.addClass( "noteDoneMarkdown" );
-        noteMarkdownDetailsEditor.addClass( "noteDoneMarkdown" );
+    if( noteDoneCheckmark.hasClass( 'fa-check' ) ) {
+        noteTitleLabel.addClass( 'noteDoneText' );
+        noteMarkdownDetailsPreview.addClass( 'noteDoneMarkdown' );
+        noteMarkdownDetailsEditor.addClass( 'noteDoneMarkdown' );
         noteDoneCheckmark.attr('data-id', '0');
     }
-    if( noteDoneCheckmark.hasClass( "fa-circle-thin" ) ) {
-        noteTitleLabel.removeClass( "noteDoneText" );
-        noteMarkdownDetailsPreview.removeClass( "noteDoneMarkdown" );
-        noteMarkdownDetailsEditor.removeClass( "noteDoneMarkdown" );
+    if( noteDoneCheckmark.hasClass( 'fa-circle-thin' ) ) {
+        noteTitleLabel.removeClass( 'noteDoneText' );
+        noteMarkdownDetailsPreview.removeClass( 'noteDoneMarkdown' );
+        noteMarkdownDetailsEditor.removeClass( 'noteDoneMarkdown' );
         noteDoneCheckmark.attr('data-id', '1');
     }
-    if( noteDoneCheckmark.hasClass( "fa-spinner fa-pulse" ) ) {
-        noteTitleLabel.removeClass( "noteDoneText" );
-        noteMarkdownDetailsPreview.removeClass( "noteDoneMarkdown" );
-        noteMarkdownDetailsEditor.removeClass( "noteDoneMarkdown" );
+    if( noteDoneCheckmark.hasClass( 'fa-spinner fa-pulse' ) ) {
+        noteTitleLabel.removeClass( 'noteDoneText' );
+        noteMarkdownDetailsPreview.removeClass( 'noteDoneMarkdown' );
+        noteMarkdownDetailsEditor.removeClass( 'noteDoneMarkdown' );
         noteDoneCheckmark.attr('data-id', '2');
     }
 }
@@ -604,7 +604,7 @@ static #noteActionHandlers() {
 
 static #settingsCollapseAll() {
     $(".showDetails").each(function() {
-        if ($(this).find('i').hasClass( "fa-angle-double-up" ))
+        if ($(this).find('i').hasClass( 'fa-angle-double-up' ))
         {
             var project_id = $(this).attr('data-project');
             var id = $(this).attr('data-id');
@@ -615,7 +615,7 @@ static #settingsCollapseAll() {
 
 static #settingsExpandAll() {
     $(".showDetails").each(function() {
-        if ($(this).find('i').hasClass( "fa-angle-double-down" ))
+        if ($(this).find('i').hasClass( 'fa-angle-double-down' ))
         {
             var project_id = $(this).attr('data-project');
             var id = $(this).attr('data-id');

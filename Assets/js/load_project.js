@@ -60,7 +60,7 @@ static prepareDocument() {
 
     if(isMobile) {
         // choose mobile view
-        $("#mainholderP" + project_id).removeClass('mainholder').addClass('mainholderMobile');
+        $("#mainholderP" + project_id).removeClass( 'mainholder' ).addClass( 'mainholderMobile' );
 
         // show all Save buttons
         if (!readonlyNotes ) { // if NOT in Overview Mode
