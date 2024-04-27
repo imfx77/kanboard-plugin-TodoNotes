@@ -563,6 +563,7 @@ static #noteActionHandlers() {
         var user_id = $(this).attr('data-user');
         var id = $(this).attr('data-id');
         var title = $("#noteTitleLabel-P" + project_id + "-" + id).html();
+        var description = $('[name="editorMarkdownDetails-P' + project_id + '-' + id + '"]').val();
         var category_id = $("#cat-P" + project_id + "-" + id + " option:selected").val();
         var is_active = $("#noteDoneCheckmark-P" + project_id + "-" + id).attr('data-id');
         _BoardNotes_.#modalNoteToTask(project_id, user_id, id, is_active, title, description, category_id);
@@ -614,7 +615,7 @@ static #settingsCollapseAll() {
             _BoardNotes_.#toggleDetails(project_id, id);
         }
     });
-};
+}
 
 static #settingsExpandAll() {
     $(".showDetails").each(function() {
@@ -625,7 +626,7 @@ static #settingsExpandAll() {
             _BoardNotes_.#toggleDetails(project_id, id);
         }
     });
-};
+}
 
 //------------------------------------------------
 static #settingsHandlers() {
