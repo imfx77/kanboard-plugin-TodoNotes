@@ -9,11 +9,18 @@ if (!array_key_exists('boardnotesShowCategoryColors', $_SESSION)) {
     $_SESSION['boardnotesShowCategoryColors'] = false;
 }
 $optionShowCategoryColors = $_SESSION['boardnotesShowCategoryColors'];
+// evaluate optionShowAllDone option from session
+if (!array_key_exists('boardnotesShowAllDone', $_SESSION)) {
+    $_SESSION['boardnotesShowAllDone'] = false;
+}
+$optionShowAllDone = $_SESSION['boardnotesShowAllDone'];
 
 // session_vars (hidden reference for options)
 print '<div id="session_vars';
 print '" data-optionShowCategoryColors="';
 print $optionShowCategoryColors ? 'true' : 'false';
+print '" data-optionShowAllDone="';
+print $optionShowAllDone ? 'true' : 'false';
 print '" class="hideMe">';
 print '</div>';
 

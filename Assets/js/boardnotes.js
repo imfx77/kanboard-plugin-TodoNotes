@@ -26,6 +26,7 @@ static isMobile() {
 
 static optionShowCategoryColors = false;
 static optionSortByStatus = false;
+static optionShowAllDone = false;
 
 //------------------------------------------------
 // Note Details routines
@@ -37,8 +38,8 @@ static adjustNotePlaceholders(project_id, id) {
     var isTitle = (project_id == 0 && id == 0);
     if (isTitle) {
         var offsetTitle = $(".labelNewNote").offset().top;
-        var offsetButtons = $("#settingsSortByStatus").offset().top;
-        offsetButtons += $("#settingsSortByStatus").outerHeight();
+        var offsetButtons = $("#settingsShowAllDone").offset().top;
+        offsetButtons += $("#settingsShowAllDone").outerHeight();
         if (offsetTitle > offsetButtons) {
             $("#placeholderNewNote").removeClass( 'hideMe' );
         } else {
@@ -445,6 +446,8 @@ static #noteStatusHandlers() {
 
         _BoardNotes_.#blinkNote(project_id, id);
 
+        _BoardNotes_.refreshShowAllDone();
+
         if (_BoardNotes_.optionSortByStatus) {
             $("#noteRefreshOrder-P" + project_id + "-" + id).removeClass( 'hideMe' );
         }
@@ -671,6 +674,15 @@ static #settingsHandlers() {
 
     //------------------------------------------------
 
+    $("#settingsShowAllDone").click(function() {
+        _BoardNotes_.#sqlToggleSessionOption('boardnotesShowAllDone');
+
+        _BoardNotes_.optionShowAllDone = !_BoardNotes_.optionShowAllDone;
+        _BoardNotes_.refreshShowAllDone();
+
+        _BoardNotes_Project_.adjustAllNotesPlaceholders();
+    });
+
     $("#settingsSortByStatus").click(function() {
         _BoardNotes_.#sqlToggleSessionOption('boardnotesSortByStatus');
 
@@ -698,8 +710,28 @@ static #settingsHandlers() {
 }
 
 //------------------------------------------------
-// Refresh sort/colorizing routines
+// Refresh hide/sort/colorizing routines
 //------------------------------------------------
+
+//------------------------------------------------
+// Refresh hide All Done
+static refreshShowAllDone() {
+    if (_BoardNotes_.optionShowAllDone) {
+        $("#settingsShowAllDone").addClass( 'toolbarButtonToggled' );
+        $(".liNote").each(function() {
+            if ($(this).find(".checkDone").children().hasClass( 'fa-check' )) {
+                $(this).removeClass( 'hideMe' );
+            }
+        });
+    } else {
+        $("#settingsShowAllDone").removeClass( 'toolbarButtonToggled' );
+        $(".liNote").each(function() {
+            if ($(this).find(".checkDone").children().hasClass( 'fa-check' )) {
+                $(this).addClass( 'hideMe' );
+            }
+        });
+    }
+}
 
 //------------------------------------------------
 // Refresh sort by Status

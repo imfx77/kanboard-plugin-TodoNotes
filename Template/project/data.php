@@ -104,6 +104,11 @@ if (!array_key_exists('boardnotesSortByStatus', $_SESSION)) {
     $_SESSION['boardnotesSortByStatus'] = false;
 }
 $optionSortByStatus = $_SESSION['boardnotesSortByStatus'];
+// evaluate optionShowAllDone option from session
+if (!array_key_exists('boardnotesShowAllDone', $_SESSION)) {
+    $_SESSION['boardnotesShowAllDone'] = false;
+}
+$optionShowAllDone = $_SESSION['boardnotesShowAllDone'];
 
 // session_vars (hidden reference for options)
 print '<div id="session_vars';
@@ -111,6 +116,8 @@ print '" data-optionShowCategoryColors="';
 print $optionShowCategoryColors ? 'true' : 'false';
 print '" data-optionSortByStatus="';
 print $optionSortByStatus ? 'true' : 'false';
+print '" data-optionShowAllDone="';
+print $optionShowAllDone ? 'true' : 'false';
 print '" class="hideMe">';
 print '</div>';
 
@@ -192,6 +199,16 @@ print '</button>';
 
 // add some space between button groups
 print '<div class="toolbarSeparator">&nbsp;</div>';
+
+// Toggle hide All Done
+print '<button id="settingsShowAllDone" class="toolbarButton"';
+print ' title="' . t('BoardNotes_PROJECT_TOGGLE_SHOW_ALL_DONE') . '"';
+print ' data-id="0"';
+print ' data-project="' . $project_id . '"';
+print ' data-user="' . $user_id . '"';
+print '>';
+print '<i class="fa fa-check-square" aria-hidden="true"></i>';
+print '</button>';
 
 // Toggle sort by status
 print '<button id="settingsSortByStatus" class="toolbarButton"';

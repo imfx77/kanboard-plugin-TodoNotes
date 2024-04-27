@@ -5,6 +5,7 @@ static prepareDocument() {
     $(".noteTitleInput").hide();
 
     _BoardNotes_.optionShowCategoryColors = ($("#session_vars").attr('data-optionShowCategoryColors') == 'true') ? true : false;
+    _BoardNotes_.optionShowAllDone = ($("#session_vars").attr('data-optionShowAllDone') == 'true') ? true : false;
 
     // category colors
     $(".catLabel").each(function() {
@@ -15,6 +16,7 @@ static prepareDocument() {
     });
 
     _BoardNotes_.refreshCategoryColors();
+    _BoardNotes_.refreshShowAllDone();
 }
 
 //------------------------------------------------

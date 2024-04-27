@@ -17,6 +17,7 @@ static adjustAllNotesPlaceholders() {
 static prepareDocument() {
     _BoardNotes_.optionShowCategoryColors = ($("#session_vars").attr('data-optionShowCategoryColors') == 'true') ? true : false;
     _BoardNotes_.optionSortByStatus = ($("#session_vars").attr('data-optionSortByStatus') == 'true') ? true : false;
+    _BoardNotes_.optionShowAllDone = ($("#session_vars").attr('data-optionShowAllDone') == 'true') ? true : false;
 
     var project_id = $("#refProjectId").attr('data-project');
     var user_id = $("#refProjectId").attr('data-user');
@@ -75,6 +76,7 @@ static prepareDocument() {
 
     _BoardNotes_.refreshCategoryColors();
     _BoardNotes_.refreshSortByStatus();
+    _BoardNotes_.refreshShowAllDone();
 
     // prepare method for dashboard view if embedded
     if (typeof _BoardNotes_Dashboard_ !== 'undefined') {
