@@ -9,11 +9,18 @@ if (!array_key_exists('boardnotesShowCategoryColors', $_SESSION)) {
     $_SESSION['boardnotesShowCategoryColors'] = false;
 }
 $optionShowCategoryColors = $_SESSION['boardnotesShowCategoryColors'];
+// evaluate optionShowAllDone option from session
+if (!array_key_exists('boardnotesShowAllDone', $_SESSION)) {
+    $_SESSION['boardnotesShowAllDone'] = false;
+}
+$optionShowAllDone = $_SESSION['boardnotesShowAllDone'];
 
 // session_vars (hidden reference for options)
 print '<div id="session_vars';
 print '" data-optionShowCategoryColors="';
 print $optionShowCategoryColors ? 'true' : 'false';
+print '" data-optionShowAllDone="';
+print $optionShowAllDone ? 'true' : 'false';
 print '" class="hideMe">';
 print '</div>';
 
@@ -34,92 +41,71 @@ print '</div>';
 $num = "1";
 
 foreach ($data as $u) {
-    print '<tr class="trReport" id="trReportNr';
-    print $num;
-    print '">';
+    print '<tr class="trReport" id="trReportNr' . $num . '">';
 
     print '<td class="tdReport tdReportNr">';
+    print '<div class="reportBkgr"></div>';
+
      // Hide button
-    print '<button id="singleReportHide" class="singleReportHide" data-id="';
-    print $num;
-    print '"><i class="fa fa-minus-square-o" style="color:#CCCCCC" aria-hidden="true"';
-    print ' title="' . t('BoardNotes_REPORT_HIDE_ROW') . '"></i></button>';
+    print '<button id="reportHide" class="reportHide"';
+    print ' data-id="' .  $num . '"';
+    print '>';
+    print '<i class="fa fa-minus-square-o" style="color:#CCCCCC" aria-hidden="true"';
+    print ' title="' . t('BoardNotes_REPORT_HIDE_ROW') . '">';
+    print '</i>';
+    print '</button>';
     // Report #
     print '<span class="fa-stack fa-lg">';
     print '<i class="fa fa-circle-thin fa-stack-2x"></i>';
-    print '<i class="fa fa-inverse fa-stack-1x">';
-    print $num;
-    print '</i>';
+    print '<i class="fa fa-inverse fa-stack-1x">' .  $num . '</i>';
     print '</span>';
     print '</td>';
 
     // Report Info
     print '<td class="tdReport tdReportInfo">';
+    print '<div class="reportBkgr"></div>';
 
     // Category label
-    print '<label class="catLabel" id="noteCatLabel-P';
-    print $u['project_id'];
-    print '-';
-    print $num;
-    print '" data-id="';
-    print $num;
-    print '" data-project="';
-    print $u['project_id'];
-    print '">';
+    print '<label class="catLabel"';
+    print ' id="noteCatLabel-P' . $u['project_id'] . '-' . $num . '"';
+    print ' data-id="' . $num . '"';
+    print ' data-project="' . $u['project_id'] . '"';
+    print '>';
     print $u['category'];
     print '</label>';
 
     // Note title label
-    print '<label id="reportTitleLabelP';
-    print $u['project_id'];
-    print '-';
-    print $num;
-    print '" type="text" placeholder="" data-id="';
-    print $num;
-    print '" data-project="';
-    print $u['project_id'];
-    print '" name="reportTitleLabel';
-    print $num;
+    print '<label id="reportTitleLabel-P' . $u['project_id'] . '-' . $num . '"';
     if ($u['is_active'] == "0") {
-        print '" class="reportTitleLabel reportTitle noteDoneDesignText" value="">';
+        print ' class="reportTitleLabel reportTitle noteDoneText">';
     } else {
-        print '" class="reportTitleLabel reportTitle" value="">';
+        print ' class="reportTitleLabel reportTitle">';
     }
     print $u['title'];
     print '</label>';
 
-    // Detailed view
+    // Note details
     if (!empty($u['description'])) {
-        print '<div id="noteDescription-P';
-        print $u['project_id'];
-        print '-';
-        print $num;
-        print '" data-id="';
-        print $num;
-        print '" data-project="';
-        print $u['project_id'];
-        print '" class="details reportDescriptionClass ui-corner-all">';
+        print '<div id="noteDetails-P' . $u['project_id'] . '-' . $num . '"';
+        print ' class="details reportDetails ui-corner-all">';
 
-        print '<span id="noteTextareaDescription-P';
-        print $u['project_id'];
-        print '-';
-        print $num;
-        print '" data-id="';
-        print $num;
-        print '" data-project="';
-        print $u['project_id'];
+        print '<span id="noteMarkdownDetails-P' . $u['project_id'] . '-' . $num . '"';
         if ($u['is_active'] == "0") {
-            print '" class="textareaReportDescription reportTitle noteDoneDesignTextarea">';
+            print ' class="markdown markdownReportDetails reportTitle noteDoneMarkdown"';
         } else {
-            print '" class="textareaReportDescription reportTitle">';
+            print ' class="markdown markdownReportDetails reportTitle"';
         }
-        print $u['description'];
+        print '>';
+        print $this->helper->text->markdown($u['description']);
         print '</span>';
+
+        print '</div>';
     }
 
     print '</td>'; // report info
 
     print '<td class="tdReport tdReportStatus reportTitle">';
+    print '<div class="reportBkgr"></div>';
 
     if ($u['is_active'] == "2") {
         print '<i class="fa fa-spinner fa-pulse" aria-hidden="true"></i>';

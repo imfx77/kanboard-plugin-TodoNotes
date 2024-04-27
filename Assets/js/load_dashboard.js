@@ -12,21 +12,21 @@ static #updateProjectsStats_OnCheckDoneHandler() {
         var $statsWidgetCurrent = $("#BoardNotes-StatsWidget-P" + project_id);
 
         // cycle through statuses
-        if ($checkDone.hasClass( "fa-circle-thin" )) {
+        if ($checkDone.hasClass( 'fa-circle-thin' )) {
             // open++, done--
             $statsWidgetAll.find(".statOpen b").text(parseInt($statsWidgetAll.find(".statOpen b").text()) + 1)
             $statsWidgetAll.find(".statDone b").text(parseInt($statsWidgetAll.find(".statDone b").text()) - 1)
             $statsWidgetCurrent.find(".statOpen b").text(parseInt($statsWidgetCurrent.find(".statOpen b").text()) + 1)
             $statsWidgetCurrent.find(".statDone b").text(parseInt($statsWidgetCurrent.find(".statDone b").text()) - 1)
         }
-        if ($checkDone.hasClass( "fa-spinner fa-pulse" )) {
+        if ($checkDone.hasClass( 'fa-spinner fa-pulse' )) {
             // progress++, open--
             $statsWidgetAll.find(".statProgress b").text(parseInt($statsWidgetAll.find(".statProgress b").text()) + 1)
             $statsWidgetAll.find(".statOpen b").text(parseInt($statsWidgetAll.find(".statOpen b").text()) - 1)
             $statsWidgetCurrent.find(".statProgress b").text(parseInt($statsWidgetCurrent.find(".statProgress b").text()) + 1)
             $statsWidgetCurrent.find(".statOpen b").text(parseInt($statsWidgetCurrent.find(".statOpen b").text()) - 1)
         }
-        if ($checkDone.hasClass( "fa-check" )) {
+        if ($checkDone.hasClass( 'fa-check' )) {
             // done++, progress--
             $statsWidgetAll.find(".statDone b").text(parseInt($statsWidgetAll.find(".statDone b").text()) + 1)
             $statsWidgetAll.find(".statProgress b").text(parseInt($statsWidgetAll.find(".statProgress b").text()) - 1)
@@ -38,7 +38,7 @@ static #updateProjectsStats_OnCheckDoneHandler() {
 
 //------------------------------------------------
 static #updateNotesTabs() {
-    var tab_id = $("#tab_id").attr('data');
+    var tab_id = $("#tabId").attr('data-tab');
 
     $(".singleTab").removeClass( 'active' );
     $("#singleTab" + tab_id).addClass( 'active' );
@@ -58,11 +58,15 @@ static prepareDocument() {
 
     if(isMobile) {
         // choose mobile view
-        $("#mainholderDashboard").removeClass('mainholderDashboard').addClass('mainholderMobileDashboard');
+        $("#mainholderDashboard").removeClass( 'mainholderDashboard' ).addClass( 'mainholderMobileDashboard' );
     }
+
+    _BoardNotes_Translations_.initialize();
 
     _BoardNotes_Dashboard_.#updateProjectsStats_OnCheckDoneHandler();
     _BoardNotes_Dashboard_.#updateNotesTabs();
+
+    _BoardNotes_Tabs_.attachAllHandlers();
 }
 
 //------------------------------------------------

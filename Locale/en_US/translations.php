@@ -23,17 +23,22 @@ return array(
     'BoardNotes_PROJECT_CREATE_REPORT' => 'Create Report',
     'BoardNotes_PROJECT_COLLAPSE_ALL_NOTES' => 'Collapse all Notes',
     'BoardNotes_PROJECT_EXPAND_ALL_NOTES' => 'Expand all Notes',
-    'BoardNotes_PROJECT_TOGGLE_SORT_BY_STATUS' => 'Toggle sort by Status',
+    'BoardNotes_PROJECT_TOGGLE_SHOW_ALL_DONE' => 'Toggle Show all Done Notes',
+    'BoardNotes_PROJECT_TOGGLE_SORT_BY_STATUS' => 'Toggle Sort by Status',
     'BoardNotes_PROJECT_TOGGLE_COLORIZE_BY_CATEGORY' => 'Toggle Colorize by Category',
     'BoardNotes_PROJECT_NOTE_TOGGLE_DETAILS' => 'Toggle Details',
+    'BoardNotes_PROJECT_NOTE_EDIT_DETAILS' => 'Edit Note Details',
+    'BoardNotes_PROJECT_NOTE_CONFIRM_DETAILS' => 'Confirm Note Details',
+    'BoardNotes_PROJECT_NOTE_REFRESH_ORDER' => 'Refresh Order',
     'BoardNotes_PROJECT_NOTE_SAVE' => 'Save Note',
     'BoardNotes_PROJECT_NOTE_DELETE' => 'Delete Note',
     'BoardNotes_PROJECT_NOTE_MOVE_TO_PROJECT' => 'Move Note to Project',
     'BoardNotes_PROJECT_NOTE_CREATE_TASK' => 'Create Task from Note',
     'BoardNotes_PROJECT_NOTE_SWITCH_STATUS' => 'Switch Status',
-    'BoardNotes_PROJECT_NOTE_EDIT_HINT' => 'Edit Title',
-    'BoardNotes_PROJECT_NOTE_TITLE_SAVE_HINT' => 'Press ENTER to save changes',
-    'BoardNotes_PROJECT_NOTE_DESCR_SAVE_HINT' => 'Press TAB to save changes',
+    'BoardNotes_PROJECT_NOTE_TITLE_EDIT_HINT' => 'Edit Title',
+    'BoardNotes_PROJECT_NOTE_TITLE_SAVE_HINT' => 'Press ENTER to save changes, or Press TAB to edit details',
+    'BoardNotes_PROJECT_NOTE_DETAILS_EDIT_HINT' => '... add Note details here ...',
+    'BoardNotes_PROJECT_NOTE_DETAILS_SAVE_HINT' => 'Press TAB to save changes',
     'BoardNotes_PROJECT_NOTE_BUSY_ICON_HINT' => 'Polling data changes ...
 Might be waiting for an unsubmitted New Note data input!',
     //
@@ -42,6 +47,9 @@ Might be waiting for an unsubmitted New Note data input!',
     'BoardNotes_DASHBOARD_TITLE' => 'Notes overview for %s',
     'BoardNotes_DASHBOARD_MY_NOTES' => 'My notes',
     'BoardNotes_DASHBOARD_ALL_TAB' => 'All',
+    'BoardNotes_DASHBOARD_REINDEX_SUCCESS' => 'Reindexing Notes and Lists finished successfully.',
+    'BoardNotes_DASHBOARD_REINDEX_FAILURE' => '⚠ Reindexing Notes and Lists failed!',
+    'BoardNotes_DASHBOARD_REINDEX_METHOD_NOT_IMPLEMENTED' => 'Schema version method is NOT implemented!',
     //
     // Template/report
     //
@@ -65,6 +73,7 @@ Might be waiting for an unsubmitted New Note data input!',
     // Specific EXPORTS FOR JS
     //
     'BoardNotes_JS_LOADING_MSG' => 'Loading ...',
+    'BoardNotes_JS_REINDEXING_MSG' => 'Reindexing ...',
     'BoardNotes_JS_NOTE_ADD_TITLE_EMPTY_MSG' => '⚠
 Note title is empty !
 Skipping note addition !',

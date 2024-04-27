@@ -13,10 +13,21 @@
     text-decoration: none;       
 }
 
+@media (max-width : 768px) {
+    .mainholder {
+        width: auto;
+        font: 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
+        color: #4D4D4D;
+        -webkit-font-smoothing: antialiased;
+        position: relative;
+        font-weight: 300;
+    }
+}
+
 .mainholder {
-    width: 700px;
+    width: 720px;
     font: 13px "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #999999;
+    color: #4D4D4D;
     -webkit-font-smoothing: antialiased;
     position: relative;
     font-weight: 300;
@@ -55,7 +66,7 @@ input[type="text"] {
 }
 
 input[type="text"]::selection {
-  background: rgba(82,168,236,.8);
+    background: rgba(82,168,236,.8);
 }
 
 input[type="text"]:focus {
@@ -68,7 +79,7 @@ input[type="text"]:focus {
 }
 
 input::placeholder {
-  color: #BBBBBB !important;
+    color: #BBBBBB !important;
 }
 
 label {
@@ -76,16 +87,16 @@ label {
 }
 
 .sortableRef {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 
 .sortableRef li {
-  margin: 0 3px 3px 3px;
-  padding: .4em;
-  border-radius: 3px;
-  min-height: 16px;
+    margin: 0 3px 3px 3px;
+    padding: .4em;
+    border-radius: 3px;
+    min-height: 16px;
 }
 
 .hideMe {
@@ -112,19 +123,52 @@ label {
     clear: both !important;
 }
 
+.containerLeft {
+    position: absolute;
+    left: 20px;
+    margin-top: -5px;
+}
+
 
 /* Notes elements */
 
 .liNote {
     padding: 5px 10px 12px 15px!important;
-    background-color: rgba(246, 246, 246, .7);
     font-size: 1em !important;
+    position: relative;
+    z-index: 100;
+}
+
+.liNoteBkgr {
+    background-color: rgba(246, 246, 246, .7);
+    border: 1px solid;
+    border-radius: 6px;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: -100;
 }
 
 .liNewNote {
     padding: 5px 10px 12px 15px!important;
-    background-color: rgba(246, 246, 246, .9);
     font-size: 1em !important;
+    position: relative;
+    z-index: 100;
+}
+
+.liNewNoteBkgr {
+    background-color: rgba(246, 246, 246, .9);
+    border: 1px solid;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: -100;
 }
 
 .labelNewNote {
@@ -139,38 +183,20 @@ label {
     cursor: default;
 }
 
-.textareaNewNote {
-    display: inline-block;
-    color: #999999;
-}
-
 .noteTitle {
     color: #1F1F1F;
 }
 
 .noteTitleLabel {
     margin-top: 0;
-    padding-left: 10px;
     height: 20px;
     border: 0 !important;
 }
 
-.noteDescriptionClass {
+.noteDetails {
     padding: 5px 10px 0 40px;
     color: #7A7A7A;
     min-height: 16px;
-}
-
-.sortableHandle {
-    float: right;
-    appearance: none;
-    -webkit-appearance: none;
-    outline: none;
-    border: 0;
-    background: transparent;
-    padding-left: 15px;
-    padding-right: 10px;
-    font-size: 1.5em !important;
 }
 
 .toolbarSeparator {
@@ -195,75 +221,68 @@ label {
     padding-right: 5px;
     padding-left: 5px;
     cursor: pointer;
+    color: #1F1F1F;
 }
 
 .toolbarButtonToggled {
     color: #993333;
 }
 
+.toolbarButtonBigger {
+    font-size: 1.5em;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
 .checkDone {
     appearance: none;
     -webkit-appearance: none;
     outline: none;
+    padding-right: 10px;
     border: 0;
     background: transparent;
     color: #1F1F1F;
     cursor: cell;
 }
 
-.noteDoneDesignText {
-    color: #555555;
+.noteDoneText {
+    color: #444444;
     text-decoration: line-through;
 }
 
-.noteDoneDesignTextarea {
-    color: #555555;
-    border: 1px solid #555555 !important;
-    text-decoration: line-through;
+.noteDetailsMarkdown {
+    display: inline-block;
+    background-color: rgba(0, 0, 0, .5);
+    padding: 5px 0 0 10px;
+    border: 0;
+    color: #CCCCCC;
+    width: 100%;
 }
 
-#item-0 .noteDescriptionClass {
-    padding: 5px 10px 0 40px;
+.noteEditorMarkdown {
+    background-color: rgba(0, 0, 0, .25) !important;
+    color: #EEEEEE !important;
+}
+
+.noteEditorMarkdownNewNote {
+    background-color: rgba(0, 0, 0, .5) !important;
+    color: #EEEEEE !important;
+}
+
+.noteEditorTextarea {
+    resize: vertical;
+    padding: 4px;
+}
+
+.noteDoneMarkdown {
+    background-color: rgba(0, 0, 0, .25) !important;
 }
 
 .categories {
     display: inline-block;
     vertical-align: top;
-    margin-left: 20px;
+    margin-bottom: 10px;
     color: #1F1F1F;
-}
-
-textarea {
-    resize: vertical;
-    min-height: 50px;
-    max-height: 350px;
-    height: 50px;
-    width: 320px;
-    padding: 5px;
-    color: #1F1F1F;
-    margin-top: 5px;
-}
-
-textarea::selection {
-    background: rgba(82,168,236,.8);
-}
-
-.textareaDescription {
-    display: inline-block;
-    background: none;
-    border: 1px solid #1F1F1F;
-    white-space:pre-wrap;
-}
-
-.textareaDescriptionSelected {
-    display: inline-block;
-    color: #000000 !important;
-    background-color: #777777;
-    text-decoration: none;
-}
-
-.textareaDescriptionSelected:focus {
-    color: #FFFFFF !important;
 }
 
 .catSelector {
@@ -273,7 +292,8 @@ textarea::selection {
 .catLabel {
     float: right;
     cursor: default;
-    margin-top: 0;
+    margin-top: 3px;
+    margin-right: 5px;
     padding: 0 5px 0 5px;
     border-radius: 5px;
     color: #1F1F1F;
@@ -297,8 +317,9 @@ textarea::selection {
 /* Style for report.php */
 
 .reportTitleLabel {
-    margin-top: 0;
     padding-left: 10px;
+    padding-top: 5px;
+    margin-top: 0;
     max-width: 90%;
     cursor: default;
 }
@@ -308,7 +329,7 @@ textarea::selection {
     cursor: default;
 }
 
-.singleReportHide {
+.reportHide {
     float: left;
     appearance: none;
     -webkit-appearance: none;
@@ -319,11 +340,26 @@ textarea::selection {
     cursor: pointer;
 }
 
-.reportDescriptionClass {
+.reportDetails {
     padding: 5px 10px 0 20px;
     color: #7A7A7A;
     font-size: .9em !important;
     min-height: 16px;
+}
+
+.reportBkgr {
+    background-image: linear-gradient(rgba(92, 92, 92, .75) 0 0) !important;
+    background-color: rgba(92, 92, 92, .50);
+    border-color: rgba(92, 92, 92, .50) !important;
+    border: 1px solid;
+    border-radius: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: -100;
 }
 
 .tableReport {
@@ -334,21 +370,22 @@ textarea::selection {
 }
 
 .theadReport {
-   font-family: Helvetica, Arial, sans-serif;
-   line-height: 16px;
+    font-family: Helvetica, Arial, sans-serif;
+    line-height: 16px;
 }
 
 .thReport {
-   border-top: 1px solid #CCCCCC;
-   padding-left: 10px;
-   border-left: none;
-   border-bottom: 1px solid #CCCCCC;
-   background-color: rgba(37, 37, 37, .75);
+    padding-left: 10px;
+    border-left: none;
+    border-top: 1px solid #CCCCCC;
+    border-bottom: 1px solid #CCCCCC;
+    color: #999999;
+    background-color: rgba(37, 37, 37, .75);
 }
 
 .thReportNr {
-   padding-left: 35px;
-   width: 30px;
+    padding-left: 35px;
+    width: 30px;
 }
 
 .thReportStatus {
@@ -356,20 +393,22 @@ textarea::selection {
     width: 45px;
 }
 
-.textareaReportDescription {
+.markdownReportDetails {
     width: 95%;
     display: inline-block;
     margin-left: 10px;
     padding: 10px 10px 10px 10px;
-    background-color: #555555;
+    background-color: rgba(0, 0, 0, .3);
     border: 0;
     white-space:pre-wrap;
 }
 
 
 .tdReport {
-    background-color: rgba(92, 92, 92, .50);
     font-size: 12px !important;
+    padding: 0;
+    position: relative;
+    z-index: 100;
 }
 
 .tdReportNr {
@@ -389,17 +428,6 @@ textarea::selection {
     border-right: 1px solid #CCCCCC;
 }
 
-
-@media (max-width : 751px) {
-    .mainholder {
-        width: auto;
-        font: 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
-        color: #999999;
-        -webkit-font-smoothing: antialiased;
-        position: relative;
-        font-weight: 300;
-    }
-}
 
 /* Style for stat boxes (e.g. in dropdown.php) */
 

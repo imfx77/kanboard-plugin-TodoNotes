@@ -3,6 +3,7 @@
 namespace Kanboard\Plugin\BoardNotes\Controller;
 
 use Kanboard\Controller\BaseController;
+use Kanboard\Plugin\BoardNotes\Plugin;
 
 class BoardNotesController extends BaseController
 {
@@ -135,6 +136,14 @@ class BoardNotesController extends BaseController
         $stats_project_id = $this->request->getIntegerParam('stats_project_id');
         return $this->response->html($this->helper->layout->app('BoardNotes:widgets/stats', array(
             'stats_project_id' => $stats_project_id,
+        )));
+    }
+
+    public function boardNotesRefreshMarkdownPreviewWidget()
+    {
+        $markdown_text = $this->request->getStringParam('markdown_text');
+        return $this->response->html($this->helper->layout->app('BoardNotes:widgets/markdown_preview', array(
+            'markdown_text' => $markdown_text,
         )));
     }
 
@@ -288,6 +297,22 @@ class BoardNotesController extends BaseController
         return $validation;
     }
 
+    public function boardNotesUpdateNoteStatus()
+    {
+        $user_id = $this->resolveUserId();
+        $project = $this->resolveProject($user_id);
+        $project_id = $project['id'];
+
+        $note_id = $this->request->getStringParam('note_id');
+
+        $is_active = $this->request->getStringParam('is_active');
+
+        $validation = $this->boardNotesModel->boardNotesUpdateNoteStatus($project_id, $user_id, $note_id, $is_active);
+        print $validation ? time() : 0;
+
+        return $validation;
+    }
+
     public function boardNotesStats()
     {
         $user_id = $this->resolveUserId();
@@ -370,6 +395,42 @@ class BoardNotesController extends BaseController
             'project_id' => $project_id,
             'user_id' => $user_id,
             'data' => $data,
+        )));
+    }
+
+    public function reindexNotesAndLists()
+    {
+        $user_id = $this->resolveUserId();
+        $tab_id = $this->request->getStringParam('tab_id');
+
+        $lastVersion = constant('\Kanboard\Plugin\\' . Plugin::NAME . '\Schema\VERSION');
+        $functionName = '\Kanboard\Plugin\\' . Plugin::NAME . '\Schema\reindexNotesAndLists_' . $lastVersion;
+
+        if (function_exists($functionName)) {
+            try {
+                $this->db->startTransaction();
+                $this->db->getDriver()->disableForeignKeys();
+
+                call_user_func($functionName, $this->db->getConnection());
+
+                $this->db->getDriver()->enableForeignKeys();
+                $this->db->closeTransaction();
+
+                $this->flash->success(t('BoardNotes_DASHBOARD_REINDEX_SUCCESS'));
+            } catch (PDOException $e) {
+                $this->db->cancelTransaction();
+                $this->db->getDriver()->enableForeignKeys();
+
+                $this->flash->failure(t('BoardNotes_DASHBOARD_REINDEX_FAILURE') . ' => ' . $e->getMessage());
+            }
+        } else {
+            $this->flash->failure(t('BoardNotes_DASHBOARD_REINDEX_FAILURE') . ' => ' . t('BoardNotes_DASHBOARD_REINDEX_METHOD_NOT_IMPLEMENTED') . ' [v.' . $lastVersion . ']');
+        }
+
+        $this->response->redirect($this->helper->url->to('BoardNotesController', 'boardNotesShowAll', array(
+            'plugin' => 'BoardNotes',
+            'user_id' => $user_id,
+            'tab_id' => $tab_id,
         )));
     }
 }

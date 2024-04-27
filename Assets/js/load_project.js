@@ -17,22 +17,23 @@ static adjustAllNotesPlaceholders() {
 static prepareDocument() {
     _BoardNotes_.optionShowCategoryColors = ($("#session_vars").attr('data-optionShowCategoryColors') == 'true') ? true : false;
     _BoardNotes_.optionSortByStatus = ($("#session_vars").attr('data-optionSortByStatus') == 'true') ? true : false;
+    _BoardNotes_.optionShowAllDone = ($("#session_vars").attr('data-optionShowAllDone') == 'true') ? true : false;
 
     var project_id = $("#refProjectId").attr('data-project');
     var user_id = $("#refProjectId").attr('data-user');
     var isMobile = _BoardNotes_.isMobile();
+    var readonlyNotes = (project_id == 0); // Overview Mode
 
-    // notes reordering is disabled in Overview Mode (ALL projects tab)
-    // or when explicitly sorted by Status
+    // notes reordering is disabled when explicitly sorted by Status
     if (!_BoardNotes_.optionSortByStatus) {
         $(".sortableRef").each(function() {
             var sortable_project_id = $(this).attr('data-project');
-            var sortable_notes_number = $("#nrNotes").attr('data-id');
-
-            $("#sortableRef-P" + sortable_project_id).disableSelection();
+            var sortable_notes_number = $("#nrNotes-P" + sortable_project_id).attr('data-num');
 
             $("#sortableRef-P" + sortable_project_id).sortable({
                 placeholder: "ui-state-highlight",
+                items: 'li.liNote', // exclude the NewNote
+                cancel: '.disableEventsPropagation',
                 update: function() {
                     // handle notes reordering
                     var order = $(this).sortable('toArray');
@@ -60,19 +61,34 @@ static prepareDocument() {
 
     if(isMobile) {
         // choose mobile view
-        $("#mainholderP" + project_id).removeClass('mainholder').addClass('mainholderMobile');
+        $("#mainholderP" + project_id).removeClass( 'mainholder' ).addClass( 'mainholderMobile' );
+
+        // show all Save buttons
+        if (!readonlyNotes ) { // if NOT in Overview Mode
+            $(".saveNewNote").removeClass( 'hideMe' );
+            $(".noteSave").removeClass( 'hideMe' );
+        }
     }
 
     _BoardNotes_Translations_.initialize();
 
     _BoardNotes_Project_.adjustAllNotesPlaceholders();
+
     _BoardNotes_.refreshCategoryColors();
     _BoardNotes_.refreshSortByStatus();
+    _BoardNotes_.refreshShowAllDone();
 
     // prepare method for dashboard view if embedded
     if (typeof _BoardNotes_Dashboard_ !== 'undefined') {
         _BoardNotes_Dashboard_.prepareDocument();
     }
+
+    // force render all KB elements
+    KB.render();
+
+    setTimeout(function() {
+        _BoardNotes_.showTitleInputNewNote();
+    }, 100);
 }
 
 //------------------------------------------------

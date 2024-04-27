@@ -7,6 +7,8 @@ use Kanboard\Core\Translator;
 
 class Plugin extends Base
 {
+    const NAME = 'BoardNotes';
+
     public function initialize()
     {
         //HELPER
@@ -49,7 +51,7 @@ class Plugin extends Base
 
     public function getPluginName()
     {
-        return 'BoardNotes';
+        return self::NAME;
     }
 
     public function getPluginAuthor()

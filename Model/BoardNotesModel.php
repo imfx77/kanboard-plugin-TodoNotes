@@ -211,6 +211,7 @@ class BoardNotesModel extends Base
 
         $values = array(
             'is_active' => -1,
+            'position' => -1,
             'date_modified' => $timestamp,
         );
 
@@ -235,6 +236,7 @@ class BoardNotesModel extends Base
 
         $values = array(
             'is_active' => -1,
+            'position' => -1,
             'date_modified' => $timestamp,
         );
 
@@ -285,10 +287,10 @@ class BoardNotesModel extends Base
             'position' => $lastPosition,
             'is_active' => $is_active,
             'title' => $title,
+            'category' => $category,
             'description' => $description,
             'date_created' => $timestamp,
             'date_modified' => $timestamp,
-            'category' => $category,
         );
 
         return $this->db->table(self::TABLE_NOTES)
@@ -298,11 +300,26 @@ class BoardNotesModel extends Base
     // Transfer note
     public function boardNotesTransferNote($project_id, $user_id, $note_id, $target_project_id)
     {
+        // Get last position number for target project
+        $lastPosition = $this->db->table(self::TABLE_NOTES)
+            ->eq('project_id', $target_project_id)
+            ->gte('is_active', "0") // -1 == deleted
+            ->desc('position')
+            ->findOneColumn('position');
+
+        if (empty($lastPosition)) {
+            $lastPosition = 0;
+        }
+
+        // Add 1 to position
+        $lastPosition++;
+
         // Get current unixtime
         $timestamp = time();
 
         $values = array(
             'project_id' => $target_project_id,
+            'position' => $lastPosition,
             'date_modified' => $timestamp,
         );
 
@@ -339,6 +356,29 @@ class BoardNotesModel extends Base
             ->update($values);
     }
 
+    // Update note Status
+    public function boardNotesUpdateNoteStatus($project_id, $user_id, $note_id, $is_active)
+    {
+        $is_unique = $this->boardNotesIsUniqueNote($project_id, $user_id, $note_id);
+        if (!$is_unique) {
+            return false;
+        }
+
+        // Get current unixtime
+        $timestamp = time();
+
+        $values = array(
+            'is_active' => $is_active,
+            'date_modified' => $timestamp,
+        );
+
+        return $this->db->table(self::TABLE_NOTES)
+            ->eq('id', $note_id)
+            ->eq('project_id', $project_id)
+            ->eq('user_id', $user_id)
+            ->update($values);
+    }
+
     // Update note positions
     public function boardNotesUpdatePosition($project_id, $user_id, $notePositions, $nrNotes)
     {
@@ -354,7 +394,7 @@ class BoardNotesModel extends Base
         $timestamp = time();
 
         // Loop through all positions
-        foreach ($note_ids as $row) {
+        foreach ($note_ids as $row_id) {
             $values = array(
                 'position' => $num,
                 'date_modified' => $timestamp,
@@ -363,9 +403,10 @@ class BoardNotesModel extends Base
             $this->db->table(self::TABLE_NOTES)
                 ->eq('project_id', $project_id)
                 ->eq('user_id', $user_id)
-                ->eq('id', $row)
+                ->eq('id', $row_id)
                 ->gte('is_active', "0") // -1 == deleted
                 ->update($values);
+
             $num--;
         }
     }
