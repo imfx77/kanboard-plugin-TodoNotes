@@ -654,11 +654,9 @@ foreach ($data as $u) {
     print ' data-project="' . $u['project_id'] . '"';
     print ' data-user="' . $user_id . '"';
     print '>';
-    if (!empty($u['description'])) {
-        print $this->helper->text->markdown($u['description']);
-    } else {
-        print t('BoardNotes_PROJECT_NOTE_DETAILS_EDIT_HINT');
-    }
+    print $this->render('BoardNotes:widgets/markdown_preview', array(
+         'markdown_text' => $u['description'],
+    ));
     print '</div>';
 
     if (!$readonlyNotes) {

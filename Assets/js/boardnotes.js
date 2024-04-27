@@ -944,6 +944,10 @@ static #sqlUpdateNote(project_id, user_id, id) {
             var lastModifiedTimestamp = parseInt(response);
             if (lastModifiedTimestamp > 0) {
                 $("#refProjectId").attr('data-timestamp', lastModifiedTimestamp);
+                $("#noteMarkdownDetails-P" + project_id + "-" + id + "_Preview").html(_BoardNotes_Translations_.msgLoadingSpinner).load(
+                    '/?controller=BoardNotesController&action=boardNotesRefreshMarkdownPreviewWidget&plugin=BoardNotes'
+                        + '&markdown_text=' + encodeURIComponent(description),
+                ).css('height', 'auto');
             } else {
                 alert( _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_NOTE_UPDATE_INVALID_MSG') );
                 _BoardNotes_.#sqlRefreshTabs(user_id);

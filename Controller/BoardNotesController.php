@@ -139,6 +139,14 @@ class BoardNotesController extends BaseController
         )));
     }
 
+    public function boardNotesRefreshMarkdownPreviewWidget()
+    {
+        $markdown_text = $this->request->getStringParam('markdown_text');
+        return $this->response->html($this->helper->layout->app('BoardNotes:widgets/markdown_preview', array(
+            'markdown_text' => $markdown_text,
+        )));
+    }
+
     public function boardNotesShowAll()
     {
         $user = $this->getUser();
