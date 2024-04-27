@@ -593,6 +593,28 @@ static #noteActionHandlers() {
 // Settings handlers
 //------------------------------------------------
 
+static #settingsCollapseAll() {
+    $(".showDetails").each(function() {
+        if ($(this).find('i').hasClass( "fa-angle-double-up" ))
+        {
+            var project_id = $(this).attr('data-project');
+            var id = $(this).attr('data-id');
+            _BoardNotes_.#toggleDetails(project_id, id);
+        }
+    });
+};
+
+static #settingsExpandAll() {
+    $(".showDetails").each(function() {
+        if ($(this).find('i').hasClass( "fa-angle-double-down" ))
+        {
+            var project_id = $(this).attr('data-project');
+            var id = $(this).attr('data-id');
+            _BoardNotes_.#toggleDetails(project_id, id);
+        }
+    });
+};
+
 //------------------------------------------------
 static #settingsHandlers() {
     //------------------------------------------------
@@ -621,25 +643,21 @@ static #settingsHandlers() {
     //------------------------------------------------
 
     $("#settingsCollapseAll").click(function() {
-        $(".showDetails").each(function() {
-            if ($(this).find('i').hasClass( "fa-angle-double-up" ))
-            {
-                var project_id = $(this).attr('data-project');
-                var id = $(this).attr('data-id');
-                _BoardNotes_.#toggleDetails(project_id, id);
-            }
-        });
+        _BoardNotes_.#settingsCollapseAll();
+    });
+
+    $(document).keydown(function(event) {
+        if (event.keyCode != 109) return; // [-] key
+        _BoardNotes_.#settingsCollapseAll();
     });
 
     $("#settingsExpandAll").click(function() {
-        $(".showDetails").each(function() {
-            if ($(this).find('i').hasClass( "fa-angle-double-down" ))
-            {
-                var project_id = $(this).attr('data-project');
-                var id = $(this).attr('data-id');
-                _BoardNotes_.#toggleDetails(project_id, id);
-            }
-        });
+        _BoardNotes_.#settingsExpandAll();
+    });
+
+    $(document).keydown(function(event) {
+        if (event.keyCode != 107) return; // [+] key
+        _BoardNotes_.#settingsExpandAll();
     });
 
     //------------------------------------------------
