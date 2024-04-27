@@ -221,6 +221,19 @@ label {
     width: 100%;
 }
 
+.noteDetailsMarkdown a {
+    color: var(--link-color-primary) !important;
+}
+
+.noteDetailsMarkdown a:hover {
+    color: revert !important;
+    text-decoration: revert !important;
+}
+
+.noteDetailsMarkdown pre, .noteDetailsMarkdown code {
+    background-color: #555 !important;
+}
+
 .noteEditorMarkdown {
     background-color: rgba(0, 0, 0, .2) !important;
     color: #EEEEEE !important;
