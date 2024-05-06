@@ -16,7 +16,8 @@ function version_1(PDO $pdo)
 {
     $pdo->exec('CREATE TABLE IF NOT EXISTS `boardnotes_custom_projects` (
         `id` INT NOT NULL AUTO_INCREMENT,
-        `project_id` INTEGER NOT NULL,
+        `owner_id` INT NOT NULL DEFAULT 0,
+        `position` INT,
         `project_name` TEXT,
         PRIMARY KEY(id)
     ) ENGINE=InnoDB CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci');
@@ -35,9 +36,9 @@ function version_1(PDO $pdo)
         PRIMARY KEY(id)
     ) ENGINE=InnoDB CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci');
 
-    $pdo->exec('INSERT INTO `boardnotes_custom_projects`(`project_id`, `project_name`) VALUES (9998, "General")');
+    $pdo->exec('INSERT INTO `boardnotes_custom_projects`(`owner_id`, `position`, `project_name`) VALUES (0, 1, "General")');
 
-    $pdo->exec('INSERT INTO `boardnotes_custom_projects`(`project_id`, `project_name`) VALUES (9997, "Todo")');
+    $pdo->exec('INSERT INTO `boardnotes_custom_projects`(`owner_id`, `position`, `project_name`) VALUES (0, 2, "Todo")');
 }
 
 //------------------------------------------------

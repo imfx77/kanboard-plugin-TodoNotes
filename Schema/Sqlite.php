@@ -16,7 +16,8 @@ function version_1(PDO $pdo)
 {
     $pdo->exec('CREATE TABLE IF NOT EXISTS boardnotes_custom_projects (
         id INTEGER PRIMARY KEY,
-        project_id INTEGER NOT NULL,
+        owner_id INTEGER NOT NULL DEFAULT 0,
+        position INTEGER,
         project_name TEXT
     )');
 
@@ -33,9 +34,9 @@ function version_1(PDO $pdo)
         date_modified INTEGER
     )');
 
-    $pdo->exec('INSERT INTO boardnotes_custom_projects (project_id, project_name) VALUES (9998, "General")');
+    $pdo->exec('INSERT INTO boardnotes_custom_projects (owner_id, position, project_name) VALUES (0, 1, "General")');
 
-    $pdo->exec('INSERT INTO boardnotes_custom_projects (project_id, project_name) VALUES (9997, "Todo")');
+    $pdo->exec('INSERT INTO boardnotes_custom_projects (owner_id, position, project_name) VALUES (0, 2, "Todo")');
 }
 
 //------------------------------------------------
