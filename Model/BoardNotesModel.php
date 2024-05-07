@@ -44,7 +44,7 @@ class BoardNotesModel extends Base
     {
         $result = $this->db->table(self::TABLE_NOTES_ENTRIES);
         $result = $result->eq('user_id', $user_id);
-        if ($project_id > 0) {
+        if ($project_id != 0) {
             $result = $result->eq('project_id', $project_id);
         }
         $result = $result->desc('project_id');
@@ -123,12 +123,17 @@ class BoardNotesModel extends Base
     }
 
     // Get all project_id where user has custom access
-    public function boardNotesGetCustomProjectIds()
+    public function boardNotesGetCustomProjectIds($user_id)
     {
         $projectIds = $this->db->table(self::TABLE_NOTES_CUSTOM_PROJECTS)
-            ->columns('project_id', 'project_name')
+            ->columns('id AS project_id', 'project_name')
+            ->beginOr()
+            ->eq('owner_id', 0)         // GLOBAL custom projects, managed by Admin only!
+            ->eq('owner_id', $user_id)  // PRIVATE custom projects, managed by each user
+            ->closeOr()
             ->findAll();
         foreach ($projectIds as &$projectId) {
+            $projectId['project_id'] = -$projectId['project_id']; // custom project Ids are denoted as NEGATIVE values !!!
             $projectId['is_custom'] = true;
         }
         return $projectIds;
@@ -137,7 +142,7 @@ class BoardNotesModel extends Base
     // Get all project_id where user has assigned or custom access
     public function boardNotesGetAllProjectIds($user_id)
     {
-        $projectCustomAccess = $this->boardNotesGetCustomProjectIds();
+        $projectCustomAccess = $this->boardNotesGetCustomProjectIds($user_id);
         $projectAssignedAccess = $this->boardNotesGetProjectIds($user_id);
         $projectsAccess = array_merge($projectCustomAccess, $projectAssignedAccess);
         return $projectsAccess;
@@ -190,7 +195,7 @@ class BoardNotesModel extends Base
         $result = $this->db->table(self::TABLE_NOTES_ENTRIES);
         $result = $result->columns('date_modified');
         $result = $result->eq('user_id', $user_id);
-        if ($project_id > 0) {
+        if ($project_id != 0) {
             $result = $result->eq('project_id', $project_id);
         }
         // including 'is_active' == -1 i.e. lately deleted notes
@@ -415,7 +420,7 @@ class BoardNotesModel extends Base
     public function boardNotesStats($project_id, $user_id)
     {
         $statsData = $this->db->table(self::TABLE_NOTES_ENTRIES);
-        if ($project_id > 0) {
+        if ($project_id != 0) {
             $statsData = $statsData->eq('project_id', $project_id);
         }
         $statsData = $statsData->eq('user_id', $user_id);
