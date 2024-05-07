@@ -130,7 +130,7 @@ static #toggleDetails(project_id, id) {
     }
     $("#toolbarSeparator-P" + project_id + "-" + id).toggleClass( 'hideMe' );
     $("#noteTransfer-P" + project_id + "-" + id).toggleClass( 'hideMe' );
-    $("#noteToTask-P" + project_id + "-" + id).toggleClass( 'hideMe' );
+    $("#noteCreateTask-P" + project_id + "-" + id).toggleClass( 'hideMe' );
     $("#noteCatLabel-P" + project_id + "-" + id).toggleClass( 'hideMe' );
 
     _BoardNotes_.#showTitleInput(project_id, id, !$("#noteTitleInput-P" + project_id + "-" + id).hasClass( 'hideMe' ));
@@ -558,7 +558,7 @@ static #noteActionHandlers() {
     });
 
     // POST on Export Note button
-    $("button" + ".noteToTask").click(function() {
+    $("button" + ".noteCreateTask").click(function() {
         var project_id = $(this).attr('data-project');
         var user_id = $(this).attr('data-user');
         var id = $(this).attr('data-id');
@@ -566,7 +566,7 @@ static #noteActionHandlers() {
         var description = $('[name="editorMarkdownDetails-P' + project_id + '-' + id + '"]').val();
         var category_id = $("#cat-P" + project_id + "-" + id + " option:selected").val();
         var is_active = $("#noteDoneCheckmark-P" + project_id + "-" + id).attr('data-id');
-        _BoardNotes_.#modalNoteToTask(project_id, user_id, id, is_active, title, description, category_id);
+        _BoardNotes_.#modalCreateTask(project_id, user_id, id, is_active, title, description, category_id);
     });
 
     //------------------------------------------------
@@ -786,8 +786,8 @@ static updateCategoryColors(project_id, id, old_category, new_category) {
 
 //------------------------------------------------
 static #modalTransferNote(project_id, user_id, id) {
-    $("#dialogTransfer-P" + project_id).removeClass( 'hideMe' );
-    $("#dialogTransfer-P" + project_id).dialog({
+    $("#dialogTransferNote-P" + project_id).removeClass( 'hideMe' );
+    $("#dialogTransferNote-P" + project_id).dialog({
         buttons: [
             {
                 text : _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_MOVE_BTN'),
@@ -811,34 +811,34 @@ static #modalTransferNote(project_id, user_id, id) {
 }
 
 //------------------------------------------------
-static #modalNoteToTask(project_id, user_id, id, is_active, title, description, category_id) {
+static #modalCreateTask(project_id, user_id, id, is_active, title, description, category_id) {
     $.ajaxSetup ({
         cache: false
     });
-    $("#dialogToTaskParams").removeClass( 'hideMe' );
+    $("#dialogCreateTaskParams").removeClass( 'hideMe' );
     $("#deadloading").addClass( 'hideMe' );
-    $("#listCatToTask-P" + project_id).val(category_id).change();
-    $("#dialogToTask-P" + project_id).removeClass( 'hideMe' );
-    $("#dialogToTask-P" + project_id).dialog({
+    $("#listCatCreateTask-P" + project_id).val(category_id).change();
+    $("#dialogCreateTask-P" + project_id).removeClass( 'hideMe' );
+    $("#dialogCreateTask-P" + project_id).dialog({
         buttons: [
             {
                 text : _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_CREATE_BTN'),
                 click: function() {
-                    var categoryToTask = $("#listCatToTask-P" + project_id + " option:selected").val();
-                    var columnToTask = $("#listColToTask-P" + project_id + " option:selected").val();
-                    var swimlaneToTask = $("#listSwimToTask-P" + project_id + " option:selected").val();
+                    var categoryCreateTask = $("#listCatCreateTask-P" + project_id + " option:selected").val();
+                    var columnCreateTask = $("#listColCreateTask-P" + project_id + " option:selected").val();
+                    var swimlaneCreateTask = $("#listSwimCreateTask-P" + project_id + " option:selected").val();
                     var removeNote = $("#removeNote-P" + project_id).is(":checked");
 
-                    var loadUrl = '/?controller=BoardNotesController&action=boardNotesToTask&plugin=BoardNotes'
-                                + '&project_cus_id=' + project_id
+                    var loadUrl = '/?controller=BoardNotesController&action=boardNotesCreateTask&plugin=BoardNotes'
+                                + '&project_custom_id=' + project_id
                                 + '&user_id=' + user_id
                                 + '&task_title=' + encodeURIComponent(title)
                                 + '&task_description=' + encodeURIComponent(description)
-                                + '&category_id=' + categoryToTask
-                                + '&column_id=' + columnToTask
-                                + '&swimlane_id=' + swimlaneToTask;
+                                + '&category_id=' + categoryCreateTask
+                                + '&column_id=' + columnCreateTask
+                                + '&swimlane_id=' + swimlaneCreateTask;
 
-                    $("#dialogToTask-P" + project_id).dialog({
+                    $("#dialogCreateTask-P" + project_id).dialog({
                         title: _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_RESULT_TITLE'),
                         buttons: [
                             {
@@ -847,7 +847,7 @@ static #modalNoteToTask(project_id, user_id, id, is_active, title, description, 
                             },
                         ]
                     });
-                    $("#dialogToTaskParams").addClass( 'hideMe' );
+                    $("#dialogCreateTaskParams").addClass( 'hideMe' );
                     $("#deadloading").removeClass( 'hideMe' );
                     $("#deadloading").html(_BoardNotes_Translations_.msgLoadingSpinner).load(loadUrl);
                     if (removeNote) {
@@ -897,7 +897,7 @@ static #modalStats(project_id, user_id) {
         cache: false
     });
     var loadUrl = '/?controller=BoardNotesController&action=boardNotesStats&plugin=BoardNotes'
-                + '&project_cus_id=' + project_id
+                + '&project_custom_id=' + project_id
                 + '&user_id=' + user_id;
     $("#dialogStatsInside").html(_BoardNotes_Translations_.msgLoadingSpinner).load(loadUrl,
         function() {
@@ -928,7 +928,7 @@ static #modalReport(project_id, user_id) {
                 click: function() {
                     var category = $("#catReport-P" + project_id + " option:selected").text();
                     var loadUrl = "/?controller=BoardNotesController&action=boardNotesReport&plugin=BoardNotes"
-                                + "&project_cus_id=" + project_id
+                                + "&project_custom_id=" + project_id
                                 + "&user_id=" + user_id
                                 + "&category=" + encodeURIComponent(category);
                     $("#result" + project_id).html(_BoardNotes_Translations_.msgLoadingSpinner).load(loadUrl,
@@ -960,7 +960,7 @@ static #sqlTransferNote(project_id, user_id, id, target_project_id) {
         cache: false,
         type: "POST",
         url: '/?controller=BoardNotesController&action=boardNotesTransferNote&plugin=BoardNotes'
-            + '&project_cus_id=' + project_id
+            + '&project_custom_id=' + project_id
             + '&user_id=' + user_id
             + '&note_id=' + note_id
             + '&target_project_id=' + target_project_id,
@@ -994,7 +994,7 @@ static #sqlUpdateNote(project_id, user_id, id) {
         cache: false,
         type: "POST",
         url: '/?controller=BoardNotesController&action=boardNotesUpdateNote&plugin=BoardNotes'
-            + '&project_cus_id=' + project_id
+            + '&project_custom_id=' + project_id
             + '&user_id=' + user_id
             + '&note_id=' + note_id
             + '&title=' + encodeURIComponent(title)
@@ -1033,7 +1033,7 @@ static #sqlUpdateNoteStatus(project_id, user_id, id) {
         cache: false,
         type: "POST",
         url: '/?controller=BoardNotesController&action=boardNotesUpdateNoteStatus&plugin=BoardNotes'
-            + '&project_cus_id=' + project_id
+            + '&project_custom_id=' + project_id
             + '&user_id=' + user_id
             + '&note_id=' + note_id
             + '&is_active=' + is_active,
@@ -1071,7 +1071,7 @@ static #sqlAddNote(project_id, user_id) {
         cache: false,
         type: "POST",
         url: '/?controller=BoardNotesController&action=boardNotesAddNote&plugin=BoardNotes'
-            + '&project_cus_id=' + project_id
+            + '&project_custom_id=' + project_id
             + '&user_id=' + user_id
             + '&title=' + encodeURIComponent(title)
             + '&description=' + encodeURIComponent(description)
@@ -1094,7 +1094,7 @@ static #sqlDeleteNote(project_id, user_id, id) {
         cache: false,
         type: "POST",
         url: '/?controller=BoardNotesController&action=boardNotesDeleteNote&plugin=BoardNotes'
-            + '&project_cus_id=' + project_id
+            + '&project_custom_id=' + project_id
             + '&user_id=' + user_id
             + '&note_id=' + note_id,
         success: function() {
@@ -1113,7 +1113,7 @@ static #sqlDeleteAllDoneNotes(project_id, user_id) {
         cache: false,
         type: "POST",
         url: '/?controller=BoardNotesController&action=boardNotesDeleteAllDoneNotes&plugin=BoardNotes'
-            + '&project_cus_id=' + project_id
+            + '&project_custom_id=' + project_id
             + '&user_id=' + user_id,
         success: function() {
         },
@@ -1148,7 +1148,7 @@ static #sqlRefreshNotes(project_id, user_id) {
         cache: false
     });
     var loadUrl = '/?controller=BoardNotesController&action=boardNotesRefreshProject&plugin=BoardNotes'
-                + '&project_cus_id=' + project_id
+                + '&project_custom_id=' + project_id
                 + '&user_id=' + user_id;
     setTimeout(function() {
         $("#result" + project_id).html(_BoardNotes_Translations_.msgLoadingSpinner).load(loadUrl,
@@ -1184,7 +1184,7 @@ static sqlUpdatePosition(project_id, user_id, order, nrNotes) {
         cache: false,
         type: "POST",
         url: '/?controller=BoardNotesController&action=boardNotesUpdatePosition&plugin=BoardNotes'
-            + '&project_cus_id=' + project_id
+            + '&project_custom_id=' + project_id
             + '&user_id=' + user_id
             + '&order=' + order
             + '&nrNotes=' + nrNotes,
@@ -1205,7 +1205,7 @@ static #sqlGetLastModifiedTimestamp(project_id, user_id) {
         cache: false,
         type: "POST",
         url: '/?controller=BoardNotesController&action=boardNotesGetLastModifiedTimestamp&plugin=BoardNotes'
-            + '&project_cus_id=' + project_id
+            + '&project_custom_id=' + project_id
             + '&user_id=' + user_id,
         success: function(response) {
             var lastModifiedTimestamp = parseInt(response);

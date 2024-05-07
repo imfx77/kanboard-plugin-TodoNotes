@@ -473,8 +473,8 @@ foreach ($data as $u) {
         // notes from custom lists obviously CANNOT create tasks from notes
         if (!$project['is_custom']) {
             // Add note to tasks table (in detailed view)
-            print '<button id="noteToTask-P' . $u['project_id'] . '-' . $num . '"';
-            print ' class="hideMe toolbarButton noteToTask"';
+            print '<button id="noteCreateTask-P' . $u['project_id'] . '-' . $num . '"';
+            print ' class="hideMe toolbarButton noteCreateTask"';
             print ' title="' . t('BoardNotes_PROJECT_NOTE_CREATE_TASK') . '"';
             print ' data-id="' . $num . '"';
             print ' data-project="' . $u['project_id'] . '"';
@@ -752,12 +752,12 @@ if (!$is_refresh) { // print only once per project !!!
 
     //---------------------------------------------
 
-    print '<div class="hideMe" id="dialogToTask-P' . $project_id . '" title="' . t('BoardNotes_PROJECT_NOTE_CREATE_TASK') . '">';
+    print '<div class="hideMe" id="dialogCreateTask-P' . $project_id . '" title="' . t('BoardNotes_PROJECT_NOTE_CREATE_TASK') . '">';
 
-    print '<div id="dialogToTaskParams">';
+    print '<div id="dialogCreateTaskParams">';
 
-    print '<label for="listCatToTask-P' . $project_id . '">' . t('Category') . ' : &nbsp;</label>';
-    print '<select id="listCatToTask-P' . $project_id . '">';
+    print '<label for="listCatCreateTask-P' . $project_id . '">' . t('Category') . ' : &nbsp;</label>';
+    print '<select id="listCatCreateTask-P' . $project_id . '">';
     // Only allow blank select if there's other selectable options
     if (!empty($listCategoriesById)) {
         print '<option></option>';
@@ -766,20 +766,20 @@ if (!$is_refresh) { // print only once per project !!!
     print '</select>';
     print '<br>';
 
-    print '<label for="listColToTask-P' . $project_id . '">' . t('Column') . ' : &nbsp;</label>';
-    print '<select id="listColToTask-P' . $project_id . '">';
+    print '<label for="listColCreateTask-P' . $project_id . '">' . t('Column') . ' : &nbsp;</label>';
+    print '<select id="listColCreateTask-P' . $project_id . '">';
     print $listColumnsById;
     print '</select>';
     print '<br>';
 
-    print '<label for="listSwimToTask-P' . $project_id . '">' . t('Swimlane') . ' : &nbsp;</label>';
-    print '<select id="listSwimToTask-P' . $project_id . '">';
+    print '<label for="listSwimCreateTask-P' . $project_id . '">' . t('Swimlane') . ' : &nbsp;</label>';
+    print '<select id="listSwimCreateTask-P' . $project_id . '">';
     print $listSwimlanesById;
     print '</select>';
     print '<br>';
 
     print '<input type="checkbox" checked id="removeNote-P' . $project_id . '">';
-    print '<label for="removeNote-P' . $project_id . '">&nbsp;&nbsp;' . t('BoardNotes_CREATETASK_CHECKBOX_REMOVE_TASK') . '</label>';
+    print '<label for="removeNote-P' . $project_id . '">&nbsp;&nbsp;' . t('BoardNotes_CREATETASK_DIALOG_CHECKBOX_REMOVE_NOTE') . '</label>';
 
     print '</div>';
 
@@ -788,7 +788,7 @@ if (!$is_refresh) { // print only once per project !!!
 
     //---------------------------------------------
 
-    print '<div class="hideMe" id="dialogTransfer-P' . $project_id . '" title="' . t('BoardNotes_PROJECT_NOTE_MOVE_TO_PROJECT') . '">';
+    print '<div class="hideMe" id="dialogTransferNote-P' . $project_id . '" title="' . t('BoardNotes_PROJECT_NOTE_MOVE_TO_PROJECT') . '">';
 
     print '<label for="listNoteProject-P' . $project_id . '">' . t('BoardNotes_TRANSFERNOTE_DIALOG_TARGET_PROJECT') . ' : &nbsp&nbsp;</label>';
     print '<select id="listNoteProject-P' . $project_id . '">';
@@ -813,7 +813,7 @@ if (!$is_refresh) { // print only once per project !!!
 
     print '<div class="hideMe" id="dialogReport-P' . $project_id . '" title="' . t('BoardNotes_PROJECT_CREATE_REPORT') . '">';
     print '<div id="">';
-    print '<label for="catReport-P' . $project_id . '">' . t('BoardNotes_REPOSR_DIALOG_CATEGORY_FILTER') . ' :</label><br>';
+    print '<label for="catReport-P' . $project_id . '">' . t('BoardNotes_REPORT_DIALOG_CATEGORY_FILTER') . ' :</label><br>';
     print '<select id="catReport-P' . $project_id . '">';
 
     print '<option></option>'; // add an empty category option

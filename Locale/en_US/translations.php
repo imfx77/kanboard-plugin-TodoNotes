@@ -60,16 +60,16 @@ Might be waiting for an unsubmitted New Note data input!',
     //
     'BoardNotes_DELETEALLDONE_DIALOG_MSG' => '⚠ These items will be permanently deleted and cannot be recovered!
 &#10;Are you sure?',
-    'BoardNotes_CREATETASK_CHECKBOX_REMOVE_TASK' => '⚠ Remove the Note',
     'BoardNotes_TRANSFERNOTE_DIALOG_TARGET_PROJECT' => 'Target Project',
     'BoardNotes_TRANSFERNOTE_DIALOG_MSG' => '⚠ Bear in mind that the target project may NOT have the category that is assigned to the note!
 &#10;If so, the category will be displayed greyed and will be ignored until a valid one from the target project is set.
 &#10;Continue?',
-    'BoardNotes_REPOSR_DIALOG_CATEGORY_FILTER' => 'Filter by Category',
+    'BoardNotes_CREATETASK_DIALOG_CHECKBOX_REMOVE_NOTE' => '⚠ Remove the Note',
     'BoardNotes_POST_DIALOG_SUCCESS_TITLE' => 'Success!',
     'BoardNotes_POST_DIALOG_FAILURE_TITLE' => 'Ooops, something went wrong ;/',
     'BoardNotes_POST_DIALOG_SUCCESS_TEXT' => 'Created task',
     'BoardNotes_POST_DIALOG_FAILURE_TEXT' => 'The task could not be created for:',
+    'BoardNotes_REPORT_DIALOG_CATEGORY_FILTER' => 'Filter by Category',
     //
     // Specific EXPORTS FOR JS
     //

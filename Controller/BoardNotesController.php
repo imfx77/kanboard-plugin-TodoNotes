@@ -34,7 +34,7 @@ class BoardNotesController extends BaseController
 
     private function resolveProject($user_id)
     {
-        $project_id = $this->request->getIntegerParam('project_cus_id');
+        $project_id = $this->request->getIntegerParam('project_custom_id');
         if (empty($project_id)) {
             $project_id = $this->request->getIntegerParam('project_id');
         }
@@ -327,7 +327,7 @@ class BoardNotesController extends BaseController
         )));
     }
 
-    public function boardNotesToTask()
+    public function boardNotesCreateTask()
     {
         $user_id = $this->resolveUserId();
         $project = $this->resolveProject($user_id);
