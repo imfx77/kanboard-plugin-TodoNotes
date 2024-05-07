@@ -59,7 +59,7 @@ function reindexNotesAndLists_1(PDO $pdo)
 
     $pdo->exec('INSERT INTO `boardnotes_entries_NOPK`
                 SELECT * FROM `boardnotes_entries`
-                WHERE `project_id` > 0 AND `user_id` > 0 AND `position` > 0 AND `is_active` >= 0');
+                WHERE `project_id` <> 0 AND `user_id` > 0 AND `position` > 0 AND `is_active` >= 0');
 
     $pdo->exec('DROP TABLE `boardnotes_entries`');
     $pdo->exec('CREATE TABLE IF NOT EXISTS `boardnotes_entries` (
