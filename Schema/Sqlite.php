@@ -34,9 +34,9 @@ function version_1(PDO $pdo)
         date_modified INTEGER
     )');
 
-    $pdo->exec('INSERT INTO boardnotes_custom_projects (owner_id, position, project_name) VALUES (0, 1, "General")');
+    $pdo->exec('INSERT INTO boardnotes_custom_projects (owner_id, position, project_name) VALUES (0, 1, "Global Notes")');
 
-    $pdo->exec('INSERT INTO boardnotes_custom_projects (owner_id, position, project_name) VALUES (0, 2, "Todo")');
+    $pdo->exec('INSERT INTO boardnotes_custom_projects (owner_id, position, project_name) VALUES (0, 2, "Global TODO")');
 }
 
 //------------------------------------------------

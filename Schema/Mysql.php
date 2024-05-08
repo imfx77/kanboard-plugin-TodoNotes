@@ -36,9 +36,9 @@ function version_1(PDO $pdo)
         PRIMARY KEY(id)
     ) ENGINE=InnoDB CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci');
 
-    $pdo->exec('INSERT INTO `boardnotes_custom_projects`(`owner_id`, `position`, `project_name`) VALUES (0, 1, "General")');
+    $pdo->exec('INSERT INTO `boardnotes_custom_projects`(`owner_id`, `position`, `project_name`) VALUES (0, 1, "Global Notes")');
 
-    $pdo->exec('INSERT INTO `boardnotes_custom_projects`(`owner_id`, `position`, `project_name`) VALUES (0, 2, "Todo")');
+    $pdo->exec('INSERT INTO `boardnotes_custom_projects`(`owner_id`, `position`, `project_name`) VALUES (0, 2, "Global TODO")');
 }
 
 //------------------------------------------------

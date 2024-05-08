@@ -69,12 +69,13 @@ class BoardNotesModel extends Base
         $result = $this->db->table(self::TABLE_NOTES_ENTRIES);
         $result = $result->eq('user_id', $user_id);
         $result = $result->in('project_id', $projectsAccessList);
-        $result = $result->desc('project_id');
         $result = $result->gte('is_active', "0"); // -1 == deleted
+        $result = $result->desc('project_id');
         if ($doSortByStatus) {
             $result = $result->desc('is_active');
+        } else {
+            $result = $result->desc('position');
         }
-        $result = $result->desc('position');
         $result = $result->findAll();
 
         return $result;
@@ -114,10 +115,11 @@ class BoardNotesModel extends Base
             ->columns(self::TABLE_ACCESS . '.project_id', 'alias_projects_table.name AS project_name')
             ->eq('user_id', $user_id)
             ->left(self::TABLE_PROJECTS, 'alias_projects_table', 'id', self::TABLE_ACCESS, 'project_id')
-            ->asc('project_name')
+            ->asc('project_id')
             ->findAll();
         foreach ($projectIds as &$projectId) {
             $projectId['is_custom'] = false;
+            $projectId['is_global'] = false;
         }
         return $projectIds;
     }
@@ -125,18 +127,30 @@ class BoardNotesModel extends Base
     // Get all project_id where user has custom access
     public function boardNotesGetCustomProjectIds($user_id)
     {
-        $projectIds = $this->db->table(self::TABLE_NOTES_CUSTOM_PROJECTS)
+        $projectIdsGlobal = $this->db->table(self::TABLE_NOTES_CUSTOM_PROJECTS)
             ->columns('id AS project_id', 'project_name')
-            ->beginOr()
             ->eq('owner_id', 0)         // GLOBAL custom projects, managed by Admin only!
-            ->eq('owner_id', $user_id)  // PRIVATE custom projects, managed by each user
-            ->closeOr()
+            ->asc('position')
             ->findAll();
-        foreach ($projectIds as &$projectId) {
+        foreach ($projectIdsGlobal as &$projectId) {
             $projectId['project_id'] = -$projectId['project_id']; // custom project Ids are denoted as NEGATIVE values !!!
             $projectId['is_custom'] = true;
+            $projectId['is_global'] = true;
         }
-        return $projectIds;
+
+        $projectIdsPrivate = $this->db->table(self::TABLE_NOTES_CUSTOM_PROJECTS)
+            ->columns('id AS project_id', 'project_name')
+            ->eq('owner_id', $user_id)  // PRIVATE custom projects, managed by each user
+            ->asc('position')
+            ->findAll();
+        foreach ($projectIdsPrivate as &$projectId) {
+            $projectId['project_id'] = -$projectId['project_id']; // custom project Ids are denoted as NEGATIVE values !!!
+            $projectId['is_custom'] = true;
+            $projectId['is_global'] = false;
+        }
+
+        $projectsIdsCustom = array_merge($projectIdsGlobal, $projectIdsPrivate);
+        return $projectsIdsCustom;
     }
 
     // Get all project_id where user has assigned or custom access
