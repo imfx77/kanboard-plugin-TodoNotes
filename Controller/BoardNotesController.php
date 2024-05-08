@@ -93,7 +93,12 @@ class BoardNotesController extends BaseController
             $_SESSION['boardnotesSortByStatus'] = false;
         }
         $doSortByStatus = $_SESSION['boardnotesSortByStatus'];
-        $data = $this->boardNotesModel->boardNotesShowProject($project_id, $user_id, $doSortByStatus);
+
+        if ($project_id == 0) {
+            $data = $this->boardNotesModel->boardNotesShowAll($projectsAccess, $user_id, $doSortByStatus);
+        } else {
+            $data = $this->boardNotesModel->boardNotesShowProject($project_id, $user_id, $doSortByStatus);
+        }
 
         return $this->response->html($this->helper->layout->app('BoardNotes:project/data', array(
             'title' => $project['name'], // rather keep the project name as title

@@ -44,10 +44,7 @@ class BoardNotesModel extends Base
     {
         $result = $this->db->table(self::TABLE_NOTES_ENTRIES);
         $result = $result->eq('user_id', $user_id);
-        if ($project_id != 0) {
-            $result = $result->eq('project_id', $project_id);
-        }
-        $result = $result->desc('project_id');
+        $result = $result->eq('project_id', $project_id);
         $result = $result->gte('is_active', "0"); // -1 == deleted
         if ($doSortByStatus) {
             $result = $result->desc('is_active');
