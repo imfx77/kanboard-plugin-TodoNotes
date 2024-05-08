@@ -234,6 +234,10 @@ label {
     color: #993333;
 }
 
+.toolbarButtonDisabled {
+    color: #888888;
+}
+
 .toolbarButtonBigger {
     font-size: 1.5em;
     padding-right: 15px;

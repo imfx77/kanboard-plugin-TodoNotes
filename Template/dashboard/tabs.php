@@ -3,6 +3,8 @@
 
 $num = 0;
 
+$isAdmin = $this->user->isAdmin();
+
 // Add a default tab that denotes none project and all notes
 //----------------------------------------
 print '<li class="singleTab" id="singleTab' .  $num . '"';
@@ -26,22 +28,25 @@ print '<div class="toolbarSeparator">&nbsp;</div>';
 
 print '<button id="customListNew"';
 print ' class="toolbarButton customListNew"';
-print ' title="' . t('New custom list') . '"';
+print ' title="' . t('BoardNotes_DASHBOARD_NEW_CUSTOM_LIST') . '"';
 print ' data-user="' . $user_id . '"';
 print '>';
 print '<a><i class="fa fa-fw fa-wpforms" aria-hidden="true"></i></a>';
 print '</button>';
 
-if ($this->user->isAdmin()) {
-    // show the system button to Admins ONLY !
-    print '<button id="reindexNotesAndLists"';
-    print ' class="toolbarButton toolbarButtonToggled reindexNotesAndLists"';
-    print ' title="' . t('⚠ Reindex Notes and Lists!') . '"';
-    print ' data-user="' . $user_id . '"';
-    print '>';
-    print '<i class="fa fa-fw fa-recycle" aria-hidden="true"></i>';
-    print '</button>';
-}
+// reindexing is available to Admins ONLY!
+print '<button id="reindexNotesAndLists"';
+print $isAdmin
+    ? ' class="toolbarButton toolbarButtonToggled reindexNotesAndLists"'
+    : ' class="toolbarButton toolbarButtonDisabled reindexNotesAndLists"';
+print $isAdmin
+    ? ' title="' . t('BoardNotes_DASHBOARD_REINDEX') . '"'
+    : ' title="' . t('BoardNotes_DASHBOARD_REINDEX') . ' ' . t('BoardNotes_DASHBOARD_ADMIN_ONLY') . '"';
+print ' data-user="' . $user_id . '"';
+print '>';
+print '<i class="fa fa-fw fa-recycle" aria-hidden="true"></i>';
+print '</button>';
+
 //----------------------------------------
 
 print '</li>';
@@ -96,23 +101,53 @@ foreach ($projectsAccess as $o) {
     if ($o['is_custom']) {
         // edit buttons for custom lists ONLY
         //----------------------------------------
-        print '<button id="customListDelete-P' . $o['project_id'] . '"';
-        print ' class="toolbarButton customListDelete"';
-        print ' title="' . t('Delete custom list') . '"';
-        print ' data-project="' . $o['project_id'] . '"';
-        print ' data-user="' . $user_id . '"';
-        print '>';
-        print '<a><i class="fa fa-trash-o" aria-hidden="true"></i></a>';
-        print '</button>';
+        if ($o['is_global']) {
+            // managing custom GLOBAL lists is available to Admins ONLY!
+            print '<button id="customListDelete-P' . $o['project_id'] . '"';
+            print $isAdmin
+                ? ' class="toolbarButton toolbarButtonToggled customListDelete"'
+                : ' class="toolbarButton toolbarButtonDisabled customListDelete"';
+            print $isAdmin
+                ? ' title="' . t('BoardNotes_DASHBOARD_DELETE_CUSTOM_GLOBAL_LIST') . '"'
+                : ' title="' . t('BoardNotes_DASHBOARD_DELETE_CUSTOM_GLOBAL_LIST') . ' ' . t('BoardNotes_DASHBOARD_ADMIN_ONLY') . '"';
+            print ' data-project="' . $o['project_id'] . '"';
+            print ' data-user="' . $user_id . '"';
+            print '>';
+            print '<i class="fa fa-trash-o" aria-hidden="true"></i>';
+            print '</button>';
 
-        print '<button id="customListRenameP' . $o['project_id'] . '"';
-        print ' class="toolbarButton customListRename"';
-        print ' title="' . t('Rename custom list') . '"';
-        print ' data-project="' . $o['project_id'] . '"';
-        print ' data-user="' . $user_id . '"';
-        print '>';
-        print '<a><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>';
-        print '</button>';
+            print '<button id="customListRenameP' . $o['project_id'] . '"';
+            print $isAdmin
+                ? ' class="toolbarButton toolbarButtonToggled customListRename"'
+                : ' class="toolbarButton toolbarButtonDisabled customListRename"';
+            print $isAdmin
+                ? ' title="' . t('BoardNotes_DASHBOARD_RENAME_CUSTOM_GLOBAL_LIST') . '"'
+                : ' title="' . t('BoardNotes_DASHBOARD_RENAME_CUSTOM_GLOBAL_LIST') . ' ' . t('BoardNotes_DASHBOARD_ADMIN_ONLY') . '"';
+            print ' data-project="' . $o['project_id'] . '"';
+            print ' data-user="' . $user_id . '"';
+            print '>';
+            print '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>';
+            print '</button>';
+        } else {
+            // managing custom PRIVATE lists is available to each user for their owned lists
+            print '<button id="customListDelete-P' . $o['project_id'] . '"';
+            print ' class="toolbarButton customListDelete"';
+            print ' title="' . t('BoardNotes_DASHBOARD_DELETE_CUSTOM_PRIVATE_LIST') . '"';
+            print ' data-project="' . $o['project_id'] . '"';
+            print ' data-user="' . $user_id . '"';
+            print '>';
+            print '<a><i class="fa fa-trash-o" aria-hidden="true"></i></a>';
+            print '</button>';
+
+            print '<button id="customListRenameP' . $o['project_id'] . '"';
+            print ' class="toolbarButton customListRename"';
+            print ' title="' . t('BoardNotes_DASHBOARD_RENAME_CUSTOM_PRIVATE_LIST') . '"';
+            print ' data-project="' . $o['project_id'] . '"';
+            print ' data-user="' . $user_id . '"';
+            print '>';
+            print '<a><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>';
+            print '</button>';
+        }
         //----------------------------------------
     } else {
         // shortcut buttons for regular projects ONLY
