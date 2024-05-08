@@ -14,6 +14,23 @@ static adjustAllNotesPlaceholders() {
 }
 
 //------------------------------------------------
+static adjustScrollableContent() {
+    var scrollableContent = $("#scrollableContent");
+    if ( _BoardNotes_.isMobile() ) {
+        // adjust scrollableContent height
+        scrollableContent.height( 0.7 * $(window).height() );
+    } else {
+        // adjust scrollableContent height
+        var maxHeight = 0.9 * ( $(window).height() - scrollableContent.offset().top );
+        scrollableContent.height(1);
+        scrollableContent.height( Math.min( maxHeight, scrollableContent.prop('scrollHeight') ) );
+        // adjust scrollableContent margins regarding scrollbar width
+        const scrollbarWidth = (scrollableContent.outerWidth() - scrollableContent.prop('scrollWidth'));
+        $(".liNewNote").css('margin-right', scrollbarWidth + 3); // 3px margin from CSS ".ulNotes li"
+    }
+}
+
+//------------------------------------------------
 static prepareDocument() {
     _BoardNotes_.optionShowCategoryColors = ($("#session_vars").attr('data-optionShowCategoryColors') == 'true') ? true : false;
     _BoardNotes_.optionSortByStatus = ($("#session_vars").attr('data-optionSortByStatus') == 'true') ? true : false;
@@ -70,9 +87,9 @@ static prepareDocument() {
         }
     }
 
-    _BoardNotes_Translations_.initialize();
+    _BoardNotes_Project_.resizeDocument();
 
-    _BoardNotes_Project_.adjustAllNotesPlaceholders();
+    _BoardNotes_Translations_.initialize();
 
     _BoardNotes_.refreshCategoryColors();
     _BoardNotes_.refreshSortByStatus();
@@ -92,9 +109,15 @@ static prepareDocument() {
 }
 
 //------------------------------------------------
+static resizeDocument() {
+    _BoardNotes_Project_.adjustAllNotesPlaceholders();
+    _BoardNotes_Project_.adjustScrollableContent();
+}
+
+//------------------------------------------------
 
 } // class _BoardNotes_Project_
 
 //////////////////////////////////////////////////
-window.onresize = _BoardNotes_Project_.adjustAllNotesPlaceholders;
+window.onresize = _BoardNotes_Project_.resizeDocument;
 $( document ).ready( _BoardNotes_Project_.prepareDocument );

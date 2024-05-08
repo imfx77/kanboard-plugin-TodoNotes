@@ -123,17 +123,11 @@ print '</div>';
 
 //----------------------------------------
 
-print '<ul class="sortableRef" id="sortableRef-P' . $project_id . '"';
-print ' data-project="' . $project_id . '"';
-print '>';
-
-//----------------------------------------
-
 //////////////////////////////////////////
 ////    NEW NOTE / OVERVIEW MODE TITLE
 //////////////////////////////////////////
 
-print '<li id="item-0" class="liNewNote" data-id="0" data-project="' . $project_id . '">';
+print '<ul class="ulNotes"><li id="item-0" class="liNewNote" data-id="0" data-project="' . $project_id . '">';
 print '<div class="liNewNoteBkgr"></div>';
 
 // here goes the Settings Button Toolbar
@@ -357,7 +351,18 @@ if (!$readonlyNotes) {
     print '</div>'; // Detailed View
 } // end exclude
 
-print '</li>';
+print '</li></ul>';
+
+//----------------------------------------
+
+//////////////////////////////////////////
+////    PROJECT LIST(S)
+//////////////////////////////////////////
+
+print '<div class="scrollableContent" id="scrollableContent">';
+print '<ul class="ulNotes sortableRef" id="sortableRef-P' . $project_id . '"';
+print ' data-project="' . $project_id . '"';
+print '>';
 
 //----------------------------------------
 
@@ -393,7 +398,7 @@ foreach ($data as $u) {
         print '</h2>';
 
         // sortable list by project
-        print '<ul class="sortableRef" id="sortableRef-P' . $last_project_id . '"';
+        print '<ul class="ulNotes sortableRef" id="sortableRef-P' . $last_project_id . '"';
         print ' data-project="' . $last_project_id . '"';
         print '>';
     }
@@ -704,6 +709,7 @@ foreach ($data as $u) {
 }
 
 print '</ul>';
+print '</div>'; // scrollableContent
 
 // hidden reference for number of notes by project
 print '<div class="hideMe" id="nrNotes-P' . $last_project_id . '"';

@@ -657,20 +657,24 @@ static #settingsHandlers() {
 
     $("#settingsCollapseAll").click(function() {
         _BoardNotes_.#settingsCollapseAll();
+        _BoardNotes_Project_.adjustScrollableContent();
     });
 
     $(document).keydown(function(event) {
         if (event.keyCode != 109) return; // [-] key
         _BoardNotes_.#settingsCollapseAll();
+        _BoardNotes_Project_.adjustScrollableContent();
     });
 
     $("#settingsExpandAll").click(function() {
         _BoardNotes_.#settingsExpandAll();
+        _BoardNotes_Project_.adjustScrollableContent();
     });
 
     $(document).keydown(function(event) {
         if (event.keyCode != 107) return; // [+] key
         _BoardNotes_.#settingsExpandAll();
+        _BoardNotes_Project_.adjustScrollableContent();
     });
 
     //------------------------------------------------

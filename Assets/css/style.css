@@ -86,19 +86,6 @@ label {
     display: inline-block;
 }
 
-.sortableRef {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-
-.sortableRef li {
-    margin: 0 3px 3px 3px;
-    padding: .4em;
-    border-radius: 3px;
-    min-height: 16px;
-}
-
 .hideMe {
     display:none !important;
 } 
@@ -131,6 +118,25 @@ label {
 
 
 /* Notes elements */
+
+.scrollableContent {
+    width: 100%;
+    overflow-y: scroll;
+    scrollbar-color: rgba(192, 192, 192, .5) transparent;
+}
+
+.ulNotes {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.ulNotes li {
+    margin: 0 3px 3px 3px;
+    padding: .4em;
+    border-radius: 3px;
+    min-height: 16px;
+}
 
 .liNote {
     padding: 5px 10px 12px 15px!important;
