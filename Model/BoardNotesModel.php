@@ -75,9 +75,8 @@ class BoardNotesModel extends Base
         $result = $result->orderBy($orderCaseClause); // order notes by projects as listed in $projectsAccess
         if ($doSortByStatus) {
             $result = $result->desc('is_active');
-        } else {
-            $result = $result->desc('position');
         }
+        $result = $result->desc('position');
         $result = $result->findAll();
 
         return $result;
