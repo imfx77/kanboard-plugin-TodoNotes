@@ -34,7 +34,8 @@ class BoardNotesController extends BaseController
 
     private function resolveProject($user_id)
     {
-        $project_id = $this->request->getIntegerParam('project_custom_id');
+        $project_id = intval( $this->request->getStringParam('project_custom_id') );
+
         if (empty($project_id)) {
             $project_id = $this->request->getIntegerParam('project_id');
         }
@@ -47,7 +48,7 @@ class BoardNotesController extends BaseController
             }
         }
 
-        // if we didn't find the requested project, switch by default to the first one (i.e. General custom list)
+        // if we didn't find the requested project, switch by default to the first one (i.e. Global Notes custom list)
         if ($projectAccess['project_id'] != $project_id) {
             $projectAccess = $projectsAccess[0];
         }
