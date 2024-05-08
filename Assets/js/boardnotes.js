@@ -36,14 +36,17 @@ static optionShowAllDone = false;
 // Adjust scrollableContent container
 static adjustScrollableContent() {
     var scrollableContent = $("#scrollableContent");
+    scrollableContent.height(0);
+
     if ( _BoardNotes_.isMobile() ) {
         // adjust scrollableContent height
-        scrollableContent.height( 0.7 * $(window).height() );
+        var maxHeight = 0.7 * $(window).height()
+        scrollableContent.height( Math.min(maxHeight, scrollableContent.prop('scrollHeight')) );
     } else {
         // adjust scrollableContent height
         var maxHeight = 0.9 * ( $(window).height() - scrollableContent.offset().top );
-        scrollableContent.height(0);
         scrollableContent.height( Math.min(maxHeight, scrollableContent.prop('scrollHeight')) );
+
         // adjust scrollableContent margins regarding scrollbar width
         const scrollbarWidth = (scrollableContent.outerWidth() - scrollableContent.prop('scrollWidth'));
         $(".liNewNote").css('margin-right', scrollbarWidth + 3); // 3px margin from CSS ".ulNotes li"

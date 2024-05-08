@@ -65,15 +65,6 @@ foreach ($data as $u) {
     print '<td class="tdReport tdReportInfo">';
     print '<div class="reportBkgr"></div>';
 
-    // Category label
-    print '<label class="catLabel"';
-    print ' id="noteCatLabel-P' . $u['project_id'] . '-' . $num . '"';
-    print ' data-id="' . $num . '"';
-    print ' data-project="' . $u['project_id'] . '"';
-    print '>';
-    print $u['category'];
-    print '</label>';
-
     // Note title label
     print '<label id="reportTitleLabel-P' . $u['project_id'] . '-' . $num . '"';
     if ($u['is_active'] == "0") {
@@ -83,6 +74,17 @@ foreach ($data as $u) {
     }
     print $u['title'];
     print '</label>';
+
+    // Category label
+    print '<div class="containerFloatRight">';
+    print '<label class="catLabel"';
+    print ' id="noteCatLabel-P' . $u['project_id'] . '-' . $num . '"';
+    print ' data-id="' . $num . '"';
+    print ' data-project="' . $u['project_id'] . '"';
+    print '>';
+    print $u['category'];
+    print '</label>';
+    print '</div>';
 
     // Note details
     if (!empty($u['description'])) {

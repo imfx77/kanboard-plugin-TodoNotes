@@ -16,7 +16,22 @@ static prepareDocument() {
     });
 
     _BoardNotes_.refreshCategoryColors();
-    _BoardNotes_.refreshShowAllDone();
+
+    setTimeout(function() {
+        // resize the report table to fit in screen height so to scroll its contents
+        var scrollableTable = $(".tableReport");
+        scrollableTable.height(0);
+
+        if ( _BoardNotes_.isMobile() ) {
+            // adjust scrollableTable height
+            var maxHeight = 0.7 * $(window).height()
+            scrollableTable.height( Math.min(maxHeight, scrollableTable.prop('scrollHeight')) );
+        } else {
+            // adjust scrollableTable height
+            var maxHeight = 0.9 * ( $(window).height() - scrollableTable.eq(0).offset().top );
+            scrollableTable.height( Math.min(maxHeight, scrollableTable.prop('scrollHeight')) );
+        }
+    }, 100);
 }
 
 //------------------------------------------------
