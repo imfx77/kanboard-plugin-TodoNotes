@@ -502,7 +502,7 @@ foreach ($data as $u) {
     print ' class="hideMe toolbarButton toolbarButtonToggled toolbarButtonBigger disableEventsPropagation noteRefreshOrder"';
     print ' title="' . t('BoardNotes_PROJECT_NOTE_REFRESH_ORDER') . '"';
     print ' data-id="' . $num  . '"';
-    print ' data-project="' . $u['project_id'] . '"';
+    print ' data-project="' . $project_id . '"';
     print ' data-user="' . $user_id . '"';
     print '>';
     print '<i class="fa fa-refresh fa-spin fa-spin-reverse" aria-hidden="true"></i>';
