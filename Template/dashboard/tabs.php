@@ -47,22 +47,29 @@ if ($this->user->isAdmin()) {
 print '</li>';
 $num++;
 
-$separatorPlacedCustom = false;
-$separatorPlacedNormal = false;
+$separatorPlacedCustomGlobal = false;
+$separatorPlacedCustomPrivate = false;
+$separatorPlacedRegular = false;
 
 // Loop through all projects
 //----------------------------------------
 foreach ($projectsAccess as $o) {
-    // separator for custom lists
-    if (!$separatorPlacedCustom && $o['is_custom']) {
+    // separator for custom GLOBAL lists
+    if (!$separatorPlacedCustomGlobal && $o['is_custom'] && $o['is_global']) {
         print '<hr class="hrTabs">';
-        $separatorPlacedCustom = true;
+        $separatorPlacedCustomGlobal = true;
+    }
+
+    // separator for custom PRIVATE lists
+    if (!$separatorPlacedCustomPrivate && $o['is_custom'] && !$o['is_global']) {
+        print '<hr class="hrTabs">';
+        $separatorPlacedCustomPrivate = true;
     }
 
     // separator for regular projects
-    if (!$separatorPlacedNormal && !$o['is_custom']) {
+    if (!$separatorPlacedRegular && !$o['is_custom']) {
         print '<hr class="hrTabs">';
-        $separatorPlacedNormal = true;
+        $separatorPlacedRegular = true;
     }
 
     //----------------------------------------

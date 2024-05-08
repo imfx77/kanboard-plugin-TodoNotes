@@ -62,15 +62,20 @@ class BoardNotesModel extends Base
     public function boardNotesShowAll($projectsAccess, $user_id, $doSortByStatus)
     {
         $projectsAccessList = array();
+        $orderCaseClause = 'CASE project_id';
+        $orderCaseNum = 1;
         foreach ($projectsAccess as $u) {
             $projectsAccessList[] = $u['project_id'];
+            $orderCaseClause .= ' WHEN ' . $u['project_id'] . ' THEN ' . $orderCaseNum;
+            $orderCaseNum++;
         }
+        $orderCaseClause .= ' END';
 
         $result = $this->db->table(self::TABLE_NOTES_ENTRIES);
         $result = $result->eq('user_id', $user_id);
         $result = $result->in('project_id', $projectsAccessList);
         $result = $result->gte('is_active', "0"); // -1 == deleted
-        $result = $result->desc('project_id');
+        $result = $result->orderBy($orderCaseClause); // order notes by projects as listed in $projectsAccess
         if ($doSortByStatus) {
             $result = $result->desc('is_active');
         } else {
