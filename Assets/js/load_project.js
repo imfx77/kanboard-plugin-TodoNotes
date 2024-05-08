@@ -1,36 +1,6 @@
 class _BoardNotes_Project_ {
 
 //------------------------------------------------
-static adjustAllNotesPlaceholders() {
-    setTimeout(function() {
-        // adjust notePlaceholder containers where not needed
-        _BoardNotes_.adjustNotePlaceholders(0, 0);
-        $("button" + ".checkDone").each(function() {
-            var project_id = $(this).attr('data-project');
-            var id = $(this).attr('data-id');
-            _BoardNotes_.adjustNotePlaceholders(project_id, id);
-        })
-    }, 100);
-}
-
-//------------------------------------------------
-static adjustScrollableContent() {
-    var scrollableContent = $("#scrollableContent");
-    if ( _BoardNotes_.isMobile() ) {
-        // adjust scrollableContent height
-        scrollableContent.height( 0.7 * $(window).height() );
-    } else {
-        // adjust scrollableContent height
-        var maxHeight = 0.9 * ( $(window).height() - scrollableContent.offset().top );
-        scrollableContent.height(1);
-        scrollableContent.height( Math.min( maxHeight, scrollableContent.prop('scrollHeight') ) );
-        // adjust scrollableContent margins regarding scrollbar width
-        const scrollbarWidth = (scrollableContent.outerWidth() - scrollableContent.prop('scrollWidth'));
-        $(".liNewNote").css('margin-right', scrollbarWidth + 3); // 3px margin from CSS ".ulNotes li"
-    }
-}
-
-//------------------------------------------------
 static prepareDocument() {
     _BoardNotes_.optionShowCategoryColors = ($("#session_vars").attr('data-optionShowCategoryColors') == 'true') ? true : false;
     _BoardNotes_.optionSortByStatus = ($("#session_vars").attr('data-optionSortByStatus') == 'true') ? true : false;
@@ -110,8 +80,8 @@ static prepareDocument() {
 
 //------------------------------------------------
 static resizeDocument() {
-    _BoardNotes_Project_.adjustAllNotesPlaceholders();
-    _BoardNotes_Project_.adjustScrollableContent();
+    _BoardNotes_.adjustAllNotesPlaceholders();
+    _BoardNotes_.adjustScrollableContent();
 }
 
 //------------------------------------------------

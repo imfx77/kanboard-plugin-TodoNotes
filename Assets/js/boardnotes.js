@@ -33,6 +33,24 @@ static optionShowAllDone = false;
 //------------------------------------------------
 
 //------------------------------------------------
+// Adjust scrollableContent container
+static adjustScrollableContent() {
+    var scrollableContent = $("#scrollableContent");
+    if ( _BoardNotes_.isMobile() ) {
+        // adjust scrollableContent height
+        scrollableContent.height( 0.7 * $(window).height() );
+    } else {
+        // adjust scrollableContent height
+        var maxHeight = 0.9 * ( $(window).height() - scrollableContent.offset().top );
+        scrollableContent.height(0);
+        scrollableContent.height( Math.min(maxHeight, scrollableContent.prop('scrollHeight')) );
+        // adjust scrollableContent margins regarding scrollbar width
+        const scrollbarWidth = (scrollableContent.outerWidth() - scrollableContent.prop('scrollWidth'));
+        $(".liNewNote").css('margin-right', scrollbarWidth + 3); // 3px margin from CSS ".ulNotes li"
+    }
+}
+
+//------------------------------------------------
 // Adjust notePlaceholder container
 static adjustNotePlaceholders(project_id, id) {
     var isTitle = (project_id == 0 && id == 0);
@@ -54,6 +72,20 @@ static adjustNotePlaceholders(project_id, id) {
             $("#notePlaceholder-P" + project_id + "-" + id).removeClass( 'hideMe' );
         }
     }
+}
+
+//------------------------------------------------
+// Adjust ALL notePlaceholder containers
+static adjustAllNotesPlaceholders() {
+    setTimeout(function() {
+        // adjust notePlaceholder containers where not needed
+        _BoardNotes_.adjustNotePlaceholders(0, 0);
+        $("button" + ".checkDone").each(function() {
+            var project_id = $(this).attr('data-project');
+            var id = $(this).attr('data-id');
+            _BoardNotes_.adjustNotePlaceholders(project_id, id);
+        })
+    }, 100);
 }
 
 //------------------------------------------------
@@ -218,6 +250,10 @@ static #noteDetailsDblclickHandlers() {
         var project_id = $(this).attr('data-project');
         var id = $(this).attr('data-id');
         _BoardNotes_.#toggleDetails(project_id, id);
+
+        setTimeout(function() {
+            _BoardNotes_.adjustScrollableContent();
+        }, 100);
     });
 
     _BoardNotes_.#noteDetailsDblclickHandlersInitialized = true;
@@ -301,6 +337,10 @@ static #noteDetailsHandlers() {
         var project_id = $(this).attr('data-project');
         var id = $(this).attr('data-id');
         _BoardNotes_.#toggleDetails(project_id, id);
+
+        setTimeout(function() {
+            _BoardNotes_.adjustScrollableContent();
+        }, 100);
     });
 
     // On TAB key open detailed view for Note
@@ -316,6 +356,7 @@ static #noteDetailsHandlers() {
 
             setTimeout(function() {
                 $('[name="editorMarkdownDetails-P' + project_id + '-' + id + '"]').focus();
+                _BoardNotes_.adjustScrollableContent();
             }, 100);
         }
     });
@@ -329,6 +370,7 @@ static #noteDetailsHandlers() {
 
         setTimeout(function() {
             $('[name="editorMarkdownDetails-P' + project_id + '-' + id + '"]').focus();
+            _BoardNotes_.adjustScrollableContent();
         }, 100);
     });
 
@@ -340,6 +382,10 @@ static #noteDetailsHandlers() {
         var project_id = $(this).attr('data-project');
         var id = $(this).attr('data-id');
         _BoardNotes_.#showTitleInput(project_id, id, true);
+
+        setTimeout(function() {
+            _BoardNotes_.adjustScrollableContent();
+        }, 100);
     });
 
     // Click on category label to auto open details and change category
@@ -350,6 +396,7 @@ static #noteDetailsHandlers() {
 
         setTimeout(function() {
             $("#cat-P" + project_id + "-" + id + "-button").trigger('click');
+            _BoardNotes_.adjustScrollableContent();
         }, 100);
     });
 
@@ -444,13 +491,18 @@ static #noteStatusHandlers() {
             _BoardNotes_.#sqlUpdateNote(project_id, user_id, id);
         }
 
-        _BoardNotes_.#blinkNote(project_id, id);
-
-        _BoardNotes_.refreshShowAllDone();
-
         if (_BoardNotes_.optionSortByStatus) {
             $("#noteRefreshOrder-P" + project_id + "-" + id).removeClass( 'hideMe' );
         }
+
+        _BoardNotes_.#blinkNote(project_id, id);
+        _BoardNotes_.refreshShowAllDone();
+
+        _BoardNotes_.adjustNotePlaceholders(project_id, id);
+
+        setTimeout(function() {
+            _BoardNotes_.adjustScrollableContent();
+        }, 400); // waiting for blinkNote() to finish
     });
 
     //------------------------------------------------
@@ -510,6 +562,10 @@ static #noteActionHandlers() {
             _BoardNotes_.#showDetailsInput(project_id, id, false);
             _BoardNotes_.#sqlUpdateNote(project_id, user_id, id);
             _BoardNotes_.#blinkNote(project_id, id);
+
+            setTimeout(function() {
+                _BoardNotes_.adjustScrollableContent();
+            }, 400); // waiting for blinkNote() to finish
         }
     });
 
@@ -523,6 +579,10 @@ static #noteActionHandlers() {
             _BoardNotes_.#showDetailsInput(project_id, id, false);
             _BoardNotes_.#sqlUpdateNote(project_id, user_id, id);
             _BoardNotes_.#blinkNote(project_id, id);
+
+            setTimeout(function() {
+                _BoardNotes_.adjustScrollableContent();
+            }, 400); // waiting for blinkNote() to finish
         }
     });
 
@@ -535,6 +595,10 @@ static #noteActionHandlers() {
         _BoardNotes_.#showDetailsInput(project_id, id, false);
         _BoardNotes_.#sqlUpdateNote(project_id, user_id, id);
         _BoardNotes_.#blinkNote(project_id, id);
+
+        setTimeout(function() {
+            _BoardNotes_.adjustScrollableContent();
+        }, 400); // waiting for blinkNote() to finish
     });
 
     //------------------------------------------------
@@ -595,6 +659,10 @@ static #noteActionHandlers() {
                 _BoardNotes_.#showDetailsInput(project_id, id, false);
                 _BoardNotes_.#sqlUpdateNote(project_id, user_id, id);
                 _BoardNotes_.#blinkNote(project_id, id);
+
+                setTimeout(function() {
+                    _BoardNotes_.adjustScrollableContent();
+                    }, 400); // waiting for blinkNote() to finish
             }
         }
     });
@@ -615,6 +683,10 @@ static #settingsCollapseAll() {
             _BoardNotes_.#toggleDetails(project_id, id);
         }
     });
+
+    setTimeout(function() {
+        _BoardNotes_.adjustScrollableContent();
+    }, 100);
 }
 
 static #settingsExpandAll() {
@@ -626,6 +698,10 @@ static #settingsExpandAll() {
             _BoardNotes_.#toggleDetails(project_id, id);
         }
     });
+
+    setTimeout(function() {
+        _BoardNotes_.adjustScrollableContent();
+    }, 100);
 }
 
 //------------------------------------------------
@@ -657,24 +733,20 @@ static #settingsHandlers() {
 
     $("#settingsCollapseAll").click(function() {
         _BoardNotes_.#settingsCollapseAll();
-        _BoardNotes_Project_.adjustScrollableContent();
     });
 
     $(document).keydown(function(event) {
         if (event.keyCode != 109) return; // [-] key
         _BoardNotes_.#settingsCollapseAll();
-        _BoardNotes_Project_.adjustScrollableContent();
     });
 
     $("#settingsExpandAll").click(function() {
         _BoardNotes_.#settingsExpandAll();
-        _BoardNotes_Project_.adjustScrollableContent();
     });
 
     $(document).keydown(function(event) {
         if (event.keyCode != 107) return; // [+] key
         _BoardNotes_.#settingsExpandAll();
-        _BoardNotes_Project_.adjustScrollableContent();
     });
 
     //------------------------------------------------
@@ -685,7 +757,11 @@ static #settingsHandlers() {
         _BoardNotes_.optionShowAllDone = !_BoardNotes_.optionShowAllDone;
         _BoardNotes_.refreshShowAllDone();
 
-        _BoardNotes_Project_.adjustAllNotesPlaceholders();
+        _BoardNotes_.adjustAllNotesPlaceholders();
+
+        setTimeout(function() {
+            _BoardNotes_.adjustScrollableContent();
+        }, 100);
     });
 
     $("#settingsSortByStatus").click(function() {
