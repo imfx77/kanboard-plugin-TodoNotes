@@ -76,15 +76,13 @@ foreach ($data as $u) {
     print '</label>';
 
     // Category label
-    print '<div class="containerFloatRight">';
-    print '<label class="catLabel"';
+    print '<label class="catLabel containerFloatRight"';
     print ' id="noteCatLabel-P' . $u['project_id'] . '-' . $num . '"';
     print ' data-id="' . $num . '"';
     print ' data-project="' . $u['project_id'] . '"';
     print '>';
     print $u['category'];
     print '</label>';
-    print '</div>';
 
     // Note details
     if (!empty($u['description'])) {

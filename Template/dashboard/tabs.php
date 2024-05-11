@@ -17,14 +17,26 @@ print $this->url->link(
     'boardNotesShowAll',
     array('plugin' => 'BoardNotes', 'user_id' => $user_id, 'tab_id' => $num)
 );
-print '<div class="toolbarSeparator">&nbsp;</div>';
-print $this->render('BoardNotes:widgets/stats', array(
-     'stats_project_id' => 0,
-));
+
+//----------------------------------------
+print '<div class="containerNoWrap containerFloatRight">';
 
 // buttons for ALL tab
 //----------------------------------------
-print '<div class="toolbarSeparator">&nbsp;</div>';
+//print '<div class="containerNoWrap containerFloatRight">';
+
+// reindexing is available to Admins ONLY!
+print '<button id="reindexNotesAndLists"';
+print $isAdmin
+    ? ' class="toolbarButton buttonToggled reindexNotesAndLists"'
+    : ' class="toolbarButton buttonDisabled reindexNotesAndLists"';
+print $isAdmin
+    ? ' title="' . t('BoardNotes_DASHBOARD_REINDEX') . '"'
+    : ' title="' . t('BoardNotes_DASHBOARD_REINDEX') . ' ' . t('BoardNotes_DASHBOARD_ADMIN_ONLY') . '"';
+print ' data-user="' . $user_id . '"';
+print '>';
+print '<i class="fa fa-fw fa-recycle" aria-hidden="true"></i>';
+print '</button>';
 
 print '<button id="customListNew"';
 print ' class="toolbarButton customListNew"';
@@ -34,19 +46,17 @@ print '>';
 print '<a><i class="fa fa-fw fa-wpforms" aria-hidden="true"></i></a>';
 print '</button>';
 
-// reindexing is available to Admins ONLY!
-print '<button id="reindexNotesAndLists"';
-print $isAdmin
-    ? ' class="toolbarButton toolbarButtonToggled reindexNotesAndLists"'
-    : ' class="toolbarButton toolbarButtonDisabled reindexNotesAndLists"';
-print $isAdmin
-    ? ' title="' . t('BoardNotes_DASHBOARD_REINDEX') . '"'
-    : ' title="' . t('BoardNotes_DASHBOARD_REINDEX') . ' ' . t('BoardNotes_DASHBOARD_ADMIN_ONLY') . '"';
-print ' data-user="' . $user_id . '"';
-print '>';
-print '<i class="fa fa-fw fa-recycle" aria-hidden="true"></i>';
-print '</button>';
+//print '<button class="toolbarSeparator">&nbsp;</button>';
+//print '</div>'; // containerNoWrap containerFloatRight
 
+// stats widget for ALL tab
+//----------------------------------------
+//print '<br>';
+print $this->render('BoardNotes:widgets/stats', array(
+     'stats_project_id' => 0,
+));
+
+print '</div>'; // containerFloatRight
 //----------------------------------------
 
 print '</li>';
@@ -92,34 +102,21 @@ foreach ($projectsAccess as $o) {
         array('plugin' => 'BoardNotes', 'user_id' => $user_id, 'tab_id' => $num)
     );
 
-    print '<div class="toolbarSeparator">&nbsp;</div>';
-    print $this->render('BoardNotes:widgets/stats', array(
-         'stats_project_id' => $o['project_id'],
-    ));
+    //----------------------------------------
+    print '<div class="containerNoWrap containerFloatRight">';
 
-    print '<div class="toolbarSeparator">&nbsp;</div>';
+    // buttons for single tabs
+    //----------------------------------------
+    //print '<div class="containerNoWrap containerFloatRight">';
+
     if ($o['is_custom']) {
-        // edit buttons for custom lists ONLY
-        //----------------------------------------
         if ($o['is_global']) {
             // managing custom GLOBAL lists is available to Admins ONLY!
-            print '<button id="customListDelete-P' . $o['project_id'] . '"';
-            print $isAdmin
-                ? ' class="toolbarButton toolbarButtonToggled customListDelete"'
-                : ' class="toolbarButton toolbarButtonDisabled customListDelete"';
-            print $isAdmin
-                ? ' title="' . t('BoardNotes_DASHBOARD_DELETE_CUSTOM_GLOBAL_LIST') . '"'
-                : ' title="' . t('BoardNotes_DASHBOARD_DELETE_CUSTOM_GLOBAL_LIST') . ' ' . t('BoardNotes_DASHBOARD_ADMIN_ONLY') . '"';
-            print ' data-project="' . $o['project_id'] . '"';
-            print ' data-user="' . $user_id . '"';
-            print '>';
-            print '<i class="fa fa-trash-o" aria-hidden="true"></i>';
-            print '</button>';
-
+            //----------------------------------------
             print '<button id="customListRenameP' . $o['project_id'] . '"';
             print $isAdmin
-                ? ' class="toolbarButton toolbarButtonToggled customListRename"'
-                : ' class="toolbarButton toolbarButtonDisabled customListRename"';
+                ? ' class="toolbarButton buttonToggled customListRename"'
+                : ' class="toolbarButton buttonDisabled customListRename"';
             print $isAdmin
                 ? ' title="' . t('BoardNotes_DASHBOARD_RENAME_CUSTOM_GLOBAL_LIST') . '"'
                 : ' title="' . t('BoardNotes_DASHBOARD_RENAME_CUSTOM_GLOBAL_LIST') . ' ' . t('BoardNotes_DASHBOARD_ADMIN_ONLY') . '"';
@@ -128,17 +125,23 @@ foreach ($projectsAccess as $o) {
             print '>';
             print '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>';
             print '</button>';
-        } else {
-            // managing custom PRIVATE lists is available to each user for their owned lists
+
             print '<button id="customListDelete-P' . $o['project_id'] . '"';
-            print ' class="toolbarButton customListDelete"';
-            print ' title="' . t('BoardNotes_DASHBOARD_DELETE_CUSTOM_PRIVATE_LIST') . '"';
+            print $isAdmin
+                ? ' class="toolbarButton buttonToggled customListDelete"'
+                : ' class="toolbarButton buttonDisabled customListDelete"';
+            print $isAdmin
+                ? ' title="' . t('BoardNotes_DASHBOARD_DELETE_CUSTOM_GLOBAL_LIST') . '"'
+                : ' title="' . t('BoardNotes_DASHBOARD_DELETE_CUSTOM_GLOBAL_LIST') . ' ' . t('BoardNotes_DASHBOARD_ADMIN_ONLY') . '"';
             print ' data-project="' . $o['project_id'] . '"';
             print ' data-user="' . $user_id . '"';
             print '>';
-            print '<a><i class="fa fa-trash-o" aria-hidden="true"></i></a>';
+            print '<i class="fa fa-trash-o" aria-hidden="true"></i>';
             print '</button>';
-
+            //----------------------------------------
+        } else {
+            // managing custom PRIVATE lists is available to each user for their owned lists
+            //----------------------------------------
             print '<button id="customListRenameP' . $o['project_id'] . '"';
             print ' class="toolbarButton customListRename"';
             print ' title="' . t('BoardNotes_DASHBOARD_RENAME_CUSTOM_PRIVATE_LIST') . '"';
@@ -147,20 +150,20 @@ foreach ($projectsAccess as $o) {
             print '>';
             print '<a><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>';
             print '</button>';
+
+            print '<button id="customListDelete-P' . $o['project_id'] . '"';
+            print ' class="toolbarButton customListDelete"';
+            print ' title="' . t('BoardNotes_DASHBOARD_DELETE_CUSTOM_PRIVATE_LIST') . '"';
+            print ' data-project="' . $o['project_id'] . '"';
+            print ' data-user="' . $user_id . '"';
+            print '>';
+            print '<a><i class="fa fa-trash-o" aria-hidden="true"></i></a>';
+            print '</button>';
+            //----------------------------------------
         }
-        //----------------------------------------
     } else {
         // shortcut buttons for regular projects ONLY
         //----------------------------------------
-        print '<button id="gotoProjectTasks-P' . $o['project_id'] . '"';
-        print ' class="toolbarButton gotoProjectTasks"';
-        print ' title="' . t('List') . ' ⇗' . '"';
-        print ' data-project="' . $o['project_id'] . '"';
-        print ' data-user="' . $user_id . '"';
-        print '>';
-        print $this->url->icon('list', '', 'TaskListController', 'show', array('project_id' => $o['project_id']), false, 'view-listing', t('List') . ' ⇗');
-        print '</button>';
-
         print '<button id="gotoProjectBoard-P' . $o['project_id'] . '"';
         print ' class="toolbarButton gotoProjectBoard"';
         print ' title="' . t('Board') . ' ⇗' . '"';
@@ -169,8 +172,31 @@ foreach ($projectsAccess as $o) {
         print '>';
         print $this->url->icon('th', '', 'BoardViewController', 'show', array('project_id' => $o['project_id']), false, 'view-board', t('Board') . ' ⇗');
         print '</button>';
+
+        print '<button id="gotoProjectTasks-P' . $o['project_id'] . '"';
+        print ' class="toolbarButton gotoProjectTasks"';
+        print ' title="' . t('List') . ' ⇗' . '"';
+        print ' data-project="' . $o['project_id'] . '"';
+        print ' data-user="' . $user_id . '"';
+        print '>';
+        print $this->url->icon('list', '', 'TaskListController', 'show', array('project_id' => $o['project_id']), false, 'view-listing', t('List') . ' ⇗');
+        print '</button>';
         //----------------------------------------
     }
+
+    //print '<button class="toolbarSeparator">&nbsp;</button>';
+
+    //print '</div>'; // containerNoWrap containerFloatRight
+
+    // stats widget for single tabs
+    //----------------------------------------
+    //print '<br>';
+    print $this->render('BoardNotes:widgets/stats', array(
+         'stats_project_id' => $o['project_id'],
+    ));
+
+    print '</div>'; // containerFloatRight
+    //----------------------------------------
 
     print'</li>';
     $num++;

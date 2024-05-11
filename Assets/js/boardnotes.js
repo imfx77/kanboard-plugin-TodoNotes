@@ -128,8 +128,8 @@ static #showTitleInput(project_id, id, show_title_input) {
         if (_BoardNotes_.isMobile()) {
             noteTitleInput.width( inputWidth );
         } else {
-            var toolbarHeader = noteDetails.parent().find(".toolbarNoteHeader");
-            noteTitleInput.width( inputWidth - toolbarHeader.width());
+            var toolbarButtons = noteDetails.parent().find(".toolbarNoteButtons");
+            noteTitleInput.width( inputWidth - toolbarButtons.width());
         }
     } else {
         noteTitleInput.blur();
@@ -801,14 +801,14 @@ static #settingsHandlers() {
 // Refresh hide All Done
 static refreshShowAllDone() {
     if (_BoardNotes_.optionShowAllDone) {
-        $("#settingsShowAllDone").addClass( 'toolbarButtonToggled' );
+        $("#settingsShowAllDone").addClass( 'buttonToggled' );
         $(".liNote").each(function() {
             if ($(this).find(".checkDone").children().hasClass( 'fa-check' )) {
                 $(this).removeClass( 'hideMe' );
             }
         });
     } else {
-        $("#settingsShowAllDone").removeClass( 'toolbarButtonToggled' );
+        $("#settingsShowAllDone").removeClass( 'buttonToggled' );
         $(".liNote").each(function() {
             if ($(this).find(".checkDone").children().hasClass( 'fa-check' )) {
                 $(this).addClass( 'hideMe' );
@@ -821,9 +821,9 @@ static refreshShowAllDone() {
 // Refresh sort by Status
 static refreshSortByStatus() {
     if (_BoardNotes_.optionSortByStatus) {
-        $("#settingsSortByStatus").addClass( 'toolbarButtonToggled' );
+        $("#settingsSortByStatus").addClass( 'buttonToggled' );
     } else {
-        $("#settingsSortByStatus").removeClass( 'toolbarButtonToggled' );
+        $("#settingsSortByStatus").removeClass( 'buttonToggled' );
     }
 }
 
@@ -831,7 +831,7 @@ static refreshSortByStatus() {
 // Refresh category colors
 static refreshCategoryColors() {
     if (_BoardNotes_.optionShowCategoryColors) {
-        $("#settingsCategoryColors").addClass( 'toolbarButtonToggled' );
+        $("#settingsCategoryColors").addClass( 'buttonToggled' );
         $(".tdReport .reportBkgr").addClass( 'task-board' );
         $(".liNote .liNoteBkgr").addClass( 'task-board' );
         // avoid the ugly empty category label boxes
@@ -841,7 +841,7 @@ static refreshCategoryColors() {
             }
         });
     } else {
-        $("#settingsCategoryColors").removeClass( 'toolbarButtonToggled' );
+        $("#settingsCategoryColors").removeClass( 'buttonToggled' );
         $(".tdReport .reportBkgr").removeClass( 'task-board' );
         $(".liNote .liNoteBkgr").removeClass( 'task-board' );
         $(".catLabel").removeClass( 'task-board-category' );

@@ -8,6 +8,12 @@ print $this->render('BoardNotes:translations/export_to_js');
 
 ?>
 
+<style>
+.BoardNotes_ProjectDropdown_StatsWidget {
+    float: right;
+}
+</style>
+
 <li class="">
     <?php
         $statsWidget = '';

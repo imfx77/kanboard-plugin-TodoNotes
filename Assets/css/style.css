@@ -110,7 +110,7 @@ label {
     clear: both !important;
 }
 
-.containerLeft {
+.containerAbsoluteLeft {
     position: absolute;
     left: 20px;
     margin-top: -5px;
@@ -206,7 +206,6 @@ label {
 }
 
 .toolbarSeparator {
-    float: right;
     appearance: none;
     -webkit-appearance: none;
     outline: none;
@@ -218,7 +217,6 @@ label {
 }
 
 .toolbarButton {
-    float: right;
     appearance: none;
     -webkit-appearance: none;
     outline: none;
@@ -230,15 +228,15 @@ label {
     color: #1F1F1F;
 }
 
-.toolbarButtonToggled {
+.buttonToggled {
     color: #993333;
 }
 
-.toolbarButtonDisabled {
+.buttonDisabled {
     color: #888888;
 }
 
-.toolbarButtonBigger {
+.buttonBigger {
     font-size: 1.5em;
     padding-right: 15px;
     padding-left: 15px;
@@ -300,7 +298,6 @@ label {
 }
 
 .catLabel {
-    float: right;
     cursor: default;
     margin-top: 3px;
     margin-right: 5px;
