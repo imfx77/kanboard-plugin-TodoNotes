@@ -57,9 +57,9 @@ static prepareDocument() {
         }
     }
 
-    _BoardNotes_Project_.resizeDocument();
-
     _BoardNotes_Translations_.initialize();
+
+    _BoardNotes_Project_.resizeDocument();
 
     _BoardNotes_.refreshCategoryColors();
     _BoardNotes_.refreshSortByStatus();
@@ -81,7 +81,10 @@ static prepareDocument() {
 //------------------------------------------------
 static resizeDocument() {
     _BoardNotes_.adjustAllNotesPlaceholders();
-    _BoardNotes_.adjustScrollableContent();
+    _BoardNotes_.adjustAllNotesTitleInputs();
+    setTimeout(function() {
+        _BoardNotes_.adjustScrollableContent();
+    }, 100);
 }
 
 //------------------------------------------------

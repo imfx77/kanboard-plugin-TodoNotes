@@ -80,13 +80,8 @@ if (!empty($swimlanes)) {
 
 if (!$is_refresh) { // print only once per project !!!
     print '<div align="center">';
-    print '<section class="mainholder" id="mainholderP';
-    print $project_id;
-    print '">';
-
-    print '<div align="left" id="result';
-    print $project_id;
-    print '">';
+    print '<section class="mainholder" id="mainholderP' . $project_id . '">';
+    print '<div align="left" id="result' . $project_id . '">';
 }
 
 //----------------------------------------

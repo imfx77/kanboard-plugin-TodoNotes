@@ -25,7 +25,7 @@ static prepareDocument() {
 
         if ( _BoardNotes_.isMobile() ) {
             // adjust scrollableTable height
-            var maxHeight = 0.7 * $(window).height()
+            var maxHeight = 0.7 * $(window).height();
             scrollableTable.height( Math.min(maxHeight, scrollableTable.prop('scrollHeight')) );
         } else {
             // adjust scrollableTable height

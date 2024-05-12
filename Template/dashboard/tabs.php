@@ -11,16 +11,24 @@ print '<li class="singleTab" id="singleTab' .  $num . '"';
 print ' data-id="' . $num . '"';
 print ' data-project="0"';
 print '>';
+
+// ALL tab title row container
+//----------------------------------------
+print '<div class="localTable">';
+
+// ALL tab title
+print '<div class="localTableCell">';
 print $this->url->link(
     t('BoardNotes_DASHBOARD_ALL_TAB'),
     'BoardNotesController',
     'boardNotesShowAll',
     array('plugin' => 'BoardNotes', 'user_id' => $user_id, 'tab_id' => $num)
 );
+print '</div>'; // ALL tab title
 
 // buttons for ALL tab
 //----------------------------------------
-print '<div class="containerNoWrap containerFloatRight">';
+print '<div class="localTableCellExpandRight">';
 
 // button space
 print '<button class="toolbarSeparator">&nbsp;</button>';
@@ -34,9 +42,6 @@ print '>';
 print '<a><i class="fa fa-fw fa-wpforms" aria-hidden="true"></i></a>';
 print '</button>';
 
-// button space
-print '<button class="toolbarSeparator">&nbsp;</button>';
-
 // Show tabStatsWidget button
 print '<button id="settingsTabStats"';
 print ' class="toolbarButton settingsTabStats"';
@@ -45,9 +50,6 @@ print ' data-user="' . $user_id . '"';
 print '>';
 print '<a><i class="fa fa-pie-chart" aria-hidden="true"></i></a>';
 print '</button>';
-
-// button space
-print '<button class="toolbarSeparator">&nbsp;</button>';
 
 // ReIndex button - available to Admins ONLY!
 print '<button id="reindexNotesAndLists"';
@@ -62,15 +64,18 @@ print '>';
 print '<i class="fa fa-fw fa-recycle" aria-hidden="true"></i>';
 print '</button>';
 
-print '</div>'; // containerNoWrap containerFloatRight
+print '</div>'; // buttons for ALL tab
 
 // stats widget for ALL tab
 //----------------------------------------
-print '<div class="hideMe tabStatsWidget containerAlignRight">';
+print '<div class="hideMe localTableCell tabStatsWidget">';
 print $this->render('BoardNotes:widgets/stats', array(
      'stats_project_id' => 0,
 ));
-print '</div>'; // containerAlignRight
+print '</div>'; // stats widget for ALL tab
+
+//----------------------------------------
+print '</div>'; // ALL tab title row container
 
 //----------------------------------------
 print '</li>';
@@ -109,16 +114,24 @@ foreach ($projectsAccess as $o) {
     print '" data-project="';
     print $o['project_id'];
     print '">';
+
+    // single tab title row container
+    //----------------------------------------
+    print '<div class="localTable">';
+
+    // single tab title
+    print '<div class="localTableCell">';
     print $this->url->link(
         $o['project_name'],
         'BoardNotesController',
         'boardNotesShowAll',
         array('plugin' => 'BoardNotes', 'user_id' => $user_id, 'tab_id' => $num)
     );
+    print '</div>'; // single tab title
 
     // buttons for single tabs
     //----------------------------------------
-    print '<div class="containerNoWrap containerFloatRight">';
+    print '<div class="localTableCellExpandRight">';
 
     if ($o['is_custom']) {
         if ($o['is_global']) {
@@ -213,20 +226,25 @@ foreach ($projectsAccess as $o) {
         //----------------------------------------
     }
 
-    print '</div>'; // containerNoWrap containerFloatRight
+    print '</div>'; // buttons for single tabs
 
     // stats widget for single tabs
     //----------------------------------------
-    print '<div class="hideMe tabStatsWidget containerAlignRight">';
+    print '<div class="hideMe localTableCell tabStatsWidget">';
     print $this->render('BoardNotes:widgets/stats', array(
          'stats_project_id' => $o['project_id'],
     ));
-    print '</div>'; // containerAlignRight
+    print '</div>'; // stats widget for single tabs
+
+    //----------------------------------------
+    print '</div>'; // single tab title row container
 
     //----------------------------------------
     print'</li>';
     $num++;
 }
+
+print '<hr class="hrTabs">';
 
 ?>
 </ul>

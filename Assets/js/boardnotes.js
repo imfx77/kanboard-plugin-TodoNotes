@@ -41,7 +41,7 @@ static adjustScrollableContent() {
 
     if ( _BoardNotes_.isMobile() ) {
         // adjust scrollableContent height
-        var maxHeight = 0.7 * $(window).height()
+        var maxHeight = 0.7 * $(window).height();
         scrollableContent.height( Math.min(maxHeight, scrollableContent.prop('scrollHeight')) );
     } else {
         // adjust scrollableContent height
@@ -88,8 +88,21 @@ static adjustAllNotesPlaceholders() {
             var project_id = $(this).attr('data-project');
             var id = $(this).attr('data-id');
             _BoardNotes_.adjustNotePlaceholders(project_id, id);
-        })
+        });
     }, 100);
+}
+
+//------------------------------------------------
+// Adjust ALL notePlaceholder containers
+static adjustAllNotesTitleInputs() {
+    _BoardNotes_.showTitleInputNewNote();
+    $(".noteTitleLabel").each(function() {
+        if ($(this).hasClass( 'hideMe' )) {
+            var project_id = $(this).attr('data-project');
+            var id = $(this).attr('data-id');
+            _BoardNotes_.#showTitleInput(project_id, id, true);
+        }
+    });
 }
 
 //------------------------------------------------
@@ -178,7 +191,7 @@ static #toggleDetails(project_id, id) {
 }
 
 //------------------------------------------------
-// Show input or label visuals for title of NewNote
+// Show input visuals for title of NewNote
 static showTitleInputNewNote() {
     var noteDetails = $("#detailsNewNote");
     var previewDetails = $("#noteMarkdownDetailsNewNote_Preview");

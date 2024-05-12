@@ -1,31 +1,7 @@
 /* General */
 
-.button a {
-    border-bottom: 1px solid #777777;
-    border-left: 1px solid #000000;
-    border-right: 1px solid #333333;
-    border-top: 1px solid #000000;
-    color: #000000;
-    display: block;
-    height: 2.5em;
-    padding: 0 1em;
-    width: 5em;       
-    text-decoration: none;       
-}
-
-@media (max-width : 768px) {
-    .mainholder {
-        width: auto;
-        font: 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
-        color: #4D4D4D;
-        -webkit-font-smoothing: antialiased;
-        position: relative;
-        font-weight: 300;
-    }
-}
-
 .mainholder {
-    width: 720px;
+    width: 736px;
     font: 13px "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #4D4D4D;
     -webkit-font-smoothing: antialiased;
@@ -40,6 +16,55 @@
     -webkit-font-smoothing: antialiased;
     position: relative;
     font-weight: 300;
+}
+
+/* desktop browser styles override */
+@media only screen and (max-width: 768px) {
+    .mainholder {
+        width: 100%;
+        font: 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
+        color: #4D4D4D;
+        -webkit-font-smoothing: antialiased;
+        position: relative;
+        font-weight: 300;
+    }
+}
+
+/* mobile browser portrait mode styles override */
+@media only screen and (max-device-width: 768px) and (orientation:portrait) {
+    .mainholderMobile {
+        width: 100%;
+        font: 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
+        color: #4D4D4D;
+        -webkit-font-smoothing: antialiased;
+        position: relative;
+        font-weight: 300;
+    }
+}
+
+/* mobile browser landscape mode styles override */
+@media only screen and (max-device-width: 768px) and (orientation:landscape) {
+    .mainholderMobile {
+        width: 100%;
+        font: 10px "Helvetica Neue", Helvetica, Arial, sans-serif;
+        color: #4D4D4D;
+        -webkit-font-smoothing: antialiased;
+        position: relative;
+        font-weight: 300;
+    }
+}
+
+.button a {
+    border-bottom: 1px solid #777777;
+    border-left: 1px solid #000000;
+    border-right: 1px solid #333333;
+    border-top: 1px solid #000000;
+    color: #000000;
+    display: block;
+    height: 2.5em;
+    padding: 0 1em;
+    width: 5em;
+    text-decoration: none;
 }
 
 .view {
@@ -98,16 +123,6 @@ label {
     white-space: nowrap;
 }
 
-.containerAlignLeft {
-    text-align: left;
-    width: 100%;
-}
-
-.containerAlignRight {
-    text-align: right;
-    width: 100%;
-}
-
 .containerFloatLeft {
     float: left;
 }
@@ -131,6 +146,7 @@ label {
 
 .scrollableContent {
     width: 100%;
+    overflow-x: hidden;
     overflow-y: scroll;
     scrollbar-color: rgba(192, 192, 192, .5) rgba(0, 0, 0, .1);
 }
@@ -461,7 +477,6 @@ label {
 /* Style for stat boxes (e.g. in dropdown.php) */
 
 .statOpen {
-    float: right;
     color: #F7F7F7;
     background: #CD650A;
     border: 2px solid #1F1F1F;
@@ -471,7 +486,6 @@ label {
 }
 
 .statProgress {
-    float: right;
     color: #F7F7F7;
     background: #1F77B4;
     border: 2px solid #1F1F1F;
@@ -481,7 +495,6 @@ label {
 }
 
 .statDone {
-    float: right;
     color: #F7F7F7;
     background: #2CA02C;
     border: 2px solid #1F1F1F;

@@ -9,6 +9,7 @@ static prepareDocument() {
     if(isMobile) {
         // choose mobile view
         $("#mainholderDashboard").removeClass( 'mainholderDashboard' ).addClass( 'mainholderMobileDashboard' );
+        $(".sidebar").addClass( 'sidebarMobileDashboard' );
     }
 
     _BoardNotes_Translations_.initialize();

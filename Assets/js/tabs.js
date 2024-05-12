@@ -18,7 +18,7 @@ static updateTabs() {
 
 //------------------------------------------------
 static updateTabsContainer() {
-    var numTabs = $("#tabs li").length + 1; // add +1 because of the separator lines
+    var numTabs = $("#tabs li").length + 2; // add +2 because of the separator lines
     var tabHeight = $("#tabs li:eq(0)").outerHeight();
     $("#tabs").height(numTabs * tabHeight);
 }
