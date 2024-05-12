@@ -1270,8 +1270,11 @@ static sqlRefreshTabs(user_id) {
     var loadUrl = '/?controller=BoardNotesController&action=boardNotesRefreshTabs&plugin=BoardNotes'
                 + '&user_id=' + user_id;
     setTimeout(function() {
-        $("#tabs").html(_BoardNotes_Translations_.msgLoadingSpinner).load(loadUrl);
-    }, 50);
+        $("#tabs").html(_BoardNotes_Translations_.msgLoadingSpinner).load(loadUrl,
+            function() {
+                _BoardNotes_Dashboard_.prepareDocument();
+            });
+    }, 100);
 }
 
 //------------------------------------------------
