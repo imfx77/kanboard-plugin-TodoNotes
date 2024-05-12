@@ -24,10 +24,7 @@
 
 .hrTabs {
     border: 1px solid;
-}
-
-.hideMe {
-    display:none !important;
+    width: 100%;
 }
 </style>
 

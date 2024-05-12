@@ -20,6 +20,7 @@ static prepareDocument() {
     setTimeout(function() {
         // resize the report table to fit in screen height so to scroll its contents
         var scrollableTable = $(".tableReport");
+        if (!scrollableTable.eq(0).length) return; // missing table when NOT in report screen
         scrollableTable.height(0);
 
         if ( _BoardNotes_.isMobile() ) {

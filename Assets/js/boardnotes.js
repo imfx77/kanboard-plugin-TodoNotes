@@ -27,6 +27,7 @@ static isMobile() {
 static optionShowCategoryColors = false;
 static optionSortByStatus = false;
 static optionShowAllDone = false;
+static optionShowTabStats = false;
 
 //------------------------------------------------
 // Note Details routines
@@ -755,7 +756,7 @@ static #settingsHandlers() {
     //------------------------------------------------
 
     $("#settingsShowAllDone").click(function() {
-        _BoardNotes_.#sqlToggleSessionOption('boardnotesShowAllDone');
+        _BoardNotes_.sqlToggleSessionOption('boardnotesShowAllDone');
 
         _BoardNotes_.optionShowAllDone = !_BoardNotes_.optionShowAllDone;
         _BoardNotes_.refreshShowAllDone();
@@ -768,7 +769,7 @@ static #settingsHandlers() {
     });
 
     $("#settingsSortByStatus").click(function() {
-        _BoardNotes_.#sqlToggleSessionOption('boardnotesSortByStatus');
+        _BoardNotes_.sqlToggleSessionOption('boardnotesSortByStatus');
 
         var project_id = $(this).attr('data-project');
         var user_id = $(this).attr('data-user');
@@ -776,7 +777,7 @@ static #settingsHandlers() {
     });
 
     $("#settingsCategoryColors").click(function() {
-        _BoardNotes_.#sqlToggleSessionOption('boardnotesShowCategoryColors');
+        _BoardNotes_.sqlToggleSessionOption('boardnotesShowCategoryColors');
 
         _BoardNotes_.optionShowCategoryColors = !_BoardNotes_.optionShowCategoryColors;
         _BoardNotes_.refreshCategoryColors();
@@ -1244,7 +1245,7 @@ static #sqlRefreshNotes(project_id, user_id) {
 }
 
 //------------------------------------------------
-static #sqlToggleSessionOption(session_option) {
+static sqlToggleSessionOption(session_option) {
     $.ajax({
         cache: false,
         type: "POST",

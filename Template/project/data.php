@@ -99,16 +99,24 @@ if (!array_key_exists('boardnotesShowCategoryColors', $_SESSION)) {
     $_SESSION['boardnotesShowCategoryColors'] = false;
 }
 $optionShowCategoryColors = $_SESSION['boardnotesShowCategoryColors'];
+
 // evaluate optionSortByStatus option from session
 if (!array_key_exists('boardnotesSortByStatus', $_SESSION)) {
     $_SESSION['boardnotesSortByStatus'] = false;
 }
 $optionSortByStatus = $_SESSION['boardnotesSortByStatus'];
+
 // evaluate optionShowAllDone option from session
 if (!array_key_exists('boardnotesShowAllDone', $_SESSION)) {
     $_SESSION['boardnotesShowAllDone'] = false;
 }
 $optionShowAllDone = $_SESSION['boardnotesShowAllDone'];
+
+// evaluate optionShowTabStats option from session
+if (!array_key_exists('boardnotesShowTabStats', $_SESSION)) {
+    $_SESSION['boardnotesShowTabStats'] = false;
+}
+$optionShowTabStats = $_SESSION['boardnotesShowTabStats'];
 
 // session_vars (hidden reference for options)
 print '<div id="session_vars';
@@ -118,6 +126,8 @@ print '" data-optionSortByStatus="';
 print $optionSortByStatus ? 'true' : 'false';
 print '" data-optionShowAllDone="';
 print $optionShowAllDone ? 'true' : 'false';
+print '" data-optionShowTabStats="';
+print $optionShowTabStats ? 'true' : 'false';
 print '" class="hideMe">';
 print '</div>';
 
@@ -198,7 +208,7 @@ if (!$readonlyNotes) {
     print ' data-project="' . $project_id . '"';
     print ' data-user="' . $user_id . '"';
     print '>';
-    print '<i class="fa fa-file-text-o" aria-hidden="true"></i>';
+    print '<i class="fa fa-file-text" aria-hidden="true"></i>';
     print '</button>';
 
     // Settings stats
@@ -208,7 +218,7 @@ if (!$readonlyNotes) {
     print ' data-project="' . $project_id . '"';
     print ' data-user="' . $user_id . '"';
     print '>';
-    print '<i class="fa fa-bar-chart" aria-hidden="true"></i>';
+    print '<i class="fa fa-pie-chart" aria-hidden="true"></i>';
     print '</button>';
 
     // add some space between button groups

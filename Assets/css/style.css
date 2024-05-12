@@ -98,6 +98,16 @@ label {
     white-space: nowrap;
 }
 
+.containerAlignLeft {
+    text-align: left;
+    width: 100%;
+}
+
+.containerAlignRight {
+    text-align: right;
+    width: 100%;
+}
+
 .containerFloatLeft {
     float: left;
 }
@@ -229,17 +239,17 @@ label {
 }
 
 .buttonToggled {
-    color: #993333;
+    color: #993333 !important;
 }
 
 .buttonDisabled {
-    color: #888888;
+    color: #888888 !important;
 }
 
 .buttonBigger {
-    font-size: 1.5em;
-    padding-right: 15px;
-    padding-left: 15px;
+    font-size: 1.5em !important;
+    padding-right: 15px !important;
+    padding-left: 15px !important;
 }
 
 .checkDone {
