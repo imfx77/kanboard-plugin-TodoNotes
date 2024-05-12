@@ -43,21 +43,6 @@ static updateTabStats() {
 
 //------------------------------------------------
 static #TabActionHandlers() {
-    // toggle visibility of tabs stats widgets
-    $("#settingsTabStats").click(function() {
-        _BoardNotes_.sqlToggleSessionOption('boardnotesShowTabStats');
-
-        _BoardNotes_.optionShowTabStats = !_BoardNotes_.optionShowTabStats;
-
-        _BoardNotes_Tabs_.updateTabStats();
-    });
-
-    // start DB optimization routine on system reindex button
-    $("#reindexNotesAndLists").click(function() {
-        var user_id = $(this).attr('data-user');
-        _BoardNotes_Tabs_.#sqlReindexNotesAndLists(user_id);
-    });
-
     // update tabs stats widgets on clicking checkDone
     $("button" + ".checkDone").click(function() {
         var project_id = $(this).attr('data-project');
@@ -91,6 +76,63 @@ static #TabActionHandlers() {
             $statsWidgetCurrent.find(".statProgress b").text(parseInt($statsWidgetCurrent.find(".statProgress b").text()) - 1)
         }
     });
+
+    //------------------------------------------------
+
+    // toggle visibility of tabs stats widgets
+    $("button" + "#settingsTabStats").click(function() {
+        _BoardNotes_.sqlToggleSessionOption('boardnotesShowTabStats');
+
+        _BoardNotes_.optionShowTabStats = !_BoardNotes_.optionShowTabStats;
+
+        _BoardNotes_Tabs_.updateTabStats();
+    });
+
+    // start DB optimization routine on system reindex button
+    $("button" + "#reindexNotesAndLists").click(function() {
+        var user_id = $(this).attr('data-user');
+        _BoardNotes_Tabs_.#sqlReindexNotesAndLists(user_id);
+    });
+
+    //------------------------------------------------
+
+    // create custom list (global or private)
+    $("button" + "#customNoteListCreate").click(function() {
+        var user_id = $(this).attr('data-user');
+        _BoardNotes_Tabs_.#modalCreateCustomNoteList(user_id);
+    });
+}
+
+//------------------------------------------------
+// Modal Dialogs routines
+//------------------------------------------------
+
+//------------------------------------------------
+static #modalCreateCustomNoteList(user_id) {
+    $("#dialogCreateCustomNoteList").removeClass( 'hideMe' );
+    $("#dialogCreateCustomNoteList").dialog({
+        resizable: false,
+        height: "auto",
+        modal: true,
+        buttons: [
+            {
+                text : _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_CREATE_BTN'),
+                click : function() {
+                    var custom_note_list_name = $("#nameCreateCustomNoteList").val().trim();
+                    var custom_note_list_is_global = $("#globalCreateCustomNoteList").is(":checked");
+                    _BoardNotes_Tabs_.#sqlCreateCustomNoteList(user_id, custom_note_list_name, custom_note_list_is_global);
+                    $( this ).dialog( "close" );
+                },
+            },
+            {
+                text : _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_CANCEL_BTN'),
+                click : function() {
+                    $( this ).dialog( "close" );
+                }
+            },
+        ]
+    });
+    return false;
 }
 
 //------------------------------------------------
@@ -107,11 +149,36 @@ static #sqlReindexNotesAndLists(user_id) {
     $.ajaxSetup ({
         cache: false
     });
-    var loadUrl = '/?controller=BoardNotesController&action=reindexNotesAndLists&plugin=BoardNotes'
+    var loadUrl = '/?controller=BoardNotesController&action=boardNotesReindexNotesAndLists&plugin=BoardNotes'
                 + '&user_id=' + user_id
                 + '&tab_id=' + tab_id;
     setTimeout(function() {
         $("#result" + project_id).html(_BoardNotes_Translations_.getSpinnerMsg('BoardNotes_JS_REINDEXING_MSG'));
+        location.replace(loadUrl);
+    }, 50);
+}
+
+//------------------------------------------------
+// SQL create custom note list
+static #sqlCreateCustomNoteList(user_id, custom_note_list_name, custom_note_list_is_global) {
+    if (!custom_note_list_name) {
+        alert( _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_CUSTOM_NOTE_LIST_NAME_EMPTY_MSG') );
+        return;
+    }
+
+    var project_id = $("#tabId").attr('data-project');
+
+    // don't cache ajax or content won't be fresh
+    $.ajaxSetup ({
+        cache: false
+    });
+    var loadUrl = '/?controller=BoardNotesController&action=boardNotesCreateCustomNoteList&plugin=BoardNotes'
+                + '&user_id=' + user_id
+                + '&project_id=' + project_id
+                + '&custom_note_list_name=' + encodeURIComponent(custom_note_list_name)
+                + '&custom_note_list_is_global=' + custom_note_list_is_global;
+    setTimeout(function() {
+        $("#result" + project_id).html(_BoardNotes_Translations_.msgLoadingSpinner);
         location.replace(loadUrl);
     }, 50);
 }

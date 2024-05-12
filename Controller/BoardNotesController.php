@@ -406,7 +406,7 @@ class BoardNotesController extends BaseController
         )));
     }
 
-    public function reindexNotesAndLists()
+    public function boardNotesReindexNotesAndLists()
     {
         $user_id = $this->resolveUserId();
         $tab_id = $this->request->getStringParam('tab_id');
@@ -437,6 +437,58 @@ class BoardNotesController extends BaseController
             }
         } else {
             $this->flash->failure(t('BoardNotes_DASHBOARD_REINDEX_FAILURE') . ' => ' . t('BoardNotes_DASHBOARD_NO_ADMIN_PRIVILEGES'));
+        }
+
+        $this->response->redirect($this->helper->url->to('BoardNotesController', 'boardNotesShowAll', array(
+            'plugin' => 'BoardNotes',
+            'user_id' => $user_id,
+            'tab_id' => $tab_id,
+        )));
+    }
+
+    public function boardNotesCreateCustomNoteList()
+    {
+        $user_id = $this->resolveUserId();
+        $project_id = intval($this->request->getStringParam('project_id'));
+
+        $custom_note_list_name = $this->request->getStringParam('custom_note_list_name');
+        $custom_note_list_is_global = ($this->request->getStringParam('custom_note_list_is_global') == 'true');
+
+
+        if (empty($custom_note_list_name)) {
+            // empty name !
+            $this->flash->failure(t('BoardNotes_DASHBOARD_CREATE_CUSTOM_NOTE_LIST_GLOBAL_FAILURE') . ' => ' . t('BoardNotes_DASHBOARD_INVALID_OR_EMPTY_PARAMETER'));
+        } elseif ($custom_note_list_is_global && !$this->userModel->isAdmin($user_id)) {
+            // non-Admin attempting to create a Global note list !
+            $this->flash->failure(t('BoardNotes_DASHBOARD_CREATE_CUSTOM_NOTE_LIST_GLOBAL_FAILURE') . ' => ' . t('BoardNotes_DASHBOARD_NO_ADMIN_PRIVILEGES'));
+        } else {
+            $validation = $this->boardNotesModel->boardNotesCreateCustomNoteList(!$custom_note_list_is_global ? $user_id : 0, $custom_note_list_name);
+
+            if ($validation) {
+                if ($custom_note_list_is_global) {
+                    $this->flash->success(t('BoardNotes_DASHBOARD_CREATE_CUSTOM_NOTE_LIST_GLOBAL_SUCCESS'));
+                } else {
+                    $this->flash->success(t('BoardNotes_DASHBOARD_CREATE_CUSTOM_NOTE_LIST_PRIVATE_SUCCESS'));
+                }
+            } else {
+                if ($custom_note_list_is_global) {
+                    $this->flash->failure(t('BoardNotes_DASHBOARD_CREATE_CUSTOM_NOTE_LIST_GLOBAL_FAILURE'));
+                } else {
+                    $this->flash->failure(t('BoardNotes_DASHBOARD_CREATE_CUSTOM_NOTE_LIST_PRIVATE_FAILURE'));
+                }
+            }
+        }
+
+        $tab_id = 0;
+        $count = 1;
+        $all_user_projects = $this->boardNotesModel->boardNotesGetAllProjectIds($user_id);
+        // recover the tab_id of the last selected project (or leave it 0)
+        foreach ( $all_user_projects as $project ) {
+            if ($project_id == $project['project_id']) {
+                $tab_id = $count;
+                break;
+            }
+            $count++;
         }
 
         $this->response->redirect($this->helper->url->to('BoardNotesController', 'boardNotesShowAll', array(

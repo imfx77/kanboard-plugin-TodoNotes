@@ -103,6 +103,13 @@
 <?= t('BoardNotes_DASHBOARD_MY_NOTES')?> > <?= t('BoardNotes_DASHBOARD_ALL_TAB') ?>
 </h2></div>
 
+<!--
+//----------------------------------------
+// ACTUAL CONTENT BEGINS HERE !!!
+// it shall be regenerated dynamically by reloading the "tabs" and "content" containers from within the page
+//----------------------------------------
+-->
+
 <section class="mainholderDashboard sidebar-container" id="mainholderDashboard">
 
 <div id="tabs" class="sidebar tabs">
@@ -146,7 +153,16 @@ if ($tab_id > 0) {
 
 </section>
 
+<!--
+//----------------------------------------
+// ACTUAL CONTENT ENDS HERE !!!
+// all sections below must appear ONCE ONLY and NOT be refreshed
+//----------------------------------------
+-->
+
 <?php
+
+$isAdmin = $this->user->isAdmin();
 
 // tabId (hidden reference for tabs)
 print '<div class="hideMe" id="tabId"';
@@ -154,3 +170,24 @@ print ' data-tab="' . $tab_id  . '"';
 print ' data-project="' . $project['id'] . '"';
 print '></div>';
 
+//----------------------------------------
+
+print '<div class="hideMe" id="dialogCreateCustomNoteList" title="' . t('BoardNotes_DASHBOARD_CREATE_CUSTOM_NOTE_LIST') . '">';
+
+print '<input type="text" id="nameCreateCustomNoteList" placeholder="' . t('BoardNotes_DIALOG_CREATE_CUSTOM_NOTE_LIST_NAME_PLACEHOLDER') . '">';
+print '<br>';
+if ($isAdmin) {
+    print '<input type="checkbox" id="globalCreateCustomNoteList">';
+    print '<label for="globalCreateCustomNoteList">&nbsp;&nbsp;' . t('BoardNotes_DIALOG_CREATE_CUSTOM_NOTE_LIST_GLOBAL_CHECKBOX') . '</label>';
+} else {
+    print '<input type="checkbox" disabled id="globalCreateCustomNoteList">';
+    print '<label for="globalCreateCustomNoteList">&nbsp;&nbsp;' . t('BoardNotes_DIALOG_CREATE_CUSTOM_NOTE_LIST_GLOBAL_CHECKBOX') . ' ' . t('BoardNotes_DASHBOARD_ADMIN_ONLY') . '</label>';
+}
+print '<br><br>';
+print '<p style="white-space: pre-wrap;">';
+print t('BoardNotes_DIALOG_CREATE_CUSTOM_NOTE_LIST_MSG');
+print '</p>';
+
+print '</div>';
+
+//---------------------------------------------

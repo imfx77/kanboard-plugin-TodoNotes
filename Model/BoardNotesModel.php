@@ -488,4 +488,31 @@ class BoardNotesModel extends Base
             'statTotal' => $statTotal,
         );
     }
+
+    // Create Custom Note List
+    public function boardNotesCreateCustomNoteList($user_id, $custom_note_list_name)
+    {
+        // Get last position number for project and user
+        $lastPosition = $this->db->table(self::TABLE_NOTES_CUSTOM_PROJECTS)
+            ->eq('owner_id', $user_id)
+            ->desc('position')
+            ->findOneColumn('position');
+
+        if (empty($lastPosition)) {
+            $lastPosition = 0;
+        }
+
+        // Add 1 to position
+        $lastPosition++;
+
+        // Define values
+        $values = array(
+            'owner_id' => $user_id,
+            'position' => $lastPosition,
+            'project_name' => $custom_note_list_name,
+        );
+
+        return $this->db->table(self::TABLE_NOTES_CUSTOM_PROJECTS)
+            ->insert($values);
+    }
 }
