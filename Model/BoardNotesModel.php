@@ -20,6 +20,11 @@ class BoardNotesModel extends Base
     private const TABLE_CATEGORIES              = CategoryModel::TABLE;
     private const TABLE_ACCESS                  = ProjectUserRoleModel::TABLE;
 
+    public const PROJECT_TYPE_NONE              = 0;
+    public const PROJECT_TYPE_NATIVE            = 1;
+    public const PROJECT_TYPE_CUSTOM_GLOBAL     = 2;
+    public const PROJECT_TYPE_CUSTOM_PRIVATE    = 3;
+
     // Check unique note
     private function boardNotesIsUniqueNote($project_id, $user_id, $note_id)
     {
@@ -125,8 +130,8 @@ class BoardNotesModel extends Base
         return $projectIds;
     }
 
-    // Get all project_id where user has custom access
-    public function boardNotesGetCustomProjectIds($user_id)
+    // Get all project_id where all users have custom Global access
+    public function boardNotesGetCustomGlobalProjectIds()
     {
         $projectIdsGlobal = $this->db->table(self::TABLE_NOTES_CUSTOM_PROJECTS)
             ->columns('id AS project_id', 'project_name')
@@ -138,7 +143,12 @@ class BoardNotesModel extends Base
             $projectId['is_custom'] = true;
             $projectId['is_global'] = true;
         }
+        return $projectIdsGlobal;
+    }
 
+    // Get all project_id where each user has custom Private access
+    public function boardNotesGetCustomPrivateProjectIds($user_id)
+    {
         $projectIdsPrivate = $this->db->table(self::TABLE_NOTES_CUSTOM_PROJECTS)
             ->columns('id AS project_id', 'project_name')
             ->eq('owner_id', $user_id)  // PRIVATE custom projects, managed by each user
@@ -149,18 +159,29 @@ class BoardNotesModel extends Base
             $projectId['is_custom'] = true;
             $projectId['is_global'] = false;
         }
+        return $projectIdsPrivate;
+    }
 
-        $projectsIdsCustom = array_merge($projectIdsGlobal, $projectIdsPrivate);
-        return $projectsIdsCustom;
+    // Get all project_id where user has custom access
+    public function boardNotesGetCustomProjectIds($user_id)
+    {
+        return array_merge( $this->boardNotesGetCustomGlobalProjectIds(), $this->boardNotesGetCustomPrivateProjectIds($user_id) );
     }
 
     // Get all project_id where user has assigned or custom access
     public function boardNotesGetAllProjectIds($user_id)
     {
-        $projectCustomAccess = $this->boardNotesGetCustomProjectIds($user_id);
-        $projectAssignedAccess = $this->boardNotesGetProjectIds($user_id);
-        $projectsAccess = array_merge($projectCustomAccess, $projectAssignedAccess);
-        return $projectsAccess;
+        return array_merge( $this->boardNotesGetCustomProjectIds($user_id), $this->boardNotesGetProjectIds($user_id) );
+    }
+
+    // Get projects count by type
+    public function boardNotesGetProjectsCountByType($user_id)
+    {
+        $numProjects = array();
+        $numProjects[self::PROJECT_TYPE_NATIVE] = count($this->boardNotesGetProjectIds($user_id));
+        $numProjects[self::PROJECT_TYPE_CUSTOM_GLOBAL] = count($this->boardNotesGetCustomGlobalProjectIds());
+        $numProjects[self::PROJECT_TYPE_CUSTOM_PRIVATE] = count($this->boardNotesGetCustomPrivateProjectIds($user_id));
+        return $numProjects;
     }
 
     // Get a list of all categories in project
