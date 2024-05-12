@@ -23,13 +23,14 @@ static prepareDocument() {
         if (!scrollableTable.eq(0).length) return; // missing table when NOT in report screen
         scrollableTable.height(0);
 
+        var maxHeight = 0;
         if ( _BoardNotes_.isMobile() ) {
             // adjust scrollableTable height
-            var maxHeight = 0.7 * $(window).height();
+            maxHeight = 0.7 * $(window).height();
             scrollableTable.height( Math.min(maxHeight, scrollableTable.prop('scrollHeight')) );
         } else {
             // adjust scrollableTable height
-            var maxHeight = 0.9 * ( $(window).height() - scrollableTable.eq(0).offset().top );
+            maxHeight = 0.9 * ( $(window).height() - scrollableTable.eq(0).offset().top );
             scrollableTable.height( Math.min(maxHeight, scrollableTable.prop('scrollHeight')) );
         }
     }, 100);
