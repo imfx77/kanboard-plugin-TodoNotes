@@ -65,7 +65,9 @@ Might be waiting for an unsubmitted New Note data input!',
     //
     // Template dialogs
     //
-    'BoardNotes_DIALOG_DELETE_ALL_DONE_MSG' => '⚠ These items will be permanently deleted and cannot be recovered!
+    'BoardNotes_DIALOG_DELETE_NOTE_MSG' => '⚠ This note will be permanently deleted and cannot be recovered!
+&#10;Are you sure?',
+    'BoardNotes_DIALOG_DELETE_ALL_DONE_MSG' => '⚠ ALL Done notes will be permanently deleted and cannot be recovered!
 &#10;Are you sure?',
     'BoardNotes_DIALOG_TRANSFER_NOTE_TARGET_PROJECT' => 'Target Project',
     'BoardNotes_DIALOG_TRANSFER_NOTE_MSG' => '⚠ Bear in mind that the target project may NOT have the category that is assigned to the note!

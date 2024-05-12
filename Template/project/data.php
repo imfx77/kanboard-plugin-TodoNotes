@@ -745,11 +745,23 @@ if (!$is_refresh) { // print only once per project !!!
 //----------------------------------------
 
 if (!$is_refresh) { // print only once per project !!!
+    //---------------------------------------------
+
+    print '<div class="hideMe" id="dialogDeleteNote" title="' . t('BoardNotes_PROJECT_NOTE_DELETE') . '">';
+    print '<p style="white-space: pre-wrap;">';
+    print t('BoardNotes_DIALOG_DELETE_NOTE_MSG');
+    print '</p>';
+    print '</div>';
+
+    //---------------------------------------------
+
     print '<div class="hideMe" id="dialogDeleteAllDone" title="' . t('BoardNotes_PROJECT_DELETE_ALL_DONE_NOTES') . '">';
     print '<p style="white-space: pre-wrap;">';
     print t('BoardNotes_DIALOG_DELETE_ALL_DONE_MSG');
     print '</p>';
     print '</div>';
+
+    //---------------------------------------------
 
     print '<div class="hideMe" id="dialogStats" title="' . t('BoardNotes_PROJECT_NOTES_STATS') . '">';
     print '<div id="dialogStatsInside"></div>';

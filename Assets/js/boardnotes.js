@@ -626,9 +626,7 @@ static #noteActionHandlers() {
         var project_id = $(this).attr('data-project');
         var user_id = $(this).attr('data-user');
         var id = $(this).attr('data-id');
-        _BoardNotes_.#sqlDeleteNote(project_id, user_id, id);
-        _BoardNotes_.sqlRefreshTabs(user_id);
-        _BoardNotes_.sqlRefreshNotes(project_id, user_id);
+        _BoardNotes_.#modalDeleteNote(project_id, user_id, id);
     });
 
     // POST on Transfer Note button
@@ -968,6 +966,31 @@ static #modalCreateTask(project_id, user_id, id, is_active, title, description, 
         ]
     });
     return false;
+}
+
+//------------------------------------------------
+static #modalDeleteNote(project_id, user_id, id) {
+    $("#dialogDeleteNote").removeClass( 'hideMe' );
+    $("#dialogDeleteNote").dialog({
+        resizable: false,
+        height: "auto",
+        modal: true,
+        buttons: [
+            {
+                text : _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_DELETE_BTN'),
+                click: function() {
+                    _BoardNotes_.#sqlDeleteNote(project_id, user_id, id);
+                    $( this ).dialog( "close" );
+                    _BoardNotes_.sqlRefreshTabs(user_id);
+                    _BoardNotes_.sqlRefreshNotes(project_id, user_id);
+                },
+            },
+            {
+                text : _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_CANCEL_BTN'),
+                click: function() { $( this ).dialog( "close" ); }
+            },
+        ]
+    });
 }
 
 //------------------------------------------------
