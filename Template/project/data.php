@@ -747,7 +747,7 @@ if (!$is_refresh) { // print only once per project !!!
 if (!$is_refresh) { // print only once per project !!!
     print '<div class="hideMe" id="dialogDeleteAllDone" title="' . t('BoardNotes_PROJECT_DELETE_ALL_DONE_NOTES') . '">';
     print '<p style="white-space: pre-wrap;">';
-    print t('BoardNotes_DELETEALLDONE_DIALOG_MSG');
+    print t('BoardNotes_DIALOG_DELETE_ALL_DONE_MSG');
     print '</p>';
     print '</div>';
 
@@ -784,7 +784,7 @@ if (!$is_refresh) { // print only once per project !!!
     print '<br>';
 
     print '<input type="checkbox" checked id="removeNote-P' . $project_id . '">';
-    print '<label for="removeNote-P' . $project_id . '">&nbsp;&nbsp;' . t('BoardNotes_CREATETASK_DIALOG_CHECKBOX_REMOVE_NOTE') . '</label>';
+    print '<label for="removeNote-P' . $project_id . '">&nbsp;&nbsp;' . t('BoardNotes_DIALOG_CREATE_TASK_CHECKBOX_REMOVE_NOTE') . '</label>';
 
     print '</div>';
 
@@ -795,7 +795,7 @@ if (!$is_refresh) { // print only once per project !!!
 
     print '<div class="hideMe" id="dialogTransferNote-P' . $project_id . '" title="' . t('BoardNotes_PROJECT_NOTE_MOVE_TO_PROJECT') . '">';
 
-    print '<label for="listNoteProject-P' . $project_id . '">' . t('BoardNotes_TRANSFERNOTE_DIALOG_TARGET_PROJECT') . ' : &nbsp&nbsp;</label>';
+    print '<label for="listNoteProject-P' . $project_id . '">' . t('BoardNotes_DIALOG_TRANSFER_NOTE_TARGET_PROJECT') . ' : &nbsp&nbsp;</label>';
     print '<select id="listNoteProject-P' . $project_id . '">';
     foreach ($projectsTabsById as $key => $projectTab) {
         if ($key != $project_id) {
@@ -809,7 +809,7 @@ if (!$is_refresh) { // print only once per project !!!
     print '</select>';
     print '<br><br>';
     print '<p style="white-space: pre-wrap;">';
-    print t('BoardNotes_TRANSFERNOTE_DIALOG_MSG');
+    print t('BoardNotes_DIALOG_TRANSFER_NOTE_MSG');
     print '</p>';
 
     print '</div>';
@@ -818,7 +818,7 @@ if (!$is_refresh) { // print only once per project !!!
 
     print '<div class="hideMe" id="dialogReport-P' . $project_id . '" title="' . t('BoardNotes_PROJECT_CREATE_REPORT') . '">';
     print '<div id="">';
-    print '<label for="catReport-P' . $project_id . '">' . t('BoardNotes_REPORT_DIALOG_CATEGORY_FILTER') . ' :</label><br>';
+    print '<label for="catReport-P' . $project_id . '">' . t('BoardNotes_DIALOG_REPORT_CATEGORY_FILTER') . ' :</label><br>';
     print '<select id="catReport-P' . $project_id . '">';
 
     print '<option></option>'; // add an empty category option

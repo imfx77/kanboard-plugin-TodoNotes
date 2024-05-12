@@ -53,7 +53,7 @@ Might be waiting for an unsubmitted New Note data input!',
     'BoardNotes_DASHBOARD_REINDEX_SUCCESS' => 'Reindexing Notes and Lists finished successfully.',
     'BoardNotes_DASHBOARD_REINDEX_FAILURE' => '⚠ Reindexing Notes and Lists failed!',
     'BoardNotes_DASHBOARD_REINDEX_METHOD_NOT_IMPLEMENTED' => 'Schema version method is NOT implemented!',
-    'BoardNotes_DASHBOARD_NEW_CUSTOM_LIST' => 'New custom list',
+    'BoardNotes_DASHBOARD_CREATE_CUSTOM_NOTE_LIST' => 'Create custom list',
     'BoardNotes_DASHBOARD_RENAME_CUSTOM_GLOBAL_LIST' => '⚠ Rename custom global list!',
     'BoardNotes_DASHBOARD_DELETE_CUSTOM_GLOBAL_LIST' => '⚠ Delete custom global list!',
     'BoardNotes_DASHBOARD_RENAME_CUSTOM_PRIVATE_LIST' => 'Rename custom private list',
@@ -65,18 +65,22 @@ Might be waiting for an unsubmitted New Note data input!',
     //
     // Template dialogs
     //
-    'BoardNotes_DELETEALLDONE_DIALOG_MSG' => '⚠ These items will be permanently deleted and cannot be recovered!
+    'BoardNotes_DIALOG_DELETE_ALL_DONE_MSG' => '⚠ These items will be permanently deleted and cannot be recovered!
 &#10;Are you sure?',
-    'BoardNotes_TRANSFERNOTE_DIALOG_TARGET_PROJECT' => 'Target Project',
-    'BoardNotes_TRANSFERNOTE_DIALOG_MSG' => '⚠ Bear in mind that the target project may NOT have the category that is assigned to the note!
+    'BoardNotes_DIALOG_TRANSFER_NOTE_TARGET_PROJECT' => 'Target Project',
+    'BoardNotes_DIALOG_TRANSFER_NOTE_MSG' => '⚠ Bear in mind that the target project may NOT have the category that is assigned to the note!
 &#10;If so, the category will be displayed greyed and will be ignored until a valid one from the target project is set.
 &#10;Continue?',
-    'BoardNotes_CREATETASK_DIALOG_CHECKBOX_REMOVE_NOTE' => '⚠ Remove the Note',
-    'BoardNotes_POST_DIALOG_SUCCESS_TITLE' => 'Success!',
-    'BoardNotes_POST_DIALOG_FAILURE_TITLE' => 'Ooops, something went wrong ;/',
-    'BoardNotes_POST_DIALOG_SUCCESS_TEXT' => 'Created task',
-    'BoardNotes_POST_DIALOG_FAILURE_TEXT' => 'The task could not be created for:',
-    'BoardNotes_REPORT_DIALOG_CATEGORY_FILTER' => 'Filter by Category',
+    'BoardNotes_DIALOG_CREATE_TASK_CHECKBOX_REMOVE_NOTE' => '⚠ Remove the Note',
+    'BoardNotes_DIALOG_POST_SUCCESS_TITLE' => 'Success!',
+    'BoardNotes_DIALOG_POST_FAILURE_TITLE' => 'Ooops, something went wrong ;/',
+    'BoardNotes_DIALOG_POST_SUCCESS_TEXT' => 'Created task',
+    'BoardNotes_DIALOG_POST_FAILURE_TEXT' => 'The task could not be created for:',
+    'BoardNotes_DIALOG_REPORT_CATEGORY_FILTER' => 'Filter by Category',
+    'BoardNotes_DIALOG_CREATE_CUSTOM_NOTE_LIST_NAME_PLACEHOLDER' => 'type custom note list name',
+    'BoardNotes_DIALOG_CREATE_CUSTOM_NOTE_LIST_GLOBAL_CHECKBOX' => '⚠ Make it Global',
+    'BoardNotes_DIALOG_CREATE_CUSTOM_NOTE_LIST_MSG' => 'You can create a Private custom list for your personal usage.
+&#10;⚠ If you have Admin privileges, you can create a Global custom list - and it will be visible for all users to work with!',
     //
     // Specific EXPORTS FOR JS
     //
@@ -91,6 +95,9 @@ Keeping the current one !',
     'BoardNotes_JS_NOTE_UPDATE_INVALID_MSG' => '⚠
 The note you are trying to update is INVALID !
 The page will forcefully refresh now !',
+    'BoardNotes_JS_CUSTOM_NOTE_LIST_NAME_EMPTY_MSG' => '⚠
+Custom list name is empty !
+Aborting operation !',
     'BoardNotes_JS_DIALOG_CANCEL_BTN' => 'Cancel',
     'BoardNotes_JS_DIALOG_CLOSE_BTN' => 'Close',
     'BoardNotes_JS_DIALOG_MOVE_BTN' => '⚠ Move',

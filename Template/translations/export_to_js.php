@@ -9,6 +9,7 @@ $translationTextIds = array(
     'BoardNotes_JS_NOTE_ADD_TITLE_EMPTY_MSG',
     'BoardNotes_JS_NOTE_UPDATE_TITLE_EMPTY_MSG',
     'BoardNotes_JS_NOTE_UPDATE_INVALID_MSG',
+    'BoardNotes_JS_CUSTOM_NOTE_LIST_NAME_EMPTY_MSG',
     'BoardNotes_JS_DIALOG_CANCEL_BTN',
     'BoardNotes_JS_DIALOG_CLOSE_BTN',
     'BoardNotes_JS_DIALOG_MOVE_BTN',

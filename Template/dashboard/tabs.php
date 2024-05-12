@@ -34,9 +34,9 @@ print '<div class="localTableCellExpandRight">';
 print '<button class="toolbarSeparator">&nbsp;</button>';
 
 // New list button
-print '<button id="customListNew"';
-print ' class="toolbarButton customListNew"';
-print ' title="' . t('BoardNotes_DASHBOARD_NEW_CUSTOM_LIST') . '"';
+print '<button id="customNoteListCreate"';
+print ' class="toolbarButton customNoteListCreate"';
+print ' title="' . t('BoardNotes_DASHBOARD_CREATE_CUSTOM_NOTE_LIST') . '"';
 print ' data-user="' . $user_id . '"';
 print '>';
 print '<a><i class="fa fa-fw fa-wpforms" aria-hidden="true"></i></a>';
@@ -142,10 +142,10 @@ foreach ($projectsAccess as $o) {
             print '<button class="toolbarSeparator">&nbsp;</button>';
 
             // Rename button
-            print '<button id="customListRenameP' . $o['project_id'] . '"';
+            print '<button id="customNoteListRenameP' . $o['project_id'] . '"';
             print $isAdmin
-                ? ' class="toolbarButton buttonToggled customListRename"'
-                : ' class="toolbarButton buttonDisabled customListRename"';
+                ? ' class="toolbarButton buttonToggled customNoteListRename"'
+                : ' class="toolbarButton buttonDisabled customNoteListRename"';
             print $isAdmin
                 ? ' title="' . t('BoardNotes_DASHBOARD_RENAME_CUSTOM_GLOBAL_LIST') . '"'
                 : ' title="' . t('BoardNotes_DASHBOARD_RENAME_CUSTOM_GLOBAL_LIST') . ' ' . t('BoardNotes_DASHBOARD_ADMIN_ONLY') . '"';
@@ -156,10 +156,10 @@ foreach ($projectsAccess as $o) {
             print '</button>';
 
             // Delete button
-            print '<button id="customListDelete-P' . $o['project_id'] . '"';
+            print '<button id="customNoteListDelete-P' . $o['project_id'] . '"';
             print $isAdmin
-                ? ' class="toolbarButton buttonToggled customListDelete"'
-                : ' class="toolbarButton buttonDisabled customListDelete"';
+                ? ' class="toolbarButton buttonToggled customNoteListDelete"'
+                : ' class="toolbarButton buttonDisabled customNoteListDelete"';
             print $isAdmin
                 ? ' title="' . t('BoardNotes_DASHBOARD_DELETE_CUSTOM_GLOBAL_LIST') . '"'
                 : ' title="' . t('BoardNotes_DASHBOARD_DELETE_CUSTOM_GLOBAL_LIST') . ' ' . t('BoardNotes_DASHBOARD_ADMIN_ONLY') . '"';
@@ -177,8 +177,8 @@ foreach ($projectsAccess as $o) {
             print '<button class="toolbarSeparator">&nbsp;</button>';
 
             // Rename button
-            print '<button id="customListRenameP' . $o['project_id'] . '"';
-            print ' class="toolbarButton customListRename"';
+            print '<button id="customNoteListRenameP' . $o['project_id'] . '"';
+            print ' class="toolbarButton customNoteListRename"';
             print ' title="' . t('BoardNotes_DASHBOARD_RENAME_CUSTOM_PRIVATE_LIST') . '"';
             print ' data-project="' . $o['project_id'] . '"';
             print ' data-user="' . $user_id . '"';
@@ -187,8 +187,8 @@ foreach ($projectsAccess as $o) {
             print '</button>';
 
             // Delete button
-            print '<button id="customListDelete-P' . $o['project_id'] . '"';
-            print ' class="toolbarButton customListDelete"';
+            print '<button id="customNoteListDelete-P' . $o['project_id'] . '"';
+            print ' class="toolbarButton customNoteListDelete"';
             print ' title="' . t('BoardNotes_DASHBOARD_DELETE_CUSTOM_PRIVATE_LIST') . '"';
             print ' data-project="' . $o['project_id'] . '"';
             print ' data-user="' . $user_id . '"';
