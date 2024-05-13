@@ -90,6 +90,12 @@ static #TabActionHandlers() {
 
     // start DB optimization routine on system reindex button
     $("button" + "#reindexNotesAndLists").click(function() {
+        var is_admin = $("#tabId").attr('data-admin');
+        if (is_admin != "1") {
+            alert( _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_DASHBOARD_NO_ADMIN_PRIVILEGES') );
+            return;
+        }
+
         var user_id = $(this).attr('data-user');
         _BoardNotes_Tabs_.#sqlReindexNotesAndLists(user_id);
     });
@@ -100,6 +106,30 @@ static #TabActionHandlers() {
     $("button" + "#customNoteListCreate").click(function() {
         var user_id = $(this).attr('data-user');
         _BoardNotes_Tabs_.#modalCreateCustomNoteList(user_id);
+    });
+
+    //------------------------------------------------
+
+    // rename custom list (global)
+    $("button" + ".customNoteListRenameGlobal").click(function() {
+        var is_admin = $("#tabId").attr('data-admin');
+        if (is_admin != "1") {
+            alert( _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_DASHBOARD_NO_ADMIN_PRIVILEGES') );
+            return;
+        }
+
+        var user_id = $(this).attr('data-user');
+        var project_id = $(this).attr('data-project');
+        var default_name = $(this).closest('.singleTab').find('a').text();
+        _BoardNotes_Tabs_.#modalRenameCustomNoteList(user_id, project_id, true /* is_global */, default_name);
+    });
+
+    // rename custom list (private)
+    $("button" + ".customNoteListRenamePrivate").click(function() {
+        var user_id = $(this).attr('data-user');
+        var project_id = $(this).attr('data-project');
+        var default_name = $(this).closest('.singleTab').find('a').text();
+        _BoardNotes_Tabs_.#modalRenameCustomNoteList(user_id, project_id, false /* is_global */, default_name);
     });
 }
 
@@ -136,6 +166,34 @@ static #modalCreateCustomNoteList(user_id) {
 }
 
 //------------------------------------------------
+static #modalRenameCustomNoteList(user_id, project_id, is_global, default_name) {
+    $("#nameRenameCustomNoteList").val(default_name);
+    $("#dialogRenameCustomNoteList").removeClass( 'hideMe' );
+    $("#dialogRenameCustomNoteList").dialog({
+        resizable: false,
+        height: "auto",
+        modal: true,
+        buttons: [
+            {
+                text : _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_RENAME_BTN'),
+                click : function() {
+                    var custom_note_list_name = $("#nameRenameCustomNoteList").val().trim();
+                    _BoardNotes_Tabs_.#sqlRenameCustomNoteList(user_id, project_id, custom_note_list_name);
+                    $( this ).dialog( "close" );
+                },
+            },
+            {
+                text : _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_CANCEL_BTN'),
+                click : function() {
+                    $( this ).dialog( "close" );
+                }
+            },
+        ]
+    });
+    return false;
+}
+
+//------------------------------------------------
 // SQL routines
 //------------------------------------------------
 
@@ -151,7 +209,6 @@ static #sqlReindexNotesAndLists(user_id) {
     });
     var loadUrl = '/?controller=BoardNotesController&action=boardNotesReindexNotesAndLists&plugin=BoardNotes'
                 + '&user_id=' + user_id
-                + '&project_id=' + project_id
                 + '&tab_id=' + tab_id;
     setTimeout(function() {
         $("#result" + project_id).html(_BoardNotes_Translations_.getSpinnerMsg('BoardNotes_JS_REINDEXING_MSG'));
@@ -167,7 +224,6 @@ static #sqlCreateCustomNoteList(user_id, custom_note_list_name, custom_note_list
         return;
     }
 
-    var tab_id = $("#tabId").attr('data-tab');
     var project_id = $("#tabId").attr('data-project');
 
     // don't cache ajax or content won't be fresh
@@ -176,10 +232,34 @@ static #sqlCreateCustomNoteList(user_id, custom_note_list_name, custom_note_list
     });
     var loadUrl = '/?controller=BoardNotesController&action=boardNotesCreateCustomNoteList&plugin=BoardNotes'
                 + '&user_id=' + user_id
-                + '&project_id=' + project_id
-                + '&tab_id=' + tab_id
+                + '&project_custom_id=' + project_id
                 + '&custom_note_list_name=' + encodeURIComponent(custom_note_list_name)
                 + '&custom_note_list_is_global=' + custom_note_list_is_global;
+    setTimeout(function() {
+        $("#result" + project_id).html(_BoardNotes_Translations_.msgLoadingSpinner);
+        location.replace(loadUrl);
+    }, 50);
+}
+
+//------------------------------------------------
+// SQL rename custom note list
+static #sqlRenameCustomNoteList(user_id, project_id, custom_note_list_name) {
+    if (!custom_note_list_name) {
+        alert( _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_CUSTOM_NOTE_LIST_NAME_EMPTY_MSG') );
+        return;
+    }
+
+    var tab_id = $("#tabId").attr('data-tab');
+
+    // don't cache ajax or content won't be fresh
+    $.ajaxSetup ({
+        cache: false
+    });
+    var loadUrl = '/?controller=BoardNotesController&action=boardNotesRenameCustomNoteList&plugin=BoardNotes'
+                + '&user_id=' + user_id
+                + '&tab_id=' + tab_id
+                + '&project_custom_id=' + project_id
+                + '&custom_note_list_name=' + encodeURIComponent(custom_note_list_name);
     setTimeout(function() {
         $("#result" + project_id).html(_BoardNotes_Translations_.msgLoadingSpinner);
         location.replace(loadUrl);

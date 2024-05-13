@@ -168,6 +168,7 @@ $isAdmin = $this->user->isAdmin();
 print '<div class="hideMe" id="tabId"';
 print ' data-tab="' . $tab_id  . '"';
 print ' data-project="' . $project['id'] . '"';
+print ' data-admin="' . ($isAdmin ? '1' : '0') . '"';
 print '></div>';
 
 //----------------------------------------
@@ -186,6 +187,18 @@ if ($isAdmin) {
 print '<br><br>';
 print '<p style="white-space: pre-wrap;">';
 print t('BoardNotes_DIALOG_CREATE_CUSTOM_NOTE_LIST_MSG');
+print '</p>';
+
+print '</div>';
+
+//----------------------------------------
+
+print '<div class="hideMe" id="dialogRenameCustomNoteList" title="' . t('BoardNotes_DIALOG_RENAME_CUSTOM_NOTE_LIST_TITLE') . '">';
+
+print '<input type="text" id="nameRenameCustomNoteList">';
+print '<br><br>';
+print '<p style="white-space: pre-wrap;">';
+print t('BoardNotes_DIALOG_RENAME_CUSTOM_NOTE_LIST_MSG');
 print '</p>';
 
 print '</div>';

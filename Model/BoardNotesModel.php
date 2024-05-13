@@ -26,14 +26,14 @@ class BoardNotesModel extends Base
     public const PROJECT_TYPE_CUSTOM_PRIVATE    = 3;
 
     // Check unique note
-    private function boardNotesIsUniqueNote($project_id, $user_id, $note_id)
+    private function IsUniqueNote($project_id, $user_id, $note_id)
     {
-        $result = $this->db->table(self::TABLE_NOTES_ENTRIES);
-        $result = $result->eq('id', $note_id);
-        $result = $result->eq('user_id', $user_id);
-        $result = $result->eq('project_id', $project_id);
-        $result = $result->gte('is_active', "0"); // -1 == deleted
-        $result = $result->findAll();
+        $result = $this->db->table(self::TABLE_NOTES_ENTRIES)
+            ->eq('id', $note_id)
+            ->eq('user_id', $user_id)
+            ->eq('project_id', $project_id)
+            ->gte('is_active', "0") // -1 == deleted
+            ->findAll();
 
         if (!$result) {
             return false;
@@ -42,6 +42,22 @@ class BoardNotesModel extends Base
             return false;
         }
         return true;
+    }
+
+    // Check global project
+    public function IsCustomGlobalProject($project_id)
+    {
+        if ($project_id >= 0) { // custom projects have negative Ids
+            return false;
+        }
+        $result = $this->db->table(self::TABLE_NOTES_CUSTOM_PROJECTS)
+            ->eq('id', -$project_id)
+            ->findOneColumn('owner_id');
+
+        if ($result == 0) {
+            return true;
+        }
+        return false;
     }
 
     // Show all notes related to project
@@ -374,7 +390,7 @@ class BoardNotesModel extends Base
     // Update note
     public function boardNotesUpdateNote($project_id, $user_id, $note_id, $is_active, $title, $description, $category)
     {
-        $is_unique = $this->boardNotesIsUniqueNote($project_id, $user_id, $note_id);
+        $is_unique = $this->IsUniqueNote($project_id, $user_id, $note_id);
         if (!$is_unique) {
             return false;
         }
@@ -400,7 +416,7 @@ class BoardNotesModel extends Base
     // Update note Status
     public function boardNotesUpdateNoteStatus($project_id, $user_id, $note_id, $is_active)
     {
-        $is_unique = $this->boardNotesIsUniqueNote($project_id, $user_id, $note_id);
+        $is_unique = $this->IsUniqueNote($project_id, $user_id, $note_id);
         if (!$is_unique) {
             return false;
         }
@@ -514,5 +530,17 @@ class BoardNotesModel extends Base
 
         return $this->db->table(self::TABLE_NOTES_CUSTOM_PROJECTS)
             ->insert($values);
+    }
+
+    // Rename Custom Note List
+    public function boardNotesRenameCustomNoteList($project_id, $custom_note_list_name)
+    {
+        $values = array(
+            'project_name' => $custom_note_list_name,
+        );
+
+        return $this->db->table(self::TABLE_NOTES_CUSTOM_PROJECTS)
+            ->eq('id', -$project_id)
+            ->update($values);
     }
 }

@@ -144,8 +144,8 @@ foreach ($projectsAccess as $o) {
             // Rename button
             print '<button id="customNoteListRenameP' . $o['project_id'] . '"';
             print $isAdmin
-                ? ' class="toolbarButton buttonToggled customNoteListRename"'
-                : ' class="toolbarButton buttonDisabled customNoteListRename"';
+                ? ' class="toolbarButton buttonToggled customNoteListRenameGlobal"'
+                : ' class="toolbarButton buttonDisabled customNoteListRenameGlobal"';
             print $isAdmin
                 ? ' title="' . t('BoardNotes_DASHBOARD_RENAME_CUSTOM_GLOBAL_LIST') . '"'
                 : ' title="' . t('BoardNotes_DASHBOARD_RENAME_CUSTOM_GLOBAL_LIST') . ' ' . t('BoardNotes_DASHBOARD_ADMIN_ONLY') . '"';
@@ -178,7 +178,7 @@ foreach ($projectsAccess as $o) {
 
             // Rename button
             print '<button id="customNoteListRenameP' . $o['project_id'] . '"';
-            print ' class="toolbarButton customNoteListRename"';
+            print ' class="toolbarButton customNoteListRenamePrivate"';
             print ' title="' . t('BoardNotes_DASHBOARD_RENAME_CUSTOM_PRIVATE_LIST') . '"';
             print ' data-project="' . $o['project_id'] . '"';
             print ' data-user="' . $user_id . '"';
