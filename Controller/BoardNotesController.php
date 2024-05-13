@@ -493,6 +493,9 @@ class BoardNotesController extends BaseController
             $this->flash->failure(t('BoardNotes_DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('BoardNotes_DASHBOARD_NO_ADMIN_PRIVILEGES'));
         } else {
             $validation = $this->boardNotesModel->boardNotesCreateCustomNoteList(!$custom_note_list_is_global ? $user_id : 0, $custom_note_list_name);
+            if ($validation) {
+                $this->boardNotesModel->EmulateForceRefresh();
+            }
             $this->CustomNoteListOperationNotification($validation, $custom_note_list_is_global);
         }
 
@@ -520,6 +523,9 @@ class BoardNotesController extends BaseController
             $this->flash->failure(t('BoardNotes_DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('BoardNotes_DASHBOARD_NO_ADMIN_PRIVILEGES'));
         } else {
             $validation = $this->boardNotesModel->boardNotesRenameCustomNoteList($project_id, $custom_note_list_name);
+            if ($validation) {
+                $this->boardNotesModel->EmulateForceRefresh();
+            }
             $this->CustomNoteListOperationNotification($validation, $is_global);
         }
 

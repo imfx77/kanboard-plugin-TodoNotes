@@ -254,14 +254,19 @@ class BoardNotesModel extends Base
         $result = $result->desc('date_modified');
         $result = $result->findOne();
 
-        return $result;
+        $forceRefresh = $this->db->table(self::TABLE_NOTES_ENTRIES)
+            ->columns('date_modified')
+            ->eq('id', 0)
+            ->findOne();
+
+        return max($result, $forceRefresh);
     }
 
     // Delete note
     public function boardNotesDeleteNote($project_id, $user_id, $note_id)
     {
         // purge previously marked as deleted notes
-        $purged = $this->boardNotesPurgeNotes($project_id, $user_id);
+        $purged = $this->PurgeNotes($project_id, $user_id);
 
         // Get current unixtime
         $timestamp = time();
@@ -286,7 +291,7 @@ class BoardNotesModel extends Base
     public function boardNotesDeleteAllDoneNotes($project_id, $user_id)
     {
         // purge previously marked as deleted notes
-        $purged = $this->boardNotesPurgeNotes($project_id, $user_id);
+        $purged = $this->PurgeNotes($project_id, $user_id);
 
         // Get current unixtime
         $timestamp = time();
@@ -308,13 +313,21 @@ class BoardNotesModel extends Base
     }
 
     // Actually PURGE the notes marked as deleted
-    private function boardNotesPurgeNotes($project_id, $user_id)
+    private function PurgeNotes($project_id, $user_id)
     {
         return $this->db->table(self::TABLE_NOTES_ENTRIES)
             ->eq('project_id', $project_id)
             ->eq('user_id', $user_id)
             ->eq('is_active', "-1") // previously marked as deleted
             ->remove();
+    }
+
+    // Emulate a global force refresh by updating a modified timestamp to the special id=0 entry
+    public function EmulateForceRefresh()
+    {
+        return $this->db->table(self::TABLE_NOTES_ENTRIES)
+            ->eq('id', 0)
+            ->update(array('date_modified' => time()));
     }
 
     // Add note
