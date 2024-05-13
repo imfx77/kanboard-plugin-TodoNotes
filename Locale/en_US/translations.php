@@ -55,14 +55,14 @@ Might be waiting for an unsubmitted New Note data input!',
     'BoardNotes_DASHBOARD_REINDEX_FAILURE' => '⚠ Reindexing Notes and Lists failed!',
     'BoardNotes_DASHBOARD_REINDEX_METHOD_NOT_IMPLEMENTED' => 'Schema version method is NOT implemented!',
     'BoardNotes_DASHBOARD_CREATE_CUSTOM_NOTE_LIST' => 'Create custom list',
-    'BoardNotes_DASHBOARD_CREATE_CUSTOM_NOTE_LIST_PRIVATE_SUCCESS' => 'Creating a Private custom note list succeeded.',
-    'BoardNotes_DASHBOARD_CREATE_CUSTOM_NOTE_LIST_PRIVATE_FAILURE' => '⚠ Creating a Private custom note list failed!',
-    'BoardNotes_DASHBOARD_CREATE_CUSTOM_NOTE_LIST_GLOBAL_SUCCESS' => 'Creating a Global custom note list succeeded.',
-    'BoardNotes_DASHBOARD_CREATE_CUSTOM_NOTE_LIST_GLOBAL_FAILURE' => '⚠ Creating a Global custom note list failed!',
     'BoardNotes_DASHBOARD_RENAME_CUSTOM_GLOBAL_LIST' => '⚠ Rename custom global list!',
     'BoardNotes_DASHBOARD_DELETE_CUSTOM_GLOBAL_LIST' => '⚠ Delete custom global list!',
     'BoardNotes_DASHBOARD_RENAME_CUSTOM_PRIVATE_LIST' => 'Rename custom private list',
     'BoardNotes_DASHBOARD_DELETE_CUSTOM_PRIVATE_LIST' => 'Delete custom private list',
+    'BoardNotes_DASHBOARD_OPERATION_CUSTOM_NOTE_LISTPRIVATE_SUCCESS' => 'Private custom note list operation succeeded.',
+    'BoardNotes_DASHBOARD_OPERATION_CUSTOM_NOTE_LISTPRIVATE_FAILURE' => '⚠ Private custom note list operation failed!',
+    'BoardNotes_DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_SUCCESS' => 'Global custom note list operation succeeded.',
+    'BoardNotes_DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE' => '⚠ Global custom note list operation failed!',
     //
     // Template/report
     //

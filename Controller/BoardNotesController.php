@@ -34,7 +34,7 @@ class BoardNotesController extends BaseController
 
     private function resolveProject($user_id)
     {
-        $project_id = intval( $this->request->getStringParam('project_custom_id') );
+        $project_id = intval($this->request->getStringParam('project_custom_id'));
 
         if (empty($project_id)) {
             $project_id = $this->request->getIntegerParam('project_id');
@@ -63,6 +63,21 @@ class BoardNotesController extends BaseController
             $project['is_global'] = false;
             return $project;
         }
+    }
+
+    private function FetchTabForProject($user_id, $project_id)
+    {
+        $count = 1;
+        $all_user_projects = $this->boardNotesModel->boardNotesGetAllProjectIds($user_id);
+        // recover the tab_id of the last selected project
+        foreach ($all_user_projects as $project) {
+            if ($project_id == $project['project_id']) {
+                return $count;
+            }
+            $count++;
+        }
+        // if nothing found leave 0
+        return 0;
     }
 
     private function boardNotesShowProjectWithRefresh($is_refresh)
@@ -446,6 +461,23 @@ class BoardNotesController extends BaseController
         )));
     }
 
+    private function CustomNoteListOperationNotification($validation, $is_global)
+    {
+        if ($validation) {
+            if ($is_global) {
+                $this->flash->success(t('BoardNotes_DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_SUCCESS'));
+            } else {
+                $this->flash->success(t('BoardNotes_DASHBOARD_OPERATION_CUSTOM_NOTE_LISTPRIVATE_SUCCESS'));
+            }
+        } else {
+            if ($is_global) {
+                $this->flash->failure(t('BoardNotes_DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE'));
+            } else {
+                $this->flash->failure(t('BoardNotes_DASHBOARD_OPERATION_CUSTOM_NOTE_LISTPRIVATE_FAILURE'));
+            }
+        }
+    }
+
     public function boardNotesCreateCustomNoteList()
     {
         $user_id = $this->resolveUserId();
@@ -457,44 +489,19 @@ class BoardNotesController extends BaseController
 
         if (empty($custom_note_list_name)) {
             // empty name !
-            $this->flash->failure(t('BoardNotes_DASHBOARD_CREATE_CUSTOM_NOTE_LIST_GLOBAL_FAILURE') . ' => ' . t('BoardNotes_DASHBOARD_INVALID_OR_EMPTY_PARAMETER'));
+            $this->flash->failure(t('BoardNotes_DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('BoardNotes_DASHBOARD_INVALID_OR_EMPTY_PARAMETER'));
         } elseif ($custom_note_list_is_global && !$this->userModel->isAdmin($user_id)) {
             // non-Admin attempting to create a Global note list !
-            $this->flash->failure(t('BoardNotes_DASHBOARD_CREATE_CUSTOM_NOTE_LIST_GLOBAL_FAILURE') . ' => ' . t('BoardNotes_DASHBOARD_NO_ADMIN_PRIVILEGES'));
+            $this->flash->failure(t('BoardNotes_DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('BoardNotes_DASHBOARD_NO_ADMIN_PRIVILEGES'));
         } else {
             $validation = $this->boardNotesModel->boardNotesCreateCustomNoteList(!$custom_note_list_is_global ? $user_id : 0, $custom_note_list_name);
-
-            if ($validation) {
-                if ($custom_note_list_is_global) {
-                    $this->flash->success(t('BoardNotes_DASHBOARD_CREATE_CUSTOM_NOTE_LIST_GLOBAL_SUCCESS'));
-                } else {
-                    $this->flash->success(t('BoardNotes_DASHBOARD_CREATE_CUSTOM_NOTE_LIST_PRIVATE_SUCCESS'));
-                }
-            } else {
-                if ($custom_note_list_is_global) {
-                    $this->flash->failure(t('BoardNotes_DASHBOARD_CREATE_CUSTOM_NOTE_LIST_GLOBAL_FAILURE'));
-                } else {
-                    $this->flash->failure(t('BoardNotes_DASHBOARD_CREATE_CUSTOM_NOTE_LIST_PRIVATE_FAILURE'));
-                }
-            }
-        }
-
-        $tab_id = 0;
-        $count = 1;
-        $all_user_projects = $this->boardNotesModel->boardNotesGetAllProjectIds($user_id);
-        // recover the tab_id of the last selected project (or leave it 0)
-        foreach ( $all_user_projects as $project ) {
-            if ($project_id == $project['project_id']) {
-                $tab_id = $count;
-                break;
-            }
-            $count++;
+            $this->CustomNoteListOperationNotification($validation, $custom_note_list_is_global);
         }
 
         $this->response->redirect($this->helper->url->to('BoardNotesController', 'boardNotesShowAll', array(
             'plugin' => 'BoardNotes',
             'user_id' => $user_id,
-            'tab_id' => $tab_id,
+            'tab_id' => $this->FetchTabForProject($user_id, $project_id),
         )));
     }
 }

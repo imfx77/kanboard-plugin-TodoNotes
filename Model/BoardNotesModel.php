@@ -165,13 +165,13 @@ class BoardNotesModel extends Base
     // Get all project_id where user has custom access
     public function boardNotesGetCustomProjectIds($user_id)
     {
-        return array_merge( $this->boardNotesGetCustomGlobalProjectIds(), $this->boardNotesGetCustomPrivateProjectIds($user_id) );
+        return array_merge($this->boardNotesGetCustomGlobalProjectIds(), $this->boardNotesGetCustomPrivateProjectIds($user_id));
     }
 
     // Get all project_id where user has assigned or custom access
     public function boardNotesGetAllProjectIds($user_id)
     {
-        return array_merge( $this->boardNotesGetCustomProjectIds($user_id), $this->boardNotesGetProjectIds($user_id) );
+        return array_merge($this->boardNotesGetCustomProjectIds($user_id), $this->boardNotesGetProjectIds($user_id));
     }
 
     // Get projects count by type

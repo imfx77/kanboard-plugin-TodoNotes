@@ -142,8 +142,8 @@ static #modalCreateCustomNoteList(user_id) {
 //------------------------------------------------
 // SQL reindex notes and lists DB routine
 static #sqlReindexNotesAndLists(user_id) {
-    var tab_id = $("#tabId").attr('data-tab');
     var project_id = $("#tabId").attr('data-project');
+    var tab_id = $("#tabId").attr('data-tab');
 
     // don't cache ajax or content won't be fresh
     $.ajaxSetup ({
@@ -151,6 +151,7 @@ static #sqlReindexNotesAndLists(user_id) {
     });
     var loadUrl = '/?controller=BoardNotesController&action=boardNotesReindexNotesAndLists&plugin=BoardNotes'
                 + '&user_id=' + user_id
+                + '&project_id=' + project_id
                 + '&tab_id=' + tab_id;
     setTimeout(function() {
         $("#result" + project_id).html(_BoardNotes_Translations_.getSpinnerMsg('BoardNotes_JS_REINDEXING_MSG'));
@@ -166,6 +167,7 @@ static #sqlCreateCustomNoteList(user_id, custom_note_list_name, custom_note_list
         return;
     }
 
+    var tab_id = $("#tabId").attr('data-tab');
     var project_id = $("#tabId").attr('data-project');
 
     // don't cache ajax or content won't be fresh
@@ -175,6 +177,7 @@ static #sqlCreateCustomNoteList(user_id, custom_note_list_name, custom_note_list
     var loadUrl = '/?controller=BoardNotesController&action=boardNotesCreateCustomNoteList&plugin=BoardNotes'
                 + '&user_id=' + user_id
                 + '&project_id=' + project_id
+                + '&tab_id=' + tab_id
                 + '&custom_note_list_name=' + encodeURIComponent(custom_note_list_name)
                 + '&custom_note_list_is_global=' + custom_note_list_is_global;
     setTimeout(function() {
