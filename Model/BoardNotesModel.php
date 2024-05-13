@@ -259,7 +259,11 @@ class BoardNotesModel extends Base
             ->eq('id', 0)
             ->findOne();
 
-        return max($result, $forceRefresh);
+        return array(
+            'notes' => $result['date_modified'],
+            'projects' => $forceRefresh['date_modified'],
+            'max' => max($result['date_modified'], $forceRefresh['date_modified']),
+        );
     }
 
     // Delete note

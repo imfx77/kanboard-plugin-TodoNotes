@@ -244,9 +244,7 @@ class BoardNotesController extends BaseController
         $project_id = $project['id'];
 
         $validation = $this->boardNotesModel->boardNotesGetLastModifiedTimestamp($project_id, $user_id);
-
-        $lastTimestamp = (!$validation) ? 0 : $validation['date_modified'];
-        print($lastTimestamp);
+        print(json_encode($validation));
 
         return $validation;
     }

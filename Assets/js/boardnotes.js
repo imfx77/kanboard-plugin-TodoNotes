@@ -1344,8 +1344,7 @@ static #sqlGetLastModifiedTimestamp(project_id, user_id) {
             + '&project_custom_id=' + project_id
             + '&user_id=' + user_id,
         success: function(response) {
-            var lastModifiedTimestamp = parseInt(response);
-            _BoardNotes_.#checkAndTriggerRefresh(lastModifiedTimestamp);
+            _BoardNotes_.#checkAndTriggerRefresh(JSON.parse(response));
         },
         error: function(xhr,textStatus,e) {
             alert('sqlGetLastModifiedTimestamp');
@@ -1401,12 +1400,17 @@ static scheduleCheckModifications() {
 // check if page refresh is necessary
 static #checkAndTriggerRefresh(lastModifiedTimestamp) {
     var lastRefreshedTimestamp = $("#refProjectId").attr('data-timestamp');
+    var project_id = $("#refProjectId").attr('data-project');
+    var user_id = $("#refProjectId").attr('data-user');
 
-    if (lastRefreshedTimestamp < lastModifiedTimestamp) {
-        var project_id = $("#refProjectId").attr('data-project');
-        var user_id = $("#refProjectId").attr('data-user');
+    if (lastRefreshedTimestamp < lastModifiedTimestamp.projects) {
         _BoardNotes_.sqlRefreshTabs(user_id);
+    }
+    if (lastRefreshedTimestamp < lastModifiedTimestamp.notes) {
         _BoardNotes_.sqlRefreshNotes(project_id, user_id);
+    }
+    if (lastRefreshedTimestamp < lastModifiedTimestamp.max) {
+        $("#refProjectId").attr('data-timestamp', lastModifiedTimestamp.max);
     }
 
     _BoardNotes_.scheduleCheckModifications();
