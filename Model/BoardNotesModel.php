@@ -254,15 +254,21 @@ class BoardNotesModel extends Base
         $result = $result->desc('date_modified');
         $result = $result->findOne();
 
+        $timestampNotes = 0;
+        if ($result && count($result) == 1) {
+            $timestampNotes = $result['date_modified'];
+        }
+
         $forceRefresh = $this->db->table(self::TABLE_NOTES_ENTRIES)
             ->columns('date_modified')
             ->eq('id', 0)
             ->findOne();
+        $timestampProjects = $forceRefresh['date_modified'];
 
         return array(
-            'notes' => $result['date_modified'],
-            'projects' => $forceRefresh['date_modified'],
-            'max' => max($result['date_modified'], $forceRefresh['date_modified']),
+            'notes' => $timestampNotes,
+            'projects' => $timestampProjects,
+            'max' => max($timestampNotes, $timestampProjects),
         );
     }
 
