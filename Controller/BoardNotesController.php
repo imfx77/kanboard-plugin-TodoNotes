@@ -394,6 +394,8 @@ class BoardNotesController extends BaseController
         $nrNotes = $this->request->getStringParam('nrNotes');
 
         $validation = $this->boardNotesModel->boardNotesUpdatePosition($project_id, $user_id, $notePositions, $nrNotes);
+        print $validation ? time() : 0;
+
         return $validation;
     }
 

@@ -294,6 +294,25 @@ static #noteDetailsDblclickHandlersDisable() {
 static #noteDetailsHandlers() {
     //------------------------------------------------
 
+    // disable keydown propagation for title and edit controls of Notes and New Note
+    $(".inputNewNote").keydown(function(event) {
+        event.stopPropagation();
+    });
+
+    $(".noteEditorMarkdownNewNote").keydown(function(event) {
+        event.stopPropagation();
+    });
+
+    $(".noteTitle").keydown(function(event) {
+        event.stopPropagation();
+    });
+
+    $(".noteEditorMarkdown").keydown(function(event) {
+        event.stopPropagation();
+    });
+
+    //------------------------------------------------
+
     // disable click & dblclick propagation for all marked sub-elements
     $(".disableEventsPropagation").click(function (event) {
         event.stopPropagation();
@@ -310,6 +329,17 @@ static #noteDetailsHandlers() {
     });
 
     _BoardNotes_.#noteDetailsDblclickHandlers();
+
+    //------------------------------------------------
+
+    // On TAB key in document focus on New Note input
+    $(document).keydown(function(event) {
+        if (event.keyCode == 9) {
+            setTimeout(function() {
+                $("#inputNewNote").focus();
+            }, 100);
+        }
+    });
 
     //------------------------------------------------
 
@@ -1138,6 +1168,7 @@ static #sqlUpdateNote(project_id, user_id, id) {
             var lastModifiedTimestamp = parseInt(response);
             if (lastModifiedTimestamp > 0) {
                 $("#refProjectId").attr('data-timestamp', lastModifiedTimestamp);
+                // refresh and render the details markdown preview
                 $("#noteMarkdownDetails-P" + project_id + "-" + id + "_Preview").html(_BoardNotes_Translations_.msgLoadingSpinner).load(
                     '/?controller=BoardNotesController&action=boardNotesRefreshMarkdownPreviewWidget&plugin=BoardNotes'
                         + '&markdown_text=' + encodeURIComponent(description),
@@ -1324,7 +1355,13 @@ static sqlUpdatePosition(project_id, user_id, order, nrNotes) {
             + '&user_id=' + user_id
             + '&order=' + order
             + '&nrNotes=' + nrNotes,
-        success: function() {
+        success: function(response) {
+            var lastModifiedTimestamp = parseInt(response);
+            if (lastModifiedTimestamp > 0) {
+                $("#refProjectId").attr('data-timestamp', lastModifiedTimestamp);
+            } else {
+                _BoardNotes_.sqlRefreshNotes(project_id, user_id);
+            }
         },
         error: function(xhr,textStatus,e) {
             alert('sqlUpdatePosition');

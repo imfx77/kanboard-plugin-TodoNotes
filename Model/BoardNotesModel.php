@@ -473,6 +473,7 @@ class BoardNotesModel extends Base
 
         $timestamp = time();
 
+        $result = true;
         // Loop through all positions
         foreach ($note_ids as $row_id) {
             $values = array(
@@ -480,7 +481,7 @@ class BoardNotesModel extends Base
                 'date_modified' => $timestamp,
             );
 
-            $this->db->table(self::TABLE_NOTES_ENTRIES)
+            $result = $result && $this->db->table(self::TABLE_NOTES_ENTRIES)
                 ->eq('project_id', $project_id)
                 ->eq('user_id', $user_id)
                 ->eq('id', $row_id)
@@ -489,6 +490,8 @@ class BoardNotesModel extends Base
 
             $num--;
         }
+
+        return $result;
     }
 
     // Get Stats for Notes
