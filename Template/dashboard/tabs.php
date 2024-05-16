@@ -142,7 +142,7 @@ foreach ($projectsAccess as $o) {
             print '<button class="toolbarSeparator">&nbsp;</button>';
 
             // Rename button
-            print '<button id="customNoteListRenameP' . $o['project_id'] . '"';
+            print '<button id="customNoteListRenameGlobal-P' . $o['project_id'] . '"';
             print $isAdmin
                 ? ' class="toolbarButton buttonToggled customNoteListRenameGlobal"'
                 : ' class="toolbarButton buttonDisabled customNoteListRenameGlobal"';
@@ -156,10 +156,10 @@ foreach ($projectsAccess as $o) {
             print '</button>';
 
             // Delete button
-            print '<button id="customNoteListDelete-P' . $o['project_id'] . '"';
+            print '<button id="customNoteListDeleteGlobal-P' . $o['project_id'] . '"';
             print $isAdmin
-                ? ' class="toolbarButton buttonToggled customNoteListDelete"'
-                : ' class="toolbarButton buttonDisabled customNoteListDelete"';
+                ? ' class="toolbarButton buttonToggled customNoteListDeleteGlobal"'
+                : ' class="toolbarButton buttonDisabled customNoteListDeleteGlobal"';
             print $isAdmin
                 ? ' title="' . t('BoardNotes_DASHBOARD_DELETE_CUSTOM_GLOBAL_LIST') . '"'
                 : ' title="' . t('BoardNotes_DASHBOARD_DELETE_CUSTOM_GLOBAL_LIST') . ' ' . t('BoardNotes_DASHBOARD_ADMIN_ONLY') . '"';
@@ -177,7 +177,7 @@ foreach ($projectsAccess as $o) {
             print '<button class="toolbarSeparator">&nbsp;</button>';
 
             // Rename button
-            print '<button id="customNoteListRenameP' . $o['project_id'] . '"';
+            print '<button id="customNoteListRenamePrivate-P' . $o['project_id'] . '"';
             print ' class="toolbarButton customNoteListRenamePrivate"';
             print ' title="' . t('BoardNotes_DASHBOARD_RENAME_CUSTOM_PRIVATE_LIST') . '"';
             print ' data-project="' . $o['project_id'] . '"';
@@ -187,8 +187,8 @@ foreach ($projectsAccess as $o) {
             print '</button>';
 
             // Delete button
-            print '<button id="customNoteListDelete-P' . $o['project_id'] . '"';
-            print ' class="toolbarButton customNoteListDelete"';
+            print '<button id="customNoteListDeletePrivate-P' . $o['project_id'] . '"';
+            print ' class="toolbarButton customNoteListDeletePrivate"';
             print ' title="' . t('BoardNotes_DASHBOARD_DELETE_CUSTOM_PRIVATE_LIST') . '"';
             print ' data-project="' . $o['project_id'] . '"';
             print ' data-user="' . $user_id . '"';

@@ -569,4 +569,23 @@ class BoardNotesModel extends Base
             ->eq('id', -$project_id)
             ->update($values);
     }
+
+    // Delete Custom Note List
+    public function boardNotesDeleteCustomNoteList($project_id)
+    {
+        $result = true;
+
+        // delete notes
+        $result = $result && $this->db->table(self::TABLE_NOTES_ENTRIES)
+            ->eq('project_id', $project_id)
+            ->remove();
+
+        // delete custom list
+        $result = $result && $this->db->table(self::TABLE_NOTES_CUSTOM_PROJECTS)
+            ->eq('id', -$project_id)
+            ->remove();
+
+        return $result;
+
+    }
 }

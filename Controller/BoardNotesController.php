@@ -424,7 +424,7 @@ class BoardNotesController extends BaseController
     public function boardNotesReindexNotesAndLists()
     {
         $user_id = $this->resolveUserId();
-        $tab_id = intval($this->request->getStringParam('tab_id'));
+        $project_tab_id = intval($this->request->getStringParam('project_tab_id'));
 
         if ($this->userModel->isAdmin($user_id)) {
             $lastVersion = constant('\Kanboard\Plugin\\' . Plugin::NAME . '\Schema\VERSION');
@@ -457,7 +457,7 @@ class BoardNotesController extends BaseController
         $this->response->redirect($this->helper->url->to('BoardNotesController', 'boardNotesShowAll', array(
             'plugin' => 'BoardNotes',
             'user_id' => $user_id,
-            'tab_id' => $tab_id,
+            'tab_id' => $this->FetchTabForProject($user_id, $project_tab_id),
         )));
     }
 
@@ -481,7 +481,7 @@ class BoardNotesController extends BaseController
     public function boardNotesCreateCustomNoteList()
     {
         $user_id = $this->resolveUserId();
-        $project_id = intval($this->request->getStringParam('project_custom_id'));
+        $project_tab_id = intval($this->request->getStringParam('project_tab_id'));
         $custom_note_list_name = $this->request->getStringParam('custom_note_list_name');
         $custom_note_list_is_global = ($this->request->getStringParam('custom_note_list_is_global') == 'true');
 
@@ -502,14 +502,14 @@ class BoardNotesController extends BaseController
         $this->response->redirect($this->helper->url->to('BoardNotesController', 'boardNotesShowAll', array(
             'plugin' => 'BoardNotes',
             'user_id' => $user_id,
-            'tab_id' => $this->FetchTabForProject($user_id, $project_id),
+            'tab_id' => $this->FetchTabForProject($user_id, $project_tab_id),
         )));
     }
 
     public function boardNotesRenameCustomNoteList()
     {
         $user_id = $this->resolveUserId();
-        $tab_id = intval($this->request->getStringParam('tab_id'));
+        $project_tab_id = intval($this->request->getStringParam('project_tab_id'));
         $project_id = intval($this->request->getStringParam('project_custom_id'));
         $custom_note_list_name = $this->request->getStringParam('custom_note_list_name');
 
@@ -532,7 +532,36 @@ class BoardNotesController extends BaseController
         $this->response->redirect($this->helper->url->to('BoardNotesController', 'boardNotesShowAll', array(
             'plugin' => 'BoardNotes',
             'user_id' => $user_id,
-            'tab_id' => $tab_id,
+            'tab_id' => $this->FetchTabForProject($user_id, $project_tab_id),
+        )));
+    }
+
+    public function boardNotesDeleteCustomNoteList()
+    {
+        $user_id = $this->resolveUserId();
+        $project_tab_id = intval($this->request->getStringParam('project_tab_id'));
+        $project_id = intval($this->request->getStringParam('project_custom_id'));
+
+        $is_global = $this->boardNotesModel->IsCustomGlobalProject($project_id);
+
+        if ($project_id >= 0) {
+            // non-custom project!
+            $this->flash->failure(t('BoardNotes_DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('BoardNotes_DASHBOARD_INVALID_OR_EMPTY_PARAMETER'));
+        } elseif ($is_global && !$this->userModel->isAdmin($user_id)) {
+            // non-Admin attempting to rename a Global note list !
+            $this->flash->failure(t('BoardNotes_DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('BoardNotes_DASHBOARD_NO_ADMIN_PRIVILEGES'));
+        } else {
+            $validation = $this->boardNotesModel->boardNotesDeleteCustomNoteList($project_id);
+            if ($validation) {
+                $this->boardNotesModel->EmulateForceRefresh();
+            }
+            $this->CustomNoteListOperationNotification($validation, $is_global);
+        }
+
+        $this->response->redirect($this->helper->url->to('BoardNotesController', 'boardNotesShowAll', array(
+            'plugin' => 'BoardNotes',
+            'user_id' => $user_id,
+            'tab_id' => $this->FetchTabForProject($user_id, $project_tab_id),
         )));
     }
 }
