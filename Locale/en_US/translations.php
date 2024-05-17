@@ -29,6 +29,7 @@ return array(
     'BoardNotes_PROJECT_CREATE_REPORT' => 'Create Report',
     'BoardNotes_PROJECT_NOTES_STATS' => 'Notes Stats',
     'BoardNotes_PROJECT_DELETE_ALL_DONE_NOTES' => '⚠️ Delete ALL Done Notes!',
+    'BoardNotes_PROJECT_TOGGLE_LIST' => 'Toggle List',
     //
     'BoardNotes_PROJECT_NOTE_REFRESH_ORDER' => 'Refresh Order',
     'BoardNotes_PROJECT_NOTE_CREATE_TASK' => 'Create Task from Note',

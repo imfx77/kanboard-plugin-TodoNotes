@@ -750,6 +750,12 @@ static #settingsExpandAll() {
     }, 100);
 }
 
+static #toggleList(project_id) {
+    $("#sortableRef-P" + project_id).toggleClass( 'hideMe' );
+    $("#toggleList-P" + project_id).find('i').toggleClass( "fa-chevron-circle-up" );
+    $("#toggleList-P" + project_id).find('i').toggleClass( "fa-chevron-circle-down" );
+}
+
 //------------------------------------------------
 static #settingsHandlers() {
     //------------------------------------------------
@@ -823,6 +829,18 @@ static #settingsHandlers() {
 
         _BoardNotes_.optionShowCategoryColors = !_BoardNotes_.optionShowCategoryColors;
         _BoardNotes_.refreshCategoryColors();
+    });
+
+    //------------------------------------------------
+
+    // Toogle lists in OverviewMode
+    $("button" + ".toggleList").click(function() {
+        var project_id = $(this).attr('data-project');
+        _BoardNotes_.#toggleList(project_id);
+
+        setTimeout(function() {
+            _BoardNotes_.adjustScrollableContent();
+        }, 100);
     });
 
     //------------------------------------------------

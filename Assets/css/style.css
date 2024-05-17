@@ -268,6 +268,12 @@ label {
     padding-left: 15px !important;
 }
 
+.buttonHeader {
+    font-size: 1.2em !important;
+    padding-right: 10px !important;
+    padding-left: 10px !important;
+}
+
 .checkDone {
     appearance: none;
     -webkit-appearance: none;

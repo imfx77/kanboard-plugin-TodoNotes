@@ -400,6 +400,16 @@ foreach ($data as $u) {
             'boardNotesShowAll',
             array('plugin' => 'BoardNotes', 'user_id' => $user_id, 'tab_id' => $projectsTabsById[ $last_project_id ]['tab_id']),
         );
+        // collapse/expand project button
+        print '<div class="containerNoWrap containerFloatRight">';
+        print '<button id="toggleList-P' . $last_project_id . '"';
+        print ' class="toolbarButton buttonHeader disableEventsPropagation toggleList"';
+        print ' title="' . t('BoardNotes_PROJECT_TOGGLE_LIST') . '"';
+        print ' data-project="' . $last_project_id . '"';
+        print '>';
+        print '<a><i class="fa fa-chevron-circle-up " aria-hidden="true"></i></a>';
+        print '</button>';
+        print '</div>';
         print '</h2>';
 
         // sortable list by project
@@ -451,7 +461,7 @@ foreach ($data as $u) {
     print ' data-project="' . $project_id . '"';
     print ' data-user="' . $user_id . '"';
     print '>';
-    print '<i class="fa fa-refresh fa-spin fa-spin-reverse" aria-hidden="true"></i>';
+    print '<i class="fa fa-refresh fa-spin" aria-hidden="true"></i>';
     print '</button>';
 
     // explicit reorder handle for mobile
