@@ -54,27 +54,8 @@
     }
 }
 
-.button a {
-    border-bottom: 1px solid #777777;
-    border-left: 1px solid #000000;
-    border-right: 1px solid #333333;
-    border-top: 1px solid #000000;
-    color: #000000;
-    display: block;
-    height: 2.5em;
-    padding: 0 1em;
-    width: 5em;
-    text-decoration: none;
-}
-
-.view {
-    height: 35px;
-    line-height: 35px;
-    border-bottom: 1px solid #EDEDED;
-    border-left: 1px solid #EDEDED;
-    border-right: 1px solid #EDEDED;
-    padding-left: 10px;
-    padding-right: 10px;
+button a .fa {
+    padding: 0;
 }
 
 input[type="text"] {
@@ -273,7 +254,7 @@ label {
 }
 
 .buttonDisabled {
-    color: #888888 !important;
+    color: rgba(136, 136, 136, 0.3) !important;
 }
 
 .buttonBigger {

@@ -112,6 +112,7 @@ static #TabActionHandlers() {
         _BoardNotes_.sqlToggleSessionOption('boardnotesShowTabStats');
 
         _BoardNotes_.optionShowTabStats = !_BoardNotes_.optionShowTabStats;
+        $("#session_vars").attr('data-optionShowTabStats', _BoardNotes_.optionShowTabStats);
 
         _BoardNotes_Tabs_.updateTabStats();
     });

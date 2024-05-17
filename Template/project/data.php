@@ -466,7 +466,7 @@ foreach ($data as $u) {
     print '</button>';
 
     // explicit reorder handle for mobile
-    print '<button class="hideMe toolbarButton buttonBigger sortableHandle">';
+    print '<button class="hideMe toolbarButton buttonBigger sortableListHandle">';
     print '<i class="fa fa-arrows-alt" aria-hidden="true"></i>';
     print '</button>';
 

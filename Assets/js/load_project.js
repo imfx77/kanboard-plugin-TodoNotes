@@ -35,14 +35,14 @@ static prepareDocument() {
             if (isMobile) {
                 // bind explicit reorder handles for mobile
                 $("#sortableList-P" + sortable_project_id).sortable({
-                    handle: ".sortableHandle",
+                    handle: ".sortableListHandle",
                 });
             }
         });
 
         if (isMobile) {
             // show explicit reorder handles for mobile
-            $(".sortableHandle").removeClass( 'hideMe' );
+            $(".sortableListHandle").removeClass( 'hideMe' );
         }
     }
 
