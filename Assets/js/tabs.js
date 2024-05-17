@@ -6,13 +6,13 @@ class _BoardNotes_Tabs_ {
 
 //------------------------------------------------
 static updateTabs() {
-    var tab_id = $("#tabId").attr('data-tab');
+    var project_tab_id = $("#tabId").attr('data-project');
 
     $(".singleTab").removeClass( 'active' );
-    $("#singleTab" + tab_id).addClass( 'active' );
+    $("#singleTab" + project_tab_id).addClass( 'active' );
     $("#myNotesHeader h2").text(
         _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_DASHBOARD_MY_NOTES')
-        + ' > ' + $("#singleTab" + tab_id + " a").text()
+        + ' > ' + $("#singleTab" + project_tab_id + " a").text()
     );
 }
 
@@ -119,8 +119,8 @@ static #TabActionHandlers() {
 
     // start DB optimization routine on system reindex button
     $("button" + "#reindexNotesAndLists").click(function() {
-        var is_admin = $("#tabId").attr('data-admin');
-        if (is_admin != "1") {
+        var isAdmin = $("#tabId").attr('data-admin');
+        if (isAdmin != "1") {
             alert( _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_DASHBOARD_NO_ADMIN_PRIVILEGES') );
             return;
         }
@@ -141,8 +141,8 @@ static #TabActionHandlers() {
 
     // rename custom list (global)
     $("button" + ".customNoteListRenameGlobal").click(function() {
-        var is_admin = $("#tabId").attr('data-admin');
-        if (is_admin != "1") {
+        var isAdmin = $("#tabId").attr('data-admin');
+        if (isAdmin != "1") {
             alert( _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_DASHBOARD_NO_ADMIN_PRIVILEGES') );
             return;
         }
@@ -165,8 +165,8 @@ static #TabActionHandlers() {
 
     // delete custom list (global)
     $("button" + ".customNoteListDeleteGlobal").click(function() {
-        var is_admin = $("#tabId").attr('data-admin');
-        if (is_admin != "1") {
+        var isAdmin = $("#tabId").attr('data-admin');
+        if (isAdmin != "1") {
             alert( _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_DASHBOARD_NO_ADMIN_PRIVILEGES') );
             return;
         }
