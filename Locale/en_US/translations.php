@@ -51,7 +51,11 @@ Might be waiting for an unsubmitted New Note data input!',
     //
     'BoardNotes_DASHBOARD_TITLE' => 'Notes overview for %s',
     'BoardNotes_DASHBOARD_MY_NOTES' => 'My notes',
-    'BoardNotes_DASHBOARD_ALL_TAB' => 'All',
+    'BoardNotes_DASHBOARD_ALL_TAB' => 'All Lists',
+    'BoardNotes_DASHBOARD_LIST_GROUP_GLOBAL' => 'Global Custom Lists',
+    'BoardNotes_DASHBOARD_LIST_GROUP_PRIVATE' => 'Private Custom Lists',
+    'BoardNotes_DASHBOARD_LIST_GROUP_REGULAR' => 'Regular Projects Lists',
+    'BoardNotes_DASHBOARD_TOGGLE_LIST_GROUP' => 'Toggle List Group',
     //
     'BoardNotes_DASHBOARD_ADMIN_ONLY' => '(Admin only)',
     'BoardNotes_DASHBOARD_NO_ADMIN_PRIVILEGES' => '⚠️ Current user has no Admin privileges!',

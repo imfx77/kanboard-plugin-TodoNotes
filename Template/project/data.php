@@ -402,6 +402,7 @@ foreach ($data as $u) {
         );
         // collapse/expand project button
         print '<div class="containerNoWrap containerFloatRight">';
+        print '<button class="toolbarSeparator">&nbsp;</button>';
         print '<button id="toggleList-P' . $last_project_id . '"';
         print ' class="toolbarButton buttonHeader disableEventsPropagation toggleList"';
         print ' title="' . t('BoardNotes_PROJECT_TOGGLE_LIST') . '"';

@@ -107,6 +107,14 @@ input::placeholder {
     color: #BBBBBB !important;
 }
 
+h1, h2 {
+    margin: 10px;
+}
+
+h3, h4 {
+    margin: 0;
+}
+
 label {
     display: inline-block;
 }
@@ -275,9 +283,8 @@ label {
 }
 
 .buttonHeader {
-    font-size: 1.2em !important;
-    padding-right: 10px !important;
-    padding-left: 10px !important;
+    font-size: 1em !important;
+    padding: 0 !important;
 }
 
 .checkDone {

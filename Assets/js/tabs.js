@@ -18,8 +18,8 @@ static updateTabs() {
 
 //------------------------------------------------
 static updateTabsContainer() {
-    var numTabs = $("#tabs li").length + 2; // add +2 because of the separator lines
     var tabHeight = $("#tabs li:eq(0)").outerHeight();
+    var numTabs = $("#tabs li").length + 6; // add +6 because of the separator headers
     $("#tabs").height(numTabs * tabHeight);
 }
 
@@ -34,7 +34,28 @@ static updateTabStats() {
     }
 
     _BoardNotes_Tabs_.updateTabsContainer();
+}
 
+//------------------------------------------------
+static toggleTabGroup(group) {
+    $("#hrGroup" + group).toggleClass( 'hideMe' );
+    $("#group" + group).toggleClass( 'hideMe' );
+
+    $("#toggleGroup" + group).find('i').toggleClass( "fa-chevron-circle-up" );
+    $("#toggleGroup" + group).find('i').toggleClass( "fa-chevron-circle-down" );
+
+    _BoardNotes_Tabs_.updateTabsContainer();
+}
+
+//------------------------------------------------
+static handlersTabGroup(group) {
+    $("#headerGroup" + group).dblclick(function() {
+        _BoardNotes_Tabs_.toggleTabGroup(group);
+    });
+
+    $("#toggleGroup" + group).click(function() {
+        _BoardNotes_Tabs_.toggleTabGroup(group);
+    });
 }
 
 //------------------------------------------------
@@ -76,6 +97,13 @@ static #TabActionHandlers() {
             $statsWidgetCurrent.find(".statProgress b").text(parseInt($statsWidgetCurrent.find(".statProgress b").text()) - 1)
         }
     });
+
+    //------------------------------------------------
+
+    // toggle visibility of tab groups
+    _BoardNotes_Tabs_.handlersTabGroup( 'Global' );
+    _BoardNotes_Tabs_.handlersTabGroup( 'Private' );
+    _BoardNotes_Tabs_.handlersTabGroup( 'Regular' );
 
     //------------------------------------------------
 
