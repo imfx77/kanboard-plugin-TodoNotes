@@ -384,7 +384,7 @@ class BoardNotesController extends BaseController
         )));
     }
 
-    public function boardNotesUpdatePosition()
+    public function boardNotesUpdateNotesPositions()
     {
         $user_id = $this->resolveUserId();
         $project = $this->resolveProject($user_id);
@@ -393,7 +393,7 @@ class BoardNotesController extends BaseController
         $notePositions = $this->request->getStringParam('order');
         $nrNotes = $this->request->getStringParam('nrNotes');
 
-        $validation = $this->boardNotesModel->boardNotesUpdatePosition($project_id, $user_id, $notePositions, $nrNotes);
+        $validation = $this->boardNotesModel->boardNotesUpdateNotesPositions($project_id, $user_id, $notePositions, $nrNotes);
         print $validation ? time() : 0;
 
         return $validation;

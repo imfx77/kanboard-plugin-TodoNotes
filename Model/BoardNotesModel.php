@@ -470,7 +470,7 @@ class BoardNotesModel extends Base
     }
 
     // Update note positions
-    public function boardNotesUpdatePosition($project_id, $user_id, $notePositions, $nrNotes)
+    public function boardNotesUpdateNotesPositions($project_id, $user_id, $notePositions, $nrNotes)
     {
         unset($num);
         unset($note_id);

@@ -28,7 +28,7 @@ static prepareDocument() {
                     var regex = new RegExp('item-', 'g');
                     order = order.replace(regex, '');
                     order = order.split(',');
-                    _BoardNotes_.sqlUpdatePosition(sortable_project_id, user_id, order, sortable_notes_number);
+                    _BoardNotes_.sqlUpdateNotesPositions(sortable_project_id, user_id, order, sortable_notes_number);
                 }
             });
 

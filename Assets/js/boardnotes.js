@@ -1372,12 +1372,12 @@ static sqlToggleSessionOption(session_option) {
 }
 
 //------------------------------------------------
-// SQL update positions
-static sqlUpdatePosition(project_id, user_id, order, nrNotes) {
+// SQL update notes positions
+static sqlUpdateNotesPositions(project_id, user_id, order, nrNotes) {
     $.ajax({
         cache: false,
         type: "POST",
-        url: '/?controller=BoardNotesController&action=boardNotesUpdatePosition&plugin=BoardNotes'
+        url: '/?controller=BoardNotesController&action=boardNotesUpdateNotesPositions&plugin=BoardNotes'
             + '&project_custom_id=' + project_id
             + '&user_id=' + user_id
             + '&order=' + order
@@ -1391,7 +1391,7 @@ static sqlUpdatePosition(project_id, user_id, order, nrNotes) {
             }
         },
         error: function(xhr,textStatus,e) {
-            alert('sqlUpdatePosition');
+            alert('sqlUpdateNotesPositions');
             alert(e);
         }
     });
