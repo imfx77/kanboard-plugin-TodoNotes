@@ -751,7 +751,7 @@ static #settingsExpandAll() {
 }
 
 static #toggleList(project_id) {
-    $("#sortableRef-P" + project_id).toggleClass( 'hideMe' );
+    $("#sortableList-P" + project_id).toggleClass( 'hideMe' );
     $("#toggleList-P" + project_id).find('i').toggleClass( "fa-chevron-circle-up" );
     $("#toggleList-P" + project_id).find('i').toggleClass( "fa-chevron-circle-down" );
 }
@@ -834,6 +834,15 @@ static #settingsHandlers() {
     //------------------------------------------------
 
     // Toogle lists in OverviewMode
+    $(".headerList").dblclick(function() {
+        var project_id = $(this).find("button" + ".toggleList").attr('data-project');
+        _BoardNotes_.#toggleList(project_id);
+
+        setTimeout(function() {
+            _BoardNotes_.adjustScrollableContent();
+        }, 100);
+    });
+
     $("button" + ".toggleList").click(function() {
         var project_id = $(this).attr('data-project');
         _BoardNotes_.#toggleList(project_id);

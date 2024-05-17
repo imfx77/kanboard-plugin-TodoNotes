@@ -365,7 +365,7 @@ print '</li></ul>';
 //////////////////////////////////////////
 
 print '<div class="scrollableContent" id="scrollableContent">';
-print '<ul class="ulNotes sortableRef" id="sortableRef-P' . $project_id . '"';
+print '<ul class="ulNotes sortableList" id="sortableList-P' . $project_id . '"';
 print ' data-project="' . $project_id . '"';
 print '>';
 
@@ -393,7 +393,7 @@ foreach ($data as $u) {
         $last_num_notes = 0;
 
         // project name link
-        print '<h2>';
+        print '<h2 class="textNonSelectable disableEventsPropagation headerList" id="headerList-P' . $last_project_id . '">';
         print $this->url->link(
             $projectsTabsById[ $last_project_id ]['name'],
             'BoardNotesController',
@@ -413,7 +413,7 @@ foreach ($data as $u) {
         print '</h2>';
 
         // sortable list by project
-        print '<ul class="ulNotes sortableRef" id="sortableRef-P' . $last_project_id . '"';
+        print '<ul class="ulNotes sortableList" id="sortableList-P' . $last_project_id . '"';
         print ' data-project="' . $last_project_id . '"';
         print '>';
     }

@@ -13,11 +13,11 @@ static prepareDocument() {
 
     // notes reordering is disabled when explicitly sorted by Status
     if (!_BoardNotes_.optionSortByStatus) {
-        $(".sortableRef").each(function() {
+        $(".sortableList").each(function() {
             var sortable_project_id = $(this).attr('data-project');
             var sortable_notes_number = $("#nrNotes-P" + sortable_project_id).attr('data-num');
 
-            $("#sortableRef-P" + sortable_project_id).sortable({
+            $("#sortableList-P" + sortable_project_id).sortable({
                 placeholder: "ui-state-highlight",
                 items: 'li.liNote', // exclude the NewNote
                 cancel: '.disableEventsPropagation',
@@ -34,7 +34,7 @@ static prepareDocument() {
 
             if (isMobile) {
                 // bind explicit reorder handles for mobile
-                $("#sortableRef-P" + sortable_project_id).sortable({
+                $("#sortableList-P" + sortable_project_id).sortable({
                     handle: ".sortableHandle",
                 });
             }

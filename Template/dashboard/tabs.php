@@ -17,7 +17,7 @@ print '>';
 print '<div class="localTable">';
 
 // ALL tab title
-print '<div class="localTableCell">';
+print '<div class="localTableCell textNonSelectable">';
 print $this->url->link(
     t('BoardNotes_DASHBOARD_ALL_TAB'),
     'BoardNotesController',
@@ -120,7 +120,7 @@ foreach ($projectsAccess as $o) {
     print '<div class="localTable">';
 
     // single tab title
-    print '<div class="localTableCell">';
+    print '<div class="localTableCell textNonSelectable">';
     print $this->url->link(
         $o['project_name'],
         'BoardNotesController',
