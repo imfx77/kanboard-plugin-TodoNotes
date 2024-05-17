@@ -173,6 +173,16 @@ print '></div>';
 
 //----------------------------------------
 
+print '<div class="hideMe" id="dialogReindexNotesAndLists" title="' . t('BoardNotes_DASHBOARD_REINDEX') . '">';
+
+print '<p style="white-space: pre-wrap;">';
+print t('BoardNotes_DIALOG_REINDEX_MSG');
+print '</p>';
+
+print '</div>';
+
+//----------------------------------------
+
 print '<div class="hideMe" id="dialogCreateCustomNoteList" title="' . t('BoardNotes_DASHBOARD_CREATE_CUSTOM_NOTE_LIST') . '">';
 
 print '<input type="text" id="nameCreateCustomNoteList" placeholder="' . t('BoardNotes_DIALOG_CREATE_CUSTOM_NOTE_LIST_NAME_PLACEHOLDER') . '">';

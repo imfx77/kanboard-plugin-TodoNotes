@@ -32,7 +32,7 @@ class BoardNotesModel extends Base
             ->eq('id', $note_id)
             ->eq('user_id', $user_id)
             ->eq('project_id', $project_id)
-            ->gte('is_active', "0") // -1 == deleted
+            ->gte('is_active', 0) // -1 == deleted
             ->findAll();
 
         if (!$result) {
@@ -66,7 +66,7 @@ class BoardNotesModel extends Base
         $result = $this->db->table(self::TABLE_NOTES_ENTRIES);
         $result = $result->eq('user_id', $user_id);
         $result = $result->eq('project_id', $project_id);
-        $result = $result->gte('is_active', "0"); // -1 == deleted
+        $result = $result->gte('is_active', 0); // -1 == deleted
         if ($doSortByStatus) {
             $result = $result->desc('is_active');
         }
@@ -92,7 +92,7 @@ class BoardNotesModel extends Base
         $result = $this->db->table(self::TABLE_NOTES_ENTRIES);
         $result = $result->eq('user_id', $user_id);
         $result = $result->in('project_id', $projectsAccessList);
-        $result = $result->gte('is_active', "0"); // -1 == deleted
+        $result = $result->gte('is_active', 0); // -1 == deleted
         $result = $result->orderBy($orderCaseClause); // order notes by projects as listed in $projectsAccess
         if ($doSortByStatus) {
             $result = $result->desc('is_active');
@@ -112,7 +112,7 @@ class BoardNotesModel extends Base
         if (!empty($category)) {
             $result = $result->eq('category', $category);
         }
-        $result = $result->gte('is_active', "0"); // -1 == deleted
+        $result = $result->gte('is_active', 0); // -1 == deleted
         if ($doSortByStatus) {
             $result = $result->desc('is_active');
         }
@@ -261,9 +261,16 @@ class BoardNotesModel extends Base
 
         $forceRefresh = $this->db->table(self::TABLE_NOTES_ENTRIES)
             ->columns('date_modified')
-            ->eq('id', 0)
+            ->eq('project_id', 0)
+            ->eq('user_id', 0)
+            ->eq('position', 0)
+            ->eq('is_active', -1)
             ->findOne();
-        $timestampProjects = $forceRefresh['date_modified'];
+
+        $timestampProjects = 0;
+        if ($forceRefresh && count($forceRefresh) == 1) {
+            $timestampProjects = $forceRefresh['date_modified'];
+        }
 
         return array(
             'notes' => $timestampNotes,
@@ -316,7 +323,7 @@ class BoardNotesModel extends Base
         $deleted = $this->db->table(self::TABLE_NOTES_ENTRIES)
             ->eq('project_id', $project_id)
             ->eq('user_id', $user_id)
-            ->eq('is_active', "0")
+            ->eq('is_active', 0)
             ->update($values);
 
         return $purged && $deleted;
@@ -332,11 +339,14 @@ class BoardNotesModel extends Base
             ->remove();
     }
 
-    // Emulate a global force refresh by updating a modified timestamp to the special id=0 entry
+    // Emulate a global force refresh by updating a modified timestamp to the special `zero` entry
     public function EmulateForceRefresh()
     {
         return $this->db->table(self::TABLE_NOTES_ENTRIES)
-            ->eq('id', 0)
+            ->eq('project_id', 0)
+            ->eq('user_id', 0)
+            ->eq('position', 0)
+            ->eq('is_active', -1)
             ->update(array('date_modified' => time()));
     }
 
@@ -346,7 +356,7 @@ class BoardNotesModel extends Base
         // Get last position number
         $lastPosition = $this->db->table(self::TABLE_NOTES_ENTRIES)
             ->eq('project_id', $project_id)
-            ->gte('is_active', "0") // -1 == deleted
+            ->gte('is_active', 0) // -1 == deleted
             ->desc('position')
             ->findOneColumn('position');
 
@@ -383,7 +393,7 @@ class BoardNotesModel extends Base
         // Get last position number for target project
         $lastPosition = $this->db->table(self::TABLE_NOTES_ENTRIES)
             ->eq('project_id', $target_project_id)
-            ->gte('is_active', "0") // -1 == deleted
+            ->gte('is_active', 0) // -1 == deleted
             ->desc('position')
             ->findOneColumn('position');
 
@@ -485,7 +495,7 @@ class BoardNotesModel extends Base
                 ->eq('project_id', $project_id)
                 ->eq('user_id', $user_id)
                 ->eq('id', $row_id)
-                ->gte('is_active', "0") // -1 == deleted
+                ->gte('is_active', 0) // -1 == deleted
                 ->update($values);
 
             $num--;
@@ -502,7 +512,7 @@ class BoardNotesModel extends Base
             $statsData = $statsData->eq('project_id', $project_id);
         }
         $statsData = $statsData->eq('user_id', $user_id);
-        $statsData = $statsData->gte('is_active', "0"); // -1 == deleted
+        $statsData = $statsData->gte('is_active', 0); // -1 == deleted
         $statsData = $statsData->findAll();
 
         $statDone = 0;
@@ -511,13 +521,13 @@ class BoardNotesModel extends Base
         $statTotal = 0;
 
         foreach ($statsData as $qq) {
-            if ($qq['is_active'] == "0") {
+            if ($qq['is_active'] == 0) {
                 $statDone++;
             }
-            if ($qq['is_active'] == "1") {
+            if ($qq['is_active'] == 1) {
                 $statOpen++;
             }
-            if ($qq['is_active'] == "2") {
+            if ($qq['is_active'] == 2) {
                 $statProgress++;
             }
             $statTotal++;

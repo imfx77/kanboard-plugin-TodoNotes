@@ -97,7 +97,7 @@ static #TabActionHandlers() {
         }
 
         var user_id = $(this).attr('data-user');
-        _BoardNotes_Tabs_.#sqlReindexNotesAndLists(user_id);
+        _BoardNotes_Tabs_.#modalReindexNotesAndLists(user_id);
     });
 
     //------------------------------------------------
@@ -158,6 +158,32 @@ static #TabActionHandlers() {
 //------------------------------------------------
 // Modal Dialogs routines
 //------------------------------------------------
+
+//------------------------------------------------
+static #modalReindexNotesAndLists(user_id,) {
+    $("#dialogReindexNotesAndLists").removeClass( 'hideMe' );
+    $("#dialogReindexNotesAndLists").dialog({
+        resizable: false,
+        height: "auto",
+        modal: true,
+        buttons: [
+            {
+                text : _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_REINDEX_BTN'),
+                click : function() {
+                    _BoardNotes_Tabs_.#sqlReindexNotesAndLists(user_id);
+                    $( this ).dialog( "close" );
+                },
+            },
+            {
+                text : _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_CANCEL_BTN'),
+                click : function() {
+                    $( this ).dialog( "close" );
+                }
+            },
+        ]
+    });
+    return false;
+}
 
 //------------------------------------------------
 static #modalCreateCustomNoteList(user_id) {

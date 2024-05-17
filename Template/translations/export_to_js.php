@@ -17,6 +17,7 @@ $translationTextIds = array(
     'BoardNotes_JS_DIALOG_CREATE_BTN',
     'BoardNotes_JS_DIALOG_RENAME_BTN',
     'BoardNotes_JS_DIALOG_DELETE_BTN',
+    'BoardNotes_JS_DIALOG_REINDEX_BTN',
     'BoardNotes_JS_DIALOG_RESULT_TITLE',
     'BoardNotes_PROJECT_NOTE_DETAILS_SAVE_HINT',
 );
