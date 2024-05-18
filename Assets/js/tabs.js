@@ -20,9 +20,9 @@ static updateTabs() {
 static updateTabsContainer() {
     const tabHeight = $("#tabs li:eq(0)").outerHeight();
 
-    const numListsGlobal = parseInt( $("#nrLists").attr('data-num-Global') );
-    const numListsPrivate = parseInt( $("#nrLists").attr('data-num-Private') );
-    const numListsRegular = parseInt( $("#nrLists").attr('data-num-Regular') );
+    const numListsGlobal = parseInt( $("#groupGlobal li").length );
+    const numListsPrivate = parseInt( $("#groupPrivate li").length );
+    const numListsRegular = parseInt( $("#groupRegular li").length );
 
     var numTabs = 1 + 3 + 3 // ALL tab + 3x group headers + 3x pairs of <hr>
         + ($("#groupGlobal").hasClass( 'hideMe' ) ? -0.5 : numListsGlobal)     // conditional on groupGlobal visibility
@@ -306,7 +306,7 @@ static #modalDeleteCustomNoteList(user_id, project_id) {
 }
 
 //------------------------------------------------
-static modalReorderCustomNoteList(user_id, order, nrCustomLists) {
+static modalReorderCustomNoteList(user_id, order) {
     $("#dialogReorderCustomNoteList").removeClass( 'hideMe' );
     $("#dialogReorderCustomNoteList").dialog({
         resizable: false,
@@ -316,7 +316,7 @@ static modalReorderCustomNoteList(user_id, order, nrCustomLists) {
             {
                 text : _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_REORDER_BTN'),
                 click : function() {
-                    _BoardNotes_Tabs_.#sqlUpdateCustomNoteListsPositions(user_id, order, nrCustomLists);
+                    _BoardNotes_Tabs_.#sqlUpdateCustomNoteListsPositions(user_id, order);
                     $( this ).dialog( "close" );
                 },
             },
@@ -425,7 +425,7 @@ static #sqlDeleteCustomNoteList(user_id, project_id) {
 
 //------------------------------------------------
 // SQL update custom note lists positions
-static #sqlUpdateCustomNoteListsPositions(user_id, order, nrCustomLists) {
+static #sqlUpdateCustomNoteListsPositions(user_id, order) {
     var project_tab_id = $("#tabId").attr('data-project');
 
     // don't cache ajax or content won't be fresh
@@ -435,8 +435,7 @@ static #sqlUpdateCustomNoteListsPositions(user_id, order, nrCustomLists) {
     var loadUrl = '/?controller=BoardNotesController&action=boardNotesUpdateCustomNoteListsPositions&plugin=BoardNotes'
             + '&user_id=' + user_id
             + '&project_tab_id=' + project_tab_id
-            + '&order=' + order
-            + '&nrCustomLists=' + nrCustomLists;
+            + '&order=' + order;
     setTimeout(function() {
         $("#result" + project_tab_id).html(_BoardNotes_Translations_.msgLoadingSpinner);
         location.replace(loadUrl);

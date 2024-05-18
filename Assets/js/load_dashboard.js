@@ -16,8 +16,7 @@ static initializeSortableGroup(group) {
             order = order.split(',');
 
             const user_id = $("#refProjectId").attr('data-user');
-            const nrCustomLists = parseInt( $("#nrLists").attr('data-num-' + group) );
-            _BoardNotes_Tabs_.modalReorderCustomNoteList(user_id, order, nrCustomLists);
+            _BoardNotes_Tabs_.modalReorderCustomNoteList(user_id, order);
         }
     });
 

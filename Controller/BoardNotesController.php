@@ -569,9 +569,7 @@ class BoardNotesController extends BaseController
     {
         $user_id = $this->resolveUserId();
         $project_tab_id = intval($this->request->getStringParam('project_tab_id'));
-
         $customListsPositions = array_map('intval', explode(',', $this->request->getStringParam('order') ));
-        $nrCustomLists = intval($this->request->getStringParam('nrCustomLists'));
 
         $project_id = intval($customListsPositions[0]); // use the first project_id in the array as reference
         $is_global = $this->boardNotesModel->IsCustomGlobalProject($project_id);
@@ -583,7 +581,7 @@ class BoardNotesController extends BaseController
             // non-Admin attempting to rename a Global note list !
             $this->flash->failure(t('BoardNotes_DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('BoardNotes_DASHBOARD_NO_ADMIN_PRIVILEGES'));
         } else {
-            $validation = $this->boardNotesModel->boardNotesUpdateCustomNoteListsPositions(!$is_global ? $user_id : 0, $customListsPositions, $nrCustomLists);
+            $validation = $this->boardNotesModel->boardNotesUpdateCustomNoteListsPositions(!$is_global ? $user_id : 0, $customListsPositions);
             if ($validation) {
                 $this->boardNotesModel->EmulateForceRefresh();
             }

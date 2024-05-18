@@ -87,11 +87,6 @@ $num++;
 $separatorPlacedGlobal = false;
 $separatorPlacedPrivate = false;
 $separatorPlacedRegular = false;
-//----------------------------------------
-$numListsTmp = 0;
-$numListsGlobal = 0;
-$numListsPrivate = 0;
-$numListsRegular = 0;
 
 //----------------------------------------
 foreach ($projectsAccess as $o) {
@@ -110,7 +105,6 @@ foreach ($projectsAccess as $o) {
         print '</button></div></h4>';
         print '<hr id="hrGroupGlobal" class="hrTabs">';
         $separatorPlacedGlobal = true;
-        $numListsTmp = 0;
         print '<ul id="groupGlobal" class="ulLists">';
     }
 
@@ -129,8 +123,6 @@ foreach ($projectsAccess as $o) {
         print '</button></div></h4>';
         print '<hr id="hrGroupPrivate" class="hrTabs">';
         $separatorPlacedPrivate = true;
-        $numListsGlobal = $numListsTmp;
-        $numListsTmp = 0;
         print '<ul id="groupPrivate" class="ulLists">';
     }
 
@@ -149,8 +141,6 @@ foreach ($projectsAccess as $o) {
         print '</button></div></h4>';
         print '<hr id="hrGroupRegular" class="hrTabs">';
         $separatorPlacedRegular = true;
-        $numListsPrivate = $numListsTmp;
-        $numListsTmp = 0;
         print '<ul id="groupRegular" class="ulLists">';
     }
 
@@ -300,19 +290,8 @@ foreach ($projectsAccess as $o) {
 
     //----------------------------------------
     print'</li>';
-    $numListsTmp++;
     $num++;
 }
 
-$numListsRegular = $numListsTmp;
-$numListsTmp = 0;
-
 print '</ul>';
 print '<hr class="hrTabs">';
-
-// hidden reference for number of lists by group
-print '<div class="hideMe" id="nrLists"';
-print ' data-num-Global="' . $numListsGlobal . '"';
-print ' data-num-Private="' . $numListsPrivate . '"';
-print ' data-num-Regular="' . $numListsRegular . '"';
-print '></div>';

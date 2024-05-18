@@ -587,7 +587,7 @@ class BoardNotesModel extends Base
     }
 
     // Update Custom Note Lists Positions
-    public function boardNotesUpdateCustomNoteListsPositions($user_id, $customListsPositions, $nrCustomLists)
+    public function boardNotesUpdateCustomNoteListsPositions($user_id, $customListsPositions)
     {
         $num = 1;
         $timestamp = time();
