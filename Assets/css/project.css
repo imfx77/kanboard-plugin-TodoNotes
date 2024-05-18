@@ -1,31 +1,11 @@
+/**
+ * @author  Im[F(x)]
+ */
+
 /* General */
 
-.button a {
-    border-bottom: 1px solid #777777;
-    border-left: 1px solid #000000;
-    border-right: 1px solid #333333;
-    border-top: 1px solid #000000;
-    color: #000000;
-    display: block;
-    height: 2.5em;
-    padding: 0 1em;
-    width: 5em;       
-    text-decoration: none;       
-}
-
-@media (max-width : 768px) {
-    .mainholder {
-        width: auto;
-        font: 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
-        color: #4D4D4D;
-        -webkit-font-smoothing: antialiased;
-        position: relative;
-        font-weight: 300;
-    }
-}
-
 .mainholder {
-    width: 720px;
+    width: 736px;
     font: 13px "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #4D4D4D;
     -webkit-font-smoothing: antialiased;
@@ -42,14 +22,44 @@
     font-weight: 300;
 }
 
-.view {
-    height: 35px;
-    line-height: 35px;
-    border-bottom: 1px solid #EDEDED;
-    border-left: 1px solid #EDEDED;
-    border-right: 1px solid #EDEDED;
-    padding-left: 10px;
-    padding-right: 10px;
+/* desktop browser styles override */
+@media only screen and (max-width: 768px) {
+    .mainholder {
+        width: 100%;
+        font: 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
+        color: #4D4D4D;
+        -webkit-font-smoothing: antialiased;
+        position: relative;
+        font-weight: 300;
+    }
+}
+
+/* mobile browser portrait mode styles override */
+@media only screen and (max-device-width: 768px) and (orientation:portrait) {
+    .mainholderMobile {
+        width: 100%;
+        font: 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
+        color: #4D4D4D;
+        -webkit-font-smoothing: antialiased;
+        position: relative;
+        font-weight: 300;
+    }
+}
+
+/* mobile browser landscape mode styles override */
+@media only screen and (max-device-width: 768px) and (orientation:landscape) {
+    .mainholderMobile {
+        width: 100%;
+        font: 10px "Helvetica Neue", Helvetica, Arial, sans-serif;
+        color: #4D4D4D;
+        -webkit-font-smoothing: antialiased;
+        position: relative;
+        font-weight: 300;
+    }
+}
+
+button a .fa {
+    padding: 0;
 }
 
 input[type="text"] {
@@ -58,10 +68,9 @@ input[type="text"] {
     border: none;
     color: #000000 !important;
     background-color: #777777 !important;
-    padding: 0 0;
+    padding: 0 !important;
     margin-top: 0;
     height: auto;
-    padding-left: 10px;
     text-decoration: none;
 }
 
@@ -82,21 +91,16 @@ input::placeholder {
     color: #BBBBBB !important;
 }
 
+h1, h2 {
+    margin: 10px;
+}
+
+h3, h4 {
+    margin: 0;
+}
+
 label {
     display: inline-block;
-}
-
-.sortableRef {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-
-.sortableRef li {
-    margin: 0 3px 3px 3px;
-    padding: .4em;
-    border-radius: 3px;
-    min-height: 16px;
 }
 
 .hideMe {
@@ -123,17 +127,43 @@ label {
     clear: both !important;
 }
 
-.containerLeft {
+.containerAbsoluteLeft {
     position: absolute;
     left: 20px;
     margin-top: -5px;
 }
 
+.textNonSelectable {
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+}
 
 /* Notes elements */
 
+.scrollableContent {
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    scrollbar-color: rgba(192, 192, 192, .5) rgba(0, 0, 0, .1);
+}
+
+.ulNotes {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.ulNotes li {
+    margin: 0 3px 3px 3px;
+    padding: .4em;
+    border-radius: 3px;
+    min-height: 16px;
+}
+
 .liNote {
-    padding: 5px 10px 12px 15px!important;
+    padding: 6px 10px 10px 12px !important;
     font-size: 1em !important;
     position: relative;
     z-index: 100;
@@ -200,7 +230,6 @@ label {
 }
 
 .toolbarSeparator {
-    float: right;
     appearance: none;
     -webkit-appearance: none;
     outline: none;
@@ -212,7 +241,6 @@ label {
 }
 
 .toolbarButton {
-    float: right;
     appearance: none;
     -webkit-appearance: none;
     outline: none;
@@ -224,14 +252,23 @@ label {
     color: #1F1F1F;
 }
 
-.toolbarButtonToggled {
-    color: #993333;
+.buttonToggled {
+    color: #993333 !important;
 }
 
-.toolbarButtonBigger {
-    font-size: 1.5em;
-    padding-right: 15px;
-    padding-left: 15px;
+.buttonDisabled {
+    color: rgba(136, 136, 136, .3) !important;
+}
+
+.buttonBigger {
+    font-size: 1.5em !important;
+    padding-right: 15px !important;
+    padding-left: 15px !important;
+}
+
+.buttonHeader {
+    font-size: 1em !important;
+    padding: 0 !important;
 }
 
 .checkDone {
@@ -290,7 +327,6 @@ label {
 }
 
 .catLabel {
-    float: right;
     cursor: default;
     margin-top: 3px;
     margin-right: 5px;
@@ -367,14 +403,25 @@ label {
     border-left: 1px solid #CCCCCC;
     border-right: none;
     border-top: none;
+    width: 100%;
+    display: block;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-color: rgba(192, 192, 192, .5) rgba(0, 0, 0, .1);
 }
 
 .theadReport {
+    position: sticky;
+    top: 0;
+    z-index: 101;
     font-family: Helvetica, Arial, sans-serif;
     line-height: 16px;
 }
 
 .thReport {
+    position: sticky;
+    top: 0;
+    z-index: 101;
     padding-left: 10px;
     border-left: none;
     border-top: 1px solid #CCCCCC;
@@ -384,8 +431,8 @@ label {
 }
 
 .thReportNr {
-    padding-left: 35px;
-    width: 30px;
+    padding-left: 40px;
+    padding-right: 15px;
 }
 
 .thReportStatus {
@@ -420,6 +467,7 @@ label {
 .tdReportInfo {
     border-left:none;
     padding-left: 0;
+    width: 100%;
 }
 
 .tdReportStatus {
@@ -432,7 +480,6 @@ label {
 /* Style for stat boxes (e.g. in dropdown.php) */
 
 .statOpen {
-    float: right;
     color: #F7F7F7;
     background: #CD650A;
     border: 2px solid #1F1F1F;
@@ -442,7 +489,6 @@ label {
 }
 
 .statProgress {
-    float: right;
     color: #F7F7F7;
     background: #1F77B4;
     border: 2px solid #1F1F1F;
@@ -452,7 +498,6 @@ label {
 }
 
 .statDone {
-    float: right;
     color: #F7F7F7;
     background: #2CA02C;
     border: 2px solid #1F1F1F;

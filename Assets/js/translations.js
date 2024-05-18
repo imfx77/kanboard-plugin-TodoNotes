@@ -1,3 +1,7 @@
+/**
+ * @author  Im[F(x)]
+ */
+
 class _BoardNotes_Translations_ {
 
 //------------------------------------------------
@@ -25,7 +29,7 @@ static getTranslationExportToJS(textId) {
 
 //------------------------------------------------
 static getSpinnerMsg(textId) {
-    var msg = _BoardNotes_Translations_.getTranslationExportToJS(textId);
+    const msg = _BoardNotes_Translations_.getTranslationExportToJS(textId);
     return '<i class="fa fa-spinner fa-pulse" aria-hidden="true" alt="' + msg + '"></i> ' + msg;
 }
 

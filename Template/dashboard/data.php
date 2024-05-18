@@ -1,36 +1,4 @@
-<style>
-.mainholderDashboard {
-    width: 750px;
-    font: 16px 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    color: #4D4D4D;
-    -webkit-font-smoothing: antialiased;
-    position: relative;
-    font-weight: 300;
-}
-
-.mainholderMobileDashboard {
-    width: auto;
-    font: 16px 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    color: #4D4D4D;
-    -webkit-font-smoothing: antialiased;
-    position: relative;
-    font-weight: 300;
-}
-
-.sidebar {
-    max-width: 50%;
-    min-width: 350px;
-}
-
-.hrTabs {
-    border: 1px solid;
-}
-
-.hideMe {
-    display:none !important;
-}
-</style>
-
+<?= $this->asset->css('plugins/BoardNotes/Assets/css/dashboard.css') ?>
 <?= $this->asset->js('plugins/BoardNotes/Assets/js/tabs.js') ?>
 <?= $this->asset->js('plugins/BoardNotes/Assets/js/load_dashboard.js') ?>
 
@@ -38,9 +6,16 @@
 <?= t('BoardNotes_DASHBOARD_MY_NOTES')?> > <?= t('BoardNotes_DASHBOARD_ALL_TAB') ?>
 </h2></div>
 
-<section id="mainholderDashboard" class="mainholderDashboard sidebar-container">
+<!--
+//----------------------------------------
+// ACTUAL CONTENT BEGINS HERE !!!
+// it shall be regenerated dynamically by reloading the "tabs" and "content" containers from within the page
+//----------------------------------------
+-->
 
-<div id="tabs" class="sidebar">
+<section class="mainholderDashboard sidebar-container" id="mainholderDashboard">
+
+<div id="tabs" class="sidebar tabs">
 
     <?= $this->render('BoardNotes:dashboard/tabs', array(
          'projectsAccess' => $projectsAccess,
@@ -81,11 +56,84 @@ if ($tab_id > 0) {
 
 </section>
 
+<!--
+//----------------------------------------
+// ACTUAL CONTENT ENDS HERE !!!
+// all sections below must appear ONCE ONLY and NOT be refreshed
+//----------------------------------------
+-->
+
 <?php
+
+$isAdmin = $this->user->isAdmin();
 
 // tabId (hidden reference for tabs)
 print '<div class="hideMe" id="tabId"';
 print ' data-tab="' . $tab_id  . '"';
 print ' data-project="' . $project['id'] . '"';
+print ' data-admin="' . ($isAdmin ? '1' : '0') . '"';
 print '></div>';
 
+//----------------------------------------
+
+print '<div class="hideMe" id="dialogReindexNotesAndLists" title="' . t('BoardNotes_DASHBOARD_REINDEX') . '">';
+
+print '<p style="white-space: pre-wrap;">';
+print t('BoardNotes_DIALOG_REINDEX_MSG');
+print '</p>';
+
+print '</div>';
+
+//----------------------------------------
+
+print '<div class="hideMe" id="dialogCreateCustomNoteList" title="' . t('BoardNotes_DASHBOARD_CREATE_CUSTOM_NOTE_LIST') . '">';
+
+print '<input type="text" id="nameCreateCustomNoteList" placeholder="' . t('BoardNotes_DIALOG_CREATE_CUSTOM_NOTE_LIST_NAME_PLACEHOLDER') . '">';
+print '<br>';
+if ($isAdmin) {
+    print '<input type="checkbox" id="globalCreateCustomNoteList">';
+    print '<label for="globalCreateCustomNoteList">&nbsp;&nbsp;' . t('BoardNotes_DIALOG_CREATE_CUSTOM_NOTE_LIST_GLOBAL_CHECKBOX') . '</label>';
+} else {
+    print '<input type="checkbox" disabled id="globalCreateCustomNoteList">';
+    print '<label for="globalCreateCustomNoteList">&nbsp;&nbsp;' . t('BoardNotes_DIALOG_CREATE_CUSTOM_NOTE_LIST_GLOBAL_CHECKBOX') . ' ' . t('BoardNotes_DASHBOARD_ADMIN_ONLY') . '</label>';
+}
+print '<br><br>';
+print '<p style="white-space: pre-wrap;">';
+print t('BoardNotes_DIALOG_CREATE_CUSTOM_NOTE_LIST_MSG');
+print '</p>';
+
+print '</div>';
+
+//----------------------------------------
+
+print '<div class="hideMe" id="dialogRenameCustomNoteList" title="' . t('BoardNotes_DIALOG_RENAME_CUSTOM_NOTE_LIST_TITLE') . '">';
+
+print '<input type="text" id="nameRenameCustomNoteList">';
+print '<br><br>';
+print '<p style="white-space: pre-wrap;">';
+print t('BoardNotes_DIALOG_RENAME_CUSTOM_NOTE_LIST_MSG');
+print '</p>';
+
+print '</div>';
+
+//----------------------------------------
+
+print '<div class="hideMe" id="dialogDeleteCustomNoteList" title="' . t('BoardNotes_DIALOG_DELETE_CUSTOM_NOTE_LIST_TITLE') . '">';
+
+print '<p style="white-space: pre-wrap;">';
+print t('BoardNotes_DIALOG_DELETE_CUSTOM_NOTE_LIST_MSG');
+print '</p>';
+
+print '</div>';
+
+//----------------------------------------
+
+print '<div class="hideMe" id="dialogReorderCustomNoteList" title="' . t('BoardNotes_DIALOG_REORDER_CUSTOM_NOTE_LIST_TITLE') . '">';
+
+print '<p style="white-space: pre-wrap;">';
+print t('BoardNotes_DIALOG_REORDER_CUSTOM_NOTE_LIST_MSG');
+print '</p>';
+
+print '</div>';
+
+//----------------------------------------

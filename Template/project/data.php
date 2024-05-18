@@ -1,7 +1,7 @@
 <?php
 
 if (!$is_refresh) { // load CSS and JS and translations only once per project !!!
-    print $this->asset->css('plugins/BoardNotes/Assets/css/style.css');
+    print $this->asset->css('plugins/BoardNotes/Assets/css/project.css');
     print $this->asset->js('plugins/BoardNotes/Assets/js/boardnotes.js');
     print $this->asset->js('plugins/BoardNotes/Assets/js/load_project.js');
     print $this->asset->js('plugins/BoardNotes/Assets/js/load_report.js');
@@ -44,12 +44,9 @@ if (!empty($categories)) {
         $mapCategoryColorByName[ $cat['name'] ] = $cat['color_id'];
         // category color hidden reference
         if (!$is_refresh) { // generate only once per project !!!
-            print '<div id="category-';
-            print $cat['name'];
-            print '" data-color="';
-            print $cat['color_id'];
-            print '" class="hideMe">';
-            print '</div>';
+            print '<div class="hideMe" id="category-' . $cat['name'] . '"';
+            print ' data-color="' . $cat['color_id'] . '"';
+            print '></div>';
         }
     }
 }
@@ -80,13 +77,8 @@ if (!empty($swimlanes)) {
 
 if (!$is_refresh) { // print only once per project !!!
     print '<div align="center">';
-    print '<section class="mainholder" id="mainholderP';
-    print $project_id;
-    print '">';
-
-    print '<div align="left" id="result';
-    print $project_id;
-    print '">';
+    print '<section class="mainholder" id="mainholderP' . $project_id . '">';
+    print '<div align="left" id="result' . $project_id . '">';
 }
 
 //----------------------------------------
@@ -99,33 +91,32 @@ if (!array_key_exists('boardnotesShowCategoryColors', $_SESSION)) {
     $_SESSION['boardnotesShowCategoryColors'] = false;
 }
 $optionShowCategoryColors = $_SESSION['boardnotesShowCategoryColors'];
+
 // evaluate optionSortByStatus option from session
 if (!array_key_exists('boardnotesSortByStatus', $_SESSION)) {
     $_SESSION['boardnotesSortByStatus'] = false;
 }
 $optionSortByStatus = $_SESSION['boardnotesSortByStatus'];
+
 // evaluate optionShowAllDone option from session
 if (!array_key_exists('boardnotesShowAllDone', $_SESSION)) {
     $_SESSION['boardnotesShowAllDone'] = false;
 }
 $optionShowAllDone = $_SESSION['boardnotesShowAllDone'];
 
+// evaluate optionShowTabStats option from session
+if (!array_key_exists('boardnotesShowTabStats', $_SESSION)) {
+    $_SESSION['boardnotesShowTabStats'] = false;
+}
+$optionShowTabStats = $_SESSION['boardnotesShowTabStats'];
+
 // session_vars (hidden reference for options)
-print '<div id="session_vars';
-print '" data-optionShowCategoryColors="';
-print $optionShowCategoryColors ? 'true' : 'false';
-print '" data-optionSortByStatus="';
-print $optionSortByStatus ? 'true' : 'false';
-print '" data-optionShowAllDone="';
-print $optionShowAllDone ? 'true' : 'false';
-print '" class="hideMe">';
-print '</div>';
-
-//----------------------------------------
-
-print '<ul class="sortableRef" id="sortableRef-P' . $project_id . '"';
-print ' data-project="' . $project_id . '"';
-print '>';
+print '<div class="hideMe" id="session_vars"';
+print ' data-optionShowCategoryColors="' . ($optionShowCategoryColors ? 'true' : 'false') . '"';
+print ' data-optionSortByStatus="' . ($optionSortByStatus ? 'true' : 'false') . '"';
+print ' data-optionShowAllDone="' . ($optionShowAllDone ? 'true' : 'false') . '"';
+print ' data-optionShowTabStats="' . ($optionShowTabStats ? 'true' : 'false') . '"';
+print '></div>';
 
 //----------------------------------------
 
@@ -133,75 +124,23 @@ print '>';
 ////    NEW NOTE / OVERVIEW MODE TITLE
 //////////////////////////////////////////
 
-print '<li id="item-0" class="liNewNote" data-id="0" data-project="' . $project_id . '">';
+print '<ul class="ulNotes"><li id="item-0" class="liNewNote" data-id="0" data-project="' . $project_id . '">';
 print '<div class="liNewNoteBkgr"></div>';
 
 // here goes the Settings Button Toolbar
 print '<div class="toolbarSettingsButtons containerNoWrap containerFloatRight disableEventsPropagation">';
 
-// exclude when in Overview Mode
-if (!$readonlyNotes) {
-    // Settings delete all done
-    print '<button id="settingsDeleteAllDone" class="toolbarButton toolbarButtonToggled"';
-    print ' title="' . t('BoardNotes_PROJECT_DELETE_ALL_DONE_NOTES') . '"';
-    print ' data-id="0"';
-    print ' data-project="' . $project_id . '"';
-    print ' data-user="' . $user_id . '"';
-    print '>';
-    print '<i class="fa fa-trash" aria-hidden="true"></i>';
-    print'</button>';
-
-    // add some space between button groups
-    print '<div class="toolbarSeparator">&nbsp;</div>';
-
-    // Settings stats
-    print '<button id="settingsStats" class="toolbarButton"';
-    print ' title="' . t('BoardNotes_PROJECT_NOTES_STATS') . '"';
-    print ' data-id="0"';
-    print ' data-project="' . $project_id . '"';
-    print ' data-user="' . $user_id . '"';
-    print '>';
-    print '<i class="fa fa-bar-chart" aria-hidden="true"></i>';
-    print '</button>';
-
-    // Open report
-    print '<button id="settingsReport" class="toolbarButton"';
-    print ' title="' . t('BoardNotes_PROJECT_CREATE_REPORT') . '"';
-    print ' data-id="0"';
-    print ' data-project="' . $project_id . '"';
-    print ' data-user="' . $user_id . '"';
-    print '>';
-    print '<i class="fa fa-file-text-o" aria-hidden="true"></i>';
-    print '</button>';
-
-    // add some space between button groups
-    print '<div class="toolbarSeparator">&nbsp;</div>';
-} // end exclude
-
-// Collapse all
-print '<button id="settingsCollapseAll" class="toolbarButton"';
-print ' title="' . t('BoardNotes_PROJECT_COLLAPSE_ALL_NOTES') . '"';
+// Toggle category colors
+print '<button id="settingsCategoryColors" class="toolbarButton"';
+print ' title="' . t('BoardNotes_PROJECT_TOGGLE_COLORIZE_BY_CATEGORY') . '"';
 print ' data-id="0"';
 print ' data-project="' . $project_id . '"';
-print ' data-user="' . $user_id . '"';
+print ' data-user="' .  $user_id . '"';
 print '>';
-print '<i class="fa fa-minus-square" aria-hidden="true"></i>';
+print '<i class="fa fa-paint-brush" aria-hidden="true"></i>';
 print '</button>';
 
-// Expand all
-print '<button id="settingsExpandAll" class="toolbarButton"';
-print ' title="' . t('BoardNotes_PROJECT_EXPAND_ALL_NOTES') . '"';
-print ' data-id="0"';
-print ' data-project="' . $project_id . '"';
-print ' data-user="' . $user_id . '"';
-print '>';
-print '<i class="fa fa-plus-square" aria-hidden="true"></i>';
-print '</button>';
-
-// add some space between button groups
-print '<div class="toolbarSeparator">&nbsp;</div>';
-
-// Toggle hide All Done
+// Toggle show All Done
 print '<button id="settingsShowAllDone" class="toolbarButton"';
 print ' title="' . t('BoardNotes_PROJECT_TOGGLE_SHOW_ALL_DONE') . '"';
 print ' data-id="0"';
@@ -221,17 +160,69 @@ print '>';
 print '<i class="fa fa-sort" aria-hidden="true"></i>';
 print '</button>';
 
-// Toggle category colors
-print '<button id="settingsCategoryColors" class="toolbarButton"';
-print ' title="' . t('BoardNotes_PROJECT_TOGGLE_COLORIZE_BY_CATEGORY') . '"';
+// add some space between button groups
+print '<button class="toolbarSeparator">&nbsp;</button>';
+
+// Expand all
+print '<button id="settingsExpandAll" class="toolbarButton"';
+print ' title="' . t('BoardNotes_PROJECT_EXPAND_ALL_NOTES') . '"';
 print ' data-id="0"';
 print ' data-project="' . $project_id . '"';
-print ' data-user="' .  $user_id . '"';
+print ' data-user="' . $user_id . '"';
 print '>';
-print '<i class="fa fa-paint-brush" aria-hidden="true"></i>';
+print '<i class="fa fa-plus-square" aria-hidden="true"></i>';
 print '</button>';
 
-print '</div>';
+// Collapse all
+print '<button id="settingsCollapseAll" class="toolbarButton"';
+print ' title="' . t('BoardNotes_PROJECT_COLLAPSE_ALL_NOTES') . '"';
+print ' data-id="0"';
+print ' data-project="' . $project_id . '"';
+print ' data-user="' . $user_id . '"';
+print '>';
+print '<i class="fa fa-minus-square" aria-hidden="true"></i>';
+print '</button>';
+
+// exclude when in Overview Mode
+if (!$readonlyNotes) {
+    // add some space between button groups
+    print '<button class="toolbarSeparator">&nbsp;</button>';
+
+    // Open report
+    print '<button id="settingsReport" class="toolbarButton"';
+    print ' title="' . t('BoardNotes_PROJECT_CREATE_REPORT') . '"';
+    print ' data-id="0"';
+    print ' data-project="' . $project_id . '"';
+    print ' data-user="' . $user_id . '"';
+    print '>';
+    print '<i class="fa fa-file-text" aria-hidden="true"></i>';
+    print '</button>';
+
+    // Settings stats
+    print '<button id="settingsStats" class="toolbarButton"';
+    print ' title="' . t('BoardNotes_PROJECT_NOTES_STATS') . '"';
+    print ' data-id="0"';
+    print ' data-project="' . $project_id . '"';
+    print ' data-user="' . $user_id . '"';
+    print '>';
+    print '<i class="fa fa-pie-chart" aria-hidden="true"></i>';
+    print '</button>';
+
+    // add some space between button groups
+    print '<button class="toolbarSeparator">&nbsp;</button>';
+
+    // Settings delete all done
+    print '<button id="settingsDeleteAllDone" class="toolbarButton buttonToggled"';
+    print ' title="' . t('BoardNotes_PROJECT_DELETE_ALL_DONE_NOTES') . '"';
+    print ' data-id="0"';
+    print ' data-project="' . $project_id . '"';
+    print ' data-user="' . $user_id . '"';
+    print '>';
+    print '<i class="fa fa-trash" aria-hidden="true"></i>';
+    print'</button>';
+} // end exclude in Overview Mode
+
+print '</div>'; // Settings Button Toolbar
 
 // here goes the Title row
 print '<div class="containerNoWrap containerFloatLeft disableEventsPropagation">';
@@ -250,7 +241,7 @@ if ($readonlyNotes) {
         print '<span class="textNewNote"></span>';
     }
 }
-print '</div>';
+print '</div>'; // Title row
 
 // here goes the space Placeholder
 print '<div class="hideMe containerFloatClear" id="placeholderNewNote"></div>';
@@ -260,8 +251,28 @@ if (!$readonlyNotes) {
     // Newline after heading and top settings
     print '<br>';
 
-    // here goes the Input line
+    // here goes the New Note Input row
     print '<div class="containerNoWrap containerFloatClear">';
+
+    // Input line
+    print '<input id="inputNewNote" class="inputNewNote disableEventsPropagation"';
+    print ' type="text" placeholder="' . t('BoardNotes_PROJECT_NEW_NOTE_TITLE_PLACEHOLDER') . '"';
+    print ' title="' . t('BoardNotes_PROJECT_NOTE_TITLE_SAVE_HINT') . '"';
+    print ' data-project="' . $project_id . '"';
+    print ' data-user="' . $user_id . '"';
+    print '>';
+
+    // add some space before button group
+    print '<button class="toolbarSeparator">&nbsp;</button>';
+
+    // Save button
+    print '<button id="saveNewNote" class="hideMe saveNewNote toolbarButton"';
+    print ' title="' . t('BoardNotes_PROJECT_NOTE_SAVE') . '"';
+    print ' data-project="' . $project_id . '"';
+    print ' data-user="' . $user_id . '"';
+    print '>';
+    print '<i class="fa fa-floppy-o" aria-hidden="true"></i>';
+    print '</button>';
 
     // Show details button
     print '<button id="showDetailsNewNote" class="showDetailsNewNote toolbarButton"';
@@ -273,32 +284,14 @@ if (!$readonlyNotes) {
     print '<i class="fa fa-angle-double-down" aria-hidden="true"></i>';
     print '</button>';
 
-    // Save button
-    print '<button id="saveNewNote" class="hideMe saveNewNote toolbarButton"';
-    print ' title="' . t('BoardNotes_PROJECT_NOTE_SAVE') . '"';
-    print ' data-project="' . $project_id . '"';
-    print ' data-user="' . $user_id . '"';
-    print '>';
-    print '<i class="fa fa-floppy-o" aria-hidden="true"></i>';
-    print '</button>';
+    print '</div>'; // New Note Input row
 
-    // Input line
-    print '<input class="inputNewNote disableEventsPropagation" id="inputNewNote"';
-    print ' type="text" placeholder="' . t('BoardNotes_PROJECT_NEW_NOTE_TITLE_PLACEHOLDER') . '"';
-    print ' title="' . t('BoardNotes_PROJECT_NOTE_TITLE_SAVE_HINT') . '"';
-    print ' data-project="' . $project_id . '"';
-    print ' data-user="' . $user_id . '"';
-    print '>';
-
-    print '</div>';
-
-    // here goes the Detailed View
+    // here goes the New Note Detailed View
     print '<div id="detailsNewNote" class="hideMe details containerFloatClear noteDetails ui-corner-all"';
     print ' data-id="0"';
     print '>';
 
-    //-----------------------
-
+    // Category dropdown
     print '<div class="categories disableEventsPropagation">';
     print '<label for="catNewNote">' . t('Category') . '</label> : &nbsp;&nbsp;';
     print '<select id="catNewNote"';
@@ -310,18 +303,16 @@ if (!$readonlyNotes) {
     print '<option selected="selected"></option>'; // Insert empty line for keeping non category by default
     print $listCategoriesById;
     print '</select>';
-    print '</div>';
+    print '</div>'; // Category dropdown
 
     print '<br>';
 
-    //-----------------------
-
-    // here go the New Note Edit Button
-    print '<div class="containerNoWrap containerLeft disableEventsPropagation">';
+    // here goes the New Note Edit Button
+    print '<div class="containerNoWrap containerAbsoluteLeft disableEventsPropagation">';
 
     // Edit details button
     print '<button id="editDetailsNewNote"';
-    print ' class="editDetailsNewNote toolbarButton toolbarButtonBigger disableEventsPropagation"';
+    print ' class="editDetailsNewNote toolbarButton buttonBigger disableEventsPropagation"';
     print ' title="' . t('BoardNotes_PROJECT_NOTE_EDIT_DETAILS') . '"';
     print ' data-id="0"';
     print ' data-project="' . $project_id . '"';
@@ -330,7 +321,7 @@ if (!$readonlyNotes) {
     print '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>';
     print '</button>';
 
-    print '</div>';
+    print '</div>'; // New Note Edit Button
 
     //-----------------------
 
@@ -354,16 +345,26 @@ if (!$readonlyNotes) {
 
     //-----------------------
 
-    print '</div>'; // Detailed View
+    print '</div>'; // New Note Detailed View
 } // end exclude
 
-print '</li>';
+print '</li></ul>';
+
+//----------------------------------------
+
+//////////////////////////////////////////
+////    PROJECT LIST(S)
+//////////////////////////////////////////
+
+print '<div id="scrollableContent" class="scrollableContent">';
+print '<ul class="ulNotes sortableList" id="sortableList-P' . $project_id . '"';
+print ' data-project="' . $project_id . '"';
+print '>';
 
 //----------------------------------------
 
 $num = 1;
 $last_project_id = $project_id;
-$last_num_notes = 0;
 foreach ($data as $u) {
     if (!empty($project_id) && $u['project_id'] != $project_id) {
         continue;
@@ -373,27 +374,32 @@ foreach ($data as $u) {
     if ($readonlyNotes && $last_project_id != $u['project_id']) {
         print '</ul>';
 
-        // hidden reference for number of notes by project
-        print '<div class="hideMe" id="nrNotes-P' . $last_project_id . '"';
-        print ' data-num="' . $last_num_notes . '"';
-        print '></div>';
-
         // reset project and number of notes
         $last_project_id = $u['project_id'];
-        $last_num_notes = 0;
 
         // project name link
-        print '<h2>';
+        print '<h2 class="textNonSelectable disableEventsPropagation headerList" id="headerList-P' . $last_project_id . '">';
         print $this->url->link(
             $projectsTabsById[ $last_project_id ]['name'],
             'BoardNotesController',
             'boardNotesShowAll',
             array('plugin' => 'BoardNotes', 'user_id' => $user_id, 'tab_id' => $projectsTabsById[ $last_project_id ]['tab_id']),
         );
+        // collapse/expand project button
+        print '<div class="containerNoWrap containerFloatRight">';
+        print '<button class="toolbarSeparator">&nbsp;</button>';
+        print '<button id="toggleList-P' . $last_project_id . '"';
+        print ' class="toolbarButton buttonHeader disableEventsPropagation toggleList"';
+        print ' title="' . t('BoardNotes_PROJECT_TOGGLE_LIST') . '"';
+        print ' data-project="' . $last_project_id . '"';
+        print '>';
+        print '<a><i class="fa fa-chevron-circle-up " aria-hidden="true"></i></a>';
+        print '</button>';
+        print '</div>';
         print '</h2>';
 
         // sortable list by project
-        print '<ul class="sortableRef" id="sortableRef-P' . $last_project_id . '"';
+        print '<ul class="ulNotes sortableList" id="sortableList-P' . $last_project_id . '"';
         print ' data-project="' . $last_project_id . '"';
         print '>';
     }
@@ -412,96 +418,8 @@ foreach ($data as $u) {
     }
     print '"></div>';
 
-    // here goes the Note Header Toolbar
-    print '<div class="toolbarNoteHeader containerNoWrap containerFloatRight">';
-
     // here goes the Note Button Toolbar
-    print '<div class="toolbarNoteButtons containerNoWrap containerFloatRight disableEventsPropagation">';
-
-    // Show details button
-    print '<button id="showDetails-P' . $u['project_id'] . '-' . $num . '"';
-    print ' class="showDetails toolbarButton"';
-    print ' title="' . t('BoardNotes_PROJECT_NOTE_TOGGLE_DETAILS') . '"';
-    print ' data-id="' . $num  . '"';
-    print ' data-project="' . $u['project_id'] . '"';
-    print ' data-user="' . $user_id . '"';
-    print '>';
-    print '<i class="fa fa-angle-double-down" aria-hidden="true"></i>';
-    print '</button>';
-
-    // hide all the utility buttons when viewing notes as readonly
-    // just allow for check/uncheck note
-    if (!$readonlyNotes) {
-        // Save button (in detailed view)
-        print '<button id="noteSave-P' . $u['project_id'] . '-' . $num . '"';
-        print ' class="hideMe toolbarButton noteSave"';
-        print ' title="' . t('BoardNotes_PROJECT_NOTE_SAVE')  . '"';
-        print ' data-id="' . $num . '"';
-        print ' data-project="' . $u['project_id'] . '"';
-        print ' data-user="' . $user_id . '"';
-        print '>';
-        print '<i class="fa fa-floppy-o" aria-hidden="true"></i>';
-        print '</button>';
-
-        // Delete button viewed (in detailed view)
-        print '<button id="noteDelete-P' . $u['project_id'] . '-' . $num . '"';
-        print ' class="hideMe toolbarButton noteDelete"';
-        print ' title="' . t('BoardNotes_PROJECT_NOTE_DELETE') . '"';
-        print ' data-id="' . $num . '"';
-        print ' data-project="' . $u['project_id'] . '"';
-        print ' data-user="' . $user_id . '"';
-        print '>';
-        print '<i class="fa fa-trash-o" aria-hidden="true"></i>';
-        print '</button>';
-
-        // add some space between button groups
-        print '<div id="toolbarSeparator-P' . $u['project_id'] . '-' . $num . '"';
-        print ' class="hideMe toolbarSeparator"';
-        print '>&nbsp;</div>';
-
-        // Transfer button (in detailed view)
-        print '<button id="noteTransfer-P' . $u['project_id'] . '-' . $num . '"';
-        print ' class="hideMe toolbarButton noteTransfer"';
-        print ' title="' . t('BoardNotes_PROJECT_NOTE_MOVE_TO_PROJECT') . '"';
-        print ' data-id="' . $num . '"';
-        print ' data-project="' . $u['project_id'] . '"';
-        print ' data-user="' . $user_id . '"';
-        print '>';
-        print '<i class="fa fa-exchange" aria-hidden="true"></i>';
-        print '</button>';
-
-        // notes from custom lists obviously CANNOT create tasks from notes
-        if (!$project['is_custom']) {
-            // Add note to tasks table (in detailed view)
-            print '<button id="noteToTask-P' . $u['project_id'] . '-' . $num . '"';
-            print ' class="hideMe toolbarButton noteToTask"';
-            print ' title="' . t('BoardNotes_PROJECT_NOTE_CREATE_TASK') . '"';
-            print ' data-id="' . $num . '"';
-            print ' data-project="' . $u['project_id'] . '"';
-            print ' data-user="' . $user_id . '"';
-            print '>';
-            print '<i class="fa fa-share-square-o" aria-hidden="true"></i>';
-            print '</button>';
-        }
-    }
-
-    print '</div>'; // Note Button Toolbar
-
-    // explicit reorder handle for mobile
-    print '<button class="hideMe toolbarButton toolbarButtonBigger sortableHandle">';
-    print '<i class="fa fa-arrows-alt" aria-hidden="true"></i>';
-    print '</button>';
-
-    // Refresh order button (shown on changed status in SortByStatus mode only)
-    print '<button id="noteRefreshOrder-P' . $u['project_id'] . '-' . $num . '"';
-    print ' class="hideMe toolbarButton toolbarButtonToggled toolbarButtonBigger disableEventsPropagation noteRefreshOrder"';
-    print ' title="' . t('BoardNotes_PROJECT_NOTE_REFRESH_ORDER') . '"';
-    print ' data-id="' . $num  . '"';
-    print ' data-project="' . $u['project_id'] . '"';
-    print ' data-user="' . $user_id . '"';
-    print '>';
-    print '<i class="fa fa-refresh fa-spin fa-spin-reverse" aria-hidden="true"></i>';
-    print '</button>';
+    print '<div class="toolbarNoteButtons containerNoWrap containerFloatRight">';
 
     // Category label (in simple view)
     print '<label id="noteCatLabel-P' . $u['project_id'] . '-' . $num . '"';
@@ -521,9 +439,92 @@ foreach ($data as $u) {
     print $u['category'];
     print '</label>';
 
-    print '</div>'; // Note Header Toolbar
+    // Refresh order button (shown on changed status in SortByStatus mode only)
+    print '<button id="noteRefreshOrder-P' . $u['project_id'] . '-' . $num . '"';
+    print ' class="hideMe toolbarButton buttonToggled buttonBigger disableEventsPropagation noteRefreshOrder"';
+    print ' title="' . t('BoardNotes_PROJECT_NOTE_REFRESH_ORDER') . '"';
+    print ' data-id="' . $num  . '"';
+    print ' data-project="' . $project_id . '"';
+    print ' data-user="' . $user_id . '"';
+    print '>';
+    print '<i class="fa fa-refresh fa-spin" aria-hidden="true"></i>';
+    print '</button>';
 
-    // here goes the Title row with Checkbox
+    // explicit reorder handle for mobile
+    print '<button class="hideMe toolbarButton buttonBigger sortableListHandle">';
+    print '<i class="fa fa-arrows-alt" aria-hidden="true"></i>';
+    print '</button>';
+
+    // hide all the utility buttons when viewing notes as readonly
+    // just allow for check/uncheck note
+    if (!$readonlyNotes) {
+        // notes from custom lists obviously CANNOT create tasks from notes
+        if (!$project['is_custom']) {
+            // Add note to tasks table (in detailed view)
+            print '<button id="noteCreateTask-P' . $u['project_id'] . '-' . $num . '"';
+            print ' class="hideMe toolbarButton noteCreateTask"';
+            print ' title="' . t('BoardNotes_PROJECT_NOTE_CREATE_TASK') . '"';
+            print ' data-id="' . $num . '"';
+            print ' data-project="' . $u['project_id'] . '"';
+            print ' data-user="' . $user_id . '"';
+            print '>';
+            print '<i class="fa fa-share-square-o" aria-hidden="true"></i>';
+            print '</button>';
+        }
+
+        // Transfer button (in detailed view)
+        print '<button id="noteTransfer-P' . $u['project_id'] . '-' . $num . '"';
+        print ' class="hideMe toolbarButton noteTransfer"';
+        print ' title="' . t('BoardNotes_PROJECT_NOTE_MOVE_TO_PROJECT') . '"';
+        print ' data-id="' . $num . '"';
+        print ' data-project="' . $u['project_id'] . '"';
+        print ' data-user="' . $user_id . '"';
+        print '>';
+        print '<i class="fa fa-exchange" aria-hidden="true"></i>';
+        print '</button>';
+
+        // add some space between button groups
+        print '<button id="toolbarSeparator-P' . $u['project_id'] . '-' . $num . '"';
+        print ' class="hideMe toolbarSeparator"';
+        print '>&nbsp;</button>';
+
+        // Delete button viewed (in detailed view)
+        print '<button id="noteDelete-P' . $u['project_id'] . '-' . $num . '"';
+        print ' class="hideMe toolbarButton noteDelete"';
+        print ' title="' . t('BoardNotes_PROJECT_NOTE_DELETE') . '"';
+        print ' data-id="' . $num . '"';
+        print ' data-project="' . $u['project_id'] . '"';
+        print ' data-user="' . $user_id . '"';
+        print '>';
+        print '<i class="fa fa-trash-o" aria-hidden="true"></i>';
+        print '</button>';
+
+        // Save button (in detailed view)
+        print '<button id="noteSave-P' . $u['project_id'] . '-' . $num . '"';
+        print ' class="hideMe toolbarButton noteSave"';
+        print ' title="' . t('BoardNotes_PROJECT_NOTE_SAVE')  . '"';
+        print ' data-id="' . $num . '"';
+        print ' data-project="' . $u['project_id'] . '"';
+        print ' data-user="' . $user_id . '"';
+        print '>';
+        print '<i class="fa fa-floppy-o" aria-hidden="true"></i>';
+        print '</button>';
+    }
+
+    // Show details button
+    print '<button id="showDetails-P' . $u['project_id'] . '-' . $num . '"';
+    print ' class="showDetails toolbarButton"';
+    print ' title="' . t('BoardNotes_PROJECT_NOTE_TOGGLE_DETAILS') . '"';
+    print ' data-id="' . $num  . '"';
+    print ' data-project="' . $u['project_id'] . '"';
+    print ' data-user="' . $user_id . '"';
+    print '>';
+    print '<i class="fa fa-angle-double-down" aria-hidden="true"></i>';
+    print '</button>';
+
+    print '</div>'; // Note Button Toolbar
+
+    // here goes the Note Title row with Checkbox
     print '<div class="containerNoWrap containerFloatLeft disableEventsPropagation">';
 
     // Checkbox for Note Status
@@ -547,7 +548,7 @@ foreach ($data as $u) {
     print '></i>';
     print '</button>';
 
-    // Note title input - typing. Changes after submit to label below.
+    // Note Input line
     print '<input class="hideMe noteTitle" id="noteTitleInput-P' . $u['project_id'] . '-' . $num . '"';
     print ' type="text" placeholder=""';
     print ' title="' . t('BoardNotes_PROJECT_NOTE_TITLE_SAVE_HINT') . '"';
@@ -560,7 +561,7 @@ foreach ($data as $u) {
     }
     print '>';
 
-    // Note title label - visual. Changes on click to input
+    // Note Title label
     print '<label id="noteTitleLabel-P' . $u['project_id'] . '-' . $num . '"';
     if ($u['is_active'] == "0") {
         print ' class="noteTitleLabel noteTitle noteDoneText"';
@@ -578,12 +579,12 @@ foreach ($data as $u) {
     print $u['title'];
     print '</label>';
 
-    print '</div>'; // Title row with Checkbox
+    print '</div>'; // Note Title row with Checkbox
 
     // here goes the space Placeholder
     print '<div class="hideMe containerFloatClear" id="notePlaceholder-P' . $u['project_id'] . '-' . $num . '"></div>';
 
-    // here goes the Detailed View
+    // here goes the Note Detailed View
     print '<div id="noteDetails-P' . $u['project_id'] . '-' . $num . '"';
     print ' class="hideMe details containerFloatClear noteDetails ui-corner-all"';
     print ' data-id="' . $num . '"';
@@ -591,8 +592,7 @@ foreach ($data as $u) {
     print ' data-user="' . $user_id . '"';
     print '>';
 
-    //-----------------------
-
+    // Category dropdown
     print '<div class="categories disableEventsPropagation">';
     print '<label for="cat-P' . $u['project_id'] . '-' . $num . '">' . t('Category') . '</label> : &nbsp;&nbsp;';
     print '<select id="cat-P' . $u['project_id'] . '-' . $num . '"';
@@ -633,19 +633,19 @@ foreach ($data as $u) {
     }
 
     print '</select>';
-    print '</div>';
+    print '</div>'; // Category dropdown
 
     print '<br>';
 
     //-----------------------
 
     if (!$readonlyNotes) {
-        // here go the Note Edit Buttons
-        print '<div class="containerNoWrap containerLeft disableEventsPropagation">';
+        // here goes the Note Edit Buttons
+        print '<div class="containerNoWrap containerAbsoluteLeft disableEventsPropagation">';
 
         // Edit details button
         print '<button id="editDetails-P' . $u['project_id'] . '-' . $num . '"';
-        print ' class="editDetails toolbarButton toolbarButtonBigger"';
+        print ' class="editDetails toolbarButton buttonBigger"';
         print ' title="' . t('BoardNotes_PROJECT_NOTE_EDIT_DETAILS') . '"';
         print ' data-id="' . $num  . '"';
         print ' data-project="' . $u['project_id'] . '"';
@@ -654,7 +654,7 @@ foreach ($data as $u) {
         print '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>';
         print '</button>';
 
-        print '</div>';
+        print '</div>'; // Note Edit Buttons
     }
 
     //-----------------------
@@ -688,7 +688,7 @@ foreach ($data as $u) {
 
     //-----------------------
 
-    print '</div>'; // Detailed View
+    print '</div>'; // Note Detailed View
 
     // noteId (hidden reference for each note)
     print '<div class="hideMe" id="noteId-P' .  $u['project_id'] . '-' . $num . '"';
@@ -697,25 +697,14 @@ foreach ($data as $u) {
 
     print '</li>';
 
-    $last_num_notes++;
-
     // Id
     $num++;
 }
 
 print '</ul>';
-
-// hidden reference for number of notes by project
-print '<div class="hideMe" id="nrNotes-P' . $last_project_id . '"';
-print ' data-num="' . $last_num_notes . '"';
-print '></div>';
+print '</div>'; // scrollableContent
 
 //----------------------------------------
-
-// hidden reference for total number of notes
-print '<div class="hideMe" id="nrNotes"';
-print ' data-id="' . ($num - 1) . '"';
-print '></div>';
 
 // hidden reference for project_id and user_id of the currently active page
 print '<div class="hideMe" id="refProjectId"';
@@ -740,11 +729,23 @@ if (!$is_refresh) { // print only once per project !!!
 //----------------------------------------
 
 if (!$is_refresh) { // print only once per project !!!
-    print '<div class="hideMe" id="dialogDeleteAllDone" title="' . t('BoardNotes_PROJECT_DELETE_ALL_DONE_NOTES') . '">';
+    //---------------------------------------------
+
+    print '<div class="hideMe" id="dialogDeleteNote" title="' . t('BoardNotes_PROJECT_NOTE_DELETE') . '">';
     print '<p style="white-space: pre-wrap;">';
-    print t('BoardNotes_DELETEALLDONE_DIALOG_MSG');
+    print t('BoardNotes_DIALOG_DELETE_NOTE_MSG');
     print '</p>';
     print '</div>';
+
+    //---------------------------------------------
+
+    print '<div class="hideMe" id="dialogDeleteAllDone" title="' . t('BoardNotes_PROJECT_DELETE_ALL_DONE_NOTES') . '">';
+    print '<p style="white-space: pre-wrap;">';
+    print t('BoardNotes_DIALOG_DELETE_ALL_DONE_MSG');
+    print '</p>';
+    print '</div>';
+
+    //---------------------------------------------
 
     print '<div class="hideMe" id="dialogStats" title="' . t('BoardNotes_PROJECT_NOTES_STATS') . '">';
     print '<div id="dialogStatsInside"></div>';
@@ -752,12 +753,12 @@ if (!$is_refresh) { // print only once per project !!!
 
     //---------------------------------------------
 
-    print '<div class="hideMe" id="dialogToTask-P' . $project_id . '" title="' . t('BoardNotes_PROJECT_NOTE_CREATE_TASK') . '">';
+    print '<div class="hideMe" id="dialogCreateTask-P' . $project_id . '" title="' . t('BoardNotes_PROJECT_NOTE_CREATE_TASK') . '">';
 
-    print '<div id="dialogToTaskParams">';
+    print '<div id="dialogCreateTaskParams">';
 
-    print '<label for="listCatToTask-P' . $project_id . '">' . t('Category') . ' : &nbsp;</label>';
-    print '<select id="listCatToTask-P' . $project_id . '">';
+    print '<label for="listCatCreateTask-P' . $project_id . '">' . t('Category') . ' : &nbsp;</label>';
+    print '<select id="listCatCreateTask-P' . $project_id . '">';
     // Only allow blank select if there's other selectable options
     if (!empty($listCategoriesById)) {
         print '<option></option>';
@@ -766,20 +767,20 @@ if (!$is_refresh) { // print only once per project !!!
     print '</select>';
     print '<br>';
 
-    print '<label for="listColToTask-P' . $project_id . '">' . t('Column') . ' : &nbsp;</label>';
-    print '<select id="listColToTask-P' . $project_id . '">';
+    print '<label for="listColCreateTask-P' . $project_id . '">' . t('Column') . ' : &nbsp;</label>';
+    print '<select id="listColCreateTask-P' . $project_id . '">';
     print $listColumnsById;
     print '</select>';
     print '<br>';
 
-    print '<label for="listSwimToTask-P' . $project_id . '">' . t('Swimlane') . ' : &nbsp;</label>';
-    print '<select id="listSwimToTask-P' . $project_id . '">';
+    print '<label for="listSwimCreateTask-P' . $project_id . '">' . t('Swimlane') . ' : &nbsp;</label>';
+    print '<select id="listSwimCreateTask-P' . $project_id . '">';
     print $listSwimlanesById;
     print '</select>';
     print '<br>';
 
     print '<input type="checkbox" checked id="removeNote-P' . $project_id . '">';
-    print '<label for="removeNote-P' . $project_id . '">&nbsp;&nbsp;' . t('BoardNotes_CREATETASK_CHECKBOX_REMOVE_TASK') . '</label>';
+    print '<label for="removeNote-P' . $project_id . '">&nbsp;&nbsp;' . t('BoardNotes_DIALOG_CREATE_TASK_CHECKBOX_REMOVE_NOTE') . '</label>';
 
     print '</div>';
 
@@ -788,9 +789,9 @@ if (!$is_refresh) { // print only once per project !!!
 
     //---------------------------------------------
 
-    print '<div class="hideMe" id="dialogTransfer-P' . $project_id . '" title="' . t('BoardNotes_PROJECT_NOTE_MOVE_TO_PROJECT') . '">';
+    print '<div class="hideMe" id="dialogTransferNote-P' . $project_id . '" title="' . t('BoardNotes_PROJECT_NOTE_MOVE_TO_PROJECT') . '">';
 
-    print '<label for="listNoteProject-P' . $project_id . '">' . t('BoardNotes_TRANSFERNOTE_DIALOG_TARGET_PROJECT') . ' : &nbsp&nbsp;</label>';
+    print '<label for="listNoteProject-P' . $project_id . '">' . t('BoardNotes_DIALOG_TRANSFER_NOTE_TARGET_PROJECT') . ' : &nbsp&nbsp;</label>';
     print '<select id="listNoteProject-P' . $project_id . '">';
     foreach ($projectsTabsById as $key => $projectTab) {
         if ($key != $project_id) {
@@ -804,7 +805,7 @@ if (!$is_refresh) { // print only once per project !!!
     print '</select>';
     print '<br><br>';
     print '<p style="white-space: pre-wrap;">';
-    print t('BoardNotes_TRANSFERNOTE_DIALOG_MSG');
+    print t('BoardNotes_DIALOG_TRANSFER_NOTE_MSG');
     print '</p>';
 
     print '</div>';
@@ -813,7 +814,7 @@ if (!$is_refresh) { // print only once per project !!!
 
     print '<div class="hideMe" id="dialogReport-P' . $project_id . '" title="' . t('BoardNotes_PROJECT_CREATE_REPORT') . '">';
     print '<div id="">';
-    print '<label for="catReport-P' . $project_id . '">' . t('BoardNotes_REPOSR_DIALOG_CATEGORY_FILTER') . ' :</label><br>';
+    print '<label for="catReport-P' . $project_id . '">' . t('BoardNotes_DIALOG_REPORT_CATEGORY_FILTER') . ' :</label><br>';
     print '<select id="catReport-P' . $project_id . '">';
 
     print '<option></option>'; // add an empty category option

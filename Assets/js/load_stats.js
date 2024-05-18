@@ -1,12 +1,16 @@
+/**
+ * @author  Im[F(x)]
+ */
+
 class _BoardNotes_Stats_ {
 
 //------------------------------------------------
 static prepareDocument() {
-    var t = $("#chart").data("metrics");
+    const t = $("#chart").data("metrics");
     if (!t) return;
 
-    var e = [];
-    var a = 0;
+    let e = [];
+    let a = 0;
     for (t; a < t.length; a++) {
         e.push([t[a].column_title, t[a].nb_tasks]);
     }

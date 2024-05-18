@@ -1,14 +1,15 @@
 <?php
 
+/**
+ * Class TranslationsExportToJSHelper
+ * @package Kanboard\Plugin\BoardNotes\Helper
+ * @author  Im[F(x)]
+ */
+
 namespace Kanboard\Plugin\BoardNotes\Helper;
 
 use Kanboard\Core\Base;
 
-/**
- * Class TranslationsExportToJSHelper
- * @package Kanboard\Plugin\BoardNotes\Controller
- * @author  Im[F(x)]
- */
 class TranslationsExportToJSHelper extends Base
 {
     private $translationsExported = false;
