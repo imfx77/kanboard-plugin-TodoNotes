@@ -36,10 +36,10 @@ static initializeSortableGroup(group) {
 
 //------------------------------------------------
 static prepareDocument() {
-    _BoardNotes_.optionShowTabStats = ($("#session_vars").attr('data-optionShowTabStats') == 'true') ? true : false;
+    _BoardNotes_.optionShowTabStats = $("#session_vars").attr('data-optionShowTabStats') === 'true';
 
-    var isMobile = _BoardNotes_.isMobile();
-    var isAdmin = $("#tabId").attr('data-admin');
+    const isMobile = _BoardNotes_.isMobile();
+    const isAdmin = $("#tabId").attr('data-admin');
 
     if(isMobile) {
         // choose mobile view
@@ -47,7 +47,7 @@ static prepareDocument() {
         $(".sidebar").addClass( 'sidebarMobileDashboard' );
     }
 
-    if (isAdmin == "1") {
+    if (isAdmin === "1") {
         _BoardNotes_Dashboard_.initializeSortableGroup("Global");
     }
     _BoardNotes_Dashboard_.initializeSortableGroup("Private");

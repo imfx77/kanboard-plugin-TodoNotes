@@ -6,19 +6,19 @@ class _BoardNotes_Project_ {
 
 //------------------------------------------------
 static prepareDocument() {
-    _BoardNotes_.optionShowCategoryColors = ($("#session_vars").attr('data-optionShowCategoryColors') == 'true') ? true : false;
-    _BoardNotes_.optionSortByStatus = ($("#session_vars").attr('data-optionSortByStatus') == 'true') ? true : false;
-    _BoardNotes_.optionShowAllDone = ($("#session_vars").attr('data-optionShowAllDone') == 'true') ? true : false;
+    _BoardNotes_.optionShowCategoryColors = $("#session_vars").attr('data-optionShowCategoryColors') === 'true';
+    _BoardNotes_.optionSortByStatus = $("#session_vars").attr('data-optionSortByStatus') === 'true';
+    _BoardNotes_.optionShowAllDone = $("#session_vars").attr('data-optionShowAllDone') === 'true';
 
-    var project_id = $("#refProjectId").attr('data-project');
-    var user_id = $("#refProjectId").attr('data-user');
-    var isMobile = _BoardNotes_.isMobile();
-    var readonlyNotes = (project_id == 0); // Overview Mode
+    const project_id = $("#refProjectId").attr('data-project');
+    const user_id = $("#refProjectId").attr('data-user');
+    const isMobile = _BoardNotes_.isMobile();
+    const readonlyNotes = (project_id === 0); // Overview Mode
 
     // notes reordering is disabled when explicitly sorted by Status
     if (!_BoardNotes_.optionSortByStatus) {
         $(".sortableList").each(function() {
-            var sortable_project_id = $(this).attr('data-project');
+            const sortable_project_id = $(this).attr('data-project');
 
             $("#sortableList-P" + sortable_project_id).sortable({
                 placeholder: "ui-state-highlight",
@@ -26,9 +26,9 @@ static prepareDocument() {
                 cancel: '.disableEventsPropagation',
                 update: function() {
                     // handle notes reordering
-                    var order = $(this).sortable('toArray');
+                    let order = $(this).sortable('toArray');
                     order = order.join(",");
-                    var regex = new RegExp('item-', 'g');
+                    const regex = new RegExp('item-', 'g');
                     order = order.replace(regex, '');
                     order = order.split(',');
                     _BoardNotes_.sqlUpdateNotesPositions(sortable_project_id, user_id, order);

@@ -8,14 +8,14 @@ class _BoardNotes_Report_ {
 static prepareDocument() {
     $(".noteTitleInput").hide();
 
-    _BoardNotes_.optionShowCategoryColors = ($("#session_vars").attr('data-optionShowCategoryColors') == 'true') ? true : false;
-    _BoardNotes_.optionShowAllDone = ($("#session_vars").attr('data-optionShowAllDone') == 'true') ? true : false;
+    _BoardNotes_.optionShowCategoryColors = $("#session_vars").attr('data-optionShowCategoryColors') === 'true';
+    _BoardNotes_.optionShowAllDone = $("#session_vars").attr('data-optionShowAllDone') === 'true';
 
     // category colors
     $(".catLabel").each(function() {
-        var id = $(this).attr('data-id');
-        var project_id = $(this).attr('data-project');
-        var category = $(this).html();
+        const id = $(this).attr('data-id');
+        const project_id = $(this).attr('data-project');
+        const category = $(this).html();
         _BoardNotes_.updateCategoryColors(project_id, id, category, category)
     });
 
@@ -23,11 +23,11 @@ static prepareDocument() {
 
     setTimeout(function() {
         // resize the report table to fit in screen height so to scroll its contents
-        var scrollableTable = $(".tableReport");
+        const scrollableTable = $(".tableReport");
         if (!scrollableTable.eq(0).length) return; // missing table when NOT in report screen
         scrollableTable.height(0);
 
-        var maxHeight = 0;
+        let maxHeight;
         if ( _BoardNotes_.isMobile() ) {
             // adjust scrollableTable height
             maxHeight = 0.7 * $(window).height();

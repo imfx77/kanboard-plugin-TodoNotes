@@ -10,7 +10,7 @@ class _BoardNotes_Tabs_ {
 
 //------------------------------------------------
 static updateTabs() {
-    var project_tab_id = $("#tabId").attr('data-project');
+    const project_tab_id = $("#tabId").attr('data-project');
 
     $(".singleTab").removeClass( 'active' );
     $("#singleTab-P" + project_tab_id).addClass( 'active' );
@@ -28,7 +28,7 @@ static updateTabsContainer() {
     const numListsPrivate = parseInt( $("#groupPrivate li").length );
     const numListsRegular = parseInt( $("#groupRegular li").length );
 
-    var numTabs = 1 + 3 + 3 // ALL tab + 3x group headers + 3x pairs of <hr>
+    const numTabs = 1 + 3 + 3 // ALL tab + 3x group headers + 3x pairs of <hr>
         + ($("#groupGlobal").hasClass( 'hideMe' ) ? -0.5 : numListsGlobal)     // conditional on groupGlobal visibility
         + ($("#groupPrivate").hasClass( 'hideMe' ) ? -0.5 : numListsPrivate)   // conditional on groupPrivate visibility
         + ($("#groupRegular").hasClass( 'hideMe' ) ? -0.5 : numListsRegular);  // conditional on groupRegular visibility
@@ -79,13 +79,13 @@ static handlersTabGroup(group) {
 static #TabActionHandlers() {
     // update tabs stats widgets on clicking checkDone
     $("button" + ".checkDone").click(function() {
-        var project_id = $(this).attr('data-project');
+        const project_id = $(this).attr('data-project');
         //var user_id = $(this).attr('data-user');
-        var id = $(this).attr('data-id');
+        const id = $(this).attr('data-id');
 
-        var $checkDone = $("#noteDoneCheckmark-P" + project_id + "-" + id);
-        var $statsWidgetAll = $("#BoardNotes-StatsWidget-P0");
-        var $statsWidgetCurrent = $("#BoardNotes-StatsWidget-P" + project_id);
+        const $checkDone = $("#noteDoneCheckmark-P" + project_id + "-" + id);
+        const $statsWidgetAll = $("#BoardNotes-StatsWidget-P0");
+        const $statsWidgetCurrent = $("#BoardNotes-StatsWidget-P" + project_id);
 
         // cycle through statuses
         if ($checkDone.hasClass( 'fa-circle-thin' )) {
@@ -132,13 +132,13 @@ static #TabActionHandlers() {
 
     // start DB optimization routine on system reindex button
     $("button" + "#reindexNotesAndLists").click(function() {
-        var isAdmin = $("#tabId").attr('data-admin');
-        if (isAdmin != "1") {
+        const isAdmin = $("#tabId").attr('data-admin');
+        if (isAdmin !== "1") {
             alert( _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_DASHBOARD_NO_ADMIN_PRIVILEGES') );
             return;
         }
 
-        var user_id = $(this).attr('data-user');
+        const user_id = $(this).attr('data-user');
         _BoardNotes_Tabs_.#modalReindexNotesAndLists(user_id);
     });
 
@@ -146,7 +146,7 @@ static #TabActionHandlers() {
 
     // create custom list (global or private)
     $("button" + "#customNoteListCreate").click(function() {
-        var user_id = $(this).attr('data-user');
+        const user_id = $(this).attr('data-user');
         _BoardNotes_Tabs_.#modalCreateCustomNoteList(user_id);
     });
 
@@ -154,23 +154,23 @@ static #TabActionHandlers() {
 
     // rename custom list (global)
     $("button" + ".customNoteListRenameGlobal").click(function() {
-        var isAdmin = $("#tabId").attr('data-admin');
-        if (isAdmin != "1") {
+        const isAdmin = $("#tabId").attr('data-admin');
+        if (isAdmin !== "1") {
             alert( _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_DASHBOARD_NO_ADMIN_PRIVILEGES') );
             return;
         }
 
-        var user_id = $(this).attr('data-user');
-        var project_id = $(this).attr('data-project');
-        var default_name = $(this).closest('.singleTab').find('a').text();
+        const user_id = $(this).attr('data-user');
+        const project_id = $(this).attr('data-project');
+        const default_name = $(this).closest('.singleTab').find('a').text();
         _BoardNotes_Tabs_.#modalRenameCustomNoteList(user_id, project_id, default_name);
     });
 
     // rename custom list (private)
     $("button" + ".customNoteListRenamePrivate").click(function() {
-        var user_id = $(this).attr('data-user');
-        var project_id = $(this).attr('data-project');
-        var default_name = $(this).closest('.singleTab').find('a').text();
+        const user_id = $(this).attr('data-user');
+        const project_id = $(this).attr('data-project');
+        const default_name = $(this).closest('.singleTab').find('a').text();
         _BoardNotes_Tabs_.#modalRenameCustomNoteList(user_id, project_id, default_name);
     });
 
@@ -178,21 +178,21 @@ static #TabActionHandlers() {
 
     // delete custom list (global)
     $("button" + ".customNoteListDeleteGlobal").click(function() {
-        var isAdmin = $("#tabId").attr('data-admin');
-        if (isAdmin != "1") {
+        const isAdmin = $("#tabId").attr('data-admin');
+        if (isAdmin !== "1") {
             alert( _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_DASHBOARD_NO_ADMIN_PRIVILEGES') );
             return;
         }
 
-        var user_id = $(this).attr('data-user');
-        var project_id = $(this).attr('data-project');
+        const user_id = $(this).attr('data-user');
+        const project_id = $(this).attr('data-project');
         _BoardNotes_Tabs_.#modalDeleteCustomNoteList(user_id, project_id);
     });
 
     // delete custom list (private)
     $("button" + ".customNoteListDeletePrivate").click(function() {
-        var user_id = $(this).attr('data-user');
-        var project_id = $(this).attr('data-project');
+        const user_id = $(this).attr('data-user');
+        const project_id = $(this).attr('data-project');
         _BoardNotes_Tabs_.#modalDeleteCustomNoteList(user_id, project_id);
     });
 }
@@ -238,8 +238,8 @@ static #modalCreateCustomNoteList(user_id) {
             {
                 text : _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_CREATE_BTN'),
                 click : function() {
-                    var custom_note_list_name = $("#nameCreateCustomNoteList").val().trim();
-                    var custom_note_list_is_global = $("#globalCreateCustomNoteList").is(":checked");
+                    const custom_note_list_name = $("#nameCreateCustomNoteList").val().trim();
+                    const custom_note_list_is_global = $("#globalCreateCustomNoteList").is(":checked");
                     _BoardNotes_Tabs_.#sqlCreateCustomNoteList(user_id, custom_note_list_name, custom_note_list_is_global);
                     $( this ).dialog( "close" );
                 },
@@ -267,7 +267,7 @@ static #modalRenameCustomNoteList(user_id, project_id, default_name) {
             {
                 text : _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_RENAME_BTN'),
                 click : function() {
-                    var custom_note_list_name = $("#nameRenameCustomNoteList").val().trim();
+                    const custom_note_list_name = $("#nameRenameCustomNoteList").val().trim();
                     _BoardNotes_Tabs_.#sqlRenameCustomNoteList(user_id, project_id, custom_note_list_name);
                     $( this ).dialog( "close" );
                 },
@@ -343,13 +343,13 @@ static modalReorderCustomNoteList(user_id, order) {
 //------------------------------------------------
 // SQL reindex notes and lists DB routine
 static #sqlReindexNotesAndLists(user_id) {
-    var project_tab_id = $("#tabId").attr('data-project');
+    const project_tab_id = $("#tabId").attr('data-project');
 
     // don't cache ajax or content won't be fresh
     $.ajaxSetup ({
         cache: false
     });
-    var loadUrl = '/?controller=BoardNotesController&action=boardNotesReindexNotesAndLists&plugin=BoardNotes'
+    const loadUrl = '/?controller=BoardNotesController&action=boardNotesReindexNotesAndLists&plugin=BoardNotes'
                 + '&user_id=' + user_id
                 + '&project_tab_id=' + project_tab_id;
     setTimeout(function() {
@@ -366,13 +366,13 @@ static #sqlCreateCustomNoteList(user_id, custom_note_list_name, custom_note_list
         return;
     }
 
-    var project_tab_id = $("#tabId").attr('data-project');
+    const project_tab_id = $("#tabId").attr('data-project');
 
     // don't cache ajax or content won't be fresh
     $.ajaxSetup ({
         cache: false
     });
-    var loadUrl = '/?controller=BoardNotesController&action=boardNotesCreateCustomNoteList&plugin=BoardNotes'
+    const loadUrl = '/?controller=BoardNotesController&action=boardNotesCreateCustomNoteList&plugin=BoardNotes'
                 + '&user_id=' + user_id
                 + '&project_tab_id=' + project_tab_id
                 + '&custom_note_list_name=' + encodeURIComponent(custom_note_list_name)
@@ -391,13 +391,13 @@ static #sqlRenameCustomNoteList(user_id, project_id, custom_note_list_name) {
         return;
     }
 
-    var project_tab_id = $("#tabId").attr('data-project');
+    const project_tab_id = $("#tabId").attr('data-project');
 
     // don't cache ajax or content won't be fresh
     $.ajaxSetup ({
         cache: false
     });
-    var loadUrl = '/?controller=BoardNotesController&action=boardNotesRenameCustomNoteList&plugin=BoardNotes'
+    const loadUrl = '/?controller=BoardNotesController&action=boardNotesRenameCustomNoteList&plugin=BoardNotes'
                 + '&user_id=' + user_id
                 + '&project_tab_id=' + project_tab_id
                 + '&project_custom_id=' + project_id
@@ -411,13 +411,13 @@ static #sqlRenameCustomNoteList(user_id, project_id, custom_note_list_name) {
 //------------------------------------------------
 // SQL delete custom note list
 static #sqlDeleteCustomNoteList(user_id, project_id) {
-    var project_tab_id = $("#tabId").attr('data-project');
+    const project_tab_id = $("#tabId").attr('data-project');
 
     // don't cache ajax or content won't be fresh
     $.ajaxSetup ({
         cache: false
     });
-    var loadUrl = '/?controller=BoardNotesController&action=boardNotesDeleteCustomNoteList&plugin=BoardNotes'
+    const loadUrl = '/?controller=BoardNotesController&action=boardNotesDeleteCustomNoteList&plugin=BoardNotes'
                 + '&user_id=' + user_id
                 + '&project_tab_id=' + project_tab_id
                 + '&project_custom_id=' + project_id;
@@ -430,16 +430,16 @@ static #sqlDeleteCustomNoteList(user_id, project_id) {
 //------------------------------------------------
 // SQL update custom note lists positions
 static #sqlUpdateCustomNoteListsPositions(user_id, order) {
-    var project_tab_id = $("#tabId").attr('data-project');
+    const project_tab_id = $("#tabId").attr('data-project');
 
     // don't cache ajax or content won't be fresh
     $.ajaxSetup ({
         cache: false
     });
-    var loadUrl = '/?controller=BoardNotesController&action=boardNotesUpdateCustomNoteListsPositions&plugin=BoardNotes'
-            + '&user_id=' + user_id
-            + '&project_tab_id=' + project_tab_id
-            + '&order=' + order;
+    const loadUrl = '/?controller=BoardNotesController&action=boardNotesUpdateCustomNoteListsPositions&plugin=BoardNotes'
+                + '&user_id=' + user_id
+                + '&project_tab_id=' + project_tab_id
+                + '&order=' + order;
     setTimeout(function() {
         $("#result" + project_tab_id).html(_BoardNotes_Translations_.msgLoadingSpinner);
         location.replace(loadUrl);
