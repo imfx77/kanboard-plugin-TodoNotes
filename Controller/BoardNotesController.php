@@ -71,7 +71,7 @@ class BoardNotesController extends BaseController
         }
     }
 
-    private function FetchTabForProject($user_id, $project_id)
+    private function FetchTabForProject($user_id, $project_id): int
     {
         $count = 1;
         $all_user_projects = $this->boardNotesModel->boardNotesGetAllProjectIds($user_id);
@@ -221,7 +221,7 @@ class BoardNotesController extends BaseController
         )));
     }
 
-    public function boardNotesToggleSessionOption()
+    public function boardNotesToggleSessionOption(): bool
     {
         $session_option = $this->request->getStringParam('session_option');
         if (empty($session_option)) {
@@ -263,8 +263,7 @@ class BoardNotesController extends BaseController
 
         $note_id = $this->request->getStringParam('note_id');
 
-        $validation = $this->boardNotesModel->boardNotesDeleteNote($project_id, $user_id, $note_id);
-        return $validation;
+        return $this->boardNotesModel->boardNotesDeleteNote($project_id, $user_id, $note_id);
     }
 
     public function boardNotesDeleteAllDoneNotes()
@@ -273,8 +272,7 @@ class BoardNotesController extends BaseController
         $project = $this->resolveProject($user_id);
         $project_id = $project['id'];
 
-        $validation = $this->boardNotesModel->boardNotesDeleteAllDoneNotes($project_id, $user_id);
-        return $validation;
+        return $this->boardNotesModel->boardNotesDeleteAllDoneNotes($project_id, $user_id);
     }
 
     public function boardNotesAddNote()
@@ -288,8 +286,7 @@ class BoardNotesController extends BaseController
         $description = $this->request->getStringParam('description');
         $category = $this->request->getStringParam('category');
 
-        $validation = $this->boardNotesModel->boardNotesAddNote($project_id, $user_id, $is_active, $title, $description, $category);
-        return $validation;
+        return $this->boardNotesModel->boardNotesAddNote($project_id, $user_id, $is_active, $title, $description, $category);
     }
 
     public function boardNotesTransferNote()
@@ -301,8 +298,7 @@ class BoardNotesController extends BaseController
         $note_id = $this->request->getStringParam('note_id');
         $target_project_id = $this->request->getStringParam('target_project_id');
 
-        $validation = $this->boardNotesModel->boardNotesTransferNote($project_id, $user_id, $note_id, $target_project_id);
-        return $validation;
+        return $this->boardNotesModel->boardNotesTransferNote($project_id, $user_id, $note_id, $target_project_id);
     }
 
     public function boardNotesUpdateNote()

@@ -32,7 +32,7 @@ class BoardNotesModel extends Base
     public const PROJECT_TYPE_CUSTOM_PRIVATE    = 3;
 
     // Check unique note
-    private function IsUniqueNote($project_id, $user_id, $note_id)
+    private function IsUniqueNote($project_id, $user_id, $note_id): bool
     {
         $result = $this->db->table(self::TABLE_NOTES_ENTRIES)
             ->eq('id', $note_id)
@@ -51,7 +51,7 @@ class BoardNotesModel extends Base
     }
 
     // Check global project
-    public function IsCustomGlobalProject($project_id)
+    public function IsCustomGlobalProject($project_id): bool
     {
         if ($project_id >= 0) { // custom projects have negative Ids
             return false;
@@ -238,13 +238,11 @@ class BoardNotesModel extends Base
     // Get a list of all swimlanes in project
     public function boardNotesGetSwimlanes($project_id)
     {
-        $swimlanes = $this->db->table(self::TABLE_SWIMLANES)
+        return $this->db->table(self::TABLE_SWIMLANES)
             ->columns('id', 'name')
             ->eq('project_id', $project_id)
             ->asc('position')
             ->findAll();
-
-        return $swimlanes;
     }
 
     // Get last modified timestamp
@@ -596,7 +594,6 @@ class BoardNotesModel extends Base
     public function boardNotesUpdateCustomNoteListsPositions($user_id, $customListsPositions)
     {
         $num = 1;
-        $timestamp = time();
 
         $result = true;
         // Loop through all positions
