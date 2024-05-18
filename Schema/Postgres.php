@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Postgres schema
+ * @package Kanboard\Plugin\BoardNotes\Schema
+ * @author  Im[F(x)]
+ */
+
 namespace Kanboard\Plugin\BoardNotes\Schema;
 
 use PDO;

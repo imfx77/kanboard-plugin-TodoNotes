@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Class BoardNotesModel
+ * @package Kanboard\Plugin\BoardNotes\Model
+ * @author  Im[F(x)]
+ */
+
 namespace Kanboard\Plugin\BoardNotes\Model;
 
 use Kanboard\Core\Base;

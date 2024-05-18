@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Class BoardNotesController
+ * @package Kanboard\Plugin\BoardNotes\Controller
+ * @author  Im[F(x)]
+ */
+
 namespace Kanboard\Plugin\BoardNotes\Controller;
 
 use Kanboard\Controller\BaseController;
