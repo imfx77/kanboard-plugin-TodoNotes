@@ -389,11 +389,9 @@ class BoardNotesController extends BaseController
         $user_id = $this->resolveUserId();
         $project = $this->resolveProject($user_id);
         $project_id = $project['id'];
-
         $notesPositions = array_map('intval', explode(',', $this->request->getStringParam('order') ));
-        $nrNotes = intval($this->request->getStringParam('nrNotes'));
 
-        $validation = $this->boardNotesModel->boardNotesUpdateNotesPositions($project_id, $user_id, $notesPositions, $nrNotes);
+        $validation = $this->boardNotesModel->boardNotesUpdateNotesPositions($project_id, $user_id, $notesPositions);
         print $validation ? time() : 0;
 
         return $validation;

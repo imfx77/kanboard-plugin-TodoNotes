@@ -15,7 +15,6 @@ static prepareDocument() {
     if (!_BoardNotes_.optionSortByStatus) {
         $(".sortableList").each(function() {
             var sortable_project_id = $(this).attr('data-project');
-            var sortable_notes_number = $("#nrNotes-P" + sortable_project_id).attr('data-num');
 
             $("#sortableList-P" + sortable_project_id).sortable({
                 placeholder: "ui-state-highlight",
@@ -28,7 +27,7 @@ static prepareDocument() {
                     var regex = new RegExp('item-', 'g');
                     order = order.replace(regex, '');
                     order = order.split(',');
-                    _BoardNotes_.sqlUpdateNotesPositions(sortable_project_id, user_id, order, sortable_notes_number);
+                    _BoardNotes_.sqlUpdateNotesPositions(sortable_project_id, user_id, order);
                 }
             });
 

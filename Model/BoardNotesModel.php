@@ -470,9 +470,9 @@ class BoardNotesModel extends Base
     }
 
     // Update notes positions
-    public function boardNotesUpdateNotesPositions($project_id, $user_id, $notesPositions, $nrNotes)
+    public function boardNotesUpdateNotesPositions($project_id, $user_id, $notesPositions)
     {
-        $num = $nrNotes;
+        $num = count($notesPositions);
         $timestamp = time();
 
         $result = true;

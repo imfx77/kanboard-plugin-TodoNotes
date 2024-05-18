@@ -1373,15 +1373,14 @@ static sqlToggleSessionOption(session_option) {
 
 //------------------------------------------------
 // SQL update notes positions
-static sqlUpdateNotesPositions(project_id, user_id, order, nrNotes) {
+static sqlUpdateNotesPositions(project_id, user_id, order) {
     $.ajax({
         cache: false,
         type: "POST",
         url: '/?controller=BoardNotesController&action=boardNotesUpdateNotesPositions&plugin=BoardNotes'
             + '&project_custom_id=' + project_id
             + '&user_id=' + user_id
-            + '&order=' + order
-            + '&nrNotes=' + nrNotes,
+            + '&order=' + order,
         success: function(response) {
             var lastModifiedTimestamp = parseInt(response);
             if (lastModifiedTimestamp > 0) {
