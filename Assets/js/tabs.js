@@ -18,8 +18,17 @@ static updateTabs() {
 
 //------------------------------------------------
 static updateTabsContainer() {
-    var tabHeight = $("#tabs li:eq(0)").outerHeight();
-    var numTabs = $("#tabs li").length + 6; // add +6 because of the separator headers
+    const tabHeight = $("#tabs li:eq(0)").outerHeight();
+
+    const numListsGlobal = parseInt( $("#nrLists").attr('data-num-global') );
+    const numListsPrivate = parseInt( $("#nrLists").attr('data-num-private') );
+    const numListsRegular = parseInt( $("#nrLists").attr('data-num-regular') );
+
+    var numTabs = 1 + 3 + 3 // ALL tab + 3x group headers + 3x pairs of <hr>
+        + ($("#groupGlobal").hasClass( 'hideMe' ) ? -0.5 : numListsGlobal)     // conditional on groupGlobal visibility
+        + ($("#groupPrivate").hasClass( 'hideMe' ) ? -0.5 : numListsPrivate)   // conditional on groupPrivate visibility
+        + ($("#groupRegular").hasClass( 'hideMe' ) ? -0.5 : numListsRegular);  // conditional on groupRegular visibility
+
     $("#tabs").height(numTabs * tabHeight);
 }
 

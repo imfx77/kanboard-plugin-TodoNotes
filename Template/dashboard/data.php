@@ -49,6 +49,10 @@
     text-align: right;
 }
 
+.ulLists li {
+    min-height: 16px;
+}
+
 /* desktop browser styles override */
 @media only screen and (max-width: 768px) {
     .mainholderDashboard {

@@ -4,7 +4,7 @@ $num = 0;
 
 $isAdmin = $this->user->isAdmin();
 
-print '<ul id="groupAll">';
+print '<ul id="groupAll" class="ulLists">';
 
 // Add a default tab that denotes none project and all notes
 //----------------------------------------
@@ -84,13 +84,19 @@ $num++;
 
 // Loop through all projects for single tabs
 //----------------------------------------
-$separatorPlacedCustomGlobal = false;
-$separatorPlacedCustomPrivate = false;
+$separatorPlacedGlobal = false;
+$separatorPlacedPrivate = false;
 $separatorPlacedRegular = false;
+//----------------------------------------
+$numListsTmp = 0;
+$numListsGlobal = 0;
+$numListsPrivate = 0;
+$numListsRegular = 0;
 
+//----------------------------------------
 foreach ($projectsAccess as $o) {
     // separator header for custom GLOBAL lists
-    if (!$separatorPlacedCustomGlobal && $o['is_custom'] && $o['is_global']) {
+    if (!$separatorPlacedGlobal && $o['is_custom'] && $o['is_global']) {
         print '</ul>';
         print '<hr class="hrTabs">';
         print '<h4 id="headerGroupGlobal" class="localTable textNonSelectable disableEventsPropagation">';
@@ -103,12 +109,13 @@ foreach ($projectsAccess as $o) {
         print '<a><i class="fa fa-chevron-circle-up " aria-hidden="true"></i></a>';
         print '</button></div></h4>';
         print '<hr id="hrGroupGlobal" class="hrTabs">';
-        $separatorPlacedCustomGlobal = true;
-        print '<ul id="groupGlobal">';
+        $separatorPlacedGlobal = true;
+        $numListsTmp = 0;
+        print '<ul id="groupGlobal" class="ulLists">';
     }
 
     // separator header for custom PRIVATE lists
-    if (!$separatorPlacedCustomPrivate && $o['is_custom'] && !$o['is_global']) {
+    if (!$separatorPlacedPrivate && $o['is_custom'] && !$o['is_global']) {
         print '</ul>';
         print '<hr class="hrTabs">';
         print '<h4 id="headerGroupPrivate" class="localTable textNonSelectable disableEventsPropagation">';
@@ -121,8 +128,10 @@ foreach ($projectsAccess as $o) {
         print '<a><i class="fa fa-chevron-circle-up " aria-hidden="true"></i></a>';
         print '</button></div></h4>';
         print '<hr id="hrGroupPrivate" class="hrTabs">';
-        $separatorPlacedCustomPrivate = true;
-        print '<ul id="groupPrivate">';
+        $separatorPlacedPrivate = true;
+        $numListsGlobal = $numListsTmp;
+        $numListsTmp = 0;
+        print '<ul id="groupPrivate" class="ulLists">';
     }
 
     // separator header for regular projects
@@ -140,7 +149,9 @@ foreach ($projectsAccess as $o) {
         print '</button></div></h4>';
         print '<hr id="hrGroupRegular" class="hrTabs">';
         $separatorPlacedRegular = true;
-        print '<ul id="groupRegular">';
+        $numListsPrivate = $numListsTmp;
+        $numListsTmp = 0;
+        print '<ul id="groupRegular" class="ulLists">';
     }
 
     //----------------------------------------
@@ -278,8 +289,19 @@ foreach ($projectsAccess as $o) {
 
     //----------------------------------------
     print'</li>';
+    $numListsTmp++;
     $num++;
 }
 
+$numListsRegular = $numListsTmp;
+$numListsTmp = 0;
+
 print '</ul>';
 print '<hr class="hrTabs">';
+
+// hidden reference for number of lists by group
+print '<div class="hideMe" id="nrLists"';
+print ' data-num-global="' . $numListsGlobal . '"';
+print ' data-num-private="' . $numListsPrivate . '"';
+print ' data-num-regular="' . $numListsRegular . '"';
+print '></div>';
