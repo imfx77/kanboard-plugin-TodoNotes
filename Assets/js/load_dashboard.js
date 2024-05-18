@@ -11,13 +11,13 @@ static initializeSortableGroup(group) {
             // handle lists reordering
             let order = $(this).sortable('toArray');
             order = order.join(",");
-            const regex = new RegExp('singleTab-', 'g');
+            const regex = new RegExp('singleTab-P', 'g');
             order = order.replace(regex, '');
             order = order.split(',');
 
             const user_id = $("#refProjectId").attr('data-user');
-            const numCustomLists = parseInt( $("#nrLists").attr('data-num-' + group) );
-            _BoardNotes_Tabs_.modalReorderCustomNoteList(user_id, order, numCustomLists);
+            const nrCustomLists = parseInt( $("#nrLists").attr('data-num-' + group) );
+            _BoardNotes_Tabs_.modalReorderCustomNoteList(user_id, order, nrCustomLists);
         }
     });
 

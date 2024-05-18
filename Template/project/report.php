@@ -23,15 +23,11 @@ if (!array_key_exists('boardnotesShowTabStats', $_SESSION)) {
 $optionShowTabStats = $_SESSION['boardnotesShowTabStats'];
 
 // session_vars (hidden reference for options)
-print '<div id="session_vars';
-print '" data-optionShowCategoryColors="';
-print $optionShowCategoryColors ? 'true' : 'false';
-print '" data-optionShowAllDone="';
-print $optionShowAllDone ? 'true' : 'false';
-print '" data-optionShowTabStats="';
-print $optionShowTabStats ? 'true' : 'false';
-print '" class="hideMe">';
-print '</div>';
+print '<div class="hideMe" id="session_vars"';
+print ' data-optionShowCategoryColors="' . ($optionShowCategoryColors ? 'true' : 'false') . '"';
+print ' data-optionShowAllDone="' . ($optionShowAllDone ? 'true' : 'false') . '"';
+print ' data-optionShowTabStats="' . ($optionShowTabStats ? 'true' : 'false') . '"';
+print '></div>';
 
 ?>
 

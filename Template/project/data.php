@@ -44,12 +44,9 @@ if (!empty($categories)) {
         $mapCategoryColorByName[ $cat['name'] ] = $cat['color_id'];
         // category color hidden reference
         if (!$is_refresh) { // generate only once per project !!!
-            print '<div id="category-';
-            print $cat['name'];
-            print '" data-color="';
-            print $cat['color_id'];
-            print '" class="hideMe">';
-            print '</div>';
+            print '<div class="hideMe" id="category-' . $cat['name'] . '"';
+            print ' data-color="' . $cat['color_id'] . '"';
+            print '></div>';
         }
     }
 }
@@ -114,17 +111,12 @@ if (!array_key_exists('boardnotesShowTabStats', $_SESSION)) {
 $optionShowTabStats = $_SESSION['boardnotesShowTabStats'];
 
 // session_vars (hidden reference for options)
-print '<div id="session_vars';
-print '" data-optionShowCategoryColors="';
-print $optionShowCategoryColors ? 'true' : 'false';
-print '" data-optionSortByStatus="';
-print $optionSortByStatus ? 'true' : 'false';
-print '" data-optionShowAllDone="';
-print $optionShowAllDone ? 'true' : 'false';
-print '" data-optionShowTabStats="';
-print $optionShowTabStats ? 'true' : 'false';
-print '" class="hideMe">';
-print '</div>';
+print '<div class="hideMe" id="session_vars"';
+print ' data-optionShowCategoryColors="' . ($optionShowCategoryColors ? 'true' : 'false') . '"';
+print ' data-optionSortByStatus="' . ($optionSortByStatus ? 'true' : 'false') . '"';
+print ' data-optionShowAllDone="' . ($optionShowAllDone ? 'true' : 'false') . '"';
+print ' data-optionShowTabStats="' . ($optionShowTabStats ? 'true' : 'false') . '"';
+print '></div>';
 
 //----------------------------------------
 
@@ -263,7 +255,7 @@ if (!$readonlyNotes) {
     print '<div class="containerNoWrap containerFloatClear">';
 
     // Input line
-    print '<input class="inputNewNote disableEventsPropagation" id="inputNewNote"';
+    print '<input id="inputNewNote" class="inputNewNote disableEventsPropagation"';
     print ' type="text" placeholder="' . t('BoardNotes_PROJECT_NEW_NOTE_TITLE_PLACEHOLDER') . '"';
     print ' title="' . t('BoardNotes_PROJECT_NOTE_TITLE_SAVE_HINT') . '"';
     print ' data-project="' . $project_id . '"';
@@ -364,7 +356,7 @@ print '</li></ul>';
 ////    PROJECT LIST(S)
 //////////////////////////////////////////
 
-print '<div class="scrollableContent" id="scrollableContent">';
+print '<div id="scrollableContent" class="scrollableContent">';
 print '<ul class="ulNotes sortableList" id="sortableList-P' . $project_id . '"';
 print ' data-project="' . $project_id . '"';
 print '>';

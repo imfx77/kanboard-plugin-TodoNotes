@@ -9,10 +9,10 @@ static updateTabs() {
     var project_tab_id = $("#tabId").attr('data-project');
 
     $(".singleTab").removeClass( 'active' );
-    $("#singleTab" + project_tab_id).addClass( 'active' );
+    $("#singleTab-P" + project_tab_id).addClass( 'active' );
     $("#myNotesHeader h2").text(
         _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_DASHBOARD_MY_NOTES')
-        + ' > ' + $("#singleTab" + project_tab_id + " a").text()
+        + ' > ' + $("#singleTab-P" + project_tab_id + " a").text()
     );
 }
 
@@ -306,7 +306,7 @@ static #modalDeleteCustomNoteList(user_id, project_id) {
 }
 
 //------------------------------------------------
-static modalReorderCustomNoteList(user_id, order, numCustomLists) {
+static modalReorderCustomNoteList(user_id, order, nrCustomLists) {
     $("#dialogReorderCustomNoteList").removeClass( 'hideMe' );
     $("#dialogReorderCustomNoteList").dialog({
         resizable: false,
@@ -316,7 +316,7 @@ static modalReorderCustomNoteList(user_id, order, numCustomLists) {
             {
                 text : _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_REORDER_BTN'),
                 click : function() {
-                    _BoardNotes_Tabs_.#sqlUpdateCustomNoteListPositions(user_id, order, numCustomLists);
+                    _BoardNotes_Tabs_.#sqlUpdateCustomNoteListsPositions(user_id, order, nrCustomLists);
                     $( this ).dialog( "close" );
                 },
             },
@@ -425,12 +425,13 @@ static #sqlDeleteCustomNoteList(user_id, project_id) {
 
 //------------------------------------------------
 // SQL update custom note lists positions
-static #sqlUpdateCustomNoteListPositions(user_id, order, numCustomLists) {
+static #sqlUpdateCustomNoteListsPositions(user_id, order, nrCustomLists) {
     console.log(user_id);
     console.log(order);
-    console.log(numCustomLists);
+    console.log(nrCustomLists);
     return false;
 }
+
 //------------------------------------------------
 // Global routines
 //------------------------------------------------

@@ -469,8 +469,8 @@ class BoardNotesModel extends Base
             ->update($values);
     }
 
-    // Update note positions
-    public function boardNotesUpdateNotesPositions($project_id, $user_id, $notePositions, $nrNotes)
+    // Update notes positions
+    public function boardNotesUpdateNotesPositions($project_id, $user_id, $notesPositions, $nrNotes)
     {
         unset($num);
         unset($note_id);
@@ -479,7 +479,7 @@ class BoardNotesModel extends Base
         $num = $nrNotes;
 
         //  Explode all positions
-        $note_ids = explode(',', $notePositions);
+        $note_ids = explode(',', $notesPositions);
 
         $timestamp = time();
 

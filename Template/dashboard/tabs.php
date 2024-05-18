@@ -8,7 +8,7 @@ print '<ul id="groupAll" class="ulLists">';
 
 // Add a default tab that denotes none project and all notes
 //----------------------------------------
-print '<li class="singleTab" id="singleTab0"';
+print '<li class="singleTab" id="singleTab-P0"';
 print ' data-id="' . $num . '"';
 print ' data-project="0"';
 print '>';
@@ -155,13 +155,10 @@ foreach ($projectsAccess as $o) {
     }
 
     //----------------------------------------
-    print '<li class="singleTab" id="singleTab';
-    print $o['project_id'];
-    print '" data-id="';
-    print $num;
-    print '" data-project="';
-    print $o['project_id'];
-    print '">';
+    print '<li class="singleTab" id="singleTab-P' . $o['project_id'] . '"';
+    print ' data-id="' . $num . '"';
+    print ' data-project="' . $o['project_id'] . '"';
+    print '>';
 
     // single tab title row container
     //----------------------------------------
