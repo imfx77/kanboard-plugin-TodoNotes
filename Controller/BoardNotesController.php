@@ -390,8 +390,8 @@ class BoardNotesController extends BaseController
         $project = $this->resolveProject($user_id);
         $project_id = $project['id'];
 
-        $notesPositions = $this->request->getStringParam('order');
-        $nrNotes = $this->request->getStringParam('nrNotes');
+        $notesPositions = array_map('intval', explode(',', $this->request->getStringParam('order') ));
+        $nrNotes = intval($this->request->getStringParam('nrNotes'));
 
         $validation = $this->boardNotesModel->boardNotesUpdateNotesPositions($project_id, $user_id, $notesPositions, $nrNotes);
         print $validation ? time() : 0;
@@ -564,4 +564,37 @@ class BoardNotesController extends BaseController
             'tab_id' => $this->FetchTabForProject($user_id, $project_tab_id),
         )));
     }
+
+    public function boardNotesUpdateCustomNoteListsPositions()
+    {
+        $user_id = $this->resolveUserId();
+        $project_tab_id = intval($this->request->getStringParam('project_tab_id'));
+
+        $customListsPositions = array_map('intval', explode(',', $this->request->getStringParam('order') ));
+        $nrCustomLists = intval($this->request->getStringParam('nrCustomLists'));
+
+        $project_id = intval($customListsPositions[0]); // use the first project_id in the array as reference
+        $is_global = $this->boardNotesModel->IsCustomGlobalProject($project_id);
+
+        if ($project_id >= 0) {
+            // non-custom project!
+            $this->flash->failure(t('BoardNotes_DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('BoardNotes_DASHBOARD_INVALID_OR_EMPTY_PARAMETER'));
+        } elseif ($is_global && !$this->userModel->isAdmin($user_id)) {
+            // non-Admin attempting to rename a Global note list !
+            $this->flash->failure(t('BoardNotes_DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('BoardNotes_DASHBOARD_NO_ADMIN_PRIVILEGES'));
+        } else {
+            $validation = $this->boardNotesModel->boardNotesUpdateCustomNoteListsPositions(!$is_global ? $user_id : 0, $customListsPositions, $nrCustomLists);
+            if ($validation) {
+                $this->boardNotesModel->EmulateForceRefresh();
+            }
+            $this->CustomNoteListOperationNotification($validation, $is_global);
+        }
+
+        $this->response->redirect($this->helper->url->to('BoardNotesController', 'boardNotesShowAll', array(
+            'plugin' => 'BoardNotes',
+            'user_id' => $user_id,
+            'tab_id' => $this->FetchTabForProject($user_id, $project_tab_id),
+        )));
+    }
+
 }

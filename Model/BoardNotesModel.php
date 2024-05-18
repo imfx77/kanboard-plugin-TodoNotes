@@ -472,20 +472,12 @@ class BoardNotesModel extends Base
     // Update notes positions
     public function boardNotesUpdateNotesPositions($project_id, $user_id, $notesPositions, $nrNotes)
     {
-        unset($num);
-        unset($note_id);
-
-        // Ser $num to nr of notes to max
         $num = $nrNotes;
-
-        //  Explode all positions
-        $note_ids = explode(',', $notesPositions);
-
         $timestamp = time();
 
         $result = true;
         // Loop through all positions
-        foreach ($note_ids as $row_id) {
+        foreach ($notesPositions as $row_id) {
             $values = array(
                 'position' => $num,
                 'date_modified' => $timestamp,
@@ -592,5 +584,29 @@ class BoardNotesModel extends Base
         return $this->db->table(self::TABLE_NOTES_CUSTOM_PROJECTS)
             ->eq('id', -$project_id)
             ->remove();
+    }
+
+    // Update Custom Note Lists Positions
+    public function boardNotesUpdateCustomNoteListsPositions($user_id, $customListsPositions, $nrCustomLists)
+    {
+        $num = 1;
+        $timestamp = time();
+
+        $result = true;
+        // Loop through all positions
+        foreach ($customListsPositions as $row_id) {
+            $values = array(
+                'position' => $num,
+            );
+
+            $result = $result && $this->db->table(self::TABLE_NOTES_CUSTOM_PROJECTS)
+                ->eq('owner_id', $user_id)
+                ->eq('id', -$row_id)
+                ->update($values);
+
+            $num++;
+        }
+
+        return $result;
     }
 }

@@ -426,10 +426,21 @@ static #sqlDeleteCustomNoteList(user_id, project_id) {
 //------------------------------------------------
 // SQL update custom note lists positions
 static #sqlUpdateCustomNoteListsPositions(user_id, order, nrCustomLists) {
-    console.log(user_id);
-    console.log(order);
-    console.log(nrCustomLists);
-    return false;
+    var project_tab_id = $("#tabId").attr('data-project');
+
+    // don't cache ajax or content won't be fresh
+    $.ajaxSetup ({
+        cache: false
+    });
+    var loadUrl = '/?controller=BoardNotesController&action=boardNotesUpdateCustomNoteListsPositions&plugin=BoardNotes'
+            + '&user_id=' + user_id
+            + '&project_tab_id=' + project_tab_id
+            + '&order=' + order
+            + '&nrCustomLists=' + nrCustomLists;
+    setTimeout(function() {
+        $("#result" + project_tab_id).html(_BoardNotes_Translations_.msgLoadingSpinner);
+        location.replace(loadUrl);
+    }, 50);
 }
 
 //------------------------------------------------
