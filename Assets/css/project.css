@@ -257,7 +257,7 @@ label {
 }
 
 .buttonDisabled {
-    color: rgba(136, 136, 136, 0.3) !important;
+    color: rgba(136, 136, 136, .3) !important;
 }
 
 .buttonBigger {
