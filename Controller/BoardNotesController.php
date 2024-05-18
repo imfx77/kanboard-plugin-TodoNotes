@@ -229,8 +229,7 @@ class BoardNotesController extends BaseController
         }
 
         // toggle options are expected to be boolean i.e. to only have values of 'true' of 'false'
-        if (
-            !array_key_exists($session_option, $_SESSION) ||    // key not exist
+        if (!array_key_exists($session_option, $_SESSION) ||    // key not exist
             !is_bool($_SESSION[$session_option])                // value not bool
         ) {
             // set initial value
@@ -391,7 +390,7 @@ class BoardNotesController extends BaseController
         $user_id = $this->resolveUserId();
         $project = $this->resolveProject($user_id);
         $project_id = $project['id'];
-        $notesPositions = array_map('intval', explode(',', $this->request->getStringParam('order') ));
+        $notesPositions = array_map('intval', explode(',', $this->request->getStringParam('order')));
 
         $validation = $this->boardNotesModel->boardNotesUpdateNotesPositions($project_id, $user_id, $notesPositions);
         print $validation ? time() : 0;
@@ -569,7 +568,7 @@ class BoardNotesController extends BaseController
     {
         $user_id = $this->resolveUserId();
         $project_tab_id = intval($this->request->getStringParam('project_tab_id'));
-        $customListsPositions = array_map('intval', explode(',', $this->request->getStringParam('order') ));
+        $customListsPositions = array_map('intval', explode(',', $this->request->getStringParam('order')));
 
         $project_id = intval($customListsPositions[0]); // use the first project_id in the array as reference
         $is_global = $this->boardNotesModel->IsCustomGlobalProject($project_id);
@@ -594,5 +593,4 @@ class BoardNotesController extends BaseController
             'tab_id' => $this->FetchTabForProject($user_id, $project_tab_id),
         )));
     }
-
 }
