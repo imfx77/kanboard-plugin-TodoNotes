@@ -118,6 +118,11 @@ Might be waiting for an unsubmitted New Note data input!',
 &#10;⚠️ If you have Admin privileges, you can delete Global custom lists - but BE AWARE that this action will delete ALL the notes of ALL the users that share those Global custom lists! 
 &#10;⚠️ This operation will also leave orphaned Archived Notes, if you have any for that list!
 &#10;Continue?',
+    'BoardNotes_DIALOG_REORDER_CUSTOM_NOTE_LIST_TITLE' => 'Reorder custom note list',
+    'BoardNotes_DIALOG_REORDER_CUSTOM_NOTE_LIST_MSG' => 'Reordering custom lists is a persistent operation, the list will stay ordered that way!
+&#10;⚠️ This order will also determine the order in which Notes List will be shown in Overview Mode!
+&#10;⚠️ If you have Admin privileges, you can reorder Global custom lists - this change will be displayed for ALL users! 
+&#10;Continue?',
     //
     // Specific EXPORTS FOR JS
     //
@@ -145,5 +150,6 @@ Aborting operation !',
     'BoardNotes_JS_DIALOG_RENAME_BTN' => '✏️ Rename',
     'BoardNotes_JS_DIALOG_DELETE_BTN' => '⚠️ Delete',
     'BoardNotes_JS_DIALOG_REINDEX_BTN' => '♻️ Reindex',
+    'BoardNotes_JS_DIALOG_REORDER_BTN' => '📑 Reorder',
     'BoardNotes_JS_DIALOG_RESULT_TITLE' => 'Result ...',
 );

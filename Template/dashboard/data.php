@@ -127,3 +127,13 @@ print '</p>';
 print '</div>';
 
 //----------------------------------------
+
+print '<div class="hideMe" id="dialogReorderCustomNoteList" title="' . t('BoardNotes_DIALOG_REORDER_CUSTOM_NOTE_LIST_TITLE') . '">';
+
+print '<p style="white-space: pre-wrap;">';
+print t('BoardNotes_DIALOG_REORDER_CUSTOM_NOTE_LIST_MSG');
+print '</p>';
+
+print '</div>';
+
+//----------------------------------------

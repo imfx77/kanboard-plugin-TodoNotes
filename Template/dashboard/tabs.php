@@ -188,6 +188,14 @@ foreach ($projectsAccess as $o) {
 
             // button space
             print '<button class="toolbarSeparator">&nbsp;</button>';
+            // explicit reorder handle for mobile
+            print $isAdmin
+                ? '<button class="hideMe toolbarButton buttonBigger buttonToggled sortableGroupHandle">'
+                : '<button class="hideMe toolbarButton buttonBigger buttonDisabled sortableGroupHandle">';
+            print '<i class="fa fa-arrows-alt" aria-hidden="true"></i>';
+            print '</button>';
+            // button space
+            print '<button class="toolbarSeparator">&nbsp;</button>';
 
             // Rename button
             print '<button id="customNoteListRenameGlobal-P' . $o['project_id'] . '"';
@@ -221,6 +229,12 @@ foreach ($projectsAccess as $o) {
             // managing custom PRIVATE lists is available to each user for their owned lists
             //----------------------------------------
 
+            // button space
+            print '<button class="toolbarSeparator">&nbsp;</button>';
+            // explicit reorder handle for mobile
+            print '<button class="hideMe toolbarButton buttonBigger sortableGroupHandle">';
+            print '<a><i class="fa fa-arrows-alt" aria-hidden="true"></i></a>';
+            print '</button>';
             // button space
             print '<button class="toolbarSeparator">&nbsp;</button>';
 
@@ -301,7 +315,7 @@ print '<hr class="hrTabs">';
 
 // hidden reference for number of lists by group
 print '<div class="hideMe" id="nrLists"';
-print ' data-num-global="' . $numListsGlobal . '"';
-print ' data-num-private="' . $numListsPrivate . '"';
-print ' data-num-regular="' . $numListsRegular . '"';
+print ' data-num-Global="' . $numListsGlobal . '"';
+print ' data-num-Private="' . $numListsPrivate . '"';
+print ' data-num-Regular="' . $numListsRegular . '"';
 print '></div>';

@@ -20,9 +20,9 @@ static updateTabs() {
 static updateTabsContainer() {
     const tabHeight = $("#tabs li:eq(0)").outerHeight();
 
-    const numListsGlobal = parseInt( $("#nrLists").attr('data-num-global') );
-    const numListsPrivate = parseInt( $("#nrLists").attr('data-num-private') );
-    const numListsRegular = parseInt( $("#nrLists").attr('data-num-regular') );
+    const numListsGlobal = parseInt( $("#nrLists").attr('data-num-Global') );
+    const numListsPrivate = parseInt( $("#nrLists").attr('data-num-Private') );
+    const numListsRegular = parseInt( $("#nrLists").attr('data-num-Regular') );
 
     var numTabs = 1 + 3 + 3 // ALL tab + 3x group headers + 3x pairs of <hr>
         + ($("#groupGlobal").hasClass( 'hideMe' ) ? -0.5 : numListsGlobal)     // conditional on groupGlobal visibility
@@ -306,6 +306,33 @@ static #modalDeleteCustomNoteList(user_id, project_id) {
 }
 
 //------------------------------------------------
+static modalReorderCustomNoteList(user_id, order, numCustomLists) {
+    $("#dialogReorderCustomNoteList").removeClass( 'hideMe' );
+    $("#dialogReorderCustomNoteList").dialog({
+        resizable: false,
+        height: "auto",
+        modal: true,
+        buttons: [
+            {
+                text : _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_REORDER_BTN'),
+                click : function() {
+                    _BoardNotes_Tabs_.#sqlUpdateCustomNoteListPositions(user_id, order, numCustomLists);
+                    $( this ).dialog( "close" );
+                },
+            },
+            {
+                text : _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_CANCEL_BTN'),
+                click : function() {
+                    $( this ).dialog( "close" );
+                    _BoardNotes_.sqlRefreshTabs(user_id);
+                }
+            },
+        ]
+    });
+    return false;
+}
+
+//------------------------------------------------
 // SQL routines
 //------------------------------------------------
 
@@ -396,6 +423,14 @@ static #sqlDeleteCustomNoteList(user_id, project_id) {
     }, 50);
 }
 
+//------------------------------------------------
+// SQL update custom note lists positions
+static #sqlUpdateCustomNoteListPositions(user_id, order, numCustomLists) {
+    console.log(user_id);
+    console.log(order);
+    console.log(numCustomLists);
+    return false;
+}
 //------------------------------------------------
 // Global routines
 //------------------------------------------------
