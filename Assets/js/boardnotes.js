@@ -62,7 +62,7 @@ static adjustScrollableContent() {
 //------------------------------------------------
 // Adjust notePlaceholder container
 static adjustNotePlaceholders(project_id, id) {
-    const isTitle = (project_id === 0 && id === 0);
+    const isTitle = (project_id === '0' && id === '0');
     if (isTitle) {
         const offsetTitle = $(".labelNewNote").offset().top;
         let offsetButtons = $("#settingsShowAllDone").offset().top;
@@ -88,7 +88,7 @@ static adjustNotePlaceholders(project_id, id) {
 static adjustAllNotesPlaceholders() {
     setTimeout(function() {
         // adjust notePlaceholder containers where not needed
-        _BoardNotes_.adjustNotePlaceholders(0, 0);
+        _BoardNotes_.adjustNotePlaceholders('0', '0');
         $("button" + ".checkDone").each(function() {
             const project_id = $(this).attr('data-project');
             const id = $(this).attr('data-id');
@@ -530,7 +530,7 @@ static #noteStatusHandlers() {
         const id = $(this).attr('data-id');
 
         const ref_project_id = $("#refProjectId").attr('data-project');
-        const readonlyNotes = (ref_project_id === 0); // Overview Mode
+        const readonlyNotes = (ref_project_id === '0'); // Overview Mode
 
         _BoardNotes_.#switchNoteDoneStatus(project_id, id);
         _BoardNotes_.#updateNoteDoneCheckmark(project_id, id);
@@ -1450,11 +1450,11 @@ static scheduleCheckModifications() {
 
         const project_id = $("#refProjectId").attr('data-project');
         const user_id = $("#refProjectId").attr('data-user');
-        const title = (project_id !== 0) ? $("#inputNewNote").val().trim() : "";
-        const description = (project_id !== 0) ? $('[name="editorMarkdownDetailsNewNote"]').val() : "";
+        const title = (project_id !== '0') ? $("#inputNewNote").val().trim() : '';
+        const description = (project_id !== '0') ? $('[name="editorMarkdownDetailsNewNote"]').val() : '';
 
         // skip SQL query if page not visible, or if new note has pending changes
-        if (!KB.utils.isVisible() || title !== "" || description !== "") {
+        if (!KB.utils.isVisible() || title !== '' || description !== '') {
             _BoardNotes_.scheduleCheckModifications();
             return;
         }

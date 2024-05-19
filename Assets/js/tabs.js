@@ -133,7 +133,7 @@ static #TabActionHandlers() {
     // start DB optimization routine on system reindex button
     $("button" + "#reindexNotesAndLists").click(function() {
         const isAdmin = $("#tabId").attr('data-admin');
-        if (isAdmin !== "1") {
+        if (isAdmin !== '1') {
             alert( _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_DASHBOARD_NO_ADMIN_PRIVILEGES') );
             return;
         }
@@ -155,7 +155,7 @@ static #TabActionHandlers() {
     // rename custom list (global)
     $("button" + ".customNoteListRenameGlobal").click(function() {
         const isAdmin = $("#tabId").attr('data-admin');
-        if (isAdmin !== "1") {
+        if (isAdmin !== '1') {
             alert( _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_DASHBOARD_NO_ADMIN_PRIVILEGES') );
             return;
         }
@@ -179,7 +179,7 @@ static #TabActionHandlers() {
     // delete custom list (global)
     $("button" + ".customNoteListDeleteGlobal").click(function() {
         const isAdmin = $("#tabId").attr('data-admin');
-        if (isAdmin !== "1") {
+        if (isAdmin !== '1') {
             alert( _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_DASHBOARD_NO_ADMIN_PRIVILEGES') );
             return;
         }

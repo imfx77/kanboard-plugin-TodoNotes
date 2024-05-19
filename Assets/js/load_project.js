@@ -13,7 +13,7 @@ static prepareDocument() {
     const project_id = $("#refProjectId").attr('data-project');
     const user_id = $("#refProjectId").attr('data-user');
     const isMobile = _BoardNotes_.isMobile();
-    const readonlyNotes = (project_id === 0); // Overview Mode
+    const readonlyNotes = (project_id === '0'); // Overview Mode
 
     // notes reordering is disabled when explicitly sorted by Status
     if (!_BoardNotes_.optionSortByStatus) {
@@ -69,7 +69,7 @@ static prepareDocument() {
     _BoardNotes_.refreshShowAllDone();
 
     // prepare method for dashboard view if embedded
-    if (typeof _BoardNotes_Dashboard_ !== 'undefined') {
+    if (typeof(_BoardNotes_Dashboard_) !== 'undefined') {
         _BoardNotes_Dashboard_.prepareDocument();
     }
 

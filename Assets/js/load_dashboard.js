@@ -47,7 +47,7 @@ static prepareDocument() {
         $(".sidebar").addClass( 'sidebarMobileDashboard' );
     }
 
-    if (isAdmin === "1") {
+    if (isAdmin === '1') {
         _BoardNotes_Dashboard_.initializeSortableGroup("Global");
     }
     _BoardNotes_Dashboard_.initializeSortableGroup("Private");
