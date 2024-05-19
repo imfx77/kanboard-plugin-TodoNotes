@@ -271,7 +271,7 @@ label {
     padding: 0 !important;
 }
 
-.checkDone {
+.buttonStatus {
     appearance: none;
     -webkit-appearance: none;
     outline: none;

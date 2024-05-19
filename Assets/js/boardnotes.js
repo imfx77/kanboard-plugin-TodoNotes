@@ -73,9 +73,9 @@ static adjustNotePlaceholders(project_id, id) {
             $("#placeholderNewNote").addClass( 'hideMe' );
         }
     } else {
-        const offsetCheck = $("#checkDone-P" + project_id + "-" + id).offset().top;
+        const offsetStatus = $("#buttonStatus-P" + project_id + "-" + id).offset().top;
         const offsetDetails = $("#showDetails-P" + project_id + "-" + id).offset().top;
-        if (offsetCheck === offsetDetails) {
+        if (offsetStatus === offsetDetails) {
             $("#notePlaceholder-P" + project_id + "-" + id).addClass( 'hideMe' );
         } else {
             $("#notePlaceholder-P" + project_id + "-" + id).removeClass( 'hideMe' );
@@ -89,7 +89,7 @@ static adjustAllNotesPlaceholders() {
     setTimeout(function() {
         // adjust notePlaceholder containers where not needed
         _BoardNotes_.adjustNotePlaceholders('0', '0');
-        $("button" + ".checkDone").each(function() {
+        $("button" + ".buttonStatus").each(function() {
             const project_id = $(this).attr('data-project');
             const id = $(this).attr('data-id');
             _BoardNotes_.adjustNotePlaceholders(project_id, id);
@@ -469,53 +469,58 @@ static #noteDetailsHandlers() {
 //------------------------------------------------
 
 //------------------------------------------------
-// Switch note done status
-static #switchNoteDoneStatus(project_id, id) {
-    const checkDone = $("#noteDoneCheckmark-P" + project_id + "-" + id);
+// Switch note status
+static #switchNoteStatus(project_id, id) {
+    const noteCheckmark = $("#noteCheckmark-P" + project_id + "-" + id);
 
     // cycle through statuses
-    if (checkDone.hasClass( 'fa-circle-thin' )) {
-        checkDone.removeClass( 'fa-circle-thin' );
-        checkDone.addClass( 'fa-spinner fa-pulse' );
-        return;
-    }
-    if (checkDone.hasClass( 'fa-spinner fa-pulse' )) {
-        checkDone.removeClass( 'fa-spinner fa-pulse' );
-        checkDone.addClass( 'fa-check' );
-        return;
-    }
-    if (checkDone.hasClass( 'fa-check' )) {
-        checkDone.removeClass( 'fa-check' );
-        checkDone.addClass( 'fa-circle-thin' );
-        return;
+    switch (noteCheckmark.attr('data-id')) {
+        case '0': // done
+            noteCheckmark.attr('data-id', '1'); // open
+            break;
+        case '1': // open
+            noteCheckmark.attr('data-id', '2'); // in progress
+            break;
+        case '2': // in progress
+            noteCheckmark.attr('data-id', '0'); // done
+            break;
     }
 }
 
 //------------------------------------------------
-// Update note done checkmark
-static #updateNoteDoneCheckmark(project_id, id) {
-    const noteDoneCheckmark = $("#noteDoneCheckmark-P" + project_id + "-" + id);
+// Refresh note status
+static #refreshNoteStatus(project_id, id) {
+    const noteCheckmark = $("#noteCheckmark-P" + project_id + "-" + id);
     const noteTitleLabel = $("#noteTitleLabel-P" + project_id + "-" + id);
     const noteMarkdownDetailsPreview = $("#noteMarkdownDetails-P" + project_id + "-" + id + "_Preview");
     const noteMarkdownDetailsEditor = $("#noteMarkdownDetails-P" + project_id + "-" + id + "_Editor");
 
-    if( noteDoneCheckmark.hasClass( 'fa-check' ) ) {
+    if( noteCheckmark.attr('data-id') === '0' ) { // done
+        noteCheckmark.addClass( 'fa-check' );
+        noteCheckmark.removeClass( 'fa-circle-thin' );
+        noteCheckmark.removeClass( 'fa-spinner fa-pulse' );
+
         noteTitleLabel.addClass( 'noteDoneText' );
         noteMarkdownDetailsPreview.addClass( 'noteDoneMarkdown' );
         noteMarkdownDetailsEditor.addClass( 'noteDoneMarkdown' );
-        noteDoneCheckmark.attr('data-id', '0');
     }
-    if( noteDoneCheckmark.hasClass( 'fa-circle-thin' ) ) {
+    if( noteCheckmark.attr('data-id') === '1' ) { // open
+        noteCheckmark.removeClass( 'fa-check' );
+        noteCheckmark.addClass( 'fa-circle-thin' );
+        noteCheckmark.removeClass( 'fa-spinner fa-pulse' );
+
         noteTitleLabel.removeClass( 'noteDoneText' );
         noteMarkdownDetailsPreview.removeClass( 'noteDoneMarkdown' );
         noteMarkdownDetailsEditor.removeClass( 'noteDoneMarkdown' );
-        noteDoneCheckmark.attr('data-id', '1');
     }
-    if( noteDoneCheckmark.hasClass( 'fa-spinner fa-pulse' ) ) {
+    if( noteCheckmark.attr('data-id') === '2' ) { // in progress
+        noteCheckmark.removeClass( 'fa-check' );
+        noteCheckmark.removeClass( 'fa-circle-thin' );
+        noteCheckmark.addClass( 'fa-spinner fa-pulse' );
+
         noteTitleLabel.removeClass( 'noteDoneText' );
         noteMarkdownDetailsPreview.removeClass( 'noteDoneMarkdown' );
         noteMarkdownDetailsEditor.removeClass( 'noteDoneMarkdown' );
-        noteDoneCheckmark.attr('data-id', '2');
     }
 }
 
@@ -523,8 +528,8 @@ static #updateNoteDoneCheckmark(project_id, id) {
 static #noteStatusHandlers() {
     //------------------------------------------------
 
-    //Checkmark done handler
-    $("button" + ".checkDone").click(function() {
+    //Status button handler
+    $("button" + ".buttonStatus").click(function() {
         const project_id = $(this).attr('data-project');
         const user_id = $(this).attr('data-user');
         const id = $(this).attr('data-id');
@@ -532,8 +537,8 @@ static #noteStatusHandlers() {
         const ref_project_id = $("#refProjectId").attr('data-project');
         const readonlyNotes = (ref_project_id === '0'); // Overview Mode
 
-        _BoardNotes_.#switchNoteDoneStatus(project_id, id);
-        _BoardNotes_.#updateNoteDoneCheckmark(project_id, id);
+        _BoardNotes_.#switchNoteStatus(project_id, id);
+        _BoardNotes_.#refreshNoteStatus(project_id, id);
 
         if (readonlyNotes) {
             _BoardNotes_.#sqlUpdateNoteStatus(project_id, user_id, id);
@@ -679,7 +684,7 @@ static #noteActionHandlers() {
         const title = $("#noteTitleLabel-P" + project_id + "-" + id).html();
         const description = $('[name="editorMarkdownDetails-P' + project_id + '-' + id + '"]').val();
         const category_id = $("#cat-P" + project_id + "-" + id + " option:selected").val();
-        const is_active = $("#noteDoneCheckmark-P" + project_id + "-" + id).attr('data-id');
+        const is_active = $("#noteCheckmark-P" + project_id + "-" + id).attr('data-id');
         _BoardNotes_.#modalCreateTask(project_id, user_id, id, is_active, title, description, category_id);
     });
 
@@ -877,14 +882,14 @@ static refreshShowAllDone() {
     if (_BoardNotes_.optionShowAllDone) {
         $("#settingsShowAllDone").addClass( 'buttonToggled' );
         $(".liNote").each(function() {
-            if ($(this).find(".checkDone").children().hasClass( 'fa-check' )) {
+            if ($(this).find(".buttonStatus").children().attr('data-id') === '0') {
                 $(this).removeClass( 'hideMe' );
             }
         });
     } else {
         $("#settingsShowAllDone").removeClass( 'buttonToggled' );
         $(".liNote").each(function() {
-            if ($(this).find(".checkDone").children().hasClass( 'fa-check' )) {
+            if ($(this).find(".buttonStatus").children().attr('data-id') === '0') {
                 $(this).addClass( 'hideMe' );
             }
         });
@@ -1175,7 +1180,7 @@ static #sqlUpdateNote(project_id, user_id, id) {
     let title = $("#noteTitleInput-P" + project_id + "-" + id).val().trim();
     const description = $('[name="editorMarkdownDetails-P' + project_id + '-' + id + '"]').val();
     const category = $("#cat-P" + project_id + "-" + id + " option:selected").text();
-    const is_active = $("#noteDoneCheckmark-P" + project_id + "-" + id).attr('data-id');
+    const is_active = $("#noteCheckmark-P" + project_id + "-" + id).attr('data-id');
 
     if (!title) {
         alert( _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_NOTE_UPDATE_TITLE_EMPTY_MSG') );
@@ -1222,7 +1227,7 @@ static #sqlUpdateNote(project_id, user_id, id) {
 // SQL note update Status only!
 static #sqlUpdateNoteStatus(project_id, user_id, id) {
     const note_id = $("#noteId-P" + project_id + "-" + id).attr('data-note');
-    const is_active = $("#noteDoneCheckmark-P" + project_id + "-" + id).attr('data-id');
+    const is_active = $("#noteCheckmark-P" + project_id + "-" + id).attr('data-id');
 
     $.ajax({
         cache: false,

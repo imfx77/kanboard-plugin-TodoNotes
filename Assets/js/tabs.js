@@ -77,37 +77,36 @@ static handlersTabGroup(group) {
 
 //------------------------------------------------
 static #TabActionHandlers() {
-    // update tabs stats widgets on clicking checkDone
-    $("button" + ".checkDone").click(function() {
+    // update tabs stats widgets on clicking buttonStatus
+    $("button" + ".buttonStatus").click(function() {
         const project_id = $(this).attr('data-project');
         //var user_id = $(this).attr('data-user');
         const id = $(this).attr('data-id');
 
-        const $checkDone = $("#noteDoneCheckmark-P" + project_id + "-" + id);
-        const $statsWidgetAll = $("#BoardNotes-StatsWidget-P0");
-        const $statsWidgetCurrent = $("#BoardNotes-StatsWidget-P" + project_id);
+        const noteCheckmark = $("#noteCheckmark-P" + project_id + "-" + id);
+        const statsWidgetAll = $("#BoardNotes-StatsWidget-P0");
+        const statsWidgetCurrent = $("#BoardNotes-StatsWidget-P" + project_id);
 
-        // cycle through statuses
-        if ($checkDone.hasClass( 'fa-circle-thin' )) {
-            // open++, done--
-            $statsWidgetAll.find(".statOpen b").text(parseInt($statsWidgetAll.find(".statOpen b").text()) + 1)
-            $statsWidgetAll.find(".statDone b").text(parseInt($statsWidgetAll.find(".statDone b").text()) - 1)
-            $statsWidgetCurrent.find(".statOpen b").text(parseInt($statsWidgetCurrent.find(".statOpen b").text()) + 1)
-            $statsWidgetCurrent.find(".statDone b").text(parseInt($statsWidgetCurrent.find(".statDone b").text()) - 1)
-        }
-        if ($checkDone.hasClass( 'fa-spinner fa-pulse' )) {
-            // progress++, open--
-            $statsWidgetAll.find(".statProgress b").text(parseInt($statsWidgetAll.find(".statProgress b").text()) + 1)
-            $statsWidgetAll.find(".statOpen b").text(parseInt($statsWidgetAll.find(".statOpen b").text()) - 1)
-            $statsWidgetCurrent.find(".statProgress b").text(parseInt($statsWidgetCurrent.find(".statProgress b").text()) + 1)
-            $statsWidgetCurrent.find(".statOpen b").text(parseInt($statsWidgetCurrent.find(".statOpen b").text()) - 1)
-        }
-        if ($checkDone.hasClass( 'fa-check' )) {
+        if (noteCheckmark.attr('data-id') === '0') {
             // done++, progress--
-            $statsWidgetAll.find(".statDone b").text(parseInt($statsWidgetAll.find(".statDone b").text()) + 1)
-            $statsWidgetAll.find(".statProgress b").text(parseInt($statsWidgetAll.find(".statProgress b").text()) - 1)
-            $statsWidgetCurrent.find(".statDone b").text(parseInt($statsWidgetCurrent.find(".statDone b").text()) + 1)
-            $statsWidgetCurrent.find(".statProgress b").text(parseInt($statsWidgetCurrent.find(".statProgress b").text()) - 1)
+            statsWidgetAll.find(".statDone b").text(parseInt(statsWidgetAll.find(".statDone b").text()) + 1)
+            statsWidgetAll.find(".statProgress b").text(parseInt(statsWidgetAll.find(".statProgress b").text()) - 1)
+            statsWidgetCurrent.find(".statDone b").text(parseInt(statsWidgetCurrent.find(".statDone b").text()) + 1)
+            statsWidgetCurrent.find(".statProgress b").text(parseInt(statsWidgetCurrent.find(".statProgress b").text()) - 1)
+        }
+        if (noteCheckmark.attr('data-id') === '1') {
+            // open++, done--
+            statsWidgetAll.find(".statOpen b").text(parseInt(statsWidgetAll.find(".statOpen b").text()) + 1)
+            statsWidgetAll.find(".statDone b").text(parseInt(statsWidgetAll.find(".statDone b").text()) - 1)
+            statsWidgetCurrent.find(".statOpen b").text(parseInt(statsWidgetCurrent.find(".statOpen b").text()) + 1)
+            statsWidgetCurrent.find(".statDone b").text(parseInt(statsWidgetCurrent.find(".statDone b").text()) - 1)
+        }
+        if (noteCheckmark.attr('data-id') === '2') {
+            // progress++, open--
+            statsWidgetAll.find(".statProgress b").text(parseInt(statsWidgetAll.find(".statProgress b").text()) + 1)
+            statsWidgetAll.find(".statOpen b").text(parseInt(statsWidgetAll.find(".statOpen b").text()) - 1)
+            statsWidgetCurrent.find(".statProgress b").text(parseInt(statsWidgetCurrent.find(".statProgress b").text()) + 1)
+            statsWidgetCurrent.find(".statOpen b").text(parseInt(statsWidgetCurrent.find(".statOpen b").text()) - 1)
         }
     });
 

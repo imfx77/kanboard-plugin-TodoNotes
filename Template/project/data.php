@@ -456,7 +456,7 @@ foreach ($data as $u) {
     print '</button>';
 
     // hide all the utility buttons when viewing notes as readonly
-    // just allow for check/uncheck note
+    // just allow for note status change
     if (!$readonlyNotes) {
         // notes from custom lists obviously CANNOT create tasks from notes
         if (!$project['is_custom']) {
@@ -528,13 +528,13 @@ foreach ($data as $u) {
     print '<div class="containerNoWrap containerFloatLeft disableEventsPropagation">';
 
     // Checkbox for Note Status
-    print '<button class="checkDone" id="checkDone-P' . $u['project_id'] . '-' . $num . '"';
+    print '<button class="buttonStatus" id="buttonStatus-P' . $u['project_id'] . '-' . $num . '"';
     print ' title="' . t('BoardNotes_PROJECT_NOTE_SWITCH_STATUS') . '"';
     print ' data-id="' . $num . '"';
     print ' data-project="' . $u['project_id'] . '"';
     print ' data-user="' . $user_id . '"';
     print '>';
-    print '<i id="noteDoneCheckmark-P' . $u['project_id'] . '-' . $num . '"';
+    print '<i id="noteCheckmark-P' . $u['project_id'] . '-' . $num . '"';
     print ' data-id="' . $u['is_active'] . '"';
     if ($u['is_active'] == "2") {
         print ' class="fa fa-spinner fa-pulse" aria-hidden="true"';
