@@ -262,8 +262,8 @@ label {
 
 .buttonBigger {
     font-size: 1.5em !important;
-    padding-right: 15px !important;
-    padding-left: 15px !important;
+    padding-right: 10px !important;
+    padding-left: 10px !important;
 }
 
 .buttonHeader {
@@ -279,6 +279,7 @@ label {
     border: 0;
     background: transparent;
     color: #1F1F1F;
+    font-size: 1.3em;
     cursor: cell;
 }
 

@@ -423,7 +423,7 @@ foreach ($data as $u) {
 
     // Category label (in simple view)
     print '<label id="noteCatLabel-P' . $u['project_id'] . '-' . $num . '"';
-    print ' class="catLabel catLabelClickable disableEventsPropagation';
+    print ' class="catLabel catLabelClickable textNonSelectable disableEventsPropagation';
     if (!empty($u['category']) && array_key_exists($u['category'], $mapCategoryColorByName)) {
         $category_color = $mapCategoryColorByName[ $u['category'] ];
         if (!empty($category_color)) {
