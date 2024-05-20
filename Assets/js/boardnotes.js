@@ -34,6 +34,22 @@ static optionShowAllDone = false;
 static optionShowTabStats = false;
 
 //------------------------------------------------
+// Global vars for status class aliases
+//------------------------------------------------
+static #aliasStatusCasual = {
+    Done : 'fa fa-check',
+    Open : 'fa fa-circle-thin',
+    InProgress : 'fa fa-spinner fa-pulse',
+    Suspended : 'fa fa-spinner',
+};
+static #aliasStatusStandard = {
+    Done : 'fa fa-check-square-o',
+    Open : 'fa fa-square-o',
+    InProgress : 'fa fa-cog fa-spin',
+    Suspended : 'fa fa-cog',
+};
+
+//------------------------------------------------
 // Note Details routines
 //------------------------------------------------
 
@@ -469,6 +485,29 @@ static #noteDetailsHandlers() {
 //------------------------------------------------
 
 //------------------------------------------------
+// Expand status aliases
+static expandStatusAliases() {
+    const aliasStatus = _BoardNotes_.#aliasStatusCasual;
+    //const aliasStatus = _BoardNotes_.#aliasStatusStandard;
+    $(".statusDone").each(function() {
+        $(this).removeClass();
+        $(this).addClass(aliasStatus.Done);
+    });
+    $(".statusOpen").each(function() {
+        $(this).removeClass();
+        $(this).addClass(aliasStatus.Open);
+    });
+    $(".statusInProgress").each(function() {
+        $(this).removeClass();
+        $(this).addClass(aliasStatus.InProgress);
+    });
+    $(".statusSuspended").each(function() {
+        $(this).removeClass();
+        $(this).addClass(aliasStatus.Suspended);
+    });
+}
+
+//------------------------------------------------
 // Switch note status
 static #switchNoteStatus(project_id, id) {
     const noteCheckmark = $("#noteCheckmark-P" + project_id + "-" + id);
@@ -496,32 +535,25 @@ static #refreshNoteStatus(project_id, id) {
     const noteMarkdownDetailsEditor = $("#noteMarkdownDetails-P" + project_id + "-" + id + "_Editor");
 
     if( noteCheckmark.attr('data-id') === '0' ) { // done
-        noteCheckmark.addClass( 'fa-check' );
-        noteCheckmark.removeClass( 'fa-circle-thin' );
-        noteCheckmark.removeClass( 'fa-spinner fa-pulse' );
-
+        noteCheckmark.addClass( 'statusDone' );
         noteTitleLabel.addClass( 'noteDoneText' );
         noteMarkdownDetailsPreview.addClass( 'noteDoneMarkdown' );
         noteMarkdownDetailsEditor.addClass( 'noteDoneMarkdown' );
     }
     if( noteCheckmark.attr('data-id') === '1' ) { // open
-        noteCheckmark.removeClass( 'fa-check' );
-        noteCheckmark.addClass( 'fa-circle-thin' );
-        noteCheckmark.removeClass( 'fa-spinner fa-pulse' );
-
+        noteCheckmark.addClass( 'statusOpen' );
         noteTitleLabel.removeClass( 'noteDoneText' );
         noteMarkdownDetailsPreview.removeClass( 'noteDoneMarkdown' );
         noteMarkdownDetailsEditor.removeClass( 'noteDoneMarkdown' );
     }
     if( noteCheckmark.attr('data-id') === '2' ) { // in progress
-        noteCheckmark.removeClass( 'fa-check' );
-        noteCheckmark.removeClass( 'fa-circle-thin' );
-        noteCheckmark.addClass( 'fa-spinner fa-pulse' );
-
+        noteCheckmark.addClass( 'statusInProgress' );
         noteTitleLabel.removeClass( 'noteDoneText' );
         noteMarkdownDetailsPreview.removeClass( 'noteDoneMarkdown' );
         noteMarkdownDetailsEditor.removeClass( 'noteDoneMarkdown' );
     }
+
+    _BoardNotes_.expandStatusAliases();
 }
 
 //------------------------------------------------

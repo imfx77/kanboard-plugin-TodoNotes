@@ -537,13 +537,13 @@ foreach ($data as $u) {
     print '<i id="noteCheckmark-P' . $u['project_id'] . '-' . $num . '"';
     print ' data-id="' . $u['is_active'] . '"';
     if ($u['is_active'] == "2") {
-        print ' class="fa fa-spinner fa-pulse" aria-hidden="true"';
+        print ' class="statusInProgress" aria-hidden="true"';
     }
     if ($u['is_active'] == "1") {
-        print ' class="fa fa-circle-thin" aria-hidden="true"';
+        print ' class="statusOpen" aria-hidden="true"';
     }
     if ($u['is_active'] == "0") {
-        print ' class="fa fa-check" aria-hidden="true"';
+        print ' class="statusDone" aria-hidden="true"';
     }
     print '></i>';
     print '</button>';

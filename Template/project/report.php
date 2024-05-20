@@ -114,13 +114,13 @@ foreach ($data as $u) {
         print '<div class="reportBkgr"></div>';
 
         if ($u['is_active'] == "2") {
-            print '<i class="fa fa-spinner fa-pulse" aria-hidden="true"></i>';
+            print '<i class="statusInProgress" aria-hidden="true"></i>';
         }
         //if ($u['is_active'] == "1") {
-        //    print '<i class="fa fa-circle-thin" aria-hidden="true"></i>';
+        //    print '<i class="statusOpen" aria-hidden="true"></i>';
         //}
         if ($u['is_active'] == "0") {
-            print '<i class="fa fa-check" aria-hidden="true"></i>';
+            print '<i class="statusDone" aria-hidden="true"></i>';
         }
 
         print '</td>';

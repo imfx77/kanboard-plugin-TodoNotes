@@ -19,6 +19,7 @@ static prepareDocument() {
         _BoardNotes_.updateCategoryColors(project_id, id, category, category)
     });
 
+    _BoardNotes_.expandStatusAliases();
     _BoardNotes_.refreshCategoryColors();
 
     setTimeout(function() {
