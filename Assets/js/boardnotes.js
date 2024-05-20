@@ -57,6 +57,7 @@ static #aliasStatusStandard = {
 // Adjust scrollableContent container
 static adjustScrollableContent() {
     const scrollableContent = $("#scrollableContent");
+    if (!scrollableContent.length) return; // missing scrollableContent when NOT in project screen
     scrollableContent.height(0);
 
     let maxHeight;
@@ -80,6 +81,7 @@ static adjustScrollableContent() {
 static adjustNotePlaceholders(project_id, id) {
     const isTitle = (project_id === '0' && id === '0');
     if (isTitle) {
+        if (!$(".liNewNote").length) return; // missing NewNote when NOT in project screen
         const offsetTitle = $(".labelNewNote").offset().top;
         let offsetButtons = $("#settingsShowAllDone").offset().top;
         offsetButtons += $("#settingsShowAllDone").outerHeight();

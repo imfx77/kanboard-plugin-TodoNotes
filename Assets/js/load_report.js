@@ -25,7 +25,7 @@ static prepareDocument() {
     setTimeout(function() {
         // resize the report table to fit in screen height so to scroll its contents
         const scrollableTable = $(".tableReport");
-        if (!scrollableTable.eq(0).length) return; // missing table when NOT in report screen
+        if (!scrollableTable.length) return; // missing scrollableTable when NOT in report screen
         scrollableTable.height(0);
 
         let maxHeight;
@@ -35,10 +35,10 @@ static prepareDocument() {
             scrollableTable.height( Math.min(maxHeight, scrollableTable.prop('scrollHeight')) );
         } else {
             // adjust scrollableTable height
-            maxHeight = 0.9 * ( $(window).height() - scrollableTable.eq(0).offset().top );
+            maxHeight = 0.9 * ( $(window).height() - scrollableTable.offset().top );
             scrollableTable.height( Math.min(maxHeight, scrollableTable.prop('scrollHeight')) );
         }
-    }, 100);
+    }, 300);
 }
 
 //------------------------------------------------
