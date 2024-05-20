@@ -1,6 +1,5 @@
 <?php
 
-    // TODO: improve obtaining the user_id !!!
     $stats_user_id = $_SESSION['cached_user_id'] ?? $this->user->getId();
 
     $statsData = $this->model->boardNotesModel->boardNotesStats($stats_project_id, $stats_user_id);
