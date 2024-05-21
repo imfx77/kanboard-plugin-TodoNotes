@@ -17,7 +17,7 @@ print $this->render('BoardNotes:translations/export_to_js');
 .localTableCell {
     display: table-cell;
 }
-.BoardNotes_ProjectDropdown_StatsWidget {
+._TodoNotes_ProjectDropdown_StatsWidget {
     display: table-cell;
     width: 100%;
     text-align: right;
@@ -29,7 +29,7 @@ print $this->render('BoardNotes:translations/export_to_js');
         $linkTitle = '<div class="localTableCell">' . t('BoardNotes_PROJECT_TITLE') . '</div>';
 
         $statsWidget = '';
-        $statsWidget .= '<div class="BoardNotes_ProjectDropdown_StatsWidget" data-project="';
+        $statsWidget .= '<div class="_TodoNotes_ProjectDropdown_StatsWidget" data-project="';
         $statsWidget .= $project['id'];
         $statsWidget .= '">';
         $statsWidget .= $this->render('BoardNotes:widgets/stats', array('stats_project_id' => $project['id']));
