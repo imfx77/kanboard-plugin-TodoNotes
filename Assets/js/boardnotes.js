@@ -1240,7 +1240,7 @@ static #sqlUpdateNote(project_id, user_id, id) {
                 $("#refProjectId").attr('data-timestamp', lastModifiedTimestamp);
                 // refresh and render the details markdown preview
                 $("#noteMarkdownDetails-P" + project_id + "-" + id + "_Preview").html(_BoardNotes_Translations_.msgLoadingSpinner).load(
-                    '/?controller=BoardNotesController&action=boardNotesRefreshMarkdownPreviewWidget&plugin=BoardNotes'
+                    '/?controller=BoardNotesController&action=RefreshMarkdownPreviewWidget&plugin=BoardNotes'
                         + '&markdown_text=' + encodeURIComponent(description),
                 ).css('height', 'auto');
             } else {
@@ -1368,7 +1368,7 @@ static sqlRefreshTabs(user_id) {
     $.ajaxSetup ({
         cache: false
     });
-    const loadUrl = '/?controller=BoardNotesController&action=boardNotesRefreshTabs&plugin=BoardNotes'
+    const loadUrl = '/?controller=BoardNotesController&action=RefreshTabs&plugin=BoardNotes'
                 + '&user_id=' + user_id;
     setTimeout(function() {
         $("#tabs").html(_BoardNotes_Translations_.msgLoadingSpinner).load(loadUrl,
@@ -1384,7 +1384,7 @@ static sqlRefreshNotes(project_id, user_id) {
     $.ajaxSetup ({
         cache: false
     });
-    const loadUrl = '/?controller=BoardNotesController&action=boardNotesRefreshProject&plugin=BoardNotes'
+    const loadUrl = '/?controller=BoardNotesController&action=RefreshProject&plugin=BoardNotes'
                 + '&project_custom_id=' + project_id
                 + '&user_id=' + user_id;
     setTimeout(function() {
@@ -1402,7 +1402,7 @@ static sqlToggleSessionOption(session_option) {
     $.ajax({
         cache: false,
         type: "POST",
-        url: '/?controller=BoardNotesController&action=boardNotesToggleSessionOption&plugin=BoardNotes'
+        url: '/?controller=BoardNotesController&action=ToggleSessionOption&plugin=BoardNotes'
             + '&session_option=' + session_option,
         success: function() {
         },
@@ -1446,7 +1446,7 @@ static #sqlGetLastModifiedTimestamp(project_id, user_id) {
     $.ajax({
         cache: false,
         type: "POST",
-        url: '/?controller=BoardNotesController&action=boardNotesGetLastModifiedTimestamp&plugin=BoardNotes'
+        url: '/?controller=BoardNotesController&action=GetLastModifiedTimestamp&plugin=BoardNotes'
             + '&project_custom_id=' + project_id
             + '&user_id=' + user_id,
         success: function(response) {

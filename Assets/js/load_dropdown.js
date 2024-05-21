@@ -16,7 +16,7 @@ static #refreshStatsWidget() {
         $.ajaxSetup ({
           cache: false
         });
-        const loadUrl = '/?controller=BoardNotesController&action=boardNotesRefreshStatsWidget&plugin=BoardNotes'
+        const loadUrl = '/?controller=BoardNotesController&action=RefreshStatsWidget&plugin=BoardNotes'
                     + '&stats_project_id=' + project_id;
         $(".BoardNotes_ProjectDropdown_StatsWidget:last").html(_BoardNotes_Translations_.msgLoadingSpinner).load(loadUrl);
     }

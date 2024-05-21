@@ -246,7 +246,7 @@ class BoardNotesModel extends Base
     }
 
     // Get last modified timestamp
-    public function boardNotesGetLastModifiedTimestamp($project_id, $user_id)
+    public function GetLastModifiedTimestamp($project_id, $user_id)
     {
         $result = $this->db->table(self::TABLE_NOTES_ENTRIES);
         $result = $result->columns('date_modified');

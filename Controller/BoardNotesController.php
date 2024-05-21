@@ -144,12 +144,12 @@ class BoardNotesController extends BaseController
         $this->ShowProjectWithRefresh(false);
     }
 
-    public function boardNotesRefreshProject()
+    public function RefreshProject()
     {
         $this->ShowProjectWithRefresh(true);
     }
 
-    public function boardNotesRefreshTabs()
+    public function RefreshTabs()
     {
         $user_id = $this->ResolveUserId();
         $projectsAccess = $this->boardNotesModel->GetAllProjectIds($user_id);
@@ -160,7 +160,7 @@ class BoardNotesController extends BaseController
         )));
     }
 
-    public function boardNotesRefreshStatsWidget()
+    public function RefreshStatsWidget()
     {
         $stats_project_id = $this->request->getIntegerParam('stats_project_id');
         return $this->response->html($this->helper->layout->app('BoardNotes:widgets/stats', array(
@@ -168,7 +168,7 @@ class BoardNotesController extends BaseController
         )));
     }
 
-    public function boardNotesRefreshMarkdownPreviewWidget()
+    public function RefreshMarkdownPreviewWidget()
     {
         $markdown_text = $this->request->getStringParam('markdown_text');
         return $this->response->html($this->helper->layout->app('BoardNotes:widgets/markdown_preview', array(
@@ -221,7 +221,7 @@ class BoardNotesController extends BaseController
         )));
     }
 
-    public function boardNotesToggleSessionOption(): bool
+    public function ToggleSessionOption(): bool
     {
         $session_option = $this->request->getStringParam('session_option');
         if (empty($session_option)) {
@@ -242,13 +242,13 @@ class BoardNotesController extends BaseController
         return true;
     }
 
-    public function boardNotesGetLastModifiedTimestamp()
+    public function GetLastModifiedTimestamp()
     {
         $user_id = $this->ResolveUserId();
         $project = $this->ResolveProject($user_id);
         $project_id = $project['id'];
 
-        $validation = $this->boardNotesModel->boardNotesGetLastModifiedTimestamp($project_id, $user_id);
+        $validation = $this->boardNotesModel->GetLastModifiedTimestamp($project_id, $user_id);
         print(json_encode($validation));
 
         return $validation;
@@ -420,7 +420,7 @@ class BoardNotesController extends BaseController
         )));
     }
 
-    public function boardNotesReindexNotesAndLists()
+    public function ReindexNotesAndLists()
     {
         $user_id = $this->ResolveUserId();
         $project_tab_id = intval($this->request->getStringParam('project_tab_id'));

@@ -348,7 +348,7 @@ static #sqlReindexNotesAndLists(user_id) {
     $.ajaxSetup ({
         cache: false
     });
-    const loadUrl = '/?controller=BoardNotesController&action=boardNotesReindexNotesAndLists&plugin=BoardNotes'
+    const loadUrl = '/?controller=BoardNotesController&action=ReindexNotesAndLists&plugin=BoardNotes'
                 + '&user_id=' + user_id
                 + '&project_tab_id=' + project_tab_id;
     setTimeout(function() {
