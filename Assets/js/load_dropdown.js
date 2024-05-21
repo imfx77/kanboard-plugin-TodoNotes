@@ -2,7 +2,7 @@
  * @author  Im[F(x)]
  */
 
-class _BoardNotes_Dropdown_ {
+class _TodoNotes_Dropdown_ {
 
 //------------------------------------------------
 static #refreshStatsWidget() {
@@ -18,30 +18,30 @@ static #refreshStatsWidget() {
         });
         const loadUrl = '/?controller=BoardNotesController&action=RefreshStatsWidget&plugin=BoardNotes'
                     + '&stats_project_id=' + project_id;
-        $(".BoardNotes_ProjectDropdown_StatsWidget:last").html(_BoardNotes_Translations_.msgLoadingSpinner).load(loadUrl,
+        $(".BoardNotes_ProjectDropdown_StatsWidget:last").html(_TodoNotes_Translations_.msgLoadingSpinner).load(loadUrl,
             function() {
-                _BoardNotes_Statuses_.expandStatusAliases();
+                _TodoNotes_Statuses_.expandStatusAliases();
             });
     }
 
     // re-schedule
     setTimeout(function() {
-        _BoardNotes_Dropdown_.#refreshStatsWidget();
+        _TodoNotes_Dropdown_.#refreshStatsWidget();
     }, 15 * 1000); // 15 sec
 }
 
 //------------------------------------------------
 static prepareDocument() {
-    _BoardNotes_Translations_.initialize();
+    _TodoNotes_Translations_.initialize();
 
-    _BoardNotes_Statuses_.expandStatusAliases();
+    _TodoNotes_Statuses_.expandStatusAliases();
 
-    _BoardNotes_Dropdown_.#refreshStatsWidget();
+    _TodoNotes_Dropdown_.#refreshStatsWidget();
 }
 
 //------------------------------------------------
 
-} // class _BoardNotes_Dropdown_
+} // class _TodoNotes_Dropdown_
 
 //////////////////////////////////////////////////
-$( document ).ready( _BoardNotes_Dropdown_.prepareDocument );
+$( document ).ready( _TodoNotes_Dropdown_.prepareDocument );

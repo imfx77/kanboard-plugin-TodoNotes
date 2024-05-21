@@ -2,7 +2,7 @@
  * @author  Im[F(x)]
  */
 
-class _BoardNotes_Translations_ {
+class _TodoNotes_Translations_ {
 
 //------------------------------------------------
 // Translation Export to JS
@@ -14,28 +14,28 @@ static msgLoadingSpinner;
 //------------------------------------------------
 static initialize() {
     // lazy init the translations ONCE
-    if (_BoardNotes_Translations_.#translationsExportToJS) return;
+    if (_TodoNotes_Translations_.#translationsExportToJS) return;
 
-    _BoardNotes_Translations_.#translationsExportToJS = JSON.parse( $("#_BoardNotes_TranslationsExportToJS_").html() );
-    $("#_BoardNotes_TranslationsExportToJS_").remove();
+    _TodoNotes_Translations_.#translationsExportToJS = JSON.parse( $("#_TodoNotes_TranslationsExportToJS_").html() );
+    $("#_TodoNotes_TranslationsExportToJS_").remove();
 
-    _BoardNotes_Translations_.msgLoadingSpinner = _BoardNotes_Translations_.getSpinnerMsg('BoardNotes_JS_LOADING_MSG');
+    _TodoNotes_Translations_.msgLoadingSpinner = _TodoNotes_Translations_.getSpinnerMsg('BoardNotes_JS_LOADING_MSG');
 }
 
 //------------------------------------------------
 static getTranslationExportToJS(textId) {
-    return _BoardNotes_Translations_.#translationsExportToJS[textId];
+    return _TodoNotes_Translations_.#translationsExportToJS[textId];
 }
 
 //------------------------------------------------
 static getSpinnerMsg(textId) {
-    const msg = _BoardNotes_Translations_.getTranslationExportToJS(textId);
+    const msg = _TodoNotes_Translations_.getTranslationExportToJS(textId);
     return '<i class="fa fa-spinner fa-pulse" aria-hidden="true" alt="' + msg + '"></i> ' + msg;
 }
 
 //------------------------------------------------
 
-} // class _BoardNotes_Translations_
+} // class _TodoNotes_Translations_
 
 //////////////////////////////////////////////////
-$( document ).ready( _BoardNotes_Translations_.initialize );
+$( document ).ready( _TodoNotes_Translations_.initialize );

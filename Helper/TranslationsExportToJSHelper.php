@@ -33,7 +33,7 @@ class TranslationsExportToJSHelper extends Base
         }
 
         echo $this->helper->asset->js('plugins/BoardNotes/Assets/js/translations.js');
-        echo '<textarea id="_BoardNotes_TranslationsExportToJS_" style="display: none">';
+        echo '<textarea id="_TodoNotes_TranslationsExportToJS_" style="display: none">';
         echo json_encode($translations);
         echo '</textarea>';
 

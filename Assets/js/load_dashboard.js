@@ -2,7 +2,7 @@
  * @author  Im[F(x)]
  */
 
-class _BoardNotes_Dashboard_ {
+class _TodoNotes_Dashboard_ {
 
 //------------------------------------------------
 static initializeSortableGroup(group) {
@@ -20,11 +20,11 @@ static initializeSortableGroup(group) {
             order = order.split(',');
 
             const user_id = $("#refProjectId").attr('data-user');
-            _BoardNotes_Tabs_.modalReorderCustomNoteList(user_id, order);
+            _TodoNotes_Tabs_.modalReorderCustomNoteList(user_id, order);
         }
     });
 
-    if (_BoardNotes_.isMobile()) {
+    if (_TodoNotes_.isMobile()) {
         // bind explicit reorder handles for mobile
         $("#group" + group).sortable({
             handle: ".sortableGroupHandle",
@@ -36,9 +36,9 @@ static initializeSortableGroup(group) {
 
 //------------------------------------------------
 static prepareDocument() {
-    _BoardNotes_.optionShowTabStats = $("#session_vars").attr('data-optionShowTabStats') === 'true';
+    _TodoNotes_.optionShowTabStats = $("#session_vars").attr('data-optionShowTabStats') === 'true';
 
-    const isMobile = _BoardNotes_.isMobile();
+    const isMobile = _TodoNotes_.isMobile();
     const isAdmin = $("#tabId").attr('data-admin');
 
     if(isMobile) {
@@ -48,16 +48,16 @@ static prepareDocument() {
     }
 
     if (isAdmin === '1') {
-        _BoardNotes_Dashboard_.initializeSortableGroup("Global");
+        _TodoNotes_Dashboard_.initializeSortableGroup("Global");
     }
-    _BoardNotes_Dashboard_.initializeSortableGroup("Private");
+    _TodoNotes_Dashboard_.initializeSortableGroup("Private");
 
-    _BoardNotes_Translations_.initialize();
+    _TodoNotes_Translations_.initialize();
 
-    _BoardNotes_Tabs_.updateTabs();
-    _BoardNotes_Tabs_.updateTabStats();
+    _TodoNotes_Tabs_.updateTabs();
+    _TodoNotes_Tabs_.updateTabStats();
 
-    _BoardNotes_Tabs_.attachAllHandlers();
+    _TodoNotes_Tabs_.attachAllHandlers();
 }
 
 //------------------------------------------------
@@ -65,7 +65,7 @@ static _dummy_() {}
 
 //------------------------------------------------
 
-} // class _BoardNotes_Dashboard_
+} // class _TodoNotes_Dashboard_
 
 //////////////////////////////////////////////////
-$( document ).ready( _BoardNotes_Dashboard_._dummy_ );
+$( document ).ready( _TodoNotes_Dashboard_._dummy_ );

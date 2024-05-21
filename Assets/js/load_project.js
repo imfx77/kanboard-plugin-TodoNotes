@@ -2,21 +2,21 @@
  * @author  Im[F(x)]
  */
 
-class _BoardNotes_Project_ {
+class _TodoNotes_Project_ {
 
 //------------------------------------------------
 static prepareDocument() {
-    _BoardNotes_.optionShowCategoryColors = $("#session_vars").attr('data-optionShowCategoryColors') === 'true';
-    _BoardNotes_.optionSortByStatus = $("#session_vars").attr('data-optionSortByStatus') === 'true';
-    _BoardNotes_.optionShowAllDone = $("#session_vars").attr('data-optionShowAllDone') === 'true';
+    _TodoNotes_.optionShowCategoryColors = $("#session_vars").attr('data-optionShowCategoryColors') === 'true';
+    _TodoNotes_.optionSortByStatus = $("#session_vars").attr('data-optionSortByStatus') === 'true';
+    _TodoNotes_.optionShowAllDone = $("#session_vars").attr('data-optionShowAllDone') === 'true';
 
     const project_id = $("#refProjectId").attr('data-project');
     const user_id = $("#refProjectId").attr('data-user');
-    const isMobile = _BoardNotes_.isMobile();
+    const isMobile = _TodoNotes_.isMobile();
     const readonlyNotes = (project_id === '0'); // Overview Mode
 
     // notes reordering is disabled when explicitly sorted by Status
-    if (!_BoardNotes_.optionSortByStatus) {
+    if (!_TodoNotes_.optionSortByStatus) {
         $(".sortableList").each(function() {
             const sortable_project_id = $(this).attr('data-project');
 
@@ -31,7 +31,7 @@ static prepareDocument() {
                     const regex = new RegExp('item-', 'g');
                     order = order.replace(regex, '');
                     order = order.split(',');
-                    _BoardNotes_.sqlUpdateNotesPositions(sortable_project_id, user_id, order);
+                    _TodoNotes_.sqlUpdateNotesPositions(sortable_project_id, user_id, order);
                 }
             });
 
@@ -60,42 +60,42 @@ static prepareDocument() {
         }
     }
 
-    _BoardNotes_Translations_.initialize();
+    _TodoNotes_Translations_.initialize();
 
-    _BoardNotes_Project_.resizeDocument();
+    _TodoNotes_Project_.resizeDocument();
 
-    _BoardNotes_Statuses_.expandStatusAliases();
+    _TodoNotes_Statuses_.expandStatusAliases();
 
-    _BoardNotes_.refreshCategoryColors();
-    _BoardNotes_.refreshSortByStatus();
-    _BoardNotes_.refreshShowAllDone();
+    _TodoNotes_.refreshCategoryColors();
+    _TodoNotes_.refreshSortByStatus();
+    _TodoNotes_.refreshShowAllDone();
 
     // prepare method for dashboard view if embedded
-    if (typeof(_BoardNotes_Dashboard_) !== 'undefined') {
-        _BoardNotes_Dashboard_.prepareDocument();
+    if (typeof(_TodoNotes_Dashboard_) !== 'undefined') {
+        _TodoNotes_Dashboard_.prepareDocument();
     }
 
     // force render all KB elements
     KB.render();
 
     setTimeout(function() {
-        _BoardNotes_.showTitleInputNewNote();
+        _TodoNotes_.showTitleInputNewNote();
     }, 100);
 }
 
 //------------------------------------------------
 static resizeDocument() {
-    _BoardNotes_.adjustAllNotesPlaceholders();
-    _BoardNotes_.adjustAllNotesTitleInputs();
+    _TodoNotes_.adjustAllNotesPlaceholders();
+    _TodoNotes_.adjustAllNotesTitleInputs();
     setTimeout(function() {
-        _BoardNotes_.adjustScrollableContent();
+        _TodoNotes_.adjustScrollableContent();
     }, 100);
 }
 
 //------------------------------------------------
 
-} // class _BoardNotes_Project_
+} // class _TodoNotes_Project_
 
 //////////////////////////////////////////////////
-window.onresize = _BoardNotes_Project_.resizeDocument;
-$( document ).ready( _BoardNotes_Project_.prepareDocument );
+window.onresize = _TodoNotes_Project_.resizeDocument;
+$( document ).ready( _TodoNotes_Project_.prepareDocument );

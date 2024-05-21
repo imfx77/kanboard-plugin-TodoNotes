@@ -2,7 +2,7 @@
  * @author  Im[F(x)]
  */
 
-class _BoardNotes_Statuses_ {
+class _TodoNotes_Statuses_ {
 
 //------------------------------------------------
 // Global vars for status class aliases
@@ -23,8 +23,8 @@ static #aliasStatusStandard = {
 //------------------------------------------------
 // Expand status aliases
 static expandStatusAliases() {
-    const aliasStatus = _BoardNotes_Statuses_.#aliasStatusCasual;
-    //const aliasStatus = _BoardNotes_Statuses_.#aliasStatusStandard;
+    const aliasStatus = _TodoNotes_Statuses_.#aliasStatusCasual;
+    //const aliasStatus = _TodoNotes_Statuses_.#aliasStatusStandard;
 
     $(".statusDone").each(function() {
         $(this).removeClass();
@@ -52,7 +52,7 @@ static _dummy_() {}
 
 //------------------------------------------------
 
-} // class _BoardNotes_Statuses_
+} // class _TodoNotes_Statuses_
 
 //////////////////////////////////////////////////
-$( document ).ready( _BoardNotes_Statuses_._dummy_ );
+$( document ).ready( _TodoNotes_Statuses_._dummy_ );

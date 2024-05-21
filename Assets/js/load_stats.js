@@ -2,7 +2,7 @@
  * @author  Im[F(x)]
  */
 
-class _BoardNotes_Stats_ {
+class _TodoNotes_Stats_ {
 
 //------------------------------------------------
 static prepareDocument() {
@@ -28,7 +28,7 @@ static prepareDocument() {
 
 //------------------------------------------------
 
-} // class _BoardNotes_Stats_
+} // class _TodoNotes_Stats_
 
 //////////////////////////////////////////////////
-$( document ).ready( _BoardNotes_Stats_.prepareDocument );
+$( document ).ready( _TodoNotes_Stats_.prepareDocument );
