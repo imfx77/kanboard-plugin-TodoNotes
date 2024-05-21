@@ -80,7 +80,6 @@ static #TabActionHandlers() {
     // update tabs stats widgets on clicking buttonStatus
     $("button" + ".buttonStatus").click(function() {
         const project_id = $(this).attr('data-project');
-        //var user_id = $(this).attr('data-user');
         const id = $(this).attr('data-id');
 
         const noteCheckmark = $("#noteCheckmark-P" + project_id + "-" + id);
@@ -108,6 +107,14 @@ static #TabActionHandlers() {
             statsWidgetCurrent.find(".statProgress b").text(parseInt(statsWidgetCurrent.find(".statProgress b").text()) + 1)
             statsWidgetCurrent.find(".statOpen b").text(parseInt(statsWidgetCurrent.find(".statOpen b").text()) - 1)
         }
+
+        // update progress icons
+        const statusAliasAll =  (statsWidgetAll.find(".statProgress b").text() !== '0') ? 'statusInProgress' : 'statusSuspended';
+        statsWidgetAll.find(".statProgress i").addClass(statusAliasAll);
+        const statusAliasCurrent =  (statsWidgetCurrent.find(".statProgress b").text() !== '0') ? 'statusInProgress' : 'statusSuspended';
+        statsWidgetCurrent.find(".statProgress i").addClass(statusAliasCurrent);
+
+        _BoardNotes_.expandStatusAliases();
     });
 
     //------------------------------------------------
