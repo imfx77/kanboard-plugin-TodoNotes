@@ -1426,13 +1426,13 @@ static #sqlGetLastModifiedTimestamp(project_id, user_id) {
 //------------------------------------------------
 
 //------------------------------------------------
-static #showBusyIcon() {
-    $("#boardnotesBusyIcon").removeClass( 'hideMe' );
+static #showRefreshIcon() {
+    $("#refreshIcon").removeClass( 'hideMe' );
 }
 
 //------------------------------------------------
-static #hideBusyIcon( ) {
-    $("#boardnotesBusyIcon").addClass( 'hideMe' );
+static #hideRefreshIcon( ) {
+    $("#refreshIcon").addClass( 'hideMe' );
 }
 
 //------------------------------------------------
@@ -1446,7 +1446,7 @@ static scheduleCheckModifications() {
             return;
         }
 
-        _BoardNotes_.#showBusyIcon();
+        _BoardNotes_.#showRefreshIcon();
 
         const project_id = $("#refProjectId").attr('data-project');
         const user_id = $("#refProjectId").attr('data-user');
@@ -1481,7 +1481,7 @@ static #checkAndTriggerRefresh(lastModifiedTimestamp) {
     }
 
     _BoardNotes_.scheduleCheckModifications();
-    _BoardNotes_.#hideBusyIcon();
+    _BoardNotes_.#hideRefreshIcon();
 }
 
 //------------------------------------------------

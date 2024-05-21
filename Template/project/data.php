@@ -714,7 +714,7 @@ print ' data-user="' . $user_id . '"';
 print ' data-timestamp="' . time() . '"';
 print '></div>';
 
-print '<span id="boardnotesBusyIcon" class="boardnotesBusyIcon hideMe">';
+print '<span id="refreshIcon" class="refreshIcon hideMe">';
 print '&nbsp;<i class="fa fa-refresh fa-spin" title="' . t('BoardNotes_PROJECT_NOTE_BUSY_ICON_HINT') . '"></i></span>';
 
 
