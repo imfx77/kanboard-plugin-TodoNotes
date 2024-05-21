@@ -128,6 +128,43 @@ class BoardNotesModel extends Base
         return $result;
     }
 
+    // Get stats related to user and project
+    public function GetProjectStatsForUser($project_id, $user_id)
+    {
+        $statsData = $this->db->table(self::TABLE_NOTES_ENTRIES);
+        if ($project_id != 0) {
+            $statsData = $statsData->eq('project_id', $project_id);
+        }
+        $statsData = $statsData->eq('user_id', $user_id);
+        $statsData = $statsData->gte('is_active', 0); // -1 == deleted
+        $statsData = $statsData->findAll();
+
+        $statDone = 0;
+        $statOpen = 0;
+        $statProgress = 0;
+        $statTotal = 0;
+
+        foreach ($statsData as $qq) {
+            if ($qq['is_active'] == 0) {
+                $statDone++;
+            }
+            if ($qq['is_active'] == 1) {
+                $statOpen++;
+            }
+            if ($qq['is_active'] == 2) {
+                $statProgress++;
+            }
+            $statTotal++;
+        }
+
+        return array(
+            'statDone' => $statDone,
+            'statOpen' => $statOpen,
+            'statProgress' => $statProgress,
+            'statTotal' => $statTotal,
+        );
+    }
+
     // Get regular project data by project_id
     public function GetRegularProjectById($project_id)
     {
@@ -245,42 +282,41 @@ class BoardNotesModel extends Base
             ->findAll();
     }
 
-    // Get last modified timestamp
-    public function GetLastModifiedTimestamp($project_id, $user_id)
+    // Add note
+    public function AddNote($project_id, $user_id, $is_active, $title, $description, $category)
     {
-        $result = $this->db->table(self::TABLE_NOTES_ENTRIES);
-        $result = $result->columns('date_modified');
-        $result = $result->eq('user_id', $user_id);
-        if ($project_id != 0) {
-            $result = $result->eq('project_id', $project_id);
-        }
-        // including 'is_active' == -1 i.e. lately deleted notes
-        $result = $result->desc('date_modified');
-        $result = $result->findOne();
+        // Get last position number
+        $lastPosition = $this->db->table(self::TABLE_NOTES_ENTRIES)
+            ->eq('project_id', $project_id)
+            ->gte('is_active', 0) // -1 == deleted
+            ->desc('position')
+            ->findOneColumn('position');
 
-        $timestampNotes = 0;
-        if ($result && count($result) == 1) {
-            $timestampNotes = $result['date_modified'];
+        if (empty($lastPosition)) {
+            $lastPosition = 0;
         }
 
-        $forceRefresh = $this->db->table(self::TABLE_NOTES_ENTRIES)
-            ->columns('date_modified')
-            ->eq('project_id', 0)
-            ->eq('user_id', 0)
-            ->eq('position', 0)
-            ->eq('is_active', -1)
-            ->findOne();
+        // Add 1 to position
+        $lastPosition++;
 
-        $timestampProjects = 0;
-        if ($forceRefresh && count($forceRefresh) == 1) {
-            $timestampProjects = $forceRefresh['date_modified'];
-        }
+        // Get current unixtime
+        $timestamp = time();
 
-        return array(
-            'notes' => $timestampNotes,
-            'projects' => $timestampProjects,
-            'max' => max($timestampNotes, $timestampProjects),
+        // Define values
+        $values = array(
+            'project_id' => $project_id,
+            'user_id' => $user_id,
+            'position' => $lastPosition,
+            'is_active' => $is_active,
+            'title' => $title,
+            'category' => $category,
+            'description' => $description,
+            'date_created' => $timestamp,
+            'date_modified' => $timestamp,
         );
+
+        return $this->db->table(self::TABLE_NOTES_ENTRIES)
+            ->insert($values);
     }
 
     // Delete note
@@ -341,87 +377,6 @@ class BoardNotesModel extends Base
             ->eq('user_id', $user_id)
             ->eq('is_active', "-1") // previously marked as deleted
             ->remove();
-    }
-
-    // Emulate a global force refresh by updating a modified timestamp to the special `zero` entry
-    public function EmulateForceRefresh()
-    {
-        return $this->db->table(self::TABLE_NOTES_ENTRIES)
-            ->eq('project_id', 0)
-            ->eq('user_id', 0)
-            ->eq('position', 0)
-            ->eq('is_active', -1)
-            ->update(array('date_modified' => time()));
-    }
-
-    // Add note
-    public function AddNote($project_id, $user_id, $is_active, $title, $description, $category)
-    {
-        // Get last position number
-        $lastPosition = $this->db->table(self::TABLE_NOTES_ENTRIES)
-            ->eq('project_id', $project_id)
-            ->gte('is_active', 0) // -1 == deleted
-            ->desc('position')
-            ->findOneColumn('position');
-
-        if (empty($lastPosition)) {
-            $lastPosition = 0;
-        }
-
-        // Add 1 to position
-        $lastPosition++;
-
-        // Get current unixtime
-        $timestamp = time();
-
-        // Define values
-        $values = array(
-            'project_id' => $project_id,
-            'user_id' => $user_id,
-            'position' => $lastPosition,
-            'is_active' => $is_active,
-            'title' => $title,
-            'category' => $category,
-            'description' => $description,
-            'date_created' => $timestamp,
-            'date_modified' => $timestamp,
-        );
-
-        return $this->db->table(self::TABLE_NOTES_ENTRIES)
-            ->insert($values);
-    }
-
-    // Transfer note
-    public function TransferNote($project_id, $user_id, $note_id, $target_project_id)
-    {
-        // Get last position number for target project
-        $lastPosition = $this->db->table(self::TABLE_NOTES_ENTRIES)
-            ->eq('project_id', $target_project_id)
-            ->gte('is_active', 0) // -1 == deleted
-            ->desc('position')
-            ->findOneColumn('position');
-
-        if (empty($lastPosition)) {
-            $lastPosition = 0;
-        }
-
-        // Add 1 to position
-        $lastPosition++;
-
-        // Get current unixtime
-        $timestamp = time();
-
-        $values = array(
-            'project_id' => $target_project_id,
-            'position' => $lastPosition,
-            'date_modified' => $timestamp,
-        );
-
-        return $this->db->table(self::TABLE_NOTES_ENTRIES)
-            ->eq('id', $note_id)
-            ->eq('project_id', $project_id)
-            ->eq('user_id', $user_id)
-            ->update($values);
     }
 
     // Update note
@@ -500,41 +455,37 @@ class BoardNotesModel extends Base
         return $result;
     }
 
-    // Get stats related to user and project
-    public function GetProjectStatsForUser($project_id, $user_id)
+    // Transfer note
+    public function TransferNote($project_id, $user_id, $note_id, $target_project_id)
     {
-        $statsData = $this->db->table(self::TABLE_NOTES_ENTRIES);
-        if ($project_id != 0) {
-            $statsData = $statsData->eq('project_id', $project_id);
-        }
-        $statsData = $statsData->eq('user_id', $user_id);
-        $statsData = $statsData->gte('is_active', 0); // -1 == deleted
-        $statsData = $statsData->findAll();
+        // Get last position number for target project
+        $lastPosition = $this->db->table(self::TABLE_NOTES_ENTRIES)
+            ->eq('project_id', $target_project_id)
+            ->gte('is_active', 0) // -1 == deleted
+            ->desc('position')
+            ->findOneColumn('position');
 
-        $statDone = 0;
-        $statOpen = 0;
-        $statProgress = 0;
-        $statTotal = 0;
-
-        foreach ($statsData as $qq) {
-            if ($qq['is_active'] == 0) {
-                $statDone++;
-            }
-            if ($qq['is_active'] == 1) {
-                $statOpen++;
-            }
-            if ($qq['is_active'] == 2) {
-                $statProgress++;
-            }
-            $statTotal++;
+        if (empty($lastPosition)) {
+            $lastPosition = 0;
         }
 
-        return array(
-            'statDone' => $statDone,
-            'statOpen' => $statOpen,
-            'statProgress' => $statProgress,
-            'statTotal' => $statTotal,
+        // Add 1 to position
+        $lastPosition++;
+
+        // Get current unixtime
+        $timestamp = time();
+
+        $values = array(
+            'project_id' => $target_project_id,
+            'position' => $lastPosition,
+            'date_modified' => $timestamp,
         );
+
+        return $this->db->table(self::TABLE_NOTES_ENTRIES)
+            ->eq('id', $note_id)
+            ->eq('project_id', $project_id)
+            ->eq('user_id', $user_id)
+            ->update($values);
     }
 
     // Create Custom Note List
@@ -611,5 +562,54 @@ class BoardNotesModel extends Base
         }
 
         return $result;
+    }
+
+    // Emulate a global force refresh by updating a modified timestamp to the special `zero` entry
+    public function EmulateForceRefresh()
+    {
+        return $this->db->table(self::TABLE_NOTES_ENTRIES)
+            ->eq('project_id', 0)
+            ->eq('user_id', 0)
+            ->eq('position', 0)
+            ->eq('is_active', -1)
+            ->update(array('date_modified' => time()));
+    }
+
+    // Get last modified timestamp
+    public function GetLastModifiedTimestamp($project_id, $user_id)
+    {
+        $result = $this->db->table(self::TABLE_NOTES_ENTRIES);
+        $result = $result->columns('date_modified');
+        $result = $result->eq('user_id', $user_id);
+        if ($project_id != 0) {
+            $result = $result->eq('project_id', $project_id);
+        }
+        // including 'is_active' == -1 i.e. lately deleted notes
+        $result = $result->desc('date_modified');
+        $result = $result->findOne();
+
+        $timestampNotes = 0;
+        if ($result && count($result) == 1) {
+            $timestampNotes = $result['date_modified'];
+        }
+
+        $forceRefresh = $this->db->table(self::TABLE_NOTES_ENTRIES)
+            ->columns('date_modified')
+            ->eq('project_id', 0)
+            ->eq('user_id', 0)
+            ->eq('position', 0)
+            ->eq('is_active', -1)
+            ->findOne();
+
+        $timestampProjects = 0;
+        if ($forceRefresh && count($forceRefresh) == 1) {
+            $timestampProjects = $forceRefresh['date_modified'];
+        }
+
+        return array(
+            'notes' => $timestampNotes,
+            'projects' => $timestampProjects,
+            'max' => max($timestampNotes, $timestampProjects),
+        );
     }
 }

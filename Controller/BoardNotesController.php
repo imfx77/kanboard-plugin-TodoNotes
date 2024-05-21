@@ -71,21 +71,6 @@ class BoardNotesController extends BaseController
         }
     }
 
-    private function FetchTabForProject($user_id, $project_id): int
-    {
-        $count = 1;
-        $all_user_projects = $this->boardNotesModel->GetAllProjectIds($user_id);
-        // recover the tab_id of the last selected project
-        foreach ($all_user_projects as $project) {
-            if ($project_id == $project['project_id']) {
-                return $count;
-            }
-            $count++;
-        }
-        // if nothing found leave 0
-        return 0;
-    }
-
     private function ShowProjectWithRefresh($is_refresh)
     {
         $user = $this->getUser();
@@ -149,33 +134,6 @@ class BoardNotesController extends BaseController
         $this->ShowProjectWithRefresh(true);
     }
 
-    public function RefreshTabs()
-    {
-        $user_id = $this->ResolveUserId();
-        $projectsAccess = $this->boardNotesModel->GetAllProjectIds($user_id);
-
-        return $this->response->html($this->helper->layout->app('BoardNotes:dashboard/tabs', array(
-            'user_id' => $user_id,
-            'projectsAccess' => $projectsAccess,
-        )));
-    }
-
-    public function RefreshStatsWidget()
-    {
-        $stats_project_id = $this->request->getIntegerParam('stats_project_id');
-        return $this->response->html($this->helper->layout->app('BoardNotes:widgets/stats', array(
-            'stats_project_id' => $stats_project_id,
-        )));
-    }
-
-    public function RefreshMarkdownPreviewWidget()
-    {
-        $markdown_text = $this->request->getStringParam('markdown_text');
-        return $this->response->html($this->helper->layout->app('BoardNotes:widgets/markdown_preview', array(
-            'markdown_text' => $markdown_text,
-        )));
-    }
-
     public function ShowDashboard()
     {
         $user = $this->getUser();
@@ -221,37 +179,29 @@ class BoardNotesController extends BaseController
         )));
     }
 
-    public function ToggleSessionOption(): bool
+    public function RefreshTabs()
     {
-        $session_option = $this->request->getStringParam('session_option');
-        if (empty($session_option)) {
-            return false;
-        }
+        $user_id = $this->ResolveUserId();
+        $projectsAccess = $this->boardNotesModel->GetAllProjectIds($user_id);
 
-        // toggle options are expected to be boolean i.e. to only have values of 'true' of 'false'
-        if (!array_key_exists($session_option, $_SESSION) ||    // key not exist
-            !is_bool($_SESSION[$session_option])                // value not bool
-        ) {
-            // set initial value
-            $_SESSION[$session_option] = false;
-            return true;
-        }
-
-        // toggle option
-        $_SESSION[$session_option] = !$_SESSION[$session_option];
-        return true;
+        return $this->response->html($this->helper->layout->app('BoardNotes:dashboard/tabs', array(
+            'user_id' => $user_id,
+            'projectsAccess' => $projectsAccess,
+        )));
     }
 
-    public function GetLastModifiedTimestamp()
+    public function AddNote()
     {
         $user_id = $this->ResolveUserId();
         $project = $this->ResolveProject($user_id);
         $project_id = $project['id'];
 
-        $validation = $this->boardNotesModel->GetLastModifiedTimestamp($project_id, $user_id);
-        print(json_encode($validation));
+        $is_active = $this->request->getStringParam('is_active'); // Not needed when new is added
+        $title = $this->request->getStringParam('title');
+        $description = $this->request->getStringParam('description');
+        $category = $this->request->getStringParam('category');
 
-        return $validation;
+        return $this->boardNotesModel->AddNote($project_id, $user_id, $is_active, $title, $description, $category);
     }
 
     public function DeleteNote()
@@ -272,32 +222,6 @@ class BoardNotesController extends BaseController
         $project_id = $project['id'];
 
         return $this->boardNotesModel->DeleteAllDoneNotes($project_id, $user_id);
-    }
-
-    public function AddNote()
-    {
-        $user_id = $this->ResolveUserId();
-        $project = $this->ResolveProject($user_id);
-        $project_id = $project['id'];
-
-        $is_active = $this->request->getStringParam('is_active'); // Not needed when new is added
-        $title = $this->request->getStringParam('title');
-        $description = $this->request->getStringParam('description');
-        $category = $this->request->getStringParam('category');
-
-        return $this->boardNotesModel->AddNote($project_id, $user_id, $is_active, $title, $description, $category);
-    }
-
-    public function TransferNote()
-    {
-        $user_id = $this->ResolveUserId();
-        $project = $this->ResolveProject($user_id);
-        $project_id = $project['id'];
-
-        $note_id = $this->request->getStringParam('note_id');
-        $target_project_id = $this->request->getStringParam('target_project_id');
-
-        return $this->boardNotesModel->TransferNote($project_id, $user_id, $note_id, $target_project_id);
     }
 
     public function UpdateNote()
@@ -335,21 +259,32 @@ class BoardNotesController extends BaseController
         return $validation;
     }
 
-    public function ShowStats()
+    public function UpdateNotesPositions()
+    {
+        $user_id = $this->ResolveUserId();
+        $project = $this->ResolveProject($user_id);
+        $project_id = $project['id'];
+        $notesPositions = array_map('intval', explode(',', $this->request->getStringParam('order')));
+
+        $validation = $this->boardNotesModel->UpdateNotesPositions($project_id, $user_id, $notesPositions);
+        print $validation ? time() : 0;
+
+        return $validation;
+    }
+
+    public function TransferNote()
     {
         $user_id = $this->ResolveUserId();
         $project = $this->ResolveProject($user_id);
         $project_id = $project['id'];
 
-        $statsData = $this->boardNotesModel->GetProjectStatsForUser($project_id, $user_id);
+        $note_id = $this->request->getStringParam('note_id');
+        $target_project_id = $this->request->getStringParam('target_project_id');
 
-        return $this->response->html($this->helper->layout->app('BoardNotes:project/stats', array(
-            //'title' => t('Stats'),
-            'statsData' => $statsData
-        )));
+        return $this->boardNotesModel->TransferNote($project_id, $user_id, $note_id, $target_project_id);
     }
 
-    public function boardNotesCreateTask()
+    public function CreateTaskFromNote()
     {
         $user_id = $this->ResolveUserId();
         $project = $this->ResolveProject($user_id);
@@ -385,19 +320,6 @@ class BoardNotesController extends BaseController
         )));
     }
 
-    public function UpdateNotesPositions()
-    {
-        $user_id = $this->ResolveUserId();
-        $project = $this->ResolveProject($user_id);
-        $project_id = $project['id'];
-        $notesPositions = array_map('intval', explode(',', $this->request->getStringParam('order')));
-
-        $validation = $this->boardNotesModel->UpdateNotesPositions($project_id, $user_id, $notesPositions);
-        print $validation ? time() : 0;
-
-        return $validation;
-    }
-
     public function ShowReport()
     {
         $user_id = $this->ResolveUserId();
@@ -417,6 +339,36 @@ class BoardNotesController extends BaseController
             'project_id' => $project_id,
             'user_id' => $user_id,
             'data' => $data,
+        )));
+    }
+
+    public function ShowStats()
+    {
+        $user_id = $this->ResolveUserId();
+        $project = $this->ResolveProject($user_id);
+        $project_id = $project['id'];
+
+        $statsData = $this->boardNotesModel->GetProjectStatsForUser($project_id, $user_id);
+
+        return $this->response->html($this->helper->layout->app('BoardNotes:project/stats', array(
+            //'title' => t('Stats'),
+            'statsData' => $statsData
+        )));
+    }
+
+    public function RefreshStatsWidget()
+    {
+        $stats_project_id = $this->request->getIntegerParam('stats_project_id');
+        return $this->response->html($this->helper->layout->app('BoardNotes:widgets/stats', array(
+            'stats_project_id' => $stats_project_id,
+        )));
+    }
+
+    public function RefreshMarkdownPreviewWidget()
+    {
+        $markdown_text = $this->request->getStringParam('markdown_text');
+        return $this->response->html($this->helper->layout->app('BoardNotes:widgets/markdown_preview', array(
+            'markdown_text' => $markdown_text,
         )));
     }
 
@@ -458,6 +410,21 @@ class BoardNotesController extends BaseController
             'user_id' => $user_id,
             'tab_id' => $this->FetchTabForProject($user_id, $project_tab_id),
         )));
+    }
+
+    private function FetchTabForProject($user_id, $project_id): int
+    {
+        $count = 1;
+        $all_user_projects = $this->boardNotesModel->GetAllProjectIds($user_id);
+        // recover the tab_id of the last selected project
+        foreach ($all_user_projects as $project) {
+            if ($project_id == $project['project_id']) {
+                return $count;
+            }
+            $count++;
+        }
+        // if nothing found leave 0
+        return 0;
     }
 
     private function CustomNoteListOperationNotification($validation, $is_global)
@@ -592,5 +559,38 @@ class BoardNotesController extends BaseController
             'user_id' => $user_id,
             'tab_id' => $this->FetchTabForProject($user_id, $project_tab_id),
         )));
+    }
+
+    public function ToggleSessionOption(): bool
+    {
+        $session_option = $this->request->getStringParam('session_option');
+        if (empty($session_option)) {
+            return false;
+        }
+
+        // toggle options are expected to be boolean i.e. to only have values of 'true' of 'false'
+        if (!array_key_exists($session_option, $_SESSION) ||    // key not exist
+            !is_bool($_SESSION[$session_option])                // value not bool
+        ) {
+            // set initial value
+            $_SESSION[$session_option] = false;
+            return true;
+        }
+
+        // toggle option
+        $_SESSION[$session_option] = !$_SESSION[$session_option];
+        return true;
+    }
+
+    public function GetLastModifiedTimestamp()
+    {
+        $user_id = $this->ResolveUserId();
+        $project = $this->ResolveProject($user_id);
+        $project_id = $project['id'];
+
+        $validation = $this->boardNotesModel->GetLastModifiedTimestamp($project_id, $user_id);
+        print(json_encode($validation));
+
+        return $validation;
     }
 }
