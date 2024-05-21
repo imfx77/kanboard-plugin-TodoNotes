@@ -103,12 +103,12 @@ class BoardNotesController extends BaseController
         $projectsAccess = $this->boardNotesModel->GetAllProjectIds($user_id);
 
         if ($project['is_custom']) {
-            $categories = $this->boardNotesModel->boardNotesGetAllCategories();
+            $categories = $this->boardNotesModel->GetAllCategories();
         } else {
-            $categories = $this->boardNotesModel->boardNotesGetCategories($project_id);
+            $categories = $this->boardNotesModel->GetCategories($project_id);
         }
-        $columns = $this->boardNotesModel->boardNotesGetColumns($project_id);
-        $swimlanes = $this->boardNotesModel->boardNotesGetSwimlanes($project_id);
+        $columns = $this->boardNotesModel->GetColumns($project_id);
+        $swimlanes = $this->boardNotesModel->GetSwimlanes($project_id);
 
         if (!array_key_exists('boardnotesSortByStatus', $_SESSION)) {
             $_SESSION['boardnotesSortByStatus'] = false;
@@ -192,11 +192,11 @@ class BoardNotesController extends BaseController
 
         if ($tab_id > 0 && !$projectsAccess[$tab_id - 1]['is_custom']) {
             $project_id = $projectsAccess[$tab_id - 1]['project_id'];
-            $categories = $this->boardNotesModel->boardNotesGetCategories($project_id);
-            $columns  = $this->boardNotesModel->boardNotesGetColumns($project_id);
-            $swimlanes  = $this->boardNotesModel->boardNotesGetSwimlanes($project_id);
+            $categories = $this->boardNotesModel->GetCategories($project_id);
+            $columns  = $this->boardNotesModel->GetColumns($project_id);
+            $swimlanes  = $this->boardNotesModel->GetSwimlanes($project_id);
         } else {
-            $categories = $this->boardNotesModel->boardNotesGetAllCategories();
+            $categories = $this->boardNotesModel->GetAllCategories();
             $columns  = array();
             $swimlanes  = array();
         }
@@ -254,7 +254,7 @@ class BoardNotesController extends BaseController
         return $validation;
     }
 
-    public function boardNotesDeleteNote()
+    public function DeleteNote()
     {
         $user_id = $this->ResolveUserId();
         $project = $this->ResolveProject($user_id);
@@ -262,19 +262,19 @@ class BoardNotesController extends BaseController
 
         $note_id = $this->request->getStringParam('note_id');
 
-        return $this->boardNotesModel->boardNotesDeleteNote($project_id, $user_id, $note_id);
+        return $this->boardNotesModel->DeleteNote($project_id, $user_id, $note_id);
     }
 
-    public function boardNotesDeleteAllDoneNotes()
+    public function DeleteAllDoneNotes()
     {
         $user_id = $this->ResolveUserId();
         $project = $this->ResolveProject($user_id);
         $project_id = $project['id'];
 
-        return $this->boardNotesModel->boardNotesDeleteAllDoneNotes($project_id, $user_id);
+        return $this->boardNotesModel->DeleteAllDoneNotes($project_id, $user_id);
     }
 
-    public function boardNotesAddNote()
+    public function AddNote()
     {
         $user_id = $this->ResolveUserId();
         $project = $this->ResolveProject($user_id);
@@ -285,10 +285,10 @@ class BoardNotesController extends BaseController
         $description = $this->request->getStringParam('description');
         $category = $this->request->getStringParam('category');
 
-        return $this->boardNotesModel->boardNotesAddNote($project_id, $user_id, $is_active, $title, $description, $category);
+        return $this->boardNotesModel->AddNote($project_id, $user_id, $is_active, $title, $description, $category);
     }
 
-    public function boardNotesTransferNote()
+    public function TransferNote()
     {
         $user_id = $this->ResolveUserId();
         $project = $this->ResolveProject($user_id);
@@ -297,10 +297,10 @@ class BoardNotesController extends BaseController
         $note_id = $this->request->getStringParam('note_id');
         $target_project_id = $this->request->getStringParam('target_project_id');
 
-        return $this->boardNotesModel->boardNotesTransferNote($project_id, $user_id, $note_id, $target_project_id);
+        return $this->boardNotesModel->TransferNote($project_id, $user_id, $note_id, $target_project_id);
     }
 
-    public function boardNotesUpdateNote()
+    public function UpdateNote()
     {
         $user_id = $this->ResolveUserId();
         $project = $this->ResolveProject($user_id);
@@ -313,13 +313,13 @@ class BoardNotesController extends BaseController
         $description = $this->request->getStringParam('description');
         $category = $this->request->getStringParam('category');
 
-        $validation = $this->boardNotesModel->boardNotesUpdateNote($project_id, $user_id, $note_id, $is_active, $title, $description, $category);
+        $validation = $this->boardNotesModel->UpdateNote($project_id, $user_id, $note_id, $is_active, $title, $description, $category);
         print $validation ? time() : 0;
 
         return $validation;
     }
 
-    public function boardNotesUpdateNoteStatus()
+    public function UpdateNoteStatus()
     {
         $user_id = $this->ResolveUserId();
         $project = $this->ResolveProject($user_id);
@@ -329,19 +329,19 @@ class BoardNotesController extends BaseController
 
         $is_active = $this->request->getStringParam('is_active');
 
-        $validation = $this->boardNotesModel->boardNotesUpdateNoteStatus($project_id, $user_id, $note_id, $is_active);
+        $validation = $this->boardNotesModel->UpdateNoteStatus($project_id, $user_id, $note_id, $is_active);
         print $validation ? time() : 0;
 
         return $validation;
     }
 
-    public function boardNotesStats()
+    public function ShowStats()
     {
         $user_id = $this->ResolveUserId();
         $project = $this->ResolveProject($user_id);
         $project_id = $project['id'];
 
-        $statsData = $this->boardNotesModel->boardNotesStats($project_id, $user_id);
+        $statsData = $this->boardNotesModel->GetProjectStatsForUser($project_id, $user_id);
 
         return $this->response->html($this->helper->layout->app('BoardNotes:project/stats', array(
             //'title' => t('Stats'),
@@ -385,14 +385,14 @@ class BoardNotesController extends BaseController
         )));
     }
 
-    public function boardNotesUpdateNotesPositions()
+    public function UpdateNotesPositions()
     {
         $user_id = $this->ResolveUserId();
         $project = $this->ResolveProject($user_id);
         $project_id = $project['id'];
         $notesPositions = array_map('intval', explode(',', $this->request->getStringParam('order')));
 
-        $validation = $this->boardNotesModel->boardNotesUpdateNotesPositions($project_id, $user_id, $notesPositions);
+        $validation = $this->boardNotesModel->UpdateNotesPositions($project_id, $user_id, $notesPositions);
         print $validation ? time() : 0;
 
         return $validation;
@@ -477,7 +477,7 @@ class BoardNotesController extends BaseController
         }
     }
 
-    public function boardNotesCreateCustomNoteList()
+    public function CreateCustomNoteList()
     {
         $user_id = $this->ResolveUserId();
         $project_tab_id = intval($this->request->getStringParam('project_tab_id'));
@@ -491,7 +491,7 @@ class BoardNotesController extends BaseController
             // non-Admin attempting to create a Global note list !
             $this->flash->failure(t('BoardNotes_DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('BoardNotes_DASHBOARD_NO_ADMIN_PRIVILEGES'));
         } else {
-            $validation = $this->boardNotesModel->boardNotesCreateCustomNoteList(!$custom_note_list_is_global ? $user_id : 0, $custom_note_list_name);
+            $validation = $this->boardNotesModel->CreateCustomNoteList(!$custom_note_list_is_global ? $user_id : 0, $custom_note_list_name);
             if ($validation) {
                 $this->boardNotesModel->EmulateForceRefresh();
             }
@@ -505,7 +505,7 @@ class BoardNotesController extends BaseController
         )));
     }
 
-    public function boardNotesRenameCustomNoteList()
+    public function RenameCustomNoteList()
     {
         $user_id = $this->ResolveUserId();
         $project_tab_id = intval($this->request->getStringParam('project_tab_id'));
@@ -521,7 +521,7 @@ class BoardNotesController extends BaseController
             // non-Admin attempting to rename a Global note list !
             $this->flash->failure(t('BoardNotes_DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('BoardNotes_DASHBOARD_NO_ADMIN_PRIVILEGES'));
         } else {
-            $validation = $this->boardNotesModel->boardNotesRenameCustomNoteList($project_id, $custom_note_list_name);
+            $validation = $this->boardNotesModel->RenameCustomNoteList($project_id, $custom_note_list_name);
             if ($validation) {
                 $this->boardNotesModel->EmulateForceRefresh();
             }
@@ -535,7 +535,7 @@ class BoardNotesController extends BaseController
         )));
     }
 
-    public function boardNotesDeleteCustomNoteList()
+    public function DeleteCustomNoteList()
     {
         $user_id = $this->ResolveUserId();
         $project_tab_id = intval($this->request->getStringParam('project_tab_id'));
@@ -550,7 +550,7 @@ class BoardNotesController extends BaseController
             // non-Admin attempting to rename a Global note list !
             $this->flash->failure(t('BoardNotes_DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('BoardNotes_DASHBOARD_NO_ADMIN_PRIVILEGES'));
         } else {
-            $validation = $this->boardNotesModel->boardNotesDeleteCustomNoteList($project_id);
+            $validation = $this->boardNotesModel->DeleteCustomNoteList($project_id);
             if ($validation) {
                 $this->boardNotesModel->EmulateForceRefresh();
             }
@@ -564,7 +564,7 @@ class BoardNotesController extends BaseController
         )));
     }
 
-    public function boardNotesUpdateCustomNoteListsPositions()
+    public function UpdateCustomNoteListsPositions()
     {
         $user_id = $this->ResolveUserId();
         $project_tab_id = intval($this->request->getStringParam('project_tab_id'));
@@ -580,7 +580,7 @@ class BoardNotesController extends BaseController
             // non-Admin attempting to rename a Global note list !
             $this->flash->failure(t('BoardNotes_DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('BoardNotes_DASHBOARD_NO_ADMIN_PRIVILEGES'));
         } else {
-            $validation = $this->boardNotesModel->boardNotesUpdateCustomNoteListsPositions(!$is_global ? $user_id : 0, $customListsPositions);
+            $validation = $this->boardNotesModel->UpdateCustomNoteListsPositions(!$is_global ? $user_id : 0, $customListsPositions);
             if ($validation) {
                 $this->boardNotesModel->EmulateForceRefresh();
             }

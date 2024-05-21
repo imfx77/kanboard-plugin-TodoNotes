@@ -206,8 +206,8 @@ class BoardNotesModel extends Base
         return $numProjects;
     }
 
-    // Get a list of all categories in project
-    public function boardNotesGetCategories($project_id)
+    // Get a list of categories for a project
+    public function GetCategories($project_id)
     {
         return $this->db->table(self::TABLE_CATEGORIES)
             ->columns('id', 'name', 'project_id', 'color_id')
@@ -217,7 +217,7 @@ class BoardNotesModel extends Base
     }
 
     // Get a list of ALL categories
-    public function boardNotesGetAllCategories()
+    public function GetAllCategories()
     {
         return $this->db->table(self::TABLE_CATEGORIES)
             ->columns('id', 'name', 'project_id', 'color_id')
@@ -225,8 +225,8 @@ class BoardNotesModel extends Base
             ->findAll();
     }
 
-    // Get a list of all columns in project
-    public function boardNotesGetColumns($project_id)
+    // Get a list of columns for a project
+    public function GetColumns($project_id)
     {
         return $this->db->table(self::TABLE_COLUMNS)
             ->columns('id', 'title')
@@ -235,8 +235,8 @@ class BoardNotesModel extends Base
             ->findAll();
     }
 
-    // Get a list of all swimlanes in project
-    public function boardNotesGetSwimlanes($project_id)
+    // Get a list of swimlanes for a project
+    public function GetSwimlanes($project_id)
     {
         return $this->db->table(self::TABLE_SWIMLANES)
             ->columns('id', 'name')
@@ -284,7 +284,7 @@ class BoardNotesModel extends Base
     }
 
     // Delete note
-    public function boardNotesDeleteNote($project_id, $user_id, $note_id)
+    public function DeleteNote($project_id, $user_id, $note_id)
     {
         // purge previously marked as deleted notes
         $purged = $this->PurgeNotes($project_id, $user_id);
@@ -309,7 +309,7 @@ class BoardNotesModel extends Base
     }
 
     // Delete ALL done notes
-    public function boardNotesDeleteAllDoneNotes($project_id, $user_id)
+    public function DeleteAllDoneNotes($project_id, $user_id)
     {
         // purge previously marked as deleted notes
         $purged = $this->PurgeNotes($project_id, $user_id);
@@ -355,7 +355,7 @@ class BoardNotesModel extends Base
     }
 
     // Add note
-    public function boardNotesAddNote($project_id, $user_id, $is_active, $title, $description, $category)
+    public function AddNote($project_id, $user_id, $is_active, $title, $description, $category)
     {
         // Get last position number
         $lastPosition = $this->db->table(self::TABLE_NOTES_ENTRIES)
@@ -392,7 +392,7 @@ class BoardNotesModel extends Base
     }
 
     // Transfer note
-    public function boardNotesTransferNote($project_id, $user_id, $note_id, $target_project_id)
+    public function TransferNote($project_id, $user_id, $note_id, $target_project_id)
     {
         // Get last position number for target project
         $lastPosition = $this->db->table(self::TABLE_NOTES_ENTRIES)
@@ -425,7 +425,7 @@ class BoardNotesModel extends Base
     }
 
     // Update note
-    public function boardNotesUpdateNote($project_id, $user_id, $note_id, $is_active, $title, $description, $category)
+    public function UpdateNote($project_id, $user_id, $note_id, $is_active, $title, $description, $category)
     {
         $is_unique = $this->IsUniqueNote($project_id, $user_id, $note_id);
         if (!$is_unique) {
@@ -451,7 +451,7 @@ class BoardNotesModel extends Base
     }
 
     // Update note Status
-    public function boardNotesUpdateNoteStatus($project_id, $user_id, $note_id, $is_active)
+    public function UpdateNoteStatus($project_id, $user_id, $note_id, $is_active)
     {
         $is_unique = $this->IsUniqueNote($project_id, $user_id, $note_id);
         if (!$is_unique) {
@@ -474,7 +474,7 @@ class BoardNotesModel extends Base
     }
 
     // Update notes positions
-    public function boardNotesUpdateNotesPositions($project_id, $user_id, $notesPositions)
+    public function UpdateNotesPositions($project_id, $user_id, $notesPositions)
     {
         $num = count($notesPositions);
         $timestamp = time();
@@ -500,8 +500,8 @@ class BoardNotesModel extends Base
         return $result;
     }
 
-    // Get Stats for Notes
-    public function boardNotesStats($project_id, $user_id)
+    // Get stats related to user and project
+    public function GetProjectStatsForUser($project_id, $user_id)
     {
         $statsData = $this->db->table(self::TABLE_NOTES_ENTRIES);
         if ($project_id != 0) {
@@ -538,7 +538,7 @@ class BoardNotesModel extends Base
     }
 
     // Create Custom Note List
-    public function boardNotesCreateCustomNoteList($user_id, $custom_note_list_name)
+    public function CreateCustomNoteList($user_id, $custom_note_list_name)
     {
         // Get last position number for project and user
         $lastPosition = $this->db->table(self::TABLE_NOTES_CUSTOM_PROJECTS)
@@ -565,7 +565,7 @@ class BoardNotesModel extends Base
     }
 
     // Rename Custom Note List
-    public function boardNotesRenameCustomNoteList($project_id, $custom_note_list_name)
+    public function RenameCustomNoteList($project_id, $custom_note_list_name)
     {
         $values = array(
             'project_name' => $custom_note_list_name,
@@ -577,7 +577,7 @@ class BoardNotesModel extends Base
     }
 
     // Delete Custom Note List
-    public function boardNotesDeleteCustomNoteList($project_id)
+    public function DeleteCustomNoteList($project_id)
     {
         // delete notes
         $this->db->table(self::TABLE_NOTES_ENTRIES)
@@ -591,7 +591,7 @@ class BoardNotesModel extends Base
     }
 
     // Update Custom Note Lists Positions
-    public function boardNotesUpdateCustomNoteListsPositions($user_id, $customListsPositions)
+    public function UpdateCustomNoteListsPositions($user_id, $customListsPositions)
     {
         $num = 1;
 

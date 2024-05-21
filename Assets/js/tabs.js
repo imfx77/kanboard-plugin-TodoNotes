@@ -371,7 +371,7 @@ static #sqlCreateCustomNoteList(user_id, custom_note_list_name, custom_note_list
     $.ajaxSetup ({
         cache: false
     });
-    const loadUrl = '/?controller=BoardNotesController&action=boardNotesCreateCustomNoteList&plugin=BoardNotes'
+    const loadUrl = '/?controller=BoardNotesController&action=CreateCustomNoteList&plugin=BoardNotes'
                 + '&user_id=' + user_id
                 + '&project_tab_id=' + project_tab_id
                 + '&custom_note_list_name=' + encodeURIComponent(custom_note_list_name)
@@ -396,7 +396,7 @@ static #sqlRenameCustomNoteList(user_id, project_id, custom_note_list_name) {
     $.ajaxSetup ({
         cache: false
     });
-    const loadUrl = '/?controller=BoardNotesController&action=boardNotesRenameCustomNoteList&plugin=BoardNotes'
+    const loadUrl = '/?controller=BoardNotesController&action=RenameCustomNoteList&plugin=BoardNotes'
                 + '&user_id=' + user_id
                 + '&project_tab_id=' + project_tab_id
                 + '&project_custom_id=' + project_id
@@ -416,7 +416,7 @@ static #sqlDeleteCustomNoteList(user_id, project_id) {
     $.ajaxSetup ({
         cache: false
     });
-    const loadUrl = '/?controller=BoardNotesController&action=boardNotesDeleteCustomNoteList&plugin=BoardNotes'
+    const loadUrl = '/?controller=BoardNotesController&action=DeleteCustomNoteList&plugin=BoardNotes'
                 + '&user_id=' + user_id
                 + '&project_tab_id=' + project_tab_id
                 + '&project_custom_id=' + project_id;
@@ -435,7 +435,7 @@ static #sqlUpdateCustomNoteListsPositions(user_id, order) {
     $.ajaxSetup ({
         cache: false
     });
-    const loadUrl = '/?controller=BoardNotesController&action=boardNotesUpdateCustomNoteListsPositions&plugin=BoardNotes'
+    const loadUrl = '/?controller=BoardNotesController&action=UpdateCustomNoteListsPositions&plugin=BoardNotes'
                 + '&user_id=' + user_id
                 + '&project_tab_id=' + project_tab_id
                 + '&order=' + order;

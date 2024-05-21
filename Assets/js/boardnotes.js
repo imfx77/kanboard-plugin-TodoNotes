@@ -1123,7 +1123,7 @@ static #modalStats(project_id, user_id) {
     $.ajaxSetup ({
         cache: false
     });
-    const loadUrl = '/?controller=BoardNotesController&action=boardNotesStats&plugin=BoardNotes'
+    const loadUrl = '/?controller=BoardNotesController&action=ShowStats&plugin=BoardNotes'
                 + '&project_custom_id=' + project_id
                 + '&user_id=' + user_id;
     $("#dialogStatsInside").html(_BoardNotes_Translations_.msgLoadingSpinner).load(loadUrl,
@@ -1192,7 +1192,7 @@ static #sqlTransferNote(project_id, user_id, id, target_project_id) {
     $.ajax({
         cache: false,
         type: "POST",
-        url: '/?controller=BoardNotesController&action=boardNotesTransferNote&plugin=BoardNotes'
+        url: '/?controller=BoardNotesController&action=TransferNote&plugin=BoardNotes'
             + '&project_custom_id=' + project_id
             + '&user_id=' + user_id
             + '&note_id=' + note_id
@@ -1226,7 +1226,7 @@ static #sqlUpdateNote(project_id, user_id, id) {
     $.ajax({
         cache: false,
         type: "POST",
-        url: '/?controller=BoardNotesController&action=boardNotesUpdateNote&plugin=BoardNotes'
+        url: '/?controller=BoardNotesController&action=UpdateNote&plugin=BoardNotes'
             + '&project_custom_id=' + project_id
             + '&user_id=' + user_id
             + '&note_id=' + note_id
@@ -1266,7 +1266,7 @@ static #sqlUpdateNoteStatus(project_id, user_id, id) {
     $.ajax({
         cache: false,
         type: "POST",
-        url: '/?controller=BoardNotesController&action=boardNotesUpdateNoteStatus&plugin=BoardNotes'
+        url: '/?controller=BoardNotesController&action=UpdateNoteStatus&plugin=BoardNotes'
             + '&project_custom_id=' + project_id
             + '&user_id=' + user_id
             + '&note_id=' + note_id
@@ -1304,7 +1304,7 @@ static #sqlAddNote(project_id, user_id) {
     $.ajax({
         cache: false,
         type: "POST",
-        url: '/?controller=BoardNotesController&action=boardNotesAddNote&plugin=BoardNotes'
+        url: '/?controller=BoardNotesController&action=AddNote&plugin=BoardNotes'
             + '&project_custom_id=' + project_id
             + '&user_id=' + user_id
             + '&title=' + encodeURIComponent(title)
@@ -1327,7 +1327,7 @@ static #sqlDeleteNote(project_id, user_id, id) {
     $.ajax({
         cache: false,
         type: "POST",
-        url: '/?controller=BoardNotesController&action=boardNotesDeleteNote&plugin=BoardNotes'
+        url: '/?controller=BoardNotesController&action=DeleteNote&plugin=BoardNotes'
             + '&project_custom_id=' + project_id
             + '&user_id=' + user_id
             + '&note_id=' + note_id,
@@ -1346,7 +1346,7 @@ static #sqlDeleteAllDoneNotes(project_id, user_id) {
     $.ajax({
         cache: false,
         type: "POST",
-        url: '/?controller=BoardNotesController&action=boardNotesDeleteAllDoneNotes&plugin=BoardNotes'
+        url: '/?controller=BoardNotesController&action=DeleteAllDoneNotes&plugin=BoardNotes'
             + '&project_custom_id=' + project_id
             + '&user_id=' + user_id,
         success: function() {
@@ -1420,7 +1420,7 @@ static sqlUpdateNotesPositions(project_id, user_id, order) {
     $.ajax({
         cache: false,
         type: "POST",
-        url: '/?controller=BoardNotesController&action=boardNotesUpdateNotesPositions&plugin=BoardNotes'
+        url: '/?controller=BoardNotesController&action=UpdateNotesPositions&plugin=BoardNotes'
             + '&project_custom_id=' + project_id
             + '&user_id=' + user_id
             + '&order=' + order,
