@@ -575,8 +575,6 @@ static #noteActionHandlers() {
             const user_id = $(this).attr('data-user');
             $(".inputNewNote").blur();
             _TodoNotes_.#sqlAddNote(project_id, user_id);
-            _TodoNotes_.sqlRefreshTabs(user_id);
-            _TodoNotes_.sqlRefreshNotes(project_id, user_id);
         }
     });
 
@@ -587,8 +585,6 @@ static #noteActionHandlers() {
             const user_id = $("#noteMarkdownDetailsNewNote_Editor").attr('data-user');
             $(".inputNewNote").blur();
             _TodoNotes_.#sqlAddNote(project_id, user_id);
-            _TodoNotes_.sqlRefreshTabs(user_id);
-            _TodoNotes_.sqlRefreshNotes(project_id, user_id);
         }
     });
 
@@ -598,8 +594,6 @@ static #noteActionHandlers() {
         const user_id = $(this).attr('data-user');
         $(".inputNewNote").blur();
         _TodoNotes_.#sqlAddNote(project_id, user_id);
-        _TodoNotes_.sqlRefreshTabs(user_id);
-        _TodoNotes_.sqlRefreshNotes(project_id, user_id);
     });
 
     //------------------------------------------------
@@ -1169,6 +1163,8 @@ static #sqlAddNote(project_id, user_id) {
             + '&category=' + encodeURIComponent(category)
             + '&is_active=' + is_active,
         success: function() {
+            _TodoNotes_.sqlRefreshTabs(user_id);
+            _TodoNotes_.sqlRefreshNotes(project_id, user_id);
         },
         error: function(xhr,textStatus,e) {
             alert('sqlAddNote');
