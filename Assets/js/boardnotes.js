@@ -1160,7 +1160,7 @@ static #modalReport(project_id, user_id) {
                 text : _BoardNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_CREATE_BTN'),
                 click: function() {
                     const category = $("#catReport-P" + project_id + " option:selected").text();
-                    const loadUrl = "/?controller=BoardNotesController&action=boardNotesReport&plugin=BoardNotes"
+                    const loadUrl = "/?controller=BoardNotesController&action=ShowReport&plugin=BoardNotes"
                                 + "&project_custom_id=" + project_id
                                 + "&user_id=" + user_id
                                 + "&category=" + encodeURIComponent(category);

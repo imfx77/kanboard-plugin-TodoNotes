@@ -66,8 +66,8 @@ class BoardNotesModel extends Base
         return false;
     }
 
-    // Show all notes related to project
-    public function boardNotesShowProject($project_id, $user_id, $doSortByStatus)
+    // Get notes related to user and project
+    public function GetProjectNotesForUser($project_id, $user_id, $doSortByStatus)
     {
         $result = $this->db->table(self::TABLE_NOTES_ENTRIES);
         $result = $result->eq('user_id', $user_id);
@@ -82,8 +82,8 @@ class BoardNotesModel extends Base
         return $result;
     }
 
-    // Show all notes
-    public function boardNotesShowAll($projectsAccess, $user_id, $doSortByStatus)
+    // Get all notes related to user
+    public function GetAllNotesForUser($projectsAccess, $user_id, $doSortByStatus)
     {
         $projectsAccessList = array();
         $orderCaseClause = 'CASE project_id';
@@ -109,8 +109,8 @@ class BoardNotesModel extends Base
         return $result;
     }
 
-    // Show report
-    public function boardNotesReport($project_id, $user_id, $doSortByStatus, $category)
+    // Get notes related to user project report
+    public function GetReportNotesForUser($project_id, $user_id, $doSortByStatus, $category)
     {
         $result = $this->db->table(self::TABLE_NOTES_ENTRIES);
         $result = $result->eq('user_id', $user_id);
@@ -128,16 +128,16 @@ class BoardNotesModel extends Base
         return $result;
     }
 
-    // Get project data by project_id
-    public function boardNotesGetProjectById($project_id)
+    // Get regular project data by project_id
+    public function GetRegularProjectById($project_id)
     {
         return $this->db->table(self::TABLE_PROJECTS)
             ->eq('id', $project_id)
             ->findOne();
     }
 
-    // Get all project_id where user has assigned access
-    public function boardNotesGetProjectIds($user_id)
+    // Get all project_id where user has regular access
+    public function GetRegularProjectIds($user_id)
     {
         $projectIds = $this->db->table(self::TABLE_ACCESS)
             ->columns(self::TABLE_ACCESS . '.project_id', 'alias_projects_table.name AS project_name')
@@ -153,7 +153,7 @@ class BoardNotesModel extends Base
     }
 
     // Get all project_id where all users have custom Global access
-    public function boardNotesGetCustomGlobalProjectIds()
+    public function GetCustomGlobalProjectIds()
     {
         $projectIdsGlobal = $this->db->table(self::TABLE_NOTES_CUSTOM_PROJECTS)
             ->columns('id AS project_id', 'project_name')
@@ -169,7 +169,7 @@ class BoardNotesModel extends Base
     }
 
     // Get all project_id where each user has custom Private access
-    public function boardNotesGetCustomPrivateProjectIds($user_id)
+    public function GetCustomPrivateProjectIds($user_id)
     {
         $projectIdsPrivate = $this->db->table(self::TABLE_NOTES_CUSTOM_PROJECTS)
             ->columns('id AS project_id', 'project_name')
@@ -185,24 +185,24 @@ class BoardNotesModel extends Base
     }
 
     // Get all project_id where user has custom access
-    public function boardNotesGetCustomProjectIds($user_id)
+    public function GetCustomProjectIds($user_id)
     {
-        return array_merge($this->boardNotesGetCustomGlobalProjectIds(), $this->boardNotesGetCustomPrivateProjectIds($user_id));
+        return array_merge($this->GetCustomGlobalProjectIds(), $this->GetCustomPrivateProjectIds($user_id));
     }
 
-    // Get all project_id where user has assigned or custom access
-    public function boardNotesGetAllProjectIds($user_id)
+    // Get all project_id where user has regular or custom access
+    public function GetAllProjectIds($user_id)
     {
-        return array_merge($this->boardNotesGetCustomProjectIds($user_id), $this->boardNotesGetProjectIds($user_id));
+        return array_merge($this->GetCustomProjectIds($user_id), $this->GetRegularProjectIds($user_id));
     }
 
     // Get projects count by type
-    public function boardNotesGetProjectsCountByType($user_id)
+    public function GetProjectsCountByType($user_id)
     {
         $numProjects = array();
-        $numProjects[self::PROJECT_TYPE_NATIVE] = count($this->boardNotesGetProjectIds($user_id));
-        $numProjects[self::PROJECT_TYPE_CUSTOM_GLOBAL] = count($this->boardNotesGetCustomGlobalProjectIds());
-        $numProjects[self::PROJECT_TYPE_CUSTOM_PRIVATE] = count($this->boardNotesGetCustomPrivateProjectIds($user_id));
+        $numProjects[self::PROJECT_TYPE_NATIVE] = count($this->GetRegularProjectIds($user_id));
+        $numProjects[self::PROJECT_TYPE_CUSTOM_GLOBAL] = count($this->GetCustomGlobalProjectIds());
+        $numProjects[self::PROJECT_TYPE_CUSTOM_PRIVATE] = count($this->GetCustomPrivateProjectIds($user_id));
         return $numProjects;
     }
 

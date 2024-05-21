@@ -15,7 +15,7 @@ if (!$is_refresh) { // load CSS and JS and translations only once per project !!
 
 if (!$is_refresh && !$is_dashboard_view) {
     // show project header only when initially viewing notes from project
-    print $this->projectHeader->render($project, 'BoardNotesController', 'boardNotesShowProject', false, 'BoardNotes');
+    print $this->projectHeader->render($project, 'BoardNotesController', 'ShowProject', false, 'BoardNotes');
 }
 
 //----------------------------------------
@@ -382,7 +382,7 @@ foreach ($data as $u) {
         print $this->url->link(
             $projectsTabsById[ $last_project_id ]['name'],
             'BoardNotesController',
-            'boardNotesShowAll',
+            'ShowDashboard',
             array('plugin' => 'BoardNotes', 'user_id' => $user_id, 'tab_id' => $projectsTabsById[ $last_project_id ]['tab_id']),
         );
         // collapse/expand project button

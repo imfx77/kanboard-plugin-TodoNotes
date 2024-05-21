@@ -22,7 +22,7 @@ print '<div class="localTableCell textNonSelectable">';
 print $this->url->link(
     t('BoardNotes_DASHBOARD_ALL_TAB'),
     'BoardNotesController',
-    'boardNotesShowAll',
+    'ShowDashboard',
     array('plugin' => 'BoardNotes', 'user_id' => $user_id, 'tab_id' => $num)
 );
 print '</div>'; // ALL tab title
@@ -159,7 +159,7 @@ foreach ($projectsAccess as $o) {
     print $this->url->link(
         $o['project_name'],
         'BoardNotesController',
-        'boardNotesShowAll',
+        'ShowDashboard',
         array('plugin' => 'BoardNotes', 'user_id' => $user_id, 'tab_id' => $num)
     );
     print '</div>'; // single tab title
