@@ -26,7 +26,7 @@ print $this->render('BoardNotes:translations/export_to_js');
 
 <li>
     <?php
-        $linkTitle = '<div class="localTableCell">' . t('BoardNotes_PROJECT_TITLE') . '</div>';
+        $linkTitle = '<div class="localTableCell">' . t('TodoNotes__PROJECT_TITLE') . '</div>';
 
         $statsWidget = '';
         $statsWidget .= '<div class="_TodoNotes_ProjectDropdown_StatsWidget" data-project="';

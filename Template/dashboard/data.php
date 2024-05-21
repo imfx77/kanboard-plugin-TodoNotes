@@ -3,7 +3,7 @@
 <?= $this->asset->js('plugins/BoardNotes/Assets/js/load_dashboard.js') ?>
 
 <div id="myNotesHeader" class="page-header"><h2>
-<?= t('BoardNotes_DASHBOARD_MY_NOTES')?> > <?= t('BoardNotes_DASHBOARD_ALL_TAB') ?>
+<?= t('TodoNotes__DASHBOARD_MY_NOTES')?> > <?= t('TodoNotes__DASHBOARD_ALL_TAB') ?>
 </h2></div>
 
 <!--
@@ -28,7 +28,7 @@
 
 <?php
 
-$project = array('id' => 0, 'name' => t('BoardNotes_DASHBOARD_ALL_TAB'));
+$project = array('id' => 0, 'name' => t('TodoNotes__DASHBOARD_ALL_TAB'));
 if ($tab_id > 0) {
     $projectAccess = $projectsAccess[$tab_id - 1];
     $project = array('id' => $projectAccess['project_id'],
@@ -76,62 +76,62 @@ print '></div>';
 
 //----------------------------------------
 
-print '<div class="hideMe" id="dialogReindexNotesAndLists" title="' . t('BoardNotes_DASHBOARD_REINDEX') . '">';
+print '<div class="hideMe" id="dialogReindexNotesAndLists" title="' . t('TodoNotes__DASHBOARD_REINDEX') . '">';
 
 print '<p style="white-space: pre-wrap;">';
-print t('BoardNotes_DIALOG_REINDEX_MSG');
+print t('TodoNotes__DIALOG_REINDEX_MSG');
 print '</p>';
 
 print '</div>';
 
 //----------------------------------------
 
-print '<div class="hideMe" id="dialogCreateCustomNoteList" title="' . t('BoardNotes_DASHBOARD_CREATE_CUSTOM_NOTE_LIST') . '">';
+print '<div class="hideMe" id="dialogCreateCustomNoteList" title="' . t('TodoNotes__DASHBOARD_CREATE_CUSTOM_NOTE_LIST') . '">';
 
-print '<input type="text" id="nameCreateCustomNoteList" placeholder="' . t('BoardNotes_DIALOG_CREATE_CUSTOM_NOTE_LIST_NAME_PLACEHOLDER') . '">';
+print '<input type="text" id="nameCreateCustomNoteList" placeholder="' . t('TodoNotes__DIALOG_CREATE_CUSTOM_NOTE_LIST_NAME_PLACEHOLDER') . '">';
 print '<br>';
 if ($isAdmin) {
     print '<input type="checkbox" id="globalCreateCustomNoteList">';
-    print '<label for="globalCreateCustomNoteList">&nbsp;&nbsp;' . t('BoardNotes_DIALOG_CREATE_CUSTOM_NOTE_LIST_GLOBAL_CHECKBOX') . '</label>';
+    print '<label for="globalCreateCustomNoteList">&nbsp;&nbsp;' . t('TodoNotes__DIALOG_CREATE_CUSTOM_NOTE_LIST_GLOBAL_CHECKBOX') . '</label>';
 } else {
     print '<input type="checkbox" disabled id="globalCreateCustomNoteList">';
-    print '<label for="globalCreateCustomNoteList">&nbsp;&nbsp;' . t('BoardNotes_DIALOG_CREATE_CUSTOM_NOTE_LIST_GLOBAL_CHECKBOX') . ' ' . t('BoardNotes_DASHBOARD_ADMIN_ONLY') . '</label>';
+    print '<label for="globalCreateCustomNoteList">&nbsp;&nbsp;' . t('TodoNotes__DIALOG_CREATE_CUSTOM_NOTE_LIST_GLOBAL_CHECKBOX') . ' ' . t('TodoNotes__DASHBOARD_ADMIN_ONLY') . '</label>';
 }
 print '<br><br>';
 print '<p style="white-space: pre-wrap;">';
-print t('BoardNotes_DIALOG_CREATE_CUSTOM_NOTE_LIST_MSG');
+print t('TodoNotes__DIALOG_CREATE_CUSTOM_NOTE_LIST_MSG');
 print '</p>';
 
 print '</div>';
 
 //----------------------------------------
 
-print '<div class="hideMe" id="dialogRenameCustomNoteList" title="' . t('BoardNotes_DIALOG_RENAME_CUSTOM_NOTE_LIST_TITLE') . '">';
+print '<div class="hideMe" id="dialogRenameCustomNoteList" title="' . t('TodoNotes__DIALOG_RENAME_CUSTOM_NOTE_LIST_TITLE') . '">';
 
 print '<input type="text" id="nameRenameCustomNoteList">';
 print '<br><br>';
 print '<p style="white-space: pre-wrap;">';
-print t('BoardNotes_DIALOG_RENAME_CUSTOM_NOTE_LIST_MSG');
+print t('TodoNotes__DIALOG_RENAME_CUSTOM_NOTE_LIST_MSG');
 print '</p>';
 
 print '</div>';
 
 //----------------------------------------
 
-print '<div class="hideMe" id="dialogDeleteCustomNoteList" title="' . t('BoardNotes_DIALOG_DELETE_CUSTOM_NOTE_LIST_TITLE') . '">';
+print '<div class="hideMe" id="dialogDeleteCustomNoteList" title="' . t('TodoNotes__DIALOG_DELETE_CUSTOM_NOTE_LIST_TITLE') . '">';
 
 print '<p style="white-space: pre-wrap;">';
-print t('BoardNotes_DIALOG_DELETE_CUSTOM_NOTE_LIST_MSG');
+print t('TodoNotes__DIALOG_DELETE_CUSTOM_NOTE_LIST_MSG');
 print '</p>';
 
 print '</div>';
 
 //----------------------------------------
 
-print '<div class="hideMe" id="dialogReorderCustomNoteList" title="' . t('BoardNotes_DIALOG_REORDER_CUSTOM_NOTE_LIST_TITLE') . '">';
+print '<div class="hideMe" id="dialogReorderCustomNoteList" title="' . t('TodoNotes__DIALOG_REORDER_CUSTOM_NOTE_LIST_TITLE') . '">';
 
 print '<p style="white-space: pre-wrap;">';
-print t('BoardNotes_DIALOG_REORDER_CUSTOM_NOTE_LIST_MSG');
+print t('TodoNotes__DIALOG_REORDER_CUSTOM_NOTE_LIST_MSG');
 print '</p>';
 
 print '</div>';

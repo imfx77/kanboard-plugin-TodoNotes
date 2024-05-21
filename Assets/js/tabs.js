@@ -15,7 +15,7 @@ static updateTabs() {
     $(".singleTab").removeClass( 'active' );
     $("#singleTab-P" + project_tab_id).addClass( 'active' );
     $("#myNotesHeader h2").text(
-        _TodoNotes_Translations_.getTranslationExportToJS('BoardNotes_DASHBOARD_MY_NOTES')
+        _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__DASHBOARD_MY_NOTES')
         + ' > ' + $("#singleTab-P" + project_tab_id + " a").text()
     );
 }
@@ -140,7 +140,7 @@ static #TabActionHandlers() {
     $("button" + "#reindexNotesAndLists").click(function() {
         const isAdmin = $("#tabId").attr('data-admin');
         if (isAdmin !== '1') {
-            alert( _TodoNotes_Translations_.getTranslationExportToJS('BoardNotes_DASHBOARD_NO_ADMIN_PRIVILEGES') );
+            alert( _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__DASHBOARD_NO_ADMIN_PRIVILEGES') );
             return;
         }
 
@@ -162,7 +162,7 @@ static #TabActionHandlers() {
     $("button" + ".customNoteListRenameGlobal").click(function() {
         const isAdmin = $("#tabId").attr('data-admin');
         if (isAdmin !== '1') {
-            alert( _TodoNotes_Translations_.getTranslationExportToJS('BoardNotes_DASHBOARD_NO_ADMIN_PRIVILEGES') );
+            alert( _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__DASHBOARD_NO_ADMIN_PRIVILEGES') );
             return;
         }
 
@@ -186,7 +186,7 @@ static #TabActionHandlers() {
     $("button" + ".customNoteListDeleteGlobal").click(function() {
         const isAdmin = $("#tabId").attr('data-admin');
         if (isAdmin !== '1') {
-            alert( _TodoNotes_Translations_.getTranslationExportToJS('BoardNotes_DASHBOARD_NO_ADMIN_PRIVILEGES') );
+            alert( _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__DASHBOARD_NO_ADMIN_PRIVILEGES') );
             return;
         }
 
@@ -216,14 +216,14 @@ static #modalReindexNotesAndLists(user_id,) {
         modal: true,
         buttons: [
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_REINDEX_BTN'),
+                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_REINDEX_BTN'),
                 click : function() {
                     _TodoNotes_Tabs_.#sqlReindexNotesAndLists(user_id);
                     $( this ).dialog( "close" );
                 },
             },
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_CANCEL_BTN'),
+                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
                 click : function() {
                     $( this ).dialog( "close" );
                 }
@@ -242,7 +242,7 @@ static #modalCreateCustomNoteList(user_id) {
         modal: true,
         buttons: [
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_CREATE_BTN'),
+                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CREATE_BTN'),
                 click : function() {
                     const custom_note_list_name = $("#nameCreateCustomNoteList").val().trim();
                     const custom_note_list_is_global = $("#globalCreateCustomNoteList").is(":checked");
@@ -251,7 +251,7 @@ static #modalCreateCustomNoteList(user_id) {
                 },
             },
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_CANCEL_BTN'),
+                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
                 click : function() {
                     $( this ).dialog( "close" );
                 }
@@ -271,7 +271,7 @@ static #modalRenameCustomNoteList(user_id, project_id, default_name) {
         modal: true,
         buttons: [
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_RENAME_BTN'),
+                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_RENAME_BTN'),
                 click : function() {
                     const custom_note_list_name = $("#nameRenameCustomNoteList").val().trim();
                     _TodoNotes_Tabs_.#sqlRenameCustomNoteList(user_id, project_id, custom_note_list_name);
@@ -279,7 +279,7 @@ static #modalRenameCustomNoteList(user_id, project_id, default_name) {
                 },
             },
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_CANCEL_BTN'),
+                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
                 click : function() {
                     $( this ).dialog( "close" );
                 }
@@ -298,14 +298,14 @@ static #modalDeleteCustomNoteList(user_id, project_id) {
         modal: true,
         buttons: [
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_DELETE_BTN'),
+                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_DELETE_BTN'),
                 click : function() {
                     _TodoNotes_Tabs_.#sqlDeleteCustomNoteList(user_id, project_id);
                     $( this ).dialog( "close" );
                 },
             },
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_CANCEL_BTN'),
+                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
                 click : function() {
                     $( this ).dialog( "close" );
                 }
@@ -324,14 +324,14 @@ static modalReorderCustomNoteList(user_id, order) {
         modal: true,
         buttons: [
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_REORDER_BTN'),
+                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_REORDER_BTN'),
                 click : function() {
                     _TodoNotes_Tabs_.#sqlUpdateCustomNoteListsPositions(user_id, order);
                     $( this ).dialog( "close" );
                 },
             },
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_CANCEL_BTN'),
+                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
                 click : function() {
                     $( this ).dialog( "close" );
                     _TodoNotes_.sqlRefreshTabs(user_id);
@@ -359,7 +359,7 @@ static #sqlReindexNotesAndLists(user_id) {
                 + '&user_id=' + user_id
                 + '&project_tab_id=' + project_tab_id;
     setTimeout(function() {
-        $("#result" + project_tab_id).html(_TodoNotes_Translations_.getSpinnerMsg('BoardNotes_JS_REINDEXING_MSG'));
+        $("#result" + project_tab_id).html(_TodoNotes_Translations_.getSpinnerMsg('TodoNotes__JS_REINDEXING_MSG'));
         location.replace(loadUrl);
     }, 50);
 }
@@ -368,7 +368,7 @@ static #sqlReindexNotesAndLists(user_id) {
 // SQL create custom note list
 static #sqlCreateCustomNoteList(user_id, custom_note_list_name, custom_note_list_is_global) {
     if (!custom_note_list_name) {
-        alert( _TodoNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_CUSTOM_NOTE_LIST_NAME_EMPTY_MSG') );
+        alert( _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_CUSTOM_NOTE_LIST_NAME_EMPTY_MSG') );
         return;
     }
 
@@ -393,7 +393,7 @@ static #sqlCreateCustomNoteList(user_id, custom_note_list_name, custom_note_list
 // SQL rename custom note list
 static #sqlRenameCustomNoteList(user_id, project_id, custom_note_list_name) {
     if (!custom_note_list_name) {
-        alert( _TodoNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_CUSTOM_NOTE_LIST_NAME_EMPTY_MSG') );
+        alert( _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_CUSTOM_NOTE_LIST_NAME_EMPTY_MSG') );
         return;
     }
 

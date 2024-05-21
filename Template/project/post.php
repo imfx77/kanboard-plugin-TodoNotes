@@ -7,9 +7,9 @@ table {
 <?php
 
 if ($task_id > 0) {
-    print '<strong>' . t('BoardNotes_DIALOG_POST_SUCCESS_TITLE') . '</strong>';
+    print '<strong>' . t('TodoNotes__DIALOG_POST_SUCCESS_TITLE') . '</strong>';
     print '<br>';
-    print t('BoardNotes_DIALOG_POST_SUCCESS_TEXT') . ' : ';
+    print t('TodoNotes__DIALOG_POST_SUCCESS_TEXT') . ' : ';
     print $this->url->icon(
         'external-link',
         '<strong>#' . $task_id . '</strong>',
@@ -22,9 +22,9 @@ if ($task_id > 0) {
         true
     );
 } else {
-    print '<strong>' . t('BoardNotes_DIALOG_POST_FAILURE_TITLE') . '</strong>';
+    print '<strong>' . t('TodoNotes__DIALOG_POST_FAILURE_TITLE') . '</strong>';
     print '<br>';
-    print t('BoardNotes_DIALOG_POST_FAILURE_TEXT');
+    print t('TodoNotes__DIALOG_POST_FAILURE_TEXT');
 }
 
     print '<br>';

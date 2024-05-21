@@ -166,7 +166,7 @@ class BoardNotesController extends BaseController
         $data = $this->boardNotesModel->GetAllNotesForUser($projectsAccess, $user_id, $doSortByStatus);
 
         return $this->response->html($this->helper->layout->dashboard('BoardNotes:dashboard/data', array(
-            'title' => t('BoardNotes_DASHBOARD_TITLE', $this->helper->user->getFullname($user)),
+            'title' => t('TodoNotes__DASHBOARD_TITLE', $this->helper->user->getFullname($user)),
             'user' => $user,
             'user_id' => $user_id,
             'tab_id' => $tab_id,
@@ -391,18 +391,18 @@ class BoardNotesController extends BaseController
                     $this->db->getDriver()->enableForeignKeys();
                     $this->db->closeTransaction();
 
-                    $this->flash->success(t('BoardNotes_DASHBOARD_REINDEX_SUCCESS'));
+                    $this->flash->success(t('TodoNotes__DASHBOARD_REINDEX_SUCCESS'));
                 } catch (PDOException $e) {
                     $this->db->cancelTransaction();
                     $this->db->getDriver()->enableForeignKeys();
 
-                    $this->flash->failure(t('BoardNotes_DASHBOARD_REINDEX_FAILURE') . ' => ' . $e->getMessage());
+                    $this->flash->failure(t('TodoNotes__DASHBOARD_REINDEX_FAILURE') . ' => ' . $e->getMessage());
                 }
             } else {
-                $this->flash->failure(t('BoardNotes_DASHBOARD_REINDEX_FAILURE') . ' => ' . t('BoardNotes_DASHBOARD_REINDEX_METHOD_NOT_IMPLEMENTED') . ' [v.' . $lastVersion . ']');
+                $this->flash->failure(t('TodoNotes__DASHBOARD_REINDEX_FAILURE') . ' => ' . t('TodoNotes__DASHBOARD_REINDEX_METHOD_NOT_IMPLEMENTED') . ' [v.' . $lastVersion . ']');
             }
         } else {
-            $this->flash->failure(t('BoardNotes_DASHBOARD_REINDEX_FAILURE') . ' => ' . t('BoardNotes_DASHBOARD_NO_ADMIN_PRIVILEGES'));
+            $this->flash->failure(t('TodoNotes__DASHBOARD_REINDEX_FAILURE') . ' => ' . t('TodoNotes__DASHBOARD_NO_ADMIN_PRIVILEGES'));
         }
 
         $this->response->redirect($this->helper->url->to('BoardNotesController', 'ShowDashboard', array(
@@ -431,15 +431,15 @@ class BoardNotesController extends BaseController
     {
         if ($validation) {
             if ($is_global) {
-                $this->flash->success(t('BoardNotes_DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_SUCCESS'));
+                $this->flash->success(t('TodoNotes__DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_SUCCESS'));
             } else {
-                $this->flash->success(t('BoardNotes_DASHBOARD_OPERATION_CUSTOM_NOTE_LISTPRIVATE_SUCCESS'));
+                $this->flash->success(t('TodoNotes__DASHBOARD_OPERATION_CUSTOM_NOTE_LISTPRIVATE_SUCCESS'));
             }
         } else {
             if ($is_global) {
-                $this->flash->failure(t('BoardNotes_DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE'));
+                $this->flash->failure(t('TodoNotes__DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE'));
             } else {
-                $this->flash->failure(t('BoardNotes_DASHBOARD_OPERATION_CUSTOM_NOTE_LISTPRIVATE_FAILURE'));
+                $this->flash->failure(t('TodoNotes__DASHBOARD_OPERATION_CUSTOM_NOTE_LISTPRIVATE_FAILURE'));
             }
         }
     }
@@ -453,10 +453,10 @@ class BoardNotesController extends BaseController
 
         if (empty($custom_note_list_name)) {
             // empty name !
-            $this->flash->failure(t('BoardNotes_DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('BoardNotes_DASHBOARD_INVALID_OR_EMPTY_PARAMETER'));
+            $this->flash->failure(t('TodoNotes__DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('TodoNotes__DASHBOARD_INVALID_OR_EMPTY_PARAMETER'));
         } elseif ($custom_note_list_is_global && !$this->userModel->isAdmin($user_id)) {
             // non-Admin attempting to create a Global note list !
-            $this->flash->failure(t('BoardNotes_DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('BoardNotes_DASHBOARD_NO_ADMIN_PRIVILEGES'));
+            $this->flash->failure(t('TodoNotes__DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('TodoNotes__DASHBOARD_NO_ADMIN_PRIVILEGES'));
         } else {
             $validation = $this->boardNotesModel->CreateCustomNoteList(!$custom_note_list_is_global ? $user_id : 0, $custom_note_list_name);
             if ($validation) {
@@ -483,10 +483,10 @@ class BoardNotesController extends BaseController
 
         if (empty($custom_note_list_name) || $project_id >= 0) {
             // empty name or non-custom project!
-            $this->flash->failure(t('BoardNotes_DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('BoardNotes_DASHBOARD_INVALID_OR_EMPTY_PARAMETER'));
+            $this->flash->failure(t('TodoNotes__DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('TodoNotes__DASHBOARD_INVALID_OR_EMPTY_PARAMETER'));
         } elseif ($is_global && !$this->userModel->isAdmin($user_id)) {
             // non-Admin attempting to rename a Global note list !
-            $this->flash->failure(t('BoardNotes_DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('BoardNotes_DASHBOARD_NO_ADMIN_PRIVILEGES'));
+            $this->flash->failure(t('TodoNotes__DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('TodoNotes__DASHBOARD_NO_ADMIN_PRIVILEGES'));
         } else {
             $validation = $this->boardNotesModel->RenameCustomNoteList($project_id, $custom_note_list_name);
             if ($validation) {
@@ -512,10 +512,10 @@ class BoardNotesController extends BaseController
 
         if ($project_id >= 0) {
             // non-custom project!
-            $this->flash->failure(t('BoardNotes_DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('BoardNotes_DASHBOARD_INVALID_OR_EMPTY_PARAMETER'));
+            $this->flash->failure(t('TodoNotes__DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('TodoNotes__DASHBOARD_INVALID_OR_EMPTY_PARAMETER'));
         } elseif ($is_global && !$this->userModel->isAdmin($user_id)) {
             // non-Admin attempting to rename a Global note list !
-            $this->flash->failure(t('BoardNotes_DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('BoardNotes_DASHBOARD_NO_ADMIN_PRIVILEGES'));
+            $this->flash->failure(t('TodoNotes__DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('TodoNotes__DASHBOARD_NO_ADMIN_PRIVILEGES'));
         } else {
             $validation = $this->boardNotesModel->DeleteCustomNoteList($project_id);
             if ($validation) {
@@ -542,10 +542,10 @@ class BoardNotesController extends BaseController
 
         if ($project_id >= 0) {
             // non-custom project!
-            $this->flash->failure(t('BoardNotes_DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('BoardNotes_DASHBOARD_INVALID_OR_EMPTY_PARAMETER'));
+            $this->flash->failure(t('TodoNotes__DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('TodoNotes__DASHBOARD_INVALID_OR_EMPTY_PARAMETER'));
         } elseif ($is_global && !$this->userModel->isAdmin($user_id)) {
             // non-Admin attempting to rename a Global note list !
-            $this->flash->failure(t('BoardNotes_DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('BoardNotes_DASHBOARD_NO_ADMIN_PRIVILEGES'));
+            $this->flash->failure(t('TodoNotes__DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('TodoNotes__DASHBOARD_NO_ADMIN_PRIVILEGES'));
         } else {
             $validation = $this->boardNotesModel->UpdateCustomNoteListsPositions(!$is_global ? $user_id : 0, $customListsPositions);
             if ($validation) {

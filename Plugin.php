@@ -66,7 +66,7 @@ class Plugin extends Base
 
     public function getPluginDescription()
     {
-        return t('BoardNotes_PLUGIN_DESCRIPTION');
+        return t('TodoNotes__PLUGIN_DESCRIPTION');
     }
 
     public function getPluginHomepage()

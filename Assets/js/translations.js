@@ -19,7 +19,7 @@ static initialize() {
     _TodoNotes_Translations_.#translationsExportToJS = JSON.parse( $("#_TodoNotes_TranslationsExportToJS_").html() );
     $("#_TodoNotes_TranslationsExportToJS_").remove();
 
-    _TodoNotes_Translations_.msgLoadingSpinner = _TodoNotes_Translations_.getSpinnerMsg('BoardNotes_JS_LOADING_MSG');
+    _TodoNotes_Translations_.msgLoadingSpinner = _TodoNotes_Translations_.getSpinnerMsg('TodoNotes__JS_LOADING_MSG');
 }
 
 //------------------------------------------------

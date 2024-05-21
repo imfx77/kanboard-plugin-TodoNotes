@@ -20,7 +20,7 @@ print '<div class="localTable">';
 // ALL tab title
 print '<div class="localTableCell textNonSelectable">';
 print $this->url->link(
-    t('BoardNotes_DASHBOARD_ALL_TAB'),
+    t('TodoNotes__DASHBOARD_ALL_TAB'),
     'BoardNotesController',
     'ShowDashboard',
     array('plugin' => 'BoardNotes', 'user_id' => $user_id, 'tab_id' => $num)
@@ -37,7 +37,7 @@ print '<button class="toolbarSeparator">&nbsp;</button>';
 // New list button
 print '<button id="customNoteListCreate"';
 print ' class="toolbarButton customNoteListCreate"';
-print ' title="' . t('BoardNotes_DASHBOARD_CREATE_CUSTOM_NOTE_LIST') . '"';
+print ' title="' . t('TodoNotes__DASHBOARD_CREATE_CUSTOM_NOTE_LIST') . '"';
 print ' data-user="' . $user_id . '"';
 print '>';
 print '<a><i class="fa fa-fw fa-wpforms" aria-hidden="true"></i></a>';
@@ -46,7 +46,7 @@ print '</button>';
 // Show tabStatsWidget button
 print '<button id="settingsTabStats"';
 print ' class="toolbarButton settingsTabStats"';
-print ' title="' . t('BoardNotes_PROJECT_TOGGLE_TAB_STAT') . '"';
+print ' title="' . t('TodoNotes__PROJECT_TOGGLE_TAB_STAT') . '"';
 print ' data-user="' . $user_id . '"';
 print '>';
 print '<a><i class="fa fa-pie-chart" aria-hidden="true"></i></a>';
@@ -58,8 +58,8 @@ print $isAdmin
     ? ' class="toolbarButton buttonToggled reindexNotesAndLists"'
     : ' class="toolbarButton buttonDisabled reindexNotesAndLists"';
 print $isAdmin
-    ? ' title="' . t('BoardNotes_DASHBOARD_REINDEX') . '"'
-    : ' title="' . t('BoardNotes_DASHBOARD_REINDEX') . ' ' . t('BoardNotes_DASHBOARD_ADMIN_ONLY') . '"';
+    ? ' title="' . t('TodoNotes__DASHBOARD_REINDEX') . '"'
+    : ' title="' . t('TodoNotes__DASHBOARD_REINDEX') . ' ' . t('TodoNotes__DASHBOARD_ADMIN_ONLY') . '"';
 print ' data-user="' . $user_id . '"';
 print '>';
 print '<i class="fa fa-fw fa-recycle" aria-hidden="true"></i>';
@@ -95,12 +95,12 @@ foreach ($projectsAccess as $o) {
         print '</ul>';
         print '<hr class="hrTabs">';
         print '<h4 id="headerGroupGlobal" class="localTable textNonSelectable disableEventsPropagation">';
-        print '<div class="localTableCell">' . t('BoardNotes_DASHBOARD_LIST_GROUP_GLOBAL') . '</div>';
+        print '<div class="localTableCell">' . t('TodoNotes__DASHBOARD_LIST_GROUP_GLOBAL') . '</div>';
         // collapse/expand lists group button
         print '<div class="localTableCellExpandRight">';
         print '<button class="toolbarSeparator">&nbsp;</button>';
         print '<button id="toggleGroupGlobal" class="toolbarButton buttonHeader disableEventsPropagation"';
-        print ' title="' . t('BoardNotes_DASHBOARD_TOGGLE_LIST_GROUP') . '">';
+        print ' title="' . t('TodoNotes__DASHBOARD_TOGGLE_LIST_GROUP') . '">';
         print '<a><i class="fa fa-chevron-circle-up " aria-hidden="true"></i></a>';
         print '</button></div></h4>';
         print '<hr id="hrGroupGlobal" class="hrTabs">';
@@ -113,12 +113,12 @@ foreach ($projectsAccess as $o) {
         print '</ul>';
         print '<hr class="hrTabs">';
         print '<h4 id="headerGroupPrivate" class="localTable textNonSelectable disableEventsPropagation">';
-        print '<div class="localTableCell">' . t('BoardNotes_DASHBOARD_LIST_GROUP_PRIVATE') . '</div>';
+        print '<div class="localTableCell">' . t('TodoNotes__DASHBOARD_LIST_GROUP_PRIVATE') . '</div>';
         // collapse/expand lists group button
         print '<div class="localTableCellExpandRight">';
         print '<button class="toolbarSeparator">&nbsp;</button>';
         print '<button id="toggleGroupPrivate" class="toolbarButton buttonHeader disableEventsPropagation"';
-        print ' title="' . t('BoardNotes_DASHBOARD_TOGGLE_LIST_GROUP') . '">';
+        print ' title="' . t('TodoNotes__DASHBOARD_TOGGLE_LIST_GROUP') . '">';
         print '<a><i class="fa fa-chevron-circle-up " aria-hidden="true"></i></a>';
         print '</button></div></h4>';
         print '<hr id="hrGroupPrivate" class="hrTabs">';
@@ -131,12 +131,12 @@ foreach ($projectsAccess as $o) {
         print '</ul>';
         print '<hr class="hrTabs">';
         print '<h4 id="headerGroupRegular" class="localTable textNonSelectable disableEventsPropagation">';
-        print '<div class="localTableCell">' . t('BoardNotes_DASHBOARD_LIST_GROUP_REGULAR') . '</div>';
+        print '<div class="localTableCell">' . t('TodoNotes__DASHBOARD_LIST_GROUP_REGULAR') . '</div>';
         // collapse/expand lists group button
         print '<div class="localTableCellExpandRight">';
         print '<button class="toolbarSeparator">&nbsp;</button>';
         print '<button id="toggleGroupRegular" class="toolbarButton buttonHeader disableEventsPropagation"';
-        print ' title="' . t('BoardNotes_DASHBOARD_TOGGLE_LIST_GROUP') . '">';
+        print ' title="' . t('TodoNotes__DASHBOARD_TOGGLE_LIST_GROUP') . '">';
         print '<a><i class="fa fa-chevron-circle-up " aria-hidden="true"></i></a>';
         print '</button></div></h4>';
         print '<hr id="hrGroupRegular" class="hrTabs">';
@@ -190,8 +190,8 @@ foreach ($projectsAccess as $o) {
                 ? ' class="toolbarButton buttonToggled customNoteListRenameGlobal"'
                 : ' class="toolbarButton buttonDisabled customNoteListRenameGlobal"';
             print $isAdmin
-                ? ' title="' . t('BoardNotes_DASHBOARD_RENAME_CUSTOM_GLOBAL_LIST') . '"'
-                : ' title="' . t('BoardNotes_DASHBOARD_RENAME_CUSTOM_GLOBAL_LIST') . ' ' . t('BoardNotes_DASHBOARD_ADMIN_ONLY') . '"';
+                ? ' title="' . t('TodoNotes__DASHBOARD_RENAME_CUSTOM_GLOBAL_LIST') . '"'
+                : ' title="' . t('TodoNotes__DASHBOARD_RENAME_CUSTOM_GLOBAL_LIST') . ' ' . t('TodoNotes__DASHBOARD_ADMIN_ONLY') . '"';
             print ' data-project="' . $o['project_id'] . '"';
             print ' data-user="' . $user_id . '"';
             print '>';
@@ -204,8 +204,8 @@ foreach ($projectsAccess as $o) {
                 ? ' class="toolbarButton buttonToggled customNoteListDeleteGlobal"'
                 : ' class="toolbarButton buttonDisabled customNoteListDeleteGlobal"';
             print $isAdmin
-                ? ' title="' . t('BoardNotes_DASHBOARD_DELETE_CUSTOM_GLOBAL_LIST') . '"'
-                : ' title="' . t('BoardNotes_DASHBOARD_DELETE_CUSTOM_GLOBAL_LIST') . ' ' . t('BoardNotes_DASHBOARD_ADMIN_ONLY') . '"';
+                ? ' title="' . t('TodoNotes__DASHBOARD_DELETE_CUSTOM_GLOBAL_LIST') . '"'
+                : ' title="' . t('TodoNotes__DASHBOARD_DELETE_CUSTOM_GLOBAL_LIST') . ' ' . t('TodoNotes__DASHBOARD_ADMIN_ONLY') . '"';
             print ' data-project="' . $o['project_id'] . '"';
             print ' data-user="' . $user_id . '"';
             print '>';
@@ -228,7 +228,7 @@ foreach ($projectsAccess as $o) {
             // Rename button
             print '<button id="customNoteListRenamePrivate-P' . $o['project_id'] . '"';
             print ' class="toolbarButton customNoteListRenamePrivate"';
-            print ' title="' . t('BoardNotes_DASHBOARD_RENAME_CUSTOM_PRIVATE_LIST') . '"';
+            print ' title="' . t('TodoNotes__DASHBOARD_RENAME_CUSTOM_PRIVATE_LIST') . '"';
             print ' data-project="' . $o['project_id'] . '"';
             print ' data-user="' . $user_id . '"';
             print '>';
@@ -238,7 +238,7 @@ foreach ($projectsAccess as $o) {
             // Delete button
             print '<button id="customNoteListDeletePrivate-P' . $o['project_id'] . '"';
             print ' class="toolbarButton customNoteListDeletePrivate"';
-            print ' title="' . t('BoardNotes_DASHBOARD_DELETE_CUSTOM_PRIVATE_LIST') . '"';
+            print ' title="' . t('TodoNotes__DASHBOARD_DELETE_CUSTOM_PRIVATE_LIST') . '"';
             print ' data-project="' . $o['project_id'] . '"';
             print ' data-user="' . $user_id . '"';
             print '>';

@@ -236,7 +236,7 @@ static showTitleInputNewNote() {
     }
 
     $("#inputNewNote").width( inputWidth - noteDetails.parent().find(".saveNewNote").width() );
-    editor.prop('title', _TodoNotes_Translations_.getTranslationExportToJS('BoardNotes_PROJECT_NOTE_DETAILS_SAVE_HINT'));
+    editor.prop('title', _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__PROJECT_NOTE_DETAILS_SAVE_HINT'));
 }
 
 //------------------------------------------------
@@ -950,7 +950,7 @@ static #modalDeleteNote(project_id, user_id, id) {
         modal: true,
         buttons: [
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_DELETE_BTN'),
+                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_DELETE_BTN'),
                 click: function() {
                     _TodoNotes_.#sqlDeleteNote(project_id, user_id, id);
                     $( this ).dialog( "close" );
@@ -959,7 +959,7 @@ static #modalDeleteNote(project_id, user_id, id) {
                 },
             },
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_CANCEL_BTN'),
+                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
                 click: function() { $( this ).dialog( "close" ); }
             },
         ]
@@ -975,7 +975,7 @@ static #modalDeleteAllDoneNotes(project_id, user_id) {
         modal: true,
         buttons: [
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_DELETE_BTN'),
+                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_DELETE_BTN'),
                 click: function() {
                     _TodoNotes_.#sqlDeleteAllDoneNotes(project_id, user_id);
                     $( this ).dialog( "close" );
@@ -984,7 +984,7 @@ static #modalDeleteAllDoneNotes(project_id, user_id) {
                 },
             },
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_CANCEL_BTN'),
+                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
                 click: function() { $( this ).dialog( "close" ); }
             },
         ]
@@ -1000,7 +1000,7 @@ static #modalTransferNote(project_id, user_id, id) {
         modal: true,
         buttons: [
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_MOVE_BTN'),
+                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_MOVE_BTN'),
                 click : function() {
                     const target_project_id = $("#listNoteProject-P" + project_id + " option:selected").val();
                     _TodoNotes_.#sqlTransferNote(project_id, user_id, id, target_project_id);
@@ -1010,7 +1010,7 @@ static #modalTransferNote(project_id, user_id, id) {
                 },
             },
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_CANCEL_BTN'),
+                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
                 click : function() {
                     $( this ).dialog( "close" );
                 }
@@ -1035,7 +1035,7 @@ static #modalCreateTaskFromNote(project_id, user_id, id, is_active, title, descr
         modal: true,
         buttons: [
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_CREATE_BTN'),
+                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CREATE_BTN'),
                 click: function() {
                     const categoryCreateTask = $("#listCatCreateTask-P" + project_id + " option:selected").val();
                     const columnCreateTask = $("#listColCreateTask-P" + project_id + " option:selected").val();
@@ -1052,10 +1052,10 @@ static #modalCreateTaskFromNote(project_id, user_id, id, is_active, title, descr
                                 + '&swimlane_id=' + swimlaneCreateTask;
 
                     $("#dialogCreateTaskFromNote-P" + project_id).dialog({
-                        title: _TodoNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_RESULT_TITLE'),
+                        title: _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_RESULT_TITLE'),
                         buttons: [
                             {
-                                text : _TodoNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_CLOSE_BTN'),
+                                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CLOSE_BTN'),
                                 click: function() { $( this ).dialog( "close" ); }
                             },
                         ]
@@ -1071,7 +1071,7 @@ static #modalCreateTaskFromNote(project_id, user_id, id, is_active, title, descr
                 },
             },
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_CANCEL_BTN'),
+                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
                 click: function() { $( this ).dialog( "close" ); }
             },
         ]
@@ -1091,7 +1091,7 @@ static #modalReport(project_id, user_id) {
         modal: true,
         buttons: [
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_CREATE_BTN'),
+                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CREATE_BTN'),
                 click: function() {
                     const category = $("#catReport-P" + project_id + " option:selected").text();
                     const loadUrl = "/?controller=BoardNotesController&action=ShowReport&plugin=BoardNotes"
@@ -1107,7 +1107,7 @@ static #modalReport(project_id, user_id) {
                 }
             },
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_CANCEL_BTN'),
+                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
                 click: function() { $( this ).dialog( "close" ); }
             },
         ]
@@ -1135,7 +1135,7 @@ static #modalStats(project_id, user_id) {
         modal: true,
         buttons: [
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_DIALOG_CLOSE_BTN'),
+                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CLOSE_BTN'),
                 click: function() { $( this ).dialog( "close" ); }
             },
         ]
@@ -1154,7 +1154,7 @@ static #sqlAddNote(project_id, user_id) {
     const is_active = "1";
 
     if (!title) {
-        alert( _TodoNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_NOTE_ADD_TITLE_EMPTY_MSG') );
+        alert( _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_NOTE_ADD_TITLE_EMPTY_MSG') );
         return false;
     }
 
@@ -1226,7 +1226,7 @@ static #sqlUpdateNote(project_id, user_id, id) {
     const is_active = $("#noteCheckmark-P" + project_id + "-" + id).attr('data-id');
 
     if (!title) {
-        alert( _TodoNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_NOTE_UPDATE_TITLE_EMPTY_MSG') );
+        alert( _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_NOTE_UPDATE_TITLE_EMPTY_MSG') );
         title = $("#noteTitleLabel-P" + project_id + "-" + id).html();
         $("#noteTitleInput-P" + project_id + "-" + id).val(title);
     }
@@ -1253,7 +1253,7 @@ static #sqlUpdateNote(project_id, user_id, id) {
                         + '&markdown_text=' + encodeURIComponent(description),
                 ).css('height', 'auto');
             } else {
-                alert( _TodoNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_NOTE_UPDATE_INVALID_MSG') );
+                alert( _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_NOTE_UPDATE_INVALID_MSG') );
                 _TodoNotes_.sqlRefreshTabs(user_id);
                 _TodoNotes_.sqlRefreshNotes(project_id, user_id);
             }
@@ -1285,7 +1285,7 @@ static #sqlUpdateNoteStatus(project_id, user_id, id) {
             if (lastModifiedTimestamp > 0) {
                 $("#refProjectId").attr('data-timestamp', lastModifiedTimestamp);
             } else {
-                alert( _TodoNotes_Translations_.getTranslationExportToJS('BoardNotes_JS_NOTE_UPDATE_INVALID_MSG') );
+                alert( _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_NOTE_UPDATE_INVALID_MSG') );
                 _TodoNotes_.sqlRefreshTabs(user_id);
                 _TodoNotes_.sqlRefreshNotes(project_id, user_id);
             }

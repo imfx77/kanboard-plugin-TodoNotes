@@ -58,7 +58,7 @@ foreach ($data as $u) {
         print ' data-id="' . $num . '"';
         print '>';
         print '<i class="fa fa-minus-square-o" style="color:#CCCCCC" aria-hidden="true"';
-        print ' title="' . t('BoardNotes_REPORT_HIDE_ROW') . '">';
+        print ' title="' . t('TodoNotes__REPORT_HIDE_ROW') . '">';
         print '</i>';
         print '</button>';
         // Report #
