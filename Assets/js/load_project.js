@@ -64,7 +64,8 @@ static prepareDocument() {
 
     _BoardNotes_Project_.resizeDocument();
 
-    _BoardNotes_.expandStatusAliases();
+    _BoardNotes_Statuses_.expandStatusAliases();
+
     _BoardNotes_.refreshCategoryColors();
     _BoardNotes_.refreshSortByStatus();
     _BoardNotes_.refreshShowAllDone();

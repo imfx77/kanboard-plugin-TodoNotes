@@ -114,7 +114,7 @@ static #TabActionHandlers() {
         const statusAliasCurrent =  (statsWidgetCurrent.find(".statProgress b").text() !== '0') ? 'statusInProgress' : 'statusSuspended';
         statsWidgetCurrent.find(".statProgress i").addClass(statusAliasCurrent);
 
-        _BoardNotes_.expandStatusAliases();
+        _BoardNotes_Statuses_.expandStatusAliases();
     });
 
     //------------------------------------------------

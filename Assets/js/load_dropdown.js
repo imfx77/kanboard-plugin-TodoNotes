@@ -18,7 +18,10 @@ static #refreshStatsWidget() {
         });
         const loadUrl = '/?controller=BoardNotesController&action=RefreshStatsWidget&plugin=BoardNotes'
                     + '&stats_project_id=' + project_id;
-        $(".BoardNotes_ProjectDropdown_StatsWidget:last").html(_BoardNotes_Translations_.msgLoadingSpinner).load(loadUrl);
+        $(".BoardNotes_ProjectDropdown_StatsWidget:last").html(_BoardNotes_Translations_.msgLoadingSpinner).load(loadUrl,
+            function() {
+                _BoardNotes_Statuses_.expandStatusAliases();
+            });
     }
 
     // re-schedule
@@ -30,6 +33,8 @@ static #refreshStatsWidget() {
 //------------------------------------------------
 static prepareDocument() {
     _BoardNotes_Translations_.initialize();
+
+    _BoardNotes_Statuses_.expandStatusAliases();
 
     _BoardNotes_Dropdown_.#refreshStatsWidget();
 }

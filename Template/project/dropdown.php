@@ -1,6 +1,7 @@
 <?php
 
 print $this->asset->css('plugins/BoardNotes/Assets/css/project.css');
+print $this->asset->js('plugins/BoardNotes/Assets/js/statuses.js');
 print $this->asset->js('plugins/BoardNotes/Assets/js/load_dropdown.js');
 
 // export translations to JS
