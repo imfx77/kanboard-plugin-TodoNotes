@@ -83,8 +83,8 @@ static #TabActionHandlers() {
         const id = $(this).attr('data-id');
 
         const noteCheckmark = $("#noteCheckmark-P" + project_id + "-" + id);
-        const statsWidgetAll = $("#BoardNotes-StatsWidget-P0");
-        const statsWidgetCurrent = $("#BoardNotes-StatsWidget-P" + project_id);
+        const statsWidgetAll = $("#TodoNotes-StatsWidget-P0");
+        const statsWidgetCurrent = $("#TodoNotes-StatsWidget-P" + project_id);
 
         if (noteCheckmark.attr('data-id') === '0') {
             // done++, progress--
