@@ -102,14 +102,14 @@ Every user can privately see and operate ONLY his own notes, even if notes of mu
 - Category not updating in title after manually changing the category
 - Analytic chart on categories not developed
 - Margin bottom not added
-- The only folder in the `Template` folder is `boardnotes`, and not specified out on `dashboard` etc.
+- The only folder in the `Template` folder is `todonotes`, and not specified out on `dashboard` etc.
 - There is no description of shortcuts (ENTER and TAB key)
 - Delete directly on trash button on single note - to fast?
 - If note has empty title, it's not possible to change it afterwards
 - Analytic is breaking when viewing all projects (js not reloading correctly)
 - Exporting note to task: Swimlanes not working. Category not working.
 - Div modal for "Delete all done" and "Analytic" is repeated on every reload
-- Should disabled projects show on all boardnotes page?
+- Should disabled projects show on all todonotes page?
 - Functions in controller (BoardNotesController) missing variables in () - needed?
 - Markups as Kanboard
 
