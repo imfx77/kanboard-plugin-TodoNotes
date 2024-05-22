@@ -1376,6 +1376,7 @@ static sqlRefreshTabs(user_id) {
         $("#tabs").html(_TodoNotes_Translations_.msgLoadingSpinner).load(loadUrl,
             function() {
                 _TodoNotes_Dashboard_.prepareDocument();
+                _TodoNotes_Tabs_.attachAllHandlers();
             });
     }, 100);
 }

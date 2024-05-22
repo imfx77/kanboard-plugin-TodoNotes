@@ -462,11 +462,11 @@ static attachAllHandlers() {
 }
 
 //------------------------------------------------
-static _dummy_() {}
-
-//------------------------------------------------
 
 } // class _TodoNotes_Tabs_
 
 //////////////////////////////////////////////////
-$( document ).ready( _TodoNotes_Tabs_._dummy_ );
+$(function() {
+    // attach all handlers on load page
+    _TodoNotes_Tabs_.attachAllHandlers();
+});

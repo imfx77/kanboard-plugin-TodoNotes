@@ -56,8 +56,6 @@ static prepareDocument() {
 
     _TodoNotes_Tabs_.updateTabs();
     _TodoNotes_Tabs_.updateTabStats();
-
-    _TodoNotes_Tabs_.attachAllHandlers();
 }
 
 //------------------------------------------------
