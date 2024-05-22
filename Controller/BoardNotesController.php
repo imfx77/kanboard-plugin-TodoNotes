@@ -95,10 +95,10 @@ class BoardNotesController extends BaseController
         $columns = $this->boardNotesModel->GetColumns($project_id);
         $swimlanes = $this->boardNotesModel->GetSwimlanes($project_id);
 
-        if (!array_key_exists('boardnotesSortByStatus', $_SESSION)) {
-            $_SESSION['boardnotesSortByStatus'] = false;
+        if (!array_key_exists('todonotesOption_SortByStatus', $_SESSION)) {
+            $_SESSION['todonotesOption_SortByStatus'] = false;
         }
-        $doSortByStatus = $_SESSION['boardnotesSortByStatus'];
+        $doSortByStatus = $_SESSION['todonotesOption_SortByStatus'];
 
         if ($project_id == 0) {
             $data = $this->boardNotesModel->GetAllNotesForUser($projectsAccess, $user_id, $doSortByStatus);
@@ -159,10 +159,10 @@ class BoardNotesController extends BaseController
             $swimlanes  = array();
         }
 
-        if (!array_key_exists('boardnotesSortByStatus', $_SESSION)) {
-            $_SESSION['boardnotesSortByStatus'] = false;
+        if (!array_key_exists('todonotesOption_SortByStatus', $_SESSION)) {
+            $_SESSION['todonotesOption_SortByStatus'] = false;
         }
-        $doSortByStatus = $_SESSION['boardnotesSortByStatus'];
+        $doSortByStatus = $_SESSION['todonotesOption_SortByStatus'];
         $data = $this->boardNotesModel->GetAllNotesForUser($projectsAccess, $user_id, $doSortByStatus);
 
         return $this->response->html($this->helper->layout->dashboard('BoardNotes:dashboard/data', array(
@@ -326,10 +326,10 @@ class BoardNotesController extends BaseController
         $project = $this->ResolveProject($user_id);
         $project_id = $project['id'];
 
-        if (!array_key_exists('boardnotesSortByStatus', $_SESSION)) {
-            $_SESSION['boardnotesSortByStatus'] = false;
+        if (!array_key_exists('todonotesOption_SortByStatus', $_SESSION)) {
+            $_SESSION['todonotesOption_SortByStatus'] = false;
         }
-        $doSortByStatus = $_SESSION['boardnotesSortByStatus'];
+        $doSortByStatus = $_SESSION['todonotesOption_SortByStatus'];
         $category = $this->request->getStringParam('category');
         $data = $this->boardNotesModel->GetReportNotesForUser($project_id, $user_id, $doSortByStatus, $category);
 

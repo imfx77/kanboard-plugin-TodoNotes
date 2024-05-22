@@ -128,7 +128,7 @@ static #TabActionHandlers() {
 
     // toggle visibility of tabs stats widgets
     $("button" + "#settingsTabStats").click(function() {
-        _TodoNotes_.sqlToggleSessionOption('boardnotesShowTabStats');
+        _TodoNotes_.sqlToggleSessionOption('todonotesOption_ShowTabStats');
 
         _TodoNotes_.optionShowTabStats = !_TodoNotes_.optionShowTabStats;
         $("#session_vars").attr('data-optionShowTabStats', _TodoNotes_.optionShowTabStats);

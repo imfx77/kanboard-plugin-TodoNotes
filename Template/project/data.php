@@ -88,28 +88,28 @@ if (!$is_refresh) { // print only once per project !!!
 //----------------------------------------
 
 // evaluate optionShowCategoryColors option from session
-if (!array_key_exists('boardnotesShowCategoryColors', $_SESSION)) {
-    $_SESSION['boardnotesShowCategoryColors'] = false;
+if (!array_key_exists('todonotesOption_ShowCategoryColors', $_SESSION)) {
+    $_SESSION['todonotesOption_ShowCategoryColors'] = false;
 }
-$optionShowCategoryColors = $_SESSION['boardnotesShowCategoryColors'];
+$optionShowCategoryColors = $_SESSION['todonotesOption_ShowCategoryColors'];
 
 // evaluate optionSortByStatus option from session
-if (!array_key_exists('boardnotesSortByStatus', $_SESSION)) {
-    $_SESSION['boardnotesSortByStatus'] = false;
+if (!array_key_exists('todonotesOption_SortByStatus', $_SESSION)) {
+    $_SESSION['todonotesOption_SortByStatus'] = false;
 }
-$optionSortByStatus = $_SESSION['boardnotesSortByStatus'];
+$optionSortByStatus = $_SESSION['todonotesOption_SortByStatus'];
 
 // evaluate optionShowAllDone option from session
-if (!array_key_exists('boardnotesShowAllDone', $_SESSION)) {
-    $_SESSION['boardnotesShowAllDone'] = false;
+if (!array_key_exists('todonotesOption_ShowAllDone', $_SESSION)) {
+    $_SESSION['todonotesOption_ShowAllDone'] = false;
 }
-$optionShowAllDone = $_SESSION['boardnotesShowAllDone'];
+$optionShowAllDone = $_SESSION['todonotesOption_ShowAllDone'];
 
 // evaluate optionShowTabStats option from session
-if (!array_key_exists('boardnotesShowTabStats', $_SESSION)) {
-    $_SESSION['boardnotesShowTabStats'] = false;
+if (!array_key_exists('todonotesOption_ShowTabStats', $_SESSION)) {
+    $_SESSION['todonotesOption_ShowTabStats'] = false;
 }
-$optionShowTabStats = $_SESSION['boardnotesShowTabStats'];
+$optionShowTabStats = $_SESSION['todonotesOption_ShowTabStats'];
 
 // session_vars (hidden reference for options)
 print '<div class="hideMe" id="session_vars"';
