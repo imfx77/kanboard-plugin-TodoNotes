@@ -18,8 +18,8 @@ use Kanboard\Model\CategoryModel;
 
 class BoardNotesModel extends Base
 {
-    private const TABLE_NOTES_ENTRIES           = 'boardnotes_entries';
-    private const TABLE_NOTES_CUSTOM_PROJECTS   = 'boardnotes_custom_projects';
+    private const TABLE_NOTES_ENTRIES           = 'todonotes_entries';
+    private const TABLE_NOTES_CUSTOM_PROJECTS   = 'todonotes_custom_projects';
     private const TABLE_PROJECTS                = ProjectModel::TABLE;
     private const TABLE_COLUMNS                 = ColumnModel::TABLE;
     private const TABLE_SWIMLANES               = SwimlaneModel::TABLE;
