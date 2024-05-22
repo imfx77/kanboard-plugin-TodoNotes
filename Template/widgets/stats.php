@@ -2,7 +2,7 @@
 
     $stats_user_id = $_SESSION['cached_user_id'] ?? $this->user->getId();
 
-    $statsData = $this->model->boardNotesModel->GetProjectStatsForUser($stats_project_id, $stats_user_id);
+    $statsData = $this->model->todoNotesModel->GetProjectStatsForUser($stats_project_id, $stats_user_id);
 
     $statsWidget = '<span class="containerNoWrap" id="TodoNotes-StatsWidget-P' . $stats_project_id . '">';
     $statsWidget .= '<span class="statOpen" title="' . t('Open') . '"><i class="statusOpen" aria-hidden="true"></i><b>' . $statsData['statOpen'] . '</b></span>';

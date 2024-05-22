@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class BoardNotesModel
+ * Class TodoNotesModel
  * @package Kanboard\Plugin\BoardNotes\Model
  * @author  Im[F(x)]
  */
@@ -16,7 +16,7 @@ use Kanboard\Model\SwimlaneModel;
 use Kanboard\Model\ProjectUserRoleModel;
 use Kanboard\Model\CategoryModel;
 
-class BoardNotesModel extends Base
+class TodoNotesModel extends Base
 {
     private const TABLE_NOTES_ENTRIES           = 'todonotes_entries';
     private const TABLE_NOTES_CUSTOM_PROJECTS   = 'todonotes_custom_projects';
