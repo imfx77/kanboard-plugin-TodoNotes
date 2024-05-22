@@ -21,7 +21,20 @@ static updateTabs() {
 }
 
 //------------------------------------------------
-static updateTabsContainer() {
+static updateTabStats() {
+    if (_TodoNotes_.optionShowTabStats) {
+        $("#settingsTabStats").find("a i").addClass( 'buttonToggled' );
+        $(".tabStatsWidget").removeClass( 'hideMe' );
+    } else {
+        $("#settingsTabStats").find("a i").removeClass( 'buttonToggled' );
+        $(".tabStatsWidget").addClass( 'hideMe' );
+    }
+
+    _TodoNotes_Tabs_.#updateTabsContainer();
+}
+
+//------------------------------------------------
+static #updateTabsContainer() {
     const tabHeight = $("#tabs li:eq(0)").outerHeight();
 
     const numListsGlobal = parseInt( $("#groupGlobal li").length );
@@ -34,41 +47,6 @@ static updateTabsContainer() {
         + ($("#groupRegular").hasClass( 'hideMe' ) ? -0.5 : numListsRegular);  // conditional on groupRegular visibility
 
     $("#tabs").height(numTabs * tabHeight);
-}
-
-//------------------------------------------------
-static updateTabStats() {
-    if (_TodoNotes_.optionShowTabStats) {
-        $("#settingsTabStats").find("a i").addClass( 'buttonToggled' );
-        $(".tabStatsWidget").removeClass( 'hideMe' );
-    } else {
-        $("#settingsTabStats").find("a i").removeClass( 'buttonToggled' );
-        $(".tabStatsWidget").addClass( 'hideMe' );
-    }
-
-    _TodoNotes_Tabs_.updateTabsContainer();
-}
-
-//------------------------------------------------
-static toggleTabGroup(group) {
-    $("#hrGroup" + group).toggleClass( 'hideMe' );
-    $("#group" + group).toggleClass( 'hideMe' );
-
-    $("#toggleGroup" + group).find('i').toggleClass( "fa-chevron-circle-up" );
-    $("#toggleGroup" + group).find('i').toggleClass( "fa-chevron-circle-down" );
-
-    _TodoNotes_Tabs_.updateTabsContainer();
-}
-
-//------------------------------------------------
-static handlersTabGroup(group) {
-    $("#headerGroup" + group).dblclick(function() {
-        _TodoNotes_Tabs_.toggleTabGroup(group);
-    });
-
-    $("#toggleGroup" + group).click(function() {
-        _TodoNotes_Tabs_.toggleTabGroup(group);
-    });
 }
 
 //------------------------------------------------
@@ -116,13 +94,6 @@ static #TabActionHandlers() {
 
         _TodoNotes_Statuses_.expandStatusAliases();
     });
-
-    //------------------------------------------------
-
-    // toggle visibility of tab groups
-    _TodoNotes_Tabs_.handlersTabGroup( 'Global' );
-    _TodoNotes_Tabs_.handlersTabGroup( 'Private' );
-    _TodoNotes_Tabs_.handlersTabGroup( 'Regular' );
 
     //------------------------------------------------
 
@@ -201,6 +172,51 @@ static #TabActionHandlers() {
         const project_id = $(this).attr('data-project');
         _TodoNotes_Tabs_.#modalDeleteCustomNoteList(user_id, project_id);
     });
+}
+
+//------------------------------------------------
+// Tabs Groups routines & handlers
+//------------------------------------------------
+
+//------------------------------------------------
+static #toggleTabGroup(group) {
+    $("#hrGroup" + group).toggleClass( 'hideMe' );
+    $("#group" + group).toggleClass( 'hideMe' );
+
+    $("#toggleGroup" + group).find('i').toggleClass( "fa-chevron-circle-up" );
+    $("#toggleGroup" + group).find('i').toggleClass( "fa-chevron-circle-down" );
+
+    _TodoNotes_Tabs_.#updateTabsContainer();
+}
+
+//------------------------------------------------
+static #handleTabGroup(group) {
+    $("#headerGroup" + group).dblclick(function() {
+        _TodoNotes_Tabs_.#toggleTabGroup(group);
+    });
+
+    $("#toggleGroup" + group).click(function() {
+        _TodoNotes_Tabs_.#toggleTabGroup(group);
+    });
+}
+
+//------------------------------------------------
+static #TabGroupHandlers() {
+    // disable click & dblclick propagation for all marked sub-elements
+    $(".disableTabsEventsPropagation").click(function (event) {
+        event.stopPropagation();
+    });
+
+    $(".disableTabsEventsPropagation").dblclick(function (event) {
+        event.stopPropagation();
+    });
+
+    //------------------------------------------------
+
+    // toggle visibility of tab groups
+    _TodoNotes_Tabs_.#handleTabGroup( 'Global' );
+    _TodoNotes_Tabs_.#handleTabGroup( 'Private' );
+    _TodoNotes_Tabs_.#handleTabGroup( 'Regular' );
 }
 
 //------------------------------------------------
@@ -459,6 +475,7 @@ static #sqlUpdateCustomNoteListsPositions(user_id, order) {
 //------------------------------------------------
 static attachAllHandlers() {
     _TodoNotes_Tabs_.#TabActionHandlers();
+    _TodoNotes_Tabs_.#TabGroupHandlers();
 }
 
 //------------------------------------------------
