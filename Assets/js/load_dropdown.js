@@ -2,6 +2,8 @@
  * @author  Im[F(x)]
  */
 
+// console.log('define _TodoNotes_Dropdown_');
+//////////////////////////////////////////////////
 class _TodoNotes_Dropdown_ {
 
 //------------------------------------------------
@@ -32,7 +34,7 @@ static #refreshStatsWidget() {
 
 //------------------------------------------------
 static prepareDocument() {
-    _TodoNotes_Translations_.initialize();
+    // console.log('_TodoNotes_Dropdown_.prepareDocument');
 
     _TodoNotes_Statuses_.expandStatusAliases();
 
@@ -45,3 +47,5 @@ static prepareDocument() {
 
 //////////////////////////////////////////////////
 $( document ).ready( _TodoNotes_Dropdown_.prepareDocument );
+
+//////////////////////////////////////////////////
