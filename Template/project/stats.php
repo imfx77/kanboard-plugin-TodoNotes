@@ -10,24 +10,31 @@ $statOpen = $statsData['statOpen'];
 $statProgress = $statsData['statProgress'];
 $statTotal = $statsData['statTotal'];
 
-$statDone_Percent = (($statDone / $statTotal) * 100);
-$statDone_Percent = number_format((float) $statDone_Percent, 2, '.', '');
-$statOpen_Percent = (($statOpen / $statTotal) * 100);
-$statOpen_Percent = number_format((float) $statOpen_Percent, 2, '.', '');
-$statProgress_Percent = (($statProgress / $statTotal) * 100);
-$statProgress_Percent = number_format((float) $statProgress_Percent, 2, '.', '');
+$chart_metrics = '';
+if ($statTotal > 0) {
+    $statDone_Percent = (($statDone / $statTotal) * 100);
+    $statDone_Percent = number_format((float)$statDone_Percent, 2, '.', '');
+    $statOpen_Percent = (($statOpen / $statTotal) * 100);
+    $statOpen_Percent = number_format((float)$statOpen_Percent, 2, '.', '');
+    $statProgress_Percent = (($statProgress / $statTotal) * 100);
+    $statProgress_Percent = number_format((float)$statProgress_Percent, 2, '.', '');
 
-$chart_metrics = '[';
-$chart_metrics .= '{"column_title":"' . t('Open') . '","nb_tasks":' . $statOpen . ',"percentage":' . $statOpen_Percent . '},';
-$chart_metrics .= '{"column_title":"' . t('Done') . '","nb_tasks":' . $statDone . ',"percentage":' . $statDone_Percent . '},';
-$chart_metrics .= '{"column_title":"' . t('In progress') . '","nb_tasks":' . $statProgress . ',"percentage":' . $statProgress_Percent . '}';
-$chart_metrics .= ']';
+    $chart_metrics .= '[';
+    $chart_metrics .= '{"column_title":"' . t('Open') . '","nb_tasks":' . $statOpen . ',"percentage":' . $statOpen_Percent . '},';
+    $chart_metrics .= '{"column_title":"' . t('Done') . '","nb_tasks":' . $statDone . ',"percentage":' . $statDone_Percent . '},';
+    $chart_metrics .= '{"column_title":"' . t('In progress') . '","nb_tasks":' . $statProgress . ',"percentage":' . $statProgress_Percent . '}';
+    $chart_metrics .= ']';
+}
 ?>
 
 <p><strong><?= t('Open') ?>: <?php print $statOpen; ?></strong></p>
 <p><strong><?= t('Done') ?>: <?php print $statDone; ?></strong></p>
 <p><strong><?= t('In progress') ?>: <?php print $statProgress; ?></strong></p>
-<section class="analytic-task-repartition">
-<div id="chart" class="c3" data-metrics='<?php print $chart_metrics; ?>'></div>
 
-</section>
+<?php
+
+if ($statTotal > 0) {
+    print '<section class="analytic-task-repartition">';
+    print '<div id="chart" class="c3" data-metrics=\'' . $chart_metrics . '\'></div>';
+    print '</section>';
+}
