@@ -2,57 +2,63 @@
  * @author  Im[F(x)]
  */
 
-class _TodoNotes_Statuses_ {
+var _TodoNotes_Statuses_;
 
-//------------------------------------------------
-// Global vars for status class aliases
-//------------------------------------------------
-static #aliasStatusCasual = {
-    Done : 'fa fa-check',
-    Open : 'fa fa-circle-thin',
-    InProgress : 'fa fa-spinner fa-pulse',
-    Suspended : 'fa fa-spinner',
-};
-static #aliasStatusStandard = {
-    Done : 'fa fa-check-square-o',
-    Open : 'fa fa-square-o',
-    InProgress : 'fa fa-cog fa-spin',
-    Suspended : 'fa fa-cog',
-};
+if (typeof(_TodoNotes_Statuses_) === 'undefined') {
 
-//------------------------------------------------
-// Expand status aliases
-static expandStatusAliases() {
-    const aliasStatus = _TodoNotes_Statuses_.#aliasStatusCasual;
-    //const aliasStatus = _TodoNotes_Statuses_.#aliasStatusStandard;
+    // console.log('define _TodoNotes_Statuses_');
+    //////////////////////////////////////////////////
+    _TodoNotes_Statuses_ = class {
 
-    $(".statusDone").each(function() {
-        $(this).removeClass();
-        $(this).addClass(aliasStatus.Done);
-    });
+        //------------------------------------------------
+        // Global vars for status class aliases
+        //------------------------------------------------
+        static #aliasStatusCasual = {
+            Done: 'fa fa-check',
+            Open: 'fa fa-circle-thin',
+            InProgress: 'fa fa-spinner fa-pulse',
+            Suspended: 'fa fa-spinner',
+        };
+        static #aliasStatusStandard = {
+            Done: 'fa fa-check-square-o',
+            Open: 'fa fa-square-o',
+            InProgress: 'fa fa-cog fa-spin',
+            Suspended: 'fa fa-cog',
+        };
 
-    $(".statusOpen").each(function() {
-        $(this).removeClass();
-        $(this).addClass(aliasStatus.Open);
-    });
+        //------------------------------------------------
+        // Expand status aliases
+        static expandStatusAliases() {
+            // console.log('_TodoNotes_Statuses_.expandStatusAliases');
 
-    $(".statusInProgress").each(function() {
-        $(this).removeClass();
-        $(this).addClass(aliasStatus.InProgress);
-    });
+            const aliasStatus = _TodoNotes_Statuses_.#aliasStatusCasual;
+            //const aliasStatus = _TodoNotes_Statuses_.#aliasStatusStandard;
 
-    $(".statusSuspended").each(function() {
-        $(this).removeClass();
-        $(this).addClass(aliasStatus.Suspended);
-    });
-}
+            $(".statusDone").each(function () {
+                $(this).removeClass();
+                $(this).addClass(aliasStatus.Done);
+            });
 
-//------------------------------------------------
-static _dummy_() {}
+            $(".statusOpen").each(function () {
+                $(this).removeClass();
+                $(this).addClass(aliasStatus.Open);
+            });
 
-//------------------------------------------------
+            $(".statusInProgress").each(function () {
+                $(this).removeClass();
+                $(this).addClass(aliasStatus.InProgress);
+            });
 
-} // class _TodoNotes_Statuses_
+            $(".statusSuspended").each(function () {
+                $(this).removeClass();
+                $(this).addClass(aliasStatus.Suspended);
+            });
+        }
 
-//////////////////////////////////////////////////
-$( document ).ready( _TodoNotes_Statuses_._dummy_ );
+        //------------------------------------------------
+
+    } // class _TodoNotes_Statuses_
+
+    //////////////////////////////////////////////////
+
+} // !defined _TodoNotes_Statuses_

@@ -2,40 +2,52 @@
  * @author  Im[F(x)]
  */
 
-class _TodoNotes_Translations_ {
+var _TodoNotes_Translations_;
 
-//------------------------------------------------
-// Translation Export to JS
-//------------------------------------------------
-static #translationsExportToJS;
+if (typeof(_TodoNotes_Translations_) === 'undefined') {
 
-static msgLoadingSpinner;
+    // console.log('define _TodoNotes_Translations_');
+    //////////////////////////////////////////////////
+    _TodoNotes_Translations_ = class {
 
-//------------------------------------------------
-static initialize() {
-    // lazy init the translations ONCE
-    if (_TodoNotes_Translations_.#translationsExportToJS) return;
+        //------------------------------------------------
+        // Translation Export to JS
+        //------------------------------------------------
+        static #translationsExportToJS;
 
-    _TodoNotes_Translations_.#translationsExportToJS = JSON.parse( $("#_TodoNotes_TranslationsExportToJS_").html() );
-    $("#_TodoNotes_TranslationsExportToJS_").remove();
+        static msgLoadingSpinner;
 
-    _TodoNotes_Translations_.msgLoadingSpinner = _TodoNotes_Translations_.getSpinnerMsg('TodoNotes__JS_LOADING_MSG');
-}
+        //------------------------------------------------
+        static initialize() {
+            // console.log('_TodoNotes_Translations_.initialize');
 
-//------------------------------------------------
-static getTranslationExportToJS(textId) {
-    return _TodoNotes_Translations_.#translationsExportToJS[textId];
-}
+            // lazy init the translations ONCE
+            if (_TodoNotes_Translations_.#translationsExportToJS) return;
 
-//------------------------------------------------
-static getSpinnerMsg(textId) {
-    const msg = _TodoNotes_Translations_.getTranslationExportToJS(textId);
-    return '<i class="fa fa-spinner fa-pulse" aria-hidden="true" alt="' + msg + '"></i> ' + msg;
-}
+            _TodoNotes_Translations_.#translationsExportToJS = JSON.parse($("#_TodoNotes_TranslationsExportToJS_").html());
+            $("#_TodoNotes_TranslationsExportToJS_").remove();
 
-//------------------------------------------------
+            _TodoNotes_Translations_.msgLoadingSpinner = _TodoNotes_Translations_.getSpinnerMsg('TodoNotes__JS_LOADING_MSG');
+        }
 
-} // class _TodoNotes_Translations_
+        //------------------------------------------------
+        static getTranslationExportToJS(textId) {
+            return _TodoNotes_Translations_.#translationsExportToJS[textId];
+        }
 
-//////////////////////////////////////////////////
-$( document ).ready( _TodoNotes_Translations_.initialize );
+        //------------------------------------------------
+        static getSpinnerMsg(textId) {
+            const msg = _TodoNotes_Translations_.getTranslationExportToJS(textId);
+            return '<i class="fa fa-spinner fa-pulse" aria-hidden="true" alt="' + msg + '"></i> ' + msg;
+        }
+
+        //------------------------------------------------
+
+    } // class _TodoNotes_Translations_
+
+    //////////////////////////////////////////////////
+    $(document).ready(_TodoNotes_Translations_.initialize);
+
+    //////////////////////////////////////////////////
+
+} // !defined _TodoNotes_Translations_
