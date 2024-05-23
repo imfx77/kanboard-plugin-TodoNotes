@@ -1,11 +1,11 @@
 <?php
 
+// export translations to JS
+print $this->render('BoardNotes:translations/export_to_js');
+// load all necessary CSS and JS
 print $this->asset->css('plugins/BoardNotes/Assets/css/project.css');
 print $this->asset->js('plugins/BoardNotes/Assets/js/statuses.js');
 print $this->asset->js('plugins/BoardNotes/Assets/js/load_dropdown.js');
-
-// export translations to JS
-print $this->render('BoardNotes:translations/export_to_js');
 
 ?>
 

@@ -1,10 +1,5 @@
 <?php
 
-print $this->asset->css('plugins/BoardNotes/Assets/css/project.css');
-print $this->asset->js('plugins/BoardNotes/Assets/js/notes.js');
-print $this->asset->js('plugins/BoardNotes/Assets/js/statuses.js');
-print $this->asset->js('plugins/BoardNotes/Assets/js/load_report.js');
-
 // evaluate optionShowCategoryColors option from session
 if (!array_key_exists('todonotesOption_ShowCategoryColors', $_SESSION)) {
     $_SESSION['todonotesOption_ShowCategoryColors'] = false;
