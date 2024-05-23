@@ -2,10 +2,14 @@
  * @author  Im[F(x)]
  */
 
+// console.log('define _TodoNotes_Stats_');
+//////////////////////////////////////////////////
 class _TodoNotes_Stats_ {
 
 //------------------------------------------------
 static prepareDocument() {
+    // console.log('_TodoNotes_Stats_.prepareDocument');
+
     const t = $("#chart").data("metrics");
     if (!t) return;
 
@@ -31,4 +35,3 @@ static prepareDocument() {
 } // class _TodoNotes_Stats_
 
 //////////////////////////////////////////////////
-$( document ).ready( _TodoNotes_Stats_.prepareDocument );

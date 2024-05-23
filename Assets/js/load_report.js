@@ -2,10 +2,14 @@
  * @author  Im[F(x)]
  */
 
+console.log('define _TodoNotes_Report_');
+//////////////////////////////////////////////////
 class _TodoNotes_Report_ {
 
 //------------------------------------------------
 static prepareDocument() {
+    console.log('_TodoNotes_Report_.prepareDocument');
+
     $(".noteTitleInput").hide();
 
     _TodoNotes_.optionShowCategoryColors = $("#session_vars").attr('data-optionShowCategoryColors') === 'true';
@@ -47,4 +51,3 @@ static prepareDocument() {
 } // class _TodoNotes_Report_
 
 //////////////////////////////////////////////////
-$( document ).ready( _TodoNotes_Report_.prepareDocument );
