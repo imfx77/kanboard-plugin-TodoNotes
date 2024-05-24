@@ -132,3 +132,17 @@ foreach ($data as $u) {
 
 </tbody>
 </table>
+
+<?php
+
+//----------------------------------------
+
+// hidden reference for project_id and user_id of the currently active page
+print '<div class="hideMe" id="refProjectId"';
+print ' data-project="' . $project_id . '"';
+print ' data-user="' . $user_id . '"';
+print ' data-timestamp="' . time() . '"';
+print '></div>';
+
+print '<span id="refreshIcon" class="refreshIcon hideMe">';
+print '&nbsp;<i class="fa fa-refresh fa-spin" title="' . t('TodoNotes__PROJECT_NOTE_BUSY_ICON_HINT') . '"></i></span>';

@@ -1436,19 +1436,14 @@ static #hideRefreshIcon( ) {
 // schedule check for modifications every 15 sec
 static scheduleCheckModifications() {
     setTimeout(function() {
-        if ($(".liNewNote").length === 0) {
-            // this means the page no longer displays notes list(s)
-            // most probably we are showing the report page
-            // the scheduled check is no longer relevant => so abort it
-            return;
-        }
-
         _TodoNotes_.#showRefreshIcon();
 
         const project_id = $("#refProjectId").attr('data-project');
         const user_id = $("#refProjectId").attr('data-user');
-        const title = (project_id !== '0') ? $("#inputNewNote").val().trim() : '';
-        const description = (project_id !== '0') ? $('[name="editorMarkdownDetailsNewNote"]').val() : '';
+
+        const is_project = ($(".liNewNote").length === 1);
+        const title = (is_project && project_id !== '0') ? $("#inputNewNote").val().trim() : '';
+        const description = (is_project && project_id !== '0') ? $('[name="editorMarkdownDetailsNewNote"]').val() : '';
 
         // skip SQL query if page not visible, or if new note has pending changes
         if (!KB.utils.isVisible() || title !== '' || description !== '') {
@@ -1463,15 +1458,18 @@ static scheduleCheckModifications() {
 //------------------------------------------------
 // check if page refresh is necessary
 static #checkAndTriggerRefresh(lastModifiedTimestamp) {
-    const lastRefreshedTimestamp = $("#refProjectId").attr('data-timestamp');
+    // console.log('_TodoNotes_.checkAndTriggerRefresh');
+
     const project_id = $("#refProjectId").attr('data-project');
     const user_id = $("#refProjectId").attr('data-user');
+    const lastRefreshedTimestamp = $("#refProjectId").attr('data-timestamp');
 
+    const is_project = ($(".liNewNote").length === 1);
+    if (is_project && lastRefreshedTimestamp < lastModifiedTimestamp.notes) {
+        _TodoNotes_.sqlRefreshNotes(project_id, user_id);
+    }
     if (lastRefreshedTimestamp < lastModifiedTimestamp.projects) {
         _TodoNotes_.sqlRefreshTabs(user_id);
-    }
-    if (lastRefreshedTimestamp < lastModifiedTimestamp.notes) {
-        _TodoNotes_.sqlRefreshNotes(project_id, user_id);
     }
     if (lastRefreshedTimestamp < lastModifiedTimestamp.max) {
         $("#refProjectId").attr('data-timestamp', lastModifiedTimestamp.max);
