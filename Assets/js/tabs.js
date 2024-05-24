@@ -2,6 +2,8 @@
  * @author  Im[F(x)]
  */
 
+// console.log('define _TodoNotes_Tabs_');
+//////////////////////////////////////////////////
 class _TodoNotes_Tabs_ {
 
 //------------------------------------------------
@@ -50,13 +52,16 @@ static #updateTabsContainer() {
 }
 
 //------------------------------------------------
-// Tabs Buttons handlers
+// Tabs Stats handlers
 //------------------------------------------------
 
 //------------------------------------------------
-static #TabActionHandlers() {
+static #TabStatsHandlers() {
+    // console.log('_TodoNotes_Tabs_.TabStatsHandlers');
+
     // update tabs stats widgets on clicking buttonStatus
     $("button" + ".buttonStatus").click(function() {
+        // this handler would be called AFTER actual value switch of the checkmark
         const project_id = $(this).attr('data-project');
         const id = $(this).attr('data-id');
 
@@ -94,9 +99,14 @@ static #TabActionHandlers() {
 
         _TodoNotes_Statuses_.expandStatusAliases();
     });
+}
 
-    //------------------------------------------------
+//------------------------------------------------
+// Tabs Action handlers
+//------------------------------------------------
 
+//------------------------------------------------
+static #TabActionHandlers() {
     // toggle visibility of tabs stats widgets
     $("button" + "#settingsTabStats").click(function() {
         _TodoNotes_.sqlToggleSessionOption('todonotesOption_ShowTabStats');
@@ -473,7 +483,25 @@ static #sqlUpdateCustomNoteListsPositions(user_id, order) {
 //------------------------------------------------
 
 //------------------------------------------------
+static attachStatusUpdateHandlers() {
+    // console.log('_TodoNotes_Tabs_.attachStatusUpdateHandlers');
+
+    _TodoNotes_Tabs_.#TabStatsHandlers();
+}
+
+//------------------------------------------------
+static attachTabHandlers() {
+    // console.log('_TodoNotes_Tabs_.attachTabHandlers');
+
+    _TodoNotes_Tabs_.#TabActionHandlers();
+    _TodoNotes_Tabs_.#TabGroupHandlers();
+}
+
+//------------------------------------------------
 static attachAllHandlers() {
+    // console.log('_TodoNotes_Tabs_.attachAllHandlers');
+
+    _TodoNotes_Tabs_.#TabStatsHandlers();
     _TodoNotes_Tabs_.#TabActionHandlers();
     _TodoNotes_Tabs_.#TabGroupHandlers();
 }
