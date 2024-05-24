@@ -2,6 +2,8 @@
  * @author  Im[F(x)]
  */
 
+// console.log('define _TodoNotes_Dashboard_');
+//////////////////////////////////////////////////
 class _TodoNotes_Dashboard_ {
 
 //------------------------------------------------
@@ -36,6 +38,17 @@ static initializeSortableGroup(group) {
 
 //------------------------------------------------
 static prepareDocument() {
+    _TodoNotes_Dashboard_.#prepareDocument_ConfigureDashboardHandlers(false);
+}
+//------------------------------------------------
+static prepareDocument_SkipDashboardHandlers() {
+    _TodoNotes_Dashboard_.#prepareDocument_ConfigureDashboardHandlers(true);
+}
+
+//------------------------------------------------
+static #prepareDocument_ConfigureDashboardHandlers(skipDashboardHandlers = false) {
+    // console.log('_TodoNotes_Dashboard_.prepareDocument (skipDashboardHandlers : ' + skipDashboardHandlers + ')');
+
     _TodoNotes_.optionShowTabStats = $("#session_vars").attr('data-optionShowTabStats') === 'true';
 
     const isMobile = _TodoNotes_.isMobile();
@@ -56,15 +69,14 @@ static prepareDocument() {
 
     _TodoNotes_Tabs_.updateTabs();
     _TodoNotes_Tabs_.updateTabStats();
-        _TodoNotes_Tabs_.attachAllHandlers();
-}
 
-//------------------------------------------------
-static _dummy_() {}
+    if (!skipDashboardHandlers) {
+        _TodoNotes_Tabs_.attachAllHandlers();
+    }
+}
 
 //------------------------------------------------
 
 } // class _TodoNotes_Dashboard_
 
 //////////////////////////////////////////////////
-$( document ).ready( _TodoNotes_Dashboard_._dummy_ );

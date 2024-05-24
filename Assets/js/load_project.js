@@ -2,10 +2,23 @@
  * @author  Im[F(x)]
  */
 
+// console.log('define _TodoNotes_Project_');
+//////////////////////////////////////////////////
 class _TodoNotes_Project_ {
 
 //------------------------------------------------
 static prepareDocument() {
+    _TodoNotes_Project_.#prepareDocument_ConfigureDashboardHandlers(false);
+}
+//------------------------------------------------
+static prepareDocument_SkipDashboardHandlers() {
+    _TodoNotes_Project_.#prepareDocument_ConfigureDashboardHandlers(true);
+}
+
+//------------------------------------------------
+static #prepareDocument_ConfigureDashboardHandlers(skipDashboardHandlers = false) {
+    // console.log('_TodoNotes_Project_.prepareDocument (skipDashboardHandlers : ' + skipDashboardHandlers + ')');
+
     _TodoNotes_.optionShowCategoryColors = $("#session_vars").attr('data-optionShowCategoryColors') === 'true';
     _TodoNotes_.optionSortByStatus = $("#session_vars").attr('data-optionSortByStatus') === 'true';
     _TodoNotes_.optionShowAllDone = $("#session_vars").attr('data-optionShowAllDone') === 'true';
@@ -72,7 +85,11 @@ static prepareDocument() {
 
     // prepare method for dashboard view if embedded
     if (typeof(_TodoNotes_Dashboard_) !== 'undefined') {
-        _TodoNotes_Dashboard_.prepareDocument();
+        if (skipDashboardHandlers) {
+            _TodoNotes_Dashboard_.prepareDocument_SkipDashboardHandlers();
+        } else {
+            _TodoNotes_Dashboard_.prepareDocument();
+        }
     }
 
     // force render all KB elements
