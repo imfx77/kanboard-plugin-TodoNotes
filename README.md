@@ -1,39 +1,39 @@
-<h1 name="user-content-readme-top" align="center">BoardNotes plugin for Kanboard</h1>
+<h1 name="user-content-readme-top" align="center">TodoNotes plugin for Kanboard</h1>
 
 <p align="center">
-    <a href="https://github.com/imfx77/kanboard-plugin-BoardNotes/releases">
-        <img src="https://img.shields.io/github/v/release/imfx77/kanboard-plugin-BoardNotes?style=for-the-badge&color=brightgreen" alt="GitHub Latest Release (by date)" title="GitHub Latest Release (by date)">
+    <a href="https://github.com/imfx77/kanboard-plugin-TodoNotes/releases">
+        <img src="https://img.shields.io/github/v/release/imfx77/kanboard-plugin-TodoNotes?style=for-the-badge&color=brightgreen" alt="GitHub Latest Release (by date)" title="GitHub Latest Release (by date)">
     </a>
-    <a href="https://github.com/imfx77/kanboard-plugin-BoardNotes/blob/master/LICENSE" title="Read License">
-        <img src="https://img.shields.io/github/license/imfx77/kanboard-plugin-BoardNotes?style=for-the-badge" alt="kanboard-plugin-BoardNotes">
-    </a>
-</p>
-<p align="center">
-    <a href="https://github.com/imfx77/kanboard-plugin-BoardNotes/releases">
-        <img src="https://img.shields.io/github/downloads/imfx77/kanboard-plugin-BoardNotes/total?style=for-the-badge&color=orange" alt="GitHub All Releases" title="GitHub All Downloads">
-    </a>
-    <a href="https://github.com/imfx77/kanboard-plugin-BoardNotes/releases">
-        <img src="https://img.shields.io/github/directory-file-count/imfx77/kanboard-plugin-BoardNotes?style=for-the-badge&color=orange" alt="GitHub Repository File Count" title="GitHub Repository File Count">
-    </a>
-    <a href="https://github.com/imfx77/kanboard-plugin-BoardNotes/releases">
-        <img src="https://img.shields.io/github/repo-size/imfx77/kanboard-plugin-BoardNotes?style=for-the-badge&color=orange" alt="GitHub Repository Size" title="GitHub Repository Size">
-    </a>
-    <a href="https://github.com/imfx77/kanboard-plugin-BoardNotes/releases">
-        <img src="https://img.shields.io/github/languages/code-size/imfx77/kanboard-plugin-BoardNotes?style=for-the-badge&color=orange" alt="GitHub Code Size" title="GitHub Code Size">
+    <a href="https://github.com/imfx77/kanboard-plugin-TodoNotes/blob/master/LICENSE" title="Read License">
+        <img src="https://img.shields.io/github/license/imfx77/kanboard-plugin-TodoNotes?style=for-the-badge" alt="kanboard-plugin-TodoNotes">
     </a>
 </p>
 <p align="center">
-    <a href="https://github.com/imfx77/kanboard-plugin-BoardNotes/stargazers" title="View Stargazers">
-        <img src="https://img.shields.io/github/stars/imfx77/kanboard-plugin-BoardNotes?logo=github&style=for-the-badge" alt="kanboard-plugin-BoardNotes">
+    <a href="https://github.com/imfx77/kanboard-plugin-TodoNotes/releases">
+        <img src="https://img.shields.io/github/downloads/imfx77/kanboard-plugin-TodoNotes/total?style=for-the-badge&color=orange" alt="GitHub All Releases" title="GitHub All Downloads">
     </a>
-    <a href="https://github.com/imfx77/kanboard-plugin-BoardNotes/discussions">
-        <img src="https://img.shields.io/github/discussions/imfx77/kanboard-plugin-BoardNotes?style=for-the-badge&color=blue" alt="GitHub Discussions" title="Read Discussions">
+    <a href="https://github.com/imfx77/kanboard-plugin-TodoNotes/releases">
+        <img src="https://img.shields.io/github/directory-file-count/imfx77/kanboard-plugin-TodoNotes?style=for-the-badge&color=orange" alt="GitHub Repository File Count" title="GitHub Repository File Count">
     </a>
-    <a href="https://github.com/imfx77/kanboard-plugin-BoardNotes/compare">
-        <img src="https://img.shields.io/github/commits-since/imfx77/kanboard-plugin-BoardNotes/latest?include_prereleases&style=for-the-badge&color=blue" alt="GitHub Commits Since Last Release" title="GitHub Commits Since Last Release">
+    <a href="https://github.com/imfx77/kanboard-plugin-TodoNotes/releases">
+        <img src="https://img.shields.io/github/repo-size/imfx77/kanboard-plugin-TodoNotes?style=for-the-badge&color=orange" alt="GitHub Repository Size" title="GitHub Repository Size">
     </a>
-    <a href="https://github.com/imfx77/kanboard-plugin-BoardNotes/compare">
-        <img src="https://img.shields.io/github/commit-activity/m/imfx77/kanboard-plugin-BoardNotes?style=for-the-badge&color=blue" alt="GitHub Commit Monthly Activity" title="GitHub Commit Monthly Activity">
+    <a href="https://github.com/imfx77/kanboard-plugin-TodoNotes/releases">
+        <img src="https://img.shields.io/github/languages/code-size/imfx77/kanboard-plugin-TodoNotes?style=for-the-badge&color=orange" alt="GitHub Code Size" title="GitHub Code Size">
+    </a>
+</p>
+<p align="center">
+    <a href="https://github.com/imfx77/kanboard-plugin-TodoNotes/stargazers" title="View Stargazers">
+        <img src="https://img.shields.io/github/stars/imfx77/kanboard-plugin-TodoNotes?logo=github&style=for-the-badge" alt="kanboard-plugin-TodoNotes">
+    </a>
+    <a href="https://github.com/imfx77/kanboard-plugin-TodoNotes/discussions">
+        <img src="https://img.shields.io/github/discussions/imfx77/kanboard-plugin-TodoNotes?style=for-the-badge&color=blue" alt="GitHub Discussions" title="Read Discussions">
+    </a>
+    <a href="https://github.com/imfx77/kanboard-plugin-TodoNotes/compare">
+        <img src="https://img.shields.io/github/commits-since/imfx77/kanboard-plugin-TodoNotes/latest?include_prereleases&style=for-the-badge&color=blue" alt="GitHub Commits Since Last Release" title="GitHub Commits Since Last Release">
+    </a>
+    <a href="https://github.com/imfx77/kanboard-plugin-TodoNotes/compare">
+        <img src="https://img.shields.io/github/commit-activity/m/imfx77/kanboard-plugin-TodoNotes?style=for-the-badge&color=blue" alt="GitHub Commit Monthly Activity" title="GitHub Commit Monthly Activity">
     </a>
 </p>
 <p align="center">
@@ -209,26 +209,26 @@ The notes is accessible from the project dropdown, where only the project specif
 ---
 
 <p align="center">
-    <a href="https://github.com/imfx77/kanboard-plugin-BoardNotes/stargazers" title="View Stargazers">
-        <img src="https://img.shields.io/github/stars/imfx77/kanboard-plugin-BoardNotes?logo=github&style=flat-square" alt="kanboard-plugin-BoardNotes">
+    <a href="https://github.com/imfx77/kanboard-plugin-TodoNotes/stargazers" title="View Stargazers">
+        <img src="https://img.shields.io/github/stars/imfx77/kanboard-plugin-TodoNotes?logo=github&style=flat-square" alt="kanboard-plugin-TodoNotes">
     </a>
-    <a href="https://github.com/imfx77/kanboard-plugin-BoardNotes/forks" title="See Forks">
-        <img src="https://img.shields.io/github/forks/imfx77/kanboard-plugin-BoardNotes?logo=github&style=flat-square" alt="kanboard-plugin-BoardNotes">
+    <a href="https://github.com/imfx77/kanboard-plugin-TodoNotes/forks" title="See Forks">
+        <img src="https://img.shields.io/github/forks/imfx77/kanboard-plugin-TodoNotes?logo=github&style=flat-square" alt="kanboard-plugin-TodoNotes">
     </a>
-    <a href="https://github.com/imfx77/kanboard-plugin-BoardNotes/blob/master/LICENSE" title="Read License">
-        <img src="https://img.shields.io/github/license/imfx77/kanboard-plugin-BoardNotes?style=flat-square" alt="kanboard-plugin-BoardNotes">
+    <a href="https://github.com/imfx77/kanboard-plugin-TodoNotes/blob/master/LICENSE" title="Read License">
+        <img src="https://img.shields.io/github/license/imfx77/kanboard-plugin-TodoNotes?style=flat-square" alt="kanboard-plugin-TodoNotes">
     </a>
-    <a href="https://github.com/imfx77/kanboard-plugin-BoardNotes/issues" title="Open Issues">
-        <img src="https://img.shields.io/github/issues-raw/imfx77/kanboard-plugin-BoardNotes?style=flat-square" alt="kanboard-plugin-BoardNotes">
+    <a href="https://github.com/imfx77/kanboard-plugin-TodoNotes/issues" title="Open Issues">
+        <img src="https://img.shields.io/github/issues-raw/imfx77/kanboard-plugin-TodoNotes?style=flat-square" alt="kanboard-plugin-TodoNotes">
     </a>
-    <a href="https://github.com/imfx77/kanboard-plugin-BoardNotes/issues?q=is%3Aissue+is%3Aclosed" title="Closed Issues">
-        <img src="https://img.shields.io/github/issues-closed/imfx77/kanboard-plugin-BoardNotes?style=flat-square" alt="kanboard-plugin-BoardNotes">
+    <a href="https://github.com/imfx77/kanboard-plugin-TodoNotes/issues?q=is%3Aissue+is%3Aclosed" title="Closed Issues">
+        <img src="https://img.shields.io/github/issues-closed/imfx77/kanboard-plugin-TodoNotes?style=flat-square" alt="kanboard-plugin-TodoNotes">
     </a>
-    <a href="https://github.com/imfx77/kanboard-plugin-BoardNotes/discussions" title="Read Discussions">
-        <img src="https://img.shields.io/github/discussions/imfx77/kanboard-plugin-BoardNotes?style=flat-square" alt="kanboard-plugin-BoardNotes">
+    <a href="https://github.com/imfx77/kanboard-plugin-TodoNotes/discussions" title="Read Discussions">
+        <img src="https://img.shields.io/github/discussions/imfx77/kanboard-plugin-TodoNotes?style=flat-square" alt="kanboard-plugin-TodoNotes">
     </a>
-    <a href="https://github.com/imfx77/kanboard-plugin-BoardNotes/compare/" title="Latest Commits">
-        <img alt="GitHub commits since latest release (by date)" src="https://img.shields.io/github/commits-since/imfx77/kanboard-plugin-BoardNotes/latest?style=flat-square">
+    <a href="https://github.com/imfx77/kanboard-plugin-TodoNotes/compare/" title="Latest Commits">
+        <img alt="GitHub commits since latest release (by date)" src="https://img.shields.io/github/commits-since/imfx77/kanboard-plugin-TodoNotes/latest?style=flat-square">
     </a>
 </p>
 
