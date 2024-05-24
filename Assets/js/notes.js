@@ -1039,7 +1039,7 @@ static #modalCreateTaskFromNote(project_id, user_id, id, is_active, title, descr
                     const swimlaneCreateTask = $("#listSwimCreateTask-P" + project_id + " option:selected").val();
                     const removeNote = $("#removeNote-P" + project_id).is(":checked");
 
-                    const loadUrl = '/?controller=TodoNotesController&action=CreateTaskFromNote&plugin=BoardNotes'
+                    const loadUrl = '/?controller=TodoNotesController&action=CreateTaskFromNote&plugin=TodoNotes'
                                 + '&project_custom_id=' + project_id
                                 + '&user_id=' + user_id
                                 + '&task_title=' + encodeURIComponent(title)
@@ -1091,7 +1091,7 @@ static #modalReport(project_id, user_id) {
                 text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CREATE_BTN'),
                 click: function() {
                     const category = $("#catReport-P" + project_id + " option:selected").text();
-                    const loadUrl = "/?controller=TodoNotesController&action=ShowReport&plugin=BoardNotes"
+                    const loadUrl = "/?controller=TodoNotesController&action=ShowReport&plugin=TodoNotes"
                                 + "&project_custom_id=" + project_id
                                 + "&user_id=" + user_id
                                 + "&category=" + encodeURIComponent(category);
@@ -1116,7 +1116,7 @@ static #modalStats(project_id, user_id) {
     $.ajaxSetup ({
         cache: false
     });
-    const loadUrl = '/?controller=TodoNotesController&action=ShowStats&plugin=BoardNotes'
+    const loadUrl = '/?controller=TodoNotesController&action=ShowStats&plugin=TodoNotes'
                 + '&project_custom_id=' + project_id
                 + '&user_id=' + user_id;
     $("#dialogStatsInside").html(_TodoNotes_Translations_.msgLoadingSpinner).load(loadUrl,
@@ -1157,7 +1157,7 @@ static #sqlAddNote(project_id, user_id) {
     $.ajax({
         cache: false,
         type: "POST",
-        url: '/?controller=TodoNotesController&action=AddNote&plugin=BoardNotes'
+        url: '/?controller=TodoNotesController&action=AddNote&plugin=TodoNotes'
             + '&project_custom_id=' + project_id
             + '&user_id=' + user_id
             + '&title=' + encodeURIComponent(title)
@@ -1182,7 +1182,7 @@ static #sqlDeleteNote(project_id, user_id, id) {
     $.ajax({
         cache: false,
         type: "POST",
-        url: '/?controller=TodoNotesController&action=DeleteNote&plugin=BoardNotes'
+        url: '/?controller=TodoNotesController&action=DeleteNote&plugin=TodoNotes'
             + '&project_custom_id=' + project_id
             + '&user_id=' + user_id
             + '&note_id=' + note_id,
@@ -1201,7 +1201,7 @@ static #sqlDeleteAllDoneNotes(project_id, user_id) {
     $.ajax({
         cache: false,
         type: "POST",
-        url: '/?controller=TodoNotesController&action=DeleteAllDoneNotes&plugin=BoardNotes'
+        url: '/?controller=TodoNotesController&action=DeleteAllDoneNotes&plugin=TodoNotes'
             + '&project_custom_id=' + project_id
             + '&user_id=' + user_id,
         success: function() {
@@ -1233,7 +1233,7 @@ static #sqlUpdateNote(project_id, user_id, id) {
     $.ajax({
         cache: false,
         type: "POST",
-        url: '/?controller=TodoNotesController&action=UpdateNote&plugin=BoardNotes'
+        url: '/?controller=TodoNotesController&action=UpdateNote&plugin=TodoNotes'
             + '&project_custom_id=' + project_id
             + '&user_id=' + user_id
             + '&note_id=' + note_id
@@ -1247,7 +1247,7 @@ static #sqlUpdateNote(project_id, user_id, id) {
                 $("#refProjectId").attr('data-timestamp', lastModifiedTimestamp);
                 // refresh and render the details markdown preview
                 $("#noteMarkdownDetails-P" + project_id + "-" + id + "_Preview").html(_TodoNotes_Translations_.msgLoadingSpinner).load(
-                    '/?controller=TodoNotesController&action=RefreshMarkdownPreviewWidget&plugin=BoardNotes'
+                    '/?controller=TodoNotesController&action=RefreshMarkdownPreviewWidget&plugin=TodoNotes'
                         + '&markdown_text=' + encodeURIComponent(description),
                 ).css('height', 'auto');
             } else {
@@ -1273,7 +1273,7 @@ static #sqlUpdateNoteStatus(project_id, user_id, id) {
     $.ajax({
         cache: false,
         type: "POST",
-        url: '/?controller=TodoNotesController&action=UpdateNoteStatus&plugin=BoardNotes'
+        url: '/?controller=TodoNotesController&action=UpdateNoteStatus&plugin=TodoNotes'
             + '&project_custom_id=' + project_id
             + '&user_id=' + user_id
             + '&note_id=' + note_id
@@ -1302,7 +1302,7 @@ static sqlUpdateNotesPositions(project_id, user_id, order) {
     $.ajax({
         cache: false,
         type: "POST",
-        url: '/?controller=TodoNotesController&action=UpdateNotesPositions&plugin=BoardNotes'
+        url: '/?controller=TodoNotesController&action=UpdateNotesPositions&plugin=TodoNotes'
             + '&project_custom_id=' + project_id
             + '&user_id=' + user_id
             + '&order=' + order,
@@ -1329,7 +1329,7 @@ static #sqlTransferNote(project_id, user_id, id, target_project_id) {
     $.ajax({
         cache: false,
         type: "POST",
-        url: '/?controller=TodoNotesController&action=TransferNote&plugin=BoardNotes'
+        url: '/?controller=TodoNotesController&action=TransferNote&plugin=TodoNotes'
             + '&project_custom_id=' + project_id
             + '&user_id=' + user_id
             + '&note_id=' + note_id
@@ -1352,7 +1352,7 @@ static sqlRefreshNotes(project_id, user_id) {
     $.ajaxSetup ({
         cache: false
     });
-    const loadUrl = '/?controller=TodoNotesController&action=RefreshProject&plugin=BoardNotes'
+    const loadUrl = '/?controller=TodoNotesController&action=RefreshProject&plugin=TodoNotes'
                 + '&project_custom_id=' + project_id
                 + '&user_id=' + user_id;
     setTimeout(function() {
@@ -1375,7 +1375,7 @@ static sqlRefreshTabs(user_id) {
     $.ajaxSetup ({
         cache: false
     });
-    const loadUrl = '/?controller=TodoNotesController&action=RefreshTabs&plugin=BoardNotes'
+    const loadUrl = '/?controller=TodoNotesController&action=RefreshTabs&plugin=TodoNotes'
                 + '&user_id=' + user_id;
     setTimeout(function() {
         $("#tabs").html(_TodoNotes_Translations_.msgLoadingSpinner).load(loadUrl,
@@ -1391,7 +1391,7 @@ static sqlToggleSessionOption(session_option) {
     $.ajax({
         cache: false,
         type: "POST",
-        url: '/?controller=TodoNotesController&action=ToggleSessionOption&plugin=BoardNotes'
+        url: '/?controller=TodoNotesController&action=ToggleSessionOption&plugin=TodoNotes'
             + '&session_option=' + session_option,
         success: function() {
         },
@@ -1409,7 +1409,7 @@ static #sqlGetLastModifiedTimestamp(project_id, user_id) {
     $.ajax({
         cache: false,
         type: "POST",
-        url: '/?controller=TodoNotesController&action=GetLastModifiedTimestamp&plugin=BoardNotes'
+        url: '/?controller=TodoNotesController&action=GetLastModifiedTimestamp&plugin=TodoNotes'
             + '&project_custom_id=' + project_id
             + '&user_id=' + user_id,
         success: function(response) {

@@ -1,6 +1,6 @@
-<?= $this->asset->css('plugins/BoardNotes/Assets/css/dashboard.css') ?>
-<?= $this->asset->js('plugins/BoardNotes/Assets/js/tabs.js') ?>
-<?= $this->asset->js('plugins/BoardNotes/Assets/js/load_dashboard.js') ?>
+<?= $this->asset->css('plugins/TodoNotes/Assets/css/dashboard.css') ?>
+<?= $this->asset->js('plugins/TodoNotes/Assets/js/tabs.js') ?>
+<?= $this->asset->js('plugins/TodoNotes/Assets/js/load_dashboard.js') ?>
 
 <div id="myNotesHeader" class="page-header"><h2>
 <?= t('TodoNotes__DASHBOARD_MY_NOTES')?> > <?= t('TodoNotes__DASHBOARD_ALL_TAB') ?>
@@ -17,7 +17,7 @@
 
 <div id="tabs" class="sidebar tabs">
 
-    <?= $this->render('BoardNotes:dashboard/tabs', array(
+    <?= $this->render('TodoNotes:dashboard/tabs', array(
          'projectsAccess' => $projectsAccess,
          'user_id' => $user_id,
     )) ?>
@@ -38,7 +38,7 @@ if ($tab_id > 0) {
 
 ?>
 
-<?= $this->render('BoardNotes:project/data', array(
+<?= $this->render('TodoNotes:project/data', array(
     'projectsAccess' => $projectsAccess,
     'project' => $project,
     'project_id' => $project['id'],

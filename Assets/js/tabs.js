@@ -381,7 +381,7 @@ static #sqlReindexNotesAndLists(user_id) {
     $.ajaxSetup ({
         cache: false
     });
-    const loadUrl = '/?controller=TodoNotesController&action=ReindexNotesAndLists&plugin=BoardNotes'
+    const loadUrl = '/?controller=TodoNotesController&action=ReindexNotesAndLists&plugin=TodoNotes'
                 + '&user_id=' + user_id
                 + '&project_tab_id=' + project_tab_id;
     setTimeout(function() {
@@ -404,7 +404,7 @@ static #sqlCreateCustomNoteList(user_id, custom_note_list_name, custom_note_list
     $.ajaxSetup ({
         cache: false
     });
-    const loadUrl = '/?controller=TodoNotesController&action=CreateCustomNoteList&plugin=BoardNotes'
+    const loadUrl = '/?controller=TodoNotesController&action=CreateCustomNoteList&plugin=TodoNotes'
                 + '&user_id=' + user_id
                 + '&project_tab_id=' + project_tab_id
                 + '&custom_note_list_name=' + encodeURIComponent(custom_note_list_name)
@@ -429,7 +429,7 @@ static #sqlRenameCustomNoteList(user_id, project_id, custom_note_list_name) {
     $.ajaxSetup ({
         cache: false
     });
-    const loadUrl = '/?controller=TodoNotesController&action=RenameCustomNoteList&plugin=BoardNotes'
+    const loadUrl = '/?controller=TodoNotesController&action=RenameCustomNoteList&plugin=TodoNotes'
                 + '&user_id=' + user_id
                 + '&project_tab_id=' + project_tab_id
                 + '&project_custom_id=' + project_id
@@ -449,7 +449,7 @@ static #sqlDeleteCustomNoteList(user_id, project_id) {
     $.ajaxSetup ({
         cache: false
     });
-    const loadUrl = '/?controller=TodoNotesController&action=DeleteCustomNoteList&plugin=BoardNotes'
+    const loadUrl = '/?controller=TodoNotesController&action=DeleteCustomNoteList&plugin=TodoNotes'
                 + '&user_id=' + user_id
                 + '&project_tab_id=' + project_tab_id
                 + '&project_custom_id=' + project_id;
@@ -468,7 +468,7 @@ static #sqlUpdateCustomNoteListsPositions(user_id, order) {
     $.ajaxSetup ({
         cache: false
     });
-    const loadUrl = '/?controller=TodoNotesController&action=UpdateCustomNoteListsPositions&plugin=BoardNotes'
+    const loadUrl = '/?controller=TodoNotesController&action=UpdateCustomNoteListsPositions&plugin=TodoNotes'
                 + '&user_id=' + user_id
                 + '&project_tab_id=' + project_tab_id
                 + '&order=' + order;

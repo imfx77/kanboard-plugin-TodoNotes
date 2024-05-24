@@ -1,30 +1,30 @@
 <?php
 
-namespace Kanboard\Plugin\BoardNotes;
+namespace Kanboard\Plugin\TodoNotes;
 
 use Kanboard\Core\Plugin\Base;
 use Kanboard\Core\Translator;
 
 class Plugin extends Base
 {
-    const NAME = 'BoardNotes';
+    const NAME = 'TodoNotes';
 
     public function initialize()
     {
         //HELPER
-        $this->helper->register('translationsExportToJSHelper', '\Kanboard\Plugin\BoardNotes\Helper\TranslationsExportToJSHelper');
+        $this->helper->register('translationsExportToJSHelper', '\Kanboard\Plugin\TodoNotes\Helper\TranslationsExportToJSHelper');
 
         //HOOKS
-        $this->template->hook->attach('template:dashboard:sidebar', 'BoardNotes:dashboard/sidebar');
-        $this->template->hook->attach('template:project:dropdown', 'BoardNotes:project/dropdown');
-        $this->template->hook->attach('template:project-header:view-switcher', 'BoardNotes:project/header');
+        $this->template->hook->attach('template:dashboard:sidebar', 'TodoNotes:dashboard/sidebar');
+        $this->template->hook->attach('template:project:dropdown', 'TodoNotes:project/dropdown');
+        $this->template->hook->attach('template:project-header:view-switcher', 'TodoNotes:project/header');
 
         // ROUTES
-        $this->route->addRoute('todonotes/:project_id', 'TodoNotesController', 'ShowProject', 'BoardNotes');
-        $this->route->addRoute('todonotes/:project_id/:use_cached', 'TodoNotesController', 'ShowProject', 'BoardNotes');
-        $this->route->addRoute('todonotes/:project_id/user/:user_id', 'TodoNotesController', 'ShowProject', 'BoardNotes');
-        $this->route->addRoute('dashboard/:user_id/todonotes', 'TodoNotesController', 'ShowDashboard', 'BoardNotes');
-        $this->route->addRoute('dashboard/:user_id/todonotes/:tab_id', 'TodoNotesController', 'ShowDashboard', 'BoardNotes');
+        $this->route->addRoute('todonotes/:project_id', 'TodoNotesController', 'ShowProject', 'TodoNotes');
+        $this->route->addRoute('todonotes/:project_id/:use_cached', 'TodoNotesController', 'ShowProject', 'TodoNotes');
+        $this->route->addRoute('todonotes/:project_id/user/:user_id', 'TodoNotesController', 'ShowProject', 'TodoNotes');
+        $this->route->addRoute('dashboard/:user_id/todonotes', 'TodoNotesController', 'ShowDashboard', 'TodoNotes');
+        $this->route->addRoute('dashboard/:user_id/todonotes/:tab_id', 'TodoNotesController', 'ShowDashboard', 'TodoNotes');
     }
 
     public function onStartup()
@@ -43,7 +43,7 @@ class Plugin extends Base
     public function getClasses()
     {
         return array(
-            'Plugin\BoardNotes\Model' => array(
+            'Plugin\TodoNotes\Model' => array(
                 'TodoNotesModel'
             )
         );

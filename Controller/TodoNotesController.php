@@ -2,14 +2,14 @@
 
 /**
  * Class TodoNotesController
- * @package Kanboard\Plugin\BoardNotes\Controller
+ * @package Kanboard\Plugin\TodoNotes\Controller
  * @author  Im[F(x)]
  */
 
-namespace Kanboard\Plugin\BoardNotes\Controller;
+namespace Kanboard\Plugin\TodoNotes\Controller;
 
 use Kanboard\Controller\BaseController;
-use Kanboard\Plugin\BoardNotes\Plugin;
+use Kanboard\Plugin\TodoNotes\Plugin;
 
 class TodoNotesController extends BaseController
 {
@@ -106,7 +106,7 @@ class TodoNotesController extends BaseController
             $data = $this->todoNotesModel->GetProjectNotesForUser($project_id, $user_id, $doSortByStatus);
         }
 
-        return $this->response->html($this->helper->layout->app('BoardNotes:project/data', array(
+        return $this->response->html($this->helper->layout->app('TodoNotes:project/data', array(
             'title' => $project['name'], // rather keep the project name as title
             'project' => $project,
             'project_id' => $project_id,
@@ -165,7 +165,7 @@ class TodoNotesController extends BaseController
         $doSortByStatus = $_SESSION['todonotesOption_SortByStatus'];
         $data = $this->todoNotesModel->GetAllNotesForUser($projectsAccess, $user_id, $doSortByStatus);
 
-        return $this->response->html($this->helper->layout->dashboard('BoardNotes:dashboard/data', array(
+        return $this->response->html($this->helper->layout->dashboard('TodoNotes:dashboard/data', array(
             'title' => t('TodoNotes__DASHBOARD_TITLE', $this->helper->user->getFullname($user)),
             'user' => $user,
             'user_id' => $user_id,
@@ -184,7 +184,7 @@ class TodoNotesController extends BaseController
         $user_id = $this->ResolveUserId();
         $projectsAccess = $this->todoNotesModel->GetAllProjectIds($user_id);
 
-        return $this->response->html($this->helper->layout->app('BoardNotes:dashboard/tabs', array(
+        return $this->response->html($this->helper->layout->app('TodoNotes:dashboard/tabs', array(
             'user_id' => $user_id,
             'projectsAccess' => $projectsAccess,
         )));
@@ -307,7 +307,7 @@ class TodoNotesController extends BaseController
             'swimlane_id' => $swimlane_id,
         ));
 
-        return $this->response->html($this->helper->layout->app('BoardNotes:project/post', array(
+        return $this->response->html($this->helper->layout->app('TodoNotes:project/post', array(
             //'title' => t('Post'),
             'task_id' => $task_id,
             'project_name' => $this->projectModel->getById($project_id)["name"],
@@ -333,7 +333,7 @@ class TodoNotesController extends BaseController
         $category = $this->request->getStringParam('category');
         $data = $this->todoNotesModel->GetReportNotesForUser($project_id, $user_id, $doSortByStatus, $category);
 
-        return $this->response->html($this->helper->layout->app('BoardNotes:project/report', array(
+        return $this->response->html($this->helper->layout->app('TodoNotes:project/report', array(
             'title' => $project['name'], // rather keep the project name as title
             'project' => $project,
             'project_id' => $project_id,
@@ -350,7 +350,7 @@ class TodoNotesController extends BaseController
 
         $statsData = $this->todoNotesModel->GetProjectStatsForUser($project_id, $user_id);
 
-        return $this->response->html($this->helper->layout->app('BoardNotes:project/stats', array(
+        return $this->response->html($this->helper->layout->app('TodoNotes:project/stats', array(
             //'title' => t('Stats'),
             'statsData' => $statsData
         )));
@@ -359,7 +359,7 @@ class TodoNotesController extends BaseController
     public function RefreshStatsWidget()
     {
         $stats_project_id = $this->request->getIntegerParam('stats_project_id');
-        return $this->response->html($this->helper->layout->app('BoardNotes:widgets/stats', array(
+        return $this->response->html($this->helper->layout->app('TodoNotes:widgets/stats', array(
             'stats_project_id' => $stats_project_id,
         )));
     }
@@ -367,7 +367,7 @@ class TodoNotesController extends BaseController
     public function RefreshMarkdownPreviewWidget()
     {
         $markdown_text = $this->request->getStringParam('markdown_text');
-        return $this->response->html($this->helper->layout->app('BoardNotes:widgets/markdown_preview', array(
+        return $this->response->html($this->helper->layout->app('TodoNotes:widgets/markdown_preview', array(
             'markdown_text' => $markdown_text,
         )));
     }
@@ -406,7 +406,7 @@ class TodoNotesController extends BaseController
         }
 
         $this->response->redirect($this->helper->url->to('TodoNotesController', 'ShowDashboard', array(
-            'plugin' => 'BoardNotes',
+            'plugin' => 'TodoNotes',
             'user_id' => $user_id,
             'tab_id' => $this->FetchTabForProject($user_id, $project_tab_id),
         )));
@@ -466,7 +466,7 @@ class TodoNotesController extends BaseController
         }
 
         $this->response->redirect($this->helper->url->to('TodoNotesController', 'ShowDashboard', array(
-            'plugin' => 'BoardNotes',
+            'plugin' => 'TodoNotes',
             'user_id' => $user_id,
             'tab_id' => $this->FetchTabForProject($user_id, $project_tab_id),
         )));
@@ -496,7 +496,7 @@ class TodoNotesController extends BaseController
         }
 
         $this->response->redirect($this->helper->url->to('TodoNotesController', 'ShowDashboard', array(
-            'plugin' => 'BoardNotes',
+            'plugin' => 'TodoNotes',
             'user_id' => $user_id,
             'tab_id' => $this->FetchTabForProject($user_id, $project_tab_id),
         )));
@@ -525,7 +525,7 @@ class TodoNotesController extends BaseController
         }
 
         $this->response->redirect($this->helper->url->to('TodoNotesController', 'ShowDashboard', array(
-            'plugin' => 'BoardNotes',
+            'plugin' => 'TodoNotes',
             'user_id' => $user_id,
             'tab_id' => $this->FetchTabForProject($user_id, $project_tab_id),
         )));
@@ -555,7 +555,7 @@ class TodoNotesController extends BaseController
         }
 
         $this->response->redirect($this->helper->url->to('TodoNotesController', 'ShowDashboard', array(
-            'plugin' => 'BoardNotes',
+            'plugin' => 'TodoNotes',
             'user_id' => $user_id,
             'tab_id' => $this->FetchTabForProject($user_id, $project_tab_id),
         )));

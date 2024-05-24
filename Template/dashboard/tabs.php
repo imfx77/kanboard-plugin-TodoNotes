@@ -23,7 +23,7 @@ print $this->url->link(
     t('TodoNotes__DASHBOARD_ALL_TAB'),
     'TodoNotesController',
     'ShowDashboard',
-    array('plugin' => 'BoardNotes', 'user_id' => $user_id, 'tab_id' => $num)
+    array('plugin' => 'TodoNotes', 'user_id' => $user_id, 'tab_id' => $num)
 );
 print '</div>'; // ALL tab title
 
@@ -70,7 +70,7 @@ print '</div>'; // buttons for ALL tab
 // stats widget for ALL tab
 //----------------------------------------
 print '<div class="hideMe localTableCell tabStatsWidget">';
-print $this->render('BoardNotes:widgets/stats', array(
+print $this->render('TodoNotes:widgets/stats', array(
      'stats_project_id' => 0,
 ));
 print '</div>'; // stats widget for ALL tab
@@ -160,7 +160,7 @@ foreach ($projectsAccess as $o) {
         $o['project_name'],
         'TodoNotesController',
         'ShowDashboard',
-        array('plugin' => 'BoardNotes', 'user_id' => $user_id, 'tab_id' => $num)
+        array('plugin' => 'TodoNotes', 'user_id' => $user_id, 'tab_id' => $num)
     );
     print '</div>'; // single tab title
 
@@ -280,7 +280,7 @@ foreach ($projectsAccess as $o) {
     // stats widget for single tabs
     //----------------------------------------
     print '<div class="hideMe localTableCell tabStatsWidget">';
-    print $this->render('BoardNotes:widgets/stats', array(
+    print $this->render('TodoNotes:widgets/stats', array(
          'stats_project_id' => $o['project_id'],
     ));
     print '</div>'; // stats widget for single tabs

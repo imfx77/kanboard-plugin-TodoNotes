@@ -3,7 +3,7 @@
 </style>
 
 <?php
-print $this->asset->js('plugins/BoardNotes/Assets/js/load_stats.js');
+print $this->asset->js('plugins/TodoNotes/Assets/js/load_stats.js');
 
 $statDone = $statsData['statDone'];
 $statOpen = $statsData['statOpen'];

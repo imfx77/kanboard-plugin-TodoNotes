@@ -2,11 +2,11 @@
 
 /**
  * Sqlite schema
- * @package Kanboard\Plugin\BoardNotes\Schema
+ * @package Kanboard\Plugin\TodoNotes\Schema
  * @author  Im[F(x)]
  */
 
-namespace Kanboard\Plugin\BoardNotes\Schema;
+namespace Kanboard\Plugin\TodoNotes\Schema;
 
 use PDO;
 

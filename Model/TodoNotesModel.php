@@ -2,11 +2,11 @@
 
 /**
  * Class TodoNotesModel
- * @package Kanboard\Plugin\BoardNotes\Model
+ * @package Kanboard\Plugin\TodoNotes\Model
  * @author  Im[F(x)]
  */
 
-namespace Kanboard\Plugin\BoardNotes\Model;
+namespace Kanboard\Plugin\TodoNotes\Model;
 
 use Kanboard\Core\Base;
 use Kanboard\Model\ProjectModel;

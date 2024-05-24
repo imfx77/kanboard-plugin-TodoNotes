@@ -2,21 +2,21 @@
 
 if (!$is_refresh) { // load CSS and JS and translations only once per project !!!
     // export translations to JS
-    print $this->render('BoardNotes:translations/export_to_js');
+    print $this->render('TodoNotes:translations/export_to_js');
     // load all necessary CSS and JS
-    print $this->asset->css('plugins/BoardNotes/Assets/css/project.css');
-    print $this->asset->js('plugins/BoardNotes/Assets/js/statuses.js');
-    print $this->asset->js('plugins/BoardNotes/Assets/js/notes.js');
-    print $this->asset->js('plugins/BoardNotes/Assets/js/load_project.js');
-    print $this->asset->js('plugins/BoardNotes/Assets/js/load_report.js');
-    print $this->asset->js('plugins/BoardNotes/Assets/js/load_stats.js');
+    print $this->asset->css('plugins/TodoNotes/Assets/css/project.css');
+    print $this->asset->js('plugins/TodoNotes/Assets/js/statuses.js');
+    print $this->asset->js('plugins/TodoNotes/Assets/js/notes.js');
+    print $this->asset->js('plugins/TodoNotes/Assets/js/load_project.js');
+    print $this->asset->js('plugins/TodoNotes/Assets/js/load_report.js');
+    print $this->asset->js('plugins/TodoNotes/Assets/js/load_stats.js');
 }
 
 //----------------------------------------
 
 if (!$is_refresh && !$is_dashboard_view) {
     // show project header only when initially viewing notes from project
-    print $this->projectHeader->render($project, 'TodoNotesController', 'ShowProject', false, 'BoardNotes');
+    print $this->projectHeader->render($project, 'TodoNotesController', 'ShowProject', false, 'TodoNotes');
 }
 
 //----------------------------------------
@@ -384,7 +384,7 @@ foreach ($data as $u) {
             $projectsTabsById[ $last_project_id ]['name'],
             'TodoNotesController',
             'ShowDashboard',
-            array('plugin' => 'BoardNotes', 'user_id' => $user_id, 'tab_id' => $projectsTabsById[ $last_project_id ]['tab_id']),
+            array('plugin' => 'TodoNotes', 'user_id' => $user_id, 'tab_id' => $projectsTabsById[ $last_project_id ]['tab_id']),
         );
         // collapse/expand project button
         print '<div class="containerNoWrap containerFloatRight">';
@@ -670,7 +670,7 @@ foreach ($data as $u) {
     print ' data-project="' . $u['project_id'] . '"';
     print ' data-user="' . $user_id . '"';
     print '>';
-    print $this->render('BoardNotes:widgets/markdown_preview', array(
+    print $this->render('TodoNotes:widgets/markdown_preview', array(
          'markdown_text' => $u['description'],
     ));
     print '</div>';

@@ -18,7 +18,7 @@ static #refreshStatsWidget() {
         $.ajaxSetup ({
           cache: false
         });
-        const loadUrl = '/?controller=TodoNotesController&action=RefreshStatsWidget&plugin=BoardNotes'
+        const loadUrl = '/?controller=TodoNotesController&action=RefreshStatsWidget&plugin=TodoNotes'
                     + '&stats_project_id=' + project_id;
         $("._TodoNotes_ProjectDropdown_StatsWidget:last").html(_TodoNotes_Translations_.msgLoadingSpinner).load(loadUrl,
             function() {

@@ -1,11 +1,11 @@
 <?php
 
 // export translations to JS
-print $this->render('BoardNotes:translations/export_to_js');
+print $this->render('TodoNotes:translations/export_to_js');
 // load all necessary CSS and JS
-print $this->asset->css('plugins/BoardNotes/Assets/css/project.css');
-print $this->asset->js('plugins/BoardNotes/Assets/js/statuses.js');
-print $this->asset->js('plugins/BoardNotes/Assets/js/load_dropdown.js');
+print $this->asset->css('plugins/TodoNotes/Assets/css/project.css');
+print $this->asset->js('plugins/TodoNotes/Assets/js/statuses.js');
+print $this->asset->js('plugins/TodoNotes/Assets/js/load_dropdown.js');
 
 ?>
 
@@ -32,13 +32,13 @@ print $this->asset->js('plugins/BoardNotes/Assets/js/load_dropdown.js');
         $statsWidget .= '<div class="_TodoNotes_ProjectDropdown_StatsWidget" data-project="';
         $statsWidget .= $project['id'];
         $statsWidget .= '">';
-        $statsWidget .= $this->render('BoardNotes:widgets/stats', array('stats_project_id' => $project['id']));
+        $statsWidget .= $this->render('TodoNotes:widgets/stats', array('stats_project_id' => $project['id']));
         $statsWidget .= '</div>';
     ?>
 
     <?= $this->url->icon('wpforms', $linkTitle . $statsWidget, 'TodoNotesController', 'ShowProject', array(
         'project_id' => $project['id'],
         'use_cached' => '1',
-        'plugin' => 'BoardNotes',
+        'plugin' => 'TodoNotes',
     ), false, 'localTable') ?>
 </li>
