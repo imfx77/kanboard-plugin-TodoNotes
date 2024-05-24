@@ -21,7 +21,7 @@ print '<div class="localTable">';
 print '<div class="localTableCell textNonSelectable">';
 print $this->url->link(
     t('TodoNotes__DASHBOARD_ALL_TAB'),
-    'BoardNotesController',
+    'TodoNotesController',
     'ShowDashboard',
     array('plugin' => 'BoardNotes', 'user_id' => $user_id, 'tab_id' => $num)
 );
@@ -158,7 +158,7 @@ foreach ($projectsAccess as $o) {
     print '<div class="localTableCell textNonSelectable">';
     print $this->url->link(
         $o['project_name'],
-        'BoardNotesController',
+        'TodoNotesController',
         'ShowDashboard',
         array('plugin' => 'BoardNotes', 'user_id' => $user_id, 'tab_id' => $num)
     );

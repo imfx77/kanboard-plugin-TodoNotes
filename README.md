@@ -110,7 +110,7 @@ Every user can privately see and operate ONLY his own notes, even if notes of mu
 - Exporting note to task: Swimlanes not working. Category not working.
 - Div modal for "Delete all done" and "Analytic" is repeated on every reload
 - Should disabled projects show on all todonotes page?
-- Functions in controller (BoardNotesController) missing variables in () - needed?
+- Functions in controller (TodoNotesController) missing variables in () - needed?
 - Markups as Kanboard
 
 </details>

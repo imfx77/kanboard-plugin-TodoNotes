@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class BoardNotesController
+ * Class TodoNotesController
  * @package Kanboard\Plugin\BoardNotes\Controller
  * @author  Im[F(x)]
  */
@@ -11,7 +11,7 @@ namespace Kanboard\Plugin\BoardNotes\Controller;
 use Kanboard\Controller\BaseController;
 use Kanboard\Plugin\BoardNotes\Plugin;
 
-class BoardNotesController extends BaseController
+class TodoNotesController extends BaseController
 {
     private function ResolveUserId()
     {
@@ -405,7 +405,7 @@ class BoardNotesController extends BaseController
             $this->flash->failure(t('TodoNotes__DASHBOARD_REINDEX_FAILURE') . ' => ' . t('TodoNotes__DASHBOARD_NO_ADMIN_PRIVILEGES'));
         }
 
-        $this->response->redirect($this->helper->url->to('BoardNotesController', 'ShowDashboard', array(
+        $this->response->redirect($this->helper->url->to('TodoNotesController', 'ShowDashboard', array(
             'plugin' => 'BoardNotes',
             'user_id' => $user_id,
             'tab_id' => $this->FetchTabForProject($user_id, $project_tab_id),
@@ -465,7 +465,7 @@ class BoardNotesController extends BaseController
             $this->CustomNoteListOperationNotification($validation, $custom_note_list_is_global);
         }
 
-        $this->response->redirect($this->helper->url->to('BoardNotesController', 'ShowDashboard', array(
+        $this->response->redirect($this->helper->url->to('TodoNotesController', 'ShowDashboard', array(
             'plugin' => 'BoardNotes',
             'user_id' => $user_id,
             'tab_id' => $this->FetchTabForProject($user_id, $project_tab_id),
@@ -495,7 +495,7 @@ class BoardNotesController extends BaseController
             $this->CustomNoteListOperationNotification($validation, $is_global);
         }
 
-        $this->response->redirect($this->helper->url->to('BoardNotesController', 'ShowDashboard', array(
+        $this->response->redirect($this->helper->url->to('TodoNotesController', 'ShowDashboard', array(
             'plugin' => 'BoardNotes',
             'user_id' => $user_id,
             'tab_id' => $this->FetchTabForProject($user_id, $project_tab_id),
@@ -524,7 +524,7 @@ class BoardNotesController extends BaseController
             $this->CustomNoteListOperationNotification($validation, $is_global);
         }
 
-        $this->response->redirect($this->helper->url->to('BoardNotesController', 'ShowDashboard', array(
+        $this->response->redirect($this->helper->url->to('TodoNotesController', 'ShowDashboard', array(
             'plugin' => 'BoardNotes',
             'user_id' => $user_id,
             'tab_id' => $this->FetchTabForProject($user_id, $project_tab_id),
@@ -554,7 +554,7 @@ class BoardNotesController extends BaseController
             $this->CustomNoteListOperationNotification($validation, $is_global);
         }
 
-        $this->response->redirect($this->helper->url->to('BoardNotesController', 'ShowDashboard', array(
+        $this->response->redirect($this->helper->url->to('TodoNotesController', 'ShowDashboard', array(
             'plugin' => 'BoardNotes',
             'user_id' => $user_id,
             'tab_id' => $this->FetchTabForProject($user_id, $project_tab_id),

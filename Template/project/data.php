@@ -16,7 +16,7 @@ if (!$is_refresh) { // load CSS and JS and translations only once per project !!
 
 if (!$is_refresh && !$is_dashboard_view) {
     // show project header only when initially viewing notes from project
-    print $this->projectHeader->render($project, 'BoardNotesController', 'ShowProject', false, 'BoardNotes');
+    print $this->projectHeader->render($project, 'TodoNotesController', 'ShowProject', false, 'BoardNotes');
 }
 
 //----------------------------------------
@@ -382,7 +382,7 @@ foreach ($data as $u) {
         print '<h2 class="textNonSelectable disableEventsPropagation headerList" id="headerList-P' . $last_project_id . '">';
         print $this->url->link(
             $projectsTabsById[ $last_project_id ]['name'],
-            'BoardNotesController',
+            'TodoNotesController',
             'ShowDashboard',
             array('plugin' => 'BoardNotes', 'user_id' => $user_id, 'tab_id' => $projectsTabsById[ $last_project_id ]['tab_id']),
         );

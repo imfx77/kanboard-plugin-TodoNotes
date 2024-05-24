@@ -36,7 +36,7 @@ print $this->asset->js('plugins/BoardNotes/Assets/js/load_dropdown.js');
         $statsWidget .= '</div>';
     ?>
 
-    <?= $this->url->icon('wpforms', $linkTitle . $statsWidget, 'BoardNotesController', 'ShowProject', array(
+    <?= $this->url->icon('wpforms', $linkTitle . $statsWidget, 'TodoNotesController', 'ShowProject', array(
         'project_id' => $project['id'],
         'use_cached' => '1',
         'plugin' => 'BoardNotes',

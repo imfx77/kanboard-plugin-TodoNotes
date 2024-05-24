@@ -20,11 +20,11 @@ class Plugin extends Base
         $this->template->hook->attach('template:project-header:view-switcher', 'BoardNotes:project/header');
 
         // ROUTES
-        $this->route->addRoute('todonotes/:project_id', 'BoardNotesController', 'ShowProject', 'BoardNotes');
-        $this->route->addRoute('todonotes/:project_id/:use_cached', 'BoardNotesController', 'ShowProject', 'BoardNotes');
-        $this->route->addRoute('todonotes/:project_id/user/:user_id', 'BoardNotesController', 'ShowProject', 'BoardNotes');
-        $this->route->addRoute('dashboard/:user_id/todonotes', 'BoardNotesController', 'ShowDashboard', 'BoardNotes');
-        $this->route->addRoute('dashboard/:user_id/todonotes/:tab_id', 'BoardNotesController', 'ShowDashboard', 'BoardNotes');
+        $this->route->addRoute('todonotes/:project_id', 'TodoNotesController', 'ShowProject', 'BoardNotes');
+        $this->route->addRoute('todonotes/:project_id/:use_cached', 'TodoNotesController', 'ShowProject', 'BoardNotes');
+        $this->route->addRoute('todonotes/:project_id/user/:user_id', 'TodoNotesController', 'ShowProject', 'BoardNotes');
+        $this->route->addRoute('dashboard/:user_id/todonotes', 'TodoNotesController', 'ShowDashboard', 'BoardNotes');
+        $this->route->addRoute('dashboard/:user_id/todonotes/:tab_id', 'TodoNotesController', 'ShowDashboard', 'BoardNotes');
     }
 
     public function onStartup()
