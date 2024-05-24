@@ -2,6 +2,8 @@
  * @author  Im[F(x)]
  */
 
+// console.log('define _TodoNotes_');
+//////////////////////////////////////////////////
 class _TodoNotes_ {
 
 //------------------------------------------------
@@ -286,6 +288,7 @@ static #noteDetailsDblclickHandlers() {
 }
 
 static #noteDetailsDblclickHandlersDisable() {
+    // console.log('_TodoNotes_.noteDetailsDblclickHandlersDisable');
     //------------------------------------------------
 
     $(".liNewNote").off('dblclick');
@@ -948,8 +951,8 @@ static #modalDeleteNote(project_id, user_id, id) {
                 click: function() {
                     _TodoNotes_.#sqlDeleteNote(project_id, user_id, id);
                     $( this ).dialog( "close" );
-                    _TodoNotes_.sqlRefreshTabs(user_id);
                     _TodoNotes_.sqlRefreshNotes(project_id, user_id);
+                    _TodoNotes_.sqlRefreshTabs(user_id);
                 },
             },
             {
@@ -973,8 +976,8 @@ static #modalDeleteAllDoneNotes(project_id, user_id) {
                 click: function() {
                     _TodoNotes_.#sqlDeleteAllDoneNotes(project_id, user_id);
                     $( this ).dialog( "close" );
-                    _TodoNotes_.sqlRefreshTabs(user_id);
                     _TodoNotes_.sqlRefreshNotes(project_id, user_id);
+                    _TodoNotes_.sqlRefreshTabs(user_id);
                 },
             },
             {
@@ -999,8 +1002,8 @@ static #modalTransferNote(project_id, user_id, id) {
                     const target_project_id = $("#listNoteProject-P" + project_id + " option:selected").val();
                     _TodoNotes_.#sqlTransferNote(project_id, user_id, id, target_project_id);
                     $( this ).dialog( "close" );
-                    _TodoNotes_.sqlRefreshTabs(user_id);
                     _TodoNotes_.sqlRefreshNotes(project_id, user_id);
+                    _TodoNotes_.sqlRefreshTabs(user_id);
                 },
             },
             {
@@ -1059,8 +1062,8 @@ static #modalCreateTaskFromNote(project_id, user_id, id, is_active, title, descr
                     $("#deadloading").html(_TodoNotes_Translations_.msgLoadingSpinner).load(loadUrl);
                     if (removeNote) {
                         _TodoNotes_.#sqlDeleteNote(project_id, user_id, id);
-                        _TodoNotes_.sqlRefreshTabs(user_id);
                         _TodoNotes_.sqlRefreshNotes(project_id, user_id);
+                        _TodoNotes_.sqlRefreshTabs(user_id);
                     }
                 },
             },
@@ -1095,7 +1098,6 @@ static #modalReport(project_id, user_id) {
                     $("#result" + project_id).html(_TodoNotes_Translations_.msgLoadingSpinner).load(loadUrl,
                         function() {
                             _TodoNotes_Report_.prepareDocument();
-                            _TodoNotes_.attachAllHandlers();
                         });
                     $( this ).dialog( "close" );
                 }
@@ -1163,8 +1165,8 @@ static #sqlAddNote(project_id, user_id) {
             + '&category=' + encodeURIComponent(category)
             + '&is_active=' + is_active,
         success: function() {
-            _TodoNotes_.sqlRefreshTabs(user_id);
             _TodoNotes_.sqlRefreshNotes(project_id, user_id);
+            _TodoNotes_.sqlRefreshTabs(user_id);
         },
         error: function(xhr,textStatus,e) {
             alert('sqlAddNote');
@@ -1250,8 +1252,8 @@ static #sqlUpdateNote(project_id, user_id, id) {
                 ).css('height', 'auto');
             } else {
                 alert( _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_NOTE_UPDATE_INVALID_MSG') );
-                _TodoNotes_.sqlRefreshTabs(user_id);
                 _TodoNotes_.sqlRefreshNotes(project_id, user_id);
+                _TodoNotes_.sqlRefreshTabs(user_id);
             }
         },
         error: function(xhr,textStatus,e) {
@@ -1282,8 +1284,8 @@ static #sqlUpdateNoteStatus(project_id, user_id, id) {
                 $("#refProjectId").attr('data-timestamp', lastModifiedTimestamp);
             } else {
                 alert( _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_NOTE_UPDATE_INVALID_MSG') );
-                _TodoNotes_.sqlRefreshTabs(user_id);
                 _TodoNotes_.sqlRefreshNotes(project_id, user_id);
+                _TodoNotes_.sqlRefreshTabs(user_id);
             }
         },
         error: function(xhr,textStatus,e) {
@@ -1344,6 +1346,8 @@ static #sqlTransferNote(project_id, user_id, id, target_project_id) {
 
 //------------------------------------------------
 static sqlRefreshNotes(project_id, user_id) {
+    // console.log('_TodoNotes_.sqlRefreshNotes(');
+
     // don't cache ajax or content won't be fresh
     $.ajaxSetup ({
         cache: false
@@ -1354,15 +1358,16 @@ static sqlRefreshNotes(project_id, user_id) {
     setTimeout(function() {
         $("#result" + project_id).html(_TodoNotes_Translations_.msgLoadingSpinner).load(loadUrl,
             function() {
-                _TodoNotes_Project_.prepareDocument();
-                _TodoNotes_.#noteDetailsDblclickHandlersDisable();
-                _TodoNotes_.attachAllHandlers();
+                _TodoNotes_Project_.prepareDocument_SkipDashboardHandlers();
+                _TodoNotes_Tabs_.attachStatusUpdateHandlers();
             });
     }, 100);
 }
 
 //------------------------------------------------
 static sqlRefreshTabs(user_id) {
+    // console.log('_TodoNotes_.sqlRefreshTabs(');
+
     // refresh ONLY if notes are viewed via dashboard and project tabs are present
     if ($("#tabs").length === 0) return;
 
@@ -1375,10 +1380,10 @@ static sqlRefreshTabs(user_id) {
     setTimeout(function() {
         $("#tabs").html(_TodoNotes_Translations_.msgLoadingSpinner).load(loadUrl,
             function() {
-                _TodoNotes_Dashboard_.prepareDocument();
-                _TodoNotes_Tabs_.attachAllHandlers();
+                _TodoNotes_Dashboard_.prepareDocument_SkipDashboardHandlers();
+                _TodoNotes_Tabs_.attachTabHandlers();
             });
-    }, 100);
+    }, 200);
 }
 
 //------------------------------------------------
