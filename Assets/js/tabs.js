@@ -511,7 +511,3 @@ static attachAllHandlers() {
 } // class _TodoNotes_Tabs_
 
 //////////////////////////////////////////////////
-$(function() {
-    // attach all handlers on load page
-    _TodoNotes_Tabs_.attachAllHandlers();
-});

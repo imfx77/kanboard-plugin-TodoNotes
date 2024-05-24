@@ -52,10 +52,11 @@ static prepareDocument() {
     }
     _TodoNotes_Dashboard_.initializeSortableGroup("Private");
 
-    _TodoNotes_Translations_.initialize();
+    _TodoNotes_Statuses_.expandStatusAliases();
 
     _TodoNotes_Tabs_.updateTabs();
     _TodoNotes_Tabs_.updateTabStats();
+        _TodoNotes_Tabs_.attachAllHandlers();
 }
 
 //------------------------------------------------

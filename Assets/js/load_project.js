@@ -60,8 +60,6 @@ static prepareDocument() {
         }
     }
 
-    _TodoNotes_Translations_.initialize();
-
     _TodoNotes_Project_.resizeDocument();
 
     _TodoNotes_Statuses_.expandStatusAliases();
@@ -69,6 +67,8 @@ static prepareDocument() {
     _TodoNotes_.refreshCategoryColors();
     _TodoNotes_.refreshSortByStatus();
     _TodoNotes_.refreshShowAllDone();
+
+    _TodoNotes_.attachAllHandlers();
 
     // prepare method for dashboard view if embedded
     if (typeof(_TodoNotes_Dashboard_) !== 'undefined') {
@@ -99,3 +99,5 @@ static resizeDocument() {
 //////////////////////////////////////////////////
 window.onresize = _TodoNotes_Project_.resizeDocument;
 $( document ).ready( _TodoNotes_Project_.prepareDocument );
+
+//////////////////////////////////////////////////

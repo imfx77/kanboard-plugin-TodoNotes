@@ -2,13 +2,13 @@
  * @author  Im[F(x)]
  */
 
-console.log('define _TodoNotes_Report_');
+// console.log('define _TodoNotes_Report_');
 //////////////////////////////////////////////////
 class _TodoNotes_Report_ {
 
 //------------------------------------------------
 static prepareDocument() {
-    console.log('_TodoNotes_Report_.prepareDocument');
+    // console.log('_TodoNotes_Report_.prepareDocument');
 
     $(".noteTitleInput").hide();
 
@@ -26,6 +26,8 @@ static prepareDocument() {
     _TodoNotes_Statuses_.expandStatusAliases();
 
     _TodoNotes_.refreshCategoryColors();
+
+    _TodoNotes_.attachAllHandlers();
 
     setTimeout(function() {
         // resize the report table to fit in screen height so to scroll its contents

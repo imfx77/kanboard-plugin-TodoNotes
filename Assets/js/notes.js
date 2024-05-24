@@ -1485,6 +1485,8 @@ static #checkAndTriggerRefresh(lastModifiedTimestamp) {
 
 //------------------------------------------------
 static attachAllHandlers() {
+    // console.log('_TodoNotes_.attachAllHandlers');
+
     _TodoNotes_.#noteDetailsHandlers();
     _TodoNotes_.#noteStatusHandlers();
     _TodoNotes_.#noteActionHandlers();
@@ -1497,9 +1499,8 @@ static attachAllHandlers() {
 
 //////////////////////////////////////////////////
 $(function() {
-    // attach all handlers on load page
-    _TodoNotes_.attachAllHandlers();
-
     // start the recursive check sequence on load page
     _TodoNotes_.scheduleCheckModifications();
 });
+
+//////////////////////////////////////////////////
