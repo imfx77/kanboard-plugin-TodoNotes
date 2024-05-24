@@ -76,7 +76,13 @@ static #prepareDocument_ConfigureDashboardHandlers(skipDashboardHandlers = false
 }
 
 //------------------------------------------------
+static _dummy_() {}
+
+//------------------------------------------------
 
 } // class _TodoNotes_Dashboard_
+
+//////////////////////////////////////////////////
+_TodoNotes_Dashboard_._dummy_(); // linter error workaround
 
 //////////////////////////////////////////////////

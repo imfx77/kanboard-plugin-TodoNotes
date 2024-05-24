@@ -13,11 +13,11 @@ $statTotal = $statsData['statTotal'];
 $chart_metrics = '';
 if ($statTotal > 0) {
     $statDone_Percent = (($statDone / $statTotal) * 100);
-    $statDone_Percent = number_format((float)$statDone_Percent, 2, '.', '');
+    $statDone_Percent = number_format((float) $statDone_Percent, 2, '.', '');
     $statOpen_Percent = (($statOpen / $statTotal) * 100);
-    $statOpen_Percent = number_format((float)$statOpen_Percent, 2, '.', '');
+    $statOpen_Percent = number_format((float) $statOpen_Percent, 2, '.', '');
     $statProgress_Percent = (($statProgress / $statTotal) * 100);
-    $statProgress_Percent = number_format((float)$statProgress_Percent, 2, '.', '');
+    $statProgress_Percent = number_format((float) $statProgress_Percent, 2, '.', '');
 
     $chart_metrics .= '[';
     $chart_metrics .= '{"column_title":"' . t('Open') . '","nb_tasks":' . $statOpen . ',"percentage":' . $statOpen_Percent . '},';
