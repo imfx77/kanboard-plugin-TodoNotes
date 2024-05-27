@@ -595,7 +595,7 @@ foreach ($data as $u) {
     print '<input class="hideMe noteTitle" id="noteTitleInput-P' . $u['project_id'] . '-' . $num . '"';
     print ' type="text" placeholder=""';
     print ' title="' . t('TodoNotes__PROJECT_NOTE_TITLE_SAVE_HINT') . '"';
-    print ' value="' . $u['title'] . '"';
+    print ' value="' . htmlspecialchars($u['title']) . '"';
     print ' data-id="' . $num . '"';
     print ' data-project="' . $u['project_id'] . '"';
     print ' data-user="' . $user_id . '"';
