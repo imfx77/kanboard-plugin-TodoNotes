@@ -433,6 +433,8 @@ foreach ($data as $u) {
         if (!empty($category_color)) {
             print ' color-' . $category_color; // append category color class
         }
+    } else {
+        print ' hideMe'; // hide the label
     }
     print '"';
     print ' title="' . t('Change category') . '"';
@@ -666,11 +668,11 @@ foreach ($data as $u) {
     // Dates and Notifications panel
     print '<div class="containerFloatRight disableEventsPropagation" style="text-align: right">';
     print '<label  id="noteModifiedLabel-P' . $u['project_id'] . '-' . $num . '" class="dateLabel">';
-    print '<i class="fa fa-calendar-check-o" aria-hidden="true"></i> ' . t('Modified:') . ' ' . $u['date_modified'] . '</label><br>';
+    print '<i class="fa fa-calendar-check-o" aria-hidden="true"> ' . t('Modified:') . ' ' . $u['date_modified'] . '</i></label><br>';
     print '<label  id="noteCreatedLabel-P' . $u['project_id'] . '-' . $num . '" class="dateLabel">';
-    print '<i class="fa fa-calendar-o" aria-hidden="true"></i> ' . t('Created:') . ' ' . $u['date_created'] . '</label><br>';
+    print '<i class="fa fa-calendar-o" aria-hidden="true"> ' . t('Created:') . ' ' . $u['date_created'] . '</i></label><br>';
     print '<label  id="noteNotificationsLabel-P' . $u['project_id'] . '-' . $num . '" class="dateLabel dateLabelClickable noteNotificationsSetter">';
-    print '<i class="fa fa-bell-slash-o" aria-hidden="true"></i> ' . t('Notifications:') . ' ' . $u['date_created'] . '</label><br>';
+    print '<i class="fa fa-bell-slash-o" aria-hidden="true"> ' . t('Notifications:') . ' ' . $u['date_created'] . '</i></label><br>';
     print '</div>'; // Dates and Notifications panel
 
     //-----------------------

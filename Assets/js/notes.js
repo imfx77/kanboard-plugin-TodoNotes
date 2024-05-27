@@ -718,11 +718,17 @@ static #noteActionHandlers() {
 
                 _TodoNotes_.updateCategoryColors(project_id, id, old_category, new_category);
                 // avoid the ugly empty category label boxes
-                if (new_category && _TodoNotes_.optionShowCategoryColors) {
-                    $("#noteCatLabel-P" + project_id + "-" + id).addClass( 'task-board-category' );
+                const noteCatLabel = $("#noteCatLabel-P" + project_id + "-" + id);
+                if (new_category) {
+                    noteCatLabel.removeClass( 'hideMe' );
+                    if (_TodoNotes_.optionShowCategoryColors) {
+                        noteCatLabel.addClass( 'task-board-category' );
+                    }
                 }
-                if (!new_category || !_TodoNotes_.optionShowCategoryColors) {
-                    $("#noteCatLabel-P" + project_id + "-" + id).removeClass( 'task-board-category' );
+                if (!new_category) {
+                    noteCatLabel.addClass( 'hideMe' );
+                } else if (!_TodoNotes_.optionShowCategoryColors) {
+                    noteCatLabel.removeClass( 'task-board-category' );
                 }
 
                 _TodoNotes_.#showTitleInput(project_id, id, false);
@@ -955,6 +961,32 @@ static updateCategoryColors(project_id, id, old_category, new_category) {
     $("#trReportNr" + id + " .reportBkgr").addClass( 'color-' + new_color );
     $("#item-" + note_id + " .liNoteBkgr").addClass( 'color-' + new_color );
     $("#noteCatLabel-P" + project_id + "-" + id).addClass( 'color-' + new_color);
+}
+
+//------------------------------------------------
+// Update Timestamp routines
+//------------------------------------------------
+
+//------------------------------------------------
+// note update timestamp + #refProjectId
+static #updateNoteTimestamp(lastModified, project_id, id) {
+    const updatedTimeString = _TodoNotes_Translations_.getTranslationExportToJS('Modified:') + ' ' + lastModified.timestring;
+
+    $("#noteDatesDetails-P" + project_id + "-" + id).attr('title', updatedTimeString);
+    $("#noteModifiedLabel-P" + project_id + "-" + id + " i").text(' ' + updatedTimeString);
+
+    $("#refProjectId").attr('data-timestamp', lastModified.timestamp);
+}
+
+//------------------------------------------------
+// all notes update timestamps + #refProjectId
+static #updateAllNotesTimestamp(lastModified, project_id) {
+    const updatedTimeString = _TodoNotes_Translations_.getTranslationExportToJS('Modified:') + ' ' + lastModified.timestring;
+
+    $("[id^=noteDatesDetails-P" + project_id + "]").attr('title', updatedTimeString);
+    $("[id^=noteModifiedLabel-P" + project_id + "] i").text(' ' + updatedTimeString);
+
+    $("#refProjectId").attr('data-timestamp', lastModified.timestamp);
 }
 
 //------------------------------------------------
@@ -1265,9 +1297,9 @@ static #sqlUpdateNote(project_id, user_id, id) {
             + '&category=' + encodeURIComponent(category)
             + '&is_active=' + is_active,
         success: function(response) {
-            const lastModifiedTimestamp = parseInt(response);
-            if (lastModifiedTimestamp > 0) {
-                $("#refProjectId").attr('data-timestamp', lastModifiedTimestamp);
+            const lastModified = JSON.parse(response)
+            if (lastModified.timestamp > 0) {
+                _TodoNotes_.#updateNoteTimestamp(lastModified, project_id, id);
                 // refresh and render the details markdown preview
                 $("#noteMarkdownDetails-P" + project_id + "-" + id + "_Preview").html(_TodoNotes_Translations_.msgLoadingSpinner).load(
                     '/?controller=TodoNotesController&action=RefreshMarkdownPreviewWidget&plugin=TodoNotes'
@@ -1302,9 +1334,9 @@ static #sqlUpdateNoteStatus(project_id, user_id, id) {
             + '&note_id=' + note_id
             + '&is_active=' + is_active,
         success: function(response) {
-            const lastModifiedTimestamp = parseInt(response);
-            if (lastModifiedTimestamp > 0) {
-                $("#refProjectId").attr('data-timestamp', lastModifiedTimestamp);
+            const lastModified = JSON.parse(response)
+            if (lastModified.timestamp > 0) {
+                _TodoNotes_.#updateNoteTimestamp(lastModified, project_id, id);
             } else {
                 alert( _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_NOTE_UPDATE_INVALID_MSG') );
                 _TodoNotes_.sqlRefreshNotes(project_id, user_id);
@@ -1330,9 +1362,9 @@ static sqlUpdateNotesPositions(project_id, user_id, order) {
             + '&user_id=' + user_id
             + '&order=' + order,
         success: function(response) {
-            const lastModifiedTimestamp = parseInt(response);
-            if (lastModifiedTimestamp > 0) {
-                $("#refProjectId").attr('data-timestamp', lastModifiedTimestamp);
+            const lastModified = JSON.parse(response)
+            if (lastModified.timestamp > 0) {
+                _TodoNotes_.#updateAllNotesTimestamp(lastModified, project_id);
             } else {
                 _TodoNotes_.sqlRefreshNotes(project_id, user_id);
             }

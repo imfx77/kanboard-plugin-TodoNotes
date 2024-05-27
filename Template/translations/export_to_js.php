@@ -21,6 +21,9 @@ $translationTextIds = array(
     'TodoNotes__JS_DIALOG_REORDER_BTN',
     'TodoNotes__JS_DIALOG_RESULT_TITLE',
     'TodoNotes__PROJECT_NOTE_DETAILS_SAVE_HINT',
+    'Created:',
+    'Modified:',
+    'Notifications:',
 );
 
 $this->helper->translationsExportToJSHelper->export($translationTextIds);

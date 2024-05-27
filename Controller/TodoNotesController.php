@@ -243,10 +243,10 @@ class TodoNotesController extends BaseController
         $description = $this->request->getStringParam('description');
         $category = $this->request->getStringParam('category');
 
-        $validation = $this->todoNotesModel->UpdateNote($project_id, $user_id, $note_id, $is_active, $title, $description, $category);
-        print $validation ? time() : 0;
-
-        return $validation;
+        $timestamp = $this->todoNotesModel->UpdateNote($project_id, $user_id, $note_id, $is_active, $title, $description, $category);
+        print(json_encode(array('timestamp' => $timestamp,
+                                'timestring' => date($this->dateParser->getUserDateTimeFormat(), $timestamp))));
+        return $timestamp;
     }
 
     public function UpdateNoteStatus()
@@ -259,10 +259,10 @@ class TodoNotesController extends BaseController
 
         $is_active = $this->request->getStringParam('is_active');
 
-        $validation = $this->todoNotesModel->UpdateNoteStatus($project_id, $user_id, $note_id, $is_active);
-        print $validation ? time() : 0;
-
-        return $validation;
+        $timestamp = $this->todoNotesModel->UpdateNoteStatus($project_id, $user_id, $note_id, $is_active);
+        print(json_encode(array('timestamp' => $timestamp,
+                                'timestring' => date($this->dateParser->getUserDateTimeFormat(), $timestamp))));
+        return $timestamp;
     }
 
     public function UpdateNotesPositions()
@@ -272,10 +272,10 @@ class TodoNotesController extends BaseController
         $project_id = $project['id'];
         $notesPositions = array_map('intval', explode(',', $this->request->getStringParam('order')));
 
-        $validation = $this->todoNotesModel->UpdateNotesPositions($project_id, $user_id, $notesPositions);
-        print $validation ? time() : 0;
-
-        return $validation;
+        $timestamp = $this->todoNotesModel->UpdateNotesPositions($project_id, $user_id, $notesPositions);
+        print(json_encode(array('timestamp' => $timestamp,
+                                'timestring' => date($this->dateParser->getUserDateTimeFormat(), $timestamp))));
+        return $timestamp;
     }
 
     public function TransferNote()

@@ -394,7 +394,7 @@ class TodoNotesModel extends Base
     {
         $is_unique = $this->IsUniqueNote($project_id, $user_id, $note_id);
         if (!$is_unique) {
-            return false;
+            return 0;
         }
 
         // Get current unixtime
@@ -408,11 +408,11 @@ class TodoNotesModel extends Base
             'date_modified' => $timestamp,
         );
 
-        return $this->db->table(self::TABLE_NOTES_ENTRIES)
-            ->eq('id', $note_id)
-            ->eq('project_id', $project_id)
-            ->eq('user_id', $user_id)
-            ->update($values);
+        return ($this->db->table(self::TABLE_NOTES_ENTRIES)
+                        ->eq('id', $note_id)
+                        ->eq('project_id', $project_id)
+                        ->eq('user_id', $user_id)
+                        ->update($values)) ? $timestamp : 0;
     }
 
     // Update note Status
@@ -420,7 +420,7 @@ class TodoNotesModel extends Base
     {
         $is_unique = $this->IsUniqueNote($project_id, $user_id, $note_id);
         if (!$is_unique) {
-            return false;
+            return 0;
         }
 
         // Get current unixtime
@@ -431,11 +431,11 @@ class TodoNotesModel extends Base
             'date_modified' => $timestamp,
         );
 
-        return $this->db->table(self::TABLE_NOTES_ENTRIES)
-            ->eq('id', $note_id)
-            ->eq('project_id', $project_id)
-            ->eq('user_id', $user_id)
-            ->update($values);
+        return ($this->db->table(self::TABLE_NOTES_ENTRIES)
+                        ->eq('id', $note_id)
+                        ->eq('project_id', $project_id)
+                        ->eq('user_id', $user_id)
+                        ->update($values)) ? $timestamp : 0;
     }
 
     // Update notes positions
@@ -453,16 +453,16 @@ class TodoNotesModel extends Base
             );
 
             $result = $result && $this->db->table(self::TABLE_NOTES_ENTRIES)
-                ->eq('project_id', $project_id)
-                ->eq('user_id', $user_id)
-                ->eq('id', $row_id)
-                ->gte('is_active', 0) // -1 == deleted
-                ->update($values);
+                                        ->eq('project_id', $project_id)
+                                        ->eq('user_id', $user_id)
+                                        ->eq('id', $row_id)
+                                        ->gte('is_active', 0) // -1 == deleted
+                                        ->update($values);
 
             $num--;
         }
 
-        return $result;
+        return $result ? $timestamp : 0;
     }
 
     // Transfer note
