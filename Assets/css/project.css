@@ -127,12 +127,6 @@ label {
     clear: both !important;
 }
 
-.containerAbsoluteLeft {
-    position: absolute;
-    left: 20px;
-    margin-top: -5px;
-}
-
 .textNonSelectable {
     -webkit-user-select: none; /* Safari */
     -moz-user-select: none; /* Firefox */
@@ -170,7 +164,7 @@ label {
 }
 
 .liNoteBkgr {
-    background-color: rgba(246, 246, 246, .7);
+    background-color: rgba(192, 192, 192, .9);
     border: 1px solid;
     border-radius: 6px;
     padding: 0;
@@ -283,6 +277,13 @@ label {
     cursor: cell;
 }
 
+.buttonEditMarkdown {
+    position: absolute;
+    left: 10px;
+    margin-top: 5px;
+    font-size: 1.3em;
+}
+
 .noteDoneText {
     color: #444444;
     text-decoration: line-through;
@@ -291,6 +292,7 @@ label {
 .noteDetailsMarkdown {
     display: inline-block;
     background-color: rgba(0, 0, 0, .5);
+    margin-top: 10px;
     padding: 5px 0 0 10px;
     border: 0;
     color: #CCCCCC;
@@ -332,6 +334,7 @@ label {
     margin-top: 3px;
     margin-right: 5px;
     padding: 0 5px 0 5px;
+    border: 1px solid;
     border-radius: 5px;
     color: #1F1F1F;
     background: #999999;
@@ -340,6 +343,24 @@ label {
 
 .catLabelClickable {
     cursor: pointer;
+}
+
+.dateLabel {
+    cursor: default;
+    margin: 0 4px 4px 0;
+    padding: 0 4px 0 4px;
+    border: 0;
+    border-radius: 5px;
+    color: rgba(255, 255, 255, .5);
+    background: rgba(0, 0, 0, 0.25);
+    font-size: 1em !important;
+}
+
+.dateLabelClickable {
+    cursor: pointer;
+    border: 1px solid;
+    margin: 0 4px 0 0;
+    color: #FFFFFF;
 }
 
 .refreshIcon

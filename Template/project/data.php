@@ -309,7 +309,7 @@ if (!$readonlyNotes) {
     print '<br>';
 
     // here goes the New Note Edit Button
-    print '<div class="containerNoWrap containerAbsoluteLeft disableEventsPropagation">';
+    print '<div class="containerNoWrap buttonEditMarkdown disableEventsPropagation">';
 
     // Edit details button
     print '<button id="editDetailsNewNote"';
@@ -422,6 +422,9 @@ foreach ($data as $u) {
     // here goes the Note Button Toolbar
     print '<div class="toolbarNoteButtons containerNoWrap containerFloatRight">';
 
+    // and inside it, a Note Label Toolbar container, for easier show/hide of all labels
+    print '<span id="toolbarNoteLabels-P' . $u['project_id'] . '-' . $num . '" class="toolbarNoteLabels">';
+
     // Category label (in simple view)
     print '<label id="noteCatLabel-P' . $u['project_id'] . '-' . $num . '"';
     print ' class="catLabel catLabelClickable textNonSelectable disableEventsPropagation';
@@ -439,6 +442,30 @@ foreach ($data as $u) {
     print '>';
     print $u['category'];
     print '</label>';
+
+    // Date details
+    print '<label id="noteDatesDetails-P' . $u['project_id'] . '-' . $num . '"';
+    print ' class="dateLabel dateLabelClickable disableEventsPropagation noteDatesDetails"';
+    print ' title="' . t('Modified:') . ' ' . $u['date_modified'] . '"';
+    print ' data-id="' . $num  . '"';
+    print ' data-project="' . $project_id . '"';
+    print ' data-user="' . $user_id . '"';
+    print '>';
+    print '<i class="fa fa-calendar-check-o" aria-hidden="true"></i>';
+    print '</label>';
+
+    // Notifications details
+    print '<label id="noteNotificationsDetails-P' . $u['project_id'] . '-' . $num . '"';
+    print ' class="dateLabel dateLabelClickable disableEventsPropagation noteNotificationsDetails"';
+    print ' title="' . t('Notifications:') . ' ' . $u['date_created'] . '"';
+    print ' data-id="' . $num  . '"';
+    print ' data-project="' . $project_id . '"';
+    print ' data-user="' . $user_id . '"';
+    print '>';
+    print '<i class="fa fa-bell-slash-o" aria-hidden="true"></i>';
+    print '</label>';
+
+    print '</span>'; // Note Label Toolbar
 
     // Refresh order button (shown on changed status in SortByStatus mode only)
     print '<button id="noteRefreshOrder-P' . $u['project_id'] . '-' . $num . '"';
@@ -636,13 +663,24 @@ foreach ($data as $u) {
     print '</select>';
     print '</div>'; // Category dropdown
 
-    print '<br>';
+    // Dates and Notifications panel
+    print '<div class="containerFloatRight disableEventsPropagation" style="text-align: right">';
+    print '<label  id="noteModifiedLabel-P' . $u['project_id'] . '-' . $num . '" class="dateLabel">';
+    print '<i class="fa fa-calendar-check-o" aria-hidden="true"></i> ' . t('Modified:') . ' ' . $u['date_modified'] . '</label><br>';
+    print '<label  id="noteCreatedLabel-P' . $u['project_id'] . '-' . $num . '" class="dateLabel">';
+    print '<i class="fa fa-calendar-o" aria-hidden="true"></i> ' . t('Created:') . ' ' . $u['date_created'] . '</label><br>';
+    print '<label  id="noteNotificationsLabel-P' . $u['project_id'] . '-' . $num . '" class="dateLabel dateLabelClickable noteNotificationsSetter">';
+    print '<i class="fa fa-bell-slash-o" aria-hidden="true"></i> ' . t('Notifications:') . ' ' . $u['date_created'] . '</label><br>';
+    print '</div>'; // Dates and Notifications panel
 
     //-----------------------
 
+    // Markdown Details
+    print '<div class="containerFloatClear">';
+
     if (!$readonlyNotes) {
-        // here goes the Note Edit Buttons
-        print '<div class="containerNoWrap containerAbsoluteLeft disableEventsPropagation">';
+        // here goes the Note Edit Button
+        print '<div class="containerNoWrap buttonEditMarkdown disableEventsPropagation">';
 
         // Edit details button
         print '<button id="editDetails-P' . $u['project_id'] . '-' . $num . '"';
@@ -655,11 +693,10 @@ foreach ($data as $u) {
         print '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>';
         print '</button>';
 
-        print '</div>'; // Note Edit Buttons
+        print '</div>'; // Note Edit Button
     }
 
-    //-----------------------
-
+    // Markdown Preview
     print '<div id="noteMarkdownDetails-P' . $u['project_id'] . '-' . $num . '_Preview"';
     print ' class="markdown noteDetailsMarkdown disableEventsPropagation';
     if ($u['is_active'] == "0") {
@@ -675,6 +712,7 @@ foreach ($data as $u) {
     ));
     print '</div>';
 
+    // Markdown Editor
     if (!$readonlyNotes) {
         print '<div id="noteMarkdownDetails-P' . $u['project_id'] . '-' . $num . '_Editor"';
         print ' class="hideMe noteDetailsMarkdown noteEditorMarkdown disableEventsPropagation"';
@@ -686,6 +724,8 @@ foreach ($data as $u) {
         print $this->form->textEditor($textEditorName, array($textEditorName => $u['description']));
         print '</div>';
     }
+
+    print '</div>'; // Markdown Details
 
     //-----------------------
 

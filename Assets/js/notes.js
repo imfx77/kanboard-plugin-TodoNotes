@@ -189,7 +189,8 @@ static #toggleDetails(project_id, id) {
     $("#toolbarSeparator-P" + project_id + "-" + id).toggleClass( 'hideMe' );
     $("#noteTransfer-P" + project_id + "-" + id).toggleClass( 'hideMe' );
     $("#noteCreateTask-P" + project_id + "-" + id).toggleClass( 'hideMe' );
-    $("#noteCatLabel-P" + project_id + "-" + id).toggleClass( 'hideMe' );
+
+    $("#toolbarNoteLabels-P" + project_id + "-" + id).toggleClass( 'hideMe' );
 
     _TodoNotes_.#showTitleInput(project_id, id, !$("#noteTitleInput-P" + project_id + "-" + id).hasClass( 'hideMe' ));
 
@@ -445,7 +446,7 @@ static #noteDetailsHandlers() {
         }, 100);
     });
 
-    // Click on category label to auto open details and change category
+    // Click on Category label to auto open details and change category
     $("label" + ".catLabelClickable").click(function() {
         const project_id = $(this).attr('data-project');
         const id = $(this).attr('data-id');
@@ -453,6 +454,28 @@ static #noteDetailsHandlers() {
 
         setTimeout(function() {
             $("#cat-P" + project_id + "-" + id + "-button").trigger('click');
+            _TodoNotes_.adjustScrollableContent();
+        }, 100);
+    });
+
+    // Click on Dates Details label to auto open details and see dates
+    $("label" + ".noteDatesDetails").click(function() {
+        const project_id = $(this).attr('data-project');
+        const id = $(this).attr('data-id');
+        _TodoNotes_.#toggleDetails(project_id, id);
+
+        setTimeout(function() {
+            _TodoNotes_.adjustScrollableContent();
+        }, 100);
+    });
+
+    // Click on Notifications Details label to auto open details and change notifications
+    $("label" + ".noteNotificationsDetails").click(function() {
+        const project_id = $(this).attr('data-project');
+        const id = $(this).attr('data-id');
+        _TodoNotes_.#toggleDetails(project_id, id);
+
+        setTimeout(function() {
             _TodoNotes_.adjustScrollableContent();
         }, 100);
     });
