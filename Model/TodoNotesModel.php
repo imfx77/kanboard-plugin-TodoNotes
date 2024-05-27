@@ -79,6 +79,11 @@ class TodoNotesModel extends Base
         $result = $result->desc('position');
         $result = $result->findAll();
 
+        $userDateTimeFormat = $this->dateParser->getUserDateTimeFormat();
+        foreach ($result as &$note) {
+            $note = $this->dateParser->format($note, array('date_created', 'date_modified'), $userDateTimeFormat);
+        }
+
         return $result;
     }
 
@@ -105,6 +110,11 @@ class TodoNotesModel extends Base
         }
         $result = $result->desc('position');
         $result = $result->findAll();
+
+        $userDateTimeFormat = $this->dateParser->getUserDateTimeFormat();
+        foreach ($result as &$note) {
+            $note = $this->dateParser->format($note, array('date_created', 'date_modified'), $userDateTimeFormat);
+        }
 
         return $result;
     }

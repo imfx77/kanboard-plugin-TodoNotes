@@ -148,8 +148,9 @@ class TodoNotesController extends BaseController
 
         $projectsAccess = $this->todoNotesModel->GetAllProjectIds($user_id);
 
+        $project_id = ($tab_id > 0) ? $projectsAccess[$tab_id - 1]['project_id'] : 0;
+
         if ($tab_id > 0 && !$projectsAccess[$tab_id - 1]['is_custom']) {
-            $project_id = $projectsAccess[$tab_id - 1]['project_id'];
             $categories = $this->todoNotesModel->GetCategories($project_id);
             $columns  = $this->todoNotesModel->GetColumns($project_id);
             $swimlanes  = $this->todoNotesModel->GetSwimlanes($project_id);
@@ -163,7 +164,12 @@ class TodoNotesController extends BaseController
             $_SESSION['todonotesOption_SortByStatus'] = false;
         }
         $doSortByStatus = $_SESSION['todonotesOption_SortByStatus'];
-        $data = $this->todoNotesModel->GetAllNotesForUser($projectsAccess, $user_id, $doSortByStatus);
+
+        if ($project_id == 0) {
+            $data = $this->todoNotesModel->GetAllNotesForUser($projectsAccess, $user_id, $doSortByStatus);
+        } else {
+            $data = $this->todoNotesModel->GetProjectNotesForUser($project_id, $user_id, $doSortByStatus);
+        }
 
         return $this->response->html($this->helper->layout->dashboard('TodoNotes:dashboard/data', array(
             'title' => t('TodoNotes__DASHBOARD_TITLE', $this->helper->user->getFullname($user)),
