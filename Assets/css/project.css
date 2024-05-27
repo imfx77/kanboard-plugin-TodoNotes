@@ -363,6 +363,14 @@ label {
     color: #FFFFFF;
 }
 
+.dateLabelComplete {
+    color: rgba(32, 32, 32, .5) !important;
+}
+
+.dateLabelExpired {
+    color: #993333 !important;
+}
+
 .refreshIcon
 {
     position: fixed;

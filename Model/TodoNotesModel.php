@@ -81,7 +81,8 @@ class TodoNotesModel extends Base
 
         $userDateTimeFormat = $this->dateParser->getUserDateTimeFormat();
         foreach ($result as &$note) {
-            $note = $this->dateParser->format($note, array('date_created', 'date_modified'), $userDateTimeFormat);
+            $note['notification'] = $note['date_notified']; // keep the timestamp
+            $note = $this->dateParser->format($note, array('date_created', 'date_modified', 'date_notified'), $userDateTimeFormat);
         }
 
         return $result;
@@ -113,7 +114,8 @@ class TodoNotesModel extends Base
 
         $userDateTimeFormat = $this->dateParser->getUserDateTimeFormat();
         foreach ($result as &$note) {
-            $note = $this->dateParser->format($note, array('date_created', 'date_modified'), $userDateTimeFormat);
+            $note['notification'] = $note['date_notified']; // keep the timestamp
+            $note = $this->dateParser->format($note, array('date_created', 'date_modified', 'date_notified'), $userDateTimeFormat);
         }
 
         return $result;
@@ -323,6 +325,7 @@ class TodoNotesModel extends Base
             'description' => $description,
             'date_created' => $timestamp,
             'date_modified' => $timestamp,
+            'date_notified' => 0,
         );
 
         return $this->db->table(self::TABLE_NOTES_ENTRIES)
