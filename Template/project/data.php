@@ -409,6 +409,8 @@ foreach ($data as $u) {
     ////    PROJECT NOTE
     //////////////////////////////////////////
 
+    $isNoteActive = intval($u['is_active']);
+
     print '<li id="item' . '-' . $u['id'] . '" class="liNote" data-id="' . $num . '" data-project="' . $u['project_id'] . '">';
     print '<div class="liNoteBkgr';
     if (!empty($u['category']) && array_key_exists($u['category'], $mapCategoryColorByName)) {
@@ -565,14 +567,14 @@ foreach ($data as $u) {
     print ' data-user="' . $user_id . '"';
     print '>';
     print '<i id="noteCheckmark-P' . $u['project_id'] . '-' . $num . '"';
-    print ' data-id="' . $u['is_active'] . '"';
-    if ($u['is_active'] == "2") {
+    print ' data-id="' . $isNoteActive . '"';
+    if ($isNoteActive == 2) {
         print ' class="statusInProgress" aria-hidden="true"';
     }
-    if ($u['is_active'] == "1") {
+    if ($isNoteActive == 1) {
         print ' class="statusOpen" aria-hidden="true"';
     }
-    if ($u['is_active'] == "0") {
+    if ($isNoteActive == 0) {
         print ' class="statusDone" aria-hidden="true"';
     }
     print '></i>';
@@ -593,7 +595,7 @@ foreach ($data as $u) {
 
     // Note Title label
     print '<label id="noteTitleLabel-P' . $u['project_id'] . '-' . $num . '"';
-    if ($u['is_active'] == "0") {
+    if ($isNoteActive == 0) {
         print ' class="noteTitleLabel noteTitle noteDoneText"';
     } else {
         print ' class="noteTitleLabel noteTitle"';
@@ -701,7 +703,7 @@ foreach ($data as $u) {
     // Markdown Preview
     print '<div id="noteMarkdownDetails-P' . $u['project_id'] . '-' . $num . '_Preview"';
     print ' class="markdown noteDetailsMarkdown disableEventsPropagation';
-    if ($u['is_active'] == "0") {
+    if ($u['is_active'] == 0) {
         print ' noteDoneMarkdown';
     }
     print '"';

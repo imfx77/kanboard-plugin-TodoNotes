@@ -42,7 +42,9 @@ print '></div>';
 $num = "1";
 
 foreach ($data as $u) {
-    if ($optionShowAllDone || $u['is_active'] != "0") {
+    $isNoteActive = intval($u['is_active']);
+
+    if ($optionShowAllDone || $isNoteActive != 0) {
         print '<tr class="trReport" id="trReportNr' . $num . '">';
 
         print '<td class="tdReport tdReportNr">';
@@ -69,7 +71,7 @@ foreach ($data as $u) {
 
         // Note title label
         print '<label id="reportTitleLabel-P' . $u['project_id'] . '-' . $num . '"';
-        if ($u['is_active'] == "0") {
+        if ($isNoteActive == 0) {
             print ' class="reportTitleLabel reportTitle noteDoneText">';
         } else {
             print ' class="reportTitleLabel reportTitle">';
@@ -92,7 +94,7 @@ foreach ($data as $u) {
             print ' class="details reportDetails ui-corner-all">';
 
             print '<span id="noteMarkdownDetails-P' . $u['project_id'] . '-' . $num . '"';
-            if ($u['is_active'] == "0") {
+            if ($isNoteActive == 0) {
                 print ' class="markdown markdownReportDetails reportTitle noteDoneMarkdown"';
             } else {
                 print ' class="markdown markdownReportDetails reportTitle"';
@@ -109,13 +111,13 @@ foreach ($data as $u) {
         print '<td class="tdReport tdReportStatus reportTitle">';
         print '<div class="reportBkgr"></div>';
 
-        if ($u['is_active'] == "2") {
+        if ($isNoteActive == 2) {
             print '<i class="statusInProgress" aria-hidden="true"></i>';
         }
-        //if ($u['is_active'] == "1") {
+        //if ($isNoteActive == 1) {
         //    print '<i class="statusOpen" aria-hidden="true"></i>';
         //}
-        if ($u['is_active'] == "0") {
+        if ($isNoteActive == 0) {
             print '<i class="statusDone" aria-hidden="true"></i>';
         }
 
