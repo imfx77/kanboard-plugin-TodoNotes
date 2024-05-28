@@ -684,8 +684,14 @@ foreach ($data as $u) {
     print '<i class="fa fa-calendar-check-o" aria-hidden="true"> ' . t('Modified:') . ' ' . $u['date_modified'] . '</i></label><br>';
     print '<label  id="noteCreatedLabel-P' . $u['project_id'] . '-' . $num . '" class="dateLabel">';
     print '<i class="fa fa-calendar-o" aria-hidden="true"> ' . t('Created:') . ' ' . $u['date_created'] . '</i></label><br>';
+
     print '<label  id="noteNotificationsLabel-P' . $u['project_id'] . '-' . $num . '"';
-    print 'class="dateLabel dateLabelClickable'. $noteNotificationsStyleExtra . ' noteNotificationsSetter">';
+    print 'class="dateLabel dateLabelClickable'. $noteNotificationsStyleExtra . ' noteNotificationsSetup"';
+    print ' data-id="' . $num . '"';
+    print ' data-project="' . $u['project_id'] . '"';
+    print ' data-user="' . $user_id . '"';
+    print ' data-notification="' . $u['notification'] . '"';
+    print '>';
     print '<i class="fa fa-bell-o" aria-hidden="true"> ' . t('Notifications:') . ' ' . ($hasNotifications ? $u['date_notified'] : '🔕') . '</i></label><br>';
     print '</div>'; // Dates and Notifications panel
 
@@ -870,17 +876,29 @@ if (!$is_refresh) { // print only once per project !!!
     //---------------------------------------------
 
     print '<div class="hideMe" id="dialogReport-P' . $project_id . '" title="' . t('TodoNotes__PROJECT_CREATE_REPORT') . '">';
-    print '<div id="">';
+
     print '<label for="catReport-P' . $project_id . '">' . t('TodoNotes__DIALOG_REPORT_CATEGORY_FILTER') . ' :</label><br>';
     print '<select id="catReport-P' . $project_id . '">';
-
     print '<option></option>'; // add an empty category option
     if (!empty($listCategoriesById)) {
         print $listCategoriesById;
     }
-
     print '</select>';
+
     print '</div>';
+
+    //---------------------------------------------
+
+    print '<div class="hideMe" id="dialogNotificationsSetup-P' . $project_id . '" title="' . t('TodoNotes__DIALOG_NOTIFICATIONS_SETUP_TITLE') . '">';
+
+//    print '<label for="catReport-P' . $project_id . '">' . t('TodoNotes__DIALOG_REPORT_CATEGORY_FILTER') . ' :</label><br>';
+//    print '<select id="catReport-P' . $project_id . '">';
+//    print '<option></option>'; // add an empty category option
+//    if (!empty($listCategoriesById)) {
+//        print $listCategoriesById;
+//    }
+//    print '</select>';
+
     print '</div>';
 
     //---------------------------------------------

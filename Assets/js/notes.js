@@ -476,6 +476,7 @@ static #noteDetailsHandlers() {
         _TodoNotes_.#toggleDetails(project_id, id);
 
         setTimeout(function() {
+            $("#noteNotificationsLabel-P" + project_id + "-" + id).trigger('click');
             _TodoNotes_.adjustScrollableContent();
         }, 100);
     });
@@ -741,6 +742,18 @@ static #noteActionHandlers() {
                     }, 400); // waiting for blinkNote() to finish
             }
         }
+    });
+
+    //------------------------------------------------
+    //------------------------------------------------
+
+    // Notifications date/time picker and
+    $(".noteNotificationsSetup").click(function() {
+        const user_id = $(this).attr('data-user');
+        const project_id = $(this).attr('data-project');
+        const id = $(this).attr('data-id');
+        const notification_timestamp = parseInt($(this).attr('data-notification'));
+        _TodoNotes_.#modalNotificationsSetup(project_id, user_id, id, notification_timestamp);
     });
 
     //------------------------------------------------
@@ -1191,6 +1204,36 @@ static #modalStats(project_id, user_id) {
             },
         ]
     });
+}
+
+//------------------------------------------------
+static #modalNotificationsSetup(project_id, user_id, id, notification_timestamp) {
+    $.ajaxSetup ({
+        cache: false
+    });
+    // $("#dialogCreateTaskParams").removeClass( 'hideMe' );
+    // $("#deadloading").addClass( 'hideMe' );
+    // $("#listCatCreateTask-P" + project_id).val(category_id).change();
+    console.log(project_id + ' | ' + user_id + ' | ' + id + ' | ' + notification_timestamp);
+    console.log(typeof(notification_timestamp));
+    $("#dialogNotificationsSetup-P" + project_id).removeClass( 'hideMe' );
+    $("#dialogNotificationsSetup-P" + project_id).dialog({
+        resizable: false,
+        height: "auto",
+        modal: true,
+        buttons: [
+            // {
+            //     text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CREATE_BTN'),
+            //     click: function() {
+            //     },
+            // },
+            {
+                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
+                click: function() { $( this ).dialog( "close" ); }
+            },
+        ]
+    });
+    return false;
 }
 
 //------------------------------------------------

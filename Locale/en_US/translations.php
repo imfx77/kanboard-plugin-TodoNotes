@@ -124,6 +124,8 @@ Might be waiting for an unsubmitted New Note data input!',
 &#10;⚠️ If you have Admin privileges, you can reorder Global custom lists - this change will be displayed for ALL users! 
 &#10;Continue?',
     //
+    'TodoNotes__DIALOG_NOTIFICATIONS_SETUP_TITLE' => 'Setup Notifications for Note',
+    //
     // Specific EXPORTS FOR JS
     //
     'TodoNotes__JS_LOADING_MSG' => 'Loading ...',
