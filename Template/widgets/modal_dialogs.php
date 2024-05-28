@@ -53,7 +53,7 @@ print '<br>';
 print '<input type="checkbox" checked id="removeNote-P' . $project_id . '">';
 print '<label for="removeNote-P' . $project_id . '">&nbsp;&nbsp;' . t('TodoNotes__DIALOG_CREATE_TASK_CHECKBOX_REMOVE_NOTE') . '</label>';
 
-print '</div>';
+print '</div>'; // params
 
 print '<div id="deadloading" class="hideMe"></div>';
 print '</div>';
@@ -99,13 +99,7 @@ print '</div>';
 
 print '<div class="hideMe" id="dialogNotificationsSetup-P' . $project_id . '" title="' . t('TodoNotes__DIALOG_NOTIFICATIONS_SETUP_TITLE') . '">';
 
-//print '<label for="catReport-P' . $project_id . '">' . t('TodoNotes__DIALOG_REPORT_CATEGORY_FILTER') . ' :</label><br>';
-//print '<select id="catReport-P' . $project_id . '">';
-//print '<option></option>'; // add an empty category option
-//if (!empty($listCategoriesById)) {
-//    print $listCategoriesById;
-//}
-//print '</select>';
+print $this->helper->form->datetime(t('TodoNotes__DIALOG_NOTIFICATIONS_ALERT_TIME') . ' :&nbsp;&nbsp;', 'alerttimeNotificationsSetup-P' . $project_id, array(), array(), array('tabindex="-1"'));
 
 print '</div>';
 

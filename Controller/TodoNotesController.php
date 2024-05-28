@@ -265,6 +265,22 @@ class TodoNotesController extends BaseController
         return $timestamp;
     }
 
+    public function UpdateNoteNotificationsAlertTime()
+    {
+        $user_id = $this->ResolveUserId();
+        $project = $this->ResolveProject($user_id);
+        $project_id = $project['id'];
+
+        $note_id = $this->request->getStringParam('note_id');
+
+        $notifications_alert_timestring = $this->request->getStringParam('notifications_alert_timestring');
+
+        $timestamp = $this->todoNotesModel->UpdateNoteNotificationsAlertTime($project_id, $user_id, $note_id, $notifications_alert_timestring);
+        print(json_encode(array('timestamp' => $timestamp,
+                                'timestring' => ($timestamp > 0) ? date($this->dateParser->getUserDateTimeFormat(), $timestamp) : '')));
+        return $timestamp;
+    }
+
     public function UpdateNotesPositions()
     {
         $user_id = $this->ResolveUserId();

@@ -125,6 +125,7 @@ Might be waiting for an unsubmitted New Note data input!',
 &#10;Continue?',
     //
     'TodoNotes__DIALOG_NOTIFICATIONS_SETUP_TITLE' => 'Setup Notifications for Note',
+    'TodoNotes__DIALOG_NOTIFICATIONS_ALERT_TIME' => 'Alert Time',
     //
     // Specific EXPORTS FOR JS
     //
@@ -147,6 +148,8 @@ Aborting operation !',
     //
     'TodoNotes__JS_DIALOG_CANCEL_BTN' => 'Cancel',
     'TodoNotes__JS_DIALOG_CLOSE_BTN' => 'Close',
+    'TodoNotes__JS_DIALOG_SET_BTN' => '✔️ Set',
+    'TodoNotes__JS_DIALOG_RESET_BTN' => '⭕ Reset',
     'TodoNotes__JS_DIALOG_MOVE_BTN' => '⚠️ Move',
     'TodoNotes__JS_DIALOG_CREATE_BTN' => '✔️ Create',
     'TodoNotes__JS_DIALOG_RENAME_BTN' => '✏️ Rename',

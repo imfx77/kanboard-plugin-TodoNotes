@@ -690,7 +690,8 @@ foreach ($data as $u) {
     print ' data-id="' . $num . '"';
     print ' data-project="' . $u['project_id'] . '"';
     print ' data-user="' . $user_id . '"';
-    print ' data-notification="' . $u['notification'] . '"';
+    print ' data-notifications-timestamp="' . $u['notification'] . '"';
+    print ' data-notifications-timestring="' . $u['date_notified'] . '"';
     print '>';
     print '<i class="fa fa-bell-o" aria-hidden="true"> ' . t('Notifications:') . ' ' . ($hasNotifications ? $u['date_notified'] : '🔕') . '</i></label><br>';
     print '</div>'; // Dates and Notifications panel

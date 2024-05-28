@@ -441,6 +441,27 @@ class TodoNotesModel extends Base
                         ->update($values)) ? $timestamp : 0;
     }
 
+    // Update note Notification Time
+    public function UpdateNoteNotificationsAlertTime($project_id, $user_id, $note_id, $notifications_alert_timestring)
+    {
+        $is_unique = $this->IsUniqueNote($project_id, $user_id, $note_id);
+        if (!$is_unique) {
+            return 0;
+        }
+
+        $notifications_alert_timestamp = $this->dateParser->getTimestamp($notifications_alert_timestring);
+
+        $values = array(
+            'date_notified' => $notifications_alert_timestamp,
+        );
+
+        return ($this->db->table(self::TABLE_NOTES_ENTRIES)
+                        ->eq('id', $note_id)
+                        ->eq('project_id', $project_id)
+                        ->eq('user_id', $user_id)
+                        ->update($values)) ? $notifications_alert_timestamp : 0;
+    }
+
     // Update notes positions
     public function UpdateNotesPositions($project_id, $user_id, $notesPositions)
     {

@@ -473,12 +473,8 @@ static #noteDetailsHandlers() {
     $("label" + ".noteNotificationsDetails").click(function() {
         const project_id = $(this).attr('data-project');
         const id = $(this).attr('data-id');
-        _TodoNotes_.#toggleDetails(project_id, id);
-
-        setTimeout(function() {
-            $("#noteNotificationsLabel-P" + project_id + "-" + id).trigger('click');
-            _TodoNotes_.adjustScrollableContent();
-        }, 100);
+        // just forward click handling to the noteNotificationsLabel
+        $("#noteNotificationsLabel-P" + project_id + "-" + id).trigger('click');
     });
 
     //------------------------------------------------
@@ -752,8 +748,8 @@ static #noteActionHandlers() {
         const user_id = $(this).attr('data-user');
         const project_id = $(this).attr('data-project');
         const id = $(this).attr('data-id');
-        const notification_timestamp = parseInt($(this).attr('data-notification'));
-        _TodoNotes_.#modalNotificationsSetup(project_id, user_id, id, notification_timestamp);
+        const notifications_alert_timestring = $(this).attr('data-notifications-timestring');
+        _TodoNotes_.#modalNotificationsSetup(project_id, user_id, id, notifications_alert_timestring);
     });
 
     //------------------------------------------------
@@ -982,7 +978,7 @@ static updateCategoryColors(project_id, id, old_category, new_category) {
 
 //------------------------------------------------
 // note update timestamp + #refProjectId
-static #updateNoteTimestamp(lastModified, project_id, id) {
+static #updateNoteTimestamps(lastModified, project_id, id) {
     const updatedTimeString = _TodoNotes_Translations_.getTranslationExportToJS('Modified:') + ' ' + lastModified.timestring;
 
     $("#noteDatesDetails-P" + project_id + "-" + id).attr('title', updatedTimeString);
@@ -993,13 +989,35 @@ static #updateNoteTimestamp(lastModified, project_id, id) {
 
 //------------------------------------------------
 // all notes update timestamps + #refProjectId
-static #updateAllNotesTimestamp(lastModified, project_id) {
+static #updateAllNotesTimestamps(lastModified, project_id) {
     const updatedTimeString = _TodoNotes_Translations_.getTranslationExportToJS('Modified:') + ' ' + lastModified.timestring;
 
     $("[id^=noteDatesDetails-P" + project_id + "]").attr('title', updatedTimeString);
     $("[id^=noteModifiedLabel-P" + project_id + "] i").text(' ' + updatedTimeString);
 
     $("#refProjectId").attr('data-timestamp', lastModified.timestamp);
+}
+
+//------------------------------------------------
+// note update notification timestamp + #refProjectId
+static #updateNoteNotificationsTimestamps(notificationsAlertTime, project_id, id) {
+    const hasNotifications = (notificationsAlertTime.timestamp > 0);
+    const updatedTimeString = _TodoNotes_Translations_.getTranslationExportToJS('Notifications:') + ' '
+        + (hasNotifications ? notificationsAlertTime.timestring : '🔕');
+
+    const noteNotificationsDetails = $("#noteNotificationsDetails-P" + project_id + "-" + id);
+    noteNotificationsDetails.attr('title', updatedTimeString);
+    noteNotificationsDetails.find("i").removeClass('fa fa-bell-o').removeClass('fa fa-bell-slash-o');
+    if (hasNotifications) {
+        noteNotificationsDetails.find("i").addClass('fa fa-bell-o');
+    } else {
+        noteNotificationsDetails.find("i").addClass('fa fa-bell-slash-o');
+    }
+
+    const noteNotificationsLabel = $("#noteNotificationsLabel-P" + project_id + "-" + id );
+    noteNotificationsLabel.attr('data-notifications-timestamp', notificationsAlertTime.timestamp);
+    noteNotificationsLabel.attr('data-notifications-timestring', notificationsAlertTime.timestring);
+    noteNotificationsLabel.find(" i").text(' ' + updatedTimeString);
 }
 
 //------------------------------------------------
@@ -1207,26 +1225,33 @@ static #modalStats(project_id, user_id) {
 }
 
 //------------------------------------------------
-static #modalNotificationsSetup(project_id, user_id, id, notification_timestamp) {
+static #modalNotificationsSetup(project_id, user_id, id, notifications_alert_timestring) {
     $.ajaxSetup ({
         cache: false
     });
-    // $("#dialogCreateTaskParams").removeClass( 'hideMe' );
-    // $("#deadloading").addClass( 'hideMe' );
-    // $("#listCatCreateTask-P" + project_id).val(category_id).change();
-    console.log(project_id + ' | ' + user_id + ' | ' + id + ' | ' + notification_timestamp);
-    console.log(typeof(notification_timestamp));
+    $("#form-alerttimeNotificationsSetup-P" + project_id).val(notifications_alert_timestring);
     $("#dialogNotificationsSetup-P" + project_id).removeClass( 'hideMe' );
     $("#dialogNotificationsSetup-P" + project_id).dialog({
         resizable: false,
+        width: "auto",
         height: "auto",
         modal: true,
         buttons: [
-            // {
-            //     text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CREATE_BTN'),
-            //     click: function() {
-            //     },
-            // },
+            {
+                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_SET_BTN'),
+                click: function() {
+                    const new_notifications_alert_timestring = $("#form-alerttimeNotificationsSetup-P" + project_id).val();
+                    _TodoNotes_.#sqlUpdateNoteNotificationsAlertTime(project_id, user_id, id, new_notifications_alert_timestring);
+                    $( this ).dialog( "close" );
+                }
+            },
+            {
+                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_RESET_BTN'),
+                click: function() {
+                    _TodoNotes_.#sqlUpdateNoteNotificationsAlertTime(project_id, user_id, id, ''); // empty timestring
+                    $( this ).dialog( "close" );
+                }
+            },
             {
                 text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
                 click: function() { $( this ).dialog( "close" ); }
@@ -1342,7 +1367,7 @@ static #sqlUpdateNote(project_id, user_id, id) {
         success: function(response) {
             const lastModified = JSON.parse(response)
             if (lastModified.timestamp > 0) {
-                _TodoNotes_.#updateNoteTimestamp(lastModified, project_id, id);
+                _TodoNotes_.#updateNoteTimestamps(lastModified, project_id, id);
                 // refresh and render the details markdown preview
                 $("#noteMarkdownDetails-P" + project_id + "-" + id + "_Preview").html(_TodoNotes_Translations_.msgLoadingSpinner).load(
                     '/?controller=TodoNotesController&action=RefreshMarkdownPreviewWidget&plugin=TodoNotes'
@@ -1379,7 +1404,7 @@ static #sqlUpdateNoteStatus(project_id, user_id, id) {
         success: function(response) {
             const lastModified = JSON.parse(response)
             if (lastModified.timestamp > 0) {
-                _TodoNotes_.#updateNoteTimestamp(lastModified, project_id, id);
+                _TodoNotes_.#updateNoteTimestamps(lastModified, project_id, id);
             } else {
                 alert( _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_NOTE_UPDATE_INVALID_MSG') );
                 _TodoNotes_.sqlRefreshNotes(project_id, user_id);
@@ -1388,6 +1413,31 @@ static #sqlUpdateNoteStatus(project_id, user_id, id) {
         },
         error: function(xhr,textStatus,e) {
             alert('sqlUpdateNoteStatus');
+            alert(e);
+        }
+    });
+    return false;
+}
+
+//------------------------------------------------
+// SQL note update Notification Time
+static #sqlUpdateNoteNotificationsAlertTime(project_id, user_id, id, notifications_alert_timestring) {
+    const note_id = $("#noteId-P" + project_id + "-" + id).attr('data-note');
+
+    $.ajax({
+        cache: false,
+        type: "POST",
+        url: '/?controller=TodoNotesController&action=UpdateNoteNotificationsAlertTime&plugin=TodoNotes'
+            + '&project_custom_id=' + project_id
+            + '&user_id=' + user_id
+            + '&note_id=' + note_id
+            + '&notifications_alert_timestring=' + encodeURIComponent(notifications_alert_timestring),
+        success: function(response) {
+            const notificationsAlertTime = JSON.parse(response)
+            _TodoNotes_.#updateNoteNotificationsTimestamps(notificationsAlertTime, project_id, id);
+        },
+        error: function(xhr,textStatus,e) {
+            alert('sqlUpdateNoteNotificationsAlertTime');
             alert(e);
         }
     });
@@ -1407,7 +1457,7 @@ static sqlUpdateNotesPositions(project_id, user_id, order) {
         success: function(response) {
             const lastModified = JSON.parse(response)
             if (lastModified.timestamp > 0) {
-                _TodoNotes_.#updateAllNotesTimestamp(lastModified, project_id);
+                _TodoNotes_.#updateAllNotesTimestamps(lastModified, project_id);
             } else {
                 _TodoNotes_.sqlRefreshNotes(project_id, user_id);
             }

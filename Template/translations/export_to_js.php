@@ -13,6 +13,8 @@ $translationTextIds = array(
     'TodoNotes__JS_CUSTOM_NOTE_LIST_NAME_EMPTY_MSG',
     'TodoNotes__JS_DIALOG_CANCEL_BTN',
     'TodoNotes__JS_DIALOG_CLOSE_BTN',
+    'TodoNotes__JS_DIALOG_SET_BTN',
+    'TodoNotes__JS_DIALOG_RESET_BTN',
     'TodoNotes__JS_DIALOG_MOVE_BTN',
     'TodoNotes__JS_DIALOG_CREATE_BTN',
     'TodoNotes__JS_DIALOG_RENAME_BTN',
