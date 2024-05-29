@@ -126,7 +126,7 @@ static #TabActionHandlers() {
         }
 
         const user_id = $(this).attr('data-user');
-        _TodoNotes_Tabs_.#modalReindexNotesAndLists(user_id);
+        _TodoNotes_Modals_.ReindexNotesAndLists(user_id);
     });
 
     //------------------------------------------------
@@ -134,7 +134,7 @@ static #TabActionHandlers() {
     // create custom list (global or private)
     $("button" + "#customNoteListCreate").click(function() {
         const user_id = $(this).attr('data-user');
-        _TodoNotes_Tabs_.#modalCreateCustomNoteList(user_id);
+        _TodoNotes_Modals_.CreateCustomNoteList(user_id);
     });
 
     //------------------------------------------------
@@ -150,7 +150,7 @@ static #TabActionHandlers() {
         const user_id = $(this).attr('data-user');
         const project_id = $(this).attr('data-project');
         const default_name = $(this).closest('.singleTab').find('a').text();
-        _TodoNotes_Tabs_.#modalRenameCustomNoteList(user_id, project_id, default_name);
+        _TodoNotes_Modals_.RenameCustomNoteList(user_id, project_id, default_name);
     });
 
     // rename custom list (private)
@@ -158,7 +158,7 @@ static #TabActionHandlers() {
         const user_id = $(this).attr('data-user');
         const project_id = $(this).attr('data-project');
         const default_name = $(this).closest('.singleTab').find('a').text();
-        _TodoNotes_Tabs_.#modalRenameCustomNoteList(user_id, project_id, default_name);
+        _TodoNotes_Modals_.RenameCustomNoteList(user_id, project_id, default_name);
     });
 
     //------------------------------------------------
@@ -173,14 +173,14 @@ static #TabActionHandlers() {
 
         const user_id = $(this).attr('data-user');
         const project_id = $(this).attr('data-project');
-        _TodoNotes_Tabs_.#modalDeleteCustomNoteList(user_id, project_id);
+        _TodoNotes_Modals_.DeleteCustomNoteList(user_id, project_id);
     });
 
     // delete custom list (private)
     $("button" + ".customNoteListDeletePrivate").click(function() {
         const user_id = $(this).attr('data-user');
         const project_id = $(this).attr('data-project');
-        _TodoNotes_Tabs_.#modalDeleteCustomNoteList(user_id, project_id);
+        _TodoNotes_Modals_.DeleteCustomNoteList(user_id, project_id);
     });
 }
 
@@ -227,145 +227,6 @@ static #TabGroupHandlers() {
     _TodoNotes_Tabs_.#handleTabGroup( 'Global' );
     _TodoNotes_Tabs_.#handleTabGroup( 'Private' );
     _TodoNotes_Tabs_.#handleTabGroup( 'Regular' );
-}
-
-//------------------------------------------------
-// Modal Dialogs routines
-//------------------------------------------------
-
-//------------------------------------------------
-static #modalReindexNotesAndLists(user_id,) {
-    $("#dialogReindexNotesAndLists").removeClass( 'hideMe' );
-    $("#dialogReindexNotesAndLists").dialog({
-        resizable: false,
-        height: "auto",
-        modal: true,
-        buttons: [
-            {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_REINDEX_BTN'),
-                click : function() {
-                    _TodoNotes_Requests_.ReindexNotesAndLists(user_id);
-                    $( this ).dialog( "close" );
-                },
-            },
-            {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
-                click : function() {
-                    $( this ).dialog( "close" );
-                }
-            },
-        ]
-    });
-    return false;
-}
-
-//------------------------------------------------
-static #modalCreateCustomNoteList(user_id) {
-    $("#dialogCreateCustomNoteList").removeClass( 'hideMe' );
-    $("#dialogCreateCustomNoteList").dialog({
-        resizable: false,
-        height: "auto",
-        modal: true,
-        buttons: [
-            {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CREATE_BTN'),
-                click : function() {
-                    const custom_note_list_name = $("#nameCreateCustomNoteList").val().trim();
-                    const custom_note_list_is_global = $("#globalCreateCustomNoteList").is(":checked");
-                    _TodoNotes_Requests_.CreateCustomNoteList(user_id, custom_note_list_name, custom_note_list_is_global);
-                    $( this ).dialog( "close" );
-                },
-            },
-            {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
-                click : function() {
-                    $( this ).dialog( "close" );
-                }
-            },
-        ]
-    });
-    return false;
-}
-
-//------------------------------------------------
-static #modalRenameCustomNoteList(user_id, project_id, default_name) {
-    $("#nameRenameCustomNoteList").val(default_name);
-    $("#dialogRenameCustomNoteList").removeClass( 'hideMe' );
-    $("#dialogRenameCustomNoteList").dialog({
-        resizable: false,
-        height: "auto",
-        modal: true,
-        buttons: [
-            {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_RENAME_BTN'),
-                click : function() {
-                    const custom_note_list_name = $("#nameRenameCustomNoteList").val().trim();
-                    _TodoNotes_Requests_.RenameCustomNoteList(user_id, project_id, custom_note_list_name);
-                    $( this ).dialog( "close" );
-                },
-            },
-            {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
-                click : function() {
-                    $( this ).dialog( "close" );
-                }
-            },
-        ]
-    });
-    return false;
-}
-
-//------------------------------------------------
-static #modalDeleteCustomNoteList(user_id, project_id) {
-    $("#dialogDeleteCustomNoteList").removeClass( 'hideMe' );
-    $("#dialogDeleteCustomNoteList").dialog({
-        resizable: false,
-        height: "auto",
-        modal: true,
-        buttons: [
-            {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_DELETE_BTN'),
-                click : function() {
-                    _TodoNotes_Requests_.DeleteCustomNoteList(user_id, project_id);
-                    $( this ).dialog( "close" );
-                },
-            },
-            {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
-                click : function() {
-                    $( this ).dialog( "close" );
-                }
-            },
-        ]
-    });
-    return false;
-}
-
-//------------------------------------------------
-static modalReorderCustomNoteList(user_id, order) {
-    $("#dialogReorderCustomNoteList").removeClass( 'hideMe' );
-    $("#dialogReorderCustomNoteList").dialog({
-        resizable: false,
-        height: "auto",
-        modal: true,
-        buttons: [
-            {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_REORDER_BTN'),
-                click : function() {
-                    _TodoNotes_Requests_.UpdateCustomNoteListsPositions(user_id, order);
-                    $( this ).dialog( "close" );
-                },
-            },
-            {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
-                click : function() {
-                    $( this ).dialog( "close" );
-                    _TodoNotes_Requests_.RefreshTabs(user_id);
-                }
-            },
-        ]
-    });
-    return false;
 }
 
 //------------------------------------------------

@@ -6,6 +6,7 @@ if (!$is_refresh) { // load CSS and JS and translations only once per project !!
     // load all necessary CSS and JS
     print $this->asset->css('plugins/TodoNotes/Assets/css/project.css');
     print $this->asset->js('plugins/TodoNotes/Assets/js/statuses.js');
+    print $this->asset->js('plugins/TodoNotes/Assets/js/modals.js');
     print $this->asset->js('plugins/TodoNotes/Assets/js/requests.js');
     print $this->asset->js('plugins/TodoNotes/Assets/js/notes.js');
     print $this->asset->js('plugins/TodoNotes/Assets/js/load_project.js');
@@ -784,7 +785,7 @@ print '&nbsp;<i class="fa fa-refresh fa-spin" title="' . t('TodoNotes__PROJECT_N
 
 //----------------------------------------
 // ACTUAL CONTENT ENDS HERE !!!
-// all sections below must NOT be appended again on refresh
+// all sections below must appear ONCE ONLY and NOT be refreshed
 //----------------------------------------
 
 if (!$is_refresh) { // print only once per project !!!

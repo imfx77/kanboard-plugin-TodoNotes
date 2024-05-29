@@ -22,7 +22,7 @@ static initializeSortableGroup(group) {
             order = order.split(',');
 
             const user_id = $("#refProjectId").attr('data-user');
-            _TodoNotes_Tabs_.modalReorderCustomNoteList(user_id, order);
+            _TodoNotes_Modals_.ReorderCustomNoteList(user_id, order);
         }
     });
 
