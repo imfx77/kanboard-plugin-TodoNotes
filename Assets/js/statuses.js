@@ -28,8 +28,8 @@ if (typeof(_TodoNotes_Statuses_) === 'undefined') {
 
         //------------------------------------------------
         // Expand status aliases
-        static expandStatusAliases() {
-            // console.log('_TodoNotes_Statuses_.expandStatusAliases');
+        static ExpandStatusAliases() {
+            // console.log('_TodoNotes_Statuses_.ExpandStatusAliases');
 
             const aliasStatus = _TodoNotes_Statuses_.#aliasStatusCasual;
             //const aliasStatus = _TodoNotes_Statuses_.#aliasStatusStandard;

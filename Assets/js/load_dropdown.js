@@ -22,7 +22,7 @@ static #refreshStatsWidget() {
                     + '&stats_project_id=' + project_id;
         $("._TodoNotes_ProjectDropdown_StatsWidget:last").html(_TodoNotes_Translations_.msgLoadingSpinner).load(loadUrl,
             function() {
-                _TodoNotes_Statuses_.expandStatusAliases();
+                _TodoNotes_Statuses_.ExpandStatusAliases();
             });
     }
 
@@ -36,7 +36,7 @@ static #refreshStatsWidget() {
 static prepareDocument() {
     // console.log('_TodoNotes_Dropdown_.prepareDocument');
 
-    _TodoNotes_Statuses_.expandStatusAliases();
+    _TodoNotes_Statuses_.ExpandStatusAliases();
 
     _TodoNotes_Dropdown_.#refreshStatsWidget();
 }

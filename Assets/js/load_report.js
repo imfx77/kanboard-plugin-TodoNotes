@@ -23,7 +23,7 @@ static prepareDocument() {
         _TodoNotes_.updateCategoryColors(project_id, id, category, category)
     });
 
-    _TodoNotes_Statuses_.expandStatusAliases();
+    _TodoNotes_Statuses_.ExpandStatusAliases();
 
     _TodoNotes_.refreshCategoryColors();
 

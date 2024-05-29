@@ -539,7 +539,7 @@ static #refreshNoteStatus(project_id, id) {
         noteMarkdownDetailsEditor.removeClass( 'noteDoneMarkdown' );
     }
 
-    _TodoNotes_Statuses_.expandStatusAliases();
+    _TodoNotes_Statuses_.ExpandStatusAliases();
 }
 
 //------------------------------------------------

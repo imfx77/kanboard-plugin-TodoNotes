@@ -65,7 +65,7 @@ static #prepareDocument_ConfigureDashboardHandlers(skipDashboardHandlers = false
     }
     _TodoNotes_Dashboard_.initializeSortableGroup("Private");
 
-    _TodoNotes_Statuses_.expandStatusAliases();
+    _TodoNotes_Statuses_.ExpandStatusAliases();
 
     _TodoNotes_Tabs_.updateTabs();
     _TodoNotes_Tabs_.updateTabStats();

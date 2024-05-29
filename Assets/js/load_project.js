@@ -75,7 +75,7 @@ static #prepareDocument_ConfigureDashboardHandlers(skipDashboardHandlers = false
 
     _TodoNotes_Project_.resizeDocument();
 
-    _TodoNotes_Statuses_.expandStatusAliases();
+    _TodoNotes_Statuses_.ExpandStatusAliases();
 
     _TodoNotes_.refreshCategoryColors();
     _TodoNotes_.refreshSortByStatus();
