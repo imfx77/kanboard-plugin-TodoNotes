@@ -244,7 +244,7 @@ static #modalReindexNotesAndLists(user_id,) {
             {
                 text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_REINDEX_BTN'),
                 click : function() {
-                    _TodoNotes_Tabs_.#sqlReindexNotesAndLists(user_id);
+                    _TodoNotes_Requests_.ReindexNotesAndLists(user_id);
                     $( this ).dialog( "close" );
                 },
             },
@@ -272,7 +272,7 @@ static #modalCreateCustomNoteList(user_id) {
                 click : function() {
                     const custom_note_list_name = $("#nameCreateCustomNoteList").val().trim();
                     const custom_note_list_is_global = $("#globalCreateCustomNoteList").is(":checked");
-                    _TodoNotes_Tabs_.#sqlCreateCustomNoteList(user_id, custom_note_list_name, custom_note_list_is_global);
+                    _TodoNotes_Requests_.CreateCustomNoteList(user_id, custom_note_list_name, custom_note_list_is_global);
                     $( this ).dialog( "close" );
                 },
             },
@@ -300,7 +300,7 @@ static #modalRenameCustomNoteList(user_id, project_id, default_name) {
                 text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_RENAME_BTN'),
                 click : function() {
                     const custom_note_list_name = $("#nameRenameCustomNoteList").val().trim();
-                    _TodoNotes_Tabs_.#sqlRenameCustomNoteList(user_id, project_id, custom_note_list_name);
+                    _TodoNotes_Requests_.RenameCustomNoteList(user_id, project_id, custom_note_list_name);
                     $( this ).dialog( "close" );
                 },
             },
@@ -326,7 +326,7 @@ static #modalDeleteCustomNoteList(user_id, project_id) {
             {
                 text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_DELETE_BTN'),
                 click : function() {
-                    _TodoNotes_Tabs_.#sqlDeleteCustomNoteList(user_id, project_id);
+                    _TodoNotes_Requests_.DeleteCustomNoteList(user_id, project_id);
                     $( this ).dialog( "close" );
                 },
             },
@@ -352,7 +352,7 @@ static modalReorderCustomNoteList(user_id, order) {
             {
                 text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_REORDER_BTN'),
                 click : function() {
-                    _TodoNotes_Tabs_.#sqlUpdateCustomNoteListsPositions(user_id, order);
+                    _TodoNotes_Requests_.UpdateCustomNoteListsPositions(user_id, order);
                     $( this ).dialog( "close" );
                 },
             },
@@ -366,116 +366,6 @@ static modalReorderCustomNoteList(user_id, order) {
         ]
     });
     return false;
-}
-
-//------------------------------------------------
-// SQL routines
-//------------------------------------------------
-
-//------------------------------------------------
-// SQL reindex notes and lists DB routine
-static #sqlReindexNotesAndLists(user_id) {
-    const project_tab_id = $("#tabId").attr('data-project');
-
-    // don't cache ajax or content won't be fresh
-    $.ajaxSetup ({
-        cache: false
-    });
-    const loadUrl = '/?controller=TodoNotesController&action=ReindexNotesAndLists&plugin=TodoNotes'
-                + '&user_id=' + user_id
-                + '&project_tab_id=' + project_tab_id;
-    setTimeout(function() {
-        $("#result" + project_tab_id).html(_TodoNotes_Translations_.getSpinnerMsg('TodoNotes__JS_REINDEXING_MSG'));
-        location.replace(loadUrl);
-    }, 50);
-}
-
-//------------------------------------------------
-// SQL create custom note list
-static #sqlCreateCustomNoteList(user_id, custom_note_list_name, custom_note_list_is_global) {
-    if (!custom_note_list_name) {
-        alert( _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_CUSTOM_NOTE_LIST_NAME_EMPTY_MSG') );
-        return;
-    }
-
-    const project_tab_id = $("#tabId").attr('data-project');
-
-    // don't cache ajax or content won't be fresh
-    $.ajaxSetup ({
-        cache: false
-    });
-    const loadUrl = '/?controller=TodoNotesController&action=CreateCustomNoteList&plugin=TodoNotes'
-                + '&user_id=' + user_id
-                + '&project_tab_id=' + project_tab_id
-                + '&custom_note_list_name=' + encodeURIComponent(custom_note_list_name)
-                + '&custom_note_list_is_global=' + custom_note_list_is_global;
-    setTimeout(function() {
-        $("#result" + project_tab_id).html(_TodoNotes_Translations_.msgLoadingSpinner);
-        location.replace(loadUrl);
-    }, 50);
-}
-
-//------------------------------------------------
-// SQL rename custom note list
-static #sqlRenameCustomNoteList(user_id, project_id, custom_note_list_name) {
-    if (!custom_note_list_name) {
-        alert( _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_CUSTOM_NOTE_LIST_NAME_EMPTY_MSG') );
-        return;
-    }
-
-    const project_tab_id = $("#tabId").attr('data-project');
-
-    // don't cache ajax or content won't be fresh
-    $.ajaxSetup ({
-        cache: false
-    });
-    const loadUrl = '/?controller=TodoNotesController&action=RenameCustomNoteList&plugin=TodoNotes'
-                + '&user_id=' + user_id
-                + '&project_tab_id=' + project_tab_id
-                + '&project_custom_id=' + project_id
-                + '&custom_note_list_name=' + encodeURIComponent(custom_note_list_name);
-    setTimeout(function() {
-        $("#result" + project_tab_id).html(_TodoNotes_Translations_.msgLoadingSpinner);
-        location.replace(loadUrl);
-    }, 50);
-}
-
-//------------------------------------------------
-// SQL delete custom note list
-static #sqlDeleteCustomNoteList(user_id, project_id) {
-    const project_tab_id = $("#tabId").attr('data-project');
-
-    // don't cache ajax or content won't be fresh
-    $.ajaxSetup ({
-        cache: false
-    });
-    const loadUrl = '/?controller=TodoNotesController&action=DeleteCustomNoteList&plugin=TodoNotes'
-                + '&user_id=' + user_id
-                + '&project_tab_id=' + project_tab_id
-                + '&project_custom_id=' + project_id;
-    setTimeout(function() {
-        $("#result" + project_tab_id).html(_TodoNotes_Translations_.msgLoadingSpinner);
-        location.replace(loadUrl);
-    }, 50);
-}
-
-//------------------------------------------------
-// SQL update custom note lists positions
-static #sqlUpdateCustomNoteListsPositions(user_id, order) {
-    const project_tab_id = $("#tabId").attr('data-project');
-
-    // don't cache ajax or content won't be fresh
-    $.ajaxSetup ({
-        cache: false
-    });
-    const loadUrl = '/?controller=TodoNotesController&action=UpdateCustomNoteListsPositions&plugin=TodoNotes'
-                + '&user_id=' + user_id
-                + '&project_tab_id=' + project_tab_id
-                + '&order=' + order;
-    setTimeout(function() {
-        $("#result" + project_tab_id).html(_TodoNotes_Translations_.msgLoadingSpinner);
-        location.replace(loadUrl);
-    }, 50);
 }
 
 //------------------------------------------------
