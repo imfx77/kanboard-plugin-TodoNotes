@@ -94,7 +94,7 @@ foreach ($projectsAccess as $o) {
     if (!$separatorPlacedGlobal && $o['is_custom'] && $o['is_global']) {
         print '</ul>';
         print '<hr class="hrTabs">';
-        print '<h4 id="headerGroupGlobal" class="localTable textNonSelectable disableTabsEventsPropagation">';
+        print '<h4 id="headerGroupGlobal" class="tabGroupHeader localTable textNonSelectable disableTabsEventsPropagation">';
         print '<div class="localTableCell">' . t('TodoNotes__DASHBOARD_LIST_GROUP_GLOBAL') . '</div>';
         // collapse/expand lists group button
         print '<div class="localTableCellExpandRight">';
@@ -103,7 +103,6 @@ foreach ($projectsAccess as $o) {
         print ' title="' . t('TodoNotes__DASHBOARD_TOGGLE_LIST_GROUP') . '">';
         print '<a><i class="fa fa-chevron-circle-up " aria-hidden="true"></i></a>';
         print '</button></div></h4>';
-        print '<hr id="hrGroupGlobal" class="hrTabs">';
         $separatorPlacedGlobal = true;
         print '<ul id="groupGlobal" class="ulLists">';
     }
@@ -112,7 +111,7 @@ foreach ($projectsAccess as $o) {
     if (!$separatorPlacedPrivate && $o['is_custom'] && !$o['is_global']) {
         print '</ul>';
         print '<hr class="hrTabs">';
-        print '<h4 id="headerGroupPrivate" class="localTable textNonSelectable disableTabsEventsPropagation">';
+        print '<h4 id="headerGroupPrivate" class="tabGroupHeader localTable textNonSelectable disableTabsEventsPropagation">';
         print '<div class="localTableCell">' . t('TodoNotes__DASHBOARD_LIST_GROUP_PRIVATE') . '</div>';
         // collapse/expand lists group button
         print '<div class="localTableCellExpandRight">';
@@ -121,7 +120,6 @@ foreach ($projectsAccess as $o) {
         print ' title="' . t('TodoNotes__DASHBOARD_TOGGLE_LIST_GROUP') . '">';
         print '<a><i class="fa fa-chevron-circle-up " aria-hidden="true"></i></a>';
         print '</button></div></h4>';
-        print '<hr id="hrGroupPrivate" class="hrTabs">';
         $separatorPlacedPrivate = true;
         print '<ul id="groupPrivate" class="ulLists">';
     }
@@ -130,7 +128,7 @@ foreach ($projectsAccess as $o) {
     if (!$separatorPlacedRegular && !$o['is_custom']) {
         print '</ul>';
         print '<hr class="hrTabs">';
-        print '<h4 id="headerGroupRegular" class="localTable textNonSelectable disableTabsEventsPropagation">';
+        print '<h4 id="headerGroupRegular" class="tabGroupHeader localTable textNonSelectable disableTabsEventsPropagation">';
         print '<div class="localTableCell">' . t('TodoNotes__DASHBOARD_LIST_GROUP_REGULAR') . '</div>';
         // collapse/expand lists group button
         print '<div class="localTableCellExpandRight">';
@@ -139,7 +137,6 @@ foreach ($projectsAccess as $o) {
         print ' title="' . t('TodoNotes__DASHBOARD_TOGGLE_LIST_GROUP') . '">';
         print '<a><i class="fa fa-chevron-circle-up " aria-hidden="true"></i></a>';
         print '</button></div></h4>';
-        print '<hr id="hrGroupRegular" class="hrTabs">';
         $separatorPlacedRegular = true;
         print '<ul id="groupRegular" class="ulLists">';
     }

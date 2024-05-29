@@ -31,6 +31,11 @@
     min-width: auto;
 }
 
+.tabGroupHeader {
+    color: #444444;
+    background-color: rgba(192, 192, 192, .5);
+}
+
 .hrTabs {
     border: 1px solid;
     width: 100%;

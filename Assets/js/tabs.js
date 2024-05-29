@@ -43,10 +43,10 @@ static #UpdateTabsContainer() {
     const numListsPrivate = parseInt( $("#groupPrivate li").length );
     const numListsRegular = parseInt( $("#groupRegular li").length );
 
-    const numTabs = 1 + 3 + 3 // ALL tab + 3x group headers + 3x pairs of <hr>
-        + ($("#groupGlobal").hasClass( 'hideMe' ) ? -0.5 : numListsGlobal)     // conditional on groupGlobal visibility
-        + ($("#groupPrivate").hasClass( 'hideMe' ) ? -0.5 : numListsPrivate)   // conditional on groupPrivate visibility
-        + ($("#groupRegular").hasClass( 'hideMe' ) ? -0.5 : numListsRegular);  // conditional on groupRegular visibility
+    const numTabs = 1 + 3 * 1.5 // ALL tab + 3x group headers
+        + ($("#groupGlobal").hasClass( 'hideMe' ) ? -0.25 : numListsGlobal)     // conditional on groupGlobal visibility
+        + ($("#groupPrivate").hasClass( 'hideMe' ) ? -0.25 : numListsPrivate)   // conditional on groupPrivate visibility
+        + ($("#groupRegular").hasClass( 'hideMe' ) ? -0.25 : numListsRegular);  // conditional on groupRegular visibility
 
     $("#tabs").height(numTabs * tabHeight);
 }
