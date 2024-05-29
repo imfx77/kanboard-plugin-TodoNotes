@@ -1,5 +1,11 @@
 <?php
 
+$isAdmin = $this->user->isAdmin();
+
+//---------------------------------------------
+// Notes related modal dialogs
+//---------------------------------------------
+
 //---------------------------------------------
 
 print '<div class="hideMe" id="dialogDeleteNote" title="' . t('TodoNotes__PROJECT_NOTE_DELETE') . '">';
@@ -14,12 +20,6 @@ print '<div class="hideMe" id="dialogDeleteAllDone" title="' . t('TodoNotes__PRO
 print '<p style="white-space: pre-wrap;">';
 print t('TodoNotes__DIALOG_DELETE_ALL_DONE_MSG');
 print '</p>';
-print '</div>';
-
-//---------------------------------------------
-
-print '<div class="hideMe" id="dialogStats" title="' . t('TodoNotes__PROJECT_NOTES_STATS') . '">';
-print '<div id="dialogStatsInside"></div>';
 print '</div>';
 
 //---------------------------------------------
@@ -83,6 +83,24 @@ print '</div>';
 
 //---------------------------------------------
 
+print '<div class="hideMe" id="dialogNotificationsSetup-P' . $project_id . '" title="' . t('TodoNotes__DIALOG_NOTIFICATIONS_SETUP_TITLE') . '">';
+
+print $this->helper->form->datetime(t('TodoNotes__DIALOG_NOTIFICATIONS_ALERT_TIME') . ' :&nbsp;&nbsp;', 'alerttimeNotificationsSetup-P' . $project_id, array(), array(), array('tabindex="-1"'));
+
+print '</div>';
+
+//---------------------------------------------
+// Stats & Report modal dialogs
+//---------------------------------------------
+
+//---------------------------------------------
+
+print '<div class="hideMe" id="dialogStats" title="' . t('TodoNotes__PROJECT_NOTES_STATS') . '">';
+print '<div id="dialogStatsInside"></div>';
+print '</div>';
+
+//---------------------------------------------
+
 print '<div class="hideMe" id="dialogReport-P' . $project_id . '" title="' . t('TodoNotes__PROJECT_CREATE_REPORT') . '">';
 
 print '<label for="catReport-P' . $project_id . '">' . t('TodoNotes__DIALOG_REPORT_CATEGORY_FILTER') . ' :</label><br>';
@@ -96,10 +114,72 @@ print '</select>';
 print '</div>';
 
 //---------------------------------------------
+// Dashboard system modal dialogs
+//---------------------------------------------
 
-print '<div class="hideMe" id="dialogNotificationsSetup-P' . $project_id . '" title="' . t('TodoNotes__DIALOG_NOTIFICATIONS_SETUP_TITLE') . '">';
+//----------------------------------------
 
-print $this->helper->form->datetime(t('TodoNotes__DIALOG_NOTIFICATIONS_ALERT_TIME') . ' :&nbsp;&nbsp;', 'alerttimeNotificationsSetup-P' . $project_id, array(), array(), array('tabindex="-1"'));
+print '<div class="hideMe" id="dialogReindexNotesAndLists" title="' . t('TodoNotes__DASHBOARD_REINDEX') . '">';
+
+print '<p style="white-space: pre-wrap;">';
+print t('TodoNotes__DIALOG_REINDEX_MSG');
+print '</p>';
+
+print '</div>';
+
+//---------------------------------------------
+// Lists related modal dialogs
+//---------------------------------------------
+
+//----------------------------------------
+
+print '<div class="hideMe" id="dialogCreateCustomNoteList" title="' . t('TodoNotes__DASHBOARD_CREATE_CUSTOM_NOTE_LIST') . '">';
+
+print '<input type="text" id="nameCreateCustomNoteList" placeholder="' . t('TodoNotes__DIALOG_CREATE_CUSTOM_NOTE_LIST_NAME_PLACEHOLDER') . '">';
+print '<br>';
+if ($isAdmin) {
+    print '<input type="checkbox" id="globalCreateCustomNoteList">';
+    print '<label for="globalCreateCustomNoteList">&nbsp;&nbsp;' . t('TodoNotes__DIALOG_CREATE_CUSTOM_NOTE_LIST_GLOBAL_CHECKBOX') . '</label>';
+} else {
+    print '<input type="checkbox" disabled id="globalCreateCustomNoteList">';
+    print '<label for="globalCreateCustomNoteList">&nbsp;&nbsp;' . t('TodoNotes__DIALOG_CREATE_CUSTOM_NOTE_LIST_GLOBAL_CHECKBOX') . ' ' . t('TodoNotes__DASHBOARD_ADMIN_ONLY') . '</label>';
+}
+print '<br><br>';
+print '<p style="white-space: pre-wrap;">';
+print t('TodoNotes__DIALOG_CREATE_CUSTOM_NOTE_LIST_MSG');
+print '</p>';
+
+print '</div>';
+
+//----------------------------------------
+
+print '<div class="hideMe" id="dialogRenameCustomNoteList" title="' . t('TodoNotes__DIALOG_RENAME_CUSTOM_NOTE_LIST_TITLE') . '">';
+
+print '<input type="text" id="nameRenameCustomNoteList">';
+print '<br><br>';
+print '<p style="white-space: pre-wrap;">';
+print t('TodoNotes__DIALOG_RENAME_CUSTOM_NOTE_LIST_MSG');
+print '</p>';
+
+print '</div>';
+
+//----------------------------------------
+
+print '<div class="hideMe" id="dialogDeleteCustomNoteList" title="' . t('TodoNotes__DIALOG_DELETE_CUSTOM_NOTE_LIST_TITLE') . '">';
+
+print '<p style="white-space: pre-wrap;">';
+print t('TodoNotes__DIALOG_DELETE_CUSTOM_NOTE_LIST_MSG');
+print '</p>';
+
+print '</div>';
+
+//----------------------------------------
+
+print '<div class="hideMe" id="dialogReorderCustomNoteList" title="' . t('TodoNotes__DIALOG_REORDER_CUSTOM_NOTE_LIST_TITLE') . '">';
+
+print '<p style="white-space: pre-wrap;">';
+print t('TodoNotes__DIALOG_REORDER_CUSTOM_NOTE_LIST_MSG');
+print '</p>';
 
 print '</div>';
 
