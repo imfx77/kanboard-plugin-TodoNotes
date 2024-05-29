@@ -11,7 +11,7 @@ class _TodoNotes_Tabs_ {
 //------------------------------------------------
 
 //------------------------------------------------
-static updateTabs() {
+static UpdateTabs() {
     const project_tab_id = $("#tabId").attr('data-project');
 
     $(".singleTab").removeClass( 'active' );
@@ -23,7 +23,7 @@ static updateTabs() {
 }
 
 //------------------------------------------------
-static updateTabStats() {
+static UpdateTabStats() {
     if (_TodoNotes_.optionShowTabStats) {
         $("#settingsTabStats").find("a i").addClass( 'buttonToggled' );
         $(".tabStatsWidget").removeClass( 'hideMe' );
@@ -32,11 +32,11 @@ static updateTabStats() {
         $(".tabStatsWidget").addClass( 'hideMe' );
     }
 
-    _TodoNotes_Tabs_.#updateTabsContainer();
+    _TodoNotes_Tabs_.#UpdateTabsContainer();
 }
 
 //------------------------------------------------
-static #updateTabsContainer() {
+static #UpdateTabsContainer() {
     const tabHeight = $("#tabs li:eq(0)").outerHeight();
 
     const numListsGlobal = parseInt( $("#groupGlobal li").length );
@@ -114,7 +114,7 @@ static #TabActionHandlers() {
         _TodoNotes_.optionShowTabStats = !_TodoNotes_.optionShowTabStats;
         $("#session_vars").attr('data-optionShowTabStats', _TodoNotes_.optionShowTabStats);
 
-        _TodoNotes_Tabs_.updateTabStats();
+        _TodoNotes_Tabs_.UpdateTabStats();
     });
 
     // start DB optimization routine on system reindex button
@@ -189,24 +189,24 @@ static #TabActionHandlers() {
 //------------------------------------------------
 
 //------------------------------------------------
-static #toggleTabGroup(group) {
+static #ToggleTabGroup(group) {
     $("#hrGroup" + group).toggleClass( 'hideMe' );
     $("#group" + group).toggleClass( 'hideMe' );
 
     $("#toggleGroup" + group).find('i').toggleClass( "fa-chevron-circle-up" );
     $("#toggleGroup" + group).find('i').toggleClass( "fa-chevron-circle-down" );
 
-    _TodoNotes_Tabs_.#updateTabsContainer();
+    _TodoNotes_Tabs_.#UpdateTabsContainer();
 }
 
 //------------------------------------------------
-static #handleTabGroup(group) {
+static #HandleTabGroup(group) {
     $("#headerGroup" + group).dblclick(function() {
-        _TodoNotes_Tabs_.#toggleTabGroup(group);
+        _TodoNotes_Tabs_.#ToggleTabGroup(group);
     });
 
     $("#toggleGroup" + group).click(function() {
-        _TodoNotes_Tabs_.#toggleTabGroup(group);
+        _TodoNotes_Tabs_.#ToggleTabGroup(group);
     });
 }
 
@@ -224,9 +224,9 @@ static #TabGroupHandlers() {
     //------------------------------------------------
 
     // toggle visibility of tab groups
-    _TodoNotes_Tabs_.#handleTabGroup( 'Global' );
-    _TodoNotes_Tabs_.#handleTabGroup( 'Private' );
-    _TodoNotes_Tabs_.#handleTabGroup( 'Regular' );
+    _TodoNotes_Tabs_.#HandleTabGroup( 'Global' );
+    _TodoNotes_Tabs_.#HandleTabGroup( 'Private' );
+    _TodoNotes_Tabs_.#HandleTabGroup( 'Regular' );
 }
 
 //------------------------------------------------
@@ -234,23 +234,23 @@ static #TabGroupHandlers() {
 //------------------------------------------------
 
 //------------------------------------------------
-static attachStatusUpdateHandlers() {
-    // console.log('_TodoNotes_Tabs_.attachStatusUpdateHandlers');
+static AttachStatusUpdateHandlers() {
+    // console.log('_TodoNotes_Tabs_.AttachStatusUpdateHandlers');
 
     _TodoNotes_Tabs_.#TabStatsHandlers();
 }
 
 //------------------------------------------------
-static attachTabHandlers() {
-    // console.log('_TodoNotes_Tabs_.attachTabHandlers');
+static AttachTabHandlers() {
+    // console.log('_TodoNotes_Tabs_.AttachTabHandlers');
 
     _TodoNotes_Tabs_.#TabActionHandlers();
     _TodoNotes_Tabs_.#TabGroupHandlers();
 }
 
 //------------------------------------------------
-static attachAllHandlers() {
-    // console.log('_TodoNotes_Tabs_.attachAllHandlers');
+static AttachAllHandlers() {
+    // console.log('_TodoNotes_Tabs_.AttachAllHandlers');
 
     _TodoNotes_Tabs_.#TabStatsHandlers();
     _TodoNotes_Tabs_.#TabActionHandlers();

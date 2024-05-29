@@ -67,11 +67,11 @@ static #prepareDocument_ConfigureDashboardHandlers(skipDashboardHandlers = false
 
     _TodoNotes_Statuses_.ExpandStatusAliases();
 
-    _TodoNotes_Tabs_.updateTabs();
-    _TodoNotes_Tabs_.updateTabStats();
+    _TodoNotes_Tabs_.UpdateTabs();
+    _TodoNotes_Tabs_.UpdateTabStats();
 
     if (!skipDashboardHandlers) {
-        _TodoNotes_Tabs_.attachAllHandlers();
+        _TodoNotes_Tabs_.AttachAllHandlers();
     }
 }
 

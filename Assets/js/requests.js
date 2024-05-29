@@ -252,7 +252,7 @@ static RefreshNotes(project_id, user_id) {
         $("#result" + project_id).html(_TodoNotes_Translations_.msgLoadingSpinner).load(loadUrl,
             function() {
                 _TodoNotes_Project_.prepareDocument_SkipDashboardHandlers();
-                _TodoNotes_Tabs_.attachStatusUpdateHandlers();
+                _TodoNotes_Tabs_.AttachStatusUpdateHandlers();
             });
     }, 100);
 }
@@ -384,7 +384,7 @@ static RefreshTabs(user_id) {
         $("#tabs").html(_TodoNotes_Translations_.msgLoadingSpinner).load(loadUrl,
             function() {
                 _TodoNotes_Dashboard_.prepareDocument_SkipDashboardHandlers();
-                _TodoNotes_Tabs_.attachTabHandlers();
+                _TodoNotes_Tabs_.AttachTabHandlers();
             });
     }, 200);
 }
