@@ -112,7 +112,7 @@ static UpdateNote(project_id, user_id, id) {
         success: function(response) {
             const lastModified = JSON.parse(response)
             if (lastModified.timestamp > 0) {
-                _TodoNotes_.updateNoteTimestamps(lastModified, project_id, id);
+                _TodoNotes_.UpdateNoteTimestamps(lastModified, project_id, id);
                 // refresh and render the details markdown preview
                 $("#noteMarkdownDetails-P" + project_id + "-" + id + "_Preview").html(_TodoNotes_Translations_.msgLoadingSpinner).load(
                     '/?controller=TodoNotesController&action=RefreshMarkdownPreviewWidget&plugin=TodoNotes'
@@ -149,7 +149,7 @@ static UpdateNoteStatus(project_id, user_id, id) {
         success: function(response) {
             const lastModified = JSON.parse(response)
             if (lastModified.timestamp > 0) {
-                _TodoNotes_.updateNoteTimestamps(lastModified, project_id, id);
+                _TodoNotes_.UpdateNoteTimestamps(lastModified, project_id, id);
             } else {
                 alert( _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_NOTE_UPDATE_INVALID_MSG') );
                 _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
@@ -179,7 +179,7 @@ static UpdateNoteNotificationsAlertTime(project_id, user_id, id, notifications_a
             + '&notifications_alert_timestring=' + encodeURIComponent(notifications_alert_timestring),
         success: function(response) {
             const notificationsAlertTime = JSON.parse(response)
-            _TodoNotes_.updateNoteNotificationsTimestamps(notificationsAlertTime, project_id, id);
+            _TodoNotes_.UpdateNoteNotificationsTimestamps(notificationsAlertTime, project_id, id);
         },
         error: function(xhr,textStatus,e) {
             alert('_TodoNotes_Requests_.UpdateNoteNotificationsAlertTime');
@@ -202,7 +202,7 @@ static UpdateNotesPositions(project_id, user_id, order) {
         success: function(response) {
             const lastModified = JSON.parse(response)
             if (lastModified.timestamp > 0) {
-                _TodoNotes_.updateAllNotesTimestamps(lastModified, project_id);
+                _TodoNotes_.UpdateAllNotesTimestamps(lastModified, project_id);
             } else {
                 _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
             }
@@ -421,7 +421,7 @@ static GetLastModifiedTimestamp(project_id, user_id) {
             + '&project_custom_id=' + project_id
             + '&user_id=' + user_id,
         success: function(response) {
-            _TodoNotes_.checkAndTriggerRefresh(JSON.parse(response));
+            _TodoNotes_.CheckAndTriggerRefresh(JSON.parse(response));
         },
         error: function(xhr,textStatus,e) {
             alert('_TodoNotes_Requests_.GetLastModifiedTimestamp');

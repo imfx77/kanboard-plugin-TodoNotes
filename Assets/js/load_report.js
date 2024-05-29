@@ -20,14 +20,14 @@ static prepareDocument() {
         const id = $(this).attr('data-id');
         const project_id = $(this).attr('data-project');
         const category = $(this).html();
-        _TodoNotes_.updateCategoryColors(project_id, id, category, category)
+        _TodoNotes_.UpdateCategoryColors(project_id, id, category, category)
     });
 
     _TodoNotes_Statuses_.ExpandStatusAliases();
 
-    _TodoNotes_.refreshCategoryColors();
+    _TodoNotes_.RefreshCategoryColors();
 
-    _TodoNotes_.attachAllHandlers();
+    _TodoNotes_.AttachAllHandlers();
 
     setTimeout(function() {
         // resize the report table to fit in screen height so to scroll its contents
@@ -36,7 +36,7 @@ static prepareDocument() {
         scrollableTable.height(0);
 
         let maxHeight;
-        if ( _TodoNotes_.isMobile() ) {
+        if ( _TodoNotes_.IsMobile() ) {
             // adjust scrollableTable height
             maxHeight = 0.7 * $(window).height();
             scrollableTable.height( Math.min(maxHeight, scrollableTable.prop('scrollHeight')) );

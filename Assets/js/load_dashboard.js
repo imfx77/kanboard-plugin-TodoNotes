@@ -26,7 +26,7 @@ static initializeSortableGroup(group) {
         }
     });
 
-    if (_TodoNotes_.isMobile()) {
+    if (_TodoNotes_.IsMobile()) {
         // bind explicit reorder handles for mobile
         $("#group" + group).sortable({
             handle: ".sortableGroupHandle",
@@ -51,7 +51,7 @@ static #prepareDocument_ConfigureDashboardHandlers(skipDashboardHandlers = false
 
     _TodoNotes_.optionShowTabStats = $("#session_vars").attr('data-optionShowTabStats') === 'true';
 
-    const isMobile = _TodoNotes_.isMobile();
+    const isMobile = _TodoNotes_.IsMobile();
     const isAdmin = $("#tabId").attr('data-admin');
 
     if(isMobile) {

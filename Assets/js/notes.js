@@ -11,7 +11,7 @@ class _TodoNotes_ {
 //------------------------------------------------
 static #isMobileValue = null;
 
-static isMobile() {
+static IsMobile() {
 
     // initialize ONCE
     if (_TodoNotes_.#isMobileValue === null) {
@@ -41,13 +41,13 @@ static optionShowTabStats = false;
 
 //------------------------------------------------
 // Adjust scrollableContent container
-static adjustScrollableContent() {
+static AdjustScrollableContent() {
     const scrollableContent = $("#scrollableContent");
     if (!scrollableContent.length) return; // missing scrollableContent when NOT in project screen
     scrollableContent.height(0);
 
     let maxHeight;
-    if ( _TodoNotes_.isMobile() ) {
+    if ( _TodoNotes_.IsMobile() ) {
         // adjust scrollableContent height
         maxHeight = 0.7 * $(window).height();
         scrollableContent.height( Math.min(maxHeight, scrollableContent.prop('scrollHeight')) );
@@ -64,7 +64,7 @@ static adjustScrollableContent() {
 
 //------------------------------------------------
 // Adjust notePlaceholder container
-static adjustNotePlaceholders(project_id, id) {
+static AdjustNotePlaceholders(project_id, id) {
     const isTitle = (project_id === '0' && id === '0');
     if (isTitle) {
         if (!$(".liNewNote").length) return; // missing NewNote when NOT in project screen
@@ -89,22 +89,22 @@ static adjustNotePlaceholders(project_id, id) {
 
 //------------------------------------------------
 // Adjust ALL notePlaceholder containers
-static adjustAllNotesPlaceholders() {
+static AdjustAllNotesPlaceholders() {
     setTimeout(function() {
         // adjust notePlaceholder containers where not needed
-        _TodoNotes_.adjustNotePlaceholders('0', '0');
+        _TodoNotes_.AdjustNotePlaceholders('0', '0');
         $("button" + ".buttonStatus").each(function() {
             const project_id = $(this).attr('data-project');
             const id = $(this).attr('data-id');
-            _TodoNotes_.adjustNotePlaceholders(project_id, id);
+            _TodoNotes_.AdjustNotePlaceholders(project_id, id);
         });
     }, 100);
 }
 
 //------------------------------------------------
 // Adjust ALL notePlaceholder containers
-static adjustAllNotesTitleInputs() {
-    _TodoNotes_.showTitleInputNewNote();
+static AdjustAllNotesTitleInputs() {
+    _TodoNotes_.ShowTitleInputNewNote();
     $(".noteTitleLabel").each(function() {
         if ($(this).hasClass( 'hideMe' )) {
             const project_id = $(this).attr('data-project');
@@ -148,7 +148,7 @@ static #showTitleInput(project_id, id, show_title_input) {
             }
         }
 
-        if (_TodoNotes_.isMobile()) {
+        if (_TodoNotes_.IsMobile()) {
             noteTitleInput.width( inputWidth );
         } else {
             const toolbarButtons = noteDetails.parent().find(".toolbarNoteButtons");
@@ -160,12 +160,12 @@ static #showTitleInput(project_id, id, show_title_input) {
         noteTitleLabel.removeClass( 'hideMe' );
     }
 
-    _TodoNotes_.adjustNotePlaceholders(project_id, id);
+    _TodoNotes_.AdjustNotePlaceholders(project_id, id);
 }
 
 //------------------------------------------------
 // Show editor or markdown visuals for details of existing notes
-static #showDetailsInput(project_id, id, show_details_input) {
+static #ShowDetailsInput(project_id, id, show_details_input) {
     if (show_details_input) {
         $("#editDetails-P" + project_id + "-" + id).addClass( 'hideMe' );
         $("#noteMarkdownDetails-P" + project_id + "-" + id + "_Preview").addClass( 'hideMe' );
@@ -180,10 +180,10 @@ static #showDetailsInput(project_id, id, show_details_input) {
 
 //------------------------------------------------
 // Show details for existing notes (toggle class)
-static #toggleDetails(project_id, id) {
+static #ToggleDetails(project_id, id) {
     $("#noteDetails-P" + project_id + "-" + id).toggleClass( 'hideMe' );
     $("#noteDelete-P" + project_id + "-" + id).toggleClass( 'hideMe' );
-    if (!_TodoNotes_.isMobile()) {
+    if (!_TodoNotes_.IsMobile()) {
         $("#noteSave-P" + project_id + "-" + id).toggleClass( 'hideMe' );
     }
     $("#toolbarSeparator-P" + project_id + "-" + id).toggleClass( 'hideMe' );
@@ -197,22 +197,22 @@ static #toggleDetails(project_id, id) {
     $("#showDetails-P" + project_id + "-" + id).find('i').toggleClass( "fa-angle-double-down" );
     $("#showDetails-P" + project_id + "-" + id).find('i').toggleClass( "fa-angle-double-up" );
 
-    _TodoNotes_.adjustNotePlaceholders(project_id, id);
+    _TodoNotes_.AdjustNotePlaceholders(project_id, id);
 }
 
 //------------------------------------------------
 // Blink note
-static #blinkNote(project_id, id) {
+static #BlinkNote(project_id, id) {
     const note_id = $("#noteId-P" + project_id + "-" + id).attr('data-note');
     setTimeout(function() { $("#item-" + note_id).addClass( 'blurMe' ); }, 0);
-    setTimeout(function() { _TodoNotes_.#toggleDetails(project_id, id); }, 100);
-    setTimeout(function() { _TodoNotes_.#toggleDetails(project_id, id); }, 200);
+    setTimeout(function() { _TodoNotes_.#ToggleDetails(project_id, id); }, 100);
+    setTimeout(function() { _TodoNotes_.#ToggleDetails(project_id, id); }, 200);
     setTimeout(function() { $("#item-" + note_id).removeClass( 'blurMe' ); }, 300);
 }
 
 //------------------------------------------------
 // Show input visuals for title of NewNote
-static showTitleInputNewNote() {
+static ShowTitleInputNewNote() {
     const noteDetails = $("#detailsNewNote");
     const previewDetails = $("#noteMarkdownDetailsNewNote_Preview");
     const editor = $('[name="editorMarkdownDetailsNewNote"]');
@@ -244,15 +244,15 @@ static showTitleInputNewNote() {
 
 //------------------------------------------------
 // Show details menu for NewNote (toggle class)
-static #toggleDetailsNewNote() {
+static #ToggleDetailsNewNote() {
     $("#detailsNewNote").toggleClass( 'hideMe' );
-    if (!_TodoNotes_.isMobile()) {
+    if (!_TodoNotes_.IsMobile()) {
         $("#saveNewNote").toggleClass( 'hideMe' );
     }
     $("#showDetailsNewNote").find('i').toggleClass( "fa-angle-double-down" );
     $("#showDetailsNewNote").find('i').toggleClass( "fa-angle-double-up" );
 
-    _TodoNotes_.showTitleInputNewNote();
+    _TodoNotes_.ShowTitleInputNewNote();
 }
 
 //------------------------------------------------
@@ -262,24 +262,24 @@ static #toggleDetailsNewNote() {
 //------------------------------------------------
 static #noteDetailsDblclickHandlersInitialized = false;
 
-static #noteDetailsDblclickHandlers() {
+static #NoteDetailsDblclickHandlers() {
     //------------------------------------------------
 
     if (_TodoNotes_.#noteDetailsDblclickHandlersInitialized) return;
 
     // Show details for new note by dblclick the New Note
     $(".liNewNote").dblclick(function() {
-        _TodoNotes_.#toggleDetailsNewNote();
+        _TodoNotes_.#ToggleDetailsNewNote();
     });
 
     // Show details for note by dblclick the Note
     $(".liNote").dblclick(function() {
         const project_id = $(this).attr('data-project');
         const id = $(this).attr('data-id');
-        _TodoNotes_.#toggleDetails(project_id, id);
+        _TodoNotes_.#ToggleDetails(project_id, id);
 
         setTimeout(function() {
-            _TodoNotes_.adjustScrollableContent();
+            _TodoNotes_.AdjustScrollableContent();
         }, 100);
     });
 
@@ -288,7 +288,7 @@ static #noteDetailsDblclickHandlers() {
     //------------------------------------------------
 }
 
-static #noteDetailsDblclickHandlersDisable() {
+static #NoteDetailsDblclickHandlersDisable() {
     // console.log('_TodoNotes_.noteDetailsDblclickHandlersDisable');
     //------------------------------------------------
 
@@ -301,7 +301,7 @@ static #noteDetailsDblclickHandlersDisable() {
 }
 
 //------------------------------------------------
-static #noteDetailsHandlers() {
+static #NoteDetailsHandlers() {
     //------------------------------------------------
 
     // disable keydown propagation for title and edit controls of Notes and New Note
@@ -327,10 +327,10 @@ static #noteDetailsHandlers() {
     $(".disableEventsPropagation").click(function (event) {
         event.stopPropagation();
 
-        _TodoNotes_.#noteDetailsDblclickHandlersDisable();
+        _TodoNotes_.#NoteDetailsDblclickHandlersDisable();
 
         setTimeout(function() {
-            _TodoNotes_.#noteDetailsDblclickHandlers();
+            _TodoNotes_.#NoteDetailsDblclickHandlers();
         }, 500);
     });
 
@@ -338,7 +338,7 @@ static #noteDetailsHandlers() {
         event.stopPropagation();
     });
 
-    _TodoNotes_.#noteDetailsDblclickHandlers();
+    _TodoNotes_.#NoteDetailsDblclickHandlers();
 
     //------------------------------------------------
 
@@ -355,7 +355,7 @@ static #noteDetailsHandlers() {
 
     // Show details for New Note by menu button
     $("button" + ".showDetailsNewNote").click(function() {
-        _TodoNotes_.#toggleDetailsNewNote();
+        _TodoNotes_.#ToggleDetailsNewNote();
     });
 
     // On TAB key open detailed view for New Note
@@ -367,7 +367,7 @@ static #noteDetailsHandlers() {
             $('[name="editorMarkdownDetailsNewNote"]').addClass( 'noteEditorTextarea' );
 
             if ($("#detailsNewNote").hasClass( 'hideMe' )) {
-                _TodoNotes_.#toggleDetailsNewNote();
+                _TodoNotes_.#ToggleDetailsNewNote();
             }
 
             setTimeout(function() {
@@ -394,10 +394,10 @@ static #noteDetailsHandlers() {
     $("button" + ".showDetails").click(function() {
         const project_id = $(this).attr('data-project');
         const id = $(this).attr('data-id');
-        _TodoNotes_.#toggleDetails(project_id, id);
+        _TodoNotes_.#ToggleDetails(project_id, id);
 
         setTimeout(function() {
-            _TodoNotes_.adjustScrollableContent();
+            _TodoNotes_.AdjustScrollableContent();
         }, 100);
     });
 
@@ -407,14 +407,14 @@ static #noteDetailsHandlers() {
             const project_id = $(this).attr('data-project');
             const id = $(this).attr('data-id');
 
-            _TodoNotes_.#showDetailsInput(project_id, id, true);
+            _TodoNotes_.#ShowDetailsInput(project_id, id, true);
             if ($("#noteDetails-P" + project_id + "-" + id).hasClass( 'hideMe' )) {
-                _TodoNotes_.#toggleDetails(project_id, id);
+                _TodoNotes_.#ToggleDetails(project_id, id);
             }
 
             setTimeout(function() {
                 $('[name="editorMarkdownDetails-P' + project_id + '-' + id + '"]').focus();
-                _TodoNotes_.adjustScrollableContent();
+                _TodoNotes_.AdjustScrollableContent();
             }, 100);
         }
     });
@@ -424,11 +424,11 @@ static #noteDetailsHandlers() {
         const project_id = $(this).attr('data-project');
         const id = $(this).attr('data-id');
 
-        _TodoNotes_.#showDetailsInput(project_id, id, true);
+        _TodoNotes_.#ShowDetailsInput(project_id, id, true);
 
         setTimeout(function() {
             $('[name="editorMarkdownDetails-P' + project_id + '-' + id + '"]').focus();
-            _TodoNotes_.adjustScrollableContent();
+            _TodoNotes_.AdjustScrollableContent();
         }, 100);
     });
 
@@ -442,7 +442,7 @@ static #noteDetailsHandlers() {
         _TodoNotes_.#showTitleInput(project_id, id, true);
 
         setTimeout(function() {
-            _TodoNotes_.adjustScrollableContent();
+            _TodoNotes_.AdjustScrollableContent();
         }, 100);
     });
 
@@ -450,11 +450,11 @@ static #noteDetailsHandlers() {
     $("label" + ".catLabelClickable").click(function() {
         const project_id = $(this).attr('data-project');
         const id = $(this).attr('data-id');
-        _TodoNotes_.#toggleDetails(project_id, id);
+        _TodoNotes_.#ToggleDetails(project_id, id);
 
         setTimeout(function() {
             $("#cat-P" + project_id + "-" + id + "-button").trigger('click');
-            _TodoNotes_.adjustScrollableContent();
+            _TodoNotes_.AdjustScrollableContent();
         }, 100);
     });
 
@@ -462,10 +462,10 @@ static #noteDetailsHandlers() {
     $("label" + ".noteDatesDetails").click(function() {
         const project_id = $(this).attr('data-project');
         const id = $(this).attr('data-id');
-        _TodoNotes_.#toggleDetails(project_id, id);
+        _TodoNotes_.#ToggleDetails(project_id, id);
 
         setTimeout(function() {
-            _TodoNotes_.adjustScrollableContent();
+            _TodoNotes_.AdjustScrollableContent();
         }, 100);
     });
 
@@ -495,7 +495,7 @@ static #noteDetailsHandlers() {
 
 //------------------------------------------------
 // Switch note status
-static #switchNoteStatus(project_id, id) {
+static #SwitchNoteStatus(project_id, id) {
     const noteCheckmark = $("#noteCheckmark-P" + project_id + "-" + id);
 
     // cycle through statuses
@@ -514,7 +514,7 @@ static #switchNoteStatus(project_id, id) {
 
 //------------------------------------------------
 // Refresh note status
-static #refreshNoteStatus(project_id, id) {
+static #RefreshNoteStatus(project_id, id) {
     const noteCheckmark = $("#noteCheckmark-P" + project_id + "-" + id);
     const noteTitleLabel = $("#noteTitleLabel-P" + project_id + "-" + id);
     const noteMarkdownDetailsPreview = $("#noteMarkdownDetails-P" + project_id + "-" + id + "_Preview");
@@ -543,7 +543,7 @@ static #refreshNoteStatus(project_id, id) {
 }
 
 //------------------------------------------------
-static #noteStatusHandlers() {
+static #NoteStatusHandlers() {
     //------------------------------------------------
 
     //Status button handler
@@ -555,14 +555,14 @@ static #noteStatusHandlers() {
         const ref_project_id = $("#refProjectId").attr('data-project');
         const readonlyNotes = (ref_project_id === '0'); // Overview Mode
 
-        _TodoNotes_.#switchNoteStatus(project_id, id);
-        _TodoNotes_.#refreshNoteStatus(project_id, id);
+        _TodoNotes_.#SwitchNoteStatus(project_id, id);
+        _TodoNotes_.#RefreshNoteStatus(project_id, id);
 
         if (readonlyNotes) {
             _TodoNotes_Requests_.UpdateNoteStatus(project_id, user_id, id);
         } else {
             _TodoNotes_.#showTitleInput(project_id, id, false);
-            _TodoNotes_.#showDetailsInput(project_id, id, false);
+            _TodoNotes_.#ShowDetailsInput(project_id, id, false);
             _TodoNotes_Requests_.UpdateNote(project_id, user_id, id);
         }
 
@@ -570,13 +570,13 @@ static #noteStatusHandlers() {
             $("#noteRefreshOrder-P" + project_id + "-" + id).removeClass( 'hideMe' );
         }
 
-        _TodoNotes_.#blinkNote(project_id, id);
-        _TodoNotes_.refreshShowAllDone();
+        _TodoNotes_.#BlinkNote(project_id, id);
+        _TodoNotes_.RefreshShowAllDone();
 
-        _TodoNotes_.adjustNotePlaceholders(project_id, id);
+        _TodoNotes_.AdjustNotePlaceholders(project_id, id);
 
         setTimeout(function() {
-            _TodoNotes_.adjustScrollableContent();
+            _TodoNotes_.AdjustScrollableContent();
         }, 400); // waiting for blinkNote() to finish
     });
 
@@ -588,7 +588,7 @@ static #noteStatusHandlers() {
 //------------------------------------------------
 
 //------------------------------------------------
-static #noteActionHandlers() {
+static #NoteActionHandlers() {
     //------------------------------------------------
 
     // POST ADD when ENTER key on New Note title
@@ -628,12 +628,12 @@ static #noteActionHandlers() {
         const id = $(this).attr('data-id');
         if (event.keyCode === 13) { // ENTER
             _TodoNotes_.#showTitleInput(project_id, id, false);
-            _TodoNotes_.#showDetailsInput(project_id, id, false);
+            _TodoNotes_.#ShowDetailsInput(project_id, id, false);
             _TodoNotes_Requests_.UpdateNote(project_id, user_id, id);
-            _TodoNotes_.#blinkNote(project_id, id);
+            _TodoNotes_.#BlinkNote(project_id, id);
 
             setTimeout(function() {
-                _TodoNotes_.adjustScrollableContent();
+                _TodoNotes_.AdjustScrollableContent();
             }, 400); // waiting for blinkNote() to finish
         }
     });
@@ -645,12 +645,12 @@ static #noteActionHandlers() {
             const user_id = $(this).attr('data-user');
             const id = $(this).attr('data-id');
             _TodoNotes_.#showTitleInput(project_id, id, false);
-            _TodoNotes_.#showDetailsInput(project_id, id, false);
+            _TodoNotes_.#ShowDetailsInput(project_id, id, false);
             _TodoNotes_Requests_.UpdateNote(project_id, user_id, id);
-            _TodoNotes_.#blinkNote(project_id, id);
+            _TodoNotes_.#BlinkNote(project_id, id);
 
             setTimeout(function() {
-                _TodoNotes_.adjustScrollableContent();
+                _TodoNotes_.AdjustScrollableContent();
             }, 400); // waiting for blinkNote() to finish
         }
     });
@@ -661,12 +661,12 @@ static #noteActionHandlers() {
         const user_id = $(this).attr('data-user');
         const id = $(this).attr('data-id');
         _TodoNotes_.#showTitleInput(project_id, id, false);
-        _TodoNotes_.#showDetailsInput(project_id, id, false);
+        _TodoNotes_.#ShowDetailsInput(project_id, id, false);
         _TodoNotes_Requests_.UpdateNote(project_id, user_id, id);
-        _TodoNotes_.#blinkNote(project_id, id);
+        _TodoNotes_.#BlinkNote(project_id, id);
 
         setTimeout(function() {
-            _TodoNotes_.adjustScrollableContent();
+            _TodoNotes_.AdjustScrollableContent();
         }, 400); // waiting for blinkNote() to finish
     });
 
@@ -713,7 +713,7 @@ static #noteActionHandlers() {
                 const new_category = $("#cat-P" + project_id + "-" + id + " option:selected").text();
                 $("#noteCatLabel-P" + project_id + "-" + id).html(new_category);
 
-                _TodoNotes_.updateCategoryColors(project_id, id, old_category, new_category);
+                _TodoNotes_.UpdateCategoryColors(project_id, id, old_category, new_category);
                 // avoid the ugly empty category label boxes
                 const noteCatLabel = $("#noteCatLabel-P" + project_id + "-" + id);
                 if (new_category) {
@@ -729,12 +729,12 @@ static #noteActionHandlers() {
                 }
 
                 _TodoNotes_.#showTitleInput(project_id, id, false);
-                _TodoNotes_.#showDetailsInput(project_id, id, false);
+                _TodoNotes_.#ShowDetailsInput(project_id, id, false);
                 _TodoNotes_Requests_.UpdateNote(project_id, user_id, id);
-                _TodoNotes_.#blinkNote(project_id, id);
+                _TodoNotes_.#BlinkNote(project_id, id);
 
                 setTimeout(function() {
-                    _TodoNotes_.adjustScrollableContent();
+                    _TodoNotes_.AdjustScrollableContent();
                     }, 400); // waiting for blinkNote() to finish
             }
         }
@@ -759,44 +759,44 @@ static #noteActionHandlers() {
 // Settings handlers
 //------------------------------------------------
 
-static #settingsCollapseAll() {
+static #SettingsCollapseAll() {
     $(".showDetails").each(function() {
         if ($(this).find('i').hasClass( 'fa-angle-double-up' ))
         {
             const project_id = $(this).attr('data-project');
             const id = $(this).attr('data-id');
-            _TodoNotes_.#toggleDetails(project_id, id);
+            _TodoNotes_.#ToggleDetails(project_id, id);
         }
     });
 
     setTimeout(function() {
-        _TodoNotes_.adjustScrollableContent();
+        _TodoNotes_.AdjustScrollableContent();
     }, 100);
 }
 
-static #settingsExpandAll() {
+static #SettingsExpandAll() {
     $(".showDetails").each(function() {
         if ($(this).find('i').hasClass( 'fa-angle-double-down' ))
         {
             const project_id = $(this).attr('data-project');
             const id = $(this).attr('data-id');
-            _TodoNotes_.#toggleDetails(project_id, id);
+            _TodoNotes_.#ToggleDetails(project_id, id);
         }
     });
 
     setTimeout(function() {
-        _TodoNotes_.adjustScrollableContent();
+        _TodoNotes_.AdjustScrollableContent();
     }, 100);
 }
 
-static #toggleList(project_id) {
+static #ToggleList(project_id) {
     $("#sortableList-P" + project_id).toggleClass( 'hideMe' );
     $("#toggleList-P" + project_id).find('i').toggleClass( "fa-chevron-circle-up" );
     $("#toggleList-P" + project_id).find('i').toggleClass( "fa-chevron-circle-down" );
 }
 
 //------------------------------------------------
-static #settingsHandlers() {
+static #SettingsHandlers() {
     //------------------------------------------------
 
     // POST delete all done
@@ -823,21 +823,21 @@ static #settingsHandlers() {
     //------------------------------------------------
 
     $("#settingsCollapseAll").click(function() {
-        _TodoNotes_.#settingsCollapseAll();
+        _TodoNotes_.#SettingsCollapseAll();
     });
 
     $(document).keydown(function(event) {
         if (event.keyCode !== 109) return; // [-] key
-        _TodoNotes_.#settingsCollapseAll();
+        _TodoNotes_.#SettingsCollapseAll();
     });
 
     $("#settingsExpandAll").click(function() {
-        _TodoNotes_.#settingsExpandAll();
+        _TodoNotes_.#SettingsExpandAll();
     });
 
     $(document).keydown(function(event) {
         if (event.keyCode !== 107) return; // [+] key
-        _TodoNotes_.#settingsExpandAll();
+        _TodoNotes_.#SettingsExpandAll();
     });
 
     //------------------------------------------------
@@ -854,12 +854,12 @@ static #settingsHandlers() {
         _TodoNotes_Requests_.ToggleSessionOption('todonotesOption_ShowAllDone');
 
         _TodoNotes_.optionShowAllDone = !_TodoNotes_.optionShowAllDone;
-        _TodoNotes_.refreshShowAllDone();
+        _TodoNotes_.RefreshShowAllDone();
 
-        _TodoNotes_.adjustAllNotesPlaceholders();
+        _TodoNotes_.AdjustAllNotesPlaceholders();
 
         setTimeout(function() {
-            _TodoNotes_.adjustScrollableContent();
+            _TodoNotes_.AdjustScrollableContent();
         }, 100);
     });
 
@@ -867,7 +867,7 @@ static #settingsHandlers() {
         _TodoNotes_Requests_.ToggleSessionOption('todonotesOption_ShowCategoryColors');
 
         _TodoNotes_.optionShowCategoryColors = !_TodoNotes_.optionShowCategoryColors;
-        _TodoNotes_.refreshCategoryColors();
+        _TodoNotes_.RefreshCategoryColors();
     });
 
     //------------------------------------------------
@@ -875,19 +875,19 @@ static #settingsHandlers() {
     // Toogle lists in OverviewMode
     $(".headerList").dblclick(function() {
         const project_id = $(this).find("button" + ".toggleList").attr('data-project');
-        _TodoNotes_.#toggleList(project_id);
+        _TodoNotes_.#ToggleList(project_id);
 
         setTimeout(function() {
-            _TodoNotes_.adjustScrollableContent();
+            _TodoNotes_.AdjustScrollableContent();
         }, 100);
     });
 
     $("button" + ".toggleList").click(function() {
         const project_id = $(this).attr('data-project');
-        _TodoNotes_.#toggleList(project_id);
+        _TodoNotes_.#ToggleList(project_id);
 
         setTimeout(function() {
-            _TodoNotes_.adjustScrollableContent();
+            _TodoNotes_.AdjustScrollableContent();
         }, 100);
     });
 
@@ -908,7 +908,7 @@ static #settingsHandlers() {
 
 //------------------------------------------------
 // Refresh hide All Done
-static refreshShowAllDone() {
+static RefreshShowAllDone() {
     if (_TodoNotes_.optionShowAllDone) {
         $("#settingsShowAllDone").addClass( 'buttonToggled' );
         $(".liNote").each(function() {
@@ -928,7 +928,7 @@ static refreshShowAllDone() {
 
 //------------------------------------------------
 // Refresh sort by Status
-static refreshSortByStatus() {
+static RefreshSortByStatus() {
     if (_TodoNotes_.optionSortByStatus) {
         $("#settingsSortByStatus").addClass( 'buttonToggled' );
     } else {
@@ -938,7 +938,7 @@ static refreshSortByStatus() {
 
 //------------------------------------------------
 // Refresh category colors
-static refreshCategoryColors() {
+static RefreshCategoryColors() {
     if (_TodoNotes_.optionShowCategoryColors) {
         $("#settingsCategoryColors").addClass( 'buttonToggled' );
         $(".tdReport .reportBkgr").addClass( 'task-board' );
@@ -958,7 +958,7 @@ static refreshCategoryColors() {
 }
 
 // Update category colors
-static updateCategoryColors(project_id, id, old_category, new_category) {
+static UpdateCategoryColors(project_id, id, old_category, new_category) {
     const note_id = $("#noteId-P" + project_id + "-" + id).attr('data-note');
     const old_color = $("#category-" + old_category).attr('data-color');
     const new_color = $("#category-" + new_category).attr('data-color');
@@ -978,7 +978,7 @@ static updateCategoryColors(project_id, id, old_category, new_category) {
 
 //------------------------------------------------
 // note update timestamp + #refProjectId
-static updateNoteTimestamps(lastModified, project_id, id) {
+static UpdateNoteTimestamps(lastModified, project_id, id) {
     const updatedTimeString = _TodoNotes_Translations_.GetTranslationExportToJS('Modified:') + ' ' + lastModified.timestring;
 
     $("#noteDatesDetails-P" + project_id + "-" + id).attr('title', updatedTimeString);
@@ -989,7 +989,7 @@ static updateNoteTimestamps(lastModified, project_id, id) {
 
 //------------------------------------------------
 // all notes update timestamps + #refProjectId
-static updateAllNotesTimestamps(lastModified, project_id) {
+static UpdateAllNotesTimestamps(lastModified, project_id) {
     const updatedTimeString = _TodoNotes_Translations_.GetTranslationExportToJS('Modified:') + ' ' + lastModified.timestring;
 
     $("[id^=noteDatesDetails-P" + project_id + "]").attr('title', updatedTimeString);
@@ -1000,7 +1000,7 @@ static updateAllNotesTimestamps(lastModified, project_id) {
 
 //------------------------------------------------
 // note update notification timestamp + #refProjectId
-static updateNoteNotificationsTimestamps(notificationsAlertTime, project_id, id) {
+static UpdateNoteNotificationsTimestamps(notificationsAlertTime, project_id, id) {
     const hasNotifications = (notificationsAlertTime.timestamp > 0);
     const updatedTimeString = _TodoNotes_Translations_.GetTranslationExportToJS('Notifications:') + ' '
         + (hasNotifications ? notificationsAlertTime.timestring : '🔕');
@@ -1025,20 +1025,20 @@ static updateNoteNotificationsTimestamps(notificationsAlertTime, project_id, id)
 //------------------------------------------------
 
 //------------------------------------------------
-static #showRefreshIcon() {
+static #ShowRefreshIcon() {
     $("#refreshIcon").removeClass( 'hideMe' );
 }
 
 //------------------------------------------------
-static #hideRefreshIcon( ) {
+static #HideRefreshIcon( ) {
     $("#refreshIcon").addClass( 'hideMe' );
 }
 
 //------------------------------------------------
 // schedule check for modifications every 15 sec
-static scheduleCheckModifications() {
+static ScheduleCheckModifications() {
     setTimeout(function() {
-        _TodoNotes_.#showRefreshIcon();
+        _TodoNotes_.#ShowRefreshIcon();
 
         const project_id = $("#refProjectId").attr('data-project');
         const user_id = $("#refProjectId").attr('data-user');
@@ -1049,7 +1049,7 @@ static scheduleCheckModifications() {
 
         // skip SQL query if page not visible, or if new note has pending changes
         if (!KB.utils.isVisible() || title !== '' || description !== '') {
-            _TodoNotes_.scheduleCheckModifications();
+            _TodoNotes_.ScheduleCheckModifications();
             return;
         }
 
@@ -1059,8 +1059,8 @@ static scheduleCheckModifications() {
 
 //------------------------------------------------
 // check if page refresh is necessary
-static checkAndTriggerRefresh(lastModifiedTimestamp) {
-    // console.log('_TodoNotes_.checkAndTriggerRefresh');
+static CheckAndTriggerRefresh(lastModifiedTimestamp) {
+    // console.log('_TodoNotes_.CheckAndTriggerRefresh');
 
     const project_id = $("#refProjectId").attr('data-project');
     const user_id = $("#refProjectId").attr('data-user');
@@ -1077,8 +1077,8 @@ static checkAndTriggerRefresh(lastModifiedTimestamp) {
         $("#refProjectId").attr('data-timestamp', lastModifiedTimestamp.max);
     }
 
-    _TodoNotes_.scheduleCheckModifications();
-    _TodoNotes_.#hideRefreshIcon();
+    _TodoNotes_.ScheduleCheckModifications();
+    _TodoNotes_.#HideRefreshIcon();
 }
 
 //------------------------------------------------
@@ -1086,13 +1086,13 @@ static checkAndTriggerRefresh(lastModifiedTimestamp) {
 //------------------------------------------------
 
 //------------------------------------------------
-static attachAllHandlers() {
-    // console.log('_TodoNotes_.attachAllHandlers');
+static AttachAllHandlers() {
+    // console.log('_TodoNotes_.AttachAllHandlers');
 
-    _TodoNotes_.#noteDetailsHandlers();
-    _TodoNotes_.#noteStatusHandlers();
-    _TodoNotes_.#noteActionHandlers();
-    _TodoNotes_.#settingsHandlers();
+    _TodoNotes_.#NoteDetailsHandlers();
+    _TodoNotes_.#NoteStatusHandlers();
+    _TodoNotes_.#NoteActionHandlers();
+    _TodoNotes_.#SettingsHandlers();
 }
 
 //------------------------------------------------
@@ -1102,7 +1102,7 @@ static attachAllHandlers() {
 //////////////////////////////////////////////////
 $(function() {
     // start the recursive check sequence on load page
-    _TodoNotes_.scheduleCheckModifications();
+    _TodoNotes_.ScheduleCheckModifications();
 });
 
 //////////////////////////////////////////////////

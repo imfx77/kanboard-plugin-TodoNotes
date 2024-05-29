@@ -25,7 +25,7 @@ static #prepareDocument_ConfigureDashboardHandlers(skipDashboardHandlers = false
 
     const project_id = $("#refProjectId").attr('data-project');
     const user_id = $("#refProjectId").attr('data-user');
-    const isMobile = _TodoNotes_.isMobile();
+    const isMobile = _TodoNotes_.IsMobile();
     const readonlyNotes = (project_id === '0'); // Overview Mode
 
     // notes reordering is disabled when explicitly sorted by Status
@@ -77,11 +77,11 @@ static #prepareDocument_ConfigureDashboardHandlers(skipDashboardHandlers = false
 
     _TodoNotes_Statuses_.ExpandStatusAliases();
 
-    _TodoNotes_.refreshCategoryColors();
-    _TodoNotes_.refreshSortByStatus();
-    _TodoNotes_.refreshShowAllDone();
+    _TodoNotes_.RefreshCategoryColors();
+    _TodoNotes_.RefreshSortByStatus();
+    _TodoNotes_.RefreshShowAllDone();
 
-    _TodoNotes_.attachAllHandlers();
+    _TodoNotes_.AttachAllHandlers();
 
     // prepare method for dashboard view if embedded
     if (typeof(_TodoNotes_Dashboard_) !== 'undefined') {
@@ -96,16 +96,16 @@ static #prepareDocument_ConfigureDashboardHandlers(skipDashboardHandlers = false
     KB.render();
 
     setTimeout(function() {
-        _TodoNotes_.showTitleInputNewNote();
+        _TodoNotes_.ShowTitleInputNewNote();
     }, 100);
 }
 
 //------------------------------------------------
 static resizeDocument() {
-    _TodoNotes_.adjustAllNotesPlaceholders();
-    _TodoNotes_.adjustAllNotesTitleInputs();
+    _TodoNotes_.AdjustAllNotesPlaceholders();
+    _TodoNotes_.AdjustAllNotesTitleInputs();
     setTimeout(function() {
-        _TodoNotes_.adjustScrollableContent();
+        _TodoNotes_.AdjustScrollableContent();
     }, 100);
 }
 
