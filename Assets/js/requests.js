@@ -113,6 +113,7 @@ static UpdateNote(project_id, user_id, id) {
             const lastModified = JSON.parse(response)
             if (lastModified.timestamp > 0) {
                 _TodoNotes_.UpdateNoteTimestamps(lastModified, project_id, id);
+                _TodoNotes_.RefreshNoteNotificationsState(project_id, id);
                 // refresh and render the details markdown preview
                 $("#noteMarkdownDetails-P" + project_id + "-" + id + "_Preview").html(_TodoNotes_Translations_.msgLoadingSpinner).load(
                     '/?controller=TodoNotesController&action=RefreshMarkdownPreviewWidget&plugin=TodoNotes'
@@ -150,6 +151,7 @@ static UpdateNoteStatus(project_id, user_id, id) {
             const lastModified = JSON.parse(response)
             if (lastModified.timestamp > 0) {
                 _TodoNotes_.UpdateNoteTimestamps(lastModified, project_id, id);
+                _TodoNotes_.RefreshNoteNotificationsState(project_id, id);
             } else {
                 alert( _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_NOTE_UPDATE_INVALID_MSG') );
                 _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
@@ -165,7 +167,7 @@ static UpdateNoteStatus(project_id, user_id, id) {
 }
 
 //------------------------------------------------
-// note update Notification Time
+// note update Notifications Alert Time
 static UpdateNoteNotificationsAlertTime(project_id, user_id, id, notifications_alert_timestring) {
     const note_id = $("#noteId-P" + project_id + "-" + id).attr('data-note');
 
@@ -179,7 +181,8 @@ static UpdateNoteNotificationsAlertTime(project_id, user_id, id, notifications_a
             + '&notifications_alert_timestring=' + encodeURIComponent(notifications_alert_timestring),
         success: function(response) {
             const notificationsAlertTime = JSON.parse(response)
-            _TodoNotes_.UpdateNoteNotificationsTimestamps(notificationsAlertTime, project_id, id);
+            _TodoNotes_.UpdateNoteNotificationsAlertTimestamps(notificationsAlertTime, project_id, id);
+            _TodoNotes_.RefreshNoteNotificationsState(project_id, id);
         },
         error: function(xhr,textStatus,e) {
             alert('_TodoNotes_Requests_.UpdateNoteNotificationsAlertTime');

@@ -748,7 +748,7 @@ static #NoteActionHandlers() {
         const user_id = $(this).attr('data-user');
         const project_id = $(this).attr('data-project');
         const id = $(this).attr('data-id');
-        const notifications_alert_timestring = $(this).attr('data-notifications-timestring');
+        const notifications_alert_timestring = $(this).attr('data-notifications-alert-timestring');
         _TodoNotes_Modals_.NotificationsSetup(project_id, user_id, id, notifications_alert_timestring);
     });
 
@@ -999,25 +999,64 @@ static UpdateAllNotesTimestamps(lastModified, project_id) {
 }
 
 //------------------------------------------------
-// note update notification timestamp + #refProjectId
-static UpdateNoteNotificationsTimestamps(notificationsAlertTime, project_id, id) {
+// note update notifications alert timestamps
+static UpdateNoteNotificationsAlertTimestamps(notificationsAlertTime, project_id, id) {
     const hasNotifications = (notificationsAlertTime.timestamp > 0);
     const updatedTimeString = _TodoNotes_Translations_.GetTranslationExportToJS('Notifications:') + ' '
         + (hasNotifications ? notificationsAlertTime.timestring : '🔕');
 
     const noteNotificationsDetails = $("#noteNotificationsDetails-P" + project_id + "-" + id);
     noteNotificationsDetails.attr('title', updatedTimeString);
+
+    const noteNotificationsLabel = $("#noteNotificationsLabel-P" + project_id + "-" + id );
+    noteNotificationsLabel.attr('data-notifications-alert-timestamp', notificationsAlertTime.timestamp);
+    noteNotificationsLabel.attr('data-notifications-alert-timestring', notificationsAlertTime.timestring);
+    noteNotificationsLabel.find(" i").text(' ' + updatedTimeString);
+}
+
+//------------------------------------------------
+// note refresh notifications vis state
+static RefreshNoteNotificationsState(project_id, id) {
+    const noteNotificationsDetails = $("#noteNotificationsDetails-P" + project_id + "-" + id);
+    const noteNotificationsLabel = $("#noteNotificationsLabel-P" + project_id + "-" + id );
+    const notifications_alert_timestamp = noteNotificationsLabel.attr('data-notifications-alert-timestamp');
+    const hasNotifications = (notifications_alert_timestamp > 0);
+
     noteNotificationsDetails.find("i").removeClass('fa fa-bell-o').removeClass('fa fa-bell-slash-o');
+    // toolbar bell/slashed icon
     if (hasNotifications) {
         noteNotificationsDetails.find("i").addClass('fa fa-bell-o');
     } else {
         noteNotificationsDetails.find("i").addClass('fa fa-bell-slash-o');
     }
 
-    const noteNotificationsLabel = $("#noteNotificationsLabel-P" + project_id + "-" + id );
-    noteNotificationsLabel.attr('data-notifications-timestamp', notificationsAlertTime.timestamp);
-    noteNotificationsLabel.attr('data-notifications-timestring', notificationsAlertTime.timestring);
-    noteNotificationsLabel.find(" i").text(' ' + updatedTimeString);
+    noteNotificationsDetails.removeClass('dateLabelComplete').removeClass('dateLabelExpired');
+    noteNotificationsLabel.removeClass('dateLabelComplete').removeClass('dateLabelExpired');
+    if (hasNotifications) {
+        // state Complete
+        if ($("#noteCheckmark-P" + project_id + "-" + id).attr('data-id') === '0') {
+            noteNotificationsDetails.addClass('dateLabelComplete');
+            noteNotificationsLabel.addClass('dateLabelComplete');
+        } else {
+            // state Expired
+            const local_timestamp = Math.floor(Date.now() / 1000);
+            const localTimeOffset = $("#refProjectId").attr('data-local-time-offset');
+            if (notifications_alert_timestamp < local_timestamp + localTimeOffset) {
+                noteNotificationsDetails.addClass('dateLabelExpired');
+                noteNotificationsLabel.addClass('dateLabelExpired');
+            }
+        }
+    }
+}
+
+//------------------------------------------------
+// all notes refresh notifications vis state
+static #RefreshAllNotesNotificationsState() {
+    $(".noteNotificationsSetup").each(function() {
+        const project_id = $(this).attr('data-project');
+        const id = $(this).attr('data-id');
+        _TodoNotes_.RefreshNoteNotificationsState(project_id, id)
+    });
 }
 
 //------------------------------------------------
@@ -1039,6 +1078,7 @@ static #HideRefreshIcon( ) {
 static ScheduleCheckModifications() {
     setTimeout(function() {
         _TodoNotes_.#ShowRefreshIcon();
+        _TodoNotes_.#RefreshAllNotesNotificationsState();
 
         const project_id = $("#refProjectId").attr('data-project');
         const user_id = $("#refProjectId").attr('data-user');
@@ -1082,6 +1122,16 @@ static CheckAndTriggerRefresh(lastModifiedTimestamp) {
 }
 
 //------------------------------------------------
+// check if page refresh is necessary
+static InitializeLocalTimeOffset() {
+    const local_timestamp = Math.floor(Date.now() / 1000);
+    const last_timestamp = $("#refProjectId").attr('data-timestamp');
+    const localTimeOffset = local_timestamp - last_timestamp;
+    console.log(localTimeOffset);
+    $("#refProjectId").attr('data-local-time-offset', localTimeOffset);
+}
+
+//------------------------------------------------
 // Global routines
 //------------------------------------------------
 
@@ -1101,6 +1151,7 @@ static AttachAllHandlers() {
 
 //////////////////////////////////////////////////
 $(function() {
+    _TodoNotes_.InitializeLocalTimeOffset();
     // start the recursive check sequence on load page
     _TodoNotes_.ScheduleCheckModifications();
 });

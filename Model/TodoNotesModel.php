@@ -81,7 +81,7 @@ class TodoNotesModel extends Base
 
         $userDateTimeFormat = $this->dateParser->getUserDateTimeFormat();
         foreach ($result as &$note) {
-            $note['notification'] = $note['date_notified']; // keep the timestamp
+            $note['notifications_alert_timestamp'] = $note['date_notified']; // keep the timestamp
             $note = $this->dateParser->format($note, array('date_created', 'date_modified', 'date_notified'), $userDateTimeFormat);
         }
 
@@ -114,7 +114,7 @@ class TodoNotesModel extends Base
 
         $userDateTimeFormat = $this->dateParser->getUserDateTimeFormat();
         foreach ($result as &$note) {
-            $note['notification'] = $note['date_notified']; // keep the timestamp
+            $note['notifications_alert_timestamp'] = $note['date_notified']; // keep the timestamp
             $note = $this->dateParser->format($note, array('date_created', 'date_modified', 'date_notified'), $userDateTimeFormat);
         }
 
@@ -441,7 +441,7 @@ class TodoNotesModel extends Base
                         ->update($values)) ? $timestamp : 0;
     }
 
-    // Update note Notification Time
+    // Update note Notifications Alert Time
     public function UpdateNoteNotificationsAlertTime($project_id, $user_id, $note_id, $notifications_alert_timestring)
     {
         $is_unique = $this->IsUniqueNote($project_id, $user_id, $note_id);

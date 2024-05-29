@@ -23,6 +23,8 @@ if (!$is_refresh && !$is_dashboard_view) {
 
 //----------------------------------------
 
+$current_time = time();
+
 $readonlyNotes = ($project_id == 0); // Overview Mode
 
 $tab_id = 1;
@@ -461,10 +463,10 @@ foreach ($data as $u) {
     print '</label>';
 
     // Notifications details
-    $hasNotifications = ($u['notification'] > 0);
+    $hasNotifications = ($u['notifications_alert_timestamp'] > 0);
     $noteNotificationsStyleExtra = '';
     // Expired notifications
-    if ($hasNotifications && ($u['notification'] > time())) {
+    if ($hasNotifications && ($u['notifications_alert_timestamp'] < $current_time)) {
         $noteNotificationsStyleExtra = ' dateLabelExpired';
     }
     // Complete notifications
@@ -692,8 +694,8 @@ foreach ($data as $u) {
     print ' data-id="' . $num . '"';
     print ' data-project="' . $u['project_id'] . '"';
     print ' data-user="' . $user_id . '"';
-    print ' data-notifications-timestamp="' . $u['notification'] . '"';
-    print ' data-notifications-timestring="' . $u['date_notified'] . '"';
+    print ' data-notifications-alert-timestamp="' . $u['notifications_alert_timestamp'] . '"';
+    print ' data-notifications-alert-timestring="' . $u['date_notified'] . '"';
     print '>';
     print '<i class="fa fa-bell-o" aria-hidden="true"> ' . t('Notifications:') . ' ' . ($hasNotifications ? $u['date_notified'] : '🔕') . '</i></label><br>';
     print '</div>'; // Dates and Notifications panel
@@ -776,7 +778,7 @@ print '</div>'; // scrollableContent
 print '<div class="hideMe" id="refProjectId"';
 print ' data-project="' . $project_id . '"';
 print ' data-user="' . $user_id . '"';
-print ' data-timestamp="' . time() . '"';
+print ' data-timestamp="' . $current_time . '"';
 print '></div>';
 
 print '<span id="refreshIcon" class="refreshIcon hideMe">';
