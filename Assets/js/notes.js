@@ -483,7 +483,7 @@ static #noteDetailsHandlers() {
     $("button" + ".noteRefreshOrder").click(function() {
         const project_id = $(this).attr('data-project');
         const user_id = $(this).attr('data-user');
-        _TodoNotes_.sqlRefreshNotes(project_id, user_id);
+        _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
     });
 
     //------------------------------------------------
@@ -559,11 +559,11 @@ static #noteStatusHandlers() {
         _TodoNotes_.#refreshNoteStatus(project_id, id);
 
         if (readonlyNotes) {
-            _TodoNotes_.#sqlUpdateNoteStatus(project_id, user_id, id);
+            _TodoNotes_Requests_.UpdateNoteStatus(project_id, user_id, id);
         } else {
             _TodoNotes_.#showTitleInput(project_id, id, false);
             _TodoNotes_.#showDetailsInput(project_id, id, false);
-            _TodoNotes_.#sqlUpdateNote(project_id, user_id, id);
+            _TodoNotes_Requests_.UpdateNote(project_id, user_id, id);
         }
 
         if (_TodoNotes_.optionSortByStatus) {
@@ -597,7 +597,7 @@ static #noteActionHandlers() {
             const project_id = $(this).attr('data-project');
             const user_id = $(this).attr('data-user');
             $(".inputNewNote").blur();
-            _TodoNotes_.#sqlAddNote(project_id, user_id);
+            _TodoNotes_Requests_.AddNote(project_id, user_id);
         }
     });
 
@@ -607,7 +607,7 @@ static #noteActionHandlers() {
             const project_id = $("#noteMarkdownDetailsNewNote_Editor").attr('data-project');
             const user_id = $("#noteMarkdownDetailsNewNote_Editor").attr('data-user');
             $(".inputNewNote").blur();
-            _TodoNotes_.#sqlAddNote(project_id, user_id);
+            _TodoNotes_Requests_.AddNote(project_id, user_id);
         }
     });
 
@@ -616,7 +616,7 @@ static #noteActionHandlers() {
         const project_id = $(this).attr('data-project');
         const user_id = $(this).attr('data-user');
         $(".inputNewNote").blur();
-        _TodoNotes_.#sqlAddNote(project_id, user_id);
+        _TodoNotes_Requests_.AddNote(project_id, user_id);
     });
 
     //------------------------------------------------
@@ -629,7 +629,7 @@ static #noteActionHandlers() {
         if (event.keyCode === 13) { // ENTER
             _TodoNotes_.#showTitleInput(project_id, id, false);
             _TodoNotes_.#showDetailsInput(project_id, id, false);
-            _TodoNotes_.#sqlUpdateNote(project_id, user_id, id);
+            _TodoNotes_Requests_.UpdateNote(project_id, user_id, id);
             _TodoNotes_.#blinkNote(project_id, id);
 
             setTimeout(function() {
@@ -646,7 +646,7 @@ static #noteActionHandlers() {
             const id = $(this).attr('data-id');
             _TodoNotes_.#showTitleInput(project_id, id, false);
             _TodoNotes_.#showDetailsInput(project_id, id, false);
-            _TodoNotes_.#sqlUpdateNote(project_id, user_id, id);
+            _TodoNotes_Requests_.UpdateNote(project_id, user_id, id);
             _TodoNotes_.#blinkNote(project_id, id);
 
             setTimeout(function() {
@@ -662,7 +662,7 @@ static #noteActionHandlers() {
         const id = $(this).attr('data-id');
         _TodoNotes_.#showTitleInput(project_id, id, false);
         _TodoNotes_.#showDetailsInput(project_id, id, false);
-        _TodoNotes_.#sqlUpdateNote(project_id, user_id, id);
+        _TodoNotes_Requests_.UpdateNote(project_id, user_id, id);
         _TodoNotes_.#blinkNote(project_id, id);
 
         setTimeout(function() {
@@ -730,7 +730,7 @@ static #noteActionHandlers() {
 
                 _TodoNotes_.#showTitleInput(project_id, id, false);
                 _TodoNotes_.#showDetailsInput(project_id, id, false);
-                _TodoNotes_.#sqlUpdateNote(project_id, user_id, id);
+                _TodoNotes_Requests_.UpdateNote(project_id, user_id, id);
                 _TodoNotes_.#blinkNote(project_id, id);
 
                 setTimeout(function() {
@@ -843,15 +843,15 @@ static #settingsHandlers() {
     //------------------------------------------------
 
     $("#settingsSortByStatus").click(function() {
-        _TodoNotes_.sqlToggleSessionOption('todonotesOption_SortByStatus');
+        _TodoNotes_Requests_.ToggleSessionOption('todonotesOption_SortByStatus');
 
         const project_id = $(this).attr('data-project');
         const user_id = $(this).attr('data-user');
-        _TodoNotes_.sqlRefreshNotes(project_id, user_id);
+        _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
     });
 
     $("#settingsShowAllDone").click(function() {
-        _TodoNotes_.sqlToggleSessionOption('todonotesOption_ShowAllDone');
+        _TodoNotes_Requests_.ToggleSessionOption('todonotesOption_ShowAllDone');
 
         _TodoNotes_.optionShowAllDone = !_TodoNotes_.optionShowAllDone;
         _TodoNotes_.refreshShowAllDone();
@@ -864,7 +864,7 @@ static #settingsHandlers() {
     });
 
     $("#settingsCategoryColors").click(function() {
-        _TodoNotes_.sqlToggleSessionOption('todonotesOption_ShowCategoryColors');
+        _TodoNotes_Requests_.ToggleSessionOption('todonotesOption_ShowCategoryColors');
 
         _TodoNotes_.optionShowCategoryColors = !_TodoNotes_.optionShowCategoryColors;
         _TodoNotes_.refreshCategoryColors();
@@ -978,7 +978,7 @@ static updateCategoryColors(project_id, id, old_category, new_category) {
 
 //------------------------------------------------
 // note update timestamp + #refProjectId
-static #updateNoteTimestamps(lastModified, project_id, id) {
+static updateNoteTimestamps(lastModified, project_id, id) {
     const updatedTimeString = _TodoNotes_Translations_.getTranslationExportToJS('Modified:') + ' ' + lastModified.timestring;
 
     $("#noteDatesDetails-P" + project_id + "-" + id).attr('title', updatedTimeString);
@@ -989,7 +989,7 @@ static #updateNoteTimestamps(lastModified, project_id, id) {
 
 //------------------------------------------------
 // all notes update timestamps + #refProjectId
-static #updateAllNotesTimestamps(lastModified, project_id) {
+static updateAllNotesTimestamps(lastModified, project_id) {
     const updatedTimeString = _TodoNotes_Translations_.getTranslationExportToJS('Modified:') + ' ' + lastModified.timestring;
 
     $("[id^=noteDatesDetails-P" + project_id + "]").attr('title', updatedTimeString);
@@ -1000,7 +1000,7 @@ static #updateAllNotesTimestamps(lastModified, project_id) {
 
 //------------------------------------------------
 // note update notification timestamp + #refProjectId
-static #updateNoteNotificationsTimestamps(notificationsAlertTime, project_id, id) {
+static updateNoteNotificationsTimestamps(notificationsAlertTime, project_id, id) {
     const hasNotifications = (notificationsAlertTime.timestamp > 0);
     const updatedTimeString = _TodoNotes_Translations_.getTranslationExportToJS('Notifications:') + ' '
         + (hasNotifications ? notificationsAlertTime.timestring : '🔕');
@@ -1035,10 +1035,10 @@ static #modalDeleteNote(project_id, user_id, id) {
             {
                 text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_DELETE_BTN'),
                 click: function() {
-                    _TodoNotes_.#sqlDeleteNote(project_id, user_id, id);
+                    _TodoNotes_Requests_.DeleteNote(project_id, user_id, id);
                     $( this ).dialog( "close" );
-                    _TodoNotes_.sqlRefreshNotes(project_id, user_id);
-                    _TodoNotes_.sqlRefreshTabs(user_id);
+                    _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
+                    _TodoNotes_Requests_.RefreshTabs(user_id);
                 },
             },
             {
@@ -1060,10 +1060,10 @@ static #modalDeleteAllDoneNotes(project_id, user_id) {
             {
                 text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_DELETE_BTN'),
                 click: function() {
-                    _TodoNotes_.#sqlDeleteAllDoneNotes(project_id, user_id);
+                    _TodoNotes_Requests_.DeleteAllDoneNotes(project_id, user_id);
                     $( this ).dialog( "close" );
-                    _TodoNotes_.sqlRefreshNotes(project_id, user_id);
-                    _TodoNotes_.sqlRefreshTabs(user_id);
+                    _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
+                    _TodoNotes_Requests_.RefreshTabs(user_id);
                 },
             },
             {
@@ -1086,10 +1086,10 @@ static #modalTransferNote(project_id, user_id, id) {
                 text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_MOVE_BTN'),
                 click : function() {
                     const target_project_id = $("#listNoteProject-P" + project_id + " option:selected").val();
-                    _TodoNotes_.#sqlTransferNote(project_id, user_id, id, target_project_id);
+                    _TodoNotes_Requests_.TransferNote(project_id, user_id, id, target_project_id);
                     $( this ).dialog( "close" );
-                    _TodoNotes_.sqlRefreshNotes(project_id, user_id);
-                    _TodoNotes_.sqlRefreshTabs(user_id);
+                    _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
+                    _TodoNotes_Requests_.RefreshTabs(user_id);
                 },
             },
             {
@@ -1147,9 +1147,9 @@ static #modalCreateTaskFromNote(project_id, user_id, id, is_active, title, descr
                     $("#deadloading").removeClass( 'hideMe' );
                     $("#deadloading").html(_TodoNotes_Translations_.msgLoadingSpinner).load(loadUrl);
                     if (removeNote) {
-                        _TodoNotes_.#sqlDeleteNote(project_id, user_id, id);
-                        _TodoNotes_.sqlRefreshNotes(project_id, user_id);
-                        _TodoNotes_.sqlRefreshTabs(user_id);
+                        _TodoNotes_Requests_.DeleteNote(project_id, user_id, id);
+                        _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
+                        _TodoNotes_Requests_.RefreshTabs(user_id);
                     }
                 },
             },
@@ -1241,14 +1241,14 @@ static #modalNotificationsSetup(project_id, user_id, id, notifications_alert_tim
                 text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_SET_BTN'),
                 click: function() {
                     const new_notifications_alert_timestring = $("#form-alerttimeNotificationsSetup-P" + project_id).val();
-                    _TodoNotes_.#sqlUpdateNoteNotificationsAlertTime(project_id, user_id, id, new_notifications_alert_timestring);
+                    _TodoNotes_Requests_.UpdateNoteNotificationsAlertTime(project_id, user_id, id, new_notifications_alert_timestring);
                     $( this ).dialog( "close" );
                 }
             },
             {
                 text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_RESET_BTN'),
                 click: function() {
-                    _TodoNotes_.#sqlUpdateNoteNotificationsAlertTime(project_id, user_id, id, ''); // empty timestring
+                    _TodoNotes_Requests_.UpdateNoteNotificationsAlertTime(project_id, user_id, id, ''); // empty timestring
                     $( this ).dialog( "close" );
                 }
             },
@@ -1257,316 +1257,6 @@ static #modalNotificationsSetup(project_id, user_id, id, notifications_alert_tim
                 click: function() { $( this ).dialog( "close" ); }
             },
         ]
-    });
-    return false;
-}
-
-//------------------------------------------------
-// SQL routines
-//------------------------------------------------
-
-//------------------------------------------------
-static #sqlAddNote(project_id, user_id) {
-    const title = $("#inputNewNote").val().trim();
-    const description = $('[name="editorMarkdownDetailsNewNote"]').val();
-    const category = $("#catNewNote" + " option:selected").text();
-    const is_active = "1";
-
-    if (!title) {
-        alert( _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_NOTE_ADD_TITLE_EMPTY_MSG') );
-        return false;
-    }
-
-    $.ajax({
-        cache: false,
-        type: "POST",
-        url: '/?controller=TodoNotesController&action=AddNote&plugin=TodoNotes'
-            + '&project_custom_id=' + project_id
-            + '&user_id=' + user_id
-            + '&title=' + encodeURIComponent(title)
-            + '&description=' + encodeURIComponent(description)
-            + '&category=' + encodeURIComponent(category)
-            + '&is_active=' + is_active,
-        success: function() {
-            _TodoNotes_.sqlRefreshNotes(project_id, user_id);
-            _TodoNotes_.sqlRefreshTabs(user_id);
-        },
-        error: function(xhr,textStatus,e) {
-            alert('sqlAddNote');
-            alert(e);
-        }
-    });
-    return false;
-}
-
-//------------------------------------------------
-static #sqlDeleteNote(project_id, user_id, id) {
-    const note_id = $("#noteId-P" + project_id + "-" + id).attr('data-note');
-    $.ajax({
-        cache: false,
-        type: "POST",
-        url: '/?controller=TodoNotesController&action=DeleteNote&plugin=TodoNotes'
-            + '&project_custom_id=' + project_id
-            + '&user_id=' + user_id
-            + '&note_id=' + note_id,
-        success: function() {
-        },
-        error: function(xhr,textStatus,e) {
-            alert('sqlDeleteNote');
-            alert(e);
-        }
-    });
-    return false;
-}
-
-//------------------------------------------------
-static #sqlDeleteAllDoneNotes(project_id, user_id) {
-    $.ajax({
-        cache: false,
-        type: "POST",
-        url: '/?controller=TodoNotesController&action=DeleteAllDoneNotes&plugin=TodoNotes'
-            + '&project_custom_id=' + project_id
-            + '&user_id=' + user_id,
-        success: function() {
-        },
-        error: function(xhr,textStatus,e) {
-            alert('sqlDeleteAllDoneNotes');
-            alert(e);
-        }
-    });
-    return false;
-}
-
-//------------------------------------------------
-// SQL note update (title, description, category and status)
-static #sqlUpdateNote(project_id, user_id, id) {
-    const note_id = $("#noteId-P" + project_id + "-" + id).attr('data-note');
-    let title = $("#noteTitleInput-P" + project_id + "-" + id).val().trim();
-    const description = $('[name="editorMarkdownDetails-P' + project_id + '-' + id + '"]').val();
-    const category = $("#cat-P" + project_id + "-" + id + " option:selected").text();
-    const is_active = $("#noteCheckmark-P" + project_id + "-" + id).attr('data-id');
-
-    if (!title) {
-        alert( _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_NOTE_UPDATE_TITLE_EMPTY_MSG') );
-        title = $("#noteTitleLabel-P" + project_id + "-" + id).html();
-        $("#noteTitleInput-P" + project_id + "-" + id).val(title);
-    }
-    $("#noteTitleLabel-P" + project_id + "-" + id).html(title);
-
-    $.ajax({
-        cache: false,
-        type: "POST",
-        url: '/?controller=TodoNotesController&action=UpdateNote&plugin=TodoNotes'
-            + '&project_custom_id=' + project_id
-            + '&user_id=' + user_id
-            + '&note_id=' + note_id
-            + '&title=' + encodeURIComponent(title)
-            + '&description=' + encodeURIComponent(description)
-            + '&category=' + encodeURIComponent(category)
-            + '&is_active=' + is_active,
-        success: function(response) {
-            const lastModified = JSON.parse(response)
-            if (lastModified.timestamp > 0) {
-                _TodoNotes_.#updateNoteTimestamps(lastModified, project_id, id);
-                // refresh and render the details markdown preview
-                $("#noteMarkdownDetails-P" + project_id + "-" + id + "_Preview").html(_TodoNotes_Translations_.msgLoadingSpinner).load(
-                    '/?controller=TodoNotesController&action=RefreshMarkdownPreviewWidget&plugin=TodoNotes'
-                        + '&markdown_text=' + encodeURIComponent(description),
-                ).css('height', 'auto');
-            } else {
-                alert( _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_NOTE_UPDATE_INVALID_MSG') );
-                _TodoNotes_.sqlRefreshNotes(project_id, user_id);
-                _TodoNotes_.sqlRefreshTabs(user_id);
-            }
-        },
-        error: function(xhr,textStatus,e) {
-            alert('sqlUpdateNote');
-            alert(e);
-        }
-    });
-    return false;
-}
-
-//------------------------------------------------
-// SQL note update Status only!
-static #sqlUpdateNoteStatus(project_id, user_id, id) {
-    const note_id = $("#noteId-P" + project_id + "-" + id).attr('data-note');
-    const is_active = $("#noteCheckmark-P" + project_id + "-" + id).attr('data-id');
-
-    $.ajax({
-        cache: false,
-        type: "POST",
-        url: '/?controller=TodoNotesController&action=UpdateNoteStatus&plugin=TodoNotes'
-            + '&project_custom_id=' + project_id
-            + '&user_id=' + user_id
-            + '&note_id=' + note_id
-            + '&is_active=' + is_active,
-        success: function(response) {
-            const lastModified = JSON.parse(response)
-            if (lastModified.timestamp > 0) {
-                _TodoNotes_.#updateNoteTimestamps(lastModified, project_id, id);
-            } else {
-                alert( _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_NOTE_UPDATE_INVALID_MSG') );
-                _TodoNotes_.sqlRefreshNotes(project_id, user_id);
-                _TodoNotes_.sqlRefreshTabs(user_id);
-            }
-        },
-        error: function(xhr,textStatus,e) {
-            alert('sqlUpdateNoteStatus');
-            alert(e);
-        }
-    });
-    return false;
-}
-
-//------------------------------------------------
-// SQL note update Notification Time
-static #sqlUpdateNoteNotificationsAlertTime(project_id, user_id, id, notifications_alert_timestring) {
-    const note_id = $("#noteId-P" + project_id + "-" + id).attr('data-note');
-
-    $.ajax({
-        cache: false,
-        type: "POST",
-        url: '/?controller=TodoNotesController&action=UpdateNoteNotificationsAlertTime&plugin=TodoNotes'
-            + '&project_custom_id=' + project_id
-            + '&user_id=' + user_id
-            + '&note_id=' + note_id
-            + '&notifications_alert_timestring=' + encodeURIComponent(notifications_alert_timestring),
-        success: function(response) {
-            const notificationsAlertTime = JSON.parse(response)
-            _TodoNotes_.#updateNoteNotificationsTimestamps(notificationsAlertTime, project_id, id);
-        },
-        error: function(xhr,textStatus,e) {
-            alert('sqlUpdateNoteNotificationsAlertTime');
-            alert(e);
-        }
-    });
-    return false;
-}
-
-//------------------------------------------------
-// SQL update notes positions
-static sqlUpdateNotesPositions(project_id, user_id, order) {
-    $.ajax({
-        cache: false,
-        type: "POST",
-        url: '/?controller=TodoNotesController&action=UpdateNotesPositions&plugin=TodoNotes'
-            + '&project_custom_id=' + project_id
-            + '&user_id=' + user_id
-            + '&order=' + order,
-        success: function(response) {
-            const lastModified = JSON.parse(response)
-            if (lastModified.timestamp > 0) {
-                _TodoNotes_.#updateAllNotesTimestamps(lastModified, project_id);
-            } else {
-                _TodoNotes_.sqlRefreshNotes(project_id, user_id);
-            }
-        },
-        error: function(xhr,textStatus,e) {
-            alert('sqlUpdateNotesPositions');
-            alert(e);
-        }
-    });
-    return false;
-}
-
-//------------------------------------------------
-// SQL note transfer (to another project)
-static #sqlTransferNote(project_id, user_id, id, target_project_id) {
-    const note_id = $("#noteId-P" + project_id + "-" + id).attr('data-note');
-    $.ajax({
-        cache: false,
-        type: "POST",
-        url: '/?controller=TodoNotesController&action=TransferNote&plugin=TodoNotes'
-            + '&project_custom_id=' + project_id
-            + '&user_id=' + user_id
-            + '&note_id=' + note_id
-            + '&target_project_id=' + target_project_id,
-        success: function() {
-        },
-        error: function(xhr,textStatus,e) {
-            alert('sqlTransferNote');
-            alert(e);
-        }
-    });
-    return false;
-}
-
-//------------------------------------------------
-static sqlRefreshNotes(project_id, user_id) {
-    // console.log('_TodoNotes_.sqlRefreshNotes(');
-
-    // don't cache ajax or content won't be fresh
-    $.ajaxSetup ({
-        cache: false
-    });
-    const loadUrl = '/?controller=TodoNotesController&action=RefreshProject&plugin=TodoNotes'
-                + '&project_custom_id=' + project_id
-                + '&user_id=' + user_id;
-    setTimeout(function() {
-        $("#result" + project_id).html(_TodoNotes_Translations_.msgLoadingSpinner).load(loadUrl,
-            function() {
-                _TodoNotes_Project_.prepareDocument_SkipDashboardHandlers();
-                _TodoNotes_Tabs_.attachStatusUpdateHandlers();
-            });
-    }, 100);
-}
-
-//------------------------------------------------
-static sqlRefreshTabs(user_id) {
-    // console.log('_TodoNotes_.sqlRefreshTabs(');
-
-    // refresh ONLY if notes are viewed via dashboard and project tabs are present
-    if ($("#tabs").length === 0) return;
-
-    // don't cache ajax or content won't be fresh
-    $.ajaxSetup ({
-        cache: false
-    });
-    const loadUrl = '/?controller=TodoNotesController&action=RefreshTabs&plugin=TodoNotes'
-                + '&user_id=' + user_id;
-    setTimeout(function() {
-        $("#tabs").html(_TodoNotes_Translations_.msgLoadingSpinner).load(loadUrl,
-            function() {
-                _TodoNotes_Dashboard_.prepareDocument_SkipDashboardHandlers();
-                _TodoNotes_Tabs_.attachTabHandlers();
-            });
-    }, 200);
-}
-
-//------------------------------------------------
-static sqlToggleSessionOption(session_option) {
-    $.ajax({
-        cache: false,
-        type: "POST",
-        url: '/?controller=TodoNotesController&action=ToggleSessionOption&plugin=TodoNotes'
-            + '&session_option=' + session_option,
-        success: function() {
-        },
-        error: function(xhr,textStatus,e) {
-            alert('sqlToggleSessionOption');
-            alert(e);
-        }
-    });
-    return false;
-}
-
-//------------------------------------------------
-// SQL get last modified timestamp
-static #sqlGetLastModifiedTimestamp(project_id, user_id) {
-    $.ajax({
-        cache: false,
-        type: "POST",
-        url: '/?controller=TodoNotesController&action=GetLastModifiedTimestamp&plugin=TodoNotes'
-            + '&project_custom_id=' + project_id
-            + '&user_id=' + user_id,
-        success: function(response) {
-            _TodoNotes_.#checkAndTriggerRefresh(JSON.parse(response));
-        },
-        error: function(xhr,textStatus,e) {
-            alert('sqlGetLastModifiedTimestamp');
-            alert(e);
-        }
     });
     return false;
 }
@@ -1604,13 +1294,13 @@ static scheduleCheckModifications() {
             return;
         }
 
-        _TodoNotes_.#sqlGetLastModifiedTimestamp(project_id, user_id);
+        _TodoNotes_Requests_.GetLastModifiedTimestamp(project_id, user_id);
     }, 15 * 1000); // 15 sec
 }
 
 //------------------------------------------------
 // check if page refresh is necessary
-static #checkAndTriggerRefresh(lastModifiedTimestamp) {
+static checkAndTriggerRefresh(lastModifiedTimestamp) {
     // console.log('_TodoNotes_.checkAndTriggerRefresh');
 
     const project_id = $("#refProjectId").attr('data-project');
@@ -1619,10 +1309,10 @@ static #checkAndTriggerRefresh(lastModifiedTimestamp) {
 
     const is_project = ($(".liNewNote").length === 1);
     if (is_project && lastRefreshedTimestamp < lastModifiedTimestamp.notes) {
-        _TodoNotes_.sqlRefreshNotes(project_id, user_id);
+        _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
     }
     if (lastRefreshedTimestamp < lastModifiedTimestamp.projects) {
-        _TodoNotes_.sqlRefreshTabs(user_id);
+        _TodoNotes_Requests_.RefreshTabs(user_id);
     }
     if (lastRefreshedTimestamp < lastModifiedTimestamp.max) {
         $("#refProjectId").attr('data-timestamp', lastModifiedTimestamp.max);

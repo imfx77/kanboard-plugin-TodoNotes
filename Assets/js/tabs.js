@@ -109,7 +109,7 @@ static #TabStatsHandlers() {
 static #TabActionHandlers() {
     // toggle visibility of tabs stats widgets
     $("button" + "#settingsTabStats").click(function() {
-        _TodoNotes_.sqlToggleSessionOption('todonotesOption_ShowTabStats');
+        _TodoNotes_Requests_.ToggleSessionOption('todonotesOption_ShowTabStats');
 
         _TodoNotes_.optionShowTabStats = !_TodoNotes_.optionShowTabStats;
         $("#session_vars").attr('data-optionShowTabStats', _TodoNotes_.optionShowTabStats);
@@ -360,7 +360,7 @@ static modalReorderCustomNoteList(user_id, order) {
                 text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
                 click : function() {
                     $( this ).dialog( "close" );
-                    _TodoNotes_.sqlRefreshTabs(user_id);
+                    _TodoNotes_Requests_.RefreshTabs(user_id);
                 }
             },
         ]

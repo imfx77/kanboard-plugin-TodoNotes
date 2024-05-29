@@ -44,7 +44,7 @@ static #prepareDocument_ConfigureDashboardHandlers(skipDashboardHandlers = false
                     const regex = new RegExp('item-', 'g');
                     order = order.replace(regex, '');
                     order = order.split(',');
-                    _TodoNotes_.sqlUpdateNotesPositions(sortable_project_id, user_id, order);
+                    _TodoNotes_Requests_.UpdateNotesPositions(sortable_project_id, user_id, order);
                 }
             });
 
