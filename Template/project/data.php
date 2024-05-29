@@ -475,7 +475,7 @@ foreach ($data as $u) {
     }
 
     print '<label id="noteNotificationsDetails-P' . $u['project_id'] . '-' . $num . '"';
-    print ' class="dateLabel dateLabelClickable'. $noteNotificationsStyleExtra . ' disableEventsPropagation noteNotificationsDetails"';
+    print ' class="dateLabel dateLabelClickable' . $noteNotificationsStyleExtra . ' disableEventsPropagation noteNotificationsDetails"';
     print ' title="' . t('Notifications:') . ' ' . ($hasNotifications ? $u['date_notified'] : '🔕') . '"';
     print ' data-id="' . $num  . '"';
     print ' data-project="' . $u['project_id'] . '"';
@@ -690,7 +690,7 @@ foreach ($data as $u) {
     print '<i class="fa fa-calendar-o" aria-hidden="true"> ' . t('Created:') . ' ' . $u['date_created'] . '</i></label><br>';
 
     print '<label  id="noteNotificationsLabel-P' . $u['project_id'] . '-' . $num . '"';
-    print 'class="dateLabel dateLabelClickable'. $noteNotificationsStyleExtra . ' noteNotificationsSetup"';
+    print 'class="dateLabel dateLabelClickable' . $noteNotificationsStyleExtra . ' noteNotificationsSetup"';
     print ' data-id="' . $num . '"';
     print ' data-project="' . $u['project_id'] . '"';
     print ' data-user="' . $user_id . '"';
