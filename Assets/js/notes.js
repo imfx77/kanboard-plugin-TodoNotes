@@ -239,7 +239,7 @@ static showTitleInputNewNote() {
     }
 
     $("#inputNewNote").width( inputWidth - noteDetails.parent().find(".saveNewNote").width() );
-    editor.prop('title', _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__PROJECT_NOTE_DETAILS_SAVE_HINT'));
+    editor.prop('title', _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__PROJECT_NOTE_DETAILS_SAVE_HINT'));
 }
 
 //------------------------------------------------
@@ -979,7 +979,7 @@ static updateCategoryColors(project_id, id, old_category, new_category) {
 //------------------------------------------------
 // note update timestamp + #refProjectId
 static updateNoteTimestamps(lastModified, project_id, id) {
-    const updatedTimeString = _TodoNotes_Translations_.getTranslationExportToJS('Modified:') + ' ' + lastModified.timestring;
+    const updatedTimeString = _TodoNotes_Translations_.GetTranslationExportToJS('Modified:') + ' ' + lastModified.timestring;
 
     $("#noteDatesDetails-P" + project_id + "-" + id).attr('title', updatedTimeString);
     $("#noteModifiedLabel-P" + project_id + "-" + id + " i").text(' ' + updatedTimeString);
@@ -990,7 +990,7 @@ static updateNoteTimestamps(lastModified, project_id, id) {
 //------------------------------------------------
 // all notes update timestamps + #refProjectId
 static updateAllNotesTimestamps(lastModified, project_id) {
-    const updatedTimeString = _TodoNotes_Translations_.getTranslationExportToJS('Modified:') + ' ' + lastModified.timestring;
+    const updatedTimeString = _TodoNotes_Translations_.GetTranslationExportToJS('Modified:') + ' ' + lastModified.timestring;
 
     $("[id^=noteDatesDetails-P" + project_id + "]").attr('title', updatedTimeString);
     $("[id^=noteModifiedLabel-P" + project_id + "] i").text(' ' + updatedTimeString);
@@ -1002,7 +1002,7 @@ static updateAllNotesTimestamps(lastModified, project_id) {
 // note update notification timestamp + #refProjectId
 static updateNoteNotificationsTimestamps(notificationsAlertTime, project_id, id) {
     const hasNotifications = (notificationsAlertTime.timestamp > 0);
-    const updatedTimeString = _TodoNotes_Translations_.getTranslationExportToJS('Notifications:') + ' '
+    const updatedTimeString = _TodoNotes_Translations_.GetTranslationExportToJS('Notifications:') + ' '
         + (hasNotifications ? notificationsAlertTime.timestring : '🔕');
 
     const noteNotificationsDetails = $("#noteNotificationsDetails-P" + project_id + "-" + id);

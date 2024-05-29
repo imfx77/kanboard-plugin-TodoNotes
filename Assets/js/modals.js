@@ -19,7 +19,7 @@ static DeleteNote(project_id, user_id, id) {
         modal: true,
         buttons: [
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_DELETE_BTN'),
+                text : _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_DIALOG_DELETE_BTN'),
                 click: function() {
                     _TodoNotes_Requests_.DeleteNote(project_id, user_id, id);
                     $( this ).dialog( "close" );
@@ -28,7 +28,7 @@ static DeleteNote(project_id, user_id, id) {
                 },
             },
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
+                text : _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
                 click: function() { $( this ).dialog( "close" ); }
             },
         ]
@@ -44,7 +44,7 @@ static DeleteAllDoneNotes(project_id, user_id) {
         modal: true,
         buttons: [
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_DELETE_BTN'),
+                text : _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_DIALOG_DELETE_BTN'),
                 click: function() {
                     _TodoNotes_Requests_.DeleteAllDoneNotes(project_id, user_id);
                     $( this ).dialog( "close" );
@@ -53,7 +53,7 @@ static DeleteAllDoneNotes(project_id, user_id) {
                 },
             },
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
+                text : _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
                 click: function() { $( this ).dialog( "close" ); }
             },
         ]
@@ -69,7 +69,7 @@ static TransferNote(project_id, user_id, id) {
         modal: true,
         buttons: [
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_MOVE_BTN'),
+                text : _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_DIALOG_MOVE_BTN'),
                 click : function() {
                     const target_project_id = $("#listNoteProject-P" + project_id + " option:selected").val();
                     _TodoNotes_Requests_.TransferNote(project_id, user_id, id, target_project_id);
@@ -79,7 +79,7 @@ static TransferNote(project_id, user_id, id) {
                 },
             },
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
+                text : _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
                 click : function() {
                     $( this ).dialog( "close" );
                 }
@@ -104,7 +104,7 @@ static CreateTaskFromNote(project_id, user_id, id, is_active, title, description
         modal: true,
         buttons: [
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CREATE_BTN'),
+                text : _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_DIALOG_CREATE_BTN'),
                 click: function() {
                     const categoryCreateTask = $("#listCatCreateTask-P" + project_id + " option:selected").val();
                     const columnCreateTask = $("#listColCreateTask-P" + project_id + " option:selected").val();
@@ -121,10 +121,10 @@ static CreateTaskFromNote(project_id, user_id, id, is_active, title, description
                                 + '&swimlane_id=' + swimlaneCreateTask;
 
                     $("#dialogCreateTaskFromNote-P" + project_id).dialog({
-                        title: _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_RESULT_TITLE'),
+                        title: _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_DIALOG_RESULT_TITLE'),
                         buttons: [
                             {
-                                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CLOSE_BTN'),
+                                text : _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_DIALOG_CLOSE_BTN'),
                                 click: function() { $( this ).dialog( "close" ); }
                             },
                         ]
@@ -140,7 +140,7 @@ static CreateTaskFromNote(project_id, user_id, id, is_active, title, description
                 },
             },
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
+                text : _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
                 click: function() { $( this ).dialog( "close" ); }
             },
         ]
@@ -162,7 +162,7 @@ static NotificationsSetup(project_id, user_id, id, notifications_alert_timestrin
         modal: true,
         buttons: [
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_SET_BTN'),
+                text : _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_DIALOG_SET_BTN'),
                 click: function() {
                     const new_notifications_alert_timestring = $("#form-alerttimeNotificationsSetup-P" + project_id).val();
                     _TodoNotes_Requests_.UpdateNoteNotificationsAlertTime(project_id, user_id, id, new_notifications_alert_timestring);
@@ -170,14 +170,14 @@ static NotificationsSetup(project_id, user_id, id, notifications_alert_timestrin
                 }
             },
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_RESET_BTN'),
+                text : _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_DIALOG_RESET_BTN'),
                 click: function() {
                     _TodoNotes_Requests_.UpdateNoteNotificationsAlertTime(project_id, user_id, id, ''); // empty timestring
                     $( this ).dialog( "close" );
                 }
             },
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
+                text : _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
                 click: function() { $( this ).dialog( "close" ); }
             },
         ]
@@ -209,7 +209,7 @@ static Stats(project_id, user_id) {
         modal: true,
         buttons: [
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CLOSE_BTN'),
+                text : _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_DIALOG_CLOSE_BTN'),
                 click: function() { $( this ).dialog( "close" ); }
             },
         ]
@@ -228,7 +228,7 @@ static Report(project_id, user_id) {
         modal: true,
         buttons: [
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CREATE_BTN'),
+                text : _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_DIALOG_CREATE_BTN'),
                 click: function() {
                     const category = $("#catReport-P" + project_id + " option:selected").text();
                     const loadUrl = "/?controller=TodoNotesController&action=ShowReport&plugin=TodoNotes"
@@ -243,7 +243,7 @@ static Report(project_id, user_id) {
                 }
             },
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
+                text : _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
                 click: function() { $( this ).dialog( "close" ); }
             },
         ]
@@ -264,14 +264,14 @@ static ReindexNotesAndLists(user_id,) {
         modal: true,
         buttons: [
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_REINDEX_BTN'),
+                text : _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_DIALOG_REINDEX_BTN'),
                 click : function() {
                     _TodoNotes_Requests_.ReindexNotesAndLists(user_id);
                     $( this ).dialog( "close" );
                 },
             },
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
+                text : _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
                 click : function() {
                     $( this ).dialog( "close" );
                 }
@@ -294,7 +294,7 @@ static CreateCustomNoteList(user_id) {
         modal: true,
         buttons: [
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CREATE_BTN'),
+                text : _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_DIALOG_CREATE_BTN'),
                 click : function() {
                     const custom_note_list_name = $("#nameCreateCustomNoteList").val().trim();
                     const custom_note_list_is_global = $("#globalCreateCustomNoteList").is(":checked");
@@ -303,7 +303,7 @@ static CreateCustomNoteList(user_id) {
                 },
             },
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
+                text : _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
                 click : function() {
                     $( this ).dialog( "close" );
                 }
@@ -323,7 +323,7 @@ static RenameCustomNoteList(user_id, project_id, default_name) {
         modal: true,
         buttons: [
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_RENAME_BTN'),
+                text : _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_DIALOG_RENAME_BTN'),
                 click : function() {
                     const custom_note_list_name = $("#nameRenameCustomNoteList").val().trim();
                     _TodoNotes_Requests_.RenameCustomNoteList(user_id, project_id, custom_note_list_name);
@@ -331,7 +331,7 @@ static RenameCustomNoteList(user_id, project_id, default_name) {
                 },
             },
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
+                text : _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
                 click : function() {
                     $( this ).dialog( "close" );
                 }
@@ -350,14 +350,14 @@ static DeleteCustomNoteList(user_id, project_id) {
         modal: true,
         buttons: [
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_DELETE_BTN'),
+                text : _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_DIALOG_DELETE_BTN'),
                 click : function() {
                     _TodoNotes_Requests_.DeleteCustomNoteList(user_id, project_id);
                     $( this ).dialog( "close" );
                 },
             },
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
+                text : _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
                 click : function() {
                     $( this ).dialog( "close" );
                 }
@@ -376,14 +376,14 @@ static ReorderCustomNoteList(user_id, order) {
         modal: true,
         buttons: [
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_REORDER_BTN'),
+                text : _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_DIALOG_REORDER_BTN'),
                 click : function() {
                     _TodoNotes_Requests_.UpdateCustomNoteListsPositions(user_id, order);
                     $( this ).dialog( "close" );
                 },
             },
             {
-                text : _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
+                text : _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
                 click : function() {
                     $( this ).dialog( "close" );
                     _TodoNotes_Requests_.RefreshTabs(user_id);

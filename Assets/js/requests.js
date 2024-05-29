@@ -18,7 +18,7 @@ static AddNote(project_id, user_id) {
     const is_active = "1";
 
     if (!title) {
-        alert( _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_NOTE_ADD_TITLE_EMPTY_MSG') );
+        alert( _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_NOTE_ADD_TITLE_EMPTY_MSG') );
         return false;
     }
 
@@ -92,7 +92,7 @@ static UpdateNote(project_id, user_id, id) {
     const is_active = $("#noteCheckmark-P" + project_id + "-" + id).attr('data-id');
 
     if (!title) {
-        alert( _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_NOTE_UPDATE_TITLE_EMPTY_MSG') );
+        alert( _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_NOTE_UPDATE_TITLE_EMPTY_MSG') );
         title = $("#noteTitleLabel-P" + project_id + "-" + id).html();
         $("#noteTitleInput-P" + project_id + "-" + id).val(title);
     }
@@ -119,7 +119,7 @@ static UpdateNote(project_id, user_id, id) {
                         + '&markdown_text=' + encodeURIComponent(description),
                 ).css('height', 'auto');
             } else {
-                alert( _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_NOTE_UPDATE_INVALID_MSG') );
+                alert( _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_NOTE_UPDATE_INVALID_MSG') );
                 _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
                 _TodoNotes_Requests_.RefreshTabs(user_id);
             }
@@ -151,7 +151,7 @@ static UpdateNoteStatus(project_id, user_id, id) {
             if (lastModified.timestamp > 0) {
                 _TodoNotes_.updateNoteTimestamps(lastModified, project_id, id);
             } else {
-                alert( _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_NOTE_UPDATE_INVALID_MSG') );
+                alert( _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_NOTE_UPDATE_INVALID_MSG') );
                 _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
                 _TodoNotes_Requests_.RefreshTabs(user_id);
             }
@@ -274,7 +274,7 @@ static ReindexNotesAndLists(user_id) {
                 + '&user_id=' + user_id
                 + '&project_tab_id=' + project_tab_id;
     setTimeout(function() {
-        $("#result" + project_tab_id).html(_TodoNotes_Translations_.getSpinnerMsg('TodoNotes__JS_REINDEXING_MSG'));
+        $("#result" + project_tab_id).html(_TodoNotes_Translations_.GetSpinnerMsg('TodoNotes__JS_REINDEXING_MSG'));
         location.replace(loadUrl);
     }, 50);
 }
@@ -283,7 +283,7 @@ static ReindexNotesAndLists(user_id) {
 // create custom note list
 static CreateCustomNoteList(user_id, custom_note_list_name, custom_note_list_is_global) {
     if (!custom_note_list_name) {
-        alert( _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_CUSTOM_NOTE_LIST_NAME_EMPTY_MSG') );
+        alert( _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_CUSTOM_NOTE_LIST_NAME_EMPTY_MSG') );
         return;
     }
 
@@ -308,7 +308,7 @@ static CreateCustomNoteList(user_id, custom_note_list_name, custom_note_list_is_
 // rename custom note list
 static RenameCustomNoteList(user_id, project_id, custom_note_list_name) {
     if (!custom_note_list_name) {
-        alert( _TodoNotes_Translations_.getTranslationExportToJS('TodoNotes__JS_CUSTOM_NOTE_LIST_NAME_EMPTY_MSG') );
+        alert( _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_CUSTOM_NOTE_LIST_NAME_EMPTY_MSG') );
         return;
     }
 
