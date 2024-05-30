@@ -44,9 +44,9 @@ static #UpdateTabsContainer() {
     const numListsRegular = parseInt( $("#groupRegular li").length );
 
     const numTabs = 1 + 3 * 1.5 // ALL tab + 3x group headers
-        + ($("#groupGlobal").hasClass( 'hideMe' ) ? -0.25 : numListsGlobal)     // conditional on groupGlobal visibility
-        + ($("#groupPrivate").hasClass( 'hideMe' ) ? -0.25 : numListsPrivate)   // conditional on groupPrivate visibility
-        + ($("#groupRegular").hasClass( 'hideMe' ) ? -0.25 : numListsRegular);  // conditional on groupRegular visibility
+        + ($("#groupGlobal").hasClass( 'accordionHide' ) ? -0.25 : numListsGlobal)     // conditional on groupGlobal visibility
+        + ($("#groupPrivate").hasClass( 'accordionHide' ) ? -0.25 : numListsPrivate)   // conditional on groupPrivate visibility
+        + ($("#groupRegular").hasClass( 'accordionHide' ) ? -0.25 : numListsRegular);  // conditional on groupRegular visibility
 
     $("#tabs").height(numTabs * tabHeight);
 }
@@ -190,13 +190,13 @@ static #TabActionHandlers() {
 
 //------------------------------------------------
 static #ToggleTabGroup(group) {
-    $("#hrGroup" + group).toggleClass( 'hideMe' );
-    $("#group" + group).toggleClass( 'hideMe' );
-
+    $("#group" + group).toggleClass( 'accordionShow' );
+    $("#group" + group).toggleClass( 'accordionHide' );
     $("#toggleGroup" + group).find('i').toggleClass( "fa-chevron-circle-up" );
     $("#toggleGroup" + group).find('i').toggleClass( "fa-chevron-circle-down" );
-
-    _TodoNotes_Tabs_.#UpdateTabsContainer();
+    setTimeout(function() {
+        _TodoNotes_Tabs_.#UpdateTabsContainer();
+    }, 300);
 }
 
 //------------------------------------------------

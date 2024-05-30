@@ -104,7 +104,7 @@ foreach ($projectsAccess as $o) {
         print '<a><i class="fa fa-chevron-circle-up " aria-hidden="true"></i></a>';
         print '</button></div></h4>';
         $separatorPlacedGlobal = true;
-        print '<ul id="groupGlobal" class="ulLists">';
+        print '<ul id="groupGlobal" class="ulLists accordionShow">';
     }
 
     // separator header for custom PRIVATE lists
@@ -121,7 +121,7 @@ foreach ($projectsAccess as $o) {
         print '<a><i class="fa fa-chevron-circle-up " aria-hidden="true"></i></a>';
         print '</button></div></h4>';
         $separatorPlacedPrivate = true;
-        print '<ul id="groupPrivate" class="ulLists">';
+        print '<ul id="groupPrivate" class="ulLists accordionShow">';
     }
 
     // separator header for regular projects
@@ -138,7 +138,7 @@ foreach ($projectsAccess as $o) {
         print '<a><i class="fa fa-chevron-circle-up " aria-hidden="true"></i></a>';
         print '</button></div></h4>';
         $separatorPlacedRegular = true;
-        print '<ul id="groupRegular" class="ulLists">';
+        print '<ul id="groupRegular" class="ulLists accordionShow">';
     }
 
     //----------------------------------------

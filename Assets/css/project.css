@@ -111,6 +111,19 @@ label {
     filter: blur(15px);
 }
 
+.accordionShow {
+    opacity: 1;
+    max-height: 25000px;
+    transition: .3s ease-in-out;
+}
+
+.accordionHide {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: .3s ease-in-out;
+}
+
 .containerNoWrap {
     white-space: nowrap;
 }

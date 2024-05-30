@@ -362,7 +362,7 @@ print '</li></ul>';
 //////////////////////////////////////////
 
 print '<div id="scrollableContent" class="scrollableContent">';
-print '<ul class="ulNotes sortableList" id="sortableList-P' . $project_id . '"';
+print '<ul class="ulNotes sortableList accordionShow" id="sortableList-P' . $project_id . '"';
 print ' data-project="' . $project_id . '"';
 print '>';
 
@@ -404,7 +404,7 @@ foreach ($data as $u) {
         print '</h2>';
 
         // sortable list by project
-        print '<ul class="ulNotes sortableList" id="sortableList-P' . $last_project_id . '"';
+        print '<ul class="ulNotes sortableList accordionShow" id="sortableList-P' . $last_project_id . '"';
         print ' data-project="' . $last_project_id . '"';
         print '>';
     }

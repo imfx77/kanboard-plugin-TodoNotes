@@ -790,7 +790,8 @@ static #SettingsExpandAll() {
 }
 
 static #ToggleList(project_id) {
-    $("#sortableList-P" + project_id).toggleClass( 'hideMe' );
+    $("#sortableList-P" + project_id).toggleClass( 'accordionShow' );
+    $("#sortableList-P" + project_id).toggleClass( 'accordionHide' );
     $("#toggleList-P" + project_id).find('i').toggleClass( "fa-chevron-circle-up" );
     $("#toggleList-P" + project_id).find('i').toggleClass( "fa-chevron-circle-down" );
 }
