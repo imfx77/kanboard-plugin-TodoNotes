@@ -195,6 +195,9 @@ The notes is accessible from the project dropdown, where only the project specif
 
 ## Credits & References
 
+This project was initially forked from the [BoardNotes](https://github.com/aljawaid/BoardNotes) plugin and I tried contributing to it for a while.
+Eventually, things grew much bigger, this repo was split, and its current code has nothing in common with the original.
+Yet, the following credits are mentioned out of courtesy:
 - [TTJ](https://github.com/ThomasTJdev) (c) 2016-2023
 - [aljawaid](https://github.com/aljawaid) (c) 2023
 

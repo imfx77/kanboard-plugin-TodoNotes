@@ -5,11 +5,13 @@
 
 _(most recent changes are listed on top):_  
 
-> As of v0.6.0 Im[F(x)] took an active development over a fork of the project.
-> Which is already quite different from the original!
-> Multiple features have been added, fixes and code refactorings have been done.
-> The list is quite long and the change log will not reflect it until an actual release is due.
-
+> As of **v0.6.0** an active development over a fork of the project was taken by **Im[F(x)]**.  
+> That fork is already quite different from the original!  
+> Multiple features have been added, fixes and code refactorings have been done.  
+> The list is quite long and the change log will not reflect it until an actual release is due.  
+> > !!!  
+> > The fork is now officially split as a standalone repo [kanboard-plugin-TodoNotes](https://github.com/imfx77/kanboard-plugin-TodoNotes).  
+> > !!!  
 
 ## v0.0.5
 
