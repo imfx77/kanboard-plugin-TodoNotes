@@ -214,7 +214,7 @@ static #HandleTabGroup(group) {
 static #TabGroupHandlers() {
     // disable click & dblclick propagation for all marked sub-elements
     $(".disableTabsEventsPropagation").click(function (event) {
-        event.stopPropagation();
+        //event.stopPropagation();
     });
 
     $(".disableTabsEventsPropagation").dblclick(function (event) {

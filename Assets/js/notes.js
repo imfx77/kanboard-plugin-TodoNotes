@@ -325,7 +325,7 @@ static #NoteDetailsHandlers() {
 
     // disable click & dblclick propagation for all marked sub-elements
     $(".disableEventsPropagation").click(function (event) {
-        event.stopPropagation();
+        //event.stopPropagation();
 
         _TodoNotes_.#NoteDetailsDblclickHandlersDisable();
 
@@ -1128,7 +1128,6 @@ static InitializeLocalTimeOffset() {
     const local_timestamp = Math.floor(Date.now() / 1000);
     const last_timestamp = $("#refProjectId").attr('data-timestamp');
     const localTimeOffset = local_timestamp - last_timestamp;
-    console.log(localTimeOffset);
     $("#refProjectId").attr('data-local-time-offset', localTimeOffset);
 }
 
@@ -1139,6 +1138,8 @@ static InitializeLocalTimeOffset() {
 //------------------------------------------------
 static AttachAllHandlers() {
     // console.log('_TodoNotes_.AttachAllHandlers');
+
+    _TodoNotes_.#NoteDetailsDblclickHandlersDisable();
 
     _TodoNotes_.#NoteDetailsHandlers();
     _TodoNotes_.#NoteStatusHandlers();

@@ -427,7 +427,7 @@ label {
 }
 
 .reportBkgr {
-    background-image: linear-gradient(rgba(92, 92, 92, .75) 0 0) !important;
+    background-image: linear-gradient(rgba(92, 92, 92, .75), rgba(92, 92, 92, .75)) !important;
     background-color: rgba(92, 92, 92, .50);
     border-color: rgba(92, 92, 92, .50) !important;
     border: 1px solid;
