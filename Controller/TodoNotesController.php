@@ -112,6 +112,7 @@ class TodoNotesController extends BaseController
             'project_id' => $project_id,
             'user' => $user,
             'user_id' => $user_id,
+            'user_datetime_format' => $this->dateParser->getUserDateTimeFormat(),
             'projectsAccess' => $projectsAccess,
 
             'categories' => $categories,
@@ -175,6 +176,7 @@ class TodoNotesController extends BaseController
             'title' => t('TodoNotes__DASHBOARD_TITLE', $this->helper->user->getFullname($user)),
             'user' => $user,
             'user_id' => $user_id,
+            'user_datetime_format' => $this->dateParser->getUserDateTimeFormat(),
             'tab_id' => $tab_id,
             'projectsAccess' => $projectsAccess,
 

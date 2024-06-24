@@ -797,6 +797,7 @@ if (!$is_refresh) { // print only once per project !!!
     // include modal dialogs
     print $this->render('TodoNotes:widgets/modal_dialogs', array(
         'project_id' => $project_id,
+        'user_datetime_format' => $user_datetime_format,
         'listCategoriesById' => $listCategoriesById,
         'listColumnsById' => $listColumnsById,
         'listSwimlanesById' => $listSwimlanesById,

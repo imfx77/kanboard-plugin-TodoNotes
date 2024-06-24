@@ -44,12 +44,15 @@ if ($tab_id > 0) {
     'project_id' => $project['id'],
     'user' => $user,
     'user_id' => $user_id,
+    'user_datetime_format' => $user_datetime_format,
+
     'is_refresh' => false,
     'is_dashboard_view' => 1,
-    'data' => $data,
+
     'categories' => $categories,
     'columns' => $columns,
     'swimlanes' => $swimlanes,
+    'data' => $data,
 )) ?>
 
 </div>
