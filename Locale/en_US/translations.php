@@ -126,6 +126,7 @@ Might be waiting for an unsubmitted New Note data input!',
     //
     'TodoNotes__DIALOG_NOTIFICATIONS_SETUP_TITLE' => 'Setup Notifications for Note',
     'TodoNotes__DIALOG_NOTIFICATIONS_ALERT_TIME' => 'Alert Time',
+    'TodoNotes__DIALOG_NOTIFICATIONS_ALERT_POSTPONE' => 'Postpone Alert Time',
     //
     // Specific EXPORTS FOR JS
     //

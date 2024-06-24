@@ -749,7 +749,8 @@ static #NoteActionHandlers() {
         const project_id = $(this).attr('data-project');
         const id = $(this).attr('data-id');
         const notifications_alert_timestring = $(this).attr('data-notifications-alert-timestring');
-        _TodoNotes_Modals_.NotificationsSetup(project_id, user_id, id, notifications_alert_timestring);
+        const notifications_alert_timestamp = $(this).attr('data-notifications-alert-timestamp');
+        _TodoNotes_Modals_.NotificationsSetup(project_id, user_id, id, notifications_alert_timestring, notifications_alert_timestamp);
     });
 
     //------------------------------------------------
@@ -1041,7 +1042,7 @@ static RefreshNoteNotificationsState(project_id, id) {
         } else {
             // state Expired
             const local_timestamp = Math.floor(Date.now() / 1000);
-            const localTimeOffset = $("#refProjectId").attr('data-local-time-offset');
+            const localTimeOffset = parseInt($("#refProjectId").attr('data-local-time-offset'));
             if (notifications_alert_timestamp < local_timestamp + localTimeOffset) {
                 noteNotificationsDetails.addClass('dateLabelExpired');
                 noteNotificationsLabel.addClass('dateLabelExpired');

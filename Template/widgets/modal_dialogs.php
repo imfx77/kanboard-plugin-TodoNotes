@@ -83,9 +83,33 @@ print '</div>';
 
 //---------------------------------------------
 
-print '<div class="hideMe" id="dialogNotificationsSetup-P' . $project_id . '" title="' . t('TodoNotes__DIALOG_NOTIFICATIONS_SETUP_TITLE') . '">';
+print '<div class="hideMe" id="dialogNotificationsSetup-P' . $project_id . '" title="' . t('TodoNotes__DIALOG_NOTIFICATIONS_SETUP_TITLE') . '"';
+print ' data-project="' . $project_id . '" data-datetime-format="' . $user_datetime_format . '">';
 
-print $this->helper->form->datetime(t('TodoNotes__DIALOG_NOTIFICATIONS_ALERT_TIME') . ' :&nbsp;&nbsp;', 'alerttimeNotificationsSetup-P' . $project_id, array(), array(), array('tabindex="-1"'));
+print $this->helper->form->datetime(t('TodoNotes__DIALOG_NOTIFICATIONS_ALERT_TIME') . ' :&nbsp;&nbsp;', 'alert_time_NotificationsSetup-P' . $project_id, array(), array(), array('tabindex="-1"'));
+
+print '<div id="postpone_options_NotificationsSetup-P' . $project_id . '" data-project="' . $project_id . '"><br>';
+print '<input type="checkbox" id="postpone_alert_NotificationsSetup-P' . $project_id . '">';
+print '<label for="postpone_alert_NotificationsSetup-P' . $project_id . '">&nbsp;&nbsp;' . t('TodoNotes__DIALOG_NOTIFICATIONS_ALERT_POSTPONE') . '</label>';
+
+print '<br>';
+print '<input type="number" id="postpone_number_NotificationsSetup-P' . $project_id . '" value="1" min="1" step="1" style="text-align: center; margin-left: 30px">';
+print '&nbsp;&nbsp';
+
+print '<select id="postpone_type_NotificationsSetup-P' . $project_id . '">';
+print '<option value="1">'. t('seconds') . '</option>';
+print '<option value="2">'. t('minutes') . '</option>';
+print '<option value="3">'. t('hours') . '</option>';
+print '<option value="4" selected>'. t('Day(s)') . '</option>';
+print '<option value="5">'. t('Month(s)') . '</option>';
+print '<option value="6">'. t('Year(s)') . '</option>';
+print '</select>';
+
+print '<br>';
+print '<input type="text" class="hideMe" id="postpone_base_NotificationsSetup-P' . $project_id . '">';
+print '<label id="postpone_time_NotificationsSetup-P' . $project_id . '" style="margin-left: 30px; color: darkred"></label>';
+
+print '</div>'; // postpone options
 
 print '</div>';
 
