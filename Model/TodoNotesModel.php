@@ -66,6 +66,37 @@ class TodoNotesModel extends Base
         return false;
     }
 
+    // Get the name of a project related to user
+    public function GetProjectNameForUser($user_id, $project_id): string
+    {
+        $all_user_projects = $this->GetAllProjectIds($user_id);
+        // fetch the project_name of the requested project
+        foreach ($all_user_projects as $project) {
+            if ($project_id == $project['project_id']) {
+                return $project['project_name'];
+            }
+        }
+        // if nothing found
+        return t('TodoNotes__PROJECT_NOT_FOUND');
+    }
+
+    // Get notes related to user and project
+    public function GetProjectNoteForUser($note_id, $project_id, $user_id)
+    {
+        $note = $this->db->table(self::TABLE_NOTES_ENTRIES)
+            ->eq('user_id', $user_id)
+            ->eq('project_id', $project_id)
+            ->eq('id', $note_id)
+            ->gte('is_active', 0) // -1 == deleted
+            ->findOne();
+
+        $userDateTimeFormat = $this->dateParser->getUserDateTimeFormat();
+        $note['notifications_alert_timestamp'] = $note['date_notified']; // keep the timestamp
+        $note = $this->dateParser->format($note, array('date_created', 'date_modified', 'date_notified'), $userDateTimeFormat);
+
+        return $note;
+    }
+
     // Get notes related to user and project
     public function GetProjectNotesForUser($project_id, $user_id, $doSortByStatus)
     {
