@@ -296,6 +296,39 @@ class TodoNotesController extends BaseController
         return $timestamp;
     }
 
+    public function TestAllNotificationTypes()
+    {
+        $user_id = $this->ResolveUserId();
+        $user = $this->userModel->getById($user_id);
+
+        $project = $this->ResolveProject($user_id);
+        $project_id = $project['id'];
+
+        $note_id = $this->request->getStringParam('note_id');
+        $note = $this->todoNotesModel->GetProjectNoteForUser($note_id, $project_id, $user_id);
+        $note_project_name = $this->todoNotesModel->GetProjectNameForUser($user_id, $note['project_id']);
+
+        //---------------------------------------------------
+        // response to JS for web notification
+        print(json_encode(array('project' => $note_project_name, 'note' => $note)));
+
+        //---------------------------------------------------
+        // email notification
+        if (! empty($user['email'])) {
+            $this->emailClient->send(
+                $user['email'],
+                $user['name'] ?: $user['username'],
+                t('TodoNotes__NOTIFICATIONS_EMAIL_SUBJECT'),
+                e('TodoNotes__NOTIFICATIONS_EMAIL_CONTENT',
+                    $note['title'],
+                    $note_project_name,
+                    $note['category'] ?: '(' . t('None') . ')',
+                    $note['description'] ? $this->helper->text->markdown($note['description']) : '(' . t('None') . ')'
+                )
+            );
+        }
+    }
+
     public function TransferNote()
     {
         $user_id = $this->ResolveUserId();

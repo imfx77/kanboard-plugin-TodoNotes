@@ -11,6 +11,8 @@ return array(
     //
     // Template/project
     //
+    'TodoNotes__PROJECT_NOT_FOUND' => '⚠️ Project NOT found!',
+    //
     'TodoNotes__PROJECT_TITLE' => 'Notes',
     'TodoNotes__PROJECT_OVERVIEW_MODE_TITLE' => 'Overview Mode',
     'TodoNotes__PROJECT_OVERVIEW_MODE_TEXT' => '⚠️ ONLY manage notes Status and lists order!',
@@ -127,6 +129,14 @@ Might be waiting for an unsubmitted New Note data input!',
     'TodoNotes__DIALOG_NOTIFICATIONS_SETUP_TITLE' => 'Setup Notifications for Note',
     'TodoNotes__DIALOG_NOTIFICATIONS_ALERT_TIME' => 'Alert Time',
     'TodoNotes__DIALOG_NOTIFICATIONS_ALERT_POSTPONE' => 'Postpone Alert Time',
+    //
+    // Notifications
+    //
+    'TodoNotes__NOTIFICATIONS_EMAIL_SUBJECT' => 'TodoNotes Notification',
+    'TodoNotes__NOTIFICATIONS_EMAIL_CONTENT' => '<h2><u>%s</u></h2>
+<div><b>Project :</b> %s</div>
+<div><b>Category :</b> %s</div>
+<div>%s</div>',
     //
     // Specific EXPORTS FOR JS
     //

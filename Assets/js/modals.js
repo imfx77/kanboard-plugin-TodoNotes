@@ -388,6 +388,14 @@ static NotificationsSetup(project_id, user_id, id, notifications_alert_timestrin
                 text : _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
                 click: function() { $( this ).dialog( "close" ); }
             },
+            {
+                //text : _TodoNotes_Translations_.GetTranslationExportToJS('Test All Notification Types'),
+                text : 'Test All Notification Types',
+                click: function() {
+                    _TodoNotes_Requests_.TestAllNotificationTypes(project_id, user_id, id);
+                    $( this ).dialog( "close" );
+                }
+            },
         ]
     });
     return false;
