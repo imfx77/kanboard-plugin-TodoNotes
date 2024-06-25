@@ -314,26 +314,27 @@ class TodoNotesController extends BaseController
         $isWysiwygMDEditorRendering = ($this->configModel->get('WysiwygMDEditor_enable_easymde_rendering', '0') == '1');
         $descriptionPrefix = $isWysiwygMDEditorRendering ? '__{WysiwygMDEditor_FORCE_FALLBACK_IMPL}__' : '';
 
+        $notification_link = $this->helper->url->base() . '/dashboard/' . $user_id . '/todonotes/' . $note_project_tab;
         $notification_title = t('TodoNotes__NOTIFICATIONS_TITLE');
         $notification_content = e('TodoNotes__NOTIFICATIONS_CONTENT',
+            $notification_link,
             $note['title'],
             $note['date_notified'],
             $note_project_name,
             $note['category'] ?: '(' . t('None') . ')',
             $note['description'] ? $this->helper->text->markdown($descriptionPrefix . $note['description']) : '(' . t('None') . ')'
         );
-        $notification_link = $this->helper->url->base() . '/dashboard/' . $user_id . '/todonotes/' . $note_project_tab;
 
-//        //---------------------------------------------------
-//        // email notification
-//        if (! empty($user['email'])) {
-//            $this->emailClient->send(
-//                $user['email'],
-//                $user['name'] ?: $user['username'],
-//                $notification_title,
-//                $notification_content_email
-//            );
-//        }
+        //---------------------------------------------------
+        // email notification
+        if (! empty($user['email'])) {
+            $this->emailClient->send(
+                $user['email'],
+                $user['name'] ?: $user['username'],
+                $notification_title,
+                $notification_content
+            );
+        }
 
         //---------------------------------------------------
         // response to JS for web notification

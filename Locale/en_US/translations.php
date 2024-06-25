@@ -133,7 +133,7 @@ Might be waiting for an unsubmitted New Note data input!',
     // Notifications
     //
     'TodoNotes__NOTIFICATIONS_TITLE' => 'TodoNotes Alert',
-    'TodoNotes__NOTIFICATIONS_CONTENT' => '<h2><u>%s</u></h2>
+    'TodoNotes__NOTIFICATIONS_CONTENT' => '<a href="%s"><h2><u>%s</u></h2></a>
 <div style="color: darkred"><b>🔔 %s</b></div><br>
 <div><b>Project :</b> %s</div>
 <div><b>Category :</b> %s</div>

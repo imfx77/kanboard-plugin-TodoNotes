@@ -1091,7 +1091,11 @@ static ShowDesktopNotification(title, content, link) {
         const notification = new Notification(title, options);
 
         notification.onclick = function () {
-            window.open(link, '_blank').focus();
+            let newBrowserTab = window.open(link, '_blank');
+            newBrowserTab.addEventListener('DOMContentLoaded', function()
+            {
+                newBrowserTab.focus();
+            });
         };
     }
 }
