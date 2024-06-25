@@ -110,7 +110,7 @@ static UpdateNote(project_id, user_id, id) {
             + '&category=' + encodeURIComponent(category)
             + '&is_active=' + is_active,
         success: function(response) {
-            const lastModified = JSON.parse(response)
+            const lastModified = JSON.parse(response);
             if (lastModified.timestamp > 0) {
                 _TodoNotes_.UpdateNoteTimestamps(lastModified, project_id, id);
                 _TodoNotes_.RefreshNoteNotificationsState(project_id, id);
@@ -148,7 +148,7 @@ static UpdateNoteStatus(project_id, user_id, id) {
             + '&note_id=' + note_id
             + '&is_active=' + is_active,
         success: function(response) {
-            const lastModified = JSON.parse(response)
+            const lastModified = JSON.parse(response);
             if (lastModified.timestamp > 0) {
                 _TodoNotes_.UpdateNoteTimestamps(lastModified, project_id, id);
                 _TodoNotes_.RefreshNoteNotificationsState(project_id, id);
@@ -180,7 +180,7 @@ static UpdateNoteNotificationsAlertTime(project_id, user_id, id, notifications_a
             + '&note_id=' + note_id
             + '&notifications_alert_timestring=' + encodeURIComponent(notifications_alert_timestring),
         success: function(response) {
-            const notificationsAlertTime = JSON.parse(response)
+            const notificationsAlertTime = JSON.parse(response);
             _TodoNotes_.UpdateNoteNotificationsAlertTimestamps(notificationsAlertTime, project_id, id);
             _TodoNotes_.RefreshNoteNotificationsState(project_id, id);
         },
@@ -205,10 +205,12 @@ static TestAllNotificationTypes(project_id, user_id, id) {
             + '&user_id=' + user_id
             + '&note_id=' + note_id,
         success: function(response) {
-            console.log(response);
-            // const notificationsAlertTime = JSON.parse(response)
-            // _TodoNotes_.UpdateNoteNotificationsAlertTimestamps(notificationsAlertTime, project_id, id);
-            // _TodoNotes_.RefreshNoteNotificationsState(project_id, id);
+            const notification_data = JSON.parse(response);
+            _TodoNotes_.ShowDesktopNotification(
+                notification_data['notification_title'],
+                notification_data['notification_content'],
+                notification_data['notification_link']
+            );
         },
         error: function(xhr,textStatus,e) {
             alert('_TodoNotes_Requests_.TestAllNotificationTypes');
@@ -229,7 +231,7 @@ static UpdateNotesPositions(project_id, user_id, order) {
             + '&user_id=' + user_id
             + '&order=' + order,
         success: function(response) {
-            const lastModified = JSON.parse(response)
+            const lastModified = JSON.parse(response);
             if (lastModified.timestamp > 0) {
                 _TodoNotes_.UpdateAllNotesTimestamps(lastModified, project_id);
             } else {

@@ -743,7 +743,7 @@ static #NoteActionHandlers() {
     //------------------------------------------------
     //------------------------------------------------
 
-    // Notifications date/time picker and
+    // Notifications date/time picker and postpone modal dialog
     $(".noteNotificationsSetup").click(function() {
         const user_id = $(this).attr('data-user');
         const project_id = $(this).attr('data-project');
@@ -1017,6 +1017,10 @@ static UpdateNoteNotificationsAlertTimestamps(notificationsAlertTime, project_id
 }
 
 //------------------------------------------------
+// Notifications routines
+//------------------------------------------------
+
+//------------------------------------------------
 // note refresh notifications vis state
 static RefreshNoteNotificationsState(project_id, id) {
     const noteNotificationsDetails = $("#noteNotificationsDetails-P" + project_id + "-" + id);
@@ -1059,6 +1063,37 @@ static #RefreshAllNotesNotificationsState() {
         const id = $(this).attr('data-id');
         _TodoNotes_.RefreshNoteNotificationsState(project_id, id)
     });
+}
+
+//------------------------------------------------
+// request desktop notifications permission
+static RequestDesktopNotificationsPermission() {
+    if (!Notification) {
+        console.log('Desktop notifications are not available in your browser.');
+        return;
+    }
+
+    if (Notification.permission !== 'granted') {
+        Notification.requestPermission();
+    }
+}
+
+//------------------------------------------------
+// all notes refresh notifications vis state
+static ShowDesktopNotification(title, content, link) {
+    if (Notification.permission !== 'granted') {
+        Notification.requestPermission();
+    } else {
+        const options = {
+            body: content,
+            icon: location.origin + '/assets/img/favicon.png',
+        };
+        const notification = new Notification(title, options);
+
+        notification.onclick = function () {
+            window.open(link, '_blank').focus();
+        };
+    }
 }
 
 //------------------------------------------------
@@ -1157,6 +1192,8 @@ $(function() {
     _TodoNotes_.InitializeLocalTimeOffset();
     // start the recursive check sequence on load page
     _TodoNotes_.ScheduleCheckModifications();
+
+    _TodoNotes_.RequestDesktopNotificationsPermission();
 });
 
 //////////////////////////////////////////////////
