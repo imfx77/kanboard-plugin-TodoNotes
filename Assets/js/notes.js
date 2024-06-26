@@ -1043,19 +1043,17 @@ static RefreshNoteNotificationsState(project_id, id) {
 
     noteNotificationsDetails.removeClass('dateLabelComplete').removeClass('dateLabelExpired');
     noteNotificationsLabel.removeClass('dateLabelComplete').removeClass('dateLabelExpired');
-    if (hasNotifications) {
+    if ($("#noteCheckmark-P" + project_id + "-" + id).attr('data-id') === '0') {
         // state Complete
-        if ($("#noteCheckmark-P" + project_id + "-" + id).attr('data-id') === '0') {
-            noteNotificationsDetails.addClass('dateLabelComplete');
-            noteNotificationsLabel.addClass('dateLabelComplete');
-        } else {
-            // state Expired
-            const local_timestamp = Math.floor(Date.now() / 1000);
-            const localTimeOffset = parseInt($("#refProjectId").attr('data-local-time-offset'));
-            if (notifications_alert_timestamp < local_timestamp + localTimeOffset) {
-                noteNotificationsDetails.addClass('dateLabelExpired');
-                noteNotificationsLabel.addClass('dateLabelExpired');
-            }
+        noteNotificationsDetails.addClass('dateLabelComplete');
+        noteNotificationsLabel.addClass('dateLabelComplete');
+    } else if (hasNotifications) {
+        // state Expired
+        const local_timestamp = Math.floor(Date.now() / 1000);
+        const localTimeOffset = parseInt($("#refProjectId").attr('data-local-time-offset'));
+        if (notifications_alert_timestamp < local_timestamp + localTimeOffset) {
+            noteNotificationsDetails.addClass('dateLabelExpired');
+            noteNotificationsLabel.addClass('dateLabelExpired');
         }
     }
 }
