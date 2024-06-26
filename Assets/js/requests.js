@@ -209,7 +209,8 @@ static TestAllNotificationTypes(project_id, user_id, id) {
             _TodoNotes_.ShowDesktopNotification(
                 notification_data['notification_title'],
                 notification_data['notification_content'],
-                notification_data['notification_link']
+                notification_data['notification_link'],
+                notification_data['notification_timestamp']
             );
         },
         error: function(xhr,textStatus,e) {

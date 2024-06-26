@@ -27,6 +27,11 @@ static IsMobile() {
 }
 
 //------------------------------------------------
+// Global vars for notifications ServiceWorker
+//------------------------------------------------
+static #swRegistration = null;
+
+//------------------------------------------------
 // Global vars for options
 //------------------------------------------------
 
@@ -1058,6 +1063,7 @@ static RefreshNoteNotificationsState(project_id, id) {
 //------------------------------------------------
 // all notes refresh notifications vis state
 static #RefreshAllNotesNotificationsState() {
+    // console.log('_TodoNotes_.RefreshAllNotesNotificationsState');
     $(".noteNotificationsSetup").each(function() {
         const project_id = $(this).attr('data-project');
         const id = $(this).attr('data-id');
@@ -1068,35 +1074,46 @@ static #RefreshAllNotesNotificationsState() {
 //------------------------------------------------
 // request desktop notifications permission
 static RequestDesktopNotificationsPermission() {
+    // console.log('_TodoNotes_.RequestDesktopNotificationsPermission');
     if (!Notification) {
-        console.log('Desktop notifications are not available in your browser.');
+        console.warn('Desktop notifications are not available in your browser.');
         return;
     }
 
     if (Notification.permission !== 'granted') {
         Notification.requestPermission();
     }
+
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register(location.origin + '/plugins/TodoNotes/Assets/js/notification_sw.js')
+        .then(function(registration) {
+            _TodoNotes_.#swRegistration = registration;
+            //registration.unregister(); // manually force refresh the service worker
+        });
+    } else {
+        console.warn('Service workers aren\'t supported in this browser.');
+    }
 }
 
 //------------------------------------------------
 // all notes refresh notifications vis state
-static ShowDesktopNotification(title, content, link) {
+static ShowDesktopNotification(title, content, link, timestamp) {
+    // console.log('_TodoNotes_.ShowDesktopNotification');
+    if (!_TodoNotes_.#swRegistration) return;
+
     if (Notification.permission !== 'granted') {
         Notification.requestPermission();
     } else {
         const options = {
             body: content,
-            icon: location.origin + '/assets/img/favicon.png',
+            icon: location.origin + '/plugins/TodoNotes/Assets/img/icon.png',
+            badge: location.origin + '/plugins/TodoNotes/Assets/img/badge.png',
+            data: { url: link },
+            timestamp: timestamp * 1000,
+            vibrate: [200, 100, 200, 100, 200, 100, 200],
         };
-        const notification = new Notification(title, options);
 
-        notification.onclick = function () {
-            let newBrowserTab = window.open(link, '_blank');
-            newBrowserTab.addEventListener('DOMContentLoaded', function()
-            {
-                newBrowserTab.focus();
-            });
-        };
+        _TodoNotes_.#swRegistration.showNotification(title, options);
     }
 }
 

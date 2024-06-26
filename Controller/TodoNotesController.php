@@ -314,7 +314,7 @@ class TodoNotesController extends BaseController
         $isWysiwygMDEditorRendering = ($this->configModel->get('WysiwygMDEditor_enable_easymde_rendering', '0') == '1');
         $descriptionPrefix = $isWysiwygMDEditorRendering ? '__{WysiwygMDEditor_FORCE_FALLBACK_IMPL}__' : '';
 
-        $notification_link = $this->helper->url->base() . '/dashboard/' . $user_id . '/todonotes/' . $note_project_tab;
+        $notification_link = $this->helper->url->base() . 'dashboard/' . $user_id . '/todonotes/' . $note_project_tab;
         $notification_title = t('TodoNotes__NOTIFICATIONS_TITLE');
         $notification_content = e('TodoNotes__NOTIFICATIONS_CONTENT',
             $notification_link,
@@ -341,6 +341,7 @@ class TodoNotesController extends BaseController
         print(json_encode(array('notification_title' => $notification_title,
                                 'notification_content' => $note['title'],
                                 'notification_link' => $notification_link,
+                                'notification_timestamp' => $note['notifications_alert_timestamp'],
         )));
     }
 
