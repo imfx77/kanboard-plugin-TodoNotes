@@ -16,15 +16,23 @@ print $this->asset->js('plugins/TodoNotes/Assets/js/load_dropdown.js');
 }
 .localTableCell {
     display: table-cell;
+    white-space: nowrap;
 }
 ._TodoNotes_ProjectDropdown_StatsWidget {
     display: table-cell;
-    width: 100%;
     text-align: right;
+}
+li._TodoNotes_ProjectDropdown_Icon i.fa-wpforms {
+    display: table-cell;
+}
+li._TodoNotes_ProjectDropdown_Icon i.fa-wpforms::before {
+    content: url('<?= $this->helper->url->base() ?>plugins/TodoNotes/Assets/img/button.svg');
+    display: inline-block;
+    vertical-align: middle;
 }
 </style>
 
-<li>
+<li class="_TodoNotes_ProjectDropdown_Icon">
     <?php
         $linkTitle = '<div class="localTableCell">' . t('TodoNotes__PROJECT_TITLE') . '</div>';
 

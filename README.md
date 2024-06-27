@@ -48,6 +48,8 @@
 
 **⚠ This README is still out of date ! ⚠**
 
+![icon](Assets/img/icon.png)
+
 ## TODO-style Notes for Kanboard
 
 The plugin allows to keep TODO-style notes on every KB project and as standalone lists.
