@@ -97,12 +97,12 @@ print '<input type="number" id="postpone_number_NotificationsSetup-P' . $project
 print '&nbsp;&nbsp';
 
 print '<select id="postpone_type_NotificationsSetup-P' . $project_id . '">';
-print '<option value="1">'. t('seconds') . '</option>';
-print '<option value="2">'. t('minutes') . '</option>';
-print '<option value="3">'. t('hours') . '</option>';
-print '<option value="4" selected>'. t('Day(s)') . '</option>';
-print '<option value="5">'. t('Month(s)') . '</option>';
-print '<option value="6">'. t('Year(s)') . '</option>';
+print '<option value="1">' . t('seconds') . '</option>';
+print '<option value="2">' . t('minutes') . '</option>';
+print '<option value="3">' . t('hours') . '</option>';
+print '<option value="4" selected>' . t('Day(s)') . '</option>';
+print '<option value="5">' . t('Month(s)') . '</option>';
+print '<option value="6">' . t('Year(s)') . '</option>';
 print '</select>';
 
 print '<br>';

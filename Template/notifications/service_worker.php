@@ -1,6 +1,8 @@
 <?php
+
 header('Content-Type: application/javascript');
 header('Service-Worker-Allowed: /');
+
 ?>
 
 self.addEventListener('push', function (event) {

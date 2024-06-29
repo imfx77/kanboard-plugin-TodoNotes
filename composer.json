@@ -1,15 +1,15 @@
 {
-  "name": "imfx77/kanboard-plugin-todonotes",
-  "description": "description",
-  "minimum-stability": "stable",
-  "license": "proprietary",
-  "authors": [
+  "name" : "imfx77/kanboard-plugin-todonotes",
+  "description" : "description",
+  "minimum-stability" : "stable",
+  "license" : "proprietary",
+  "authors" : [
     {
-      "name": "ilkitch",
-      "email": "email@example.com"
+      "name" : "ilkitch",
+      "email" : "email@example.com"
     }
   ],
-  "require": {
-    "minishlink/web-push": "^7.0.0"
+  "require" : {
+    "minishlink/web-push" : "^7.0.0"
   }
 }

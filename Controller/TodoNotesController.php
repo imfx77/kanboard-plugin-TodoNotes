@@ -316,7 +316,8 @@ class TodoNotesController extends BaseController
 
         $notification_link = $this->helper->url->base() . 'dashboard/' . $user_id . '/todonotes/' . $note_project_tab;
         $notification_title = t('TodoNotes__NOTIFICATIONS_EMAIL_TITLE');
-        $notification_content = e('TodoNotes__NOTIFICATIONS_EMAIL_CONTENT',
+        $notification_content = e(
+            'TodoNotes__NOTIFICATIONS_EMAIL_CONTENT',
             $notification_link,
             $note['title'],
             $note['date_notified'],
@@ -327,7 +328,7 @@ class TodoNotesController extends BaseController
 
         //---------------------------------------------------
         // email notification
-        if (! empty($user['email'])) {
+        if (!empty($user['email'])) {
             $this->emailClient->send(
                 $user['email'],
                 $user['name'] ?: $user['username'],
@@ -642,9 +643,7 @@ class TodoNotesController extends BaseController
         }
 
         // toggle options are expected to be boolean i.e. to only have values of 'true' of 'false'
-        if (!array_key_exists($session_option, $_SESSION) ||    // key not exist
-            !is_bool($_SESSION[$session_option])                // value not bool
-        ) {
+        if (!array_key_exists($session_option, $_SESSION) || !is_bool($_SESSION[$session_option])) {
             // set initial value
             $_SESSION[$session_option] = false;
             return true;

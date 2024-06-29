@@ -7,7 +7,7 @@ use Kanboard\Core\Translator;
 
 class Plugin extends Base
 {
-    const NAME = 'TodoNotes';
+    public const NAME = 'TodoNotes';
 
     public function initialize()
     {

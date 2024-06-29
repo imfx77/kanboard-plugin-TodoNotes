@@ -329,7 +329,7 @@ static #NoteDetailsHandlers() {
     //------------------------------------------------
 
     // disable click & dblclick propagation for all marked sub-elements
-    $(".disableEventsPropagation").click(function (event) {
+    $(".disableEventsPropagation").click(function (/*event*/) {
         //event.stopPropagation();
 
         _TodoNotes_.#NoteDetailsDblclickHandlersDisable();

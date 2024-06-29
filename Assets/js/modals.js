@@ -299,13 +299,15 @@ static #UpdateNotificationsSetupPostponeTime(project_id) {
             postponeTime.setDate(postponeTime.getDate() + postponeNumber);
             break;
         case 5: // months
-            const currentDay = postponeTime.getDate();
-            postponeTime.setMonth(postponeTime.getMonth() + postponeNumber);
-            let newDay = postponeTime.getDate();
-            // correct back over-projected dates
-            while(newDay >= 1 && newDay <= 3 && newDay < currentDay) {
-                postponeTime.setDate(postponeTime.getDate() - 1);
-                newDay = postponeTime.getDate();
+            {
+                const currentDay = postponeTime.getDate();
+                postponeTime.setMonth(postponeTime.getMonth() + postponeNumber);
+                let newDay = postponeTime.getDate();
+                // correct back over-projected dates
+                while (newDay >= 1 && newDay <= 3 && newDay < currentDay) {
+                    postponeTime.setDate(postponeTime.getDate() - 1);
+                    newDay = postponeTime.getDate();
+                }
             }
             break;
         case 6: // years
