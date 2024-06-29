@@ -1070,33 +1070,64 @@ static #RefreshAllNotesNotificationsState() {
 }
 
 //------------------------------------------------
-// request desktop notifications permission
-static RequestDesktopNotificationsPermission() {
-    // console.log('_TodoNotes_.RequestDesktopNotificationsPermission');
-    if (!Notification) {
-        console.warn('Desktop notifications are not available in your browser.');
+// request browser notifications permission
+static RequestBrowserNotificationsPermission() {
+    // console.log('_TodoNotes_.RequestBrowserNotificationsPermission');
+
+    const applicationServerKey = 'BNdqXy7oyszI1EJUA_0sWsEm9hFHeGJ4EVY0lsb7qAJ5Yi1ZcsQs1JKtuSvV0JjLhilR5QUlaoLUktMB40tFOMc';
+
+    if (!('serviceWorker' in navigator)) {
+        console.warn('Service workers are not supported by this browser!');
         return;
     }
 
-    if (Notification.permission !== 'granted') {
-        Notification.requestPermission();
+    if (!('PushManager' in window)) {
+        console.warn('Push notifications are not supported by this browser!');
+        return;
     }
 
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register(location.origin + '/plugins/TodoNotes/Assets/js/notification_sw.js')
-        .then(function(registration) {
-            _TodoNotes_.#swRegistration = registration;
-            //registration.unregister(); // manually force refresh the service worker
-        });
-    } else {
-        console.warn('Service workers aren\'t supported in this browser.');
+    if (!('showNotification' in ServiceWorkerRegistration.prototype)) {
+        console.warn('Notifications are not supported by this browser!');
+        return;
     }
+
+    if (!Notification) {
+        console.warn('Notifications are not available in this browser!');
+        return;
+    }
+
+    Notification.requestPermission();
+
+    navigator.serviceWorker.register(location.origin + '/plugins/TodoNotes/Template/notifications/service_worker.php', { scope: '/' })
+    .then(function (sw) {
+        console.log('[SW] Service worker has been registered');
+        _TodoNotes_.#swRegistration = sw;
+
+        navigator.serviceWorker.ready
+            .then(function(sw) {
+                console.log('[SW] Service worker is ready');
+                return sw.pushManager.subscribe({
+                            userVisibleOnly: true, //Always show notification when received
+                            applicationServerKey: applicationServerKey,
+                });
+            })
+            .then(subscription => {
+                //console.log(JSON.stringify(subscription));
+                console.log('[SW] Successfully subscribed to push notifications');
+            })
+            .catch(error => {
+                console.error('[SW] Impossible to subscribe to push notifications', error);
+            });
+    },
+    function(e) {
+      console.error('[SW] Service worker registration failed', e);
+    });
 }
 
 //------------------------------------------------
-// all notes refresh notifications vis state
-static ShowDesktopNotification(title, content, link, timestamp) {
-    // console.log('_TodoNotes_.ShowDesktopNotification');
+// trigger a notification from the browser
+static ShowBrowserNotification(title, content, link, timestamp) {
+    // console.log('_TodoNotes_.ShowBrowserNotification');
     if (!_TodoNotes_.#swRegistration) return;
 
     if (Notification.permission !== 'granted') {
@@ -1212,7 +1243,7 @@ $(function() {
     // start the recursive check sequence on load page
     _TodoNotes_.ScheduleCheckModifications();
 
-    _TodoNotes_.RequestDesktopNotificationsPermission();
+    _TodoNotes_.RequestBrowserNotificationsPermission();
 });
 
 //////////////////////////////////////////////////

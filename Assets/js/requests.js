@@ -206,7 +206,7 @@ static TestAllNotificationTypes(project_id, user_id, id) {
             + '&note_id=' + note_id,
         success: function(response) {
             const notification_data = JSON.parse(response);
-            _TodoNotes_.ShowDesktopNotification(
+            _TodoNotes_.ShowBrowserNotification(
                 notification_data['notification_title'],
                 notification_data['notification_content'],
                 notification_data['notification_link'],
