@@ -86,6 +86,9 @@ print '</div>';
 print '<div class="hideMe" id="dialogNotificationsSetup-P' . $project_id . '" title="' . t('TodoNotes__DIALOG_NOTIFICATIONS_SETUP_TITLE') . '"';
 print ' data-project="' . $project_id . '" data-datetime-format="' . $user_datetime_format . '">';
 
+print '<div style="text-align: center"><label id="note_title_NotificationsSetup-P' . $project_id . '" class="dateLabel dateLabelComplete"></label></div>';
+
+print '<br>';
 print $this->helper->form->datetime(t('TodoNotes__DIALOG_NOTIFICATIONS_ALERT_TIME') . ' :&nbsp;&nbsp;', 'alert_time_NotificationsSetup-P' . $project_id, array(), array(), array('tabindex="-1"'));
 
 print '<div id="postpone_options_NotificationsSetup-P' . $project_id . '" data-project="' . $project_id . '"><br>';

@@ -355,6 +355,7 @@ static NotificationsSetup(project_id, user_id, id, notifications_alert_timestrin
     $.ajaxSetup ({
         cache: false
     });
+    $("#note_title_NotificationsSetup-P" + project_id).text($("#noteTitleLabel-P" + project_id + "-" + id).text());
     $("#form-alert_time_NotificationsSetup-P" + project_id).val(notifications_alert_timestring);
     $("#postpone_base_NotificationsSetup-P" + project_id).val(notifications_alert_timestamp);
     $("#postpone_alert_NotificationsSetup-P" + project_id).prop('checked', false);
