@@ -102,8 +102,11 @@ static #prepareDocument_ConfigureDashboardHandlers(skipDashboardHandlers = false
 
 //------------------------------------------------
 static resizeDocument() {
+    _TodoNotes_Translations_.Initialize();
+
     _TodoNotes_.AdjustAllNotesPlaceholders();
     _TodoNotes_.AdjustAllNotesTitleInputs();
+
     setTimeout(function() {
         _TodoNotes_.AdjustScrollableContent();
     }, 100);

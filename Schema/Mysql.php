@@ -56,6 +56,14 @@ function version_1(PDO $pdo)
                     (`project_id`, `user_id`, `position`, `is_active`, `date_created`, `date_modified`, `date_notified`)
                     VALUES (0, 0, 0, -1, 0, 0, 0)
                 ');
+
+    // create webpn subscriptions
+    $pdo->exec('CREATE TABLE IF NOT EXISTS `todonotes_webpn_subscriptions` (
+                    `endpoint` TEXT NOT NULL,
+                    `user_id` INTEGER NOT NULL,
+                    `subscription` TEXT NOT NULL,
+                    PRIMARY KEY(endpoint)
+                ) ENGINE=InnoDB CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci');
 }
 
 //------------------------------------------------

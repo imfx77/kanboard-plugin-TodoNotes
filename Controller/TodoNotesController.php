@@ -296,56 +296,6 @@ class TodoNotesController extends BaseController
         return $timestamp;
     }
 
-    public function TestAllNotificationTypes()
-    {
-        $user_id = $this->ResolveUserId();
-        $user = $this->userModel->getById($user_id);
-
-        $project = $this->ResolveProject($user_id);
-        $project_id = $project['id'];
-
-        $note_id = $this->request->getStringParam('note_id');
-        $note = $this->todoNotesModel->GetProjectNoteForUser($note_id, $project_id, $user_id);
-        $note_project_name = $this->todoNotesModel->GetProjectNameForUser($user_id, $note['project_id']);
-        $note_project_tab = $this->FetchTabForProject($user_id, $note['project_id']);
-
-        //---------------------------------------------------
-        // workaround for WysiwygMDEditor plugin rendering (which is in JS)
-        $isWysiwygMDEditorRendering = ($this->configModel->get('WysiwygMDEditor_enable_easymde_rendering', '0') == '1');
-        $descriptionPrefix = $isWysiwygMDEditorRendering ? '__{WysiwygMDEditor_FORCE_FALLBACK_IMPL}__' : '';
-
-        $notification_link = $this->helper->url->base() . 'dashboard/' . $user_id . '/todonotes/' . $note_project_tab;
-        $notification_title = t('TodoNotes__NOTIFICATIONS_EMAIL_TITLE');
-        $notification_content = e(
-            'TodoNotes__NOTIFICATIONS_EMAIL_CONTENT',
-            $notification_link,
-            $note['title'],
-            $note['date_notified'],
-            $note_project_name,
-            $note['category'] ?: '(' . t('None') . ')',
-            $note['description'] ? $this->helper->text->markdown($descriptionPrefix . $note['description']) : '(' . t('None') . ')'
-        );
-
-        //---------------------------------------------------
-        // email notification
-        if (!empty($user['email'])) {
-            $this->emailClient->send(
-                $user['email'],
-                $user['name'] ?: $user['username'],
-                $notification_title,
-                $notification_content
-            );
-        }
-
-        //---------------------------------------------------
-        // response to JS for web notification
-        print(json_encode(array('notification_title' => $note_project_name,
-                                'notification_content' => $note['title'],
-                                'notification_link' => $notification_link,
-                                'notification_timestamp' => $note['notifications_alert_timestamp'],
-        )));
-    }
-
     public function TransferNote()
     {
         $user_id = $this->ResolveUserId();
@@ -482,23 +432,8 @@ class TodoNotesController extends BaseController
         $this->response->redirect($this->helper->url->to('TodoNotesController', 'ShowDashboard', array(
             'plugin' => 'TodoNotes',
             'user_id' => $user_id,
-            'tab_id' => $this->FetchTabForProject($user_id, $project_tab_id),
+            'tab_id' => $this->todoNotesModel->GetTabForProject($user_id, $project_tab_id),
         )));
-    }
-
-    private function FetchTabForProject($user_id, $project_id): int
-    {
-        $count = 1;
-        $all_user_projects = $this->todoNotesModel->GetAllProjectIds($user_id);
-        // recover the tab_id of the last selected project
-        foreach ($all_user_projects as $project) {
-            if ($project_id == $project['project_id']) {
-                return $count;
-            }
-            $count++;
-        }
-        // if nothing found leave 0
-        return 0;
     }
 
     private function CustomNoteListOperationNotification($validation, $is_global)
@@ -542,7 +477,7 @@ class TodoNotesController extends BaseController
         $this->response->redirect($this->helper->url->to('TodoNotesController', 'ShowDashboard', array(
             'plugin' => 'TodoNotes',
             'user_id' => $user_id,
-            'tab_id' => $this->FetchTabForProject($user_id, $project_tab_id),
+            'tab_id' => $this->todoNotesModel->GetTabForProject($user_id, $project_tab_id),
         )));
     }
 
@@ -572,7 +507,7 @@ class TodoNotesController extends BaseController
         $this->response->redirect($this->helper->url->to('TodoNotesController', 'ShowDashboard', array(
             'plugin' => 'TodoNotes',
             'user_id' => $user_id,
-            'tab_id' => $this->FetchTabForProject($user_id, $project_tab_id),
+            'tab_id' => $this->todoNotesModel->GetTabForProject($user_id, $project_tab_id),
         )));
     }
 
@@ -601,7 +536,7 @@ class TodoNotesController extends BaseController
         $this->response->redirect($this->helper->url->to('TodoNotesController', 'ShowDashboard', array(
             'plugin' => 'TodoNotes',
             'user_id' => $user_id,
-            'tab_id' => $this->FetchTabForProject($user_id, $project_tab_id),
+            'tab_id' => $this->todoNotesModel->GetTabForProject($user_id, $project_tab_id),
         )));
     }
 
@@ -631,7 +566,7 @@ class TodoNotesController extends BaseController
         $this->response->redirect($this->helper->url->to('TodoNotesController', 'ShowDashboard', array(
             'plugin' => 'TodoNotes',
             'user_id' => $user_id,
-            'tab_id' => $this->FetchTabForProject($user_id, $project_tab_id),
+            'tab_id' => $this->todoNotesModel->GetTabForProject($user_id, $project_tab_id),
         )));
     }
 

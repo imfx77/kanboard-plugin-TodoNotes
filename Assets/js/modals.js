@@ -392,10 +392,9 @@ static NotificationsSetup(project_id, user_id, id, notifications_alert_timestrin
                 click: function() { $( this ).dialog( "close" ); }
             },
             {
-                //text : _TodoNotes_Translations_.GetTranslationExportToJS('Test All Notification Types'),
-                text : 'Test All Notification Types',
+                text : 'Test Notification Alerts',
                 click: function() {
-                    _TodoNotes_Requests_.TestAllNotificationTypes(project_id, user_id, id);
+                    _TodoNotes_Requests_.TestNoteNotificationAlerts(project_id, user_id, id);
                     $( this ).dialog( "close" );
                 }
             },

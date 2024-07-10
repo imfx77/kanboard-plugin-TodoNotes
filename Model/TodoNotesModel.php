@@ -286,6 +286,22 @@ class TodoNotesModel extends Base
         return $numProjects;
     }
 
+    // Get the tab number of certain project
+    public function GetTabForProject($user_id, $project_id): int
+    {
+        $count = 1;
+        $all_user_projects = $this->GetAllProjectIds($user_id);
+        // recover the tab_id of the requested project_id
+        foreach ($all_user_projects as $project) {
+            if ($project_id == $project['project_id']) {
+                return $count;
+            }
+            $count++;
+        }
+        // if nothing found leave 0
+        return 0;
+    }
+
     // Get a list of categories for a project
     public function GetCategories($project_id)
     {
