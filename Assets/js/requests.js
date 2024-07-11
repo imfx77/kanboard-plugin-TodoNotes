@@ -204,17 +204,31 @@ static TestNoteNotificationAlerts(project_id, user_id, id) {
             + '&project_custom_id=' + project_id
             + '&user_id=' + user_id
             + '&note_id=' + note_id,
-        success: function(response) {
-            const notification_data = JSON.parse(response);
-            _TodoNotes_.ShowBrowserNotification(
-                notification_data['notification_title'],
-                notification_data['notification_content'],
-                notification_data['notification_link'],
-                notification_data['notification_timestamp']
-            );
+        success: function(/*response*/) {
+            //console.log(response);
         },
         error: function(xhr,textStatus,e) {
             alert('_TodoNotes_Requests_.TestNoteNotificationAlerts');
+            alert(e);
+        }
+    });
+    return false;
+}
+
+//------------------------------------------------
+// update a WebPN subscription for user (if changed or missing)
+static UpdateWebPNSubscription(user_id, subscription) {
+    $.ajax({
+        cache: false,
+        type: "POST",
+        url: '/?controller=TodoNotesNotificationsController&action=UpdateWebPNSubscription&plugin=TodoNotes'
+            + '&user_id=' + user_id
+            + '&webpn_subscription=' + encodeURIComponent(JSON.stringify(subscription)),
+        success: function(/*response*/) {
+            // console.log(response);
+        },
+        error: function(xhr,textStatus,e) {
+            alert('_TodoNotes_Requests_.UpdateWebPNSubscription');
             alert(e);
         }
     });

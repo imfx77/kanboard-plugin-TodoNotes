@@ -44,7 +44,8 @@ class Plugin extends Base
     {
         return array(
             'Plugin\TodoNotes\Model' => array(
-                'TodoNotesModel'
+                'TodoNotesModel',
+                'TodoNotesNotificationsModel'
             )
         );
     }

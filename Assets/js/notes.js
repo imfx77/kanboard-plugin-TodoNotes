@@ -1096,24 +1096,46 @@ static RequestBrowserNotificationsPermission() {
         return;
     }
 
+    const user_id = $("#refProjectId").attr('data-user');
+
     Notification.requestPermission();
 
     navigator.serviceWorker.register(location.origin + '/plugins/TodoNotes/Template/notifications/service_worker.php', { scope: '/' })
     .then(function (sw) {
-        console.log('[SW] Service worker has been registered');
+        console.info('[SW] Service worker has been registered');
         _TodoNotes_.#swRegistration = sw;
 
         navigator.serviceWorker.ready
             .then(function(sw) {
-                console.log('[SW] Service worker is ready');
-                return sw.pushManager.subscribe({
-                            userVisibleOnly: true, //Always show notification when received
-                            applicationServerKey: applicationServerKey,
-                });
+                console.info('[SW] Service worker is ready');
+                return sw.pushManager.getSubscription();
             })
-            .then(subscription => {
-                //console.log(JSON.stringify(subscription));
-                console.log('[SW] Successfully subscribed to push notifications');
+            .then(subscriptionExisting => {
+                if (!subscriptionExisting) {
+                    sw.pushManager.subscribe({
+                             userVisibleOnly: true, //Always show notification when received
+                             applicationServerKey: applicationServerKey,
+                    })
+                    .then(subscriptionNew => {
+                        console.info('[SW] Successfully subscribed to push notifications');
+                        // console.log(subscriptionNew);
+                        _TodoNotes_Requests_.UpdateWebPNSubscription(user_id, subscriptionNew);
+                        console.info('[SW] New subscription sent to server');
+                        sessionStorage.setItem('todonotes_webpn_latest_subscription_endpoint', subscriptionNew.endpoint);
+                    });
+                } else {
+                    console.info('[SW] Existing push notifications subscription');
+                    // console.log(subscriptionExisting);
+                    const latest_endpoint = sessionStorage.getItem('todonotes_webpn_latest_subscription_endpoint');
+                    // console.log(latest_endpoint);
+                    // console.log(subscriptionExisting.endpoint);
+                    // reduce updating the WebPN subscription on each page load by using a session cache variable
+                    if (!latest_endpoint || latest_endpoint !== subscriptionExisting.endpoint) {
+                        _TodoNotes_Requests_.UpdateWebPNSubscription(user_id, subscriptionExisting);
+                        console.info('[SW] Existing subscription sent to server');
+                        sessionStorage.setItem('todonotes_webpn_latest_subscription_endpoint', subscriptionExisting.endpoint);
+                    }
+                }
             })
             .catch(error => {
                 console.error('[SW] Impossible to subscribe to push notifications', error);
@@ -1126,7 +1148,7 @@ static RequestBrowserNotificationsPermission() {
 
 //------------------------------------------------
 // trigger a notification from the browser
-static ShowBrowserNotification(title, content, link, timestamp) {
+static ShowBrowserNotification(title, content, link, timestamp_ms) {
     // console.log('_TodoNotes_.ShowBrowserNotification');
     if (!_TodoNotes_.#swRegistration) return;
 
@@ -1138,7 +1160,7 @@ static ShowBrowserNotification(title, content, link, timestamp) {
             icon: location.origin + '/plugins/TodoNotes/Assets/img/icon.png',
             badge: location.origin + '/plugins/TodoNotes/Assets/img/badge.png',
             data: { url: link },
-            timestamp: timestamp * 1000,
+            timestamp: timestamp_ms,
             vibrate: [200, 100, 200, 100, 200, 100, 200],
         };
 
