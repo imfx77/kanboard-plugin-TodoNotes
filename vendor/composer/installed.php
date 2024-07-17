@@ -3,7 +3,7 @@
         'name' => 'imfx77/kanboard-plugin-todonotes',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '95388f17a9f52944381fdb244b57f3c3f89af020',
+        'reference' => '291b0f12f7466ad82c34a791cc9b48f649c75bbb',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -58,7 +58,7 @@
         'imfx77/kanboard-plugin-todonotes' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '95388f17a9f52944381fdb244b57f3c3f89af020',
+            'reference' => '291b0f12f7466ad82c34a791cc9b48f649c75bbb',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
