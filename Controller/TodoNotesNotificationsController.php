@@ -16,6 +16,7 @@ use Minishlink\WebPush\WebPush;
 
 class TodoNotesNotificationsController extends BaseController
 {
+    const HEARTBEAT_INTERNAL_INTERVAL = 5 * 60; // 5 min
 
     public function UpdateWebPNSubscription()
     {
@@ -54,6 +55,8 @@ class TodoNotesNotificationsController extends BaseController
             $notification_title,
             $notification_content
         );
+
+        echo 'EMail sent.';
     }
 
     private function SendWebPushNotification($user_id, $note, $note_project_name, $notification_link)
@@ -82,11 +85,23 @@ class TodoNotesNotificationsController extends BaseController
 
             if (!$report->isSuccess() && $report->getResponse()->getStatusCode() == 410) { // GONE
                 $this->todoNotesNotificationsModel->RemoveWebPNSubscription($user_id, $subscription);
+                echo 'Removed WebPN subscription for endpoint : ' . PHP_EOL . $subscription['endpoint'] . PHP_EOL;
             }
         }
+
+        echo 'WebPNs sent.';
     }
 
-    public function TestNoteNotificationAlerts()
+    public function TestNoteNotifications()
+    {
+        $user_id = $this->request->getStringParam('user_id');
+        $project_id = $this->request->getStringParam('project_custom_id');
+        $note_id = $this->request->getStringParam('note_id');
+
+        $this->TestNoteNotificationsWithParams($user_id, $project_id, $note_id);
+    }
+
+    public function TestNoteNotificationsWithParams($user_id, $project_id, $note_id)
     {
 //        $functionName = '\Kanboard\Plugin\\' . Plugin::NAME . '\Schema\version_1';
 //        if (function_exists($functionName)) {
@@ -99,10 +114,6 @@ class TodoNotesNotificationsController extends BaseController
 //            $this->db->closeTransaction();
 //        }
 
-        $project_id = $this->request->getStringParam('project_custom_id');
-        $user_id = $this->request->getStringParam('user_id');
-        $note_id = $this->request->getStringParam('note_id');
-
         $note = $this->todoNotesModel->GetProjectNoteForUser($note_id, $project_id, $user_id);
         $note_project_name = $this->todoNotesModel->GetProjectNameForUser($user_id, $note['project_id']);
         $note_project_tab = $this->todoNotesModel->GetTabForProject($user_id, $note['project_id']);
@@ -110,11 +121,47 @@ class TodoNotesNotificationsController extends BaseController
 
         //---------------------------------------------------
         // email notification
-        $this->SendEMailNotification($user_id, $note, $note_project_name, $notification_link);
+        //$this->SendEMailNotification($user_id, $note, $note_project_name, $notification_link);
 
         //---------------------------------------------------
         // web push notifications (to all registered endpoints)
         $this->SendWebPushNotification($user_id, $note, $note_project_name, $notification_link);
+    }
+
+    public function BroadcastNotesNotifications()
+    {
+        //echo 'TodoNotesNotificationsController::BroadcastNotesNotifications()' . PHP_EOL;
+        //$this->TestNoteNotificationsWithParams(3, -6, 80);
+    }
+
+    public function Heartbeat()
+    {
+        $this->HeartbeatInternal(false);
+    }
+    public function HeartbeatForced()
+    {
+        $this->HeartbeatInternal(true);
+    }
+
+    private function HeartbeatInternal($force)
+    {
+        //echo 'TodoNotesNotificationsController::HeartbeatInternal()' . PHP_EOL;
+        //echo 'force = ' . ($force ? 'true' : 'false') . PHP_EOL;
+
+        $timestamp = time();
+        //echo 'time = ' . date($this->dateParser->getUserDateTimeFormat(), $timestamp) . PHP_EOL;
+
+        $heartbeat = file_get_contents(__DIR__ . '/../.cache/heartbeat');
+        //echo 'heartbeat = ' . date($this->dateParser->getUserDateTimeFormat(), $heartbeat) . PHP_EOL;
+
+        if (!$force && !empty($heartbeat) && $timestamp < intval($heartbeat) + self::HEARTBEAT_INTERNAL_INTERVAL) {
+            echo 'SKIP heartbeat execution ...' . PHP_EOL;
+            return;
+        }
+
+        //echo 'DO execute some actual stuff here ...' . PHP_EOL;
+        $this->BroadcastNotesNotifications();
+        file_put_contents(__DIR__ . '/../.cache/heartbeat', $timestamp);
     }
 
 }

@@ -1108,6 +1108,7 @@ static RequestBrowserNotificationsPermission() {
         navigator.serviceWorker.ready
             .then(function(sw) {
                 console.info('[SW] Service worker is ready');
+                sw.active.postMessage('heartbeat');
                 return sw.pushManager.getSubscription();
             })
             .then(subscriptionExisting => {

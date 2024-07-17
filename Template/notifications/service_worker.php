@@ -53,3 +53,32 @@ self.addEventListener('notificationclick', function(event) {
             }),
     );
 });
+
+var _SW_TodoNotes_Heartbeat_ = false;
+
+self.addEventListener('message', function(event) {
+    function heartbeat() {
+        fetch('/?controller=TodoNotesNotificationsController&action=Heartbeat&plugin=TodoNotes', { method: 'POST' })
+            .then(function(response) {
+                response.text().then(function(text) {
+                    console.log(text);
+                });
+            })
+            .catch(function(e) {
+                console.error(e);
+            });
+    }
+
+    if (!_SW_TodoNotes_Heartbeat_ && event.data === 'heartbeat') {
+        heartbeat();
+        //setInterval(heartbeat, 15 * 1000); // 15 sec
+        setInterval(heartbeat, 5 * 60 * 1000); // 5 min
+
+        console.info('[SW] Started Heartbeat');
+        _SW_TodoNotes_Heartbeat_ = true;
+    }
+});
+
+self.addEventListener('install', function(event) {
+    self.skipWaiting(); // always activate updated SW immediately
+});

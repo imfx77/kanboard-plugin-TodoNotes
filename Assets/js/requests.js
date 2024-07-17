@@ -194,21 +194,21 @@ static UpdateNoteNotificationsAlertTime(project_id, user_id, id, notifications_a
 
 //------------------------------------------------
 // note test All Notification Alerts
-static TestNoteNotificationAlerts(project_id, user_id, id) {
+static TestNoteNotifications(project_id, user_id, id) {
     const note_id = $("#noteId-P" + project_id + "-" + id).attr('data-note');
 
     $.ajax({
         cache: false,
         type: "POST",
-        url: '/?controller=TodoNotesNotificationsController&action=TestNoteNotificationAlerts&plugin=TodoNotes'
+        url: '/?controller=TodoNotesNotificationsController&action=TestNoteNotifications&plugin=TodoNotes'
             + '&project_custom_id=' + project_id
             + '&user_id=' + user_id
             + '&note_id=' + note_id,
-        success: function(/*response*/) {
-            //console.log(response);
+        success: function(response) {
+            console.log(response);
         },
         error: function(xhr,textStatus,e) {
-            alert('_TodoNotes_Requests_.TestNoteNotificationAlerts');
+            alert('_TodoNotes_Requests_.TestNoteNotifications');
             alert(e);
         }
     });

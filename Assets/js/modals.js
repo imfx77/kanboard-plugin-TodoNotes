@@ -394,7 +394,7 @@ static NotificationsSetup(project_id, user_id, id, notifications_alert_timestrin
             {
                 text : 'Test Notification Alerts',
                 click: function() {
-                    _TodoNotes_Requests_.TestNoteNotificationAlerts(project_id, user_id, id);
+                    _TodoNotes_Requests_.TestNoteNotifications(project_id, user_id, id);
                     $( this ).dialog( "close" );
                 }
             },
