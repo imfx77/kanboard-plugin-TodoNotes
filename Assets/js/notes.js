@@ -124,8 +124,6 @@ static AdjustAllNotesTitleInputs() {
 static #showTitleInput(project_id, id, show_title_input) {
     const noteTitleLabel = $("#noteTitleLabel-P" + project_id + "-" + id);
     const noteTitleInput = $("#noteTitleInput-P" + project_id + "-" + id);
-    const noteDetails = $("#noteDetails-P" + project_id + "-" + id);
-    const previewDetails = $("#noteMarkdownDetails-P" + project_id + "-" + id + "_Preview");
 
     if (show_title_input) {
         noteTitleLabel.addClass( 'hideMe' );
@@ -134,30 +132,14 @@ static #showTitleInput(project_id, id, show_title_input) {
         noteTitleInput[0].selectionStart = 0;
         noteTitleInput[0].selectionEnd = 0;
 
-        let inputWidth;
-        if ( noteDetails.hasClass( 'hideMe' ) ) {
-            noteDetails.toggleClass( 'hideMe' );
-            inputWidth = previewDetails.width();
-            if ( previewDetails.hasClass( 'hideMe' ) ) {
-                previewDetails.toggleClass( 'hideMe' );
-                inputWidth = previewDetails.width();
-                previewDetails.toggleClass( 'hideMe' );
-            }
-            noteDetails.toggleClass( 'hideMe' );
-        } else {
-            inputWidth = previewDetails.width();
-            if ( previewDetails.hasClass( 'hideMe' ) ) {
-                previewDetails.toggleClass( 'hideMe' );
-                inputWidth = previewDetails.width();
-                previewDetails.toggleClass( 'hideMe' );
-            }
-        }
+        const liNote = noteTitleInput.parent().parent();
+        let inputWidth = liNote.width() - $("#buttonStatus-P" + project_id + "-" + id).outerWidth() - 20;
 
         if (_TodoNotes_.IsMobile()) {
             noteTitleInput.width( inputWidth );
         } else {
-            const toolbarButtons = noteDetails.parent().find(".toolbarNoteButtons");
-            noteTitleInput.width( inputWidth - toolbarButtons.width());
+            const toolbarButtons = liNote.find(".toolbarNoteButtons");
+            noteTitleInput.width( inputWidth - toolbarButtons.outerWidth());
         }
     } else {
         noteTitleInput.blur();
