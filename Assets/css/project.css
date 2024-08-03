@@ -6,7 +6,7 @@
 
 .mainholder {
     width: 736px;
-    font: 13px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
     color: #4D4D4D;
     -webkit-font-smoothing: antialiased;
     position: relative;
@@ -15,7 +15,7 @@
 
 .mainholderMobile {
     width: auto;
-    font: 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 11px;
     color: #4D4D4D;
     -webkit-font-smoothing: antialiased;
     position: relative;
@@ -26,7 +26,7 @@
 @media only screen and (max-width: 768px) {
     .mainholder {
         width: 100%;
-        font: 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 11px;
         color: #4D4D4D;
         -webkit-font-smoothing: antialiased;
         position: relative;
@@ -38,7 +38,7 @@
 @media only screen and (max-device-width: 768px) and (orientation:portrait) {
     .mainholderMobile {
         width: 100%;
-        font: 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 11px;
         color: #4D4D4D;
         -webkit-font-smoothing: antialiased;
         position: relative;
@@ -50,7 +50,7 @@
 @media only screen and (max-device-width: 768px) and (orientation:landscape) {
     .mainholderMobile {
         width: 100%;
-        font: 10px "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 10px;
         color: #4D4D4D;
         -webkit-font-smoothing: antialiased;
         position: relative;
@@ -72,6 +72,7 @@ input[type="text"] {
     margin-top: 0;
     height: auto;
     text-decoration: none;
+    font-family: unset !important;
 }
 
 input[type="text"]::selection {
@@ -325,6 +326,7 @@ label {
 .noteEditorTextarea {
     resize: vertical;
     padding: 4px;
+    font-family: unset;
 }
 
 .noteDoneMarkdown {
@@ -457,7 +459,6 @@ label {
     position: sticky;
     top: 0;
     z-index: 101;
-    font-family: Helvetica, Arial, sans-serif;
     line-height: 16px;
 }
 
