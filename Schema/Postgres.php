@@ -20,7 +20,7 @@ const VERSION = 1;
 //------------------------------------------------
 function version_1(PDO $pdo)
 {
-    // create+insert custom projects
+    // create+insert+index custom projects
     $pdo->exec('CREATE TABLE IF NOT EXISTS todonotes_custom_projects (
                     id SERIAL PRIMARY KEY,
                     owner_id INTEGER NOT NULL DEFAULT 0,
@@ -35,8 +35,10 @@ function version_1(PDO $pdo)
                     (owner_id, position, project_name)
                     VALUES (0, 2, "Global TODO")
                 ');
+    $pdo->exec('CREATE INDEX todonotes_custom_projects_owner_ix ON todonotes_custom_projects(owner_id)');
+    $pdo->exec('CREATE INDEX todonotes_custom_projects_position_ix ON todonotes_custom_projects(position)');
 
-    // create+insert entries
+    // create+insert+index entries
     $pdo->exec('CREATE TABLE IF NOT EXISTS todonotes_entries (
                     id SERIAL PRIMARY KEY,
                     project_id INTEGER NOT NULL,
@@ -54,13 +56,19 @@ function version_1(PDO $pdo)
                     (project_id, user_id, position, is_active, date_created, date_modified, date_notified)
                     VALUES (0, 0, 0, -1, 0, 0, 0)
                 ');
+    $pdo->exec('CREATE INDEX todonotes_entries_project_ix ON todonotes_entries(project_id)');
+    $pdo->exec('CREATE INDEX todonotes_entries_user_ix ON todonotes_entries(user_id)');
+    $pdo->exec('CREATE INDEX todonotes_entries_position_ix ON todonotes_entries(position)');
+    $pdo->exec('CREATE INDEX todonotes_entries_active_ix ON todonotes_entries(is_active)');
+    $pdo->exec('CREATE INDEX todonotes_entries_notified_ix ON todonotes_entries(date_notified)');
 
-    // create webpn subscriptions
+    // create+index webpn subscriptions
     $pdo->exec('CREATE TABLE IF NOT EXISTS todonotes_webpn_subscriptions (
                     endpoint TEXT NOT NULL PRIMARY KEY,
                     user_id INTEGER NOT NULL,
                     subscription TEXT NOT NULL
                 )');
+    $pdo->exec("CREATE INDEX todonotes_webpn_subscriptions_user_ix ON todonotes_webpn_subscriptions(user_id)");
 }
 
 //------------------------------------------------
@@ -130,6 +138,16 @@ function reindexNotesAndLists_1(PDO $pdo)
     // rename new tables
     $pdo->exec('ALTER TABLE todonotes_custom_projects_NEW RENAME TO todonotes_custom_projects');
     $pdo->exec('ALTER TABLE todonotes_entries_NEW RENAME TO todonotes_entries');
+
+    // re-create indices for todonotes_custom_projects
+    $pdo->exec('CREATE INDEX todonotes_custom_projects_owner_ix ON todonotes_custom_projects(owner_id)');
+    $pdo->exec('CREATE INDEX todonotes_custom_projects_position_ix ON todonotes_custom_projects(position)');
+    // re-create indices for todonotes_entries
+    $pdo->exec('CREATE INDEX todonotes_entries_project_ix ON todonotes_entries(project_id)');
+    $pdo->exec('CREATE INDEX todonotes_entries_user_ix ON todonotes_entries(user_id)');
+    $pdo->exec('CREATE INDEX todonotes_entries_position_ix ON todonotes_entries(position)');
+    $pdo->exec('CREATE INDEX todonotes_entries_active_ix ON todonotes_entries(is_active)');
+    $pdo->exec('CREATE INDEX todonotes_entries_notified_ix ON todonotes_entries(date_notified)');
 }
 
 //////////////////////////////////////////////////
