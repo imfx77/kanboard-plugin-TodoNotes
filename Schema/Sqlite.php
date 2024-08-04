@@ -50,17 +50,20 @@ function version_1(PDO $pdo)
                     description TEXT,
                     date_created INTEGER,
                     date_modified INTEGER,
-                    date_notified INTEGER
+                    date_notified INTEGER,
+                    last_notified INTEGER,
+                    flags_notified INTEGER
                 )');
     $pdo->exec('INSERT INTO todonotes_entries
-                    (project_id, user_id, position, is_active, date_created, date_modified, date_notified)
-                    VALUES (0, 0, 0, -1, 0, 0, 0)
+                    (project_id, user_id, position, is_active, date_created, date_modified, date_notified, last_notified, flags_notified)
+                    VALUES (0, 0, 0, -1, 0, 0, 0, 0, 0)
                 ');
     $pdo->exec('CREATE INDEX todonotes_entries_project_ix ON todonotes_entries(project_id)');
     $pdo->exec('CREATE INDEX todonotes_entries_user_ix ON todonotes_entries(user_id)');
     $pdo->exec('CREATE INDEX todonotes_entries_position_ix ON todonotes_entries(position)');
     $pdo->exec('CREATE INDEX todonotes_entries_active_ix ON todonotes_entries(is_active)');
     $pdo->exec('CREATE INDEX todonotes_entries_notified_ix ON todonotes_entries(date_notified)');
+    $pdo->exec('CREATE INDEX todonotes_entries_last_notified_ix ON todonotes_entries(last_notified)');
 
     // create+index webpn subscriptions
     $pdo->exec('CREATE TABLE IF NOT EXISTS todonotes_webpn_subscriptions (
@@ -107,15 +110,17 @@ function reindexNotesAndLists_1(PDO $pdo)
                     date_created INTEGER,
                     date_modified INTEGER,
                     date_notified INTEGER,
+                    last_notified INTEGER,
+                    flags_notified INTEGER,
                     old_project_id INTEGER
                 )');
     $pdo->exec('INSERT INTO todonotes_entries_NEW
-                    (project_id, user_id, position, is_active, date_created, date_modified, date_notified, old_project_id)
-                    VALUES (0, 0, 0, -1, 0, 0, 0, 0)
+                    (project_id, user_id, position, is_active, date_created, date_modified, date_notified, last_notified, flags_notified, old_project_id)
+                    VALUES (0, 0, 0, -1, 0, 0, 0, 0, 0, 0)
                 ');
     $pdo->exec('INSERT INTO todonotes_entries_NEW
-                    (project_id, user_id, position, is_active, title, category, description, date_created, date_modified, date_notified, old_project_id)
-                    SELECT project_id, user_id, position, is_active, title, category, description, date_created, date_modified, date_notified, old_project_id
+                    (project_id, user_id, position, is_active, title, category, description, date_created, date_modified, date_notified, last_notified, flags_notified, old_project_id)
+                    SELECT project_id, user_id, position, is_active, title, category, description, date_created, date_modified, date_notified, last_notified, flags_notified, old_project_id
                     FROM todonotes_entries
                     WHERE project_id <> 0 AND user_id > 0 AND position > 0 AND is_active >= 0
                 ');
@@ -148,6 +153,7 @@ function reindexNotesAndLists_1(PDO $pdo)
     $pdo->exec('CREATE INDEX todonotes_entries_position_ix ON todonotes_entries(position)');
     $pdo->exec('CREATE INDEX todonotes_entries_active_ix ON todonotes_entries(is_active)');
     $pdo->exec('CREATE INDEX todonotes_entries_notified_ix ON todonotes_entries(date_notified)');
+    $pdo->exec('CREATE INDEX todonotes_entries_last_notified_ix ON todonotes_entries(last_notified)');
 }
 
 //////////////////////////////////////////////////
