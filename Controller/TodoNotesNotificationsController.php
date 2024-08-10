@@ -117,7 +117,7 @@ class TodoNotesNotificationsController extends BaseController
         $note = $this->todoNotesModel->GetProjectNoteForUser($note_id, $project_id, $user_id);
         $note_project_name = $this->todoNotesModel->GetProjectNameForUser($user_id, $note['project_id']);
         $note_project_tab = $this->todoNotesModel->GetTabForProject($user_id, $note['project_id']);
-        $notification_link = $this->helper->url->base() . 'dashboard/' . $user_id . '/todonotes/' . $note_project_tab;
+        $notification_link = $this->helper->url->base() . 'dashboard/' . $user_id . '/todonotes/' . $note_project_tab . '/' . $note_id;
 
         //---------------------------------------------------
         // email notification

@@ -110,6 +110,11 @@ static resizeDocument() {
     setTimeout(function() {
         _TodoNotes_.AdjustScrollableContent();
     }, 100);
+
+    setTimeout(function() {
+        const note_id = $("#refProjectId").attr('data-note');
+        _TodoNotes_.FocusNote(note_id);
+    }, 200);
 }
 
 //------------------------------------------------

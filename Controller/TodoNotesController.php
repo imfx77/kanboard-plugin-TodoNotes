@@ -178,6 +178,7 @@ class TodoNotesController extends BaseController
             'user_id' => $user_id,
             'user_datetime_format' => $this->dateParser->getUserDateTimeFormat(),
             'tab_id' => $tab_id,
+            'note_id' => $this->request->getStringParam('note_id') ?: '0',
             'projectsAccess' => $projectsAccess,
 
             'categories' => $categories,

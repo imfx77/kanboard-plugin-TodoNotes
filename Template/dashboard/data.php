@@ -45,6 +45,7 @@ if ($tab_id > 0) {
     'user' => $user,
     'user_id' => $user_id,
     'user_datetime_format' => $user_datetime_format,
+    'note_id' => $note_id,
 
     'is_refresh' => false,
     'is_dashboard_view' => 1,

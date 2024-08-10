@@ -191,10 +191,32 @@ static #ToggleDetails(project_id, id) {
 // Blink note
 static #BlinkNote(project_id, id) {
     const note_id = $("#noteId-P" + project_id + "-" + id).attr('data-note');
-    setTimeout(function() { $("#item-" + note_id).addClass( 'blurMe' ); }, 0);
+    const note_item = $("#item-" + note_id);
+
+    note_item.find(".liNoteBkgr").removeClass( 'focusMe' );
+    note_item.addClass( 'blurMe' );
     setTimeout(function() { _TodoNotes_.#ToggleDetails(project_id, id); }, 100);
     setTimeout(function() { _TodoNotes_.#ToggleDetails(project_id, id); }, 200);
     setTimeout(function() { $("#item-" + note_id).removeClass( 'blurMe' ); }, 300);
+}
+
+//------------------------------------------------
+// Focus note
+static FocusNote(note_id) {
+    if (note_id <= 0) return;
+    const note_item = $("#item-" + note_id);
+    if (note_item.length === 0) return;
+
+    const project_id = note_item.attr('data-project');
+    const id = note_item.attr('data-id');
+
+    note_item.removeClass( 'hideMe' );
+    if ($("#noteDetails-P" + project_id + "-" + id).hasClass( 'hideMe' )) {
+        _TodoNotes_.#ToggleDetails(project_id, id);
+        _TodoNotes_.AdjustScrollableContent();
+    }
+    note_item[0].scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"})
+    note_item.find(".liNoteBkgr").addClass( 'focusMe' );
 }
 
 //------------------------------------------------

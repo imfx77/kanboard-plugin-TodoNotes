@@ -776,8 +776,9 @@ print '</div>'; // scrollableContent
 
 // hidden reference for project_id and user_id of the currently active page
 print '<div class="hideMe" id="refProjectId"';
-print ' data-project="' . $project_id . '"';
 print ' data-user="' . $user_id . '"';
+print ' data-project="' . $project_id . '"';
+print ' data-note="' . $note_id . '"';
 print ' data-timestamp="' . $current_time . '"';
 print '></div>';
 

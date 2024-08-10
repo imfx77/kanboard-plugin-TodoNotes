@@ -26,6 +26,7 @@ class Plugin extends Base
         $this->route->addRoute('todonotes/:project_id/user/:user_id', 'TodoNotesController', 'ShowProject', 'TodoNotes');
         $this->route->addRoute('dashboard/:user_id/todonotes', 'TodoNotesController', 'ShowDashboard', 'TodoNotes');
         $this->route->addRoute('dashboard/:user_id/todonotes/:tab_id', 'TodoNotesController', 'ShowDashboard', 'TodoNotes');
+        $this->route->addRoute('dashboard/:user_id/todonotes/:tab_id/:note_id', 'TodoNotesController', 'ShowDashboard', 'TodoNotes');
 
         // COMMANDS [ ./cli TodoNotes:NotificationsHeartbeat ]
         $this->cli->add(new NotificationsHeartbeatCommand($this->container));
