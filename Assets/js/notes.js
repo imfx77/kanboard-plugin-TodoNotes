@@ -759,7 +759,8 @@ static #NoteActionHandlers() {
         const id = $(this).attr('data-id');
         const notifications_alert_timestring = $(this).attr('data-notifications-alert-timestring');
         const notifications_alert_timestamp = $(this).attr('data-notifications-alert-timestamp');
-        _TodoNotes_Modals_.NotificationsSetup(project_id, user_id, id, notifications_alert_timestring, notifications_alert_timestamp);
+        const notification_options_bitflags = parseInt($(this).attr('data-notifications-options-bitflags'));
+        _TodoNotes_Modals_.NotificationsSetup(project_id, user_id, id, notifications_alert_timestring, notifications_alert_timestamp, notification_options_bitflags);
     });
 
     //------------------------------------------------
@@ -1011,17 +1012,18 @@ static UpdateAllNotesTimestamps(lastModified, project_id) {
 
 //------------------------------------------------
 // note update notifications alert timestamps
-static UpdateNoteNotificationsAlertTimestamps(notificationsAlertTime, project_id, id) {
-    const hasNotifications = (notificationsAlertTime.timestamp > 0);
+static RefreshNoteNotificationsAlertTimeAndOptions(notificationsAlertTimeAndOptions, project_id, id) {
+    const hasNotifications = (notificationsAlertTimeAndOptions.timestamp > 0);
     const updatedTimeString = _TodoNotes_Translations_.GetTranslationExportToJS('Notifications:') + ' '
-        + (hasNotifications ? notificationsAlertTime.timestring : '🔕');
+        + (hasNotifications ? notificationsAlertTimeAndOptions.timestring : '🔕');
 
     const noteNotificationsDetails = $("#noteNotificationsDetails-P" + project_id + "-" + id);
     noteNotificationsDetails.attr('title', updatedTimeString);
 
     const noteNotificationsLabel = $("#noteNotificationsLabel-P" + project_id + "-" + id );
-    noteNotificationsLabel.attr('data-notifications-alert-timestamp', notificationsAlertTime.timestamp);
-    noteNotificationsLabel.attr('data-notifications-alert-timestring', notificationsAlertTime.timestring);
+    noteNotificationsLabel.attr('data-notifications-alert-timestamp', notificationsAlertTimeAndOptions.timestamp);
+    noteNotificationsLabel.attr('data-notifications-alert-timestring', notificationsAlertTimeAndOptions.timestring);
+    noteNotificationsLabel.attr('data-notifications-options-bitflags', notificationsAlertTimeAndOptions.options_bitflags);
     noteNotificationsLabel.find(" i").text(' ' + updatedTimeString);
 }
 

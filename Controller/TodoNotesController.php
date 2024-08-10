@@ -281,7 +281,8 @@ class TodoNotesController extends BaseController
 
         $notifications_alert_timestamp = $this->todoNotesModel->UpdateNoteNotificationsAlertTimeAndOptions($project_id, $user_id, $note_id, $notifications_alert_timestring, $notification_options_bitflags);
         print(json_encode(array('timestamp' => $notifications_alert_timestamp,
-                                'timestring' => ($notifications_alert_timestamp > 0) ? date($this->dateParser->getUserDateTimeFormat(), $notifications_alert_timestamp) : '')));
+                                'timestring' => ($notifications_alert_timestamp > 0) ? date($this->dateParser->getUserDateTimeFormat(), $notifications_alert_timestamp) : '',
+                                'options_bitflags' => $notification_options_bitflags)));
         return $notifications_alert_timestamp;
     }
 

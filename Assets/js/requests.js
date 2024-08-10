@@ -181,8 +181,8 @@ static UpdateNoteNotificationsAlertTimeAndOptions(project_id, user_id, id, notif
             + '&notifications_alert_timestring=' + encodeURIComponent(notifications_alert_timestring)
             + '&notification_options_bitflags=' + notification_options_bitflags,
         success: function(response) {
-            const notificationsAlertTime = JSON.parse(response);
-            _TodoNotes_.UpdateNoteNotificationsAlertTimestamps(notificationsAlertTime, project_id, id);
+            const notificationsAlertTimeAndOptions = JSON.parse(response);
+            _TodoNotes_.RefreshNoteNotificationsAlertTimeAndOptions(notificationsAlertTimeAndOptions, project_id, id);
             _TodoNotes_.RefreshNoteNotificationsState(project_id, id);
         },
         error: function(xhr,textStatus,e) {

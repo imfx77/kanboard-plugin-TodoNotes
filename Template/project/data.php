@@ -696,6 +696,7 @@ foreach ($data as $u) {
     print ' data-user="' . $user_id . '"';
     print ' data-notifications-alert-timestamp="' . $u['notifications_alert_timestamp'] . '"';
     print ' data-notifications-alert-timestring="' . $u['date_notified'] . '"';
+    print ' data-notifications-options-bitflags="' . $u['flags_notified'] . '"';
     print '>';
     print '<i class="fa fa-bell-o" aria-hidden="true"> ' . t('Notifications:') . ' ' . ($hasNotifications ? $u['date_notified'] : '🔕') . '</i></label><br>';
     print '</div>'; // Dates and Notifications panel

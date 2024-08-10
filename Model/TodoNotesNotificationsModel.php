@@ -109,4 +109,22 @@ class TodoNotesNotificationsModel extends Base
 
         return $notification_options_bitflags;
     }
+
+    private function NotificationsOptionsFromBitflags($notification_options_bitflags)
+    {
+        $notification_options = array();
+
+        $notification_options['alert_mail'] = ($notification_options_bitflags & self::OPTIONS_FLAG_ALERT_MAIL) ? true : false;
+        $notification_options['alert_webpn'] = ($notification_options_bitflags & self::OPTIONS_FLAG_ALERT_WEBPN) ? true : false;
+        $notification_options['alert_before1day'] = ($notification_options_bitflags & self::OPTIONS_FLAG_ALERT_BEFORE1DAY) ? true : false;
+        $notification_options['alert_before1hour'] = ($notification_options_bitflags & self::OPTIONS_FLAG_ALERT_BEFORE1HOUR) ? true : false;
+        $notification_options['alert_after1day'] = ($notification_options_bitflags & self::OPTIONS_FLAG_ALERT_AFTER1DAY) ? true : false;
+        $notification_options['alert_after1hour'] = ($notification_options_bitflags & self::OPTIONS_FLAG_ALERT_AFTER1HOUR) ? true : false;
+
+        $notification_options['postpone'] = ($notification_options_bitflags & self::OPTIONS_FLAG_POSTPONE) ? true : false;
+        $notification_options['postpone_type'] = (($notification_options_bitflags & self::OPTIONS_MASK_POSTPONE_TYPE) >> self::OPTIONS_MASK_POSTPONE_TYPE_IX);
+        $notification_options['postpone_value'] = (($notification_options_bitflags & self::OPTIONS_MASK_POSTPONE_VALUE) >> self::OPTIONS_MASK_POSTPONE_VALUE_IX);
+
+        return $notification_options;
+    }
 }
