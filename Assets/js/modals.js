@@ -522,13 +522,13 @@ static NotificationsSetup(project_id, user_id, id, notifications_alert_timestrin
                 text : _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
                 click: function() { $( this ).dialog( "close" ); }
             },
-            {
-                text : 'Test',
-                click: function() {
-                    _TodoNotes_Requests_.TestNoteNotifications(project_id, user_id, id);
-                    $( this ).dialog( "close" );
-                }
-            },
+            // {
+            //     text : 'Test',
+            //     click: function() {
+            //         _TodoNotes_Requests_.TestNoteNotifications(project_id, user_id, id);
+            //         $( this ).dialog( "close" );
+            //     }
+            // },
         ]
     });
     return false;

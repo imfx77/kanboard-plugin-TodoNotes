@@ -211,12 +211,15 @@ static FocusNote(note_id) {
     const id = note_item.attr('data-id');
 
     note_item.removeClass( 'hideMe' );
+        note_item.find(".liNoteBkgr").addClass( 'focusMe' );
     if ($("#noteDetails-P" + project_id + "-" + id).hasClass( 'hideMe' )) {
         _TodoNotes_.#ToggleDetails(project_id, id);
-        _TodoNotes_.AdjustScrollableContent();
     }
-    note_item[0].scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"})
-    note_item.find(".liNoteBkgr").addClass( 'focusMe' );
+
+    setTimeout(function() {
+        _TodoNotes_.AdjustScrollableContent();
+        note_item[0].scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"})
+    }, 1000);
 }
 
 //------------------------------------------------

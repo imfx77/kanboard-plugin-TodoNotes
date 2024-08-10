@@ -59,10 +59,10 @@ var _SW_TodoNotes_Heartbeat_ = false;
 self.addEventListener('message', function(event) {
     function heartbeat() {
         fetch('/?controller=TodoNotesNotificationsController&action=Heartbeat&plugin=TodoNotes', { method: 'POST' })
-            .then(function(response) {
-                response.text().then(function(text) {
-                    console.log(text);
-                });
+            .then(function(/*response*/) {
+                //response.text().then(function(text) {
+                //    console.log(text);
+                //});
             })
             .catch(function(e) {
                 console.error(e);
