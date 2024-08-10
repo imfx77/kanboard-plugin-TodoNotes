@@ -18,8 +18,8 @@ use Kanboard\Model\CategoryModel;
 
 class TodoNotesModel extends Base
 {
-    private const TABLE_NOTES_ENTRIES           = 'todonotes_entries';
-    private const TABLE_NOTES_CUSTOM_PROJECTS   = 'todonotes_custom_projects';
+    public  const TABLE_NOTES_ENTRIES           = 'todonotes_entries';
+    public  const TABLE_NOTES_CUSTOM_PROJECTS   = 'todonotes_custom_projects';
     private const TABLE_PROJECTS                = ProjectModel::TABLE;
     private const TABLE_COLUMNS                 = ColumnModel::TABLE;
     private const TABLE_SWIMLANES               = SwimlaneModel::TABLE;
@@ -373,6 +373,8 @@ class TodoNotesModel extends Base
             'date_created' => $timestamp,
             'date_modified' => $timestamp,
             'date_notified' => 0,
+            'last_notified' => 0,
+            'flags_notified' => 0,
         );
 
         return $this->db->table(self::TABLE_NOTES_ENTRIES)
@@ -489,7 +491,7 @@ class TodoNotesModel extends Base
     }
 
     // Update note Notifications Alert Time
-    public function UpdateNoteNotificationsAlertTime($project_id, $user_id, $note_id, $notifications_alert_timestring)
+    public function UpdateNoteNotificationsAlertTimeAndOptions($project_id, $user_id, $note_id, $notifications_alert_timestring, $notification_options_bitflags)
     {
         $is_unique = $this->IsUniqueNote($project_id, $user_id, $note_id);
         if (!$is_unique) {
@@ -500,6 +502,8 @@ class TodoNotesModel extends Base
 
         $values = array(
             'date_notified' => $notifications_alert_timestamp,
+            'last_notified' => 0,
+            'flags_notified' => $notification_options_bitflags,
         );
 
         return ($this->db->table(self::TABLE_NOTES_ENTRIES)

@@ -267,10 +267,10 @@ static #FormatDate(format, date){
 //------------------------------------------------
 static #UpdateNotificationsSetupPostponeTime(project_id) {
     // validate numeric input
-    const postponeNumber = parseInt($("#postpone_number_NotificationsSetup-P" + project_id).val());
-    if (postponeNumber < 1) {
+    const postponeValue = parseInt($("#postpone_value_NotificationsSetup-P" + project_id).val());
+    if (postponeValue < 1) {
         setTimeout(function() {
-            $("#postpone_number_NotificationsSetup-P" + project_id).val(1).change();
+            $("#postpone_value_NotificationsSetup-P" + project_id).val(1).change();
         }, 50);
         return;
     }
@@ -287,21 +287,21 @@ static #UpdateNotificationsSetupPostponeTime(project_id) {
     switch(postponeType)
     {
         case 1: // seconds
-            postponeTime.setSeconds(postponeTime.getSeconds() + postponeNumber);
+            postponeTime.setSeconds(postponeTime.getSeconds() + postponeValue);
             break;
         case 2: // minutes
-            postponeTime.setMinutes(postponeTime.getMinutes() + postponeNumber);
+            postponeTime.setMinutes(postponeTime.getMinutes() + postponeValue);
             break;
         case 3: // hours
-            postponeTime.setHours(postponeTime.getHours() + postponeNumber);
+            postponeTime.setHours(postponeTime.getHours() + postponeValue);
             break;
         case 4: // days
-            postponeTime.setDate(postponeTime.getDate() + postponeNumber);
+            postponeTime.setDate(postponeTime.getDate() + postponeValue);
             break;
         case 5: // months
             {
                 const currentDay = postponeTime.getDate();
-                postponeTime.setMonth(postponeTime.getMonth() + postponeNumber);
+                postponeTime.setMonth(postponeTime.getMonth() + postponeValue);
                 let newDay = postponeTime.getDate();
                 // correct back over-projected dates
                 while (newDay >= 1 && newDay <= 3 && newDay < currentDay) {
@@ -311,7 +311,7 @@ static #UpdateNotificationsSetupPostponeTime(project_id) {
             }
             break;
         case 6: // years
-            postponeTime.setFullYear(postponeTime.getFullYear() + postponeNumber);
+            postponeTime.setFullYear(postponeTime.getFullYear() + postponeValue);
             break;
     }
 
@@ -319,9 +319,84 @@ static #UpdateNotificationsSetupPostponeTime(project_id) {
 }
 
 //------------------------------------------------
+static #UpdateNotificationsSetupAlertOptions(project_id) {
+    // alert before radio buttons
+    const alert_before = $("#alert_before_NotificationsSetup-P" + project_id).is(":checked");
+    if (alert_before) {
+        $("#alert_before1day_NotificationsSetup-P" + project_id).removeAttr('disabled');
+        $("#alert_before1hour_NotificationsSetup-P" + project_id).removeAttr('disabled');
+    } else {
+        $("#alert_before1day_NotificationsSetup-P" + project_id).attr('disabled','disabled');
+        $("#alert_before1hour_NotificationsSetup-P" + project_id).attr('disabled','disabled');
+    }
+
+    // alert after radio buttons
+    const alert_after = $("#alert_after_NotificationsSetup-P" + project_id).is(":checked");
+    if (alert_after) {
+        $("#alert_after1day_NotificationsSetup-P" + project_id).removeAttr('disabled');
+        $("#alert_after1hour_NotificationsSetup-P" + project_id).removeAttr('disabled');
+    } else {
+        $("#alert_after1day_NotificationsSetup-P" + project_id).attr('disabled','disabled');
+        $("#alert_after1hour_NotificationsSetup-P" + project_id).attr('disabled','disabled');
+    }
+}
+
+//------------------------------------------------
+static #NOTIFICATIONS_OPTIONS_FLAG_ALERT_MAIL            = 0x00000001;    // 0000-0000-0000-0000 0000-0000-0000-0001
+static #NOTIFICATIONS_OPTIONS_FLAG_ALERT_WEBPN           = 0x00000002;    // 0000-0000-0000-0000 0000-0000-0000-0010
+static #NOTIFICATIONS_OPTIONS_FLAG_ALERT_BEFORE1DAY      = 0x00000004;    // 0000-0000-0000-0000 0000-0000-0000-0100
+static #NOTIFICATIONS_OPTIONS_FLAG_ALERT_BEFORE1HOUR     = 0x00000008;    // 0000-0000-0000-0000 0000-0000-0000-1000
+static #NOTIFICATIONS_OPTIONS_FLAG_ALERT_AFTER1DAY       = 0x00000010;    // 0000-0000-0000-0000 0000-0000-0001-0000
+static #NOTIFICATIONS_OPTIONS_FLAG_ALERT_AFTER1HOUR      = 0x00000020;    // 0000-0000-0000-0000 0000-0000-0010-0000
+
+static #NOTIFICATIONS_OPTIONS_FLAG_POSTPONE              = 0x00010000;    // 0000-0000-0000-0001 0000-0000-0000-0000
+static #NOTIFICATIONS_OPTIONS_MASK_POSTPONE_TYPE         = 0x000E0000;    // 0000-0000-0000-1110 0000-0000-0000-0000
+static #NOTIFICATIONS_OPTIONS_MASK_POSTPONE_VALUE        = 0xFFF00000;    // 1111-1111-1111-0000 0000-0000-0000-0000
+static #NOTIFICATIONS_OPTIONS_MASK_POSTPONE_TYPE_IX      = 17;
+static #NOTIFICATIONS_OPTIONS_MASK_POSTPONE_VALUE_IX     = 20;
+
+//------------------------------------------------
+static #NotificationsOptionsToBitflags(project_id) {
+        let notification_options_bitflags = 0;
+
+        if ($("#alert_mail_NotificationsSetup-P" + project_id).is(":checked")) {
+            notification_options_bitflags |= _TodoNotes_Modals_.#NOTIFICATIONS_OPTIONS_FLAG_ALERT_MAIL;
+        }
+        if ($("#alert_webpn_NotificationsSetup-P" + project_id).is(":checked")) {
+            notification_options_bitflags |= _TodoNotes_Modals_.#NOTIFICATIONS_OPTIONS_FLAG_ALERT_WEBPN;
+        }
+
+        const alert_before = $("#alert_before_NotificationsSetup-P" + project_id).is(":checked");
+        if (alert_before && $("#alert_before1day_NotificationsSetup-P" + project_id).is(":checked")) {
+            notification_options_bitflags |= _TodoNotes_Modals_.#NOTIFICATIONS_OPTIONS_FLAG_ALERT_BEFORE1DAY;
+        }
+        if (alert_before && $("#alert_before1hour_NotificationsSetup-P" + project_id).is(":checked")) {
+            notification_options_bitflags |= _TodoNotes_Modals_.#NOTIFICATIONS_OPTIONS_FLAG_ALERT_BEFORE1HOUR;
+        }
+
+        const alert_after = $("#alert_after_NotificationsSetup-P" + project_id).is(":checked");
+        if (alert_after && $("#alert_after1day_NotificationsSetup-P" + project_id).is(":checked")) {
+            notification_options_bitflags |= _TodoNotes_Modals_.#NOTIFICATIONS_OPTIONS_FLAG_ALERT_AFTER1DAY;
+        }
+        if (alert_after && $("#alert_after1hour_NotificationsSetup-P" + project_id).is(":checked")) {
+            notification_options_bitflags |= _TodoNotes_Modals_.#NOTIFICATIONS_OPTIONS_FLAG_ALERT_AFTER1HOUR;
+        }
+
+        if ($("#postpone_NotificationsSetup-P" + project_id).is(":checked")) {
+            notification_options_bitflags |= _TodoNotes_Modals_.#NOTIFICATIONS_OPTIONS_FLAG_POSTPONE;
+        }
+        const postponeType = parseInt($("#postpone_type_NotificationsSetup-P" + project_id).val());
+        notification_options_bitflags |= (_TodoNotes_Modals_.#NOTIFICATIONS_OPTIONS_MASK_POSTPONE_TYPE & (postponeType << _TodoNotes_Modals_.#NOTIFICATIONS_OPTIONS_MASK_POSTPONE_TYPE_IX));
+        const postponeValue = parseInt($("#postpone_value_NotificationsSetup-P" + project_id).val());
+        notification_options_bitflags |= (_TodoNotes_Modals_.#NOTIFICATIONS_OPTIONS_MASK_POSTPONE_VALUE & (postponeValue << _TodoNotes_Modals_.#NOTIFICATIONS_OPTIONS_MASK_POSTPONE_VALUE_IX));
+
+        return notification_options_bitflags;
+}
+
+//------------------------------------------------
 static #NotificationsSetupHandlers() {
     // postpone number changed
-    $("[id^=postpone_number_NotificationsSetup]").on("change", function () {
+    $("[id^=postpone_value_NotificationsSetup]").on("change", function () {
         const project_id = $(this).parent().attr('data-project');
         _TodoNotes_Modals_.#UpdateNotificationsSetupPostponeTime(project_id);
     });
@@ -333,10 +408,10 @@ static #NotificationsSetupHandlers() {
     });
 
     // postpone checkbox changed
-    $("[id^=postpone_alert_NotificationsSetup]").on("change", function () {
+    $("[id^=postpone_NotificationsSetup]").on("change", function () {
         const project_id = $(this).parent().attr('data-project');
-        const postpone_alert = $(this).is(":checked");
-        if (postpone_alert) {
+        const postpone = $(this).is(":checked");
+        if (postpone) {
             $("#form-alert_time_NotificationsSetup-P" + project_id).attr('disabled','disabled');
         } else {
             $("#form-alert_time_NotificationsSetup-P" + project_id).removeAttr('disabled');
@@ -347,6 +422,16 @@ static #NotificationsSetupHandlers() {
     $("[id^=form-alert_time_NotificationsSetup]").on("change", function () {
         const project_id = $(this).parent().attr('data-project');
         $("#postpone_options_NotificationsSetup-P" + project_id).addClass('hideMe');
+    });
+
+    // remind before/after checkboxes
+    $("[id^=alert_before_NotificationsSetup]").on("change", function () {
+        const project_id = $(this).parent().attr('data-project');
+        _TodoNotes_Modals_.#UpdateNotificationsSetupAlertOptions(project_id);
+    });
+    $("[id^=alert_after_NotificationsSetup]").on("change", function () {
+        const project_id = $(this).parent().attr('data-project');
+        _TodoNotes_Modals_.#UpdateNotificationsSetupAlertOptions(project_id);
     });
 }
 
@@ -361,7 +446,7 @@ static NotificationsSetup(project_id, user_id, id, notifications_alert_timestrin
     $("#note_title_NotificationsSetup-P" + project_id).text($("#noteTitleLabel-P" + project_id + "-" + id).text());
     $("#form-alert_time_NotificationsSetup-P" + project_id).val(notifications_alert_timestring);
     $("#postpone_base_NotificationsSetup-P" + project_id).val(notifications_alert_timestamp);
-    $("#postpone_alert_NotificationsSetup-P" + project_id).prop('checked', false);
+    $("#postpone_NotificationsSetup-P" + project_id).prop('checked', false);
     $("#postpone_options_NotificationsSetup-P" + project_id).removeClass('hideMe');
     _TodoNotes_Modals_.#UpdateNotificationsSetupPostponeTime(project_id);
 
@@ -375,18 +460,19 @@ static NotificationsSetup(project_id, user_id, id, notifications_alert_timestrin
             {
                 text : _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_DIALOG_SET_BTN'),
                 click: function() {
-                    const postpone_alert = $("#postpone_alert_NotificationsSetup-P" + project_id).is(":checked");
+                    const postpone = $("#postpone_NotificationsSetup-P" + project_id).is(":checked");
                     const new_notifications_alert_timestring = $("#form-alert_time_NotificationsSetup-P" + project_id).val();
                     const postpone_notifications_alert_timestring = $("#postpone_time_NotificationsSetup-P" + project_id).text();
-                    _TodoNotes_Requests_.UpdateNoteNotificationsAlertTime(project_id, user_id, id,
-                        postpone_alert ? postpone_notifications_alert_timestring : new_notifications_alert_timestring);
+                    _TodoNotes_Requests_.UpdateNoteNotificationsAlertTimeAndOptions(project_id, user_id, id,
+                        postpone ? postpone_notifications_alert_timestring : new_notifications_alert_timestring,
+                        _TodoNotes_Modals_.#NotificationsOptionsToBitflags(project_id));
                     $( this ).dialog( "close" );
                 }
             },
             {
                 text : _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_DIALOG_RESET_BTN'),
                 click: function() {
-                    _TodoNotes_Requests_.UpdateNoteNotificationsAlertTime(project_id, user_id, id, ''); // empty timestring
+                    _TodoNotes_Requests_.UpdateNoteNotificationsAlertTimeAndOptions(project_id, user_id, id, '', 0); // empty timestring, empty options
                     $( this ).dialog( "close" );
                 }
             },
@@ -395,7 +481,7 @@ static NotificationsSetup(project_id, user_id, id, notifications_alert_timestrin
                 click: function() { $( this ).dialog( "close" ); }
             },
             {
-                text : 'Test Notification Alerts',
+                text : 'Test',
                 click: function() {
                     _TodoNotes_Requests_.TestNoteNotifications(project_id, user_id, id);
                     $( this ).dialog( "close" );

@@ -167,25 +167,26 @@ static UpdateNoteStatus(project_id, user_id, id) {
 }
 
 //------------------------------------------------
-// note update Notifications Alert Time
-static UpdateNoteNotificationsAlertTime(project_id, user_id, id, notifications_alert_timestring) {
+// note update Notifications Alert Time and Options
+static UpdateNoteNotificationsAlertTimeAndOptions(project_id, user_id, id, notifications_alert_timestring, notification_options_bitflags) {
     const note_id = $("#noteId-P" + project_id + "-" + id).attr('data-note');
 
     $.ajax({
         cache: false,
         type: "POST",
-        url: '/?controller=TodoNotesController&action=UpdateNoteNotificationsAlertTime&plugin=TodoNotes'
+        url: '/?controller=TodoNotesController&action=UpdateNoteNotificationsAlertTimeAndOptions&plugin=TodoNotes'
             + '&project_custom_id=' + project_id
             + '&user_id=' + user_id
             + '&note_id=' + note_id
-            + '&notifications_alert_timestring=' + encodeURIComponent(notifications_alert_timestring),
+            + '&notifications_alert_timestring=' + encodeURIComponent(notifications_alert_timestring)
+            + '&notification_options_bitflags=' + notification_options_bitflags,
         success: function(response) {
             const notificationsAlertTime = JSON.parse(response);
             _TodoNotes_.UpdateNoteNotificationsAlertTimestamps(notificationsAlertTime, project_id, id);
             _TodoNotes_.RefreshNoteNotificationsState(project_id, id);
         },
         error: function(xhr,textStatus,e) {
-            alert('_TodoNotes_Requests_.UpdateNoteNotificationsAlertTime');
+            alert('_TodoNotes_Requests_.UpdateNoteNotificationsAlertTimeAndOptions');
             alert(e);
         }
     });

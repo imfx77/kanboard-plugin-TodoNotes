@@ -127,8 +127,17 @@ Might be waiting for an unsubmitted New Note data input!',
 &#10;Continue?',
     //
     'TodoNotes__DIALOG_NOTIFICATIONS_SETUP_TITLE' => 'Setup Notifications for Note',
-    'TodoNotes__DIALOG_NOTIFICATIONS_ALERT_TIME' => 'Alert Time',
+    'TodoNotes__DIALOG_NOTIFICATIONS_ALERT_TIME' => 'Set Alert Time',
     'TodoNotes__DIALOG_NOTIFICATIONS_ALERT_POSTPONE' => 'Postpone Alert Time',
+    'TodoNotes__DIALOG_NOTIFICATIONS_ALERT_OPTIONS' => 'Alert Options',
+    'TodoNotes__DIALOG_NOTIFICATIONS_ALERT_USE_MAIL' => 'Use eMail',
+    'TodoNotes__DIALOG_NOTIFICATIONS_ALERT_USE_WEBPN' => 'Use Web Push Notifications',
+    'TodoNotes__DIALOG_NOTIFICATIONS_ALERT_REMIND_BEFORE' => 'Remind before :',
+    'TodoNotes__DIALOG_NOTIFICATIONS_ALERT_REMIND_BEFORE_1DAY' => 'a DAY',
+    'TodoNotes__DIALOG_NOTIFICATIONS_ALERT_REMIND_BEFORE_1HOUR' => 'an HOUR',
+    'TodoNotes__DIALOG_NOTIFICATIONS_ALERT_REMIND_AFTER' => 'Remind after :',
+    'TodoNotes__DIALOG_NOTIFICATIONS_ALERT_REMIND_AFTER_1DAY' => 'each DAY',
+    'TodoNotes__DIALOG_NOTIFICATIONS_ALERT_REMIND_AFTER_1HOUR' => 'each HOUR',
     //
     // Notifications
     //
