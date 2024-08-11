@@ -16,7 +16,7 @@ use Minishlink\WebPush\WebPush;
 
 class TodoNotesNotificationsController extends BaseController
 {
-    const HEARTBEAT_INTERNAL_INTERVAL = 5 * 60; // 5 min
+    private const HEARTBEAT_INTERNAL_INTERVAL  = 5 * 60; // 5 min
 
     public function UpdateWebPNSubscription()
     {
@@ -56,7 +56,7 @@ class TodoNotesNotificationsController extends BaseController
             $notification_content
         );
 
-        echo 'EMail sent.';
+        //echo 'EMail sent.';
     }
 
     private function SendWebPushNotification($user_id, $note, $note_project_name, $notification_link)
@@ -85,11 +85,11 @@ class TodoNotesNotificationsController extends BaseController
 
             if (!$report->isSuccess() && $report->getResponse()->getStatusCode() == 410) { // GONE
                 $this->todoNotesNotificationsModel->RemoveWebPNSubscription($user_id, $subscription);
-                echo 'Removed WebPN subscription for endpoint : ' . PHP_EOL . $subscription['endpoint'] . PHP_EOL;
+                //echo 'Removed WebPN subscription for endpoint : ' . PHP_EOL . $subscription['endpoint'] . PHP_EOL;
             }
         }
 
-        echo 'WebPNs sent.';
+        //echo 'WebPNs sent.';
     }
 
     public function TestNoteNotifications()
@@ -103,17 +103,6 @@ class TodoNotesNotificationsController extends BaseController
 
     public function TestNoteNotificationsWithParams($user_id, $project_id, $note_id)
     {
-//        $functionName = '\Kanboard\Plugin\\' . Plugin::NAME . '\Schema\version_1';
-//        if (function_exists($functionName)) {
-//            $this->db->startTransaction();
-//            $this->db->getDriver()->disableForeignKeys();
-//
-//            call_user_func($functionName, $this->db->getConnection());
-//
-//            $this->db->getDriver()->enableForeignKeys();
-//            $this->db->closeTransaction();
-//        }
-
         $note = $this->todoNotesModel->GetProjectNoteForUser($note_id, $project_id, $user_id);
         $note_project_name = $this->todoNotesModel->GetProjectNameForUser($user_id, $note['project_id']);
         $note_project_tab = $this->todoNotesModel->GetTabForProject($user_id, $note['project_id']);
@@ -121,17 +110,38 @@ class TodoNotesNotificationsController extends BaseController
 
         //---------------------------------------------------
         // email notification
-        //$this->SendEMailNotification($user_id, $note, $note_project_name, $notification_link);
+        $this->SendEMailNotification($user_id, $note, $note_project_name, $notification_link);
 
         //---------------------------------------------------
         // web push notifications (to all registered endpoints)
         $this->SendWebPushNotification($user_id, $note, $note_project_name, $notification_link);
     }
 
-    public function BroadcastNotesNotifications()
+    public function BroadcastNotesNotifications($last_heartbeat, $new_heartbeat)
     {
         //echo 'TodoNotesNotificationsController::BroadcastNotesNotifications()' . PHP_EOL;
-        //$this->TestNoteNotificationsWithParams(3, -6, 80);
+
+        $all_notifications = $this->todoNotesNotificationsModel->GetPendingNotifications($last_heartbeat, $new_heartbeat);
+
+        foreach ($all_notifications as $notification) {
+            $user_id = $notification['user_id'];
+            $project_id = $notification['project_id'];
+            $note_project_name = $this->todoNotesModel->GetProjectNameForUser($user_id, $project_id);
+            $note_project_tab = $this->todoNotesModel->GetTabForProject($user_id, $project_id);
+            $notification_link = $this->helper->url->base() . 'dashboard/' . $user_id . '/todonotes/' . $note_project_tab . '/' . $notification['id'];
+
+            //---------------------------------------------------
+            // email notification
+            if ($notification['notification_options']['alert_mail']) {
+                $this->SendEMailNotification($user_id, $notification, $note_project_name, $notification_link);
+            }
+
+            //---------------------------------------------------
+            // web push notifications (to all registered endpoints)
+            if ($notification['notification_options']['alert_webpn']) {
+                $this->SendWebPushNotification($user_id, $notification, $note_project_name, $notification_link);
+            }
+        }
     }
 
     public function Heartbeat()
@@ -159,8 +169,10 @@ class TodoNotesNotificationsController extends BaseController
             return;
         }
 
-        //echo 'DO execute some actual stuff here ...' . PHP_EOL;
-        $this->BroadcastNotesNotifications();
+        //echo 'DO broadcast ...' . PHP_EOL;
+        $last_heartbeat = empty($heartbeat) ? 0 : intval($heartbeat);
+        $this->BroadcastNotesNotifications($last_heartbeat, $timestamp);
+
         file_put_contents(__DIR__ . '/../.cache/heartbeat', $timestamp);
     }
 

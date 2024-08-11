@@ -27,6 +27,9 @@ class TodoNotesNotificationsModel extends Base
     private const OPTIONS_MASK_POSTPONE_TYPE_IX     = 17;
     private const OPTIONS_MASK_POSTPONE_VALUE_IX    = 20;
 
+    private const TIME_INTERVAL_1DAY                = 24 * 60 * 60; // 1 day
+    private const TIME_INTERVAL_1HOUR               = 60 * 60; // 1 hour
+
     public function GetWebPNSubscriptionsForUser($user_id)
     {
         $encoded_subscriptions = $this->db->table(self::TABLE_NOTES_WEBPN_SUBSCRIPTIONS)
@@ -76,6 +79,85 @@ class TodoNotesNotificationsModel extends Base
             ->eq('user_id', $user_id)
             ->eq('endpoint', $webpn_subscription['endpoint'])
             ->remove();
+    }
+
+    public function GetPendingNotifications($last_heartbeat, $new_heartbeat)
+    {
+        $early_reminder = $new_heartbeat + self::TIME_INTERVAL_1DAY; // 1 day ahead
+        $potential_notifications = $this->db->table(TodoNotesModel::TABLE_NOTES_ENTRIES)
+            ->neq('date_notified', 0)
+            ->lte('date_notified', $early_reminder)
+            ->gte('is_active', 1)
+            ->asc('user_id')
+            ->asc('date_notified')
+            ->findAll();
+
+        $notifications_to_trigger = array();
+        $heartbeat_interval = $new_heartbeat - $last_heartbeat;
+
+        // collect notifications that actually need to trigger
+        foreach ($potential_notifications as &$notification_to_evaluate) {
+            $notification_options = $this->NotificationsOptionsFromBitflags($notification_to_evaluate['flags_notified']);
+            if (!$notification_options['alert_mail'] && !$notification_options['alert_webpn']) {
+                continue; // not configured to trigger mail or webpn
+            }
+
+            $should_trigger = false;
+            $date_notified = $notification_to_evaluate['date_notified'];
+
+            $alert_time = $date_notified + self::TIME_INTERVAL_1DAY;
+            $alert_time_remainder = ($new_heartbeat - $alert_time) % self::TIME_INTERVAL_1DAY;
+            if ($notification_options['alert_after1day'] && ($alert_time <= $new_heartbeat) && ($alert_time_remainder < $heartbeat_interval)) {
+                //echo('after 1DAY : ' . $alert_time . ' : ' . $alert_time_remainder . PHP_EOL);
+                $notification_to_evaluate['last_notified'] = $new_heartbeat - $alert_time_remainder;
+                $should_trigger = true;
+            } else {
+                $alert_time = $date_notified + self::TIME_INTERVAL_1HOUR;
+                $alert_time_remainder = ($new_heartbeat - $alert_time) % self::TIME_INTERVAL_1HOUR;
+                if ($notification_options['alert_after1hour'] && ($alert_time <= $new_heartbeat) && ($alert_time_remainder < $heartbeat_interval)) {
+                    //echo('after 1HOUR : ' . $alert_time . ' : ' . $alert_time_remainder . PHP_EOL);
+                    $notification_to_evaluate['last_notified'] = $new_heartbeat - $alert_time_remainder;
+                    $should_trigger = true;
+                } else {
+                    $alert_time = $date_notified;
+                    if (($last_heartbeat < $alert_time) && ($alert_time <= $new_heartbeat)) {
+                        //echo('ALERT : ' . $alert_time . PHP_EOL);
+                        $notification_to_evaluate['last_notified'] = $alert_time;
+                        $should_trigger = true;
+                    } else {
+                        $alert_time = $date_notified - self::TIME_INTERVAL_1HOUR;
+                        if ($notification_options['alert_before1hour'] && ($last_heartbeat < $alert_time) && ($alert_time <= $new_heartbeat)) {
+                            //echo('before 1HOUR : ' . $alert_time . PHP_EOL);
+                            $notification_to_evaluate['last_notified'] = $alert_time;
+                            $should_trigger = true;
+                        } else {
+                            $alert_time = $date_notified - self::TIME_INTERVAL_1DAY;
+                            if ($notification_options['alert_before1day'] && ($last_heartbeat < $alert_time) && ($alert_time <= $new_heartbeat)) {
+                                //echo('before 1DAY : ' . $alert_time . PHP_EOL);
+                                $notification_to_evaluate['last_notified'] = $alert_time;
+                                $should_trigger = true;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if ($should_trigger) {
+                // append to trigger list
+                $notification_to_evaluate['notification_options'] = $notification_options;
+                $notification_to_evaluate['notifications_alert_timestamp'] = $notification_to_evaluate['date_notified']; // keep the timestamp
+                $notifications_to_trigger[] = $notification_to_evaluate;
+
+                // update last_notified field
+                $this->db->table(TodoNotesModel::TABLE_NOTES_ENTRIES)
+                        ->eq('id', $notification_to_evaluate['id'])
+                        ->eq('project_id', $notification_to_evaluate['project_id'])
+                        ->eq('user_id', $notification_to_evaluate['user_id'])
+                        ->update(array('last_notified' => $notification_to_evaluate['last_notified']));
+            }
+        }
+
+        return $notifications_to_trigger;
     }
 
     private function NotificationsOptionsToBitflags($notification_options)

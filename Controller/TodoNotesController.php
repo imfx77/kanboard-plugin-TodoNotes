@@ -247,8 +247,8 @@ class TodoNotesController extends BaseController
         $category = $this->request->getStringParam('category');
 
         $timestamp = $this->todoNotesModel->UpdateNote($project_id, $user_id, $note_id, $is_active, $title, $description, $category);
-        print(json_encode(array('timestamp' => $timestamp,
-                                'timestring' => date($this->dateParser->getUserDateTimeFormat(), $timestamp))));
+        echo(json_encode(array('timestamp' => $timestamp,
+                               'timestring' => date($this->dateParser->getUserDateTimeFormat(), $timestamp))));
         return $timestamp;
     }
 
