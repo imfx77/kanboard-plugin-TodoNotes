@@ -19,7 +19,7 @@ class NotificationsHeartbeatCommand extends BaseCommand
         $this
             ->setName('TodoNotes:NotificationsHeartbeat')
             ->setDescription('TodoNotes Notifications Heartbeat cronjob');
-        }
+    }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

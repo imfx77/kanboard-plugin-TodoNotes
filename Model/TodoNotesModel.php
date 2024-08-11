@@ -18,8 +18,9 @@ use Kanboard\Model\CategoryModel;
 
 class TodoNotesModel extends Base
 {
-    public  const TABLE_NOTES_ENTRIES           = 'todonotes_entries';
-    public  const TABLE_NOTES_CUSTOM_PROJECTS   = 'todonotes_custom_projects';
+    public const TABLE_NOTES_ENTRIES            = 'todonotes_entries';
+    public const TABLE_NOTES_CUSTOM_PROJECTS    = 'todonotes_custom_projects';
+
     private const TABLE_PROJECTS                = ProjectModel::TABLE;
     private const TABLE_COLUMNS                 = ColumnModel::TABLE;
     private const TABLE_SWIMLANES               = SwimlaneModel::TABLE;

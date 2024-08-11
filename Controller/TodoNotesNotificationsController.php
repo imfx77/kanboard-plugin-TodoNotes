@@ -78,8 +78,7 @@ class TodoNotesNotificationsController extends BaseController
         $webPush = new WebPush($auth);
 
         $subscriptions = $this->todoNotesNotificationsModel->GetWebPNSubscriptionsForUser($user_id);
-        foreach($subscriptions as $subscription) {
-
+        foreach ($subscriptions as $subscription) {
             $webPushSubscription = Subscription::create($subscription);
             $report = $webPush->sendOneNotification($webPushSubscription, $notification, ['TTL' => 5000]);
 
@@ -175,5 +174,4 @@ class TodoNotesNotificationsController extends BaseController
 
         file_put_contents(__DIR__ . '/../.cache/heartbeat', $timestamp);
     }
-
 }

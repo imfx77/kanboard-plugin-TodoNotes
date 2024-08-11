@@ -117,8 +117,8 @@ label {
 }
 
 @keyframes pulse {
-    from { box-shadow: 0px 0px 20px #FFFFFF inset; }
-    to { box-shadow: 0px 0px 10px #000000 inset; }
+    from { box-shadow: 0 0 20px #FFFFFF inset; }
+    to { box-shadow: 0 0 10px #000000 inset; }
 }
 
 .accordionShow {
