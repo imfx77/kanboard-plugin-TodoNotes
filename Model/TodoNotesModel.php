@@ -503,7 +503,6 @@ class TodoNotesModel extends Base
 
         $values = array(
             'date_notified' => $notifications_alert_timestamp,
-            'last_notified' => 0,
             'flags_notified' => $notification_options_bitflags,
         );
 

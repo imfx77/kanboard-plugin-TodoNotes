@@ -95,6 +95,8 @@ class TodoNotesNotificationsModel extends Base
         $notifications_to_trigger = array();
         $heartbeat_interval = $new_heartbeat - $last_heartbeat;
 
+        $userDateTimeFormat = $this->dateParser->getUserDateTimeFormat();
+
         // collect notifications that actually need to trigger
         foreach ($potential_notifications as &$notification_to_evaluate) {
             $notification_options = $this->NotificationsOptionsFromBitflags($notification_to_evaluate['flags_notified']);
@@ -143,17 +145,18 @@ class TodoNotesNotificationsModel extends Base
             }
 
             if ($should_trigger) {
-                // append to trigger list
-                $notification_to_evaluate['notification_options'] = $notification_options;
-                $notification_to_evaluate['notifications_alert_timestamp'] = $notification_to_evaluate['date_notified']; // keep the timestamp
-                $notifications_to_trigger[] = $notification_to_evaluate;
-
                 // update last_notified field
                 $this->db->table(TodoNotesModel::TABLE_NOTES_ENTRIES)
                         ->eq('id', $notification_to_evaluate['id'])
                         ->eq('project_id', $notification_to_evaluate['project_id'])
                         ->eq('user_id', $notification_to_evaluate['user_id'])
                         ->update(array('last_notified' => $notification_to_evaluate['last_notified']));
+
+                // append to trigger list
+                $notification_to_evaluate['notification_options'] = $notification_options;
+                $notification_to_evaluate['notifications_alert_timestamp'] = $notification_to_evaluate['date_notified']; // keep the timestamp
+                $notification_to_evaluate = $this->dateParser->format($notification_to_evaluate, array('date_created', 'date_modified', 'date_notified'), $userDateTimeFormat);
+                $notifications_to_trigger[] = $notification_to_evaluate;
             }
         }
 
