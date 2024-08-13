@@ -83,24 +83,24 @@ print '</div>';
 
 //---------------------------------------------
 
-print '<div class="hideMe" id="dialogNotificationsSetup-P' . $project_id . '" title="' . t('TodoNotes__DIALOG_NOTIFICATIONS_SETUP_TITLE') . '"';
-print ' data-project="' . $project_id . '" data-datetime-format="' . $user_datetime_format . '">';
+print '<div class="hideMe" id="dialogNotificationsSetup" title="' . t('TodoNotes__DIALOG_NOTIFICATIONS_SETUP_TITLE') . '"';
+print ' data-datetime-format="' . $user_datetime_format . '">';
 
-print '<div style="text-align: center"><label id="note_title_NotificationsSetup-P' . $project_id . '" class="dateLabel dateLabelComplete"></label></div>';
+print '<div style="text-align: center"><label id="note_title_NotificationsSetup" class="dateLabel dateLabelComplete"></label></div>';
 
 print '<br>'; // alert datetime picker
-print $this->helper->form->datetime(t('TodoNotes__DIALOG_NOTIFICATIONS_ALERT_TIME') . ' :&nbsp;&nbsp;', 'alert_time_NotificationsSetup-P' . $project_id, array(), array(), array('tabindex="-1"'));
+print $this->helper->form->datetime(t('TodoNotes__DIALOG_NOTIFICATIONS_ALERT_TIME') . ' :&nbsp;&nbsp;', 'alert_time_NotificationsSetup', array(), array(), array('tabindex="-1"'));
 
 print '<br>'; // postpone options BEGIN
-print '<div id="postpone_options_NotificationsSetup-P' . $project_id . '" data-project="' . $project_id . '">';
-print '<input type="checkbox" id="postpone_NotificationsSetup-P' . $project_id . '">';
-print '<label for="postpone_NotificationsSetup-P' . $project_id . '">&nbsp;&nbsp;' . t('TodoNotes__DIALOG_NOTIFICATIONS_ALERT_POSTPONE') . '</label>';
+print '<div id="postpone_options_NotificationsSetup">';
+print '<input type="checkbox" id="postpone_NotificationsSetup">';
+print '<label for="postpone_NotificationsSetup">&nbsp;&nbsp;' . t('TodoNotes__DIALOG_NOTIFICATIONS_ALERT_POSTPONE') . '</label>';
 
 print '<br>';
-print '<input type="number" id="postpone_value_NotificationsSetup-P' . $project_id . '" value="1" min="1" step="1" style="text-align: center; margin-left: 30px">';
+print '<input type="number" id="postpone_value_NotificationsSetup" value="1" min="1" step="1" style="text-align: center; margin-left: 30px">';
 print '&nbsp;&nbsp';
 
-print '<select id="postpone_type_NotificationsSetup-P' . $project_id . '">';
+print '<select id="postpone_type_NotificationsSetup">';
 print '<option value="1">' . t('seconds') . '</option>';
 print '<option value="2">' . t('minutes') . '</option>';
 print '<option value="3">' . t('hours') . '</option>';
@@ -110,42 +110,42 @@ print '<option value="6">' . t('Year(s)') . '</option>';
 print '</select>';
 
 print '<br>';
-print '<input type="text" class="hideMe" id="postpone_base_NotificationsSetup-P' . $project_id . '">';
-print '<label id="postpone_time_NotificationsSetup-P' . $project_id . '" style="margin-left: 30px; color: darkred"></label>';
+print '<input type="text" class="hideMe" id="postpone_base_NotificationsSetup">';
+print '<label id="postpone_time_NotificationsSetup" style="margin-left: 30px; color: darkred"></label>';
 
 print '</div>'; // postpone options END
 
 print '<br>'; // alert options BEGIN
-print '<details id="alert_options_NotificationsSetup-P' . $project_id . '" data-project="' . $project_id . '">';
+print '<details id="alert_options_NotificationsSetup">';
 print '<summary class="catLabelClickable">' . t('TodoNotes__DIALOG_NOTIFICATIONS_ALERT_OPTIONS') . '</summary>';
 
 print '<br>';
-print '<input type="checkbox" id="alert_mail_NotificationsSetup-P' . $project_id . '">';
-print '<label for="alert_mail_NotificationsSetup-P' . $project_id . '">&nbsp;' . t('TodoNotes__DIALOG_NOTIFICATIONS_ALERT_USE_MAIL') . '</label>';
+print '<input type="checkbox" id="alert_mail_NotificationsSetup">';
+print '<label for="alert_mail_NotificationsSetup">&nbsp;' . t('TodoNotes__DIALOG_NOTIFICATIONS_ALERT_USE_MAIL') . '</label>';
 print '&nbsp;&nbsp;&nbsp;&nbsp;';
-print '<input type="checkbox" id="alert_webpn_NotificationsSetup-P' . $project_id . '">';
-print '<label for="alert_webpn_NotificationsSetup-P' . $project_id . '">&nbsp;' . t('TodoNotes__DIALOG_NOTIFICATIONS_ALERT_USE_WEBPN') . '</label>';
+print '<input type="checkbox" id="alert_webpn_NotificationsSetup">';
+print '<label for="alert_webpn_NotificationsSetup">&nbsp;' . t('TodoNotes__DIALOG_NOTIFICATIONS_ALERT_USE_WEBPN') . '</label>';
 
 print '<br>';
 print '<br>';
-print '<input type="checkbox" id="alert_before_NotificationsSetup-P' . $project_id . '">';
-print '<label for="alert_before_NotificationsSetup-P' . $project_id . '">&nbsp;' . t('TodoNotes__DIALOG_NOTIFICATIONS_ALERT_REMIND_BEFORE') . '</label>';
+print '<input type="checkbox" id="alert_before_NotificationsSetup">';
+print '<label for="alert_before_NotificationsSetup">&nbsp;' . t('TodoNotes__DIALOG_NOTIFICATIONS_ALERT_REMIND_BEFORE') . '</label>';
 print '&nbsp;&nbsp;&nbsp;&nbsp;';
-print '<input type="radio" name="alert_before" id="alert_before1day_NotificationsSetup-P' . $project_id . '" disabled checked>';
-print '<label for="alert_before1day_NotificationsSetup-P' . $project_id . '">&nbsp;' . t('TodoNotes__DIALOG_NOTIFICATIONS_ALERT_REMIND_BEFORE_1DAY') . '</label>';
+print '<input type="radio" name="alert_before" id="alert_before1day_NotificationsSetup" disabled checked>';
+print '<label for="alert_before1day_NotificationsSetup">&nbsp;' . t('TodoNotes__DIALOG_NOTIFICATIONS_ALERT_REMIND_BEFORE_1DAY') . '</label>';
 print '&nbsp;&nbsp;';
-print '<input type="radio" name="alert_before" id="alert_before1hour_NotificationsSetup-P' . $project_id . '" disabled>';
-print '<label for="alert_before1hour_NotificationsSetup-P' . $project_id . '">&nbsp;' . t('TodoNotes__DIALOG_NOTIFICATIONS_ALERT_REMIND_BEFORE_1HOUR') . '</label>';
+print '<input type="radio" name="alert_before" id="alert_before1hour_NotificationsSetup" disabled>';
+print '<label for="alert_before1hour_NotificationsSetup">&nbsp;' . t('TodoNotes__DIALOG_NOTIFICATIONS_ALERT_REMIND_BEFORE_1HOUR') . '</label>';
 
 print '<br>';
-print '<input type="checkbox" id="alert_after_NotificationsSetup-P' . $project_id . '">';
-print '<label for="alert_after_NotificationsSetup-P' . $project_id . '">&nbsp;' . t('TodoNotes__DIALOG_NOTIFICATIONS_ALERT_REMIND_AFTER') . '</label>';
+print '<input type="checkbox" id="alert_after_NotificationsSetup">';
+print '<label for="alert_after_NotificationsSetup">&nbsp;' . t('TodoNotes__DIALOG_NOTIFICATIONS_ALERT_REMIND_AFTER') . '</label>';
 print '&nbsp;&nbsp;&nbsp;&nbsp;';
-print '<input type="radio" name="alert_after" id="alert_after1day_NotificationsSetup-P' . $project_id . '" disabled checked>';
-print '<label for="alert_after1day_NotificationsSetup-P' . $project_id . '">&nbsp;' . t('TodoNotes__DIALOG_NOTIFICATIONS_ALERT_REMIND_AFTER_1DAY') . '</label>';
+print '<input type="radio" name="alert_after" id="alert_after1day_NotificationsSetup" disabled checked>';
+print '<label for="alert_after1day_NotificationsSetup">&nbsp;' . t('TodoNotes__DIALOG_NOTIFICATIONS_ALERT_REMIND_AFTER_1DAY') . '</label>';
 print '&nbsp;&nbsp;';
-print '<input type="radio" name="alert_after" id="alert_after1hour_NotificationsSetup-P' . $project_id . '" disabled>';
-print '<label for="alert_after1hour_NotificationsSetup-P' . $project_id . '">&nbsp;' . t('TodoNotes__DIALOG_NOTIFICATIONS_ALERT_REMIND_AFTER_1HOUR') . '</label>';
+print '<input type="radio" name="alert_after" id="alert_after1hour_NotificationsSetup" disabled>';
+print '<label for="alert_after1hour_NotificationsSetup">&nbsp;' . t('TodoNotes__DIALOG_NOTIFICATIONS_ALERT_REMIND_AFTER_1HOUR') . '</label>';
 
 print '</details>'; // alert options END
 

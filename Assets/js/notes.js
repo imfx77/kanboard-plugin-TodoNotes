@@ -756,7 +756,7 @@ static #NoteActionHandlers() {
         const notifications_alert_timestring = $(this).attr('data-notifications-alert-timestring');
         const notifications_alert_timestamp = $(this).attr('data-notifications-alert-timestamp');
         const notification_options_bitflags = parseInt($(this).attr('data-notifications-options-bitflags'));
-        _TodoNotes_Modals_.NotificationsSetup(project_id, user_id, id, notifications_alert_timestring, notifications_alert_timestamp, notification_options_bitflags);
+        _TodoNotes_Modals_.NotificationsSetup(project_id, id, user_id, notifications_alert_timestring, notifications_alert_timestamp, notification_options_bitflags);
     });
 
     //------------------------------------------------

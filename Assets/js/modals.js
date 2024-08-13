@@ -265,25 +265,25 @@ static #FormatDate(format, date){
 }
 
 //------------------------------------------------
-static #UpdateNotificationsSetupPostponeTime(project_id) {
+static #UpdateNotificationsSetupPostponeTime() {
     // validate numeric input
-    const postponeValue = parseInt($("#postpone_value_NotificationsSetup-P" + project_id).val());
+    const postponeValue = parseInt($("#postpone_value_NotificationsSetup").val());
     if (postponeValue < 1) {
         setTimeout(function() {
-            $("#postpone_value_NotificationsSetup-P" + project_id).val(1).change();
+            $("#postpone_value_NotificationsSetup").val(1).change();
         }, 50);
         return;
     }
 
-    const datetimeFormat = $("#dialogNotificationsSetup-P" + project_id).attr('data-datetime-format');
+    const datetimeFormat = $("#dialogNotificationsSetup").attr('data-datetime-format');
 
-    const postponeBase = parseInt($("#postpone_base_NotificationsSetup-P" + project_id).val());
+    const postponeBase = parseInt($("#postpone_base_NotificationsSetup").val());
     const localTimeOffset = parseInt($("#refProjectId").attr('data-local-time-offset'));
     let postponeTime = (postponeBase > 0) ? new Date(postponeBase * 1000) : new Date(Date.now() + localTimeOffset * 1000);
 
-    $("#form-alert_time_NotificationsSetup-P" + project_id).attr('placeholder', _TodoNotes_Modals_.#FormatDate(datetimeFormat, postponeTime));
+    $("#form-alert_time_NotificationsSetup").attr('placeholder', _TodoNotes_Modals_.#FormatDate(datetimeFormat, postponeTime));
 
-    const postponeType = parseInt($("#postpone_type_NotificationsSetup-P" + project_id).val());
+    const postponeType = parseInt($("#postpone_type_NotificationsSetup").val());
     switch(postponeType)
     {
         case 1: // seconds
@@ -315,20 +315,20 @@ static #UpdateNotificationsSetupPostponeTime(project_id) {
             break;
     }
 
-    $("#postpone_time_NotificationsSetup-P" + project_id).text(_TodoNotes_Modals_.#FormatDate(datetimeFormat, postponeTime));
+    $("#postpone_time_NotificationsSetup").text(_TodoNotes_Modals_.#FormatDate(datetimeFormat, postponeTime));
 }
 
 //------------------------------------------------
-static #UpdateNotificationsSetupAlertOptions(project_id) {
+static #UpdateNotificationsSetupAlertOptions() {
     // alert before radio buttons
-    const alert_before = $("#alert_before_NotificationsSetup-P" + project_id).is(':checked');
-    $("#alert_before1day_NotificationsSetup-P" + project_id).prop('disabled', !alert_before);
-    $("#alert_before1hour_NotificationsSetup-P" + project_id).prop('disabled', !alert_before);
+    const alert_before = $("#alert_before_NotificationsSetup").is(':checked');
+    $("#alert_before1day_NotificationsSetup").prop('disabled', !alert_before);
+    $("#alert_before1hour_NotificationsSetup").prop('disabled', !alert_before);
 
     // alert after radio buttons
-    const alert_after = $("#alert_after_NotificationsSetup-P" + project_id).is(':checked');
-    $("#alert_after1day_NotificationsSetup-P" + project_id).prop('disabled', !alert_after);
-    $("#alert_after1hour_NotificationsSetup-P" + project_id).prop('disabled', !alert_after);
+    const alert_after = $("#alert_after_NotificationsSetup").is(':checked');
+    $("#alert_after1day_NotificationsSetup").prop('disabled', !alert_after);
+    $("#alert_after1hour_NotificationsSetup").prop('disabled', !alert_after);
 }
 
 //------------------------------------------------
@@ -346,96 +346,96 @@ static #NOTIFICATIONS_OPTIONS_MASK_POSTPONE_TYPE_IX      = 17;
 static #NOTIFICATIONS_OPTIONS_MASK_POSTPONE_VALUE_IX     = 20;
 
 //------------------------------------------------
-static #NotificationsOptionsToBitflags(project_id) {
+static #NotificationsOptionsToBitflags() {
         let notification_options_bitflags = 0;
 
-        if ($("#alert_mail_NotificationsSetup-P" + project_id).is(':checked')) {
+        if ($("#alert_mail_NotificationsSetup").is(':checked')) {
             notification_options_bitflags |= _TodoNotes_Modals_.#NOTIFICATIONS_OPTIONS_FLAG_ALERT_MAIL;
         }
-        if ($("#alert_webpn_NotificationsSetup-P" + project_id).is(':checked')) {
+        if ($("#alert_webpn_NotificationsSetup").is(':checked')) {
             notification_options_bitflags |= _TodoNotes_Modals_.#NOTIFICATIONS_OPTIONS_FLAG_ALERT_WEBPN;
         }
 
-        const alert_before = $("#alert_before_NotificationsSetup-P" + project_id).is(':checked');
-        if (alert_before && $("#alert_before1day_NotificationsSetup-P" + project_id).is(':checked')) {
+        const alert_before = $("#alert_before_NotificationsSetup").is(':checked');
+        if (alert_before && $("#alert_before1day_NotificationsSetup").is(':checked')) {
             notification_options_bitflags |= _TodoNotes_Modals_.#NOTIFICATIONS_OPTIONS_FLAG_ALERT_BEFORE1DAY;
         }
-        if (alert_before && $("#alert_before1hour_NotificationsSetup-P" + project_id).is(':checked')) {
+        if (alert_before && $("#alert_before1hour_NotificationsSetup").is(':checked')) {
             notification_options_bitflags |= _TodoNotes_Modals_.#NOTIFICATIONS_OPTIONS_FLAG_ALERT_BEFORE1HOUR;
         }
 
-        const alert_after = $("#alert_after_NotificationsSetup-P" + project_id).is(':checked');
-        if (alert_after && $("#alert_after1day_NotificationsSetup-P" + project_id).is(':checked')) {
+        const alert_after = $("#alert_after_NotificationsSetup").is(':checked');
+        if (alert_after && $("#alert_after1day_NotificationsSetup").is(':checked')) {
             notification_options_bitflags |= _TodoNotes_Modals_.#NOTIFICATIONS_OPTIONS_FLAG_ALERT_AFTER1DAY;
         }
-        if (alert_after && $("#alert_after1hour_NotificationsSetup-P" + project_id).is(':checked')) {
+        if (alert_after && $("#alert_after1hour_NotificationsSetup").is(':checked')) {
             notification_options_bitflags |= _TodoNotes_Modals_.#NOTIFICATIONS_OPTIONS_FLAG_ALERT_AFTER1HOUR;
         }
 
-        if ($("#postpone_NotificationsSetup-P" + project_id).is(':checked')) {
+        if ($("#postpone_NotificationsSetup").is(':checked')) {
             notification_options_bitflags |= _TodoNotes_Modals_.#NOTIFICATIONS_OPTIONS_FLAG_POSTPONE;
         }
-        const postponeType = parseInt($("#postpone_type_NotificationsSetup-P" + project_id).val());
+        const postponeType = parseInt($("#postpone_type_NotificationsSetup").val());
         notification_options_bitflags |= (_TodoNotes_Modals_.#NOTIFICATIONS_OPTIONS_MASK_POSTPONE_TYPE & (postponeType << _TodoNotes_Modals_.#NOTIFICATIONS_OPTIONS_MASK_POSTPONE_TYPE_IX));
-        const postponeValue = parseInt($("#postpone_value_NotificationsSetup-P" + project_id).val());
+        const postponeValue = parseInt($("#postpone_value_NotificationsSetup").val());
         notification_options_bitflags |= (_TodoNotes_Modals_.#NOTIFICATIONS_OPTIONS_MASK_POSTPONE_VALUE & (postponeValue << _TodoNotes_Modals_.#NOTIFICATIONS_OPTIONS_MASK_POSTPONE_VALUE_IX));
 
         return notification_options_bitflags;
 }
 
 //------------------------------------------------
-static #NotificationsOptionsFromBitflags(project_id, notification_options_bitflags) {
+static #NotificationsOptionsFromBitflags(notification_options_bitflags) {
     // init defaults
-    $("#alert_mail_NotificationsSetup-P" + project_id).prop('checked', false);
-    $("#alert_webpn_NotificationsSetup-P" + project_id).prop('checked', false);
-    $("#alert_before_NotificationsSetup-P" + project_id).prop('checked', false);
-    $("#alert_before1day_NotificationsSetup-P" + project_id).prop('disabled', true).prop('checked', true);
-    $("#alert_before1hour_NotificationsSetup-P" + project_id).prop('disabled', true).prop('checked', false);
-    $("#alert_after_NotificationsSetup-P" + project_id).prop('checked', false);
-    $("#alert_after1day_NotificationsSetup-P" + project_id).prop('disabled', true).prop('checked', true);
-    $("#alert_after1hour_NotificationsSetup-P" + project_id).prop('disabled', true).prop('checked', false);
+    $("#alert_mail_NotificationsSetup").prop('checked', false);
+    $("#alert_webpn_NotificationsSetup").prop('checked', false);
+    $("#alert_before_NotificationsSetup").prop('checked', false);
+    $("#alert_before1day_NotificationsSetup").prop('disabled', true).prop('checked', true);
+    $("#alert_before1hour_NotificationsSetup").prop('disabled', true).prop('checked', false);
+    $("#alert_after_NotificationsSetup").prop('checked', false);
+    $("#alert_after1day_NotificationsSetup").prop('disabled', true).prop('checked', true);
+    $("#alert_after1hour_NotificationsSetup").prop('disabled', true).prop('checked', false);
     
-    $("#form-alert_time_NotificationsSetup-P" + project_id).prop('disabled', false);
-    $("#postpone_NotificationsSetup-P" + project_id).prop('checked', false);
-    $("#postpone_options_NotificationsSetup-P" + project_id).removeClass('hideMe');
-    $("#postpone_type_NotificationsSetup-P" + project_id).val(4).trigger('change'); // days
-    $("#postpone_value_NotificationsSetup-P" + project_id).val(1).trigger('change');
+    $("#form-alert_time_NotificationsSetup").prop('disabled', false);
+    $("#postpone_NotificationsSetup").prop('checked', false);
+    $("#postpone_options_NotificationsSetup").removeClass('hideMe');
+    $("#postpone_type_NotificationsSetup").val(4).trigger('change'); // days
+    $("#postpone_value_NotificationsSetup").val(1).trigger('change');
 
     // exit when no stored options
     if (notification_options_bitflags <= 0) return;
 
     if (notification_options_bitflags & _TodoNotes_Modals_.#NOTIFICATIONS_OPTIONS_FLAG_ALERT_MAIL) {
-        $("#alert_mail_NotificationsSetup-P" + project_id).trigger('click');
+        $("#alert_mail_NotificationsSetup").trigger('click');
     }
     if (notification_options_bitflags & _TodoNotes_Modals_.#NOTIFICATIONS_OPTIONS_FLAG_ALERT_WEBPN) {
-        $("#alert_webpn_NotificationsSetup-P" + project_id).trigger('click');
+        $("#alert_webpn_NotificationsSetup").trigger('click');
     }
 
     if (notification_options_bitflags & _TodoNotes_Modals_.#NOTIFICATIONS_OPTIONS_FLAG_ALERT_BEFORE1DAY) {
-        $("#alert_before_NotificationsSetup-P" + project_id).trigger("click");
-        $("#alert_before1day_NotificationsSetup-P" + project_id).trigger("click");
+        $("#alert_before_NotificationsSetup").trigger("click");
+        $("#alert_before1day_NotificationsSetup").trigger("click");
     }
     if (notification_options_bitflags & _TodoNotes_Modals_.#NOTIFICATIONS_OPTIONS_FLAG_ALERT_BEFORE1HOUR) {
-        $("#alert_before_NotificationsSetup-P" + project_id).trigger("click");
-        $("#alert_before1hour_NotificationsSetup-P" + project_id).trigger("click");
+        $("#alert_before_NotificationsSetup").trigger("click");
+        $("#alert_before1hour_NotificationsSetup").trigger("click");
     }
 
     if (notification_options_bitflags & _TodoNotes_Modals_.#NOTIFICATIONS_OPTIONS_FLAG_ALERT_AFTER1DAY) {
-        $("#alert_after_NotificationsSetup-P" + project_id).trigger("click");
-        $("#alert_after1day_NotificationsSetup-P" + project_id).trigger("click");
+        $("#alert_after_NotificationsSetup").trigger("click");
+        $("#alert_after1day_NotificationsSetup").trigger("click");
     }
     if (notification_options_bitflags & _TodoNotes_Modals_.#NOTIFICATIONS_OPTIONS_FLAG_ALERT_AFTER1HOUR) {
-        $("#alert_after_NotificationsSetup-P" + project_id).trigger("click");
-        $("#alert_after1hour_NotificationsSetup-P" + project_id).trigger("click");
+        $("#alert_after_NotificationsSetup").trigger("click");
+        $("#alert_after1hour_NotificationsSetup").trigger("click");
     }
 
     if (notification_options_bitflags & _TodoNotes_Modals_.#NOTIFICATIONS_OPTIONS_FLAG_POSTPONE) {
-        $("#postpone_NotificationsSetup-P" + project_id).trigger("click");
+        $("#postpone_NotificationsSetup").trigger("click");
     }
-    $("#postpone_type_NotificationsSetup-P" + project_id)
+    $("#postpone_type_NotificationsSetup")
         .val((notification_options_bitflags & _TodoNotes_Modals_.#NOTIFICATIONS_OPTIONS_MASK_POSTPONE_TYPE) >> _TodoNotes_Modals_.#NOTIFICATIONS_OPTIONS_MASK_POSTPONE_TYPE_IX)
         .trigger('change');
-    $("#postpone_value_NotificationsSetup-P" + project_id)
+    $("#postpone_value_NotificationsSetup")
         .val((notification_options_bitflags & _TodoNotes_Modals_.#NOTIFICATIONS_OPTIONS_MASK_POSTPONE_VALUE) >> _TodoNotes_Modals_.#NOTIFICATIONS_OPTIONS_MASK_POSTPONE_VALUE_IX)
         .trigger('change');
 }
@@ -444,56 +444,48 @@ static #NotificationsOptionsFromBitflags(project_id, notification_options_bitfla
 static #NotificationsSetupHandlers() {
     // postpone number changed
     $("[id^=postpone_value_NotificationsSetup]").on("change", function () {
-        const project_id = $(this).parent().attr('data-project');
-        _TodoNotes_Modals_.#UpdateNotificationsSetupPostponeTime(project_id);
+        _TodoNotes_Modals_.#UpdateNotificationsSetupPostponeTime();
     });
 
     // postpone type changed
     $("[id^=postpone_type_NotificationsSetup]").on("change", function () {
-        const project_id = $(this).parent().attr('data-project');
-        _TodoNotes_Modals_.#UpdateNotificationsSetupPostponeTime(project_id);
+        _TodoNotes_Modals_.#UpdateNotificationsSetupPostponeTime();
     });
 
     // postpone checkbox changed
     $("[id^=postpone_NotificationsSetup]").on("change", function () {
-        const project_id = $(this).parent().attr('data-project');
         const postpone = $(this).is(':checked');
-        $("#form-alert_time_NotificationsSetup-P" + project_id).prop('disabled', postpone);
+        $("#form-alert_time_NotificationsSetup").prop('disabled', postpone);
     });
 
     // alert time input changed
     $("[id^=form-alert_time_NotificationsSetup]").on("change", function () {
-        const project_id = $(this).parent().attr('data-project');
-        $("#postpone_options_NotificationsSetup-P" + project_id).addClass('hideMe');
+        $("#postpone_options_NotificationsSetup").addClass('hideMe');
     });
 
     // remind before/after checkboxes
     $("[id^=alert_before_NotificationsSetup]").on("change", function () {
-        const project_id = $(this).parent().attr('data-project');
-        _TodoNotes_Modals_.#UpdateNotificationsSetupAlertOptions(project_id);
+        _TodoNotes_Modals_.#UpdateNotificationsSetupAlertOptions();
     });
     $("[id^=alert_after_NotificationsSetup]").on("change", function () {
-        const project_id = $(this).parent().attr('data-project');
-        _TodoNotes_Modals_.#UpdateNotificationsSetupAlertOptions(project_id);
+        _TodoNotes_Modals_.#UpdateNotificationsSetupAlertOptions();
     });
 }
 
 //------------------------------------------------
-static NotificationsSetup(project_id, user_id, id, notifications_alert_timestring, notifications_alert_timestamp, notification_options_bitflags) {
+static NotificationsSetup(project_id, id, user_id, notifications_alert_timestring, notifications_alert_timestamp, notification_options_bitflags) {
     $.ajaxSetup ({
         cache: false
     });
-    const ref_project_id = $("#refProjectId").attr('data-project');
-    if (project_id !== ref_project_id) return;
 
-    $("#note_title_NotificationsSetup-P" + project_id).text($("#noteTitleLabel-P" + project_id + "-" + id).text());
-    $("#form-alert_time_NotificationsSetup-P" + project_id).val(notifications_alert_timestring);
-    $("#postpone_base_NotificationsSetup-P" + project_id).val(notifications_alert_timestamp);
-    _TodoNotes_Modals_.#UpdateNotificationsSetupPostponeTime(project_id);
-    _TodoNotes_Modals_.#NotificationsOptionsFromBitflags(project_id, notification_options_bitflags);
+    $("#note_title_NotificationsSetup").text($("#noteTitleLabel-P" + project_id + "-" + id).text());
+    $("#form-alert_time_NotificationsSetup").val(notifications_alert_timestring);
+    $("#postpone_base_NotificationsSetup").val(notifications_alert_timestamp);
+    _TodoNotes_Modals_.#UpdateNotificationsSetupPostponeTime();
+    _TodoNotes_Modals_.#NotificationsOptionsFromBitflags(notification_options_bitflags);
 
-    $("#dialogNotificationsSetup-P" + project_id).removeClass( 'hideMe' );
-    $("#dialogNotificationsSetup-P" + project_id).dialog({
+    $("#dialogNotificationsSetup").removeClass( 'hideMe' );
+    $("#dialogNotificationsSetup").dialog({
         resizable: false,
         width: "auto",
         height: "auto",
@@ -502,12 +494,12 @@ static NotificationsSetup(project_id, user_id, id, notifications_alert_timestrin
             {
                 text : _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_DIALOG_SET_BTN'),
                 click: function() {
-                    const postpone = $("#postpone_NotificationsSetup-P" + project_id).is(':checked');
-                    const new_notifications_alert_timestring = $("#form-alert_time_NotificationsSetup-P" + project_id).val();
-                    const postpone_notifications_alert_timestring = $("#postpone_time_NotificationsSetup-P" + project_id).text();
+                    const postpone = $("#postpone_NotificationsSetup").is(':checked');
+                    const new_notifications_alert_timestring = $("#form-alert_time_NotificationsSetup").val();
+                    const postpone_notifications_alert_timestring = $("#postpone_time_NotificationsSetup").text();
                     _TodoNotes_Requests_.UpdateNoteNotificationsAlertTimeAndOptions(project_id, user_id, id,
                         postpone ? postpone_notifications_alert_timestring : new_notifications_alert_timestring,
-                        _TodoNotes_Modals_.#NotificationsOptionsToBitflags(project_id));
+                        _TodoNotes_Modals_.#NotificationsOptionsToBitflags());
                     $( this ).dialog( "close" );
                 }
             },
