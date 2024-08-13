@@ -73,14 +73,7 @@ static AdjustNotePlaceholders(project_id, id) {
     const isTitle = (project_id === '0' && id === '0');
     if (isTitle) {
         if (!$(".liNewNote").length) return; // missing NewNote when NOT in project screen
-        const offsetTitle = $(".labelNewNote").offset().top;
-        let offsetButtons = $("#settingsShowAllDone").offset().top;
-        offsetButtons += $("#settingsShowAllDone").outerHeight();
-        if (offsetTitle > offsetButtons) {
-            $("#placeholderNewNote").removeClass( 'hideMe' );
-        } else {
-            $("#placeholderNewNote").addClass( 'hideMe' );
-        }
+        $("#placeholderNewNote").removeClass( 'hideMe' );
     } else {
         const offsetStatus = $("#buttonStatus-P" + project_id + "-" + id).offset().top;
         const offsetDetails = $("#showDetails-P" + project_id + "-" + id).offset().top;

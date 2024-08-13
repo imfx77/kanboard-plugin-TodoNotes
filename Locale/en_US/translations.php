@@ -15,8 +15,9 @@ return array(
     //
     'TodoNotes__PROJECT_TITLE' => 'Notes',
     'TodoNotes__PROJECT_OVERVIEW_MODE_TITLE' => 'Overview Mode',
-    'TodoNotes__PROJECT_OVERVIEW_MODE_TEXT' => '⚠️ ONLY manage notes Status and lists order!',
-    'TodoNotes__PROJECT_OVERVIEW_MODE_TEXT_REORDERING_DISABLED' => '⚠️ ONLY manage notes Status! DISABLED lists reordering!',
+    'TodoNotes__PROJECT_OVERVIEW_MODE_TEXT' => '⚠️ ONLY manage notes Status, Alerts and lists order!',
+    'TodoNotes__PROJECT_OVERVIEW_MODE_TEXT_REORDERING_DISABLED' => '⚠️ ONLY manage notes Status and Alerts!
+⚠️ DISABLED list reordering by Status sort!',
     //
     'TodoNotes__PROJECT_NEW_NOTE_LABEL' => 'Create New Note',
     'TodoNotes__PROJECT_NEW_NOTE_TEXT_REORDERING_DISABLED' => '⚠️ DISABLED list reordering by Status sort!',

@@ -228,6 +228,8 @@ label {
 .textNewNote {
     color: #CD650A;
     cursor: default;
+    white-space: pre-line;
+    display: inline-block;
 }
 
 .noteTitle {
