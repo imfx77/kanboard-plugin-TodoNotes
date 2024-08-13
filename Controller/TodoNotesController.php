@@ -108,12 +108,12 @@ class TodoNotesController extends BaseController
 
         return $this->response->html($this->helper->layout->app('TodoNotes:project/data', array(
             'title' => $project['name'], // rather keep the project name as title
+            'projectsAccess' => $projectsAccess,
             'project' => $project,
             'project_id' => $project_id,
             'user' => $user,
             'user_id' => $user_id,
             'user_datetime_format' => $this->dateParser->getUserDateTimeFormat(),
-            'projectsAccess' => $projectsAccess,
 
             'categories' => $categories,
             'columns' => $columns,
