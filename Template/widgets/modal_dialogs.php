@@ -120,14 +120,17 @@ print '<details id="alert_options_NotificationsSetup">';
 print '<summary class="catLabelClickable">' . t('TodoNotes__DIALOG_NOTIFICATIONS_ALERT_OPTIONS') . '</summary>';
 
 print '<br>';
+print '<span class="containerNoWrap">';
 print '<input type="checkbox" id="alert_mail_NotificationsSetup">';
 print '<label for="alert_mail_NotificationsSetup">&nbsp;' . t('TodoNotes__DIALOG_NOTIFICATIONS_ALERT_USE_MAIL') . '</label>';
 print '&nbsp;&nbsp;&nbsp;&nbsp;';
 print '<input type="checkbox" id="alert_webpn_NotificationsSetup">';
 print '<label for="alert_webpn_NotificationsSetup">&nbsp;' . t('TodoNotes__DIALOG_NOTIFICATIONS_ALERT_USE_WEBPN') . '</label>';
+print '</span>';
 
 print '<br>';
 print '<br>';
+print '<span class="containerNoWrap">';
 print '<input type="checkbox" id="alert_before_NotificationsSetup">';
 print '<label for="alert_before_NotificationsSetup">&nbsp;' . t('TodoNotes__DIALOG_NOTIFICATIONS_ALERT_REMIND_BEFORE') . '</label>';
 print '&nbsp;&nbsp;&nbsp;&nbsp;';
@@ -136,8 +139,10 @@ print '<label for="alert_before1day_NotificationsSetup">&nbsp;' . t('TodoNotes__
 print '&nbsp;&nbsp;';
 print '<input type="radio" name="alert_before" id="alert_before1hour_NotificationsSetup" disabled>';
 print '<label for="alert_before1hour_NotificationsSetup">&nbsp;' . t('TodoNotes__DIALOG_NOTIFICATIONS_ALERT_REMIND_BEFORE_1HOUR') . '</label>';
+print '</span>';
 
 print '<br>';
+print '<span class="containerNoWrap">';
 print '<input type="checkbox" id="alert_after_NotificationsSetup">';
 print '<label for="alert_after_NotificationsSetup">&nbsp;' . t('TodoNotes__DIALOG_NOTIFICATIONS_ALERT_REMIND_AFTER') . '</label>';
 print '&nbsp;&nbsp;&nbsp;&nbsp;';
@@ -146,6 +151,7 @@ print '<label for="alert_after1day_NotificationsSetup">&nbsp;' . t('TodoNotes__D
 print '&nbsp;&nbsp;';
 print '<input type="radio" name="alert_after" id="alert_after1hour_NotificationsSetup" disabled>';
 print '<label for="alert_after1hour_NotificationsSetup">&nbsp;' . t('TodoNotes__DIALOG_NOTIFICATIONS_ALERT_REMIND_AFTER_1HOUR') . '</label>';
+print '</span>';
 
 print '</details>'; // alert options END
 
