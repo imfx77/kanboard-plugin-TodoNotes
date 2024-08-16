@@ -93,7 +93,7 @@ class TodoNotesModel extends Base
 
         $userDateTimeFormat = $this->dateParser->getUserDateTimeFormat();
         $note['notifications_alert_timestamp'] = $note['date_notified']; // keep the timestamp
-        $note = $this->dateParser->format($note, array('date_created', 'date_modified', 'date_notified'), $userDateTimeFormat);
+        $note = $this->dateParser->format($note, array('date_created', 'date_modified', 'date_notified', 'last_notified'), $userDateTimeFormat);
 
         return $note;
     }
@@ -114,7 +114,7 @@ class TodoNotesModel extends Base
         $userDateTimeFormat = $this->dateParser->getUserDateTimeFormat();
         foreach ($result as &$note) {
             $note['notifications_alert_timestamp'] = $note['date_notified']; // keep the timestamp
-            $note = $this->dateParser->format($note, array('date_created', 'date_modified', 'date_notified'), $userDateTimeFormat);
+            $note = $this->dateParser->format($note, array('date_created', 'date_modified', 'date_notified', 'last_notified'), $userDateTimeFormat);
         }
 
         return $result;
@@ -147,7 +147,7 @@ class TodoNotesModel extends Base
         $userDateTimeFormat = $this->dateParser->getUserDateTimeFormat();
         foreach ($result as &$note) {
             $note['notifications_alert_timestamp'] = $note['date_notified']; // keep the timestamp
-            $note = $this->dateParser->format($note, array('date_created', 'date_modified', 'date_notified'), $userDateTimeFormat);
+            $note = $this->dateParser->format($note, array('date_created', 'date_modified', 'date_notified', 'last_notified'), $userDateTimeFormat);
         }
 
         return $result;

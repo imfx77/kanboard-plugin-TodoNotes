@@ -155,7 +155,7 @@ class TodoNotesNotificationsModel extends Base
                 // append to trigger list
                 $notification_to_evaluate['notification_options'] = $notification_options;
                 $notification_to_evaluate['notifications_alert_timestamp'] = $notification_to_evaluate['date_notified']; // keep the timestamp
-                $notification_to_evaluate = $this->dateParser->format($notification_to_evaluate, array('date_created', 'date_modified', 'date_notified'), $userDateTimeFormat);
+                $notification_to_evaluate = $this->dateParser->format($notification_to_evaluate, array('date_created', 'date_modified', 'date_notified', 'last_notified'), $userDateTimeFormat);
                 $notifications_to_trigger[] = $notification_to_evaluate;
             }
         }
