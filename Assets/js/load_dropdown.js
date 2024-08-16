@@ -20,7 +20,8 @@ static #refreshStatsWidget() {
         });
         const loadUrl = '/?controller=TodoNotesController&action=RefreshStatsWidget&plugin=TodoNotes'
                     + '&stats_project_id=' + project_id;
-        $("._TodoNotes_ProjectDropdown_StatsWidget:last").html(_TodoNotes_Translations_.msgLoadingSpinner).load(loadUrl,
+        $("._TodoNotes_ProjectDropdown_StatsWidget:last").html(_TodoNotes_Translations_.msgLoadingSpinner);
+        $("._TodoNotes_ProjectDropdown_StatsWidget:last").load(loadUrl,
             function() {
                 _TodoNotes_Statuses_.ExpandStatusAliases();
             });

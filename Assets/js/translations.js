@@ -38,7 +38,7 @@ if (typeof(_TodoNotes_Translations_) === 'undefined') {
         //------------------------------------------------
         static GetSpinnerMsg(textId) {
             const msg = _TodoNotes_Translations_.GetTranslationExportToJS(textId);
-            return '<i class="fa fa-spinner fa-pulse" aria-hidden="true" alt="' + msg + '"></i> ' + msg;
+            return '<span class="spinnerMsg"><i class="fa fa-spinner fa-pulse" aria-hidden="true" alt="' + msg + '"></i> ' + msg + '</span>';
         }
 
         //------------------------------------------------

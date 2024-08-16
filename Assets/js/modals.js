@@ -131,7 +131,8 @@ static CreateTaskFromNote(project_id, user_id, id, is_active, title, description
                     });
                     $("#dialogCreateTaskParams").addClass( 'hideMe' );
                     $("#deadloading").removeClass( 'hideMe' );
-                    $("#deadloading").html(_TodoNotes_Translations_.msgLoadingSpinner).load(loadUrl);
+                    $("#deadloading").html(_TodoNotes_Translations_.msgLoadingSpinner);
+                    $("#deadloading").load(loadUrl);
                     if (removeNote) {
                         _TodoNotes_Requests_.DeleteNote(project_id, user_id, id);
                         _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
@@ -538,7 +539,8 @@ static Stats(project_id, user_id) {
     const loadUrl = '/?controller=TodoNotesController&action=ShowStats&plugin=TodoNotes'
                 + '&project_custom_id=' + project_id
                 + '&user_id=' + user_id;
-    $("#dialogStatsInside").html(_TodoNotes_Translations_.msgLoadingSpinner).load(loadUrl,
+    $("#dialogStatsInside").html(_TodoNotes_Translations_.msgLoadingSpinner);
+    $("#dialogStatsInside").load(loadUrl,
         function() {
             _TodoNotes_Stats_.prepareDocument();
         });
@@ -576,7 +578,8 @@ static Report(project_id, user_id) {
                                 + "&project_custom_id=" + project_id
                                 + "&user_id=" + user_id
                                 + "&category=" + encodeURIComponent(category);
-                    $("#result" + project_id).html(_TodoNotes_Translations_.msgLoadingSpinner).load(loadUrl,
+                    $("#result" + project_id).html(_TodoNotes_Translations_.msgLoadingSpinner);
+                    $("#result" + project_id).load(loadUrl,
                         function() {
                             _TodoNotes_Report_.prepareDocument();
                         });

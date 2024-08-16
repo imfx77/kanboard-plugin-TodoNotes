@@ -397,13 +397,18 @@ label {
     color: #993333 !important;
 }
 
+.spinnerMsg
+{
+    color:#CD650A !important;
+}
+
 .refreshIcon
 {
     position: fixed;
     bottom: 0;
     right: 0;
     font-size: 2em !important;
-    color:#F7F7F7 !important;
+    color:#CD650A !important;
 }
 
 /* Style for report.php */

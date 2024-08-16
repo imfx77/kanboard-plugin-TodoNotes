@@ -851,15 +851,19 @@ static #SettingsHandlers() {
     //------------------------------------------------
 
     $("#settingsSortByStatus").click(function() {
-        _TodoNotes_Requests_.ToggleSessionOption('todonotesOption_SortByStatus');
-
         const project_id = $(this).attr('data-project');
         const user_id = $(this).attr('data-user');
+
+        _TodoNotes_Requests_.ToggleSessionOption(project_id, user_id, 'todonotesOption_SortByStatus');
+
         _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
     });
 
     $("#settingsShowAllDone").click(function() {
-        _TodoNotes_Requests_.ToggleSessionOption('todonotesOption_ShowAllDone');
+        const project_id = $(this).attr('data-project');
+        const user_id = $(this).attr('data-user');
+
+        _TodoNotes_Requests_.ToggleSessionOption(project_id, user_id, 'todonotesOption_ShowAllDone');
 
         _TodoNotes_.optionShowAllDone = !_TodoNotes_.optionShowAllDone;
         _TodoNotes_.RefreshShowAllDone();
@@ -872,7 +876,10 @@ static #SettingsHandlers() {
     });
 
     $("#settingsCategoryColors").click(function() {
-        _TodoNotes_Requests_.ToggleSessionOption('todonotesOption_ShowCategoryColors');
+        const project_id = $(this).attr('data-project');
+        const user_id = $(this).attr('data-user');
+
+        _TodoNotes_Requests_.ToggleSessionOption(project_id, user_id, 'todonotesOption_ShowCategoryColors');
 
         _TodoNotes_.optionShowCategoryColors = !_TodoNotes_.optionShowCategoryColors;
         _TodoNotes_.RefreshCategoryColors();

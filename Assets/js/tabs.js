@@ -109,7 +109,8 @@ static #TabStatsHandlers() {
 static #TabActionHandlers() {
     // toggle visibility of tabs stats widgets
     $("button" + "#settingsTabStats").click(function() {
-        _TodoNotes_Requests_.ToggleSessionOption('todonotesOption_ShowTabStats');
+        const user_id = $(this).attr('data-user');
+        _TodoNotes_Requests_.ToggleSessionOption(-1 /* not used */, user_id, 'todonotesOption_ShowTabStats');
 
         _TodoNotes_.optionShowTabStats = !_TodoNotes_.optionShowTabStats;
         $("#session_vars").attr('data-optionShowTabStats', _TodoNotes_.optionShowTabStats);

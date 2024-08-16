@@ -115,7 +115,8 @@ static UpdateNote(project_id, user_id, id) {
                 _TodoNotes_.UpdateNoteTimestamps(lastModified, project_id, id);
                 _TodoNotes_.RefreshNoteNotificationsState(project_id, id);
                 // refresh and render the details markdown preview
-                $("#noteMarkdownDetails-P" + project_id + "-" + id + "_Preview").html(_TodoNotes_Translations_.msgLoadingSpinner).load(
+                $("#noteMarkdownDetails-P" + project_id + "-" + id + "_Preview").html(_TodoNotes_Translations_.msgLoadingSpinner);
+                $("#noteMarkdownDetails-P" + project_id + "-" + id + "_Preview").load(
                     '/?controller=TodoNotesController&action=RefreshMarkdownPreviewWidget&plugin=TodoNotes'
                         + '&markdown_text=' + encodeURIComponent(description),
                 ).css('height', 'auto');
@@ -286,7 +287,9 @@ static TransferNote(project_id, user_id, id, target_project_id) {
 
 //------------------------------------------------
 static RefreshNotes(project_id, user_id) {
-    // console.log('_TodoNotes_Requests_.RefreshNotes(');
+    // console.log('_TodoNotes_Requests_.RefreshNotes()');
+
+    $("#result" + project_id).html(_TodoNotes_Translations_.msgLoadingSpinner);
 
     // don't cache ajax or content won't be fresh
     $.ajaxSetup ({
@@ -296,7 +299,7 @@ static RefreshNotes(project_id, user_id) {
                 + '&project_custom_id=' + project_id
                 + '&user_id=' + user_id;
     setTimeout(function() {
-        $("#result" + project_id).html(_TodoNotes_Translations_.msgLoadingSpinner).load(loadUrl,
+        $("#result" + project_id).load(loadUrl,
             function() {
                 _TodoNotes_Project_.prepareDocument_SkipDashboardHandlers();
                 _TodoNotes_Tabs_.AttachStatusUpdateHandlers();
@@ -312,6 +315,7 @@ static RefreshNotes(project_id, user_id) {
 // reindex notes and lists DB routine
 static ReindexNotesAndLists(user_id) {
     const project_tab_id = $("#tabId").attr('data-project');
+    $("#result" + project_tab_id).html(_TodoNotes_Translations_.GetSpinnerMsg('TodoNotes__JS_REINDEXING_MSG'));
 
     // don't cache ajax or content won't be fresh
     $.ajaxSetup ({
@@ -321,7 +325,6 @@ static ReindexNotesAndLists(user_id) {
                 + '&user_id=' + user_id
                 + '&project_tab_id=' + project_tab_id;
     setTimeout(function() {
-        $("#result" + project_tab_id).html(_TodoNotes_Translations_.GetSpinnerMsg('TodoNotes__JS_REINDEXING_MSG'));
         location.replace(loadUrl);
     }, 50);
 }
@@ -346,7 +349,6 @@ static CreateCustomNoteList(user_id, custom_note_list_name, custom_note_list_is_
                 + '&custom_note_list_name=' + encodeURIComponent(custom_note_list_name)
                 + '&custom_note_list_is_global=' + custom_note_list_is_global;
     setTimeout(function() {
-        $("#result" + project_tab_id).html(_TodoNotes_Translations_.msgLoadingSpinner);
         location.replace(loadUrl);
     }, 50);
 }
@@ -371,7 +373,6 @@ static RenameCustomNoteList(user_id, project_id, custom_note_list_name) {
                 + '&project_custom_id=' + project_id
                 + '&custom_note_list_name=' + encodeURIComponent(custom_note_list_name);
     setTimeout(function() {
-        $("#result" + project_tab_id).html(_TodoNotes_Translations_.msgLoadingSpinner);
         location.replace(loadUrl);
     }, 50);
 }
@@ -390,7 +391,6 @@ static DeleteCustomNoteList(user_id, project_id) {
                 + '&project_tab_id=' + project_tab_id
                 + '&project_custom_id=' + project_id;
     setTimeout(function() {
-        $("#result" + project_tab_id).html(_TodoNotes_Translations_.msgLoadingSpinner);
         location.replace(loadUrl);
     }, 50);
 }
@@ -409,14 +409,13 @@ static UpdateCustomNoteListsPositions(user_id, order) {
                 + '&project_tab_id=' + project_tab_id
                 + '&order=' + order;
     setTimeout(function() {
-        $("#result" + project_tab_id).html(_TodoNotes_Translations_.msgLoadingSpinner);
         location.replace(loadUrl);
     }, 50);
 }
 
 //------------------------------------------------
 static RefreshTabs(user_id) {
-    // console.log('_TodoNotes_Requests_.RefreshTabs(');
+    // console.log('_TodoNotes_Requests_.RefreshTabs()');
 
     // refresh ONLY if notes are viewed via dashboard and project tabs are present
     if ($("#tabs").length === 0) return;
@@ -428,7 +427,7 @@ static RefreshTabs(user_id) {
     const loadUrl = '/?controller=TodoNotesController&action=RefreshTabs&plugin=TodoNotes'
                 + '&user_id=' + user_id;
     setTimeout(function() {
-        $("#tabs").html(_TodoNotes_Translations_.msgLoadingSpinner).load(loadUrl,
+        $("#tabs").load(loadUrl,
             function() {
                 _TodoNotes_Dashboard_.prepareDocument_SkipDashboardHandlers();
                 _TodoNotes_Tabs_.AttachTabHandlers();
@@ -442,13 +441,15 @@ static RefreshTabs(user_id) {
 
 //------------------------------------------------
 // toggle & store an option variable into the session
-static ToggleSessionOption(session_option) {
+static ToggleSessionOption(project_id, user_id, session_option) {
+    // $("#result" + project_id).html(_TodoNotes_Translations_.msgLoadingSpinner);
     $.ajax({
         cache: false,
         type: "POST",
         url: '/?controller=TodoNotesController&action=ToggleSessionOption&plugin=TodoNotes'
             + '&session_option=' + session_option,
         success: function() {
+            // _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
         },
         error: function(xhr,textStatus,e) {
             alert('_TodoNotes_Requests_.ToggleSessionOption');
