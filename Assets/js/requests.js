@@ -301,6 +301,7 @@ static RefreshNotes(project_id, user_id) {
     setTimeout(function() {
         $("#result" + project_id).load(loadUrl,
             function() {
+                _TodoNotes_.InitializeLocalTimeOffset();
                 _TodoNotes_Project_.prepareDocument_SkipDashboardHandlers();
                 _TodoNotes_Tabs_.AttachStatusUpdateHandlers();
             });

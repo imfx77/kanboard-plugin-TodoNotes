@@ -70,10 +70,20 @@ static AdjustScrollableContent() {
 //------------------------------------------------
 // Adjust notePlaceholder container
 static AdjustNotePlaceholders(project_id, id) {
-    const isTitle = (project_id === '0' && id === '0');
-    if (isTitle) {
+    if (id === '0') { // new note
         if (!$(".liNewNote").length) return; // missing NewNote when NOT in project screen
-        $("#placeholderNewNote").removeClass( 'hideMe' );
+        if (project_id === '0') { // overview mode
+            $("#placeholderNewNote").removeClass('hideMe');
+        } else {
+            const offsetTitle = $(".labelNewNote").offset().top;
+            let offsetButtons = $("#settingsShowAllDone").offset().top;
+            offsetButtons += $("#settingsShowAllDone").outerHeight();
+            if (offsetTitle > offsetButtons) {
+                $("#placeholderNewNote").removeClass('hideMe');
+            } else {
+                $("#placeholderNewNote").addClass('hideMe');
+            }
+        }
     } else {
         const offsetStatus = $("#buttonStatus-P" + project_id + "-" + id).offset().top;
         const offsetDetails = $("#showDetails-P" + project_id + "-" + id).offset().top;
@@ -89,8 +99,8 @@ static AdjustNotePlaceholders(project_id, id) {
 // Adjust ALL notePlaceholder containers
 static AdjustAllNotesPlaceholders() {
     setTimeout(function() {
-        // adjust notePlaceholder containers where not needed
-        _TodoNotes_.AdjustNotePlaceholders('0', '0');
+        // adjust notePlaceholder containers for Title row / New Notes
+        _TodoNotes_.AdjustNotePlaceholders($("#refProjectId").attr('data-project'), '0');
         $("button" + ".buttonStatus").each(function() {
             const project_id = $(this).attr('data-project');
             const id = $(this).attr('data-id');

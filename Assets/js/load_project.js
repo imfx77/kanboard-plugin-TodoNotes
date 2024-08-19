@@ -28,6 +28,10 @@ static #prepareDocument_ConfigureDashboardHandlers(skipDashboardHandlers = false
     const isMobile = _TodoNotes_.IsMobile();
     const readonlyNotes = (project_id === '0'); // Overview Mode
 
+    // hide the KB filters toolbar
+    $('.input-addon-field').addClass( 'hideMe' );
+    $('.input-addon-item').addClass( 'hideMe' );
+
     // notes reordering is disabled when explicitly sorted by Status
     if (!_TodoNotes_.optionSortByStatus) {
         $(".sortableList").each(function() {
