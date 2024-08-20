@@ -29,11 +29,11 @@ function version_1(PDO $pdo)
                 )');
     $pdo->exec('INSERT INTO todonotes_custom_projects
                     (owner_id, position, project_name)
-                    VALUES (0, 1, "Global Notes")
+                    VALUES (0, 1, \'Global Notes\')
                 ');
     $pdo->exec('INSERT INTO todonotes_custom_projects
                     (owner_id, position, project_name)
-                    VALUES (0, 2, "Global TODO")
+                    VALUES (0, 2, \'Global TODO\')
                 ');
     $pdo->exec('CREATE INDEX todonotes_custom_projects_owner_ix ON todonotes_custom_projects(owner_id)');
     $pdo->exec('CREATE INDEX todonotes_custom_projects_position_ix ON todonotes_custom_projects(position)');

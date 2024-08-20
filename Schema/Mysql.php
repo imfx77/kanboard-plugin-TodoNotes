@@ -72,7 +72,7 @@ function version_1(PDO $pdo)
                     `endpoint` TEXT NOT NULL,
                     `user_id` INT NOT NULL,
                     `subscription` TEXT NOT NULL,
-                    PRIMARY KEY(endpoint)
+                    PRIMARY KEY todonotes_webpn_subscriptions_endpoint_ix(endpoint(255))
                 ) ENGINE=InnoDB CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci');
     $pdo->exec("CREATE INDEX todonotes_webpn_subscriptions_user_ix ON todonotes_webpn_subscriptions(user_id)");
 }
