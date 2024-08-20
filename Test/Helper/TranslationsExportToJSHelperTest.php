@@ -23,6 +23,8 @@ class TranslationsExportToJSHelperTest extends \Base
 
         $plugin = new Loader($this->container);
         $plugin->scan();
+        $plugin->initialize();
+        $plugin->onStartup();
     }
 
     public function testExport()
