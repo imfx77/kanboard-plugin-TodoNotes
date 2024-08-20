@@ -454,7 +454,7 @@ foreach ($data as $u) {
     // Date details
     print '<label id="noteDatesDetails-P' . $u['project_id'] . '-' . $num . '"';
     print ' class="dateLabel dateLabelClickable disableEventsPropagation noteDatesDetails"';
-    print ' title="' . t('Modified:') . ' ' . $u['date_modified'] . '"';
+    print ' title="' . t('TodoNotes__NOTE_DATE_MODIFIED') . $u['date_modified'] . '"';
     print ' data-id="' . $num  . '"';
     print ' data-project="' . $u['project_id'] . '"';
     print ' data-user="' . $user_id . '"';
@@ -476,7 +476,7 @@ foreach ($data as $u) {
 
     print '<label id="noteNotificationsDetails-P' . $u['project_id'] . '-' . $num . '"';
     print ' class="dateLabel dateLabelClickable' . $noteNotificationsStyleExtra . ' disableEventsPropagation noteNotificationsDetails"';
-    print ' title="' . t('Notifications:') . ' ' . ($hasNotifications ? $u['date_notified'] : '🔕') . '"';
+    print ' title="' . t('TodoNotes__NOTE_DATE_NOTIFIED') . ($hasNotifications ? $u['date_notified'] : '🔕') . '"';
     print ' data-id="' . $num  . '"';
     print ' data-project="' . $u['project_id'] . '"';
     print ' data-user="' . $user_id . '"';
@@ -685,10 +685,18 @@ foreach ($data as $u) {
     // Dates and Notifications panel
     print '<div class="containerFloatRight disableEventsPropagation" style="text-align: right">';
     print '<label  id="noteModifiedLabel-P' . $u['project_id'] . '-' . $num . '" class="dateLabel">';
-    print '<i class="fa fa-calendar-check-o" aria-hidden="true"> ' . t('Modified:') . ' ' . $u['date_modified'] . '</i></label><br>';
+    print '<i class="fa fa-calendar-check-o" aria-hidden="true"> ' . t('TodoNotes__NOTE_DATE_MODIFIED') . $u['date_modified'] . '</i></label><br>';
     print '<label  id="noteCreatedLabel-P' . $u['project_id'] . '-' . $num . '" class="dateLabel">';
-    print '<i class="fa fa-calendar-o" aria-hidden="true"> ' . t('Created:') . ' ' . $u['date_created'] . '</i></label><br>';
+    print '<i class="fa fa-calendar-o" aria-hidden="true"> ' . t('TodoNotes__NOTE_DATE_CREATED') . $u['date_created'] . '</i></label><br>';
+    if (!empty($u['date_restored'])) {
+        print '<label  id="noteRestoredLabel-P' . $u['project_id'] . '-' . $num . '" class="dateLabel">';
+        print '<i class="fa fa-archive" aria-hidden="true"> ' . t('TodoNotes__NOTE_DATE_RESTORED') . $u['date_restored'] . '</i></label><br>';
+    }
 
+    if (!empty($u['last_notified'])) {
+        print '<label  id="noteRestoredLabel-P' . $u['project_id'] . '-' . $num . '" class="dateLabel">';
+        print '<i class="fa fa-bell" aria-hidden="true"> ' . t('TodoNotes__NOTE_DATE_LAST_NOTIFIED') . $u['last_notified'] . '</i></label><br>';
+    }
     print '<label  id="noteNotificationsLabel-P' . $u['project_id'] . '-' . $num . '"';
     print 'class="dateLabel dateLabelClickable' . $noteNotificationsStyleExtra . ' noteNotificationsSetup"';
     print ' data-id="' . $num . '"';
@@ -698,7 +706,7 @@ foreach ($data as $u) {
     print ' data-notifications-alert-timestring="' . $u['date_notified'] . '"';
     print ' data-notifications-options-bitflags="' . $u['flags_notified'] . '"';
     print '>';
-    print '<i class="fa fa-bell-o" aria-hidden="true"> ' . t('Notifications:') . ' ' . ($hasNotifications ? $u['date_notified'] : '🔕') . '</i></label><br>';
+    print '<i class="fa fa-bell-o" aria-hidden="true"> ' . t('TodoNotes__NOTE_DATE_NOTIFIED') . ($hasNotifications ? $u['date_notified'] : '🔕') . '</i></label><br>';
     print '</div>'; // Dates and Notifications panel
 
     //-----------------------

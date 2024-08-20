@@ -149,6 +149,15 @@ Might be waiting for an unsubmitted New Note data input!',
 <div><b>Category :</b> %s</div>
 <div>%s</div>',
     //
+    // Note Dates
+    //
+    'TodoNotes__NOTE_DATE_CREATED' => 'Created: ',
+    'TodoNotes__NOTE_DATE_MODIFIED' => 'Modified: ',
+    'TodoNotes__NOTE_DATE_ARCHIVED' => 'Archived: ',
+    'TodoNotes__NOTE_DATE_RESTORED' => 'Restored: ',
+    'TodoNotes__NOTE_DATE_NOTIFIED' => 'Notifications: ',
+    'TodoNotes__NOTE_DATE_LAST_NOTIFIED' => 'Last Notified: ',
+    //
     // Specific EXPORTS FOR JS
     //
     'TodoNotes__JS_LOADING_MSG' => 'Loading ...',

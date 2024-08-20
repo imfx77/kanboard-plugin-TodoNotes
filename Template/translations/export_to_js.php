@@ -5,6 +5,13 @@ $translationTextIds = array(
     'TodoNotes__DASHBOARD_MY_NOTES',
     'TodoNotes__DASHBOARD_ALL_TAB',
     'TodoNotes__DASHBOARD_NO_ADMIN_PRIVILEGES',
+    'TodoNotes__PROJECT_NOTE_DETAILS_SAVE_HINT',
+    'TodoNotes__NOTE_DATE_CREATED',
+    'TodoNotes__NOTE_DATE_MODIFIED',
+    'TodoNotes__NOTE_DATE_ARCHIVED',
+    'TodoNotes__NOTE_DATE_RESTORED',
+    'TodoNotes__NOTE_DATE_NOTIFIED',
+    'TodoNotes__NOTE_DATE_LAST_NOTIFIED',
     'TodoNotes__JS_LOADING_MSG',
     'TodoNotes__JS_REINDEXING_MSG',
     'TodoNotes__JS_NOTE_ADD_TITLE_EMPTY_MSG',
@@ -22,10 +29,6 @@ $translationTextIds = array(
     'TodoNotes__JS_DIALOG_REINDEX_BTN',
     'TodoNotes__JS_DIALOG_REORDER_BTN',
     'TodoNotes__JS_DIALOG_RESULT_TITLE',
-    'TodoNotes__PROJECT_NOTE_DETAILS_SAVE_HINT',
-    'Created:',
-    'Modified:',
-    'Notifications:',
 );
 
 $this->helper->translationsExportToJSHelper->export($translationTextIds);

@@ -1004,7 +1004,7 @@ static UpdateCategoryColors(project_id, id, old_category, new_category) {
 //------------------------------------------------
 // note update timestamp + #refProjectId
 static UpdateNoteTimestamps(lastModified, project_id, id) {
-    const updatedTimeString = _TodoNotes_Translations_.GetTranslationExportToJS('Modified:') + ' ' + lastModified.timestring;
+    const updatedTimeString = _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__NOTE_DATE_MODIFIED') + lastModified.timestring;
 
     $("#noteDatesDetails-P" + project_id + "-" + id).attr('title', updatedTimeString);
     $("#noteModifiedLabel-P" + project_id + "-" + id + " i").text(' ' + updatedTimeString);
@@ -1015,7 +1015,7 @@ static UpdateNoteTimestamps(lastModified, project_id, id) {
 //------------------------------------------------
 // all notes update timestamps + #refProjectId
 static UpdateAllNotesTimestamps(lastModified, project_id) {
-    const updatedTimeString = _TodoNotes_Translations_.GetTranslationExportToJS('Modified:') + ' ' + lastModified.timestring;
+    const updatedTimeString = _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__NOTE_DATE_MODIFIED') + lastModified.timestring;
 
     $("[id^=noteDatesDetails-P" + project_id + "]").attr('title', updatedTimeString);
     $("[id^=noteModifiedLabel-P" + project_id + "] i").text(' ' + updatedTimeString);
@@ -1027,7 +1027,7 @@ static UpdateAllNotesTimestamps(lastModified, project_id) {
 // note update notifications alert timestamps
 static RefreshNoteNotificationsAlertTimeAndOptions(notificationsAlertTimeAndOptions, project_id, id) {
     const hasNotifications = (notificationsAlertTimeAndOptions.timestamp > 0);
-    const updatedTimeString = _TodoNotes_Translations_.GetTranslationExportToJS('Notifications:') + ' '
+    const updatedTimeString = _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__NOTE_DATE_NOTIFIED')
         + (hasNotifications ? notificationsAlertTimeAndOptions.timestring : '🔕');
 
     const noteNotificationsDetails = $("#noteNotificationsDetails-P" + project_id + "-" + id);
