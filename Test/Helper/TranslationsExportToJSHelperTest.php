@@ -12,19 +12,21 @@ require_once __DIR__ . '/../../../../tests/units/Base.php';
 
 use Kanboard\Core\Plugin\Loader;
 use Kanboard\Plugin\TodoNotes\Helper\TranslationsExportToJSHelper;
+use Kanboard\Plugin\TodoNotes\Plugin;
 
 class TranslationsExportToJSHelperTest extends \Base
 {
-    protected $plugin;
+    protected $loader;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $plugin = new Loader($this->container);
-        $plugin->scan();
-        $plugin->initialize();
-        $plugin->onStartup();
+        $loader = new Loader($this->container);
+        $loader->scan();
+
+        // ensure translator initialization
+        $loader->getPlugins()[Plugin::NAME]->onStartup();
     }
 
     public function testExport()
