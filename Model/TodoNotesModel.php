@@ -33,7 +33,7 @@ class TodoNotesModel extends Base
     public const PROJECT_TYPE_CUSTOM_PRIVATE    = 3;
 
     // Check unique note
-    private function IsUniqueNote($project_id, $user_id, $note_id): bool
+    public function IsUniqueNote($project_id, $user_id, $note_id): bool
     {
         $result = $this->db->table(self::TABLE_NOTES_ENTRIES)
             ->eq('id', $note_id)

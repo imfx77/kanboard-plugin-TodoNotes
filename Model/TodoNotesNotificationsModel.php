@@ -163,7 +163,7 @@ class TodoNotesNotificationsModel extends Base
         return $notifications_to_trigger;
     }
 
-    private function NotificationsOptionsToBitflags($notification_options)
+    public function NotificationsOptionsToBitflags($notification_options)
     {
         $notification_options_bitflags = 0;
 
@@ -195,7 +195,7 @@ class TodoNotesNotificationsModel extends Base
         return $notification_options_bitflags;
     }
 
-    private function NotificationsOptionsFromBitflags($notification_options_bitflags)
+    public function NotificationsOptionsFromBitflags($notification_options_bitflags)
     {
         $notification_options = array();
 

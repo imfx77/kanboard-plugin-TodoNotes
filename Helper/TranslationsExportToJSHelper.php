@@ -20,11 +20,11 @@ class TranslationsExportToJSHelper extends Base
      * Also includes the required script to handle them
      * @param  array   $textIds     Array
      */
-    public function export(array $textIds)
+    public function export(array $textIds) : string
     {
         // early return, avoid duplicating translations and JS
         if ($this->translationsExported) {
-            return;
+            return '';
         }
 
         $translations = array();
@@ -32,11 +32,15 @@ class TranslationsExportToJSHelper extends Base
             $translations[$textId] = t($textId);
         }
 
+        $exportTranslationsToJS = json_encode($translations);
+
         echo $this->helper->asset->js('plugins/TodoNotes/Assets/js/translations.js');
         echo '<textarea id="_TodoNotes_TranslationsExportToJS_" style="display: none">';
-        echo json_encode($translations);
+        echo $exportTranslationsToJS;
         echo '</textarea>';
 
         $this->translationsExported = true;
+
+        return $exportTranslationsToJS;
     }
 }
