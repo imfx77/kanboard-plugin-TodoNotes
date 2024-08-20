@@ -20,7 +20,7 @@ class TranslationsExportToJSHelper extends Base
      * Also includes the required script to handle them
      * @param  array   $textIds     Array
      */
-    public function export(array $textIds) : string
+    public function export(array $textIds): string
     {
         // early return, avoid duplicating translations and JS
         if ($this->translationsExported) {

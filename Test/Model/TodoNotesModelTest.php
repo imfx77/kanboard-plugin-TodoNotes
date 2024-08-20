@@ -13,7 +13,7 @@ require_once __DIR__ . '/../../../../tests/units/Base.php';
 use Kanboard\Core\Plugin\Loader;
 use Kanboard\Plugin\TodoNotes\Model\TodoNotesModel;
 
-class TodoNotesModelTest extends Base
+class TodoNotesModelTest extends \Base
 {
     protected $plugin;
 
