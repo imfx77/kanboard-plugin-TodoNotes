@@ -35,6 +35,7 @@ return array(
     'TodoNotes__PROJECT_TOGGLE_LIST' => 'Toggle List',
     //
     'TodoNotes__PROJECT_NOTE_REFRESH_ORDER' => 'Refresh Order',
+    'TodoNotes__PROJECT_NOTE_GET_LINK' => 'Get Link to Note',
     'TodoNotes__PROJECT_NOTE_CREATE_TASK' => 'Create Task from Note',
     'TodoNotes__PROJECT_NOTE_MOVE_TO_PROJECT' => 'Move Note to Project',
     'TodoNotes__PROJECT_NOTE_DELETE' => 'Delete Note',
@@ -172,6 +173,7 @@ Keeping the current one !',
     'TodoNotes__JS_NOTE_UPDATE_INVALID_MSG' => '⚠️
 The note you are trying to update is INVALID !
 The page will forcefully refresh now !',
+    'TodoNotes__JS_NOTE_LINK_COPIED_MSG' => 'Note Link copied to clipboard.',
     //
     'TodoNotes__JS_CUSTOM_NOTE_LIST_NAME_EMPTY_MSG' => '⚠️
 Custom list name is empty !

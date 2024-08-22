@@ -505,6 +505,28 @@ foreach ($data as $u) {
     // hide all the utility buttons when viewing notes as readonly
     // just allow for note status change
     if (!$readonlyNotes) {
+        // Link button (in detailed view)
+        print '<button id="noteLink-P' . $u['project_id'] . '-' . $num . '"';
+        print ' class="hideMe toolbarButton noteLink"';
+        print ' title="' . t('TodoNotes__PROJECT_NOTE_GET_LINK') . '"';
+        print ' data-id="' . $num . '"';
+        print ' data-project="' . $u['project_id'] . '"';
+        print ' data-user="' . $user_id . '"';
+        print '>';
+        print '<i class="fa fa-link" aria-hidden="true"></i>';
+        print '</button>';
+
+        // Transfer button (in detailed view)
+        print '<button id="noteTransfer-P' . $u['project_id'] . '-' . $num . '"';
+        print ' class="hideMe toolbarButton noteTransfer"';
+        print ' title="' . t('TodoNotes__PROJECT_NOTE_MOVE_TO_PROJECT') . '"';
+        print ' data-id="' . $num . '"';
+        print ' data-project="' . $u['project_id'] . '"';
+        print ' data-user="' . $user_id . '"';
+        print '>';
+        print '<i class="fa fa-exchange" aria-hidden="true"></i>';
+        print '</button>';
+
         // notes from custom lists obviously CANNOT create tasks from notes
         if (!$project['is_custom']) {
             // Add note to tasks table (in detailed view)
@@ -518,17 +540,6 @@ foreach ($data as $u) {
             print '<i class="fa fa-share-square-o" aria-hidden="true"></i>';
             print '</button>';
         }
-
-        // Transfer button (in detailed view)
-        print '<button id="noteTransfer-P' . $u['project_id'] . '-' . $num . '"';
-        print ' class="hideMe toolbarButton noteTransfer"';
-        print ' title="' . t('TodoNotes__PROJECT_NOTE_MOVE_TO_PROJECT') . '"';
-        print ' data-id="' . $num . '"';
-        print ' data-project="' . $u['project_id'] . '"';
-        print ' data-user="' . $user_id . '"';
-        print '>';
-        print '<i class="fa fa-exchange" aria-hidden="true"></i>';
-        print '</button>';
 
         // add some space between button groups
         print '<button id="toolbarSeparator-P' . $u['project_id'] . '-' . $num . '"';

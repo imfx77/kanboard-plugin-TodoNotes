@@ -176,9 +176,10 @@ static #ToggleDetails(project_id, id) {
     if (!_TodoNotes_.IsMobile()) {
         $("#noteSave-P" + project_id + "-" + id).toggleClass( 'hideMe' );
     }
-    $("#toolbarSeparator-P" + project_id + "-" + id).toggleClass( 'hideMe' );
+    $("#noteLink-P" + project_id + "-" + id).toggleClass( 'hideMe' );
     $("#noteTransfer-P" + project_id + "-" + id).toggleClass( 'hideMe' );
     $("#noteCreateTask-P" + project_id + "-" + id).toggleClass( 'hideMe' );
+    $("#toolbarSeparator-P" + project_id + "-" + id).toggleClass( 'hideMe' );
 
     $("#toolbarNoteLabels-P" + project_id + "-" + id).toggleClass( 'hideMe' );
 
@@ -713,6 +714,15 @@ static #NoteActionHandlers() {
         const category_id = $("#cat-P" + project_id + "-" + id + " option:selected").val();
         const is_active = $("#noteCheckmark-P" + project_id + "-" + id).attr('data-id');
         _TodoNotes_Modals_.CreateTaskFromNote(project_id, user_id, id, is_active, title, description, category_id);
+    });
+
+    // COPY note url on Note Link button
+    $("button" + ".noteLink").click(function() {
+        const project_id = $(this).attr('data-project');
+        const id = $(this).attr('data-id');
+        const note_id = $("#noteId-P" + project_id + "-" + id).attr('data-note');
+        navigator.clipboard.writeText(window.location.href + '/' + note_id)
+            .then(() => { alert( _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_NOTE_LINK_COPIED_MSG') ); });
     });
 
     //------------------------------------------------

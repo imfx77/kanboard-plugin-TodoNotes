@@ -17,6 +17,7 @@ $translationTextIds = array(
     'TodoNotes__JS_NOTE_ADD_TITLE_EMPTY_MSG',
     'TodoNotes__JS_NOTE_UPDATE_TITLE_EMPTY_MSG',
     'TodoNotes__JS_NOTE_UPDATE_INVALID_MSG',
+    'TodoNotes__JS_NOTE_LINK_COPIED_MSG',
     'TodoNotes__JS_CUSTOM_NOTE_LIST_NAME_EMPTY_MSG',
     'TodoNotes__JS_DIALOG_CANCEL_BTN',
     'TodoNotes__JS_DIALOG_CLOSE_BTN',
