@@ -28,13 +28,13 @@ class TodoNotesModelTest extends \Base
     public function testChecks()
     {
         $model = new TodoNotesModel($this->container);
-        $this->assertEquals($model->IsUniqueNote(0, 0, 0), false);
-        $this->assertEquals($model->IsCustomGlobalProject(0), false);
+        $this->assertNotTrue($model->IsUniqueNote(0, 0, 0));
+        $this->assertNotTrue($model->IsCustomGlobalProject(0));
     }
 
     public function testReindex()
     {
         $model = new TodoNotesModel($this->container);
-        $this->assertEquals($model->ReindexNotesAndLists(false), true);
+        $this->assertTrue($model->ReindexNotesAndLists(false));
     }
 }

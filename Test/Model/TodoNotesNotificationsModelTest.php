@@ -42,6 +42,6 @@ class TodoNotesNotificationsModelTest extends \Base
 
         $notification_options_bitflags = $model->NotificationsOptionsToBitflags($notification_options);
         $notification_options_converted = $model->NotificationsOptionsFromBitflags($notification_options_bitflags);
-        $this->assertEquals($notification_options, $notification_options_converted);
+        $this->assertSame($notification_options, $notification_options_converted);
     }
 }

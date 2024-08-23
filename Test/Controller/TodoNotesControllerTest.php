@@ -24,4 +24,13 @@ class TodoNotesControllerTest extends \Base
         $loader = new Loader($this->container);
         $loader->scan();
     }
+
+    public function testPhpExtensions()
+    {
+        $extensions = get_loaded_extensions();
+        foreach ($extensions as $extension) {
+            echo $extension . ' : ' . phpversion($extension) . PHP_EOL;
+        }
+        $this->assertNotTrue(false);
+    }
 }
