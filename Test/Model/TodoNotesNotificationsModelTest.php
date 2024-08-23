@@ -15,14 +15,14 @@ use Kanboard\Plugin\TodoNotes\Model\TodoNotesNotificationsModel;
 
 class TodoNotesNotificationsModelTest extends \Base
 {
-    protected $plugin;
+    protected $loader;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $plugin = new Loader($this->container);
-        $plugin->scan();
+        $loader = new Loader($this->container);
+        $loader->scan();
     }
 
     public function testNotificationsOptionsBitflagsConversion()

@@ -335,13 +335,16 @@ static ReindexNotesAndLists(user_id) {
             type: "POST",
             url: '/?controller=TodoNotesController&action=RefreshReindexProgress&plugin=TodoNotes',
             success: function(progress) {
+                const elem = $("#result" + project_id + " span");
                 if(progress != '#') { // complete mark
                     if (progress != lastReindexProgress) {
-                        const elem = $("#result" + project_id + " span");
-                        elem.html(elem.html() + '<br>' + progress);
+                        elem.html(elem.html().replace('fa fa-cog fa-spin', 'fa fa-check-square-o'));
+                        elem.html(elem.html() + '<br> => <i class="fa fa-cog fa-spin" aria-hidden="true"></i> ' + progress);
                         lastReindexProgress = progress;
                     }
                     RefreshReindexProgress();
+                } else {
+                    elem.html(elem.html().replace('fa fa-cog fa-spin', 'fa fa-check-square-o'));
                 }
             }
         });
