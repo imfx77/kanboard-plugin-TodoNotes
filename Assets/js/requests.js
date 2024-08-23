@@ -315,18 +315,39 @@ static RefreshNotes(project_id, user_id) {
 //------------------------------------------------
 // reindex notes and lists DB routine
 static ReindexNotesAndLists(user_id) {
-    const project_tab_id = $("#tabId").attr('data-project');
-    $("#result" + project_tab_id).html(_TodoNotes_Translations_.GetSpinnerMsg('TodoNotes__JS_REINDEXING_MSG'));
+    const project_id = $("#tabId").attr('data-project');
+    $("#result" + project_id).html(_TodoNotes_Translations_.GetSpinnerMsg('TodoNotes__JS_REINDEXING_MSG'));
 
-    // don't cache ajax or content won't be fresh
-    $.ajaxSetup ({
-        cache: false
+    $.ajax({
+        cache: false,
+        type: "POST",
+        url: '/?controller=TodoNotesController&action=ReindexNotesAndLists&plugin=TodoNotes'
+            + '&user_id=' + user_id,
+        success: function() {
+            location.reload();
+        }
     });
-    const loadUrl = '/?controller=TodoNotesController&action=ReindexNotesAndLists&plugin=TodoNotes'
-                + '&user_id=' + user_id
-                + '&project_tab_id=' + project_tab_id;
+
+    let lastReindexProgress = '';
+    function RefreshReindexProgress(){
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: '/?controller=TodoNotesController&action=RefreshReindexProgress&plugin=TodoNotes',
+            success: function(progress) {
+                if(progress != '#') { // complete mark
+                    if (progress != lastReindexProgress) {
+                        const elem = $("#result" + project_id + " span");
+                        elem.html(elem.html() + '<br>' + progress);
+                        lastReindexProgress = progress;
+                    }
+                    RefreshReindexProgress();
+                }
+            }
+        });
+    }
     setTimeout(function() {
-        location.replace(loadUrl);
+        RefreshReindexProgress();
     }, 50);
 }
 

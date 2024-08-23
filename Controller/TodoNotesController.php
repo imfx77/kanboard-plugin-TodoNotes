@@ -13,14 +13,16 @@ use Kanboard\Plugin\TodoNotes\Plugin;
 
 class TodoNotesController extends BaseController
 {
+    private const REINDEX_USLEEP_INTERVAL  = 100000; // 0.1s
+
     private function ResolveUserId()
     {
         $user_id = ''; // init empty string
         $use_cached = $this->request->getStringParam('use_cached');
 
         // use cached
-        if (!empty($use_cached) && isset($_SESSION['cached_user_id'])) {
-            $user_id = $_SESSION['cached_user_id'];
+        if (!empty($use_cached) && isset($_SESSION['todonotesCache_user_id'])) {
+            $user_id = $_SESSION['todonotesCache_user_id'];
         }
 
         // try get param from URL
@@ -33,7 +35,7 @@ class TodoNotesController extends BaseController
             $user_id = $this->getUser()['id'];
         }
 
-        $_SESSION['cached_user_id'] = $user_id;
+        $_SESSION['todonotesCache_user_id'] = $user_id;
 
         return $user_id;
     }
@@ -399,14 +401,32 @@ class TodoNotesController extends BaseController
         )));
     }
 
+    private function ReadReindexProgress()
+    {
+        return file_get_contents(__DIR__ . '/../.cache/reindexProgress');
+    }
+
+    private function WriteReindexProgress($value)
+    {
+        file_put_contents(__DIR__ . '/../.cache/reindexProgress', $value);
+        usleep(self::REINDEX_USLEEP_INTERVAL);
+    }
+
+    public function RefreshReindexProgress()
+    {
+        echo $this->ReadReindexProgress();
+    }
+
     public function ReindexNotesAndLists()
     {
         $user_id = $this->ResolveUserId();
-        $project_tab_id = intval($this->request->getStringParam('project_tab_id'));
 
         if ($this->userModel->isAdmin($user_id)) {
             $lastVersion = constant('\Kanboard\Plugin\\' . Plugin::NAME . '\Schema\VERSION');
             $functionName = '\Kanboard\Plugin\\' . Plugin::NAME . '\Schema\reindexNotesAndLists_' . $lastVersion;
+
+            $this->WriteReindexProgress(''); // init empty
+            //------------------------------------------
 
             if (function_exists($functionName)) {
                 try {
@@ -428,15 +448,12 @@ class TodoNotesController extends BaseController
             } else {
                 $this->flash->failure(t('TodoNotes__DASHBOARD_REINDEX_FAILURE') . ' => ' . t('TodoNotes__DASHBOARD_REINDEX_METHOD_NOT_IMPLEMENTED') . ' [v.' . $lastVersion . ']');
             }
+
+            //------------------------------------------
+            $this->WriteReindexProgress('#'); // complete mark
         } else {
             $this->flash->failure(t('TodoNotes__DASHBOARD_REINDEX_FAILURE') . ' => ' . t('TodoNotes__DASHBOARD_NO_ADMIN_PRIVILEGES'));
         }
-
-        $this->response->redirect($this->helper->url->to('TodoNotesController', 'ShowDashboard', array(
-            'plugin' => 'TodoNotes',
-            'user_id' => $user_id,
-            'tab_id' => $this->todoNotesModel->GetTabForProject($user_id, $project_tab_id),
-        )));
     }
 
     private function CustomNoteListOperationNotification($validation, $is_global)

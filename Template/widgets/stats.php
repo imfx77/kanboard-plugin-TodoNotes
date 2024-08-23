@@ -1,6 +1,6 @@
 <?php
 
-    $stats_user_id = $_SESSION['cached_user_id'] ?? $this->user->getId();
+    $stats_user_id = $_SESSION['todonotesCache_user_id'] ?? $this->user->getId();
 
     $statsData = $this->model->todoNotesModel->GetProjectStatsForUser($stats_project_id, $stats_user_id);
 
