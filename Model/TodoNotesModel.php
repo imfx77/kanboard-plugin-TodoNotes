@@ -15,6 +15,7 @@ use Kanboard\Model\ColumnModel;
 use Kanboard\Model\SwimlaneModel;
 use Kanboard\Model\ProjectUserRoleModel;
 use Kanboard\Model\CategoryModel;
+use Kanboard\Plugin\TodoNotes\Plugin;
 
 class TodoNotesModel extends Base
 {
@@ -31,6 +32,8 @@ class TodoNotesModel extends Base
     public const PROJECT_TYPE_NATIVE            = 1;
     public const PROJECT_TYPE_CUSTOM_GLOBAL     = 2;
     public const PROJECT_TYPE_CUSTOM_PRIVATE    = 3;
+
+    private const REINDEX_USLEEP_INTERVAL       = 100000; // 0.1s
 
     // Check unique note
     public function IsUniqueNote($project_id, $user_id, $note_id): bool
@@ -697,5 +700,73 @@ class TodoNotesModel extends Base
             'projects' => $timestampProjects,
             'max' => max($timestampNotes, $timestampProjects),
         );
+    }
+
+    public function ReadReindexProgress()
+    {
+        return file_get_contents(__DIR__ . '/../.cache/reindexProgress');
+    }
+
+    private function WriteReindexProgress($value)
+    {
+        file_put_contents(__DIR__ . '/../.cache/reindexProgress', $value);
+        usleep(self::REINDEX_USLEEP_INTERVAL);
+    }
+
+    public function ReindexNotesAndLists(): bool
+    {
+        $result = true;
+
+        $schemaPrefix = '\Kanboard\Plugin\\' . Plugin::NAME . '\Schema\\';
+        $lastVersion = constant($schemaPrefix . 'VERSION');
+
+        $reindexSequence = array(
+            'Reindex_AddAndUpdate_OldProjectIds',
+            'Reindex_CreateAndInsert_NewShrunkCutomProjects',
+            'Reindex_CreateAndInsert_NewShrunkEntries',
+            'Reindex_CreateAndInsert_NewShrunkArchiveEntries',
+            'Reindex_CrossUpdate_ReindexedProjectIds',
+            'Reindex_Drop_OldProjectIds',
+            'Reindex_Drop_OldTables',
+            'Reindex_Rename_NewTables',
+            'Reindex_RecreateIndices_CustomProjects',
+            'Reindex_RecreateIndices_Entries',
+            'Reindex_RecreateIndices_ArchiveEntries',
+        );
+
+        $this->WriteReindexProgress(''); // init empty
+        //------------------------------------------
+        foreach ($reindexSequence as $reindexRoutine) {
+            $functionName = $schemaPrefix . $reindexRoutine . '_' . $lastVersion;
+            if (function_exists($functionName)) {
+                try {
+                    $this->db->startTransaction();
+                    $this->db->getDriver()->disableForeignKeys();
+
+                    $this->WriteReindexProgress($reindexRoutine);
+                    call_user_func($functionName, $this->db->getConnection());
+
+                    $this->db->getDriver()->enableForeignKeys();
+                    $this->db->closeTransaction();
+
+                    $this->flash->success(t('TodoNotes__DASHBOARD_REINDEX_SUCCESS'));
+                } catch (PDOException $e) {
+                    $this->db->cancelTransaction();
+                    $this->db->getDriver()->enableForeignKeys();
+
+                    $this->flash->failure(t('TodoNotes__DASHBOARD_REINDEX_FAILURE') . ' => ' . $e->getMessage());
+                    $result = false;
+                }
+            } else {
+                $this->flash->failure(t('TodoNotes__DASHBOARD_REINDEX_FAILURE') . ' => ' . t('TodoNotes__DASHBOARD_REINDEX_METHOD_NOT_IMPLEMENTED') . ' ' . $reindexRoutine . '[v.' . $lastVersion . ']');
+                $result = false;
+                break;
+            }
+        }
+
+        //------------------------------------------
+        $this->WriteReindexProgress('#'); // complete mark
+
+        return $result;
     }
 }

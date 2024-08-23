@@ -31,4 +31,10 @@ class TodoNotesModelTest extends \Base
         $this->assertEquals($model->IsUniqueNote(0, 0, 0), false);
         $this->assertEquals($model->IsCustomGlobalProject(0), false);
     }
+
+    public function testReindex()
+    {
+        $model = new TodoNotesModel($this->container);
+        $this->assertEquals($model->ReindexNotesAndLists(), true);
+    }
 }

@@ -9,12 +9,9 @@
 namespace Kanboard\Plugin\TodoNotes\Controller;
 
 use Kanboard\Controller\BaseController;
-use Kanboard\Plugin\TodoNotes\Plugin;
 
 class TodoNotesController extends BaseController
 {
-    private const REINDEX_USLEEP_INTERVAL  = 100000; // 0.1s
-
     private function ResolveUserId()
     {
         $user_id = ''; // init empty string
@@ -401,83 +398,21 @@ class TodoNotesController extends BaseController
         )));
     }
 
-    private function ReadReindexProgress()
-    {
-        return file_get_contents(__DIR__ . '/../.cache/reindexProgress');
-    }
-
-    private function WriteReindexProgress($value)
-    {
-        file_put_contents(__DIR__ . '/../.cache/reindexProgress', $value);
-        usleep(self::REINDEX_USLEEP_INTERVAL);
-    }
-
     public function RefreshReindexProgress()
     {
-        echo $this->ReadReindexProgress();
+        echo $this->todoNotesModel->ReadReindexProgress();
     }
 
-    public function ReindexNotesAndLists(): bool
+    public function ReindexNotesAndLists()
     {
-        $result = true;
         $user_id = $this->ResolveUserId();
 
-        if ($this->userModel->isAdmin($user_id)) {
-            $schemaPrefix = '\Kanboard\Plugin\\' . Plugin::NAME . '\Schema\\';
-            $lastVersion = constant($schemaPrefix . 'VERSION');
-
-            $reindexSequence = array(
-                'Reindex_AddAndUpdate_OldProjectIds',
-                'Reindex_CreateAndInsert_NewShrunkCutomProjects',
-                'Reindex_CreateAndInsert_NewShrunkEntries',
-                'Reindex_CreateAndInsert_NewShrunkArchiveEntries',
-                'Reindex_CrossUpdate_ReindexedProjectIds',
-                'Reindex_Drop_OldProjectIds',
-                'Reindex_Drop_OldTables',
-                'Reindex_Rename_NewTables',
-                'Reindex_RecreateIndices_CustomProjects',
-                'Reindex_RecreateIndices_Entries',
-                'Reindex_RecreateIndices_ArchiveEntries',
-            );
-
-            $this->WriteReindexProgress(''); // init empty
-            //------------------------------------------
-            foreach ($reindexSequence as $reindexRoutine) {
-                $functionName = $schemaPrefix . $reindexRoutine . '_' . $lastVersion;
-                if (function_exists($functionName)) {
-                    try {
-                        $this->db->startTransaction();
-                        $this->db->getDriver()->disableForeignKeys();
-
-                        $this->WriteReindexProgress($reindexRoutine);
-                        call_user_func($functionName, $this->db->getConnection());
-
-                        $this->db->getDriver()->enableForeignKeys();
-                        $this->db->closeTransaction();
-
-                        $this->flash->success(t('TodoNotes__DASHBOARD_REINDEX_SUCCESS'));
-                    } catch (PDOException $e) {
-                        $this->db->cancelTransaction();
-                        $this->db->getDriver()->enableForeignKeys();
-
-                        $this->flash->failure(t('TodoNotes__DASHBOARD_REINDEX_FAILURE') . ' => ' . $e->getMessage());
-                        $result = false;
-                    }
-                } else {
-                    $this->flash->failure(t('TodoNotes__DASHBOARD_REINDEX_FAILURE') . ' => ' . t('TodoNotes__DASHBOARD_REINDEX_METHOD_NOT_IMPLEMENTED') . ' [v.' . $lastVersion . ']');
-                    $result = false;
-                    break;
-                }
-            }
-
-            //------------------------------------------
-            $this->WriteReindexProgress('#'); // complete mark
-        } else {
+        if (!$this->userModel->isAdmin($user_id)) {
             $this->flash->failure(t('TodoNotes__DASHBOARD_REINDEX_FAILURE') . ' => ' . t('TodoNotes__DASHBOARD_NO_ADMIN_PRIVILEGES'));
-            $result = false;
+            return;
         }
 
-        return $result;
+        $this->todoNotesModel->ReindexNotesAndLists();
     }
 
     private function CustomNoteListOperationNotification($validation, $is_global)

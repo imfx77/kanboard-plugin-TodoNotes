@@ -24,10 +24,4 @@ class TodoNotesControllerTest extends \Base
         $loader = new Loader($this->container);
         $loader->scan();
     }
-
-    public function testReindex()
-    {
-        $controller = new TodoNotesController($this->container);
-        $this->assertEquals($controller->ReindexNotesAndLists(), true);
-    }
 }
