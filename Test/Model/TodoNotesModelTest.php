@@ -35,6 +35,6 @@ class TodoNotesModelTest extends \Base
     public function testReindex()
     {
         $model = new TodoNotesModel($this->container);
-        $this->assertEquals($model->ReindexNotesAndLists(), true);
+        $this->assertEquals($model->ReindexNotesAndLists(false), true);
     }
 }

@@ -713,7 +713,7 @@ class TodoNotesModel extends Base
         usleep(self::REINDEX_USLEEP_INTERVAL);
     }
 
-    public function ReindexNotesAndLists(): bool
+    public function ReindexNotesAndLists($doWriteProgress): bool
     {
         $result = true;
 
@@ -734,7 +734,9 @@ class TodoNotesModel extends Base
             'Reindex_RecreateIndices_ArchiveEntries',
         );
 
-        $this->WriteReindexProgress(''); // init empty
+        if ($doWriteProgress) {
+            $this->WriteReindexProgress(''); // init empty
+        }
         //------------------------------------------
         foreach ($reindexSequence as $reindexRoutine) {
             $functionName = $schemaPrefix . $reindexRoutine . '_' . $lastVersion;
@@ -743,7 +745,9 @@ class TodoNotesModel extends Base
                     $this->db->startTransaction();
                     $this->db->getDriver()->disableForeignKeys();
 
-                    $this->WriteReindexProgress($reindexRoutine);
+                    if ($doWriteProgress) {
+                        $this->WriteReindexProgress($reindexRoutine);
+                    }
                     call_user_func($functionName, $this->db->getConnection());
 
                     $this->db->getDriver()->enableForeignKeys();
@@ -765,7 +769,9 @@ class TodoNotesModel extends Base
         }
 
         //------------------------------------------
-        $this->WriteReindexProgress('#'); // complete mark
+        if ($doWriteProgress) {
+            $this->WriteReindexProgress('#'); // complete mark
+        }
 
         return $result;
     }

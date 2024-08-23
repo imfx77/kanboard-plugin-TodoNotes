@@ -412,7 +412,7 @@ class TodoNotesController extends BaseController
             return;
         }
 
-        $this->todoNotesModel->ReindexNotesAndLists();
+        $this->todoNotesModel->ReindexNotesAndLists(true);
     }
 
     private function CustomNoteListOperationNotification($validation, $is_global)
