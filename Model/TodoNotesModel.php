@@ -33,7 +33,7 @@ class TodoNotesModel extends Base
     public const PROJECT_TYPE_CUSTOM_GLOBAL     = 2;
     public const PROJECT_TYPE_CUSTOM_PRIVATE    = 3;
 
-    private const REINDEX_USLEEP_INTERVAL       = 100000; // 0.1s
+    private const REINDEX_USLEEP_INTERVAL       = 250000; // 0.25s
 
     // Check unique note
     public function IsUniqueNote($project_id, $user_id, $note_id): bool

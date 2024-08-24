@@ -181,15 +181,19 @@ function Reindex_CreateAndInsert_NewShrunkArchiveEntries_1(PDO $pdo)
 
 function Reindex_CrossUpdate_ReindexedProjectIds_1(PDO $pdo)
 {
-    $pdo->exec('UPDATE todonotes_entries_NEW AS tEntries
-                    SET project_id = -tProjects.id
-                    FROM todonotes_custom_projects_NEW AS tProjects
-                    WHERE tEntries.old_project_id = -tProjects.old_project_id
+    $pdo->exec('UPDATE todonotes_entries_NEW
+                    SET project_id = -
+                        (SELECT tProjects.id FROM todonotes_custom_projects_NEW tProjects
+                        WHERE todonotes_entries_NEW.old_project_id = -tProjects.old_project_id)
+                    WHERE EXISTS (SELECT tProjects.id FROM todonotes_custom_projects_NEW tProjects
+                        WHERE todonotes_entries_NEW.old_project_id = -tProjects.old_project_id)
                 ');
-    $pdo->exec('UPDATE todonotes_archive_entries_NEW AS tArchiveEntries
-                    SET project_id = -tProjects.id
-                    FROM todonotes_custom_projects_NEW AS tProjects
-                    WHERE tArchiveEntries.old_project_id = -tProjects.old_project_id
+    $pdo->exec('UPDATE todonotes_archive_entries_NEW
+                    SET project_id = -
+                        (SELECT tProjects.id FROM todonotes_custom_projects_NEW tProjects
+                        WHERE todonotes_archive_entries_NEW.old_project_id = -tProjects.old_project_id)
+                    WHERE EXISTS (SELECT tProjects.id FROM todonotes_custom_projects_NEW tProjects
+                        WHERE todonotes_archive_entries_NEW.old_project_id = -tProjects.old_project_id)
                 ');
 }
 
