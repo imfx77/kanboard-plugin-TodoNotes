@@ -557,6 +557,17 @@ foreach ($data as $u) {
         print '<i class="fa fa-trash-o" aria-hidden="true"></i>';
         print '</button>';
 
+        // Archive button (in detailed view)
+        print '<button id="noteArchive-P' . $u['project_id'] . '-' . $num . '"';
+        print ' class="hideMe toolbarButton noteArchive"';
+        print ' title="' . t('TodoNotes__PROJECT_NOTE_ARCHIVE')  . '"';
+        print ' data-id="' . $num . '"';
+        print ' data-project="' . $u['project_id'] . '"';
+        print ' data-user="' . $user_id . '"';
+        print '>';
+        print '<i class="fa fa-file-archive-o" aria-hidden="true"></i>';
+        print '</button>';
+
         // Save button (in detailed view)
         print '<button id="noteSave-P' . $u['project_id'] . '-' . $num . '"';
         print ' class="hideMe toolbarButton noteSave"';

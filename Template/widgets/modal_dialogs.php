@@ -8,6 +8,14 @@ $isAdmin = $this->user->isAdmin();
 
 //---------------------------------------------
 
+print '<div class="hideMe" id="dialogMoveNoteToArchive" title="' . t('TodoNotes__PROJECT_NOTE_ARCHIVE') . '">';
+print '<p style="white-space: pre-wrap;">';
+print t('TodoNotes__DIALOG_ARCHIVE_NOTE_MSG');
+print '</p>';
+print '</div>';
+
+//---------------------------------------------
+
 print '<div class="hideMe" id="dialogDeleteNote" title="' . t('TodoNotes__PROJECT_NOTE_DELETE') . '">';
 print '<p style="white-space: pre-wrap;">';
 print t('TodoNotes__DIALOG_DELETE_NOTE_MSG');

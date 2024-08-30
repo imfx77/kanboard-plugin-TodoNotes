@@ -11,6 +11,31 @@ class _TodoNotes_Modals_ {
 //---------------------------------------------
 
 //------------------------------------------------
+static MoveNoteToArchive(project_id, user_id, id) {
+    $("#dialogMoveNoteToArchive").removeClass( 'hideMe' );
+    $("#dialogMoveNoteToArchive").dialog({
+        resizable: false,
+        height: "auto",
+        modal: true,
+        buttons: [
+            {
+                text : _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_DIALOG_ARCHIVE_BTN'),
+                click: function() {
+                    _TodoNotes_Requests_.MoveNoteToArchive(project_id, user_id, id);
+                    $( this ).dialog( "close" );
+                    _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
+                    _TodoNotes_Requests_.RefreshTabs(user_id);
+                },
+            },
+            {
+                text : _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
+                click: function() { $( this ).dialog( "close" ); }
+            },
+        ]
+    });
+}
+
+//------------------------------------------------
 static DeleteNote(project_id, user_id, id) {
     $("#dialogDeleteNote").removeClass( 'hideMe' );
     $("#dialogDeleteNote").dialog({

@@ -45,6 +45,26 @@ static AddNote(project_id, user_id) {
 }
 
 //------------------------------------------------
+static MoveNoteToArchive(project_id, user_id, id) {
+    const note_id = $("#noteId-P" + project_id + "-" + id).attr('data-note');
+    $.ajax({
+        cache: false,
+        type: "POST",
+        url: '/?controller=TodoNotesController&action=MoveNoteToArchive&plugin=TodoNotes'
+            + '&project_custom_id=' + project_id
+            + '&user_id=' + user_id
+            + '&note_id=' + note_id,
+        success: function() {
+        },
+        error: function(xhr,textStatus,e) {
+            alert('_TodoNotes_Requests_.MoveNoteToArchive');
+            alert(e);
+        }
+    });
+    return false;
+}
+
+//------------------------------------------------
 static DeleteNote(project_id, user_id, id) {
     const note_id = $("#noteId-P" + project_id + "-" + id).attr('data-note');
     $.ajax({

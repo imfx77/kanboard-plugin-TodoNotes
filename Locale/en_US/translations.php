@@ -39,6 +39,7 @@ return array(
     'TodoNotes__PROJECT_NOTE_CREATE_TASK' => 'Create Task from Note',
     'TodoNotes__PROJECT_NOTE_MOVE_TO_PROJECT' => 'Move Note to Project',
     'TodoNotes__PROJECT_NOTE_DELETE' => 'Delete Note',
+    'TodoNotes__PROJECT_NOTE_ARCHIVE' => 'Move Note to Archive',
     'TodoNotes__PROJECT_NOTE_SAVE' => 'Save Note',
     'TodoNotes__PROJECT_NOTE_TOGGLE_DETAILS' => 'Toggle Details',
     //
@@ -96,6 +97,8 @@ Might be waiting for an unsubmitted New Note data input!',
 &#10;Are you sure?',
     'TodoNotes__DIALOG_DELETE_ALL_DONE_MSG' => '⚠️ ALL Done notes will be permanently deleted and cannot be recovered!
 &#10;Are you sure?',
+    'TodoNotes__DIALOG_ARCHIVE_NOTE_MSG' => '⚠️ This note will be moved to Archive, it can be restored from there at some later moment on demand!
+&#10;Continue?',
     //
     'TodoNotes__DIALOG_TRANSFER_NOTE_TARGET_PROJECT' => 'Target Project',
     'TodoNotes__DIALOG_TRANSFER_NOTE_MSG' => '⚠️ Bear in mind that the target project may NOT have the category that is assigned to the note!
@@ -187,6 +190,7 @@ Aborting operation !',
     'TodoNotes__JS_DIALOG_CREATE_BTN' => '✔️ Create',
     'TodoNotes__JS_DIALOG_RENAME_BTN' => '✏️ Rename',
     'TodoNotes__JS_DIALOG_DELETE_BTN' => '⚠️ Delete',
+    'TodoNotes__JS_DIALOG_ARCHIVE_BTN' => '📦 Archive',
     'TodoNotes__JS_DIALOG_REINDEX_BTN' => '♻️ Reindex',
     'TodoNotes__JS_DIALOG_REORDER_BTN' => '📑 Reorder',
     'TodoNotes__JS_DIALOG_RESULT_TITLE' => 'Result ...',

@@ -19,8 +19,9 @@ use Kanboard\Plugin\TodoNotes\Plugin;
 
 class TodoNotesModel extends Base
 {
-    public const TABLE_NOTES_ENTRIES            = 'todonotes_entries';
     public const TABLE_NOTES_CUSTOM_PROJECTS    = 'todonotes_custom_projects';
+    public const TABLE_NOTES_ENTRIES            = 'todonotes_entries';
+    public const TABLE_NOTES_ARCHIVE_ENTRIES    = 'todonotes_archive_entries';
 
     private const TABLE_PROJECTS                = ProjectModel::TABLE;
     private const TABLE_COLUMNS                 = ColumnModel::TABLE;
@@ -776,5 +777,38 @@ class TodoNotesModel extends Base
         }
 
         return $result;
+    }
+
+    // Move note to Archive
+    public function MoveNoteToArchive($project_id, $user_id, $note_id)
+    {
+        $is_unique = $this->IsUniqueNote($project_id, $user_id, $note_id);
+        if (!$is_unique) {
+            return 0;
+        }
+
+        // Get current unixtime
+        $timestamp = time();
+
+        $note = $this->GetProjectNoteForUser($project_id, $user_id, $note_id, false);
+        $values = array(
+            'project_id' => $note['project_id'],
+            'user_id' => $note['user_id'],
+            'title' => $note['title'],
+            'description' => $note['description'],
+            'category' => $note['category'],
+            'date_created' => $note['date_created'],
+            'date_modified' => $note['date_modified'],
+            'date_archived' => $timestamp,
+        );
+
+        $result = $this->db->table(self::TABLE_NOTES_ARCHIVE_ENTRIES)
+            ->insert($values) ? true : false;
+
+        if ($result) {
+            $result = $this->DeleteNote($project_id, $user_id, $note_id);
+        }
+
+        return $result ? $timestamp : 0;
     }
 }

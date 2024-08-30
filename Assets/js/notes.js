@@ -173,6 +173,7 @@ static #ShowDetailsInput(project_id, id, show_details_input) {
 static #ToggleDetails(project_id, id) {
     $("#noteDetails-P" + project_id + "-" + id).toggleClass( 'hideMe' );
     $("#noteDelete-P" + project_id + "-" + id).toggleClass( 'hideMe' );
+    $("#noteArchive-P" + project_id + "-" + id).toggleClass( 'hideMe' );
     if (!_TodoNotes_.IsMobile()) {
         $("#noteSave-P" + project_id + "-" + id).toggleClass( 'hideMe' );
     }
@@ -684,6 +685,16 @@ static #NoteActionHandlers() {
         setTimeout(function() {
             _TodoNotes_.AdjustScrollableContent();
         }, 400); // waiting for blinkNote() to finish
+    });
+
+    //------------------------------------------------
+
+    // MOVE Note to ARCHIVE on Archive button for existing notes
+    $("button" + ".noteArchive").click(function() {
+        const project_id = $(this).attr('data-project');
+        const user_id = $(this).attr('data-user');
+        const id = $(this).attr('data-id');
+        _TodoNotes_Modals_.MoveNoteToArchive(project_id, user_id, id);
     });
 
     //------------------------------------------------

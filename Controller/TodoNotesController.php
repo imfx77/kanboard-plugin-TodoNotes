@@ -579,4 +579,18 @@ class TodoNotesController extends BaseController
 
         return $validation;
     }
+
+    public function MoveNoteToArchive()
+    {
+        $user_id = $this->ResolveUserId();
+        $project = $this->ResolveProject($user_id);
+        $project_id = $project['id'];
+
+        $note_id = $this->request->getStringParam('note_id');
+
+        $timestamp = $this->todoNotesModel->MoveNoteToArchive($project_id, $user_id, $note_id);
+        echo(json_encode(array('timestamp' => $timestamp,
+                               'timestring' => date($this->dateParser->getUserDateTimeFormat(), $timestamp))));
+        return $timestamp;
+    }
 }
