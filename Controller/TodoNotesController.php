@@ -456,7 +456,7 @@ class TodoNotesController extends BaseController
         $this->response->redirect($this->helper->url->to('TodoNotesController', 'ShowDashboard', array(
             'plugin' => 'TodoNotes',
             'user_id' => $user_id,
-            'tab_id' => $this->todoNotesModel->GetTabForProject($user_id, $project_tab_id),
+            'tab_id' => $this->todoNotesModel->GetTabForProject($project_tab_id, $user_id),
         )));
     }
 
@@ -486,7 +486,7 @@ class TodoNotesController extends BaseController
         $this->response->redirect($this->helper->url->to('TodoNotesController', 'ShowDashboard', array(
             'plugin' => 'TodoNotes',
             'user_id' => $user_id,
-            'tab_id' => $this->todoNotesModel->GetTabForProject($user_id, $project_tab_id),
+            'tab_id' => $this->todoNotesModel->GetTabForProject($project_tab_id, $user_id),
         )));
     }
 
@@ -515,7 +515,7 @@ class TodoNotesController extends BaseController
         $this->response->redirect($this->helper->url->to('TodoNotesController', 'ShowDashboard', array(
             'plugin' => 'TodoNotes',
             'user_id' => $user_id,
-            'tab_id' => $this->todoNotesModel->GetTabForProject($user_id, $project_tab_id),
+            'tab_id' => $this->todoNotesModel->GetTabForProject($project_tab_id, $user_id),
         )));
     }
 
@@ -545,7 +545,7 @@ class TodoNotesController extends BaseController
         $this->response->redirect($this->helper->url->to('TodoNotesController', 'ShowDashboard', array(
             'plugin' => 'TodoNotes',
             'user_id' => $user_id,
-            'tab_id' => $this->todoNotesModel->GetTabForProject($user_id, $project_tab_id),
+            'tab_id' => $this->todoNotesModel->GetTabForProject($project_tab_id, $user_id),
         )));
     }
 

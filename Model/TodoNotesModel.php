@@ -71,7 +71,7 @@ class TodoNotesModel extends Base
     }
 
     // Get the name of a project related to user
-    public function GetProjectNameForUser($user_id, $project_id): string
+    public function GetProjectNameForUser($project_id, $user_id): string
     {
         $all_user_projects = $this->GetAllProjectIds($user_id);
         // fetch the project_name of the requested project
@@ -85,7 +85,7 @@ class TodoNotesModel extends Base
     }
 
     // Get notes related to user and project
-    public function GetProjectNoteForUser($note_id, $project_id, $user_id)
+    public function GetProjectNoteForUser($project_id, $user_id, $note_id, $doFormatDates = true)
     {
         $note = $this->db->table(self::TABLE_NOTES_ENTRIES)
             ->eq('user_id', $user_id)
@@ -94,9 +94,11 @@ class TodoNotesModel extends Base
             ->gte('is_active', 0) // -1 == deleted
             ->findOne();
 
-        $userDateTimeFormat = $this->dateParser->getUserDateTimeFormat();
-        $note['notifications_alert_timestamp'] = $note['date_notified']; // keep the timestamp
-        $note = $this->dateParser->format($note, array('date_created', 'date_modified', 'date_notified', 'last_notified', 'date_restored'), $userDateTimeFormat);
+        if ($doFormatDates) {
+            $userDateTimeFormat = $this->dateParser->getUserDateTimeFormat();
+            $note['notifications_alert_timestamp'] = $note['date_notified']; // keep the timestamp
+            $note = $this->dateParser->format($note, array('date_created', 'date_modified', 'date_notified', 'last_notified', 'date_restored'), $userDateTimeFormat);
+        }
 
         return $note;
     }
@@ -291,7 +293,7 @@ class TodoNotesModel extends Base
     }
 
     // Get the tab number of certain project
-    public function GetTabForProject($user_id, $project_id): int
+    public function GetTabForProject($project_id, $user_id): int
     {
         $count = 1;
         $all_user_projects = $this->GetAllProjectIds($user_id);

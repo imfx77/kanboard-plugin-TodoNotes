@@ -97,14 +97,14 @@ class TodoNotesNotificationsController extends BaseController
         $project_id = $this->request->getStringParam('project_custom_id');
         $note_id = $this->request->getStringParam('note_id');
 
-        $this->TestNoteNotificationsWithParams($user_id, $project_id, $note_id);
+        $this->TestNoteNotificationsWithParams($project_id, $user_id, $note_id);
     }
 
-    public function TestNoteNotificationsWithParams($user_id, $project_id, $note_id)
+    public function TestNoteNotificationsWithParams($project_id, $user_id, $note_id)
     {
-        $note = $this->todoNotesModel->GetProjectNoteForUser($note_id, $project_id, $user_id);
-        $note_project_name = $this->todoNotesModel->GetProjectNameForUser($user_id, $note['project_id']);
-        $note_project_tab = $this->todoNotesModel->GetTabForProject($user_id, $note['project_id']);
+        $note = $this->todoNotesModel->GetProjectNoteForUser($project_id, $user_id, $note_id);
+        $note_project_name = $this->todoNotesModel->GetProjectNameForUser($note['project_id'], $user_id);
+        $note_project_tab = $this->todoNotesModel->GetTabForProject($note['project_id'], $user_id);
         $notification_link = $this->helper->url->base() . 'dashboard/' . $user_id . '/todonotes/' . $note_project_tab . '/' . $note_id;
 
         //---------------------------------------------------
@@ -125,8 +125,8 @@ class TodoNotesNotificationsController extends BaseController
         foreach ($all_notifications as $notification) {
             $user_id = $notification['user_id'];
             $project_id = $notification['project_id'];
-            $note_project_name = $this->todoNotesModel->GetProjectNameForUser($user_id, $project_id);
-            $note_project_tab = $this->todoNotesModel->GetTabForProject($user_id, $project_id);
+            $note_project_name = $this->todoNotesModel->GetProjectNameForUser($project_id, $user_id);
+            $note_project_tab = $this->todoNotesModel->GetTabForProject($project_id, $user_id);
             $notification_link = $this->helper->url->base() . 'dashboard/' . $user_id . '/todonotes/' . $note_project_tab . '/' . $notification['id'];
 
             //---------------------------------------------------
