@@ -789,20 +789,22 @@ foreach ($data as $u) {
     }
 
     // Markdown Preview
-    print '<div id="noteMarkdownDetails-P' . $u['project_id'] . '-' . $num . '_Preview"';
-    print ' class="markdown noteDetailsMarkdown disableEventsPropagation';
-    if ($u['is_active'] == 0) {
-        print ' noteDoneMarkdown';
+    if (!$readonlyNotes || !empty($u['description'])) {
+        print '<div id="noteMarkdownDetails-P' . $u['project_id'] . '-' . $num . '_Preview"';
+        print ' class="markdown noteDetailsMarkdown disableEventsPropagation';
+        if ($u['is_active'] == 0) {
+            print ' noteDoneMarkdown';
+        }
+        print '"';
+        print ' data-id="' . $num . '"';
+        print ' data-project="' . $u['project_id'] . '"';
+        print ' data-user="' . $user_id . '"';
+        print '>';
+        print $this->render('TodoNotes:widgets/markdown_preview', array(
+            'markdown_text' => $u['description'],
+        ));
+        print '</div>';
     }
-    print '"';
-    print ' data-id="' . $num . '"';
-    print ' data-project="' . $u['project_id'] . '"';
-    print ' data-user="' . $user_id . '"';
-    print '>';
-    print $this->render('TodoNotes:widgets/markdown_preview', array(
-         'markdown_text' => $u['description'],
-    ));
-    print '</div>';
 
     // Markdown Editor
     if (!$readonlyNotes) {

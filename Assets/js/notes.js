@@ -70,6 +70,7 @@ static AdjustScrollableContent() {
 //------------------------------------------------
 // Adjust notePlaceholder container
 static AdjustNotePlaceholders(project_id, id) {
+    // console.log('_TodoNotes_.AdjustNotePlaceholders');
     if (id === '0') { // new note
         if (!$(".liNewNote").length) return; // missing NewNote when NOT in project screen
         if (project_id === '0' || _TodoNotes_.optionArchiveView) { // Overview Mode or Archive View
@@ -85,9 +86,9 @@ static AdjustNotePlaceholders(project_id, id) {
             }
         }
     } else {
-        const offsetStatus = $("#buttonStatus-P" + project_id + "-" + id).offset().top;
-        const offsetDetails = $("#showDetails-P" + project_id + "-" + id).offset().top;
-        if (offsetStatus === offsetDetails) {
+        const labelTitle = $("#noteTitleLabel-P" + project_id + "-" + id);
+        const buttonDetails = $("#showDetails-P" + project_id + "-" + id);
+        if (labelTitle.offset().top < buttonDetails.offset().top + buttonDetails.outerHeight()) {
             $("#notePlaceholder-P" + project_id + "-" + id).addClass( 'hideMe' );
         } else {
             $("#notePlaceholder-P" + project_id + "-" + id).removeClass( 'hideMe' );
@@ -101,7 +102,7 @@ static AdjustAllNotesPlaceholders() {
     setTimeout(function() {
         // adjust notePlaceholder containers for Title row / New Notes
         _TodoNotes_.AdjustNotePlaceholders($("#refProjectId").attr('data-project'), '0');
-        $("button" + ".buttonStatus").each(function() {
+        $("label" + ".noteTitleLabel").each(function() {
             const project_id = $(this).attr('data-project');
             const id = $(this).attr('data-id');
             _TodoNotes_.AdjustNotePlaceholders(project_id, id);
@@ -125,6 +126,8 @@ static AdjustAllNotesTitleInputs() {
 //------------------------------------------------
 // Show input or label visuals for titles of existing notes
 static #showTitleInput(project_id, id, show_title_input) {
+    if (_TodoNotes_.optionArchiveView) return;
+
     const noteTitleLabel = $("#noteTitleLabel-P" + project_id + "-" + id);
     const noteTitleInput = $("#noteTitleInput-P" + project_id + "-" + id);
 
