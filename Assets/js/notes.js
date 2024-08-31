@@ -34,7 +34,7 @@ static #swRegistration = null;
 //------------------------------------------------
 // Global vars for options
 //------------------------------------------------
-
+static optionArchiveView = false;
 static optionShowCategoryColors = false;
 static optionSortByStatus = false;
 static optionShowAllDone = false;
@@ -72,7 +72,7 @@ static AdjustScrollableContent() {
 static AdjustNotePlaceholders(project_id, id) {
     if (id === '0') { // new note
         if (!$(".liNewNote").length) return; // missing NewNote when NOT in project screen
-        if (project_id === '0') { // overview mode
+        if (project_id === '0' || _TodoNotes_.optionArchiveView) { // Overview Mode or Archive View
             $("#placeholderNewNote").removeClass('hideMe');
         } else {
             const offsetTitle = $(".labelNewNote").offset().top;
@@ -916,6 +916,15 @@ static #SettingsHandlers() {
         _TodoNotes_.RefreshCategoryColors();
     });
 
+    $("#settingsArchiveView").click(function() {
+        const project_id = $(this).attr('data-project');
+        const user_id = $(this).attr('data-user');
+
+        _TodoNotes_Requests_.ToggleSessionOption(project_id, user_id, 'todonotesOption_ArchiveView');
+
+        _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
+    });
+
     //------------------------------------------------
 
     // Toogle lists in OverviewMode
@@ -969,6 +978,16 @@ static RefreshShowAllDone() {
                 $(this).addClass( 'hideMe' );
             }
         });
+    }
+}
+
+//------------------------------------------------
+// Refresh Archive View
+static RefreshArchiveView() {
+    if (_TodoNotes_.optionArchiveView) {
+        $("#settingsArchiveView").addClass( 'buttonToggled' );
+    } else {
+        $("#settingsArchiveView").removeClass( 'buttonToggled' );
     }
 }
 
@@ -1226,6 +1245,7 @@ static #HideRefreshIcon( ) {
 //------------------------------------------------
 // schedule check for modifications every 15 sec
 static ScheduleCheckModifications() {
+    // console.log('_TodoNotes_.ScheduleCheckModifications()')
     setTimeout(function() {
         _TodoNotes_.#ShowRefreshIcon();
         _TodoNotes_.#RefreshAllNotesNotificationsState();
@@ -1234,8 +1254,9 @@ static ScheduleCheckModifications() {
         const user_id = $("#refProjectId").attr('data-user');
 
         const is_project = ($(".liNewNote").length === 1);
-        const title = (is_project && project_id !== '0') ? $("#inputNewNote").val().trim() : '';
-        const description = (is_project && project_id !== '0') ? $('[name="editorMarkdownDetailsNewNote"]').val() : '';
+        const has_new_note = (is_project && project_id !== '0' && !_TodoNotes_.optionArchiveView);
+        const title = has_new_note ? $("#inputNewNote").val().trim() : '';
+        const description = has_new_note ? $('[name="editorMarkdownDetailsNewNote"]').val() : '';
 
         // skip SQL query if page not visible, or if new note has pending changes
         if (!KB.utils.isVisible() || title !== '' || description !== '') {

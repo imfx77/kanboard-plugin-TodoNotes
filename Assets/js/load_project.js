@@ -19,6 +19,7 @@ static prepareDocument_SkipDashboardHandlers() {
 static #prepareDocument_ConfigureDashboardHandlers(skipDashboardHandlers = false) {
     // console.log('_TodoNotes_Project_.prepareDocument (skipDashboardHandlers : ' + skipDashboardHandlers + ')');
 
+    _TodoNotes_.optionArchiveView = $("#session_vars").attr('data-optionArchiveView') === 'true';
     _TodoNotes_.optionShowCategoryColors = $("#session_vars").attr('data-optionShowCategoryColors') === 'true';
     _TodoNotes_.optionSortByStatus = $("#session_vars").attr('data-optionSortByStatus') === 'true';
     _TodoNotes_.optionShowAllDone = $("#session_vars").attr('data-optionShowAllDone') === 'true';
@@ -32,8 +33,8 @@ static #prepareDocument_ConfigureDashboardHandlers(skipDashboardHandlers = false
     $('.input-addon-field').addClass( 'hideMe' );
     $('.input-addon-item').addClass( 'hideMe' );
 
-    // notes reordering is disabled when explicitly sorted by Status
-    if (!_TodoNotes_.optionSortByStatus) {
+    // notes reordering is disabled when in Archive View or explicitly sorted by Status
+    if (!_TodoNotes_.optionArchiveView && !_TodoNotes_.optionSortByStatus) {
         $(".sortableList").each(function() {
             const sortable_project_id = $(this).attr('data-project');
 
@@ -81,6 +82,7 @@ static #prepareDocument_ConfigureDashboardHandlers(skipDashboardHandlers = false
 
     _TodoNotes_Statuses_.ExpandStatusAliases();
 
+    _TodoNotes_.RefreshArchiveView();
     _TodoNotes_.RefreshCategoryColors();
     _TodoNotes_.RefreshSortByStatus();
     _TodoNotes_.RefreshShowAllDone();

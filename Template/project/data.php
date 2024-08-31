@@ -91,6 +91,12 @@ if (!$is_refresh) { // print only once per project !!!
 // it shall be regenerated both on initial page load and on every refresh
 //----------------------------------------
 
+// evaluate optionArchiveView option from session
+if (!array_key_exists('todonotesOption_ArchiveView', $_SESSION)) {
+    $_SESSION['todonotesOption_ArchiveView'] = false;
+}
+$optionArchiveView = $_SESSION['todonotesOption_ArchiveView'];
+
 // evaluate optionShowCategoryColors option from session
 if (!array_key_exists('todonotesOption_ShowCategoryColors', $_SESSION)) {
     $_SESSION['todonotesOption_ShowCategoryColors'] = false;
@@ -117,6 +123,7 @@ $optionShowTabStats = $_SESSION['todonotesOption_ShowTabStats'];
 
 // session_vars (hidden reference for options)
 print '<div class="hideMe" id="session_vars"';
+print ' data-optionArchiveView="' . ($optionArchiveView ? 'true' : 'false') . '"';
 print ' data-optionShowCategoryColors="' . ($optionShowCategoryColors ? 'true' : 'false') . '"';
 print ' data-optionSortByStatus="' . ($optionSortByStatus ? 'true' : 'false') . '"';
 print ' data-optionShowAllDone="' . ($optionShowAllDone ? 'true' : 'false') . '"';
@@ -134,6 +141,23 @@ print '<div class="liNewNoteBkgr"></div>';
 
 // here goes the Settings Button Toolbar
 print '<div class="toolbarSettingsButtons containerNoWrap containerFloatRight disableEventsPropagation">';
+
+// Toggle Archive View
+//print '<div class="dropdown">';
+//print '<button id="settingsArchiveView" class="toolbarButton dropdown-menu"';
+print '<button id="settingsArchiveView" class="toolbarButton"';
+print ' title="' . t('TodoNotes__PROJECT_TOGGLE_ARCHIVE_VIEW') . '"';
+print ' data-id="0"';
+print ' data-project="' . $project_id . '"';
+print ' data-user="' .  $user_id . '"';
+print '>';
+print '<i class="fa fa-archive" aria-hidden="true"></i>';
+print '</button>';
+//print '<ul><li class="toolbarButton">123</li><li class="toolbarButton">456</li><hr class="toolbarDivider"><li class="toolbarButton">789</li></ul>';
+//print '</div>';
+
+// add some space between button groups
+print '<button class="toolbarSeparator">&nbsp;</button>';
 
 // Toggle category colors
 print '<button id="settingsCategoryColors" class="toolbarButton"';
@@ -188,8 +212,8 @@ print '>';
 print '<i class="fa fa-minus-square" aria-hidden="true"></i>';
 print '</button>';
 
-// exclude when in Overview Mode
-if (!$readonlyNotes) {
+// exclude when in Overview Mode or in Archive View
+if (!$readonlyNotes && !$optionArchiveView) {
     // add some space between button groups
     print '<button class="toolbarSeparator">&nbsp;</button>';
 
@@ -232,18 +256,28 @@ print '</div>'; // Settings Button Toolbar
 // here goes the Title row
 print '<div class="containerNoWrap containerFloatLeft disableEventsPropagation">';
 if ($readonlyNotes) {
-    print '<label class="labelNewNote">' . t('TodoNotes__PROJECT_OVERVIEW_MODE_TITLE') . '</label>';
-    if ($optionSortByStatus) {
-        print '<span class="textNewNote">' . t('TodoNotes__PROJECT_OVERVIEW_MODE_TEXT_REORDERING_DISABLED') . '</label>';
+    if ($optionArchiveView) {
+        print '<label class="labelNewNote">' . t('TodoNotes__PROJECT_ARCHIVE_OVERVIEW_MODE_TITLE') . '</label>';
+        print '<span class="textNewNote">' . t('TodoNotes__PROJECT_ARCHIVE_OVERVIEW_MODE_TEXT') . '</label>';
     } else {
-        print '<span class="textNewNote">' . t('TodoNotes__PROJECT_OVERVIEW_MODE_TEXT') . '</label>';
+        print '<label class="labelNewNote">' . t('TodoNotes__PROJECT_OVERVIEW_MODE_TITLE') . '</label>';
+        if ($optionSortByStatus) {
+            print '<span class="textNewNote">' . t('TodoNotes__PROJECT_OVERVIEW_MODE_TEXT_REORDERING_DISABLED') . '</label>';
+        } else {
+            print '<span class="textNewNote">' . t('TodoNotes__PROJECT_OVERVIEW_MODE_TEXT') . '</label>';
+        }
     }
 } else {
-    print '<label class="labelNewNote">' . t('TodoNotes__PROJECT_NEW_NOTE_LABEL') . '</label>';
-    if ($optionSortByStatus) {
-        print '<span class="textNewNote">' . t('TodoNotes__PROJECT_NEW_NOTE_TEXT_REORDERING_DISABLED') . '</span>';
+    if ($optionArchiveView) {
+        print '<label class="labelNewNote">' . t('TodoNotes__PROJECT_ARCHIVE_TITLE') . '</label>';
+        print '<span class="textNewNote">' . t('TodoNotes__PROJECT_ARCHIVE_TEXT') . '</label>';
     } else {
-        print '<span class="textNewNote"></span>';
+        print '<label class="labelNewNote">' . t('TodoNotes__PROJECT_NEW_NOTE_LABEL') . '</label>';
+        if ($optionSortByStatus) {
+            print '<span class="textNewNote">' . t('TodoNotes__PROJECT_NEW_NOTE_TEXT_REORDERING_DISABLED') . '</span>';
+        } else {
+            print '<span class="textNewNote"></span>';
+        }
     }
 }
 print '</div>'; // Title row
@@ -251,8 +285,8 @@ print '</div>'; // Title row
 // here goes the space Placeholder
 print '<div class="hideMe containerFloatClear" id="placeholderNewNote"></div>';
 
-// exclude when in Overview Mode
-if (!$readonlyNotes) {
+// exclude when in Overview Mode or in Archive View
+if (!$readonlyNotes && !$optionArchiveView) {
     // Newline after heading and top settings
     print '<br>';
 

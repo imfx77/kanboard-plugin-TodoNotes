@@ -593,4 +593,13 @@ class TodoNotesController extends BaseController
                                'timestring' => date($this->dateParser->getUserDateTimeFormat(), $timestamp))));
         return $timestamp;
     }
+
+    public function RestoreNoteFromArchive()
+    {
+        $user_id = $this->ResolveUserId();
+        $project = $this->ResolveProject($user_id);
+        $project_id = $project['id'];
+
+        $note_id = $this->request->getStringParam('note_id');
+    }
 }

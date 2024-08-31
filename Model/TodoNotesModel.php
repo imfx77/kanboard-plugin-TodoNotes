@@ -811,4 +811,35 @@ class TodoNotesModel extends Base
 
         return $result ? $timestamp : 0;
     }
+
+    // Restore note from Archive
+    public function RestoreNoteFromArchive($project_id, $user_id, $archived_note_id)
+    {
+//        $is_unique = $this->IsUniqueNote($project_id, $user_id, $note_id);
+//        if (!$is_unique) {
+//            return 0;
+//        }
+//
+//        // Get current unixtime
+//        $timestamp = time();
+//
+//        $note = $this->GetProjectNoteForUser($project_id, $user_id, $note_id, false);
+//        $values = array(
+//            'is_active' => $is_active,
+//            'title' => $title,
+//            'description' => $description,
+//            'category' => $category,
+//            'date_modified' => $timestamp,
+//        );
+
+//        $this->DeleteNote($project_id, $user_id, $note_id);
+
+//        return ($this->db->table(self::TABLE_NOTES_ENTRIES)
+//                        ->eq('id', $note_id)
+//                        ->eq('project_id', $project_id)
+//                        ->eq('user_id', $user_id)
+//                        ->update($values)) ? $timestamp : 0;
+
+        return 0;
+    }
 }

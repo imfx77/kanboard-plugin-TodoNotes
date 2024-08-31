@@ -18,11 +18,16 @@ return array(
     'TodoNotes__PROJECT_OVERVIEW_MODE_TEXT' => '⚠️ ONLY manage notes Status, Alerts and lists order!',
     'TodoNotes__PROJECT_OVERVIEW_MODE_TEXT_REORDERING_DISABLED' => '⚠️ ONLY manage notes Status and Alerts!
 ⚠️ DISABLED list reordering by Status sort!',
+    'TodoNotes__PROJECT_ARCHIVE_TITLE' => 'Archive',
+    'TodoNotes__PROJECT_ARCHIVE_TEXT' => '⚠️ ONLY Delete or Restore archived notes!',
+    'TodoNotes__PROJECT_ARCHIVE_OVERVIEW_MODE_TITLE' => 'Archive Overview Mode',
+    'TodoNotes__PROJECT_ARCHIVE_OVERVIEW_MODE_TEXT' => '⚠️ ONLY browse archived notes!',
     //
     'TodoNotes__PROJECT_NEW_NOTE_LABEL' => 'Create New Note',
     'TodoNotes__PROJECT_NEW_NOTE_TEXT_REORDERING_DISABLED' => '⚠️ DISABLED list reordering by Status sort!',
     'TodoNotes__PROJECT_NEW_NOTE_TITLE_PLACEHOLDER' => 'What needs to be done',
     //
+    'TodoNotes__PROJECT_TOGGLE_ARCHIVE_VIEW' => 'Toggle Archive View',
     'TodoNotes__PROJECT_TOGGLE_COLORIZE_BY_CATEGORY' => 'Toggle Colorize by Category',
     'TodoNotes__PROJECT_TOGGLE_SHOW_ALL_DONE' => 'Toggle Show all Done Notes',
     'TodoNotes__PROJECT_TOGGLE_SORT_BY_STATUS' => 'Toggle Sort by Status',
