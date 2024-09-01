@@ -447,7 +447,7 @@ foreach ($data as $u) {
     ////    PROJECT NOTE
     //////////////////////////////////////////
 
-    $isNoteActive = intval($u['is_active']);
+    $isNoteActive = (!$optionArchiveView) ? intval($u['is_active']) : -1;
 
     print '<li id="item' . '-' . $u['id'] . '" class="liNote" data-id="' . $num . '" data-project="' . $u['project_id'] . '">';
     print '<div class="liNoteBkgr';
@@ -488,7 +488,11 @@ foreach ($data as $u) {
     // Date details
     print '<label id="noteDatesDetails-P' . $u['project_id'] . '-' . $num . '"';
     print ' class="dateLabel dateLabelClickable disableEventsPropagation noteDatesDetails"';
-    print ' title="' . t('TodoNotes__NOTE_DATE_MODIFIED') . $u['date_modified'] . '"';
+    if ($optionArchiveView) {
+        print ' title="' . t('TodoNotes__NOTE_DATE_ARCHIVED') . $u['date_archived'] . '"';
+    } else {
+        print ' title="' . t('TodoNotes__NOTE_DATE_MODIFIED') . $u['date_modified'] . '"';
+    }
     print ' data-id="' . $num  . '"';
     print ' data-project="' . $u['project_id'] . '"';
     print ' data-user="' . $user_id . '"';
@@ -496,89 +500,98 @@ foreach ($data as $u) {
     print '<i class="fa fa-calendar-check-o" aria-hidden="true"></i>';
     print '</label>';
 
-    // Notifications details
-    $hasNotifications = ($u['notifications_alert_timestamp'] > 0);
-    $noteNotificationsStyleExtra = '';
-    // Expired notifications
-    if ($hasNotifications && ($u['notifications_alert_timestamp'] < $current_time)) {
-        $noteNotificationsStyleExtra = ' dateLabelExpired';
-    }
-    // Complete notifications
-    if ($isNoteActive == 0) {
-        $noteNotificationsStyleExtra = ' dateLabelComplete';
-    }
+    // hide notifications in Archive View
+    if ((!$optionArchiveView)) {
+        // Notifications details
+        $hasNotifications = ($u['notifications_alert_timestamp'] > 0);
+        $noteNotificationsStyleExtra = '';
+        // Expired notifications
+        if ($hasNotifications && ($u['notifications_alert_timestamp'] < $current_time)) {
+            $noteNotificationsStyleExtra = ' dateLabelExpired';
+        }
+        // Complete notifications
+        if ($isNoteActive == 0) {
+            $noteNotificationsStyleExtra = ' dateLabelComplete';
+        }
 
-    print '<label id="noteNotificationsDetails-P' . $u['project_id'] . '-' . $num . '"';
-    print ' class="dateLabel dateLabelClickable' . $noteNotificationsStyleExtra . ' disableEventsPropagation noteNotificationsDetails"';
-    print ' title="' . t('TodoNotes__NOTE_DATE_NOTIFIED') . ($hasNotifications ? $u['date_notified'] : '🔕') . '"';
-    print ' data-id="' . $num  . '"';
-    print ' data-project="' . $u['project_id'] . '"';
-    print ' data-user="' . $user_id . '"';
-    print '>';
-    print '<i class="fa fa-bell' . ($hasNotifications ? '-o' : '-slash-o') . '" aria-hidden="true"></i>';
-    print '</label>';
+        print '<label id="noteNotificationsDetails-P' . $u['project_id'] . '-' . $num . '"';
+        print ' class="dateLabel dateLabelClickable' . $noteNotificationsStyleExtra . ' disableEventsPropagation noteNotificationsDetails"';
+        print ' title="' . t('TodoNotes__NOTE_DATE_NOTIFIED') . ($hasNotifications ? $u['date_notified'] : '🔕') . '"';
+        print ' data-id="' . $num . '"';
+        print ' data-project="' . $u['project_id'] . '"';
+        print ' data-user="' . $user_id . '"';
+        print '>';
+        print '<i class="fa fa-bell' . ($hasNotifications ? '-o' : '-slash-o') . '" aria-hidden="true"></i>';
+        print '</label>';
+    }
 
     print '</span>'; // Note Label Toolbar
 
-    // Refresh order button (shown on changed status in SortByStatus mode only)
-    print '<button id="noteRefreshOrder-P' . $u['project_id'] . '-' . $num . '"';
-    print ' class="hideMe toolbarButton buttonToggled buttonBigger disableEventsPropagation noteRefreshOrder"';
-    print ' title="' . t('TodoNotes__PROJECT_NOTE_REFRESH_ORDER') . '"';
-    print ' data-id="' . $num  . '"';
-    print ' data-project="' . $project_id . '"';
-    print ' data-user="' . $user_id . '"';
-    print '>';
-    print '<i class="fa fa-refresh fa-spin" aria-hidden="true"></i>';
-    print '</button>';
+    // disable reorder related functionality in Archive View
+    if ((!$optionArchiveView)) {
+        // Refresh order button (shown on changed status in SortByStatus mode only)
+        print '<button id="noteRefreshOrder-P' . $u['project_id'] . '-' . $num . '"';
+        print ' class="hideMe toolbarButton buttonToggled buttonBigger disableEventsPropagation noteRefreshOrder"';
+        print ' title="' . t('TodoNotes__PROJECT_NOTE_REFRESH_ORDER') . '"';
+        print ' data-id="' . $num . '"';
+        print ' data-project="' . $project_id . '"';
+        print ' data-user="' . $user_id . '"';
+        print '>';
+        print '<i class="fa fa-refresh fa-spin" aria-hidden="true"></i>';
+        print '</button>';
 
-    // explicit reorder handle for mobile
-    print '<button class="hideMe toolbarButton buttonBigger sortableListHandle">';
-    print '<i class="fa fa-arrows-alt" aria-hidden="true"></i>';
-    print '</button>';
+        // explicit reorder handle for mobile
+        print '<button class="hideMe toolbarButton buttonBigger sortableListHandle">';
+        print '<i class="fa fa-arrows-alt" aria-hidden="true"></i>';
+        print '</button>';
+    }
 
     // hide all the utility buttons when viewing notes as readonly
     // just allow for note status change
     if (!$readonlyNotes) {
-        // Link button (in detailed view)
-        print '<button id="noteLink-P' . $u['project_id'] . '-' . $num . '"';
-        print ' class="hideMe toolbarButton noteLink"';
-        print ' title="' . t('TodoNotes__PROJECT_NOTE_GET_LINK') . '"';
-        print ' data-id="' . $num . '"';
-        print ' data-project="' . $u['project_id'] . '"';
-        print ' data-user="' . $user_id . '"';
-        print '>';
-        print '<i class="fa fa-link" aria-hidden="true"></i>';
-        print '</button>';
-
-        // Transfer button (in detailed view)
-        print '<button id="noteTransfer-P' . $u['project_id'] . '-' . $num . '"';
-        print ' class="hideMe toolbarButton noteTransfer"';
-        print ' title="' . t('TodoNotes__PROJECT_NOTE_MOVE_TO_PROJECT') . '"';
-        print ' data-id="' . $num . '"';
-        print ' data-project="' . $u['project_id'] . '"';
-        print ' data-user="' . $user_id . '"';
-        print '>';
-        print '<i class="fa fa-exchange" aria-hidden="true"></i>';
-        print '</button>';
-
-        // notes from custom lists obviously CANNOT create tasks from notes
-        if (!$project['is_custom']) {
-            // Add note to tasks table (in detailed view)
-            print '<button id="noteCreateTask-P' . $u['project_id'] . '-' . $num . '"';
-            print ' class="hideMe toolbarButton noteCreateTask"';
-            print ' title="' . t('TodoNotes__PROJECT_NOTE_CREATE_TASK') . '"';
+        // hide some utility buttons in Archive View
+        if (!$optionArchiveView) {
+            // Link button (in detailed view)
+            print '<button id="noteLink-P' . $u['project_id'] . '-' . $num . '"';
+            print ' class="hideMe toolbarButton noteLink"';
+            print ' title="' . t('TodoNotes__PROJECT_NOTE_GET_LINK') . '"';
             print ' data-id="' . $num . '"';
             print ' data-project="' . $u['project_id'] . '"';
             print ' data-user="' . $user_id . '"';
             print '>';
-            print '<i class="fa fa-share-square-o" aria-hidden="true"></i>';
+            print '<i class="fa fa-link" aria-hidden="true"></i>';
             print '</button>';
-        }
 
-        // add some space between button groups
-        print '<button id="toolbarSeparator-P' . $u['project_id'] . '-' . $num . '"';
-        print ' class="hideMe toolbarSeparator"';
-        print '>&nbsp;</button>';
+            // Transfer button (in detailed view)
+            print '<button id="noteTransfer-P' . $u['project_id'] . '-' . $num . '"';
+            print ' class="hideMe toolbarButton noteTransfer"';
+            print ' title="' . t('TodoNotes__PROJECT_NOTE_MOVE_TO_PROJECT') . '"';
+            print ' data-id="' . $num . '"';
+            print ' data-project="' . $u['project_id'] . '"';
+            print ' data-user="' . $user_id . '"';
+            print '>';
+            print '<i class="fa fa-exchange" aria-hidden="true"></i>';
+            print '</button>';
+
+            // notes from custom lists obviously CANNOT create tasks from notes
+            if (!$project['is_custom']) {
+                // Add note to tasks table (in detailed view)
+                print '<button id="noteCreateTask-P' . $u['project_id'] . '-' . $num . '"';
+                print ' class="hideMe toolbarButton noteCreateTask"';
+                print ' title="' . t('TodoNotes__PROJECT_NOTE_CREATE_TASK') . '"';
+                print ' data-id="' . $num . '"';
+                print ' data-project="' . $u['project_id'] . '"';
+                print ' data-user="' . $user_id . '"';
+                print '>';
+                print '<i class="fa fa-share-square-o" aria-hidden="true"></i>';
+                print '</button>';
+            }
+
+            // add some space between button groups
+            print '<button id="toolbarSeparator-P' . $u['project_id'] . '-' . $num . '"';
+            print ' class="hideMe toolbarSeparator"';
+            print '>&nbsp;</button>';
+        }
 
         // Delete button viewed (in detailed view)
         print '<button id="noteDelete-P' . $u['project_id'] . '-' . $num . '"';
@@ -591,27 +604,44 @@ foreach ($data as $u) {
         print '<i class="fa fa-trash-o" aria-hidden="true"></i>';
         print '</button>';
 
-        // Archive button (in detailed view)
-        print '<button id="noteArchive-P' . $u['project_id'] . '-' . $num . '"';
-        print ' class="hideMe toolbarButton noteArchive"';
-        print ' title="' . t('TodoNotes__PROJECT_NOTE_ARCHIVE')  . '"';
-        print ' data-id="' . $num . '"';
-        print ' data-project="' . $u['project_id'] . '"';
-        print ' data-user="' . $user_id . '"';
-        print '>';
-        print '<i class="fa fa-file-archive-o" aria-hidden="true"></i>';
-        print '</button>';
+        // this button is relevant ONLY for Archive View
+        if ($optionArchiveView) {
+            // Restore button (in detailed view)
+            print '<button id="noteRestore-P' . $u['project_id'] . '-' . $num . '"';
+            print ' class="hideMe toolbarButton noteRestore"';
+            print ' title="' . t('TodoNotes__PROJECT_NOTE_RESTORE') . '"';
+            print ' data-id="' . $num . '"';
+            print ' data-project="' . $u['project_id'] . '"';
+            print ' data-user="' . $user_id . '"';
+            print '>';
+            print '<i class="fa fa-undo" aria-hidden="true"></i>';
+            print '</button>';
+        }
 
-        // Save button (in detailed view)
-        print '<button id="noteSave-P' . $u['project_id'] . '-' . $num . '"';
-        print ' class="hideMe toolbarButton noteSave"';
-        print ' title="' . t('TodoNotes__PROJECT_NOTE_SAVE')  . '"';
-        print ' data-id="' . $num . '"';
-        print ' data-project="' . $u['project_id'] . '"';
-        print ' data-user="' . $user_id . '"';
-        print '>';
-        print '<i class="fa fa-floppy-o" aria-hidden="true"></i>';
-        print '</button>';
+        // hide some utility buttons in Archive View
+        if (!$optionArchiveView) {
+            // Archive button (in detailed view)
+            print '<button id="noteArchive-P' . $u['project_id'] . '-' . $num . '"';
+            print ' class="hideMe toolbarButton noteArchive"';
+            print ' title="' . t('TodoNotes__PROJECT_NOTE_ARCHIVE') . '"';
+            print ' data-id="' . $num . '"';
+            print ' data-project="' . $u['project_id'] . '"';
+            print ' data-user="' . $user_id . '"';
+            print '>';
+            print '<i class="fa fa-file-archive-o" aria-hidden="true"></i>';
+            print '</button>';
+
+            // Save button (in detailed view)
+            print '<button id="noteSave-P' . $u['project_id'] . '-' . $num . '"';
+            print ' class="hideMe toolbarButton noteSave"';
+            print ' title="' . t('TodoNotes__PROJECT_NOTE_SAVE') . '"';
+            print ' data-id="' . $num . '"';
+            print ' data-project="' . $u['project_id'] . '"';
+            print ' data-user="' . $user_id . '"';
+            print '>';
+            print '<i class="fa fa-floppy-o" aria-hidden="true"></i>';
+            print '</button>';
+        }
     }
 
     // Show details button
@@ -630,39 +660,42 @@ foreach ($data as $u) {
     // here goes the Note Title row with Checkbox
     print '<div class="containerNoWrap containerFloatLeft disableEventsPropagation">';
 
-    // Checkbox for Note Status
-    print '<button class="buttonStatus" id="buttonStatus-P' . $u['project_id'] . '-' . $num . '"';
-    print ' title="' . t('TodoNotes__PROJECT_NOTE_SWITCH_STATUS') . '"';
-    print ' data-id="' . $num . '"';
-    print ' data-project="' . $u['project_id'] . '"';
-    print ' data-user="' . $user_id . '"';
-    print '>';
-    print '<i id="noteCheckmark-P' . $u['project_id'] . '-' . $num . '"';
-    print ' data-id="' . $isNoteActive . '"';
-    if ($isNoteActive == 2) {
-        print ' class="statusInProgress" aria-hidden="true"';
-    }
-    if ($isNoteActive == 1) {
-        print ' class="statusOpen" aria-hidden="true"';
-    }
-    if ($isNoteActive == 0) {
-        print ' class="statusDone" aria-hidden="true"';
-    }
-    print '></i>';
-    print '</button>';
+    // hide some note elements in Archive View
+    if (!$optionArchiveView) {
+        // Checkbox for Note Status
+        print '<button class="buttonStatus" id="buttonStatus-P' . $u['project_id'] . '-' . $num . '"';
+        print ' title="' . t('TodoNotes__PROJECT_NOTE_SWITCH_STATUS') . '"';
+        print ' data-id="' . $num . '"';
+        print ' data-project="' . $u['project_id'] . '"';
+        print ' data-user="' . $user_id . '"';
+        print '>';
+        print '<i id="noteCheckmark-P' . $u['project_id'] . '-' . $num . '"';
+        print ' data-id="' . $isNoteActive . '"';
+        if ($isNoteActive == 2) {
+            print ' class="statusInProgress" aria-hidden="true"';
+        }
+        if ($isNoteActive == 1) {
+            print ' class="statusOpen" aria-hidden="true"';
+        }
+        if ($isNoteActive == 0) {
+            print ' class="statusDone" aria-hidden="true"';
+        }
+        print '></i>';
+        print '</button>';
 
-    // Note Input line
-    print '<input class="hideMe noteTitle" id="noteTitleInput-P' . $u['project_id'] . '-' . $num . '"';
-    print ' type="text" placeholder=""';
-    print ' title="' . t('TodoNotes__PROJECT_NOTE_TITLE_SAVE_HINT') . '"';
-    print ' value="' . htmlspecialchars($u['title']) . '"';
-    print ' data-id="' . $num . '"';
-    print ' data-project="' . $u['project_id'] . '"';
-    print ' data-user="' . $user_id . '"';
-    if ($readonlyNotes) {
-        print ' disabled';
+        // Note Input line
+        print '<input class="hideMe noteTitle" id="noteTitleInput-P' . $u['project_id'] . '-' . $num . '"';
+        print ' type="text" placeholder=""';
+        print ' title="' . t('TodoNotes__PROJECT_NOTE_TITLE_SAVE_HINT') . '"';
+        print ' value="' . htmlspecialchars($u['title']) . '"';
+        print ' data-id="' . $num . '"';
+        print ' data-project="' . $u['project_id'] . '"';
+        print ' data-user="' . $user_id . '"';
+        if ($readonlyNotes) {
+            print ' disabled';
+        }
+        print '>';
     }
-    print '>';
 
     // Note Title label
     print '<label id="noteTitleLabel-P' . $u['project_id'] . '-' . $num . '"';
@@ -675,7 +708,7 @@ foreach ($data as $u) {
     print ' data-id="' . $num . '"';
     print ' data-project="' . $u['project_id'] . '"';
     print ' data-user="' . $user_id . '"';
-    if ($readonlyNotes) {
+    if ($readonlyNotes || $optionArchiveView) {
         print ' data-disabled="true"';
     }
     print '>';
@@ -703,12 +736,12 @@ foreach ($data as $u) {
     print ' data-id="' . $num . '"';
     print ' data-project="' . $u['project_id'] . '"';
     print ' data-user="' . $user_id . '"';
-    if ($readonlyNotes) {
+    if ($readonlyNotes || $optionArchiveView) {
         print ' disabled';
     }
     print '>';
 
-    if ($readonlyNotes) {
+    if ($readonlyNotes || $optionArchiveView) {
         // just preserve the existing category data from the note
         print '<option selected="selected">' . $u['category'] . '</option>';
     } else {
@@ -744,25 +777,34 @@ foreach ($data as $u) {
     print '<i class="fa fa-calendar-check-o" aria-hidden="true"> ' . t('TodoNotes__NOTE_DATE_MODIFIED') . $u['date_modified'] . '</i></label><br>';
     print '<label  id="noteCreatedLabel-P' . $u['project_id'] . '-' . $num . '" class="dateLabel">';
     print '<i class="fa fa-calendar-o" aria-hidden="true"> ' . t('TodoNotes__NOTE_DATE_CREATED') . $u['date_created'] . '</i></label><br>';
+
+    if (!empty($u['date_archived'])) {
+        print '<label  id="noteArchivedLabel-P' . $u['project_id'] . '-' . $num . '" class="dateLabel">';
+        print '<i class="fa fa-file-archive-o" aria-hidden="true"> ' . t('TodoNotes__NOTE_DATE_ARCHIVED') . $u['date_archived'] . '</i></label><br>';
+    }
+
     if (!empty($u['date_restored'])) {
         print '<label  id="noteRestoredLabel-P' . $u['project_id'] . '-' . $num . '" class="dateLabel">';
-        print '<i class="fa fa-archive" aria-hidden="true"> ' . t('TodoNotes__NOTE_DATE_RESTORED') . $u['date_restored'] . '</i></label><br>';
+        print '<i class="fa fa-undo" aria-hidden="true"> ' . t('TodoNotes__NOTE_DATE_RESTORED') . $u['date_restored'] . '</i></label><br>';
     }
 
     if (!empty($u['last_notified'])) {
         print '<label  id="noteRestoredLabel-P' . $u['project_id'] . '-' . $num . '" class="dateLabel">';
         print '<i class="fa fa-bell" aria-hidden="true"> ' . t('TodoNotes__NOTE_DATE_LAST_NOTIFIED') . $u['last_notified'] . '</i></label><br>';
     }
-    print '<label  id="noteNotificationsLabel-P' . $u['project_id'] . '-' . $num . '"';
-    print 'class="dateLabel dateLabelClickable' . $noteNotificationsStyleExtra . ' noteNotificationsSetup"';
-    print ' data-id="' . $num . '"';
-    print ' data-project="' . $u['project_id'] . '"';
-    print ' data-user="' . $user_id . '"';
-    print ' data-notifications-alert-timestamp="' . $u['notifications_alert_timestamp'] . '"';
-    print ' data-notifications-alert-timestring="' . $u['date_notified'] . '"';
-    print ' data-notifications-options-bitflags="' . $u['flags_notified'] . '"';
-    print '>';
-    print '<i class="fa fa-bell-o" aria-hidden="true"> ' . t('TodoNotes__NOTE_DATE_NOTIFIED') . ($hasNotifications ? $u['date_notified'] : '🔕') . '</i></label><br>';
+
+    if (!$optionArchiveView) {
+        print '<label  id="noteNotificationsLabel-P' . $u['project_id'] . '-' . $num . '"';
+        print 'class="dateLabel dateLabelClickable' . $noteNotificationsStyleExtra . ' noteNotificationsSetup"';
+        print ' data-id="' . $num . '"';
+        print ' data-project="' . $u['project_id'] . '"';
+        print ' data-user="' . $user_id . '"';
+        print ' data-notifications-alert-timestamp="' . $u['notifications_alert_timestamp'] . '"';
+        print ' data-notifications-alert-timestring="' . $u['date_notified'] . '"';
+        print ' data-notifications-options-bitflags="' . $u['flags_notified'] . '"';
+        print '>';
+        print '<i class="fa fa-bell-o" aria-hidden="true"> ' . t('TodoNotes__NOTE_DATE_NOTIFIED') . ($hasNotifications ? $u['date_notified'] : '🔕') . '</i></label><br>';
+    }
     print '</div>'; // Dates and Notifications panel
 
     //-----------------------
@@ -770,7 +812,7 @@ foreach ($data as $u) {
     // Markdown Details
     print '<div class="containerFloatClear">';
 
-    if (!$readonlyNotes) {
+    if (!$readonlyNotes && !$optionArchiveView) {
         // here goes the Note Edit Button
         print '<div class="containerNoWrap buttonEditMarkdown disableEventsPropagation">';
 
@@ -789,10 +831,10 @@ foreach ($data as $u) {
     }
 
     // Markdown Preview
-    if (!$readonlyNotes || !empty($u['description'])) {
+    if ((!$readonlyNotes && !$optionArchiveView) || !empty($u['description'])) {
         print '<div id="noteMarkdownDetails-P' . $u['project_id'] . '-' . $num . '_Preview"';
         print ' class="markdown noteDetailsMarkdown disableEventsPropagation';
-        if ($u['is_active'] == 0) {
+        if (!$optionArchiveView && $u['is_active'] == 0) {
             print ' noteDoneMarkdown';
         }
         print '"';
@@ -807,7 +849,7 @@ foreach ($data as $u) {
     }
 
     // Markdown Editor
-    if (!$readonlyNotes) {
+    if (!$readonlyNotes && !$optionArchiveView) {
         print '<div id="noteMarkdownDetails-P' . $u['project_id'] . '-' . $num . '_Editor"';
         print ' class="hideMe noteDetailsMarkdown noteEditorMarkdown disableEventsPropagation"';
         print ' data-id="' . $num . '"';

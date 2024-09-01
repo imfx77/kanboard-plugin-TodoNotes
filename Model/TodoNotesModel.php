@@ -159,6 +159,49 @@ class TodoNotesModel extends Base
         return $result;
     }
 
+    // Get archived notes related to user and project
+    public function GetArchivedProjectNotesForUser($project_id, $user_id)
+    {
+        $result = $this->db->table(self::TABLE_NOTES_ARCHIVE_ENTRIES);
+        $result = $result->eq('user_id', $user_id);
+        $result = $result->eq('project_id', $project_id);
+        $result = $result->findAll();
+
+        $userDateTimeFormat = $this->dateParser->getUserDateTimeFormat();
+        foreach ($result as &$note) {
+            $note = $this->dateParser->format($note, array('date_created', 'date_modified', 'date_archived'), $userDateTimeFormat);
+        }
+
+        return $result;
+    }
+
+    // Get all archived notes related to user
+    public function GetAllArchivedNotesForUser($projectsAccess, $user_id)
+    {
+        $projectsAccessList = array();
+        $orderCaseClause = 'CASE project_id';
+        $orderCaseNum = 1;
+        foreach ($projectsAccess as $u) {
+            $projectsAccessList[] = $u['project_id'];
+            $orderCaseClause .= ' WHEN ' . $u['project_id'] . ' THEN ' . $orderCaseNum;
+            $orderCaseNum++;
+        }
+        $orderCaseClause .= ' END';
+
+        $result = $this->db->table(self::TABLE_NOTES_ARCHIVE_ENTRIES);
+        $result = $result->eq('user_id', $user_id);
+        $result = $result->in('project_id', $projectsAccessList);
+        $result = $result->orderBy($orderCaseClause); // order notes by projects as listed in $projectsAccess
+        $result = $result->findAll();
+
+        $userDateTimeFormat = $this->dateParser->getUserDateTimeFormat();
+        foreach ($result as &$note) {
+            $note = $this->dateParser->format($note, array('date_created', 'date_modified', 'date_archived'), $userDateTimeFormat);
+        }
+
+        return $result;
+    }
+
     // Get notes related to user project report
     public function GetReportNotesForUser($project_id, $user_id, $doSortByStatus, $category)
     {

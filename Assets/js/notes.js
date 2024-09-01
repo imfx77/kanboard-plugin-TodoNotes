@@ -177,6 +177,7 @@ static #ToggleDetails(project_id, id) {
     $("#noteDetails-P" + project_id + "-" + id).toggleClass( 'hideMe' );
     $("#noteDelete-P" + project_id + "-" + id).toggleClass( 'hideMe' );
     $("#noteArchive-P" + project_id + "-" + id).toggleClass( 'hideMe' );
+    $("#noteRestore-P" + project_id + "-" + id).toggleClass( 'hideMe' );
     if (!_TodoNotes_.IsMobile()) {
         $("#noteSave-P" + project_id + "-" + id).toggleClass( 'hideMe' );
     }

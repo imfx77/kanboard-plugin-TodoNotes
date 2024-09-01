@@ -94,15 +94,24 @@ class TodoNotesController extends BaseController
         $columns = $this->todoNotesModel->GetColumns($project_id);
         $swimlanes = $this->todoNotesModel->GetSwimlanes($project_id);
 
+        if (!array_key_exists('todonotesOption_ArchiveView', $_SESSION)) {
+            $_SESSION['todonotesOption_ArchiveView'] = false;
+        }
+        $isArchiveView = $_SESSION['todonotesOption_ArchiveView'];
+
         if (!array_key_exists('todonotesOption_SortByStatus', $_SESSION)) {
             $_SESSION['todonotesOption_SortByStatus'] = false;
         }
         $doSortByStatus = $_SESSION['todonotesOption_SortByStatus'];
 
         if ($project_id == 0) {
-            $data = $this->todoNotesModel->GetAllNotesForUser($projectsAccess, $user_id, $doSortByStatus);
+            $data = $isArchiveView
+                ? $this->todoNotesModel->GetAllArchivedNotesForUser($projectsAccess, $user_id)
+                : $this->todoNotesModel->GetAllNotesForUser($projectsAccess, $user_id, $doSortByStatus);
         } else {
-            $data = $this->todoNotesModel->GetProjectNotesForUser($project_id, $user_id, $doSortByStatus);
+            $data = $isArchiveView
+                ? $this->todoNotesModel->GetArchivedProjectNotesForUser($project_id, $user_id)
+                : $this->todoNotesModel->GetProjectNotesForUser($project_id, $user_id, $doSortByStatus);
         }
 
         return $this->response->html($this->helper->layout->app('TodoNotes:project/data', array(
@@ -160,15 +169,24 @@ class TodoNotesController extends BaseController
             $swimlanes  = array();
         }
 
+        if (!array_key_exists('todonotesOption_ArchiveView', $_SESSION)) {
+            $_SESSION['todonotesOption_ArchiveView'] = false;
+        }
+        $isArchiveView = $_SESSION['todonotesOption_ArchiveView'];
+
         if (!array_key_exists('todonotesOption_SortByStatus', $_SESSION)) {
             $_SESSION['todonotesOption_SortByStatus'] = false;
         }
         $doSortByStatus = $_SESSION['todonotesOption_SortByStatus'];
 
         if ($project_id == 0) {
-            $data = $this->todoNotesModel->GetAllNotesForUser($projectsAccess, $user_id, $doSortByStatus);
+            $data = $isArchiveView
+                ? $this->todoNotesModel->GetAllArchivedNotesForUser($projectsAccess, $user_id)
+                : $this->todoNotesModel->GetAllNotesForUser($projectsAccess, $user_id, $doSortByStatus);
         } else {
-            $data = $this->todoNotesModel->GetProjectNotesForUser($project_id, $user_id, $doSortByStatus);
+            $data = $isArchiveView
+                ? $this->todoNotesModel->GetArchivedProjectNotesForUser($project_id, $user_id)
+                : $this->todoNotesModel->GetProjectNotesForUser($project_id, $user_id, $doSortByStatus);
         }
 
         return $this->response->html($this->helper->layout->dashboard('TodoNotes:dashboard/data', array(
