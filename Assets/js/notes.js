@@ -77,8 +77,8 @@ static AdjustNotePlaceholders(project_id, id) {
             $("#placeholderNewNote").removeClass('hideMe');
         } else {
             const offsetTitle = $(".labelNewNote").offset().top;
-            let offsetButtons = $("#settingsShowAllDone").offset().top;
-            offsetButtons += $("#settingsShowAllDone").outerHeight();
+            let offsetButtons = $("#settingsCategoryColors").offset().top;
+            offsetButtons += $("#settingsCategoryColors").outerHeight();
             if (offsetTitle > offsetButtons) {
                 $("#placeholderNewNote").removeClass('hideMe');
             } else {
@@ -88,10 +88,10 @@ static AdjustNotePlaceholders(project_id, id) {
     } else {
         const labelTitle = $("#noteTitleLabel-P" + project_id + "-" + id);
         const buttonDetails = $("#showDetails-P" + project_id + "-" + id);
-        if (labelTitle.offset().top < buttonDetails.offset().top + buttonDetails.outerHeight()) {
-            $("#notePlaceholder-P" + project_id + "-" + id).addClass( 'hideMe' );
+        if (labelTitle.is(":visible") && labelTitle.offset().top < buttonDetails.offset().top + buttonDetails.outerHeight()) {
+            $("#notePlaceholder-P" + project_id + "-" + id).addClass('hideMe');
         } else {
-            $("#notePlaceholder-P" + project_id + "-" + id).removeClass( 'hideMe' );
+            $("#notePlaceholder-P" + project_id + "-" + id).removeClass('hideMe');
         }
     }
 }
