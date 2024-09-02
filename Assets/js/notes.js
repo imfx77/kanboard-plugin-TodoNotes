@@ -175,9 +175,10 @@ static #ShowDetailsInput(project_id, id, show_details_input) {
 // Show details for existing notes (toggle class)
 static #ToggleDetails(project_id, id) {
     $("#noteDetails-P" + project_id + "-" + id).toggleClass( 'hideMe' );
+    $("#noteMoveToArchive-P" + project_id + "-" + id).toggleClass( 'hideMe' );
+    $("#noteRestoreFromArchive-P" + project_id + "-" + id).toggleClass( 'hideMe' );
+    $("#noteDeleteFromArchive-P" + project_id + "-" + id).toggleClass( 'hideMe' );
     $("#noteDelete-P" + project_id + "-" + id).toggleClass( 'hideMe' );
-    $("#noteArchive-P" + project_id + "-" + id).toggleClass( 'hideMe' );
-    $("#noteRestore-P" + project_id + "-" + id).toggleClass( 'hideMe' );
     if (!_TodoNotes_.IsMobile()) {
         $("#noteSave-P" + project_id + "-" + id).toggleClass( 'hideMe' );
     }
@@ -694,11 +695,19 @@ static #NoteActionHandlers() {
     //------------------------------------------------
 
     // MOVE Note to ARCHIVE on Archive button for existing notes
-    $("button" + ".noteArchive").click(function() {
+    $("button" + ".noteMoveToArchive").click(function() {
         const project_id = $(this).attr('data-project');
         const user_id = $(this).attr('data-user');
         const id = $(this).attr('data-id');
         _TodoNotes_Modals_.MoveNoteToArchive(project_id, user_id, id);
+    });
+
+    // POST on Delete Note from Archive button
+    $("button" + ".noteDeleteFromArchive").click(function() {
+        const project_id = $(this).attr('data-project');
+        const user_id = $(this).attr('data-user');
+        const id = $(this).attr('data-id');
+        _TodoNotes_Modals_.DeleteNote(project_id, user_id, id, true);
     });
 
     //------------------------------------------------
@@ -708,7 +717,7 @@ static #NoteActionHandlers() {
         const project_id = $(this).attr('data-project');
         const user_id = $(this).attr('data-user');
         const id = $(this).attr('data-id');
-        _TodoNotes_Modals_.DeleteNote(project_id, user_id, id);
+        _TodoNotes_Modals_.DeleteNote(project_id, user_id, id, false);
     });
 
     // POST on Transfer Note button

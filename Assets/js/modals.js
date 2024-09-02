@@ -36,7 +36,7 @@ static MoveNoteToArchive(project_id, user_id, id) {
 }
 
 //------------------------------------------------
-static DeleteNote(project_id, user_id, id) {
+static DeleteNote(project_id, user_id, id, isArchive) {
     $("#dialogDeleteNote").removeClass( 'hideMe' );
     $("#dialogDeleteNote").dialog({
         resizable: false,
@@ -46,7 +46,11 @@ static DeleteNote(project_id, user_id, id) {
             {
                 text : _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_DIALOG_DELETE_BTN'),
                 click: function() {
-                    _TodoNotes_Requests_.DeleteNote(project_id, user_id, id);
+                    if (isArchive) {
+                        _TodoNotes_Requests_.DeleteNoteFromArchive(project_id, user_id, id);
+                    } else {
+                        _TodoNotes_Requests_.DeleteNote(project_id, user_id, id);
+                    }
                     $( this ).dialog( "close" );
                     _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
                     _TodoNotes_Requests_.RefreshTabs(user_id);

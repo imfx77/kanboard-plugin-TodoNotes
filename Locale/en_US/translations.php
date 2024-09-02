@@ -44,9 +44,9 @@ return array(
     'TodoNotes__PROJECT_NOTE_CREATE_TASK' => 'Create Task from Note',
     'TodoNotes__PROJECT_NOTE_MOVE_TO_PROJECT' => 'Move Note to Project',
     'TodoNotes__PROJECT_NOTE_DELETE' => 'Delete Note',
+    'TodoNotes__PROJECT_NOTE_SAVE' => 'Save Note',
     'TodoNotes__PROJECT_NOTE_ARCHIVE' => 'Move Note to Archive',
     'TodoNotes__PROJECT_NOTE_RESTORE' => 'Restore Note from Archive',
-    'TodoNotes__PROJECT_NOTE_SAVE' => 'Save Note',
     'TodoNotes__PROJECT_NOTE_TOGGLE_DETAILS' => 'Toggle Details',
     //
     'TodoNotes__PROJECT_NOTE_SWITCH_STATUS' => 'Switch Status',

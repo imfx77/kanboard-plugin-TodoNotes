@@ -238,7 +238,12 @@ class TodoNotesController extends BaseController
 
         $note_id = $this->request->getStringParam('note_id');
 
-        return $this->todoNotesModel->DeleteNote($project_id, $user_id, $note_id);
+        if (!array_key_exists('todonotesOption_ArchiveView', $_SESSION)) {
+            $_SESSION['todonotesOption_ArchiveView'] = false;
+        }
+        $isArchiveView = $_SESSION['todonotesOption_ArchiveView'];
+
+        return (!$isArchiveView) ? $this->todoNotesModel->DeleteNote($project_id, $user_id, $note_id) : null;
     }
 
     public function DeleteAllDoneNotes()
@@ -619,5 +624,21 @@ class TodoNotesController extends BaseController
         $project_id = $project['id'];
 
         $note_id = $this->request->getStringParam('note_id');
+    }
+
+    public function DeleteNoteFromArchive()
+    {
+        $user_id = $this->ResolveUserId();
+        $project = $this->ResolveProject($user_id);
+        $project_id = $project['id'];
+
+        $archived_note_id = $this->request->getStringParam('archived_note_id');
+
+        if (!array_key_exists('todonotesOption_ArchiveView', $_SESSION)) {
+            $_SESSION['todonotesOption_ArchiveView'] = false;
+        }
+        $isArchiveView = $_SESSION['todonotesOption_ArchiveView'];
+
+        return ($isArchiveView) ? $this->todoNotesModel->DeleteNoteFromArchive($project_id, $user_id, $archived_note_id) : null;
     }
 }

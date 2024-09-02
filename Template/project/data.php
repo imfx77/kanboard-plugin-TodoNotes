@@ -594,8 +594,13 @@ foreach ($data as $u) {
         }
 
         // Delete button viewed (in detailed view)
-        print '<button id="noteDelete-P' . $u['project_id'] . '-' . $num . '"';
-        print ' class="hideMe toolbarButton noteDelete"';
+        if ($optionArchiveView) {
+            print '<button id="noteDeleteFromArchive-P' . $u['project_id'] . '-' . $num . '"';
+            print ' class="hideMe toolbarButton noteDeleteFromArchive"';
+        } else {
+            print '<button id="noteDelete-P' . $u['project_id'] . '-' . $num . '"';
+            print ' class="hideMe toolbarButton noteDelete"';
+        }
         print ' title="' . t('TodoNotes__PROJECT_NOTE_DELETE') . '"';
         print ' data-id="' . $num . '"';
         print ' data-project="' . $u['project_id'] . '"';
@@ -607,8 +612,8 @@ foreach ($data as $u) {
         // this button is relevant ONLY for Archive View
         if ($optionArchiveView) {
             // Restore button (in detailed view)
-            print '<button id="noteRestore-P' . $u['project_id'] . '-' . $num . '"';
-            print ' class="hideMe toolbarButton noteRestore"';
+            print '<button id="noteRestoreFromArchive-P' . $u['project_id'] . '-' . $num . '"';
+            print ' class="hideMe toolbarButton noteRestoreFromArchive"';
             print ' title="' . t('TodoNotes__PROJECT_NOTE_RESTORE') . '"';
             print ' data-id="' . $num . '"';
             print ' data-project="' . $u['project_id'] . '"';
@@ -621,8 +626,8 @@ foreach ($data as $u) {
         // hide some utility buttons in Archive View
         if (!$optionArchiveView) {
             // Archive button (in detailed view)
-            print '<button id="noteArchive-P' . $u['project_id'] . '-' . $num . '"';
-            print ' class="hideMe toolbarButton noteArchive"';
+            print '<button id="noteMoveToArchive-P' . $u['project_id'] . '-' . $num . '"';
+            print ' class="hideMe toolbarButton noteMoveToArchive"';
             print ' title="' . t('TodoNotes__PROJECT_NOTE_ARCHIVE') . '"';
             print ' data-id="' . $num . '"';
             print ' data-project="' . $u['project_id'] . '"';
@@ -789,7 +794,7 @@ foreach ($data as $u) {
     }
 
     if (!empty($u['last_notified'])) {
-        print '<label  id="noteRestoredLabel-P' . $u['project_id'] . '-' . $num . '" class="dateLabel">';
+        print '<label  id="noteLastNotifiedLabel-P' . $u['project_id'] . '-' . $num . '" class="dateLabel">';
         print '<i class="fa fa-bell" aria-hidden="true"> ' . t('TodoNotes__NOTE_DATE_LAST_NOTIFIED') . $u['last_notified'] . '</i></label><br>';
     }
 

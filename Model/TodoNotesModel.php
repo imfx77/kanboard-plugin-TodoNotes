@@ -165,6 +165,8 @@ class TodoNotesModel extends Base
         $result = $this->db->table(self::TABLE_NOTES_ARCHIVE_ENTRIES);
         $result = $result->eq('user_id', $user_id);
         $result = $result->eq('project_id', $project_id);
+        $result = $result->gte('date_modified', 0); // -1 == deleted
+        $result = $result->desc('date_archived');
         $result = $result->findAll();
 
         $userDateTimeFormat = $this->dateParser->getUserDateTimeFormat();
@@ -191,7 +193,9 @@ class TodoNotesModel extends Base
         $result = $this->db->table(self::TABLE_NOTES_ARCHIVE_ENTRIES);
         $result = $result->eq('user_id', $user_id);
         $result = $result->in('project_id', $projectsAccessList);
+        $result = $result->gte('date_modified', 0); // -1 == deleted
         $result = $result->orderBy($orderCaseClause); // order notes by projects as listed in $projectsAccess
+        $result = $result->desc('date_archived');
         $result = $result->findAll();
 
         $userDateTimeFormat = $this->dateParser->getUserDateTimeFormat();
@@ -885,4 +889,39 @@ class TodoNotesModel extends Base
 
         return 0;
     }
+
+    // Delete archived note
+    public function DeleteNoteFromArchive($project_id, $user_id, $archived_note_id)
+    {
+        // purge previously marked as deleted archive notes
+        $purged = $this->PurgeNotesFromArchive($project_id, $user_id);
+
+        // Get current unixtime
+        $timestamp = time();
+
+        $values = array(
+            'date_modified' => -1,
+            'date_archived' => $timestamp,
+        );
+
+        // mark archive note as deleted
+        $deleted = $this->db->table(self::TABLE_NOTES_ARCHIVE_ENTRIES)
+            ->eq('id', $archived_note_id)
+            ->eq('project_id', $project_id)
+            ->eq('user_id', $user_id)
+            ->update($values);
+
+        return $purged && $deleted;
+    }
+
+    // Actually PURGE the archived notes marked as deleted
+    private function PurgeNotesFromArchive($project_id, $user_id)
+    {
+        return $this->db->table(self::TABLE_NOTES_ARCHIVE_ENTRIES)
+            ->eq('project_id', $project_id)
+            ->eq('user_id', $user_id)
+            ->eq('date_modified', -1) // previously marked as deleted
+            ->remove();
+    }
+
 }

@@ -11,6 +11,46 @@ class _TodoNotes_Requests_ {
 //------------------------------------------------
 
 //------------------------------------------------
+static MoveNoteToArchive(project_id, user_id, id) {
+    const note_id = $("#noteId-P" + project_id + "-" + id).attr('data-note');
+    $.ajax({
+        cache: false,
+        type: "POST",
+        url: '/?controller=TodoNotesController&action=MoveNoteToArchive&plugin=TodoNotes'
+            + '&project_custom_id=' + project_id
+            + '&user_id=' + user_id
+            + '&note_id=' + note_id,
+        success: function() {
+        },
+        error: function(xhr,textStatus,e) {
+            alert('_TodoNotes_Requests_.MoveNoteToArchive');
+            alert(e);
+        }
+    });
+    return false;
+}
+
+//------------------------------------------------
+static DeleteNoteFromArchive(project_id, user_id, id) {
+    const archived_note_id = $("#noteId-P" + project_id + "-" + id).attr('data-note');
+    $.ajax({
+        cache: false,
+        type: "POST",
+        url: '/?controller=TodoNotesController&action=DeleteNoteFromArchive&plugin=TodoNotes'
+            + '&project_custom_id=' + project_id
+            + '&user_id=' + user_id
+            + '&archived_note_id=' + archived_note_id,
+        success: function() {
+        },
+        error: function(xhr,textStatus,e) {
+            alert('_TodoNotes_Requests_.DeleteNoteFromArchive');
+            alert(e);
+        }
+    });
+    return false;
+}
+
+//------------------------------------------------
 static AddNote(project_id, user_id) {
     const title = $("#inputNewNote").val().trim();
     const description = $('[name="editorMarkdownDetailsNewNote"]').val();
@@ -38,26 +78,6 @@ static AddNote(project_id, user_id) {
         },
         error: function(xhr,textStatus,e) {
             alert('_TodoNotes_Requests_.AddNote');
-            alert(e);
-        }
-    });
-    return false;
-}
-
-//------------------------------------------------
-static MoveNoteToArchive(project_id, user_id, id) {
-    const note_id = $("#noteId-P" + project_id + "-" + id).attr('data-note');
-    $.ajax({
-        cache: false,
-        type: "POST",
-        url: '/?controller=TodoNotesController&action=MoveNoteToArchive&plugin=TodoNotes'
-            + '&project_custom_id=' + project_id
-            + '&user_id=' + user_id
-            + '&note_id=' + note_id,
-        success: function() {
-        },
-        error: function(xhr,textStatus,e) {
-            alert('_TodoNotes_Requests_.MoveNoteToArchive');
             alert(e);
         }
     });
