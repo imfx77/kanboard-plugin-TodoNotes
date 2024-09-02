@@ -72,7 +72,7 @@ function version_1(PDO $pdo)
     $pdo->exec('CREATE INDEX todonotes_entries_notified_ix ON todonotes_entries(date_notified)');
     $pdo->exec('CREATE INDEX todonotes_entries_last_notified_ix ON todonotes_entries(last_notified)');
 
-    // create+index archive entries
+    // create+insert+index archive entries
     $pdo->exec('CREATE TABLE IF NOT EXISTS `todonotes_archive_entries` (
                     `id` INT NOT NULL AUTO_INCREMENT,
                     `project_id` INT NOT NULL,
@@ -85,6 +85,10 @@ function version_1(PDO $pdo)
                     `date_archived` INT,
                     PRIMARY KEY(id)
                 ) ENGINE=InnoDB CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci');
+    $pdo->exec('INSERT INTO `todonotes_archive_entries`
+                    (`project_id`, `user_id`, `date_created`, `date_modified`, `date_archived`)
+                    VALUES (0, 0, 0, -1, 0)
+                ');
     $pdo->exec('CREATE INDEX todonotes_archive_entries_project_ix ON todonotes_archive_entries(project_id)');
     $pdo->exec('CREATE INDEX todonotes_archive_entries_user_ix ON todonotes_archive_entries(user_id)');
     $pdo->exec('CREATE INDEX todonotes_archive_entries_created_ix ON todonotes_archive_entries(date_created)');
@@ -178,6 +182,10 @@ function Reindex_CreateAndInsert_NewShrunkArchiveEntries_1(PDO $pdo)
                     `old_project_id` INT,
                     PRIMARY KEY(id)
                 ) ENGINE=InnoDB CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci');
+    $pdo->exec('INSERT INTO `todonotes_archive_entries_NEW`
+                    (`project_id`, `user_id`, `date_created`, `date_modified`, `date_archived`)
+                    VALUES (0, 0, 0, -1, 0)
+                ');
     $pdo->exec('INSERT INTO `todonotes_archive_entries_NEW`
                     (`project_id`, `user_id`, `title`, `category`, `description`, `date_created`, `date_modified`, `date_archived`, `old_project_id`)
                     SELECT `project_id`, `user_id`, `title`, `category`, `description`, `date_created`, `date_modified`, `date_archived`, `old_project_id`

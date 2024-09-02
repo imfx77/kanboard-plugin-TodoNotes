@@ -699,15 +699,25 @@ class TodoNotesModel extends Base
         return $result;
     }
 
-    // Emulate a global force refresh by updating a modified timestamp to the special `zero` entry
+    // Emulate a global force refresh by updating a modified/archived timestamp to the special `zero` entry
     public function EmulateForceRefresh()
     {
-        return $this->db->table(self::TABLE_NOTES_ENTRIES)
+        $timestamp = time();
+
+        $notes_entries = $this->db->table(self::TABLE_NOTES_ENTRIES)
             ->eq('project_id', 0)
             ->eq('user_id', 0)
             ->eq('position', 0)
             ->eq('is_active', -1)
             ->update(array('date_modified' => time()));
+
+        $notes_archive_entries = $this->db->table(self::TABLE_NOTES_ARCHIVE_ENTRIES)
+            ->eq('project_id', 0)
+            ->eq('user_id', 0)
+            ->eq('date_modified', -1)
+            ->update(array('date_archived' => $timestamp));
+
+        return $notes_entries && $notes_archive_entries;
     }
 
     // Get last modified timestamp
@@ -825,11 +835,6 @@ class TodoNotesModel extends Base
     // Move note to Archive
     public function MoveNoteToArchive($project_id, $user_id, $note_id)
     {
-        $is_unique = $this->IsUniqueNote($project_id, $user_id, $note_id);
-        if (!$is_unique) {
-            return 0;
-        }
-
         // Get current unixtime
         $timestamp = time();
 
@@ -858,14 +863,9 @@ class TodoNotesModel extends Base
     // Restore note from Archive
     public function RestoreNoteFromArchive($project_id, $user_id, $archived_note_id)
     {
-//        $is_unique = $this->IsUniqueNote($project_id, $user_id, $note_id);
-//        if (!$is_unique) {
-//            return 0;
-//        }
-//
-//        // Get current unixtime
-//        $timestamp = time();
-//
+        // Get current unixtime
+        $timestamp = time();
+
 //        $note = $this->GetProjectNoteForUser($project_id, $user_id, $note_id, false);
 //        $values = array(
 //            'is_active' => $is_active,
