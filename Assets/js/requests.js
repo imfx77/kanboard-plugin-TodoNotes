@@ -546,19 +546,19 @@ static ToggleSessionOption(project_id, user_id, session_option) {
 }
 
 //------------------------------------------------
-// get last modified timestamp
-static GetLastModifiedTimestamp(project_id, user_id) {
+// get last timestamp
+static GetLastTimestamp(project_id, user_id) {
     $.ajax({
         cache: false,
         type: "POST",
-        url: '/?controller=TodoNotesController&action=GetLastModifiedTimestamp&plugin=TodoNotes'
+        url: '/?controller=TodoNotesController&action=GetLastTimestamp&plugin=TodoNotes'
             + '&project_custom_id=' + project_id
             + '&user_id=' + user_id,
         success: function(response) {
             _TodoNotes_.CheckAndTriggerRefresh(JSON.parse(response));
         },
         error: function(xhr,textStatus,e) {
-            alert('_TodoNotes_Requests_.GetLastModifiedTimestamp');
+            alert('_TodoNotes_Requests_.GetLastTimestamp');
             alert(e);
         }
     });

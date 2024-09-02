@@ -591,16 +591,23 @@ class TodoNotesController extends BaseController
         return true;
     }
 
-    public function GetLastModifiedTimestamp()
+    public function GetLastTimestamp()
     {
         $user_id = $this->ResolveUserId();
         $project = $this->ResolveProject($user_id);
         $project_id = $project['id'];
 
-        $validation = $this->todoNotesModel->GetLastModifiedTimestamp($project_id, $user_id);
-        print(json_encode($validation));
+        if (!array_key_exists('todonotesOption_ArchiveView', $_SESSION)) {
+            $_SESSION['todonotesOption_ArchiveView'] = false;
+        }
+        $isArchiveView = $_SESSION['todonotesOption_ArchiveView'];
 
-        return $validation;
+        $lastTimestamps = $isArchiveView
+            ? $this->todoNotesModel->GetLastArchivedTimestamp($project_id, $user_id)
+            : $this->todoNotesModel->GetLastModifiedTimestamp($project_id, $user_id);
+        print(json_encode($lastTimestamps));
+
+        return $lastTimestamps;
     }
 
     public function MoveNoteToArchive()

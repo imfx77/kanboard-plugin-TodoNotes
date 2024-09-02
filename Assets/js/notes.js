@@ -1285,7 +1285,7 @@ static ScheduleCheckModifications() {
             return;
         }
 
-        _TodoNotes_Requests_.GetLastModifiedTimestamp(project_id, user_id);
+        _TodoNotes_Requests_.GetLastTimestamp(project_id, user_id);
     }, 15 * 1000); // 15 sec
 }
 

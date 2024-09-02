@@ -727,7 +727,7 @@ class TodoNotesModel extends Base
             ->eq('user_id', 0)
             ->eq('position', 0)
             ->eq('is_active', -1)
-            ->update(array('date_modified' => time()));
+            ->update(array('date_modified' => $timestamp));
 
         $notes_archive_entries = $this->db->table(self::TABLE_NOTES_ARCHIVE_ENTRIES)
             ->eq('project_id', 0)
@@ -944,4 +944,40 @@ class TodoNotesModel extends Base
             ->remove();
     }
 
+    // Get last archived timestamp
+    public function GetLastArchivedTimestamp($project_id, $user_id)
+    {
+        $result = $this->db->table(self::TABLE_NOTES_ARCHIVE_ENTRIES);
+        $result = $result->columns('date_archived');
+        $result = $result->eq('user_id', $user_id);
+        if ($project_id != 0) {
+            $result = $result->eq('project_id', $project_id);
+        }
+        // including 'date_modified' == -1 i.e. lately deleted notes
+        $result = $result->desc('date_archived');
+        $result = $result->findOne();
+
+        $timestampNotes = 0;
+        if ($result && count($result) == 1) {
+            $timestampNotes = $result['date_archived'];
+        }
+
+        $forceRefresh = $this->db->table(self::TABLE_NOTES_ARCHIVE_ENTRIES)
+            ->columns('date_archived')
+            ->eq('project_id', 0)
+            ->eq('user_id', 0)
+            ->eq('date_modified', -1)
+            ->findOne();
+
+        $timestampProjects = 0;
+        if ($forceRefresh && count($forceRefresh) == 1) {
+            $timestampProjects = $forceRefresh['date_archived'];
+        }
+
+        return array(
+            'notes' => $timestampNotes,
+            'projects' => $timestampProjects,
+            'max' => max($timestampNotes, $timestampProjects),
+        );
+    }
 }
