@@ -35,6 +35,33 @@ static MoveNoteToArchive(project_id, user_id, id) {
     });
 }
 
+static RestoreNoteFromArchive(project_id, user_id, id) {
+    $("#listRestoreNoteProject-P" + project_id).val(project_id);
+
+    $("#dialogRestoreNoteFromArchive").removeClass( 'hideMe' );
+    $("#dialogRestoreNoteFromArchive").dialog({
+        resizable: false,
+        height: "auto",
+        modal: true,
+        buttons: [
+            {
+                text : _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_DIALOG_RESTORE_BTN'),
+                click: function() {
+                    const target_project_id = $("#listRestoreNoteProject-P" + project_id + " option:selected").val();
+                    _TodoNotes_Requests_.RestoreNoteFromArchive(project_id, user_id, id, target_project_id);
+                    $( this ).dialog( "close" );
+                    _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
+                    _TodoNotes_Requests_.RefreshTabs(user_id);
+                },
+            },
+            {
+                text : _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_DIALOG_CANCEL_BTN'),
+                click: function() { $( this ).dialog( "close" ); }
+            },
+        ]
+    });
+}
+
 //------------------------------------------------
 static DeleteNote(project_id, user_id, id, isArchive) {
     $("#dialogDeleteNote").removeClass( 'hideMe' );

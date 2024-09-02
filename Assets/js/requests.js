@@ -31,6 +31,27 @@ static MoveNoteToArchive(project_id, user_id, id) {
 }
 
 //------------------------------------------------
+static RestoreNoteFromArchive(project_id, user_id, id, target_project_id) {
+    const archived_note_id = $("#noteId-P" + project_id + "-" + id).attr('data-note');
+    $.ajax({
+        cache: false,
+        type: "POST",
+        url: '/?controller=TodoNotesController&action=RestoreNoteFromArchive&plugin=TodoNotes'
+            + '&project_custom_id=' + project_id
+            + '&user_id=' + user_id
+            + '&archived_note_id=' + archived_note_id
+            + '&target_project_id=' + target_project_id,
+        success: function() {
+        },
+        error: function(xhr,textStatus,e) {
+            alert('_TodoNotes_Requests_.RestoreNoteFromArchive');
+            alert(e);
+        }
+    });
+    return false;
+}
+
+//------------------------------------------------
 static DeleteNoteFromArchive(project_id, user_id, id) {
     const archived_note_id = $("#noteId-P" + project_id + "-" + id).attr('data-note');
     $.ajax({

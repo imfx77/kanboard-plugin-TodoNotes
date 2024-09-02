@@ -16,6 +16,25 @@ print '</div>';
 
 //---------------------------------------------
 
+print '<div class="hideMe" id="dialogRestoreNoteFromArchive" title="' . t('TodoNotes__PROJECT_NOTE_RESTORE') . '">';
+print '<label for="listRestoreNoteProject-P' . $project_id . '">' . t('TodoNotes__DIALOG_TRANSFER_NOTE_TARGET_PROJECT') . ' : &nbsp&nbsp;</label>';
+print '<select id="listRestoreNoteProject-P' . $project_id . '">';
+foreach ($projectsTabsById as $key => $projectTab) {
+    print '<option value="';
+    print $key;
+    print '">';
+    print $projectTab['name'];
+    print '</option>';
+}
+print '</select>';
+print '<br><br>';
+print '<p style="white-space: pre-wrap;">';
+print t('TodoNotes__DIALOG_RESTORE_NOTE_MSG');
+print '</p>';
+print '</div>';
+
+//---------------------------------------------
+
 print '<div class="hideMe" id="dialogDeleteNote" title="' . t('TodoNotes__PROJECT_NOTE_DELETE') . '">';
 print '<p style="white-space: pre-wrap;">';
 print t('TodoNotes__DIALOG_DELETE_NOTE_MSG');

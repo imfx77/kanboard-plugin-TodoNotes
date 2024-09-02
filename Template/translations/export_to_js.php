@@ -28,6 +28,7 @@ $translationTextIds = array(
     'TodoNotes__JS_DIALOG_RENAME_BTN',
     'TodoNotes__JS_DIALOG_DELETE_BTN',
     'TodoNotes__JS_DIALOG_ARCHIVE_BTN',
+    'TodoNotes__JS_DIALOG_RESTORE_BTN',
     'TodoNotes__JS_DIALOG_REINDEX_BTN',
     'TodoNotes__JS_DIALOG_REORDER_BTN',
     'TodoNotes__JS_DIALOG_RESULT_TITLE',

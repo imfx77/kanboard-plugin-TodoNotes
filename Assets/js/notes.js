@@ -702,6 +702,14 @@ static #NoteActionHandlers() {
         _TodoNotes_Modals_.MoveNoteToArchive(project_id, user_id, id);
     });
 
+    // RESTORE Note from ARCHIVE on Archive button for existing notes
+    $("button" + ".noteRestoreFromArchive").click(function() {
+        const project_id = $(this).attr('data-project');
+        const user_id = $(this).attr('data-user');
+        const id = $(this).attr('data-id');
+        _TodoNotes_Modals_.RestoreNoteFromArchive(project_id, user_id, id);
+    });
+
     // POST on Delete Note from Archive button
     $("button" + ".noteDeleteFromArchive").click(function() {
         const project_id = $(this).attr('data-project');

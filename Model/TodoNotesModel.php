@@ -85,7 +85,7 @@ class TodoNotesModel extends Base
         return t('TodoNotes__PROJECT_NOT_FOUND');
     }
 
-    // Get notes related to user and project
+    // Get note related to user and project
     public function GetProjectNoteForUser($project_id, $user_id, $note_id, $doFormatDates = true)
     {
         $note = $this->db->table(self::TABLE_NOTES_ENTRIES)
@@ -157,6 +157,24 @@ class TodoNotesModel extends Base
         }
 
         return $result;
+    }
+
+    // Get archived note related to user and project
+    public function GetArchivedProjectNoteForUser($project_id, $user_id, $archived_note_id, $doFormatDates = true)
+    {
+        $note = $this->db->table(self::TABLE_NOTES_ARCHIVE_ENTRIES)
+            ->eq('user_id', $user_id)
+            ->eq('project_id', $project_id)
+            ->eq('id', $archived_note_id)
+            ->gte('date_modified', 0) // -1 == deleted
+            ->findOne();
+
+        if ($doFormatDates) {
+            $userDateTimeFormat = $this->dateParser->getUserDateTimeFormat();
+            $note = $this->dateParser->format($note, array('date_created', 'date_modified', 'date_archived'), $userDateTimeFormat);
+        }
+
+        return $note;
     }
 
     // Get archived notes related to user and project
@@ -395,12 +413,12 @@ class TodoNotesModel extends Base
             ->findAll();
     }
 
-    // Add note
-    public function AddNote($project_id, $user_id, $is_active, $title, $description, $category)
+    // Get last note position for project and user
+    private function GetLastNotePosition($project_id, $user_id)
     {
-        // Get last position number
         $lastPosition = $this->db->table(self::TABLE_NOTES_ENTRIES)
             ->eq('project_id', $project_id)
+            ->eq('user_id', $user_id)
             ->gte('is_active', 0) // -1 == deleted
             ->desc('position')
             ->findOneColumn('position');
@@ -409,8 +427,14 @@ class TodoNotesModel extends Base
             $lastPosition = 0;
         }
 
-        // Add 1 to position
-        $lastPosition++;
+        return $lastPosition;
+    }
+
+    // Add note
+    public function AddNote($project_id, $user_id, $is_active, $title, $description, $category)
+    {
+        // Get last position
+        $lastPosition = $this->GetLastNotePosition($project_id, $user_id) + 1;
 
         // Get current unixtime
         $timestamp = time();
@@ -598,18 +622,7 @@ class TodoNotesModel extends Base
     public function TransferNote($project_id, $user_id, $note_id, $target_project_id)
     {
         // Get last position number for target project
-        $lastPosition = $this->db->table(self::TABLE_NOTES_ENTRIES)
-            ->eq('project_id', $target_project_id)
-            ->gte('is_active', 0) // -1 == deleted
-            ->desc('position')
-            ->findOneColumn('position');
-
-        if (empty($lastPosition)) {
-            $lastPosition = 0;
-        }
-
-        // Add 1 to position
-        $lastPosition++;
+        $lastPosition = $this->GetLastNotePosition($target_project_id, $user_id) + 1;
 
         // Get current unixtime
         $timestamp = time();
@@ -706,6 +719,7 @@ class TodoNotesModel extends Base
     // Emulate a global force refresh by updating a modified/archived timestamp to the special `zero` entry
     public function EmulateForceRefresh()
     {
+        // Get current unixtime
         $timestamp = time();
 
         $notes_entries = $this->db->table(self::TABLE_NOTES_ENTRIES)
@@ -854,40 +868,46 @@ class TodoNotesModel extends Base
             'date_archived' => $timestamp,
         );
 
-        $result = $this->db->table(self::TABLE_NOTES_ARCHIVE_ENTRIES)
+        $is_archived = $this->db->table(self::TABLE_NOTES_ARCHIVE_ENTRIES)
             ->insert($values) ? true : false;
 
-        if ($result) {
-            $result = $this->DeleteNote($project_id, $user_id, $note_id);
+        if ($is_archived) {
+            $this->DeleteNote($project_id, $user_id, $note_id);
         }
-
-        return $result ? $timestamp : 0;
     }
 
     // Restore note from Archive
-    public function RestoreNoteFromArchive($project_id, $user_id, $archived_note_id)
+    public function RestoreNoteFromArchive($project_id, $user_id, $archived_note_id, $target_project_id)
     {
+        // Get last position number for target project
+        $lastPosition = $this->GetLastNotePosition($target_project_id, $user_id) + 1;
+
         // Get current unixtime
         $timestamp = time();
 
-//        $note = $this->GetProjectNoteForUser($project_id, $user_id, $note_id, false);
-//        $values = array(
-//            'is_active' => $is_active,
-//            'title' => $title,
-//            'description' => $description,
-//            'category' => $category,
-//            'date_modified' => $timestamp,
-//        );
+        $archived_note = $this->GetArchivedProjectNoteForUser($project_id, $user_id, $archived_note_id, false);
+        $values = array(
+            'project_id' => $target_project_id,
+            'user_id' => $archived_note['user_id'],
+            'position' => $lastPosition,
+            'is_active' => 1, // open
+            'title' => $archived_note['title'],
+            'description' => $archived_note['description'],
+            'category' => $archived_note['category'],
+            'date_created' => $archived_note['date_created'],
+            'date_modified' => $timestamp,
+            'date_notified' => 0,
+            'last_notified' => 0,
+            'flags_notified' => 0,
+            'date_restored' => $timestamp,
+        );
 
-//        $this->DeleteNote($project_id, $user_id, $note_id);
+        $is_restored = $this->db->table(self::TABLE_NOTES_ENTRIES)
+            ->insert($values) ? true : false;
 
-//        return ($this->db->table(self::TABLE_NOTES_ENTRIES)
-//                        ->eq('id', $note_id)
-//                        ->eq('project_id', $project_id)
-//                        ->eq('user_id', $user_id)
-//                        ->update($values)) ? $timestamp : 0;
-
-        return 0;
+        if ($is_restored) {
+            $this->DeleteNoteFromArchive($project_id, $user_id, $archived_note_id);
+        }
     }
 
     // Delete archived note

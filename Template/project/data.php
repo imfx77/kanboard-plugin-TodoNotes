@@ -169,25 +169,28 @@ print '>';
 print '<i class="fa fa-paint-brush" aria-hidden="true"></i>';
 print '</button>';
 
-// Toggle show All Done
-print '<button id="settingsShowAllDone" class="toolbarButton"';
-print ' title="' . t('TodoNotes__PROJECT_TOGGLE_SHOW_ALL_DONE') . '"';
-print ' data-id="0"';
-print ' data-project="' . $project_id . '"';
-print ' data-user="' . $user_id . '"';
-print '>';
-print '<i class="fa fa-check-square" aria-hidden="true"></i>';
-print '</button>';
+// hide some settings buttons in Archive View
+if (!$optionArchiveView) {
+    // Toggle show All Done
+    print '<button id="settingsShowAllDone" class="toolbarButton"';
+    print ' title="' . t('TodoNotes__PROJECT_TOGGLE_SHOW_ALL_DONE') . '"';
+    print ' data-id="0"';
+    print ' data-project="' . $project_id . '"';
+    print ' data-user="' . $user_id . '"';
+    print '>';
+    print '<i class="fa fa-check-square" aria-hidden="true"></i>';
+    print '</button>';
 
-// Toggle sort by status
-print '<button id="settingsSortByStatus" class="toolbarButton"';
-print ' title="' . t('TodoNotes__PROJECT_TOGGLE_SORT_BY_STATUS') . '"';
-print ' data-id="0"';
-print ' data-project="' . $project_id . '"';
-print ' data-user="' . $user_id . '"';
-print '>';
-print '<i class="fa fa-sort" aria-hidden="true"></i>';
-print '</button>';
+    // Toggle sort by status
+    print '<button id="settingsSortByStatus" class="toolbarButton"';
+    print ' title="' . t('TodoNotes__PROJECT_TOGGLE_SORT_BY_STATUS') . '"';
+    print ' data-id="0"';
+    print ' data-project="' . $project_id . '"';
+    print ' data-user="' . $user_id . '"';
+    print '>';
+    print '<i class="fa fa-sort" aria-hidden="true"></i>';
+    print '</button>';
+}
 
 // add some space between button groups
 print '<button class="toolbarSeparator">&nbsp;</button>';

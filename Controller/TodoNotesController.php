@@ -611,10 +611,7 @@ class TodoNotesController extends BaseController
 
         $note_id = $this->request->getStringParam('note_id');
 
-        $timestamp = $this->todoNotesModel->MoveNoteToArchive($project_id, $user_id, $note_id);
-        echo(json_encode(array('timestamp' => $timestamp,
-                               'timestring' => date($this->dateParser->getUserDateTimeFormat(), $timestamp))));
-        return $timestamp;
+        return $this->todoNotesModel->MoveNoteToArchive($project_id, $user_id, $note_id);
     }
 
     public function RestoreNoteFromArchive()
@@ -623,7 +620,10 @@ class TodoNotesController extends BaseController
         $project = $this->ResolveProject($user_id);
         $project_id = $project['id'];
 
-        $note_id = $this->request->getStringParam('note_id');
+        $archived_note_id = $this->request->getStringParam('archived_note_id');
+        $target_project_id = $this->request->getStringParam('target_project_id');
+
+        return $this->todoNotesModel->RestoreNoteFromArchive($project_id, $user_id, $archived_note_id, $target_project_id);
     }
 
     public function DeleteNoteFromArchive()
