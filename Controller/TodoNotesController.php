@@ -621,6 +621,15 @@ class TodoNotesController extends BaseController
         return $this->todoNotesModel->MoveNoteToArchive($project_id, $user_id, $note_id);
     }
 
+    public function MoveAllDoneNotesToArchive()
+    {
+        $user_id = $this->ResolveUserId();
+        $project = $this->ResolveProject($user_id);
+        $project_id = $project['id'];
+
+        return $this->todoNotesModel->MoveAllDoneNotesToArchive($project_id, $user_id);
+    }
+
     public function RestoreNoteFromArchive()
     {
         $user_id = $this->ResolveUserId();

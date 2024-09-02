@@ -88,8 +88,12 @@ static AdjustNotePlaceholders(project_id, id) {
     } else {
         const labelTitle = $("#noteTitleLabel-P" + project_id + "-" + id);
         const buttonDetails = $("#showDetails-P" + project_id + "-" + id);
-        if (labelTitle.is(":visible") && labelTitle.offset().top < buttonDetails.offset().top + buttonDetails.outerHeight()) {
-            $("#notePlaceholder-P" + project_id + "-" + id).addClass('hideMe');
+        if (labelTitle.is(":visible")) {
+            if (labelTitle.offset().top >= buttonDetails.offset().top + buttonDetails.height()) {
+                $("#notePlaceholder-P" + project_id + "-" + id).removeClass('hideMe');
+            } else {
+                $("#notePlaceholder-P" + project_id + "-" + id).addClass('hideMe');
+            }
         } else {
             $("#notePlaceholder-P" + project_id + "-" + id).removeClass('hideMe');
         }
@@ -864,6 +868,13 @@ static #SettingsHandlers() {
         const project_id = $(this).attr('data-project');
         const user_id = $(this).attr('data-user');
         _TodoNotes_Modals_.DeleteAllDoneNotes(project_id, user_id);
+    });
+
+    // POST archive all done
+    $("#settingsArchiveAllDone").click(function() {
+        const project_id = $(this).attr('data-project');
+        const user_id = $(this).attr('data-user');
+        _TodoNotes_Modals_.MoveAllDoneNotesToArchive(project_id, user_id);
     });
 
     // POST stats

@@ -16,6 +16,14 @@ print '</div>';
 
 //---------------------------------------------
 
+print '<div class="hideMe" id="dialogMoveAllDoneNotesToArchive" title="' . t('TodoNotes__PROJECT_ARCHIVE_ALL_DONE_NOTES') . '">';
+print '<p style="white-space: pre-wrap;">';
+print t('TodoNotes__DIALOG_ARCHIVE_ALL_DONE_MSG');
+print '</p>';
+print '</div>';
+
+//---------------------------------------------
+
 print '<div class="hideMe" id="dialogRestoreNoteFromArchive" title="' . t('TodoNotes__PROJECT_NOTE_RESTORE') . '">';
 print '<label for="listRestoreNoteProject-P' . $project_id . '">' . t('TodoNotes__DIALOG_TRANSFER_NOTE_TARGET_PROJECT') . ' : &nbsp&nbsp;</label>';
 print '<select id="listRestoreNoteProject-P' . $project_id . '">';

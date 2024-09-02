@@ -881,6 +881,22 @@ class TodoNotesModel extends Base
         }
     }
 
+    // Move ALL done notes to Archive
+    public function MoveAllDoneNotesToArchive($project_id, $user_id)
+    {
+        // select done notes in default order
+        $done_notes = $this->db->table(self::TABLE_NOTES_ENTRIES)
+            ->eq('project_id', $project_id)
+            ->eq('user_id', $user_id)
+            ->eq('is_active', 0)
+            ->desc('position')
+            ->findAll();
+
+        foreach ($done_notes as $note) {
+            $this->MoveNoteToArchive($project_id, $user_id, $note['id']);
+        }
+    }
+
     // Restore note from Archive
     public function RestoreNoteFromArchive($project_id, $user_id, $archived_note_id, $target_project_id)
     {

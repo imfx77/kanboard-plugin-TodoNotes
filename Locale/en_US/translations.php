@@ -37,6 +37,7 @@ return array(
     'TodoNotes__PROJECT_CREATE_REPORT' => 'Create Report',
     'TodoNotes__PROJECT_NOTES_STATS' => 'Notes Stats',
     'TodoNotes__PROJECT_DELETE_ALL_DONE_NOTES' => '⚠️ Delete ALL Done Notes!',
+    'TodoNotes__PROJECT_ARCHIVE_ALL_DONE_NOTES' => 'Archive ALL Done Notes!',
     'TodoNotes__PROJECT_TOGGLE_LIST' => 'Toggle List',
     //
     'TodoNotes__PROJECT_NOTE_REFRESH_ORDER' => 'Refresh Order',
@@ -104,6 +105,8 @@ Might be waiting for an unsubmitted New Note data input!',
     'TodoNotes__DIALOG_DELETE_ALL_DONE_MSG' => '⚠️ ALL Done notes will be permanently deleted and cannot be recovered!
 &#10;Are you sure?',
     'TodoNotes__DIALOG_ARCHIVE_NOTE_MSG' => '⚠️ This note will be moved to Archive, it can be restored from there at some later moment on demand!
+&#10;Continue?',
+    'TodoNotes__DIALOG_ARCHIVE_ALL_DONE_MSG' => '⚠️ ALL Done notes will be moved to Archive, they can be restored from there at some later moment on demand!
 &#10;Continue?',
     'TodoNotes__DIALOG_RESTORE_NOTE_MSG' => '⚠️ This note will be automatically restored from Archive to the original list it belonged to!
 &#10;⚠️ You can however override that by selecting another target from the above dropdown!  

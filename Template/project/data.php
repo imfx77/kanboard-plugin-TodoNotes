@@ -243,6 +243,16 @@ if (!$readonlyNotes && !$optionArchiveView) {
     // add some space between button groups
     print '<button class="toolbarSeparator">&nbsp;</button>';
 
+    // Settings archive all done
+    print '<button id="settingsArchiveAllDone" class="toolbarButton"';
+    print ' title="' . t('TodoNotes__PROJECT_ARCHIVE_ALL_DONE_NOTES') . '"';
+    print ' data-id="0"';
+    print ' data-project="' . $project_id . '"';
+    print ' data-user="' . $user_id . '"';
+    print '>';
+    print '<i class="fa fa-file-archive-o" aria-hidden="true"></i>';
+    print'</button>';
+
     // Settings delete all done
     print '<button id="settingsDeleteAllDone" class="toolbarButton buttonToggled"';
     print ' title="' . t('TodoNotes__PROJECT_DELETE_ALL_DONE_NOTES') . '"';
