@@ -96,7 +96,7 @@ Might be waiting for an unsubmitted New Note data input!',
     //
     'TodoNotes__DIALOG_REINDEX_MSG' => 'This routine optimizes the Notes and Note Lists tables by shrinking the deleted records and reindexing all list and note Ids.
 &#10;⚠️ BE AWARE that it rewrites those tables from scratch, so it may take some time, during which the routine MUST NOT be interrupted!
-&#10;⚠️ IT IS VERY LIKELY that reindexing will break the list references of your Archived Notes, if you have any, thus making them orphaned!
+&#10;⚠️ This operation will affect BOTH the Notes and the Archived Notes tables for each list!
 &#10;Continue?',
     //
     'TodoNotes__DIALOG_DELETE_NOTE_MSG' => '⚠️ This note will be permanently deleted and cannot be recovered!
@@ -132,7 +132,7 @@ Might be waiting for an unsubmitted New Note data input!',
     'TodoNotes__DIALOG_DELETE_CUSTOM_NOTE_LIST_TITLE' => '⚠️ Delete custom note list!',
     'TodoNotes__DIALOG_DELETE_CUSTOM_NOTE_LIST_MSG' => '⚠️ Deleting this list will permanently delete ALL the notes it contains, those cannot be recovered!
 &#10;⚠️ If you have Admin privileges, you can delete Global custom lists - but BE AWARE that this action will delete ALL the notes of ALL the users that share those Global custom lists! 
-&#10;⚠️ This operation will also leave orphaned Archived Notes, if you have any for that list!
+&#10;⚠️ This operation will delete BOTH the Notes and the Archived Notes entries for the list!
 &#10;Continue?',
     'TodoNotes__DIALOG_REORDER_CUSTOM_NOTE_LIST_TITLE' => 'Reorder custom note list',
     'TodoNotes__DIALOG_REORDER_CUSTOM_NOTE_LIST_MSG' => 'Reordering custom lists is a persistent operation, the list will stay ordered that way!

@@ -183,7 +183,7 @@ function Reindex_CreateAndInsert_NewShrunkArchiveEntries_1(PDO $pdo)
                     (project_id, user_id, title, category, description, date_created, date_modified, date_archived, old_project_id)
                     SELECT project_id, user_id, title, category, description, date_created, date_modified, date_archived, old_project_id
                     FROM todonotes_archive_entries
-                    WHERE project_id <> 0 AND user_id > 0 AND date_archived > 0
+                    WHERE project_id <> 0 AND user_id > 0 AND date_modified > 0 AND date_archived > 0
                 ');
 }
 

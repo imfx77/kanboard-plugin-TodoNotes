@@ -687,6 +687,11 @@ class TodoNotesModel extends Base
             ->eq('project_id', $project_id)
             ->remove();
 
+        // delete archived notes
+        $this->db->table(self::TABLE_NOTES_ARCHIVE_ENTRIES)
+            ->eq('project_id', $project_id)
+            ->remove();
+
         // delete custom list
         return $this->db->table(self::TABLE_NOTES_CUSTOM_PROJECTS)
             ->eq('id', -$project_id)
