@@ -803,14 +803,13 @@ class TodoNotesModel extends Base
         $lastVersion = constant($schemaPrefix . 'VERSION');
 
         $reindexSequence = array(
+            'Reindex_Rename_OldTables',
             'Reindex_AddAndUpdate_OldProjectIds',
-            'Reindex_CreateAndInsert_NewShrunkCutomProjects',
+            'Reindex_CreateAndInsert_NewShrunkCustomProjects',
+            'Reindex_CrossUpdate_ReindexedProjectIds',
             'Reindex_CreateAndInsert_NewShrunkEntries',
             'Reindex_CreateAndInsert_NewShrunkArchiveEntries',
-            'Reindex_CrossUpdate_ReindexedProjectIds',
-            'Reindex_Drop_OldProjectIds',
             'Reindex_Drop_OldTables',
-            'Reindex_Rename_NewTables',
             'Reindex_RecreateIndices_CustomProjects',
             'Reindex_RecreateIndices_Entries',
             'Reindex_RecreateIndices_ArchiveEntries',

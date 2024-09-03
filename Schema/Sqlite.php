@@ -73,7 +73,7 @@ function version_1(PDO $pdo)
 
     // create+insert+index archive entries
     $pdo->exec('CREATE TABLE IF NOT EXISTS todonotes_archive_entries (
-                    id INTEGER NOT NULL PRIMARY KEY,
+                    id INTEGER PRIMARY KEY,
                     project_id INTEGER NOT NULL,
                     user_id INTEGER NOT NULL,
                     title TEXT,
@@ -109,35 +109,71 @@ function version_1(PDO $pdo)
 //------------------------------------------------
 // v.1 reindex routines
 //------------------------------------------------
-function Reindex_AddAndUpdate_OldProjectIds_1(PDO $pdo)
+function Reindex_Rename_OldTables_1(PDO $pdo)
 {
-    $pdo->exec('ALTER TABLE todonotes_custom_projects ADD old_project_id INTEGER');
-    $pdo->exec('UPDATE todonotes_custom_projects SET old_project_id = id');
-    $pdo->exec('ALTER TABLE todonotes_entries ADD old_project_id INTEGER');
-    $pdo->exec('UPDATE todonotes_entries SET old_project_id = project_id');
-    $pdo->exec('ALTER TABLE todonotes_archive_entries ADD old_project_id INTEGER');
-    $pdo->exec('UPDATE todonotes_archive_entries SET old_project_id = project_id');
+    $pdo->exec('ALTER TABLE todonotes_custom_projects RENAME TO todonotes_custom_projects_OLD');
+    $pdo->exec('ALTER TABLE todonotes_entries RENAME TO todonotes_entries_OLD');
+    $pdo->exec('ALTER TABLE todonotes_archive_entries RENAME TO todonotes_archive_entries_OLD');
 }
 
-function Reindex_CreateAndInsert_NewShrunkCutomProjects_1(PDO $pdo)
+function Reindex_AddAndUpdate_OldProjectIds_1(PDO $pdo)
 {
-    $pdo->exec('CREATE TABLE todonotes_custom_projects_NEW (
+    $pdo->exec('ALTER TABLE todonotes_custom_projects_OLD ADD old_project_id INTEGER');
+    $pdo->exec('UPDATE todonotes_custom_projects_OLD SET old_project_id = id');
+    
+    $pdo->exec('ALTER TABLE todonotes_entries_OLD ADD old_project_id INTEGER');
+    $pdo->exec('UPDATE todonotes_entries_OLD SET old_project_id = project_id');
+    
+    $pdo->exec('ALTER TABLE todonotes_archive_entries_OLD ADD old_project_id INTEGER');
+    $pdo->exec('UPDATE todonotes_archive_entries_OLD SET old_project_id = project_id');
+}
+
+function Reindex_CreateAndInsert_NewShrunkCustomProjects_1(PDO $pdo)
+{
+    $pdo->exec('CREATE TABLE todonotes_custom_projects (
                     id INTEGER PRIMARY KEY,
                     owner_id INTEGER NOT NULL DEFAULT 0,
                     position INTEGER,
-                    project_name TEXT,
+                    project_name TEXT
+                )');
+    $pdo->exec('INSERT INTO todonotes_custom_projects
+				    (owner_id, position, project_name)
+                    SELECT owner_id, position, project_name
+				    FROM todonotes_custom_projects_OLD
+				');
+
+    $pdo->exec('CREATE TABLE todonotes_custom_projects_REINDEX (
+                    id INTEGER PRIMARY KEY,
                     old_project_id INTEGER
                 )');
-    $pdo->exec('INSERT INTO todonotes_custom_projects_NEW
-				    (owner_id, position, project_name, old_project_id)
-                    SELECT owner_id, position, project_name, old_project_id
-				    FROM todonotes_custom_projects
+    $pdo->exec('INSERT INTO todonotes_custom_projects_REINDEX
+				    (old_project_id)
+                    SELECT old_project_id
+				    FROM todonotes_custom_projects_OLD
 				');
+}
+
+function Reindex_CrossUpdate_ReindexedProjectIds_1(PDO $pdo)
+{
+    $pdo->exec('UPDATE todonotes_entries_OLD
+                    SET project_id = -
+                        (SELECT tProjects.id FROM todonotes_custom_projects_REINDEX tProjects
+                        WHERE todonotes_entries_OLD.old_project_id = -tProjects.old_project_id)
+                    WHERE EXISTS (SELECT tProjects.id FROM todonotes_custom_projects_REINDEX tProjects
+                        WHERE todonotes_entries_OLD.old_project_id = -tProjects.old_project_id)
+                ');
+    $pdo->exec('UPDATE todonotes_archive_entries_OLD
+                    SET project_id = -
+                        (SELECT tProjects.id FROM todonotes_custom_projects_REINDEX tProjects
+                        WHERE todonotes_archive_entries_OLD.old_project_id = -tProjects.old_project_id)
+                    WHERE EXISTS (SELECT tProjects.id FROM todonotes_custom_projects_REINDEX tProjects
+                        WHERE todonotes_archive_entries_OLD.old_project_id = -tProjects.old_project_id)
+                ');
 }
 
 function Reindex_CreateAndInsert_NewShrunkEntries_1(PDO $pdo)
 {
-    $pdo->exec('CREATE TABLE todonotes_entries_NEW (
+    $pdo->exec('CREATE TABLE todonotes_entries (
                     id INTEGER PRIMARY KEY,
                     project_id INTEGER NOT NULL,
                     user_id INTEGER NOT NULL,
@@ -151,24 +187,23 @@ function Reindex_CreateAndInsert_NewShrunkEntries_1(PDO $pdo)
                     date_notified INTEGER,
                     last_notified INTEGER,
                     flags_notified INTEGER,
-                    date_restored INTEGER,
-                    old_project_id INTEGER
+                    date_restored INTEGER
                 )');
-    $pdo->exec('INSERT INTO todonotes_entries_NEW
-                    (project_id, user_id, position, is_active, date_created, date_modified, date_notified, last_notified, flags_notified, date_restored, old_project_id)
-                    VALUES (0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0)
+    $pdo->exec('INSERT INTO todonotes_entries
+                    (project_id, user_id, position, is_active, date_created, date_modified, date_notified, last_notified, flags_notified, date_restored)
+                    VALUES (0, 0, 0, -1, 0, 0, 0, 0, 0, 0)
                 ');
-    $pdo->exec('INSERT INTO todonotes_entries_NEW
-                    (project_id, user_id, position, is_active, title, category, description, date_created, date_modified, date_notified, last_notified, flags_notified, date_restored, old_project_id)
-                    SELECT project_id, user_id, position, is_active, title, category, description, date_created, date_modified, date_notified, last_notified, flags_notified, date_restored, old_project_id
-                    FROM todonotes_entries
+    $pdo->exec('INSERT INTO todonotes_entries
+                    (project_id, user_id, position, is_active, title, category, description, date_created, date_modified, date_notified, last_notified, flags_notified, date_restored)
+                    SELECT project_id, user_id, position, is_active, title, category, description, date_created, date_modified, date_notified, last_notified, flags_notified, date_restored
+                    FROM todonotes_entries_OLD
                     WHERE project_id <> 0 AND user_id > 0 AND position > 0 AND is_active >= 0
                 ');
 }
 
 function Reindex_CreateAndInsert_NewShrunkArchiveEntries_1(PDO $pdo)
 {
-    $pdo->exec('CREATE TABLE IF NOT EXISTS todonotes_archive_entries_NEW (
+    $pdo->exec('CREATE TABLE IF NOT EXISTS todonotes_archive_entries (
                     id INTEGER PRIMARY KEY,
                     project_id INTEGER NOT NULL,
                     user_id INTEGER NOT NULL,
@@ -179,58 +214,27 @@ function Reindex_CreateAndInsert_NewShrunkArchiveEntries_1(PDO $pdo)
                     date_modified INTEGER,
                     date_notified INTEGER,
                     last_notified INTEGER,
-                    date_archived INTEGER,
-                    old_project_id INTEGER
+                    date_archived INTEGER
                 )');
-    $pdo->exec('INSERT INTO todonotes_archive_entries_NEW
-                    (project_id, user_id, date_created, date_modified, date_notified, last_notified, date_archived, old_project_id)
-                    VALUES (0, 0, 0, -1, 0, 0, 0, 0)
+    $pdo->exec('INSERT INTO todonotes_archive_entries
+                    (project_id, user_id, date_created, date_modified, date_notified, last_notified, date_archived)
+                    VALUES (0, 0, 0, -1, 0, 0, 0)
                 ');
-    $pdo->exec('INSERT INTO todonotes_archive_entries_NEW
-                    (project_id, user_id, title, category, description, date_created, date_modified, date_notified, last_notified, date_archived, old_project_id)
-                    SELECT project_id, user_id, title, category, description, date_created, date_modified, date_notified, last_notified, date_archived, old_project_id
-                    FROM todonotes_archive_entries
+    $pdo->exec('INSERT INTO todonotes_archive_entries
+                    (project_id, user_id, title, category, description, date_created, date_modified, date_notified, last_notified, date_archived)
+                    SELECT project_id, user_id, title, category, description, date_created, date_modified, date_notified, last_notified, date_archived
+                    FROM todonotes_archive_entries_OLD
                     WHERE project_id <> 0 AND user_id > 0 AND date_modified > 0 AND date_archived > 0
                 ');
 }
 
-function Reindex_CrossUpdate_ReindexedProjectIds_1(PDO $pdo)
-{
-    $pdo->exec('UPDATE todonotes_entries_NEW
-                    SET project_id = -
-                        (SELECT tProjects.id FROM todonotes_custom_projects_NEW tProjects
-                        WHERE todonotes_entries_NEW.old_project_id = -tProjects.old_project_id)
-                    WHERE EXISTS (SELECT tProjects.id FROM todonotes_custom_projects_NEW tProjects
-                        WHERE todonotes_entries_NEW.old_project_id = -tProjects.old_project_id)
-                ');
-    $pdo->exec('UPDATE todonotes_archive_entries_NEW
-                    SET project_id = -
-                        (SELECT tProjects.id FROM todonotes_custom_projects_NEW tProjects
-                        WHERE todonotes_archive_entries_NEW.old_project_id = -tProjects.old_project_id)
-                    WHERE EXISTS (SELECT tProjects.id FROM todonotes_custom_projects_NEW tProjects
-                        WHERE todonotes_archive_entries_NEW.old_project_id = -tProjects.old_project_id)
-                ');
-}
-
-function Reindex_Drop_OldProjectIds_1(PDO $pdo)
-{
-    $pdo->exec('ALTER TABLE todonotes_custom_projects_NEW DROP old_project_id');
-    $pdo->exec('ALTER TABLE todonotes_entries_NEW DROP old_project_id');
-    $pdo->exec('ALTER TABLE todonotes_archive_entries_NEW DROP old_project_id');
-}
-
 function Reindex_Drop_OldTables_1(PDO $pdo)
 {
-    $pdo->exec('DROP TABLE todonotes_custom_projects');
-    $pdo->exec('DROP TABLE todonotes_entries');
-    $pdo->exec('DROP TABLE todonotes_archive_entries');
-}
-
-function Reindex_Rename_NewTables_1(PDO $pdo)
-{
-    $pdo->exec('ALTER TABLE todonotes_custom_projects_NEW RENAME TO todonotes_custom_projects');
-    $pdo->exec('ALTER TABLE todonotes_entries_NEW RENAME TO todonotes_entries');
-    $pdo->exec('ALTER TABLE todonotes_archive_entries_NEW RENAME TO todonotes_archive_entries');
+    $pdo->exec('DROP TABLE todonotes_custom_projects_REINDEX');
+    
+    $pdo->exec('DROP TABLE todonotes_custom_projects_OLD');
+    $pdo->exec('DROP TABLE todonotes_entries_OLD');
+    $pdo->exec('DROP TABLE todonotes_archive_entries_OLD');
 }
 
 function Reindex_RecreateIndices_CustomProjects_1(PDO $pdo)
