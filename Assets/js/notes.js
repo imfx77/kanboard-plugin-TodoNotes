@@ -1153,7 +1153,7 @@ static RefreshNoteNotificationsState(project_id, id) {
 // all notes refresh notifications vis state
 static #RefreshAllNotesNotificationsState() {
     // console.log('_TodoNotes_.RefreshAllNotesNotificationsState');
-    $(".noteNotificationsSetup").each(function() {
+    $("[id^=noteNotificationsLabel-P]").each(function() {
         const project_id = $(this).attr('data-project');
         const id = $(this).attr('data-id');
         _TodoNotes_.RefreshNoteNotificationsState(project_id, id)

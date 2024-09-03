@@ -171,7 +171,8 @@ class TodoNotesModel extends Base
 
         if ($doFormatDates) {
             $userDateTimeFormat = $this->dateParser->getUserDateTimeFormat();
-            $note = $this->dateParser->format($note, array('date_created', 'date_modified', 'date_archived'), $userDateTimeFormat);
+            $note['notifications_alert_timestamp'] = $note['date_notified']; // keep the timestamp
+            $note = $this->dateParser->format($note, array('date_created', 'date_modified', 'date_notified', 'last_notified', 'date_archived'), $userDateTimeFormat);
         }
 
         return $note;
@@ -189,7 +190,8 @@ class TodoNotesModel extends Base
 
         $userDateTimeFormat = $this->dateParser->getUserDateTimeFormat();
         foreach ($result as &$note) {
-            $note = $this->dateParser->format($note, array('date_created', 'date_modified', 'date_archived'), $userDateTimeFormat);
+            $note['notifications_alert_timestamp'] = $note['date_notified']; // keep the timestamp
+            $note = $this->dateParser->format($note, array('date_created', 'date_modified', 'date_notified', 'last_notified', 'date_archived'), $userDateTimeFormat);
         }
 
         return $result;
@@ -218,7 +220,8 @@ class TodoNotesModel extends Base
 
         $userDateTimeFormat = $this->dateParser->getUserDateTimeFormat();
         foreach ($result as &$note) {
-            $note = $this->dateParser->format($note, array('date_created', 'date_modified', 'date_archived'), $userDateTimeFormat);
+            $note['notifications_alert_timestamp'] = $note['date_notified']; // keep the timestamp
+            $note = $this->dateParser->format($note, array('date_created', 'date_modified', 'date_notified', 'last_notified', 'date_archived'), $userDateTimeFormat);
         }
 
         return $result;
@@ -870,6 +873,8 @@ class TodoNotesModel extends Base
             'category' => $note['category'],
             'date_created' => $note['date_created'],
             'date_modified' => $note['date_modified'],
+            'date_notified' => $note['date_notified'],
+            'last_notified' => $note['last_notified'],
             'date_archived' => $timestamp,
         );
 
@@ -916,9 +921,9 @@ class TodoNotesModel extends Base
             'description' => $archived_note['description'],
             'category' => $archived_note['category'],
             'date_created' => $archived_note['date_created'],
-            'date_modified' => $timestamp,
-            'date_notified' => 0,
-            'last_notified' => 0,
+            'date_modified' => $archived_note['date_modified'],
+            'date_notified' => $archived_note['date_notified'],
+            'last_notified' => $archived_note['last_notified'],
             'flags_notified' => 0,
             'date_restored' => $timestamp,
         );
@@ -929,6 +934,8 @@ class TodoNotesModel extends Base
         if ($is_restored) {
             $this->DeleteNoteFromArchive($project_id, $user_id, $archived_note_id);
         }
+
+        $this->EmulateForceRefresh();
     }
 
     // Delete archived note

@@ -166,7 +166,7 @@ print ' data-id="0"';
 print ' data-project="' . $project_id . '"';
 print ' data-user="' .  $user_id . '"';
 print '>';
-print '<i class="fa fa-paint-brush" aria-hidden="true"></i>';
+print '<i class="fa fa-tags" aria-hidden="true"></i>';
 print '</button>';
 
 // hide some settings buttons in Archive View
@@ -243,6 +243,16 @@ if (!$readonlyNotes && !$optionArchiveView) {
     // add some space between button groups
     print '<button class="toolbarSeparator">&nbsp;</button>';
 
+    // Settings delete all done
+    print '<button id="settingsDeleteAllDone" class="toolbarButton"';
+    print ' title="' . t('TodoNotes__PROJECT_DELETE_ALL_DONE_NOTES') . '"';
+    print ' data-id="0"';
+    print ' data-project="' . $project_id . '"';
+    print ' data-user="' . $user_id . '"';
+    print '>';
+    print '<i class="fa fa-trash" aria-hidden="true"></i>';
+    print'</button>';
+
     // Settings archive all done
     print '<button id="settingsArchiveAllDone" class="toolbarButton"';
     print ' title="' . t('TodoNotes__PROJECT_ARCHIVE_ALL_DONE_NOTES') . '"';
@@ -251,16 +261,6 @@ if (!$readonlyNotes && !$optionArchiveView) {
     print ' data-user="' . $user_id . '"';
     print '>';
     print '<i class="fa fa-file-archive-o" aria-hidden="true"></i>';
-    print'</button>';
-
-    // Settings delete all done
-    print '<button id="settingsDeleteAllDone" class="toolbarButton buttonToggled"';
-    print ' title="' . t('TodoNotes__PROJECT_DELETE_ALL_DONE_NOTES') . '"';
-    print ' data-id="0"';
-    print ' data-project="' . $project_id . '"';
-    print ' data-user="' . $user_id . '"';
-    print '>';
-    print '<i class="fa fa-trash" aria-hidden="true"></i>';
     print'</button>';
 } // end exclude in Overview Mode
 
@@ -513,15 +513,15 @@ foreach ($data as $u) {
     print '<i class="fa fa-calendar-check-o" aria-hidden="true"></i>';
     print '</label>';
 
-    // hide notifications in Archive View
-    if ((!$optionArchiveView)) {
-        // Notifications details
-        $hasNotifications = ($u['notifications_alert_timestamp'] > 0);
-        $noteNotificationsStyleExtra = '';
-        // Expired notifications
-        if ($hasNotifications && ($u['notifications_alert_timestamp'] < $current_time)) {
-            $noteNotificationsStyleExtra = ' dateLabelExpired';
-        }
+    // Notifications details
+    $hasNotifications = ($u['notifications_alert_timestamp'] > 0);
+    $noteNotificationsStyleExtra = '';
+    // Expired notifications
+    if ($hasNotifications && ($u['notifications_alert_timestamp'] < $current_time)) {
+        $noteNotificationsStyleExtra = ' dateLabelExpired';
+    }
+    // hide notifications details in Archive View
+    if (!$optionArchiveView) {
         // Complete notifications
         if ($isNoteActive == 0) {
             $noteNotificationsStyleExtra = ' dateLabelComplete';
@@ -541,7 +541,7 @@ foreach ($data as $u) {
     print '</span>'; // Note Label Toolbar
 
     // disable reorder related functionality in Archive View
-    if ((!$optionArchiveView)) {
+    if (!$optionArchiveView) {
         // Refresh order button (shown on changed status in SortByStatus mode only)
         print '<button id="noteRefreshOrder-P' . $u['project_id'] . '-' . $num . '"';
         print ' class="hideMe toolbarButton buttonToggled buttonBigger disableEventsPropagation noteRefreshOrder"';
@@ -791,10 +791,10 @@ foreach ($data as $u) {
 
     // Dates and Notifications panel
     print '<div class="containerFloatRight disableEventsPropagation" style="text-align: right">';
-    print '<label  id="noteModifiedLabel-P' . $u['project_id'] . '-' . $num . '" class="dateLabel">';
-    print '<i class="fa fa-calendar-check-o" aria-hidden="true"> ' . t('TodoNotes__NOTE_DATE_MODIFIED') . $u['date_modified'] . '</i></label><br>';
     print '<label  id="noteCreatedLabel-P' . $u['project_id'] . '-' . $num . '" class="dateLabel">';
     print '<i class="fa fa-calendar-o" aria-hidden="true"> ' . t('TodoNotes__NOTE_DATE_CREATED') . $u['date_created'] . '</i></label><br>';
+    print '<label  id="noteModifiedLabel-P' . $u['project_id'] . '-' . $num . '" class="dateLabel">';
+    print '<i class="fa fa-calendar-check-o" aria-hidden="true"> ' . t('TodoNotes__NOTE_DATE_MODIFIED') . $u['date_modified'] . '</i></label><br>';
 
     if (!empty($u['date_archived'])) {
         print '<label  id="noteArchivedLabel-P' . $u['project_id'] . '-' . $num . '" class="dateLabel">';
@@ -811,18 +811,23 @@ foreach ($data as $u) {
         print '<i class="fa fa-bell" aria-hidden="true"> ' . t('TodoNotes__NOTE_DATE_LAST_NOTIFIED') . $u['last_notified'] . '</i></label><br>';
     }
 
+    print '<label  id="noteNotificationsLabel-P' . $u['project_id'] . '-' . $num . '"';
     if (!$optionArchiveView) {
-        print '<label  id="noteNotificationsLabel-P' . $u['project_id'] . '-' . $num . '"';
         print 'class="dateLabel dateLabelClickable' . $noteNotificationsStyleExtra . ' noteNotificationsSetup"';
-        print ' data-id="' . $num . '"';
-        print ' data-project="' . $u['project_id'] . '"';
-        print ' data-user="' . $user_id . '"';
-        print ' data-notifications-alert-timestamp="' . $u['notifications_alert_timestamp'] . '"';
-        print ' data-notifications-alert-timestring="' . $u['date_notified'] . '"';
-        print ' data-notifications-options-bitflags="' . $u['flags_notified'] . '"';
-        print '>';
-        print '<i class="fa fa-bell-o" aria-hidden="true"> ' . t('TodoNotes__NOTE_DATE_NOTIFIED') . ($hasNotifications ? $u['date_notified'] : '🔕') . '</i></label><br>';
+    } else {
+        print 'class="dateLabel' . $noteNotificationsStyleExtra . '"';
     }
+    print ' data-id="' . $num . '"';
+    print ' data-project="' . $u['project_id'] . '"';
+    print ' data-user="' . $user_id . '"';
+    print ' data-notifications-alert-timestamp="' . $u['notifications_alert_timestamp'] . '"';
+    print ' data-notifications-alert-timestring="' . $u['date_notified'] . '"';
+    if (!$optionArchiveView) {
+        print ' data-notifications-options-bitflags="' . $u['flags_notified'] . '"';
+    }
+    print '>';
+    print '<i class="fa fa-bell-o" aria-hidden="true"> ' . t('TodoNotes__NOTE_DATE_NOTIFIED') . ($hasNotifications ? $u['date_notified'] : '🔕') . '</i></label><br>';
+
     print '</div>'; // Dates and Notifications panel
 
     //-----------------------

@@ -69,6 +69,7 @@ function version_1(PDO $pdo)
     $pdo->exec('CREATE INDEX todonotes_entries_modified_ix ON todonotes_entries(date_modified)');
     $pdo->exec('CREATE INDEX todonotes_entries_notified_ix ON todonotes_entries(date_notified)');
     $pdo->exec('CREATE INDEX todonotes_entries_last_notified_ix ON todonotes_entries(last_notified)');
+    $pdo->exec('CREATE INDEX todonotes_entries_restored_ix ON todonotes_entries(date_restored)');
 
     // create+insert+index archive entries
     $pdo->exec('CREATE TABLE IF NOT EXISTS todonotes_archive_entries (
@@ -80,16 +81,20 @@ function version_1(PDO $pdo)
                     description TEXT,
                     date_created INTEGER,
                     date_modified INTEGER,
+                    date_notified INTEGER,
+                    last_notified INTEGER,
                     date_archived INTEGER
                 )');
     $pdo->exec('INSERT INTO todonotes_archive_entries
-                    (project_id, user_id, date_created, date_modified, date_archived)
-                    VALUES (0, 0, 0, -1, 0)
+                    (project_id, user_id, date_created, date_modified, date_notified, last_notified, date_archived)
+                    VALUES (0, 0, 0, -1, 0, 0, 0)
                 ');
     $pdo->exec('CREATE INDEX todonotes_archive_entries_project_ix ON todonotes_archive_entries(project_id)');
     $pdo->exec('CREATE INDEX todonotes_archive_entries_user_ix ON todonotes_archive_entries(user_id)');
     $pdo->exec('CREATE INDEX todonotes_archive_entries_created_ix ON todonotes_archive_entries(date_created)');
     $pdo->exec('CREATE INDEX todonotes_archive_entries_modified_ix ON todonotes_archive_entries(date_modified)');
+    $pdo->exec('CREATE INDEX todonotes_archive_entries_notified_ix ON todonotes_archive_entries(date_notified)');
+    $pdo->exec('CREATE INDEX todonotes_archive_entries_last_notified_ix ON todonotes_archive_entries(last_notified)');
     $pdo->exec('CREATE INDEX todonotes_archive_entries_archived_ix ON todonotes_archive_entries(date_archived)');
 
     // create+index webpn subscriptions
@@ -172,16 +177,18 @@ function Reindex_CreateAndInsert_NewShrunkArchiveEntries_1(PDO $pdo)
                     description TEXT,
                     date_created INTEGER,
                     date_modified INTEGER,
+                    date_notified INTEGER,
+                    last_notified INTEGER,
                     date_archived INTEGER,
                     old_project_id INTEGER
                 )');
     $pdo->exec('INSERT INTO todonotes_archive_entries_NEW
-                    (project_id, user_id, date_created, date_modified, date_archived)
-                    VALUES (0, 0, 0, -1, 0)
+                    (project_id, user_id, date_created, date_modified, date_notified, last_notified, date_archived, old_project_id)
+                    VALUES (0, 0, 0, -1, 0, 0, 0, 0)
                 ');
     $pdo->exec('INSERT INTO todonotes_archive_entries_NEW
-                    (project_id, user_id, title, category, description, date_created, date_modified, date_archived, old_project_id)
-                    SELECT project_id, user_id, title, category, description, date_created, date_modified, date_archived, old_project_id
+                    (project_id, user_id, title, category, description, date_created, date_modified, date_notified, last_notified, date_archived, old_project_id)
+                    SELECT project_id, user_id, title, category, description, date_created, date_modified, date_notified, last_notified, date_archived, old_project_id
                     FROM todonotes_archive_entries
                     WHERE project_id <> 0 AND user_id > 0 AND date_modified > 0 AND date_archived > 0
                 ');
@@ -242,6 +249,7 @@ function Reindex_RecreateIndices_Entries_1(PDO $pdo)
     $pdo->exec('CREATE INDEX todonotes_entries_modified_ix ON todonotes_entries(date_modified)');
     $pdo->exec('CREATE INDEX todonotes_entries_notified_ix ON todonotes_entries(date_notified)');
     $pdo->exec('CREATE INDEX todonotes_entries_last_notified_ix ON todonotes_entries(last_notified)');
+    $pdo->exec('CREATE INDEX todonotes_entries_restored_ix ON todonotes_entries(date_restored)');
 }
 
 function Reindex_RecreateIndices_ArchiveEntries_1(PDO $pdo)
@@ -250,6 +258,8 @@ function Reindex_RecreateIndices_ArchiveEntries_1(PDO $pdo)
     $pdo->exec('CREATE INDEX todonotes_archive_entries_user_ix ON todonotes_archive_entries(user_id)');
     $pdo->exec('CREATE INDEX todonotes_archive_entries_created_ix ON todonotes_archive_entries(date_created)');
     $pdo->exec('CREATE INDEX todonotes_archive_entries_modified_ix ON todonotes_archive_entries(date_modified)');
+    $pdo->exec('CREATE INDEX todonotes_archive_entries_notified_ix ON todonotes_archive_entries(date_notified)');
+    $pdo->exec('CREATE INDEX todonotes_archive_entries_last_notified_ix ON todonotes_archive_entries(last_notified)');
     $pdo->exec('CREATE INDEX todonotes_archive_entries_archived_ix ON todonotes_archive_entries(date_archived)');
 }
 
