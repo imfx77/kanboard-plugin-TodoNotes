@@ -1,17 +1,16 @@
----
-# Set Update Schedule for GitHub Actions
-
 version: 2
 updates:
-
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      # Check for updates to GitHub Actions every week
+      interval: "daily"
+
+  - package-ecosystem: "composer"
+    directory: "/"
+    schedule:
       interval: "weekly"
-      time: "07:00"
-      # Use Greenwich Mean Time (UTC +02:00)
-      timezone: "Europe/Sofia"
-    # Add assignees
+    reviewers:
+      - "imfx77"
     assignees:
       - "imfx77"
+

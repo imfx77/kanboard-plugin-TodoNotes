@@ -1,15 +1,32 @@
----
+name: Unit Tests
 
-name: 'Unit Tests'
 on:
   workflow_dispatch:
   push:
-    branches:
-      - dev
+    branches: [ dev ]
   pull_request:
+    branches: [ dev ]
+
 jobs:
   Sqlite:
     runs-on: ubuntu-latest
+    container: kanboard/tests:latest
+    steps:
+    - name: Checkout Kanboard repo
+      uses: actions/checkout@v4
+      with:
+        repository: kanboard/kanboard
+    - name: Checkout Plugin repo
+      uses: actions/checkout@v4
+      with:
+        path: plugins/TodoNotes
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-progress --no-suggest
+    - name: Unit tests with Sqlite
+      run: ./vendor/bin/phpunit -c tests/units.sqlite.xml plugins/TodoNotes/Test/
+
+  Sqlite-PHP8:
+    runs-on: ubuntu-22.04
     container: kanboard/tests:latest
     steps:
     - name: Checkout Kanboard repo
@@ -57,7 +74,7 @@ jobs:
       run: ./vendor/bin/phpunit -c tests/units.postgres.xml plugins/TodoNotes/Test/
       env:
         DB_HOSTNAME: postgres
-        DB_PORT: ${{ job.services.postgres.ports['5432'] }}
+        DB_PORT: ${{ job.services.postgres.ports[5432] }}
 
   MariaDB:
     runs-on: ubuntu-latest
@@ -90,4 +107,4 @@ jobs:
       env:
         DB_HOSTNAME: mariadb
         DB_PASSWORD: secret
-        DB_PORT: ${{ job.services.mariadb.ports['3306'] }}
+        DB_PORT: ${{ job.services.mariadb.ports[3306] }}
