@@ -1,29 +1,6 @@
 <?php
 
-// evaluate settingsShowCategoryColors from session
-if (!array_key_exists('todonotesSettings_ShowCategoryColors', $_SESSION)) {
-    $_SESSION['todonotesSettings_ShowCategoryColors'] = false;
-}
-$settingsShowCategoryColors = $_SESSION['todonotesSettings_ShowCategoryColors'];
-
-// evaluate settingsShowAllDone from session
-if (!array_key_exists('todonotesSettings_ShowAllDone', $_SESSION)) {
-    $_SESSION['todonotesSettings_ShowAllDone'] = false;
-}
-$settingsShowAllDone = $_SESSION['todonotesSettings_ShowAllDone'];
-
-// evaluate settingsShowTabStats from session
-if (!array_key_exists('todonotesSettings_ShowTabStats', $_SESSION)) {
-    $_SESSION['todonotesSettings_ShowTabStats'] = false;
-}
-$settingsShowTabStats = $_SESSION['todonotesSettings_ShowTabStats'];
-
-// session_vars (hidden reference for settings)
-print '<div class="hideMe" id="session_vars"';
-print ' data-settingsShowCategoryColors="' . ($settingsShowCategoryColors ? 'true' : 'false') . '"';
-print ' data-settingsShowAllDone="' . ($settingsShowAllDone ? 'true' : 'false') . '"';
-print ' data-settingsShowTabStats="' . ($settingsShowTabStats ? 'true' : 'false') . '"';
-print '></div>';
+require_once('settings.php');
 
 ?>
 
@@ -44,7 +21,7 @@ $num = "1";
 foreach ($data as $u) {
     $isNoteActive = intval($u['is_active']);
 
-    if ($settingsShowAllDone || $isNoteActive != 0) {
+    if ($settings_ShowAllDone || $isNoteActive != 0) {
         print '<tr class="trReport" id="trReportNr' . $num . '">';
 
         print '<td class="tdReport tdReportNr">';

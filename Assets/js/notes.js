@@ -32,15 +32,6 @@ static IsMobile() {
 static #swRegistration = null;
 
 //------------------------------------------------
-// Global vars for settings
-//------------------------------------------------
-static settingsArchiveView = false;
-static settingsShowCategoryColors = false;
-static settingsSortByStatus = false;
-static settingsShowAllDone = false;
-static settingsShowTabStats = false;
-
-//------------------------------------------------
 // Note Details routines
 //------------------------------------------------
 
@@ -73,7 +64,7 @@ static AdjustNotePlaceholders(project_id, id) {
     // console.log('_TodoNotes_.AdjustNotePlaceholders');
     if (id === '0') { // new note
         if (!$(".liNewNote").length) return; // missing NewNote when NOT in project screen
-        if (project_id === '0' || _TodoNotes_.settingsArchiveView) { // Overview Mode or Archive View
+        if (project_id === '0' || _TodoNotes_Settings_.ArchiveView) { // Overview Mode or Archive View
             $("#placeholderNewNote").removeClass('hideMe');
         } else {
             const offsetTitle = $(".labelNewNote").offset().top;
@@ -130,7 +121,7 @@ static AdjustAllNotesTitleInputs() {
 //------------------------------------------------
 // Show input or label visuals for titles of existing notes
 static #showTitleInput(project_id, id, show_title_input) {
-    if (_TodoNotes_.settingsArchiveView) return;
+    if (_TodoNotes_Settings_.ArchiveView) return;
 
     const noteTitleLabel = $("#noteTitleLabel-P" + project_id + "-" + id);
     const noteTitleInput = $("#noteTitleInput-P" + project_id + "-" + id);
@@ -592,7 +583,7 @@ static #NoteStatusHandlers() {
             _TodoNotes_Requests_.UpdateNote(project_id, user_id, id);
         }
 
-        if (_TodoNotes_.settingsSortByStatus) {
+        if (_TodoNotes_Settings_.SortByStatus) {
             $("#noteRefreshOrder-P" + project_id + "-" + id).removeClass( 'hideMe' );
         }
 
@@ -779,13 +770,13 @@ static #NoteActionHandlers() {
                 const noteCatLabel = $("#noteCatLabel-P" + project_id + "-" + id);
                 if (new_category) {
                     noteCatLabel.removeClass( 'hideMe' );
-                    if (_TodoNotes_.settingsShowCategoryColors) {
+                    if (_TodoNotes_Settings_.ShowCategoryColors) {
                         noteCatLabel.addClass( 'task-board-category' );
                     }
                 }
                 if (!new_category) {
                     noteCatLabel.addClass( 'hideMe' );
-                } else if (!_TodoNotes_.settingsShowCategoryColors) {
+                } else if (!_TodoNotes_Settings_.ShowCategoryColors) {
                     noteCatLabel.removeClass( 'task-board-category' );
                 }
 
@@ -928,7 +919,7 @@ static #SettingsHandlers() {
 
         _TodoNotes_Requests_.ToggleSessionSettings(project_id, user_id, 'todonotesSettings_ShowAllDone');
 
-        _TodoNotes_.settingsShowAllDone = !_TodoNotes_.settingsShowAllDone;
+        _TodoNotes_Settings_.ShowAllDone = !_TodoNotes_Settings_.ShowAllDone;
         _TodoNotes_.RefreshShowAllDone();
 
         _TodoNotes_.AdjustAllNotesPlaceholders();
@@ -944,7 +935,7 @@ static #SettingsHandlers() {
 
         _TodoNotes_Requests_.ToggleSessionSettings(project_id, user_id, 'todonotesSettings_ShowCategoryColors');
 
-        _TodoNotes_.settingsShowCategoryColors = !_TodoNotes_.settingsShowCategoryColors;
+        _TodoNotes_Settings_.ShowCategoryColors = !_TodoNotes_Settings_.ShowCategoryColors;
         _TodoNotes_.RefreshCategoryColors();
     });
 
@@ -996,7 +987,7 @@ static #SettingsHandlers() {
 //------------------------------------------------
 // Refresh hide All Done
 static RefreshShowAllDone() {
-    if (_TodoNotes_.settingsShowAllDone) {
+    if (_TodoNotes_Settings_.ShowAllDone) {
         $("#settingsShowAllDone").addClass( 'buttonToggled' );
         $(".liNote").each(function() {
             if ($(this).find(".buttonStatus").children().attr('data-id') === '0') {
@@ -1016,7 +1007,7 @@ static RefreshShowAllDone() {
 //------------------------------------------------
 // Refresh Archive View
 static RefreshArchiveView() {
-    if (_TodoNotes_.settingsArchiveView) {
+    if (_TodoNotes_Settings_.ArchiveView) {
         $("#settingsArchiveView").addClass( 'buttonToggled' );
     } else {
         $("#settingsArchiveView").removeClass( 'buttonToggled' );
@@ -1026,7 +1017,7 @@ static RefreshArchiveView() {
 //------------------------------------------------
 // Refresh sort by Status
 static RefreshSortByStatus() {
-    if (_TodoNotes_.settingsSortByStatus) {
+    if (_TodoNotes_Settings_.SortByStatus) {
         $("#settingsSortByStatus").addClass( 'buttonToggled' );
     } else {
         $("#settingsSortByStatus").removeClass( 'buttonToggled' );
@@ -1036,7 +1027,7 @@ static RefreshSortByStatus() {
 //------------------------------------------------
 // Refresh category colors
 static RefreshCategoryColors() {
-    if (_TodoNotes_.settingsShowCategoryColors) {
+    if (_TodoNotes_Settings_.ShowCategoryColors) {
         $("#settingsCategoryColors").addClass( 'buttonToggled' );
         $(".tdReport .reportBkgr").addClass( 'task-board' );
         $(".liNote .liNoteBkgr").addClass( 'task-board' );
@@ -1286,7 +1277,7 @@ static ScheduleCheckModifications() {
         const user_id = $("#refProjectId").attr('data-user');
 
         const is_project = ($(".liNewNote").length === 1);
-        const has_new_note = (is_project && project_id !== '0' && !_TodoNotes_.settingsArchiveView);
+        const has_new_note = (is_project && project_id !== '0' && !_TodoNotes_Settings_.ArchiveView);
         const title = has_new_note ? $("#inputNewNote").val().trim() : '';
         const description = has_new_note ? $('[name="editorMarkdownDetailsNewNote"]').val() : '';
 

@@ -13,7 +13,8 @@ class Plugin extends Base
     public function initialize()
     {
         //HELPER
-        $this->helper->register('translationsExportToJSHelper', '\Kanboard\Plugin\TodoNotes\Helper\TranslationsExportToJSHelper');
+        $this->helper->register('todonotesTranslationsExportToJSHelper', '\Kanboard\Plugin\TodoNotes\Helper\TranslationsExportToJSHelper');
+        $this->helper->register('todonotesSettingsSessionHelper', '\Kanboard\Plugin\TodoNotes\Helper\SettingsSessionHelper');
 
         //HOOKS
         $this->template->hook->attach('template:dashboard:sidebar', 'TodoNotes:dashboard/sidebar');

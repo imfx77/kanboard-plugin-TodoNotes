@@ -545,13 +545,13 @@ static RefreshTabs(user_id) {
 
 //------------------------------------------------
 // toggle & store settings variable into the session
-static ToggleSessionSettings(project_id, user_id, session_settings_var) {
+static ToggleSessionSettings(project_id, user_id, settings_name) {
     // $("#result" + project_id).html(_TodoNotes_Translations_.msgLoadingSpinner);
     $.ajax({
         cache: false,
         type: "POST",
         url: '/?controller=TodoNotesController&action=ToggleSessionSettings&plugin=TodoNotes'
-            + '&session_settings_var=' + session_settings_var,
+            + '&settings_name=' + settings_name,
         success: function(response) {
             console.log(response);
         },

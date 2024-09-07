@@ -34,4 +34,4 @@ $translationTextIds = array(
     'TodoNotes__JS_DIALOG_RESULT_TITLE',
 );
 
-$this->helper->translationsExportToJSHelper->export($translationTextIds);
+$this->helper->todonotesTranslationsExportToJSHelper->export($translationTextIds);
