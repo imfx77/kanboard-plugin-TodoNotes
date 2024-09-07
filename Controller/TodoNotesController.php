@@ -18,8 +18,11 @@ class TodoNotesController extends BaseController
         $use_cached = $this->request->getStringParam('use_cached');
 
         // use cached
-        if (!empty($use_cached) && isset($_SESSION['todonotesCache_user_id'])) {
-            $user_id = $_SESSION['todonotesCache_user_id'];
+        if(!isset($_SESSION['_TodoNotes_Cache_'])) {
+           $_SESSION['_TodoNotes_Cache_'] = array();
+        }
+        if (!empty($use_cached) && array_key_exists('user_id', $_SESSION['_TodoNotes_Cache_'])) {
+            $user_id = $_SESSION['_TodoNotes_Cache_']['user_id'];
         }
 
         // try get param from URL
@@ -32,7 +35,7 @@ class TodoNotesController extends BaseController
             $user_id = $this->getUser()['id'];
         }
 
-        $_SESSION['todonotesCache_user_id'] = $user_id;
+        $_SESSION['_TodoNotes_Cache_']['user_id'] = $user_id;
 
         return $user_id;
     }
