@@ -24,7 +24,7 @@ static UpdateTabs() {
 
 //------------------------------------------------
 static UpdateTabStats() {
-    if (_TodoNotes_.optionShowTabStats) {
+    if (_TodoNotes_.settingsShowTabStats) {
         $("#settingsTabStats").find("a i").addClass( 'buttonToggled' );
         $(".tabStatsWidget").removeClass( 'hideMe' );
     } else {
@@ -110,10 +110,10 @@ static #TabActionHandlers() {
     // toggle visibility of tabs stats widgets
     $("button" + "#settingsTabStats").click(function() {
         const user_id = $(this).attr('data-user');
-        _TodoNotes_Requests_.ToggleSessionOption(-1 /* not used */, user_id, 'todonotesOption_ShowTabStats');
+        _TodoNotes_Requests_.ToggleSessionSettings(-1 /* not used */, user_id, 'todonotesSettings_ShowTabStats');
 
-        _TodoNotes_.optionShowTabStats = !_TodoNotes_.optionShowTabStats;
-        $("#session_vars").attr('data-optionShowTabStats', _TodoNotes_.optionShowTabStats);
+        _TodoNotes_.settingsShowTabStats = !_TodoNotes_.settingsShowTabStats;
+        $("#session_vars").attr('data-settingsShowTabStats', _TodoNotes_.settingsShowTabStats);
 
         _TodoNotes_Tabs_.UpdateTabStats();
     });

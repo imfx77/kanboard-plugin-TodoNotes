@@ -97,15 +97,15 @@ class TodoNotesController extends BaseController
         $columns = $this->todoNotesModel->GetColumns($project_id);
         $swimlanes = $this->todoNotesModel->GetSwimlanes($project_id);
 
-        if (!array_key_exists('todonotesOption_ArchiveView', $_SESSION)) {
-            $_SESSION['todonotesOption_ArchiveView'] = false;
+        if (!array_key_exists('todonotesSettings_ArchiveView', $_SESSION)) {
+            $_SESSION['todonotesSettings_ArchiveView'] = false;
         }
-        $isArchiveView = $_SESSION['todonotesOption_ArchiveView'];
+        $isArchiveView = $_SESSION['todonotesSettings_ArchiveView'];
 
-        if (!array_key_exists('todonotesOption_SortByStatus', $_SESSION)) {
-            $_SESSION['todonotesOption_SortByStatus'] = false;
+        if (!array_key_exists('todonotesSettings_SortByStatus', $_SESSION)) {
+            $_SESSION['todonotesSettings_SortByStatus'] = false;
         }
-        $doSortByStatus = $_SESSION['todonotesOption_SortByStatus'];
+        $doSortByStatus = $_SESSION['todonotesSettings_SortByStatus'];
 
         if ($project_id == 0) {
             $data = $isArchiveView
@@ -172,15 +172,15 @@ class TodoNotesController extends BaseController
             $swimlanes  = array();
         }
 
-        if (!array_key_exists('todonotesOption_ArchiveView', $_SESSION)) {
-            $_SESSION['todonotesOption_ArchiveView'] = false;
+        if (!array_key_exists('todonotesSettings_ArchiveView', $_SESSION)) {
+            $_SESSION['todonotesSettings_ArchiveView'] = false;
         }
-        $isArchiveView = $_SESSION['todonotesOption_ArchiveView'];
+        $isArchiveView = $_SESSION['todonotesSettings_ArchiveView'];
 
-        if (!array_key_exists('todonotesOption_SortByStatus', $_SESSION)) {
-            $_SESSION['todonotesOption_SortByStatus'] = false;
+        if (!array_key_exists('todonotesSettings_SortByStatus', $_SESSION)) {
+            $_SESSION['todonotesSettings_SortByStatus'] = false;
         }
-        $doSortByStatus = $_SESSION['todonotesOption_SortByStatus'];
+        $doSortByStatus = $_SESSION['todonotesSettings_SortByStatus'];
 
         if ($project_id == 0) {
             $data = $isArchiveView
@@ -241,10 +241,10 @@ class TodoNotesController extends BaseController
 
         $note_id = $this->request->getStringParam('note_id');
 
-        if (!array_key_exists('todonotesOption_ArchiveView', $_SESSION)) {
-            $_SESSION['todonotesOption_ArchiveView'] = false;
+        if (!array_key_exists('todonotesSettings_ArchiveView', $_SESSION)) {
+            $_SESSION['todonotesSettings_ArchiveView'] = false;
         }
-        $isArchiveView = $_SESSION['todonotesOption_ArchiveView'];
+        $isArchiveView = $_SESSION['todonotesSettings_ArchiveView'];
 
         return (!$isArchiveView) ? $this->todoNotesModel->DeleteNote($project_id, $user_id, $note_id) : null;
     }
@@ -378,10 +378,10 @@ class TodoNotesController extends BaseController
         $project = $this->ResolveProject($user_id);
         $project_id = $project['id'];
 
-        if (!array_key_exists('todonotesOption_SortByStatus', $_SESSION)) {
-            $_SESSION['todonotesOption_SortByStatus'] = false;
+        if (!array_key_exists('todonotesSettings_SortByStatus', $_SESSION)) {
+            $_SESSION['todonotesSettings_SortByStatus'] = false;
         }
-        $doSortByStatus = $_SESSION['todonotesOption_SortByStatus'];
+        $doSortByStatus = $_SESSION['todonotesSettings_SortByStatus'];
         $category = $this->request->getStringParam('category');
         $data = $this->todoNotesModel->GetReportNotesForUser($project_id, $user_id, $doSortByStatus, $category);
 
@@ -575,22 +575,25 @@ class TodoNotesController extends BaseController
         )));
     }
 
-    public function ToggleSessionOption(): bool
+    public function ToggleSessionSettings(): bool
     {
-        $session_option = $this->request->getStringParam('session_option');
-        if (empty($session_option)) {
+        $session_settings_var = $this->request->getStringParam('session_settings_var');
+        if (empty($session_settings_var)) {
+            print_r($_SESSION);
             return false;
         }
 
-        // toggle options are expected to be boolean i.e. to only have values of 'true' of 'false'
-        if (!array_key_exists($session_option, $_SESSION) || !is_bool($_SESSION[$session_option])) {
+        // toggle settings are expected to be boolean i.e. to only have values of 'true' of 'false'
+        if (!array_key_exists($session_settings_var, $_SESSION) || !is_bool($_SESSION[$session_settings_var])) {
             // set initial value
-            $_SESSION[$session_option] = false;
+            print_r($_SESSION);
+            $_SESSION[$session_settings_var] = false;
             return true;
         }
 
-        // toggle option
-        $_SESSION[$session_option] = !$_SESSION[$session_option];
+        // toggle settings
+        $_SESSION[$session_settings_var] = !$_SESSION[$session_settings_var];
+        print_r($_SESSION);
         return true;
     }
 
@@ -600,10 +603,10 @@ class TodoNotesController extends BaseController
         $project = $this->ResolveProject($user_id);
         $project_id = $project['id'];
 
-        if (!array_key_exists('todonotesOption_ArchiveView', $_SESSION)) {
-            $_SESSION['todonotesOption_ArchiveView'] = false;
+        if (!array_key_exists('todonotesSettings_ArchiveView', $_SESSION)) {
+            $_SESSION['todonotesSettings_ArchiveView'] = false;
         }
-        $isArchiveView = $_SESSION['todonotesOption_ArchiveView'];
+        $isArchiveView = $_SESSION['todonotesSettings_ArchiveView'];
 
         $lastTimestamps = $isArchiveView
             ? $this->todoNotesModel->GetLastArchivedTimestamp($project_id, $user_id)
@@ -653,10 +656,10 @@ class TodoNotesController extends BaseController
 
         $archived_note_id = $this->request->getStringParam('archived_note_id');
 
-        if (!array_key_exists('todonotesOption_ArchiveView', $_SESSION)) {
-            $_SESSION['todonotesOption_ArchiveView'] = false;
+        if (!array_key_exists('todonotesSettings_ArchiveView', $_SESSION)) {
+            $_SESSION['todonotesSettings_ArchiveView'] = false;
         }
-        $isArchiveView = $_SESSION['todonotesOption_ArchiveView'];
+        $isArchiveView = $_SESSION['todonotesSettings_ArchiveView'];
 
         return ($isArchiveView) ? $this->todoNotesModel->DeleteNoteFromArchive($project_id, $user_id, $archived_note_id) : null;
     }

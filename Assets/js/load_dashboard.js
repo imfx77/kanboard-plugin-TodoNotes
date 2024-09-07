@@ -49,7 +49,7 @@ static prepareDocument_SkipDashboardHandlers() {
 static #prepareDocument_ConfigureDashboardHandlers(skipDashboardHandlers = false) {
     // console.log('_TodoNotes_Dashboard_.prepareDocument (skipDashboardHandlers : ' + skipDashboardHandlers + ')');
 
-    _TodoNotes_.optionShowTabStats = $("#session_vars").attr('data-optionShowTabStats') === 'true';
+    _TodoNotes_.settingsShowTabStats = $("#session_vars").attr('data-settingsShowTabStats') === 'true';
 
     const isMobile = _TodoNotes_.IsMobile();
     const isAdmin = $("#tabId").attr('data-admin');

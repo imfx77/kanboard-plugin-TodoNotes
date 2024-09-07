@@ -1,28 +1,28 @@
 <?php
 
-// evaluate optionShowCategoryColors option from session
-if (!array_key_exists('todonotesOption_ShowCategoryColors', $_SESSION)) {
-    $_SESSION['todonotesOption_ShowCategoryColors'] = false;
+// evaluate settingsShowCategoryColors from session
+if (!array_key_exists('todonotesSettings_ShowCategoryColors', $_SESSION)) {
+    $_SESSION['todonotesSettings_ShowCategoryColors'] = false;
 }
-$optionShowCategoryColors = $_SESSION['todonotesOption_ShowCategoryColors'];
+$settingsShowCategoryColors = $_SESSION['todonotesSettings_ShowCategoryColors'];
 
-// evaluate optionShowAllDone option from session
-if (!array_key_exists('todonotesOption_ShowAllDone', $_SESSION)) {
-    $_SESSION['todonotesOption_ShowAllDone'] = false;
+// evaluate settingsShowAllDone from session
+if (!array_key_exists('todonotesSettings_ShowAllDone', $_SESSION)) {
+    $_SESSION['todonotesSettings_ShowAllDone'] = false;
 }
-$optionShowAllDone = $_SESSION['todonotesOption_ShowAllDone'];
+$settingsShowAllDone = $_SESSION['todonotesSettings_ShowAllDone'];
 
-// evaluate optionShowTabStats option from session
-if (!array_key_exists('todonotesOption_ShowTabStats', $_SESSION)) {
-    $_SESSION['todonotesOption_ShowTabStats'] = false;
+// evaluate settingsShowTabStats from session
+if (!array_key_exists('todonotesSettings_ShowTabStats', $_SESSION)) {
+    $_SESSION['todonotesSettings_ShowTabStats'] = false;
 }
-$optionShowTabStats = $_SESSION['todonotesOption_ShowTabStats'];
+$settingsShowTabStats = $_SESSION['todonotesSettings_ShowTabStats'];
 
-// session_vars (hidden reference for options)
+// session_vars (hidden reference for settings)
 print '<div class="hideMe" id="session_vars"';
-print ' data-optionShowCategoryColors="' . ($optionShowCategoryColors ? 'true' : 'false') . '"';
-print ' data-optionShowAllDone="' . ($optionShowAllDone ? 'true' : 'false') . '"';
-print ' data-optionShowTabStats="' . ($optionShowTabStats ? 'true' : 'false') . '"';
+print ' data-settingsShowCategoryColors="' . ($settingsShowCategoryColors ? 'true' : 'false') . '"';
+print ' data-settingsShowAllDone="' . ($settingsShowAllDone ? 'true' : 'false') . '"';
+print ' data-settingsShowTabStats="' . ($settingsShowTabStats ? 'true' : 'false') . '"';
 print '></div>';
 
 ?>
@@ -44,7 +44,7 @@ $num = "1";
 foreach ($data as $u) {
     $isNoteActive = intval($u['is_active']);
 
-    if ($optionShowAllDone || $isNoteActive != 0) {
+    if ($settingsShowAllDone || $isNoteActive != 0) {
         print '<tr class="trReport" id="trReportNr' . $num . '">';
 
         print '<td class="tdReport tdReportNr">';

@@ -19,10 +19,10 @@ static prepareDocument_SkipDashboardHandlers() {
 static #prepareDocument_ConfigureDashboardHandlers(skipDashboardHandlers = false) {
     // console.log('_TodoNotes_Project_.prepareDocument (skipDashboardHandlers : ' + skipDashboardHandlers + ')');
 
-    _TodoNotes_.optionArchiveView = $("#session_vars").attr('data-optionArchiveView') === 'true';
-    _TodoNotes_.optionShowCategoryColors = $("#session_vars").attr('data-optionShowCategoryColors') === 'true';
-    _TodoNotes_.optionSortByStatus = $("#session_vars").attr('data-optionSortByStatus') === 'true';
-    _TodoNotes_.optionShowAllDone = $("#session_vars").attr('data-optionShowAllDone') === 'true';
+    _TodoNotes_.settingsArchiveView = $("#session_vars").attr('data-settingsArchiveView') === 'true';
+    _TodoNotes_.settingsShowCategoryColors = $("#session_vars").attr('data-settingsShowCategoryColors') === 'true';
+    _TodoNotes_.settingsSortByStatus = $("#session_vars").attr('data-settingsSortByStatus') === 'true';
+    _TodoNotes_.settingsShowAllDone = $("#session_vars").attr('data-settingsShowAllDone') === 'true';
 
     const project_id = $("#refProjectId").attr('data-project');
     const user_id = $("#refProjectId").attr('data-user');
@@ -34,7 +34,7 @@ static #prepareDocument_ConfigureDashboardHandlers(skipDashboardHandlers = false
     $('.input-addon-item').addClass( 'hideMe' );
 
     // notes reordering is disabled when in Archive View or explicitly sorted by Status
-    if (!_TodoNotes_.optionArchiveView && !_TodoNotes_.optionSortByStatus) {
+    if (!_TodoNotes_.settingsArchiveView && !_TodoNotes_.settingsSortByStatus) {
         $(".sortableList").each(function() {
             const sortable_project_id = $(this).attr('data-project');
 

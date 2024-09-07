@@ -12,8 +12,8 @@ static prepareDocument() {
 
     $(".noteTitleInput").hide();
 
-    _TodoNotes_.optionShowCategoryColors = $("#session_vars").attr('data-optionShowCategoryColors') === 'true';
-    _TodoNotes_.optionShowAllDone = $("#session_vars").attr('data-optionShowAllDone') === 'true';
+    _TodoNotes_.settingsShowCategoryColors = $("#session_vars").attr('data-settingsShowCategoryColors') === 'true';
+    _TodoNotes_.settingsShowAllDone = $("#session_vars").attr('data-settingsShowAllDone') === 'true';
 
     // category colors
     $(".catLabel").each(function() {
