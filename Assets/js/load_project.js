@@ -31,7 +31,7 @@ static #prepareDocument_ConfigureDashboardHandlers(skipDashboardHandlers = false
     $('.input-addon-item').addClass( 'hideMe' );
 
     // notes reordering is disabled when in Archive View or explicitly sorted by Status
-    if (!_TodoNotes_Settings_.ArchiveView && !_TodoNotes_Settings_.SortByStatus) {
+    if (!_TodoNotes_Settings_.showArchive && !_TodoNotes_Settings_.sortByStatus) {
         $(".sortableList").each(function() {
             const sortable_project_id = $(this).attr('data-project');
 
@@ -79,10 +79,10 @@ static #prepareDocument_ConfigureDashboardHandlers(skipDashboardHandlers = false
 
     _TodoNotes_Statuses_.ExpandStatusAliases();
 
-    _TodoNotes_.RefreshArchiveView();
-    _TodoNotes_.RefreshCategoryColors();
+    _TodoNotes_.RefreshShowArchive();
+    _TodoNotes_.RefreshShowCategoryColors();
     _TodoNotes_.RefreshSortByStatus();
-    _TodoNotes_.RefreshShowAllDone();
+    _TodoNotes_.RefreshShowStatusDone();
 
     _TodoNotes_.AttachAllHandlers();
 

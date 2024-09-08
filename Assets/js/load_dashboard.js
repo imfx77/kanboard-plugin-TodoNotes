@@ -66,7 +66,7 @@ static #prepareDocument_ConfigureDashboardHandlers(skipDashboardHandlers = false
     _TodoNotes_Statuses_.ExpandStatusAliases();
 
     _TodoNotes_Tabs_.UpdateTabs();
-    _TodoNotes_Tabs_.UpdateTabStats();
+    _TodoNotes_Tabs_.UpdateTabsStats();
 
     if (!skipDashboardHandlers) {
         _TodoNotes_Tabs_.AttachAllHandlers();

@@ -64,12 +64,12 @@ static AdjustNotePlaceholders(project_id, id) {
     // console.log('_TodoNotes_.AdjustNotePlaceholders');
     if (id === '0') { // new note
         if (!$(".liNewNote").length) return; // missing NewNote when NOT in project screen
-        if (project_id === '0' || _TodoNotes_Settings_.ArchiveView) { // Overview Mode or Archive View
+        if (project_id === '0' || _TodoNotes_Settings_.showArchive) { // Overview Mode or Archive View
             $("#placeholderNewNote").removeClass('hideMe');
         } else {
             const offsetTitle = $(".labelNewNote").offset().top;
-            let offsetButtons = $("#settingsCategoryColors").offset().top;
-            offsetButtons += $("#settingsCategoryColors").outerHeight();
+            let offsetButtons = $("#settingsShowCategoryColors").offset().top;
+            offsetButtons += $("#settingsShowCategoryColors").outerHeight();
             if (offsetTitle > offsetButtons) {
                 $("#placeholderNewNote").removeClass('hideMe');
             } else {
@@ -121,7 +121,7 @@ static AdjustAllNotesTitleInputs() {
 //------------------------------------------------
 // Show input or label visuals for titles of existing notes
 static #showTitleInput(project_id, id, show_title_input) {
-    if (_TodoNotes_Settings_.ArchiveView) return;
+    if (_TodoNotes_Settings_.showArchive) return;
 
     const noteTitleLabel = $("#noteTitleLabel-P" + project_id + "-" + id);
     const noteTitleInput = $("#noteTitleInput-P" + project_id + "-" + id);
@@ -583,12 +583,12 @@ static #NoteStatusHandlers() {
             _TodoNotes_Requests_.UpdateNote(project_id, user_id, id);
         }
 
-        if (_TodoNotes_Settings_.SortByStatus) {
+        if (_TodoNotes_Settings_.sortByStatus) {
             $("#noteRefreshOrder-P" + project_id + "-" + id).removeClass( 'hideMe' );
         }
 
         _TodoNotes_.#BlinkNote(project_id, id);
-        _TodoNotes_.RefreshShowAllDone();
+        _TodoNotes_.RefreshShowStatusDone();
 
         _TodoNotes_.AdjustNotePlaceholders(project_id, id);
 
@@ -765,18 +765,18 @@ static #NoteActionHandlers() {
                 const new_category = $("#cat-P" + project_id + "-" + id + " option:selected").text();
                 $("#noteCatLabel-P" + project_id + "-" + id).html(new_category);
 
-                _TodoNotes_.UpdateCategoryColors(project_id, id, old_category, new_category);
+                _TodoNotes_.UpdateShowCategoryColors(project_id, id, old_category, new_category);
                 // avoid the ugly empty category label boxes
                 const noteCatLabel = $("#noteCatLabel-P" + project_id + "-" + id);
                 if (new_category) {
                     noteCatLabel.removeClass( 'hideMe' );
-                    if (_TodoNotes_Settings_.ShowCategoryColors) {
+                    if (_TodoNotes_Settings_.showCategoryColors) {
                         noteCatLabel.addClass( 'task-board-category' );
                     }
                 }
                 if (!new_category) {
                     noteCatLabel.addClass( 'hideMe' );
-                } else if (!_TodoNotes_Settings_.ShowCategoryColors) {
+                } else if (!_TodoNotes_Settings_.showCategoryColors) {
                     noteCatLabel.removeClass( 'task-board-category' );
                 }
 
@@ -908,19 +908,19 @@ static #SettingsHandlers() {
         const project_id = $(this).attr('data-project');
         const user_id = $(this).attr('data-user');
 
-        _TodoNotes_Requests_.ToggleSessionSettings(project_id, user_id, 'todonotesSettings_SortByStatus');
+        _TodoNotes_Requests_.ToggleSessionSettings(project_id, user_id, 'sort', 'sortByStatus');
 
         _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
     });
 
-    $("#settingsShowAllDone").click(function() {
+    $("#settingsShowStatusDone").click(function() {
         const project_id = $(this).attr('data-project');
         const user_id = $(this).attr('data-user');
 
-        _TodoNotes_Requests_.ToggleSessionSettings(project_id, user_id, 'todonotesSettings_ShowAllDone');
+        _TodoNotes_Requests_.ToggleSessionSettings(project_id, user_id, 'filter','showStatusDone');
 
-        _TodoNotes_Settings_.ShowAllDone = !_TodoNotes_Settings_.ShowAllDone;
-        _TodoNotes_.RefreshShowAllDone();
+        _TodoNotes_Settings_.showStatusDone = !_TodoNotes_Settings_.showStatusDone;
+        _TodoNotes_.RefreshShowStatusDone();
 
         _TodoNotes_.AdjustAllNotesPlaceholders();
 
@@ -929,21 +929,21 @@ static #SettingsHandlers() {
         }, 100);
     });
 
-    $("#settingsCategoryColors").click(function() {
+    $("#settingsShowCategoryColors").click(function() {
         const project_id = $(this).attr('data-project');
         const user_id = $(this).attr('data-user');
 
-        _TodoNotes_Requests_.ToggleSessionSettings(project_id, user_id, 'todonotesSettings_ShowCategoryColors');
+        _TodoNotes_Requests_.ToggleSessionSettings(project_id, user_id, 'view', 'showCategoryColors');
 
-        _TodoNotes_Settings_.ShowCategoryColors = !_TodoNotes_Settings_.ShowCategoryColors;
-        _TodoNotes_.RefreshCategoryColors();
+        _TodoNotes_Settings_.showCategoryColors = !_TodoNotes_Settings_.showCategoryColors;
+        _TodoNotes_.RefreshShowCategoryColors();
     });
 
-    $("#settingsArchiveView").click(function() {
+    $("#settingsShowArchive").click(function() {
         const project_id = $(this).attr('data-project');
         const user_id = $(this).attr('data-user');
 
-        _TodoNotes_Requests_.ToggleSessionSettings(project_id, user_id, 'todonotesSettings_ArchiveView');
+        _TodoNotes_Requests_.ToggleSessionSettings(project_id, user_id, 'archive', 'showArchive');
 
         _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
     });
@@ -986,16 +986,16 @@ static #SettingsHandlers() {
 
 //------------------------------------------------
 // Refresh hide All Done
-static RefreshShowAllDone() {
-    if (_TodoNotes_Settings_.ShowAllDone) {
-        $("#settingsShowAllDone").addClass( 'buttonToggled' );
+static RefreshShowStatusDone() {
+    if (_TodoNotes_Settings_.showStatusDone) {
+        $("#settingsShowStatusDone").addClass( 'buttonToggled' );
         $(".liNote").each(function() {
             if ($(this).find(".buttonStatus").children().attr('data-id') === '0') {
                 $(this).removeClass( 'hideMe' );
             }
         });
     } else {
-        $("#settingsShowAllDone").removeClass( 'buttonToggled' );
+        $("#settingsShowStatusDone").removeClass( 'buttonToggled' );
         $(".liNote").each(function() {
             if ($(this).find(".buttonStatus").children().attr('data-id') === '0') {
                 $(this).addClass( 'hideMe' );
@@ -1006,18 +1006,18 @@ static RefreshShowAllDone() {
 
 //------------------------------------------------
 // Refresh Archive View
-static RefreshArchiveView() {
-    if (_TodoNotes_Settings_.ArchiveView) {
-        $("#settingsArchiveView").addClass( 'buttonToggled' );
+static RefreshShowArchive() {
+    if (_TodoNotes_Settings_.showArchive) {
+        $("#settingsShowArchive").addClass( 'buttonToggled' );
     } else {
-        $("#settingsArchiveView").removeClass( 'buttonToggled' );
+        $("#settingsShowArchive").removeClass( 'buttonToggled' );
     }
 }
 
 //------------------------------------------------
 // Refresh sort by Status
 static RefreshSortByStatus() {
-    if (_TodoNotes_Settings_.SortByStatus) {
+    if (_TodoNotes_Settings_.sortByStatus) {
         $("#settingsSortByStatus").addClass( 'buttonToggled' );
     } else {
         $("#settingsSortByStatus").removeClass( 'buttonToggled' );
@@ -1026,9 +1026,9 @@ static RefreshSortByStatus() {
 
 //------------------------------------------------
 // Refresh category colors
-static RefreshCategoryColors() {
-    if (_TodoNotes_Settings_.ShowCategoryColors) {
-        $("#settingsCategoryColors").addClass( 'buttonToggled' );
+static RefreshShowCategoryColors() {
+    if (_TodoNotes_Settings_.showCategoryColors) {
+        $("#settingsShowCategoryColors").addClass( 'buttonToggled' );
         $(".tdReport .reportBkgr").addClass( 'task-board' );
         $(".liNote .liNoteBkgr").addClass( 'task-board' );
         // avoid the ugly empty category label boxes
@@ -1038,7 +1038,7 @@ static RefreshCategoryColors() {
             }
         });
     } else {
-        $("#settingsCategoryColors").removeClass( 'buttonToggled' );
+        $("#settingsShowCategoryColors").removeClass( 'buttonToggled' );
         $(".tdReport .reportBkgr").removeClass( 'task-board' );
         $(".liNote .liNoteBkgr").removeClass( 'task-board' );
         $(".catLabel").removeClass( 'task-board-category' );
@@ -1046,7 +1046,7 @@ static RefreshCategoryColors() {
 }
 
 // Update category colors
-static UpdateCategoryColors(project_id, id, old_category, new_category) {
+static UpdateShowCategoryColors(project_id, id, old_category, new_category) {
     const note_id = $("#noteId-P" + project_id + "-" + id).attr('data-note');
     const old_color = $("#category-" + old_category).attr('data-color');
     const new_color = $("#category-" + new_category).attr('data-color');
@@ -1277,7 +1277,7 @@ static ScheduleCheckModifications() {
         const user_id = $("#refProjectId").attr('data-user');
 
         const is_project = ($(".liNewNote").length === 1);
-        const has_new_note = (is_project && project_id !== '0' && !_TodoNotes_Settings_.ArchiveView);
+        const has_new_note = (is_project && project_id !== '0' && !_TodoNotes_Settings_.showArchive);
         const title = has_new_note ? $("#inputNewNote").val().trim() : '';
         const description = has_new_note ? $('[name="editorMarkdownDetailsNewNote"]').val() : '';
 

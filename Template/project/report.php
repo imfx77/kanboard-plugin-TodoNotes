@@ -21,7 +21,7 @@ $num = "1";
 foreach ($data as $u) {
     $isNoteActive = intval($u['is_active']);
 
-    if ($settings_ShowAllDone || $isNoteActive != 0) {
+    if ($settings_showStatusDone || $isNoteActive != 0) {
         print '<tr class="trReport" id="trReportNr' . $num . '">';
 
         print '<td class="tdReport tdReportNr">';

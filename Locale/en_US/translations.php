@@ -29,7 +29,7 @@ return array(
     //
     'TodoNotes__PROJECT_TOGGLE_ARCHIVE_VIEW' => 'Toggle Archive View',
     'TodoNotes__PROJECT_TOGGLE_COLORIZE_BY_CATEGORY' => 'Toggle Colorize by Category',
-    'TodoNotes__PROJECT_TOGGLE_SHOW_ALL_DONE' => 'Toggle Show all Done Notes',
+    'TodoNotes__PROJECT_TOGGLE_SHOW_STATUS_DONE' => 'Toggle Show Done Notes',
     'TodoNotes__PROJECT_TOGGLE_SORT_BY_STATUS' => 'Toggle Sort by Status',
     'TodoNotes__PROJECT_TOGGLE_TAB_STAT' => 'Toggle Show Stats',
     'TodoNotes__PROJECT_EXPAND_ALL_NOTES' => 'Expand all Notes',

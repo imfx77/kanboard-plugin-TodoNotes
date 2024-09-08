@@ -18,11 +18,11 @@ if (typeof(_TodoNotes_Settings_) === 'undefined') {
         //------------------------------------------------
         // Global vars for settings
         //------------------------------------------------
-        static ArchiveView = false;
-        static ShowCategoryColors = false;
-        static SortByStatus = false;
-        static ShowAllDone = false;
-        static ShowTabStats = false;
+        static showArchive = false;
+        static showCategoryColors = false;
+        static sortByStatus = false;
+        static showStatusDone = false;
+        static showTabsStats = false;
 
         //------------------------------------------------
         static Initialize() {
@@ -31,16 +31,18 @@ if (typeof(_TodoNotes_Settings_) === 'undefined') {
             _TodoNotes_Settings_.#settingsExportToJS = JSON.parse($("#_TodoNotes_SettingsExportToJS_").html());
             $("#_TodoNotes_SettingsExportToJS_").remove();
 
-            _TodoNotes_Settings_.ArchiveView = _TodoNotes_Settings_.GetSettingsExportToJS('todonotesSettings_ArchiveView');
-            _TodoNotes_Settings_.ShowCategoryColors = _TodoNotes_Settings_.GetSettingsExportToJS('todonotesSettings_ShowCategoryColors');
-            _TodoNotes_Settings_.SortByStatus = _TodoNotes_Settings_.GetSettingsExportToJS('todonotesSettings_SortByStatus');
-            _TodoNotes_Settings_.ShowAllDone = _TodoNotes_Settings_.GetSettingsExportToJS('todonotesSettings_ShowAllDone');
-            _TodoNotes_Settings_.ShowTabStats = _TodoNotes_Settings_.GetSettingsExportToJS('todonotesSettings_ShowTabStats');
+            _TodoNotes_Settings_.showArchive = _TodoNotes_Settings_.GetSettingsExportToJS('archive', 'showArchive');
+            _TodoNotes_Settings_.showCategoryColors = _TodoNotes_Settings_.GetSettingsExportToJS('view', 'showCategoryColors');
+            _TodoNotes_Settings_.sortByStatus = _TodoNotes_Settings_.GetSettingsExportToJS('sort', 'sortByStatus');
+            _TodoNotes_Settings_.showStatusDone = _TodoNotes_Settings_.GetSettingsExportToJS('filter', 'showStatusDone');
+            _TodoNotes_Settings_.showTabsStats = _TodoNotes_Settings_.GetSettingsExportToJS('tabs', 'showTabsStats');
         }
 
         //------------------------------------------------
-        static GetSettingsExportToJS(settings_name) {
-            return _TodoNotes_Settings_.#settingsExportToJS[settings_name];
+        static GetSettingsExportToJS(settings_group_name, settings_name) {
+            const settings_group = _TodoNotes_Settings_.#settingsExportToJS[settings_group_name];
+            const settings_value = settings_group ? settings_group[settings_name] : false;
+            return settings_value ? settings_value :false;
         }
 
         //------------------------------------------------

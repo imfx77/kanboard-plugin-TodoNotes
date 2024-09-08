@@ -23,12 +23,12 @@ static UpdateTabs() {
 }
 
 //------------------------------------------------
-static UpdateTabStats() {
-    if (_TodoNotes_Settings_.ShowTabStats) {
-        $("#settingsTabStats").find("a i").addClass( 'buttonToggled' );
+static UpdateTabsStats() {
+    if (_TodoNotes_Settings_.showTabsStats) {
+        $("#settingsShowTabsStats").find("a i").addClass( 'buttonToggled' );
         $(".tabStatsWidget").removeClass( 'hideMe' );
     } else {
-        $("#settingsTabStats").find("a i").removeClass( 'buttonToggled' );
+        $("#settingsShowTabsStats").find("a i").removeClass( 'buttonToggled' );
         $(".tabStatsWidget").addClass( 'hideMe' );
     }
 
@@ -56,8 +56,8 @@ static #UpdateTabsContainer() {
 //------------------------------------------------
 
 //------------------------------------------------
-static #TabStatsHandlers() {
-    // console.log('_TodoNotes_Tabs_.TabStatsHandlers');
+static #TabsStatsHandlers() {
+    // console.log('_TodoNotes_Tabs_.TabsStatsHandlers');
 
     // update tabs stats widgets on clicking buttonStatus
     $("button" + ".buttonStatus").click(function() {
@@ -106,15 +106,15 @@ static #TabStatsHandlers() {
 //------------------------------------------------
 
 //------------------------------------------------
-static #TabActionHandlers() {
+static #TabsActionHandlers() {
     // toggle visibility of tabs stats widgets
-    $("button" + "#settingsTabStats").click(function() {
+    $("button" + "#settingsShowTabsStats").click(function() {
         const user_id = $(this).attr('data-user');
-        _TodoNotes_Requests_.ToggleSessionSettings(-1 /* not used */, user_id, 'todonotesSettings_ShowTabStats');
+        _TodoNotes_Requests_.ToggleSessionSettings(-1 /* not used */, user_id, 'tabs', 'showTabsStats');
 
-        _TodoNotes_Settings_.ShowTabStats = !_TodoNotes_Settings_.ShowTabStats;
+        _TodoNotes_Settings_.showTabsStats = !_TodoNotes_Settings_.showTabsStats;
 
-        _TodoNotes_Tabs_.UpdateTabStats();
+        _TodoNotes_Tabs_.UpdateTabsStats();
     });
 
     // start DB optimization routine on system reindex button
@@ -211,7 +211,7 @@ static #HandleTabGroup(group) {
 }
 
 //------------------------------------------------
-static #TabGroupHandlers() {
+static #TabsGroupHandlers() {
     // disable click & dblclick propagation for all marked sub-elements
     $(".disableTabsEventsPropagation").click(function (/*event*/) {
         //event.stopPropagation();
@@ -237,24 +237,24 @@ static #TabGroupHandlers() {
 static AttachStatusUpdateHandlers() {
     // console.log('_TodoNotes_Tabs_.AttachStatusUpdateHandlers');
 
-    _TodoNotes_Tabs_.#TabStatsHandlers();
+    _TodoNotes_Tabs_.#TabsStatsHandlers();
 }
 
 //------------------------------------------------
 static AttachTabHandlers() {
     // console.log('_TodoNotes_Tabs_.AttachTabHandlers');
 
-    _TodoNotes_Tabs_.#TabActionHandlers();
-    _TodoNotes_Tabs_.#TabGroupHandlers();
+    _TodoNotes_Tabs_.#TabsActionHandlers();
+    _TodoNotes_Tabs_.#TabsGroupHandlers();
 }
 
 //------------------------------------------------
 static AttachAllHandlers() {
     // console.log('_TodoNotes_Tabs_.AttachAllHandlers');
 
-    _TodoNotes_Tabs_.#TabStatsHandlers();
-    _TodoNotes_Tabs_.#TabActionHandlers();
-    _TodoNotes_Tabs_.#TabGroupHandlers();
+    _TodoNotes_Tabs_.#TabsStatsHandlers();
+    _TodoNotes_Tabs_.#TabsActionHandlers();
+    _TodoNotes_Tabs_.#TabsGroupHandlers();
 }
 
 //------------------------------------------------

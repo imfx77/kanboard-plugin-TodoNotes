@@ -17,12 +17,12 @@ static prepareDocument() {
         const id = $(this).attr('data-id');
         const project_id = $(this).attr('data-project');
         const category = $(this).html();
-        _TodoNotes_.UpdateCategoryColors(project_id, id, category, category)
+        _TodoNotes_.UpdateShowCategoryColors(project_id, id, category, category)
     });
 
     _TodoNotes_Statuses_.ExpandStatusAliases();
 
-    _TodoNotes_.RefreshCategoryColors();
+    _TodoNotes_.RefreshShowCategoryColors();
 
     _TodoNotes_.AttachAllHandlers();
 

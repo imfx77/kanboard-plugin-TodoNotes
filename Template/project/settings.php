@@ -4,6 +4,6 @@ $_TodoNotes_Settings_ = (isset($_SESSION['_TodoNotes_Settings_'])) ? $_SESSION['
 // _TodoNotes_SettingsExportToJS_ (hidden reference for session settings)
 print '<div class="hideMe" id="_TodoNotes_SettingsExportToJS_">' . json_encode($_TodoNotes_Settings_) . '</div>';
 
-$settings_ArchiveView = $this->helper->todonotesSettingsSessionHelper->GetToggleableSessionSettings('todonotesSettings_ArchiveView');
-$settings_SortByStatus = $this->helper->todonotesSettingsSessionHelper->GetToggleableSessionSettings('todonotesSettings_SortByStatus');
-$settings_ShowAllDone = $this->helper->todonotesSettingsSessionHelper->GetToggleableSessionSettings('todonotesSettings_ShowAllDone');
+$settings_showArchive = $this->helper->todonotesSettingsSessionHelper->GetToggleableSessionSettings('archive', 'showArchive');
+$settings_sortByStatus = $this->helper->todonotesSettingsSessionHelper->GetToggleableSessionSettings('sort', 'sortByStatus');
+$settings_showStatusDone = $this->helper->todonotesSettingsSessionHelper->GetToggleableSessionSettings('filter', 'showStatusDone');

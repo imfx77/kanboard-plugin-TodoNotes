@@ -35,8 +35,7 @@ print '<div class="localTableCellExpandRight">';
 print '<button class="toolbarSeparator">&nbsp;</button>';
 
 // New list button
-print '<button id="customNoteListCreate"';
-print ' class="toolbarButton customNoteListCreate"';
+print '<button id="customNoteListCreate" class="toolbarButton"';
 print ' title="' . t('TodoNotes__DASHBOARD_CREATE_CUSTOM_NOTE_LIST') . '"';
 print ' data-user="' . $user_id . '"';
 print '>';
@@ -44,8 +43,7 @@ print '<a><i class="fa fa-fw fa-wpforms" aria-hidden="true"></i></a>';
 print '</button>';
 
 // Show tabStatsWidget button
-print '<button id="settingsTabStats"';
-print ' class="toolbarButton settingsTabStats"';
+print '<button id="settingsShowTabsStats" class="toolbarButton"';
 print ' title="' . t('TodoNotes__PROJECT_TOGGLE_TAB_STAT') . '"';
 print ' data-user="' . $user_id . '"';
 print '>';
@@ -55,8 +53,8 @@ print '</button>';
 // ReIndex button - available to Admins ONLY!
 print '<button id="reindexNotesAndLists"';
 print $isAdmin
-    ? ' class="toolbarButton buttonToggled reindexNotesAndLists"'
-    : ' class="toolbarButton buttonDisabled reindexNotesAndLists"';
+    ? ' class="toolbarButton buttonToggled"'
+    : ' class="toolbarButton buttonDisabled"';
 print $isAdmin
     ? ' title="' . t('TodoNotes__DASHBOARD_REINDEX') . '"'
     : ' title="' . t('TodoNotes__DASHBOARD_REINDEX') . ' ' . t('TodoNotes__DASHBOARD_ADMIN_ONLY') . '"';

@@ -106,8 +106,8 @@ print '<div class="toolbarSettingsButtons containerNoWrap containerFloatRight di
 
 // Toggle Archive View
 //print '<div class="dropdown">';
-//print '<button id="settingsArchiveView" class="toolbarButton dropdown-menu"';
-print '<button id="settingsArchiveView" class="toolbarButton"';
+//print '<button id="settingsShowArchive" class="toolbarButton dropdown-menu"';
+print '<button id="settingsShowArchive" class="toolbarButton"';
 print ' title="' . t('TodoNotes__PROJECT_TOGGLE_ARCHIVE_VIEW') . '"';
 print ' data-id="0"';
 print ' data-project="' . $project_id . '"';
@@ -122,7 +122,7 @@ print '</button>';
 print '<button class="toolbarSeparator">&nbsp;</button>';
 
 // Toggle category colors
-print '<button id="settingsCategoryColors" class="toolbarButton"';
+print '<button id="settingsShowCategoryColors" class="toolbarButton"';
 print ' title="' . t('TodoNotes__PROJECT_TOGGLE_COLORIZE_BY_CATEGORY') . '"';
 print ' data-id="0"';
 print ' data-project="' . $project_id . '"';
@@ -132,10 +132,10 @@ print '<i class="fa fa-tags" aria-hidden="true"></i>';
 print '</button>';
 
 // hide some settings buttons in Archive View
-if (!$settings_ArchiveView) {
+if (!$settings_showArchive) {
     // Toggle show All Done
-    print '<button id="settingsShowAllDone" class="toolbarButton"';
-    print ' title="' . t('TodoNotes__PROJECT_TOGGLE_SHOW_ALL_DONE') . '"';
+    print '<button id="settingsShowStatusDone" class="toolbarButton"';
+    print ' title="' . t('TodoNotes__PROJECT_TOGGLE_SHOW_STATUS_DONE') . '"';
     print ' data-id="0"';
     print ' data-project="' . $project_id . '"';
     print ' data-user="' . $user_id . '"';
@@ -178,7 +178,7 @@ print '<i class="fa fa-minus-square" aria-hidden="true"></i>';
 print '</button>';
 
 // exclude when in Overview Mode or in Archive View
-if (!$readonlyNotes && !$settings_ArchiveView) {
+if (!$readonlyNotes && !$settings_showArchive) {
     // add some space between button groups
     print '<button class="toolbarSeparator">&nbsp;</button>';
 
@@ -231,24 +231,24 @@ print '</div>'; // Settings Button Toolbar
 // here goes the Title row
 print '<div class="containerNoWrap containerFloatLeft disableEventsPropagation">';
 if ($readonlyNotes) {
-    if ($settings_ArchiveView) {
+    if ($settings_showArchive) {
         print '<label class="labelNewNote">' . t('TodoNotes__PROJECT_ARCHIVE_OVERVIEW_MODE_TITLE') . '</label>';
         print '<span class="textNewNote">' . t('TodoNotes__PROJECT_ARCHIVE_OVERVIEW_MODE_TEXT') . '</label>';
     } else {
         print '<label class="labelNewNote">' . t('TodoNotes__PROJECT_OVERVIEW_MODE_TITLE') . '</label>';
-        if ($settings_SortByStatus) {
+        if ($settings_sortByStatus) {
             print '<span class="textNewNote">' . t('TodoNotes__PROJECT_OVERVIEW_MODE_TEXT_REORDERING_DISABLED') . '</label>';
         } else {
             print '<span class="textNewNote">' . t('TodoNotes__PROJECT_OVERVIEW_MODE_TEXT') . '</label>';
         }
     }
 } else {
-    if ($settings_ArchiveView) {
+    if ($settings_showArchive) {
         print '<label class="labelNewNote">' . t('TodoNotes__PROJECT_ARCHIVE_TITLE') . '</label>';
         print '<span class="textNewNote">' . t('TodoNotes__PROJECT_ARCHIVE_TEXT') . '</label>';
     } else {
         print '<label class="labelNewNote">' . t('TodoNotes__PROJECT_NEW_NOTE_LABEL') . '</label>';
-        if ($settings_SortByStatus) {
+        if ($settings_sortByStatus) {
             print '<span class="textNewNote">' . t('TodoNotes__PROJECT_NEW_NOTE_TEXT_REORDERING_DISABLED') . '</span>';
         } else {
             print '<span class="textNewNote"></span>';
@@ -261,7 +261,7 @@ print '</div>'; // Title row
 print '<div class="hideMe containerFloatClear" id="placeholderNewNote"></div>';
 
 // exclude when in Overview Mode or in Archive View
-if (!$readonlyNotes && !$settings_ArchiveView) {
+if (!$readonlyNotes && !$settings_showArchive) {
     // Newline after heading and top settings
     print '<br>';
 
@@ -422,7 +422,7 @@ foreach ($data as $u) {
     ////    PROJECT NOTE
     //////////////////////////////////////////
 
-    $isNoteActive = (!$settings_ArchiveView) ? intval($u['is_active']) : -1;
+    $isNoteActive = (!$settings_showArchive) ? intval($u['is_active']) : -1;
 
     print '<li id="item' . '-' . $u['id'] . '" class="liNote" data-id="' . $num . '" data-project="' . $u['project_id'] . '">';
     print '<div class="liNoteBkgr';
@@ -463,7 +463,7 @@ foreach ($data as $u) {
     // Date details
     print '<label id="noteDatesDetails-P' . $u['project_id'] . '-' . $num . '"';
     print ' class="dateLabel dateLabelClickable disableEventsPropagation noteDatesDetails"';
-    if ($settings_ArchiveView) {
+    if ($settings_showArchive) {
         print ' title="' . t('TodoNotes__NOTE_DATE_ARCHIVED') . $u['date_archived'] . '"';
     } else {
         print ' title="' . t('TodoNotes__NOTE_DATE_MODIFIED') . $u['date_modified'] . '"';
@@ -483,7 +483,7 @@ foreach ($data as $u) {
         $noteNotificationsStyleExtra = ' dateLabelExpired';
     }
     // hide notifications details in Archive View
-    if (!$settings_ArchiveView) {
+    if (!$settings_showArchive) {
         // Complete notifications
         if ($isNoteActive == 0) {
             $noteNotificationsStyleExtra = ' dateLabelComplete';
@@ -503,8 +503,8 @@ foreach ($data as $u) {
     print '</span>'; // Note Label Toolbar
 
     // disable reorder related functionality in Archive View
-    if (!$settings_ArchiveView) {
-        // Refresh order button (shown on changed status in SortByStatus mode only)
+    if (!$settings_showArchive) {
+        // Refresh order button (shown on changed status in sortByStatus mode only)
         print '<button id="noteRefreshOrder-P' . $u['project_id'] . '-' . $num . '"';
         print ' class="hideMe toolbarButton buttonToggled buttonBigger disableEventsPropagation noteRefreshOrder"';
         print ' title="' . t('TodoNotes__PROJECT_NOTE_REFRESH_ORDER') . '"';
@@ -525,7 +525,7 @@ foreach ($data as $u) {
     // just allow for note status change
     if (!$readonlyNotes) {
         // hide some utility buttons in Archive View
-        if (!$settings_ArchiveView) {
+        if (!$settings_showArchive) {
             // Link button (in detailed view)
             print '<button id="noteLink-P' . $u['project_id'] . '-' . $num . '"';
             print ' class="hideMe toolbarButton noteLink"';
@@ -569,7 +569,7 @@ foreach ($data as $u) {
         }
 
         // Delete button viewed (in detailed view)
-        if ($settings_ArchiveView) {
+        if ($settings_showArchive) {
             print '<button id="noteDeleteFromArchive-P' . $u['project_id'] . '-' . $num . '"';
             print ' class="hideMe toolbarButton noteDeleteFromArchive"';
         } else {
@@ -585,7 +585,7 @@ foreach ($data as $u) {
         print '</button>';
 
         // this button is relevant ONLY for Archive View
-        if ($settings_ArchiveView) {
+        if ($settings_showArchive) {
             // Restore button (in detailed view)
             print '<button id="noteRestoreFromArchive-P' . $u['project_id'] . '-' . $num . '"';
             print ' class="hideMe toolbarButton noteRestoreFromArchive"';
@@ -599,7 +599,7 @@ foreach ($data as $u) {
         }
 
         // hide some utility buttons in Archive View
-        if (!$settings_ArchiveView) {
+        if (!$settings_showArchive) {
             // Archive button (in detailed view)
             print '<button id="noteMoveToArchive-P' . $u['project_id'] . '-' . $num . '"';
             print ' class="hideMe toolbarButton noteMoveToArchive"';
@@ -641,7 +641,7 @@ foreach ($data as $u) {
     print '<div class="containerNoWrap containerFloatLeft disableEventsPropagation">';
 
     // hide some note elements in Archive View
-    if (!$settings_ArchiveView) {
+    if (!$settings_showArchive) {
         // Checkbox for Note Status
         print '<button class="buttonStatus" id="buttonStatus-P' . $u['project_id'] . '-' . $num . '"';
         print ' title="' . t('TodoNotes__PROJECT_NOTE_SWITCH_STATUS') . '"';
@@ -688,7 +688,7 @@ foreach ($data as $u) {
     print ' data-id="' . $num . '"';
     print ' data-project="' . $u['project_id'] . '"';
     print ' data-user="' . $user_id . '"';
-    if ($readonlyNotes || $settings_ArchiveView) {
+    if ($readonlyNotes || $settings_showArchive) {
         print ' data-disabled="true"';
     }
     print '>';
@@ -716,12 +716,12 @@ foreach ($data as $u) {
     print ' data-id="' . $num . '"';
     print ' data-project="' . $u['project_id'] . '"';
     print ' data-user="' . $user_id . '"';
-    if ($readonlyNotes || $settings_ArchiveView) {
+    if ($readonlyNotes || $settings_showArchive) {
         print ' disabled';
     }
     print '>';
 
-    if ($readonlyNotes || $settings_ArchiveView) {
+    if ($readonlyNotes || $settings_showArchive) {
         // just preserve the existing category data from the note
         print '<option selected="selected">' . $u['category'] . '</option>';
     } else {
@@ -774,7 +774,7 @@ foreach ($data as $u) {
     }
 
     print '<label  id="noteNotificationsLabel-P' . $u['project_id'] . '-' . $num . '"';
-    if (!$settings_ArchiveView) {
+    if (!$settings_showArchive) {
         print 'class="dateLabel dateLabelClickable' . $noteNotificationsStyleExtra . ' noteNotificationsSetup"';
     } else {
         print 'class="dateLabel' . $noteNotificationsStyleExtra . '"';
@@ -784,7 +784,7 @@ foreach ($data as $u) {
     print ' data-user="' . $user_id . '"';
     print ' data-notifications-alert-timestamp="' . $u['notifications_alert_timestamp'] . '"';
     print ' data-notifications-alert-timestring="' . $u['date_notified'] . '"';
-    if (!$settings_ArchiveView) {
+    if (!$settings_showArchive) {
         print ' data-notifications-options-bitflags="' . $u['flags_notified'] . '"';
     }
     print '>';
@@ -797,7 +797,7 @@ foreach ($data as $u) {
     // Markdown Details
     print '<div class="containerFloatClear">';
 
-    if (!$readonlyNotes && !$settings_ArchiveView) {
+    if (!$readonlyNotes && !$settings_showArchive) {
         // here goes the Note Edit Button
         print '<div class="containerNoWrap buttonEditMarkdown disableEventsPropagation">';
 
@@ -816,10 +816,10 @@ foreach ($data as $u) {
     }
 
     // Markdown Preview
-    if ((!$readonlyNotes && !$settings_ArchiveView) || !empty($u['description'])) {
+    if ((!$readonlyNotes && !$settings_showArchive) || !empty($u['description'])) {
         print '<div id="noteMarkdownDetails-P' . $u['project_id'] . '-' . $num . '_Preview"';
         print ' class="markdown noteDetailsMarkdown disableEventsPropagation';
-        if (!$settings_ArchiveView && $u['is_active'] == 0) {
+        if (!$settings_showArchive && $u['is_active'] == 0) {
             print ' noteDoneMarkdown';
         }
         print '"';
@@ -834,7 +834,7 @@ foreach ($data as $u) {
     }
 
     // Markdown Editor
-    if (!$readonlyNotes && !$settings_ArchiveView) {
+    if (!$readonlyNotes && !$settings_showArchive) {
         print '<div id="noteMarkdownDetails-P' . $u['project_id'] . '-' . $num . '_Editor"';
         print ' class="hideMe noteDetailsMarkdown noteEditorMarkdown disableEventsPropagation"';
         print ' data-id="' . $num . '"';
