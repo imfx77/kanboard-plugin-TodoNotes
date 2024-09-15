@@ -17,10 +17,18 @@ class SessionAndCookiesSettingsHelper extends Base
     public function GetSettings($user_id, $project_id)
     {
         // obtain from cookie
-        // TODO
+        $cookie = (isset($_COOKIE[self::SETTINGS_KEY_NAME])) ? $_COOKIE[self::SETTINGS_KEY_NAME] : '';
+        $cookie_value = json_decode($cookie, true);
+        $cookie_settings_key = 'user=' . $user_id . ';project=' . $project_id . ';';
 
-        // obtain from session
-        $settings = (isset($_SESSION[self::SETTINGS_KEY_NAME])) ? $_SESSION[self::SETTINGS_KEY_NAME] : array();
+        $settings = (is_array($cookie_value) && array_key_exists($cookie_settings_key, $cookie_value))
+            ? $cookie_value[$cookie_settings_key]
+            : null;
+
+        // else obtain from session
+        if (!isset($settings)) {
+            $settings = (isset($_SESSION[self::SETTINGS_KEY_NAME])) ? $_SESSION[self::SETTINGS_KEY_NAME] : array();
+        }
 
         return $settings;
     }
@@ -33,7 +41,21 @@ class SessionAndCookiesSettingsHelper extends Base
         $_SESSION[self::SETTINGS_KEY_NAME] = $settings;
 
         // store to cookie
-        // TODO
+        $cookie = (isset($_COOKIE[self::SETTINGS_KEY_NAME])) ? $_COOKIE[self::SETTINGS_KEY_NAME] : '';
+        $cookie_value = json_decode($cookie, true);
+        $cookie_settings_key = 'user=' . $user_id . ';project=' . $project_id . ';';
+        $cookie_value[$cookie_settings_key] = $settings;
+
+        $cookie_options = array (
+            'expires' => time() + 60*60*24*30, // 30 days
+            //'expires' => time() - 3600, // reset cookie
+            'path' => '/',
+            'domain' => '',
+            'secure' => true,
+            'httponly' => true,
+            'samesite' => 'Strict',
+        );
+        setcookie(self::SETTINGS_KEY_NAME, json_encode($cookie_value), $cookie_options);
     }
 
     public function GetToggleableSettings($user_id, $project_id, $settings_group_name, $settings_name): bool
