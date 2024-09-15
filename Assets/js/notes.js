@@ -908,7 +908,7 @@ static #SettingsHandlers() {
         const project_id = $(this).attr('data-project');
         const user_id = $(this).attr('data-user');
 
-        _TodoNotes_Requests_.ToggleSessionSettings(project_id, user_id, 'sort', 'sortByStatus');
+        _TodoNotes_Requests_.ToggleSettings(project_id, user_id, 'sort', 'sortByStatus');
 
         _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
     });
@@ -917,7 +917,7 @@ static #SettingsHandlers() {
         const project_id = $(this).attr('data-project');
         const user_id = $(this).attr('data-user');
 
-        _TodoNotes_Requests_.ToggleSessionSettings(project_id, user_id, 'filter','showStatusDone');
+        _TodoNotes_Requests_.ToggleSettings(project_id, user_id, 'filter','showStatusDone');
 
         _TodoNotes_Settings_.showStatusDone = !_TodoNotes_Settings_.showStatusDone;
         _TodoNotes_.RefreshShowStatusDone();
@@ -933,7 +933,7 @@ static #SettingsHandlers() {
         const project_id = $(this).attr('data-project');
         const user_id = $(this).attr('data-user');
 
-        _TodoNotes_Requests_.ToggleSessionSettings(project_id, user_id, 'view', 'showCategoryColors');
+        _TodoNotes_Requests_.ToggleSettings(project_id, user_id, 'view', 'showCategoryColors');
 
         _TodoNotes_Settings_.showCategoryColors = !_TodoNotes_Settings_.showCategoryColors;
         _TodoNotes_.RefreshShowCategoryColors();
@@ -943,7 +943,7 @@ static #SettingsHandlers() {
         const project_id = $(this).attr('data-project');
         const user_id = $(this).attr('data-user');
 
-        _TodoNotes_Requests_.ToggleSessionSettings(project_id, user_id, 'archive', 'showArchive');
+        _TodoNotes_Requests_.ToggleSettings(project_id, user_id, 'archive', 'showArchive');
 
         _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
     });

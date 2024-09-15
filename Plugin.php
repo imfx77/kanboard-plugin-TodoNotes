@@ -14,7 +14,7 @@ class Plugin extends Base
     {
         //HELPER
         $this->helper->register('todonotesTranslationsExportToJSHelper', '\Kanboard\Plugin\TodoNotes\Helper\TranslationsExportToJSHelper');
-        $this->helper->register('todonotesSettingsSessionHelper', '\Kanboard\Plugin\TodoNotes\Helper\SettingsSessionHelper');
+        $this->helper->register('todonotesSessionAndCookiesSettingsHelper', '\Kanboard\Plugin\TodoNotes\Helper\SessionAndCookiesSettingsHelper');
 
         //HOOKS
         $this->template->hook->attach('template:dashboard:sidebar', 'TodoNotes:dashboard/sidebar');
