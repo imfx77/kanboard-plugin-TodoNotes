@@ -42,18 +42,22 @@ class SessionAndCookiesSettingsHelper extends Base
 
     public function GetSettings($user_id, $project_id)
     {
+        $settings_key = $user_id . '|' . $project_id;
+
         // obtain from cookie
         $cookie = (isset($_COOKIE[self::SETTINGS_KEY_NAME])) ? $_COOKIE[self::SETTINGS_KEY_NAME] : '';
         $cookie_value = json_decode(strtr($cookie, self::URL_DECODE_MAP), true);
-        $cookie_settings_key = $user_id . '|' . $project_id;
 
-        $settings = (is_array($cookie_value) && array_key_exists($cookie_settings_key, $cookie_value))
-            ? $cookie_value[$cookie_settings_key]
+        $settings = (is_array($cookie_value) && array_key_exists($settings_key, $cookie_value))
+            ? $cookie_value[$settings_key]
             : null;
 
         // else obtain from session
         if (!isset($settings)) {
-            $settings = (isset($_SESSION[self::SETTINGS_KEY_NAME])) ? $_SESSION[self::SETTINGS_KEY_NAME] : self::DEFAULT_SETTINGS;
+            $session_value = (isset($_SESSION[self::SETTINGS_KEY_NAME])) ? $_SESSION[self::SETTINGS_KEY_NAME] : [];
+            $settings = (is_array($session_value) && array_key_exists($settings_key, $session_value))
+                ? $session_value[$settings_key]
+                : self::DEFAULT_SETTINGS;
         }
 
         return $settings;
@@ -62,16 +66,18 @@ class SessionAndCookiesSettingsHelper extends Base
     private function SetSettings($user_id, $project_id, $settings)
     {
         //print_r($settings);
+        $settings_key = $user_id . '|' . $project_id;
 
         // store to session
-        $_SESSION[self::SETTINGS_KEY_NAME] = $settings;
+        $session_value = (isset($_SESSION[self::SETTINGS_KEY_NAME])) ? $_SESSION[self::SETTINGS_KEY_NAME] : [];
+        $session_value[$settings_key] = $settings;
+        $_SESSION[self::SETTINGS_KEY_NAME] = $session_value;
         //unset($_SESSION[self::SETTINGS_KEY_NAME]);
 
         // store to cookie
         $cookie = (isset($_COOKIE[self::SETTINGS_KEY_NAME])) ? $_COOKIE[self::SETTINGS_KEY_NAME] : '';
         $cookie_value = json_decode(strtr($cookie, self::URL_DECODE_MAP), true);
-        $cookie_settings_key = $user_id . '|' . $project_id;
-        $cookie_value[$cookie_settings_key] = $settings;
+        $cookie_value[$settings_key] = $settings;
 
         $cookie_options = array (
             'expires' => time() + (60 * 60 * 24 * 30), // 30 days
