@@ -20,6 +20,16 @@ static UpdateTabs() {
         _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__DASHBOARD_MY_NOTES')
         + ' > ' + $("#singleTab-P" + project_tab_id + " a").text()
     );
+
+    if (_TodoNotes_Settings_.hideTabsGlobal) {
+        _TodoNotes_Tabs_.#ToggleTabGroup( 'Global' );
+    }
+    if (_TodoNotes_Settings_.hideTabsPrivate) {
+        _TodoNotes_Tabs_.#ToggleTabGroup( 'Private' );
+    }
+    if (_TodoNotes_Settings_.hideTabsRegular) {
+        _TodoNotes_Tabs_.#ToggleTabGroup( 'Regular' );
+    }
 }
 
 //------------------------------------------------
@@ -200,12 +210,31 @@ static #ToggleTabGroup(group) {
 }
 
 //------------------------------------------------
+static #ToggleTabGroupSettings(group) {
+    const user_id = $("#refProjectId").attr('data-user');
+    if (group === 'Global') {
+        _TodoNotes_Requests_.ToggleSettings(0 /* overview */, user_id, 0 /*tabs*/, 1 /*Global*/);
+        _TodoNotes_Settings_.hideTabsGlobal = !_TodoNotes_Settings_.hideTabsGlobal;
+    }
+    if (group === 'Private') {
+        _TodoNotes_Requests_.ToggleSettings(0 /* overview */, user_id, 0 /*tabs*/, 2 /*Private*/);
+        _TodoNotes_Settings_.showTabsPrivate = !_TodoNotes_Settings_.showTabsPrivate;
+    }
+    if (group === 'Regular') {
+        _TodoNotes_Requests_.ToggleSettings(0 /* overview */, user_id, 0 /*tabs*/, 3 /*Regular*/);
+        _TodoNotes_Settings_.showTabsRegular = !_TodoNotes_Settings_.showTabsRegular;
+    }
+}
+
+//------------------------------------------------
 static #HandleTabGroup(group) {
     $("#headerGroup" + group).dblclick(function() {
+        _TodoNotes_Tabs_.#ToggleTabGroupSettings(group);
         _TodoNotes_Tabs_.#ToggleTabGroup(group);
     });
 
     $("#toggleGroup" + group).click(function() {
+        _TodoNotes_Tabs_.#ToggleTabGroupSettings(group);
         _TodoNotes_Tabs_.#ToggleTabGroup(group);
     });
 }

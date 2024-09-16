@@ -20,6 +20,9 @@ if (typeof(_TodoNotes_Settings_) === 'undefined') {
         // Global vars for settings
         //------------------------------------------------
         static showTabsStats = false;
+        static hideTabsGlobal = false;
+        static hideTabsPrivate = false;
+        static hideTabsRegular = false;
 
         static hideStatusDone = false;
         static hideStatusOpen = false;
@@ -42,6 +45,9 @@ if (typeof(_TodoNotes_Settings_) === 'undefined') {
             $("#_TodoNotes_ProjectSettingsExportToJS_").remove();
 
             _TodoNotes_Settings_.showTabsStats              = _TodoNotes_Settings_.GetSettingsExportToJS(0 /*tabs*/, 0 /*Stats*/, true);
+            _TodoNotes_Settings_.hideTabsGlobal             = _TodoNotes_Settings_.GetSettingsExportToJS(0 /*tabs*/, 1 /*Global*/, true);
+            _TodoNotes_Settings_.hideTabsPrivate            = _TodoNotes_Settings_.GetSettingsExportToJS(0 /*tabs*/, 2 /*Private*/, true);
+            _TodoNotes_Settings_.hideTabsRegular            = _TodoNotes_Settings_.GetSettingsExportToJS(0 /*tabs*/, 3 /*Regular*/, true);
 
             _TodoNotes_Settings_.hideStatusDone             = _TodoNotes_Settings_.GetSettingsExportToJS(1 /*filter*/, 0 /*Done*/);
             _TodoNotes_Settings_.hideStatusOpen             = _TodoNotes_Settings_.GetSettingsExportToJS(1 /*filter*/, 1 /*Open*/);
