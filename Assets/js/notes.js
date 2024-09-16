@@ -585,7 +585,7 @@ static #NoteStatusHandlers() {
             _TodoNotes_Requests_.UpdateNote(project_id, user_id, id);
         }
 
-        if (_TodoNotes_Settings_.sortByStatus) {
+        if (!_TodoNotes_Settings_.sortManual) {
             $("#noteRefreshOrder-P" + project_id + "-" + id).removeClass( 'hideMe' );
         }
 
@@ -931,6 +931,31 @@ static #SettingsFilterHandlers() {
 }
 
 //------------------------------------------------
+static #SettingsSortHandlers() {
+    // Toggle sort Manual
+    $(".settingsSortManual").unbind('click');
+    $(".settingsSortManual").click(function() {
+        const project_id = $(this).attr('data-project');
+        const user_id = $(this).attr('data-user');
+
+        _TodoNotes_Requests_.ToggleSettings(project_id, user_id, 2 /*sort*/, 0 /*Manual*/, true);
+
+        _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
+    });
+
+    // Toggle sort by Status
+    $(".settingsSortByStatus").unbind('click');
+    $(".settingsSortByStatus").click(function() {
+        const project_id = $(this).attr('data-project');
+        const user_id = $(this).attr('data-user');
+
+        _TodoNotes_Requests_.ToggleSettings(project_id, user_id, 2 /*sort*/, 1 /*Status*/, true);
+
+        _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
+    });
+}
+
+//------------------------------------------------
 static #SettingsViewHandlers() {
     // Toggle colorize by Category
     $(".settingsShowCategoryColors").unbind('click');
@@ -1014,6 +1039,12 @@ static #SettingsHandlers() {
         }, 100);
     });
 
+    $("#settingsSort").click(function() {
+        setTimeout(function() {
+            _TodoNotes_.#SettingsSortHandlers();
+        }, 100);
+    });
+
     $("#settingsView").click(function() {
         setTimeout(function() {
             _TodoNotes_.#SettingsViewHandlers();
@@ -1036,17 +1067,6 @@ static #SettingsHandlers() {
     $(document).keydown(function(event) {
         if (event.keyCode !== 107) return; // [+] key
         _TodoNotes_.#SettingsExpandAll();
-    });
-
-    //------------------------------------------------
-
-    $("#settingsSortByStatus").click(function() {
-        const project_id = $(this).attr('data-project');
-        const user_id = $(this).attr('data-user');
-
-        _TodoNotes_Requests_.ToggleSettings(project_id, user_id, 2 /*sort*/, 1 /*Status*/);
-
-        _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
     });
 
     //------------------------------------------------
@@ -1124,12 +1144,17 @@ static RefreshShowArchive() {
 }
 
 //------------------------------------------------
-// Refresh sort by Status
-static RefreshSortByStatus() {
-    if (_TodoNotes_Settings_.sortByStatus) {
-        $("#settingsSortByStatus").addClass( 'buttonToggled' );
+// Refresh sort menu items
+static RefreshSortMenuItems() {
+    if (_TodoNotes_Settings_.sortManual) {
+        $(".settingsSortManual button").addClass( 'buttonToggled' );
     } else {
-        $("#settingsSortByStatus").removeClass( 'buttonToggled' );
+        $(".settingsSortManual button").removeClass( 'buttonToggled' );
+    }
+    if (_TodoNotes_Settings_.sortByStatus) {
+        $(".settingsSortByStatus button").addClass( 'buttonToggled' );
+    } else {
+        $(".settingsSortByStatus button").removeClass( 'buttonToggled' );
     }
 }
 

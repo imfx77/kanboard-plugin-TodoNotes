@@ -98,16 +98,16 @@ class TodoNotesController extends BaseController
         $swimlanes = $this->todoNotesModel->GetSwimlanes($project_id);
 
         $doShowArchive = $this->helper->todonotesSessionAndCookiesSettingsHelper->GetToggleableSettings($user_id, $project_id, 1 /*filter*/, 3 /*Archived*/);
-        $doSortByStatus = $this->helper->todonotesSessionAndCookiesSettingsHelper->GetToggleableSettings($user_id, $project_id, 2 /*sort*/, 1 /*Status*/);
+        $doSortExplicit = !$this->helper->todonotesSessionAndCookiesSettingsHelper->GetToggleableSettings($user_id, $project_id, 2 /*sort*/, 0 /*Manual*/);
 
         if ($project_id == 0) {
             $data = $doShowArchive
                 ? $this->todoNotesModel->GetAllArchivedNotesForUser($projectsAccess, $user_id)
-                : $this->todoNotesModel->GetAllNotesForUser($projectsAccess, $user_id, $doSortByStatus);
+                : $this->todoNotesModel->GetAllNotesForUser($projectsAccess, $user_id, $doSortExplicit);
         } else {
             $data = $doShowArchive
                 ? $this->todoNotesModel->GetArchivedProjectNotesForUser($project_id, $user_id)
-                : $this->todoNotesModel->GetProjectNotesForUser($project_id, $user_id, $doSortByStatus);
+                : $this->todoNotesModel->GetProjectNotesForUser($project_id, $user_id, $doSortExplicit);
         }
 
         return $this->response->html($this->helper->layout->app('TodoNotes:project/data', array(
@@ -166,16 +166,16 @@ class TodoNotesController extends BaseController
         }
 
         $doShowArchive = $this->helper->todonotesSessionAndCookiesSettingsHelper->GetToggleableSettings($user_id, $project_id, 1 /*filter*/, 3 /*Archived*/);
-        $doSortByStatus = $this->helper->todonotesSessionAndCookiesSettingsHelper->GetToggleableSettings($user_id, $project_id, 2 /*sort*/, 1 /*Status*/);
+        $doSortExplicit = !$this->helper->todonotesSessionAndCookiesSettingsHelper->GetToggleableSettings($user_id, $project_id, 2 /*sort*/, 0 /*Manual*/);
 
         if ($project_id == 0) {
             $data = $doShowArchive
                 ? $this->todoNotesModel->GetAllArchivedNotesForUser($projectsAccess, $user_id)
-                : $this->todoNotesModel->GetAllNotesForUser($projectsAccess, $user_id, $doSortByStatus);
+                : $this->todoNotesModel->GetAllNotesForUser($projectsAccess, $user_id, $doSortExplicit);
         } else {
             $data = $doShowArchive
                 ? $this->todoNotesModel->GetArchivedProjectNotesForUser($project_id, $user_id)
-                : $this->todoNotesModel->GetProjectNotesForUser($project_id, $user_id, $doSortByStatus);
+                : $this->todoNotesModel->GetProjectNotesForUser($project_id, $user_id, $doSortExplicit);
         }
 
         return $this->response->html($this->helper->layout->dashboard('TodoNotes:dashboard/data', array(
@@ -361,10 +361,10 @@ class TodoNotesController extends BaseController
         $project = $this->ResolveProject($user_id);
         $project_id = $project['id'];
 
-        $doSortByStatus = $this->helper->todonotesSessionAndCookiesSettingsHelper->GetToggleableSettings($user_id, $project_id, 2 /*sort*/, 1 /*Status*/);
+        $doSortExplicit = !$this->helper->todonotesSessionAndCookiesSettingsHelper->GetToggleableSettings($user_id, $project_id, 2 /*sort*/, 0 /*Manual*/);
 
         $category = $this->request->getStringParam('category');
-        $data = $this->todoNotesModel->GetReportNotesForUser($project_id, $user_id, $doSortByStatus, $category);
+        $data = $this->todoNotesModel->GetReportNotesForUser($project_id, $user_id, $doSortExplicit, $category);
 
         return $this->response->html($this->helper->layout->app('TodoNotes:project/report', array(
             'title' => $project['name'], // rather keep the project name as title
@@ -563,8 +563,9 @@ class TodoNotesController extends BaseController
 
         $settings_group_key = intval($this->request->getStringParam('settings_group_key'));
         $settings_key = intval($this->request->getStringParam('settings_key'));
+        $settings_exclusive = (intval($this->request->getStringParam('settings_exclusive')) != 0) ? true : false;
 
-        $this->helper->todonotesSessionAndCookiesSettingsHelper->ToggleSettings($user_id, $project_id, $settings_group_key, $settings_key);
+        $this->helper->todonotesSessionAndCookiesSettingsHelper->ToggleSettings($user_id, $project_id, $settings_group_key, $settings_key, $settings_exclusive);
         return true;
     }
 

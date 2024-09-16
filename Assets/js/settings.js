@@ -26,6 +26,7 @@ if (typeof(_TodoNotes_Settings_) === 'undefined') {
         static showStatusInProgress = false;
         static showArchive = false;
 
+        static sortManual = false;
         static sortByStatus = false;
 
         static showCategoryColors = false;
@@ -47,6 +48,7 @@ if (typeof(_TodoNotes_Settings_) === 'undefined') {
             _TodoNotes_Settings_.showStatusInProgress       = _TodoNotes_Settings_.GetSettingsExportToJS(1 /*filter*/, 2 /*InProgress*/);
             _TodoNotes_Settings_.showArchive                = _TodoNotes_Settings_.GetSettingsExportToJS(1 /*filter*/, 3 /*Archived*/);
 
+            _TodoNotes_Settings_.sortManual                 = _TodoNotes_Settings_.GetSettingsExportToJS(2 /*sort*/, 0 /*Manual*/);
             _TodoNotes_Settings_.sortByStatus               = _TodoNotes_Settings_.GetSettingsExportToJS(2 /*sort*/, 1 /*Status*/);
 
             _TodoNotes_Settings_.showCategoryColors         = _TodoNotes_Settings_.GetSettingsExportToJS(3 /*view*/, 0 /*CategoryColors*/);

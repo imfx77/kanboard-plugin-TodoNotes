@@ -162,18 +162,46 @@ print'</button><a>&nbsp;&nbsp;' . t('TodoNotes__PROJECT_TOGGLE_ARCHIVE_VIEW') . 
 print '</ul>';
 print '</div>'; // Settings Filter
 
+// Settings Sort
+print '<div class="dropdown">';
+print '<button id="settingsSort" class="toolbarButton dropdown-menu"';
+print ' title="' . t('TodoNotes__PROJECT_SETTINGS_SORT') . '"';
+print ' data-id="0"';
+print ' data-project="' . $project_id . '"';
+print ' data-user="' . $user_id . '"';
+print '>';
+print '<i class="fa fa-sort" aria-hidden="true"></i>';
+print '</button>';
+
+print '<ul>';
+
 // hide some settings buttons in Archive View
 if (!$settings_showArchive) {
-    // Toggle sort by status
-    print '<button id="settingsSortByStatus" class="toolbarButton"';
+    // Toggle sort Manual
+    print '<li class="settingsSortManual"';
+    print ' data-id="0"';
+    print ' data-project="' . $project_id . '"';
+    print ' data-user="' .  $user_id . '"';
+    print '><button class="toolbarButton">';
+    print '<i class="fa fa-hand-pointer-o" aria-hidden="true"></i>';
+    print'</button><a>&nbsp;&nbsp;' . t('TodoNotes__PROJECT_TOGGLE_SORT_MANUAL') . '</a></li>';
+
+    // Toggle sort by Status
+    print '<li class="settingsSortByStatus"';
     print ' title="' . t('TodoNotes__PROJECT_TOGGLE_SORT_BY_STATUS') . '"';
     print ' data-id="0"';
     print ' data-project="' . $project_id . '"';
     print ' data-user="' . $user_id . '"';
-    print '>';
-    print '<i class="fa fa-sort" aria-hidden="true"></i>';
-    print '</button>';
+    print '><button class="toolbarButton">';
+    print '<i class="statusDone" aria-hidden="true"></i>';
+    print'</button><a>&nbsp;&nbsp;' . t('TodoNotes__PROJECT_TOGGLE_SORT_BY_STATUS') . '</a></li>';
+
+    // add divider between button groups
+    print '<hr class="toolbarDivider">';
 }
+
+print '</ul>';
+print '</div>'; // Settings Sort
 
 // add some space between button groups
 print '<button class="toolbarSeparator">&nbsp;</button>';
@@ -307,7 +335,7 @@ if ($readonlyNotes) {
         print '<span class="textNewNote">' . t('TodoNotes__PROJECT_ARCHIVE_OVERVIEW_MODE_TEXT') . '</label>';
     } else {
         print '<label class="labelNewNote">' . t('TodoNotes__PROJECT_OVERVIEW_MODE_TITLE') . '</label>';
-        if ($settings_sortByStatus) {
+        if ($settings_sortExplicit) {
             print '<span class="textNewNote">' . t('TodoNotes__PROJECT_OVERVIEW_MODE_TEXT_REORDERING_DISABLED') . '</label>';
         } else {
             print '<span class="textNewNote">' . t('TodoNotes__PROJECT_OVERVIEW_MODE_TEXT') . '</label>';
@@ -319,7 +347,7 @@ if ($readonlyNotes) {
         print '<span class="textNewNote">' . t('TodoNotes__PROJECT_ARCHIVE_TEXT') . '</label>';
     } else {
         print '<label class="labelNewNote">' . t('TodoNotes__PROJECT_NEW_NOTE_LABEL') . '</label>';
-        if ($settings_sortByStatus) {
+        if ($settings_sortExplicit) {
             print '<span class="textNewNote">' . t('TodoNotes__PROJECT_NEW_NOTE_TEXT_REORDERING_DISABLED') . '</span>';
         } else {
             print '<span class="textNewNote"></span>';

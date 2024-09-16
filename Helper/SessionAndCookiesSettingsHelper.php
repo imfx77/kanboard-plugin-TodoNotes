@@ -16,6 +16,7 @@ class SessionAndCookiesSettingsHelper extends Base
 
     private const DEFAULT_SETTINGS = array(
         1 /*filter*/ => [1 /*Open*/, 2 /*InProgress*/, 0 /*Done*/],
+        2 /*sort*/ => [0 /*Manual*/],
         3 /*view*/ => [0 /*CategoryColors*/],
     );
 
@@ -98,13 +99,14 @@ class SessionAndCookiesSettingsHelper extends Base
         return $settings_value;
     }
 
-    private function SetToggleableSettings($user_id, $project_id, $settings_group_key, $settings_key, $settings_value)
+    private function SetToggleableSettings($user_id, $project_id, $settings_group_key, $settings_key, $settings_value, $settings_exclusive)
     {
         $settings = $this->GetSettings($user_id, $project_id);
 
-        $settings_group = (array_key_exists($settings_group_key, $settings) && is_array($settings[$settings_group_key]))
-            ? $settings[$settings_group_key]
-            : [];
+        $settings_group = [];
+        if (!$settings_exclusive && array_key_exists($settings_group_key, $settings) && is_array($settings[$settings_group_key])) {
+            $settings_group = $settings[$settings_group_key];
+        }
 
         $hasValue = in_array($settings_key, $settings_group);
         if ($settings_value && !$hasValue) {
@@ -123,9 +125,9 @@ class SessionAndCookiesSettingsHelper extends Base
         $this->SetSettings($user_id, $project_id, $settings);
     }
 
-    public function ToggleSettings($user_id, $project_id, $settings_group_key, $settings_key)
+    public function ToggleSettings($user_id, $project_id, $settings_group_key, $settings_key, $settings_exclusive)
     {
-        $settings_value = $this->GetToggleableSettings($user_id, $project_id, $settings_group_key, $settings_key);
-        $this->SetToggleableSettings($user_id, $project_id, $settings_group_key, $settings_key, !$settings_value);
+        $settings_value = $settings_exclusive ? false : $this->GetToggleableSettings($user_id, $project_id, $settings_group_key, $settings_key);
+        $this->SetToggleableSettings($user_id, $project_id, $settings_group_key, $settings_key, !$settings_value, $settings_exclusive);
     }
 }

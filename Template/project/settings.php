@@ -12,4 +12,4 @@ $settings_showStatusDone = $this->helper->todonotesSessionAndCookiesSettingsHelp
 $settings_showStatusOpen = $this->helper->todonotesSessionAndCookiesSettingsHelper->GetToggleableSettings($user_id, $project_id, 1 /*filter*/, 1 /*Open*/);
 $settings_showStatusInProgress = $this->helper->todonotesSessionAndCookiesSettingsHelper->GetToggleableSettings($user_id, $project_id, 1 /*filter*/, 2 /*InProgress*/);
 $settings_showArchive = $this->helper->todonotesSessionAndCookiesSettingsHelper->GetToggleableSettings($user_id, $project_id, 1 /*filter*/, 3 /*Archived*/);
-$settings_sortByStatus = $this->helper->todonotesSessionAndCookiesSettingsHelper->GetToggleableSettings($user_id, $project_id, 2 /*sort*/, 1 /*Status*/);
+$settings_sortExplicit = !$this->helper->todonotesSessionAndCookiesSettingsHelper->GetToggleableSettings($user_id, $project_id, 2 /*sort*/, 0 /*Manual*/);

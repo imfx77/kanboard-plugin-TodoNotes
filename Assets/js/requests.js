@@ -531,7 +531,7 @@ static RefreshTabs(user_id) {
 
 //------------------------------------------------
 // toggle & store settings variable into the session
-static ToggleSettings(project_id, user_id, settings_group_key, settings_key) {
+static ToggleSettings(project_id, user_id, settings_group_key, settings_key, settings_exclusive = false) {
     // $("#result" + project_id).html(_TodoNotes_Translations_.msgLoadingSpinner);
     $.ajax({
         cache: false,
@@ -540,7 +540,8 @@ static ToggleSettings(project_id, user_id, settings_group_key, settings_key) {
             + '&project_custom_id=' + project_id
             + '&user_id=' + user_id
             + '&settings_group_key=' + settings_group_key
-            + '&settings_key=' + settings_key,
+            + '&settings_key=' + settings_key
+            + '&settings_exclusive=' + (settings_exclusive ? 1 : 0),
         success: function(/*response*/) {
             // console.log(response);
         },
