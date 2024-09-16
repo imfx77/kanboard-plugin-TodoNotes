@@ -21,9 +21,9 @@ if (typeof(_TodoNotes_Settings_) === 'undefined') {
         //------------------------------------------------
         static showTabsStats = false;
 
-        static showStatusDone = false;
-        static showStatusOpen = false;
-        static showStatusInProgress = false;
+        static hideStatusDone = false;
+        static hideStatusOpen = false;
+        static hideStatusInProgress = false;
         static showArchive = false;
 
         static sortManual = false;
@@ -43,9 +43,9 @@ if (typeof(_TodoNotes_Settings_) === 'undefined') {
 
             _TodoNotes_Settings_.showTabsStats              = _TodoNotes_Settings_.GetSettingsExportToJS(0 /*tabs*/, 0 /*Stats*/, true);
 
-            _TodoNotes_Settings_.showStatusDone             = _TodoNotes_Settings_.GetSettingsExportToJS(1 /*filter*/, 0 /*Done*/);
-            _TodoNotes_Settings_.showStatusOpen             = _TodoNotes_Settings_.GetSettingsExportToJS(1 /*filter*/, 1 /*Open*/);
-            _TodoNotes_Settings_.showStatusInProgress       = _TodoNotes_Settings_.GetSettingsExportToJS(1 /*filter*/, 2 /*InProgress*/);
+            _TodoNotes_Settings_.hideStatusDone             = _TodoNotes_Settings_.GetSettingsExportToJS(1 /*filter*/, 0 /*Done*/);
+            _TodoNotes_Settings_.hideStatusOpen             = _TodoNotes_Settings_.GetSettingsExportToJS(1 /*filter*/, 1 /*Open*/);
+            _TodoNotes_Settings_.hideStatusInProgress       = _TodoNotes_Settings_.GetSettingsExportToJS(1 /*filter*/, 2 /*InProgress*/);
             _TodoNotes_Settings_.showArchive                = _TodoNotes_Settings_.GetSettingsExportToJS(1 /*filter*/, 3 /*Archived*/);
 
             _TodoNotes_Settings_.sortManual                 = _TodoNotes_Settings_.GetSettingsExportToJS(2 /*sort*/, 0 /*Manual*/);

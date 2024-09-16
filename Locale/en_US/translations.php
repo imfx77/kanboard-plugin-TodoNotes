@@ -33,9 +33,9 @@ return array(
     'TodoNotes__PROJECT_SETTINGS_ACTIONS' => 'Actions',
     //
     'TodoNotes__PROJECT_TOGGLE_TAB_STAT' => 'Show Stats',
-    'TodoNotes__PROJECT_TOGGLE_SHOW_STATUS_OPEN' => 'Show Open',
-    'TodoNotes__PROJECT_TOGGLE_SHOW_STATUS_INPROGRESS' => 'Show In Progress',
-    'TodoNotes__PROJECT_TOGGLE_SHOW_STATUS_DONE' => 'Show Done',
+    'TodoNotes__PROJECT_TOGGLE_HIDE_STATUS_OPEN' => 'Hide Open',
+    'TodoNotes__PROJECT_TOGGLE_HIDE_STATUS_INPROGRESS' => 'Hide In Progress',
+    'TodoNotes__PROJECT_TOGGLE_HIDE_STATUS_DONE' => 'Hide Done',
     'TodoNotes__PROJECT_TOGGLE_ARCHIVE_VIEW' => 'Archive View',
     'TodoNotes__PROJECT_TOGGLE_SORT_MANUAL' => 'Manual Reorder',
     'TodoNotes__PROJECT_TOGGLE_SORT_BY_STATUS' => 'Sort by Status',

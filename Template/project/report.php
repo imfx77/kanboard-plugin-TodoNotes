@@ -20,9 +20,9 @@ $num = "1";
 
 foreach ($data as $u) {
     $isNoteActive = intval($u['is_active']);
-    if ($isNoteActive == 0 && !$settings_showStatusDone) continue;
-    if ($isNoteActive == 1 && !$settings_showStatusOpen) continue;
-    if ($isNoteActive == 2 && !$settings_showStatusInProgress) continue;
+    if ($isNoteActive == 0 && $settings_hideStatusDone) continue;
+    if ($isNoteActive == 1 && $settings_hideStatusOpen) continue;
+    if ($isNoteActive == 2 && $settings_hideStatusInProgress) continue;
 
     // ------------------------------------------
     // BEGIN NOTE

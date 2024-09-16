@@ -15,7 +15,6 @@ class SessionAndCookiesSettingsHelper extends Base
     private const SETTINGS_KEY_NAME = '_KB_plugin_TodoNotes_user_Settings_';
 
     private const DEFAULT_SETTINGS = array(
-        1 /*filter*/ => [1 /*Open*/, 2 /*InProgress*/, 0 /*Done*/],
         2 /*sort*/ => [0 /*Manual*/],
         3 /*view*/ => [0 /*CategoryColors*/],
     );
@@ -84,6 +83,8 @@ class SessionAndCookiesSettingsHelper extends Base
             'samesite' => 'Strict',
         );
         setcookie(self::SETTINGS_KEY_NAME, strtr(json_encode($cookie_value), self::URL_ENCODE_MAP), $cookie_options);
+
+        //echo json_encode($cookie_value);
     }
 
     public function GetToggleableSettings($user_id, $project_id, $settings_group_key, $settings_key): bool

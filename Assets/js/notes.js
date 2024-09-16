@@ -591,9 +591,9 @@ static #NoteStatusHandlers() {
 
         const noteCheckmark = $("#noteCheckmark-P" + project_id + "-" + id);
         const showNote =
-                (noteCheckmark.hasClass( 'statusOpen' ) && _TodoNotes_Settings_.showStatusOpen)
-            ||  (noteCheckmark.hasClass( 'statusInProgress' ) && _TodoNotes_Settings_.showStatusInProgress)
-            ||  (noteCheckmark.hasClass( 'statusDone' ) && _TodoNotes_Settings_.showStatusDone);
+                (noteCheckmark.hasClass( 'statusOpen' ) && !_TodoNotes_Settings_.hideStatusOpen)
+            ||  (noteCheckmark.hasClass( 'statusInProgress' ) && !_TodoNotes_Settings_.hideStatusInProgress)
+            ||  (noteCheckmark.hasClass( 'statusDone' ) && !_TodoNotes_Settings_.hideStatusDone);
 
         if (showNote) {
             $(this).parent().parent().removeClass( 'hideMe' );
@@ -864,15 +864,15 @@ static #ToggleList(project_id) {
 //------------------------------------------------
 static #SettingsFilterHandlers() {
     // Toggle status Open
-    $(".settingsShowStatusOpen").unbind('click');
-    $(".settingsShowStatusOpen").click(function() {
+    $(".settingsHideStatusOpen").unbind('click');
+    $(".settingsHideStatusOpen").click(function() {
         const project_id = $(this).attr('data-project');
         const user_id = $(this).attr('data-user');
 
         _TodoNotes_Requests_.ToggleSettings(project_id, user_id, 1 /*filter*/,1 /*Open*/);
 
-        _TodoNotes_Settings_.showStatusOpen = !_TodoNotes_Settings_.showStatusOpen;
-        _TodoNotes_.RefreshShowStatus('Open', _TodoNotes_Settings_.showStatusOpen);
+        _TodoNotes_Settings_.hideStatusOpen = !_TodoNotes_Settings_.hideStatusOpen;
+        _TodoNotes_.RefreshHideStatus('Open', _TodoNotes_Settings_.hideStatusOpen);
 
         _TodoNotes_.AdjustAllNotesPlaceholders();
 
@@ -882,15 +882,15 @@ static #SettingsFilterHandlers() {
     });
 
     // Toggle status Done
-    $(".settingsShowStatusInProgress").unbind('click');
-    $(".settingsShowStatusInProgress").click(function() {
+    $(".settingsHideStatusInProgress").unbind('click');
+    $(".settingsHideStatusInProgress").click(function() {
         const project_id = $(this).attr('data-project');
         const user_id = $(this).attr('data-user');
 
         _TodoNotes_Requests_.ToggleSettings(project_id, user_id, 1 /*filter*/,2 /*InProgress*/);
 
-        _TodoNotes_Settings_.showStatusInProgress = !_TodoNotes_Settings_.showStatusInProgress;
-        _TodoNotes_.RefreshShowStatus('InProgress', _TodoNotes_Settings_.showStatusInProgress);
+        _TodoNotes_Settings_.hideStatusInProgress = !_TodoNotes_Settings_.hideStatusInProgress;
+        _TodoNotes_.RefreshHideStatus('InProgress', _TodoNotes_Settings_.hideStatusInProgress);
 
         _TodoNotes_.AdjustAllNotesPlaceholders();
 
@@ -900,15 +900,15 @@ static #SettingsFilterHandlers() {
     });
 
     // Toggle status Done
-    $(".settingsShowStatusDone").unbind('click');
-    $(".settingsShowStatusDone").click(function() {
+    $(".settingsHideStatusDone").unbind('click');
+    $(".settingsHideStatusDone").click(function() {
         const project_id = $(this).attr('data-project');
         const user_id = $(this).attr('data-user');
 
         _TodoNotes_Requests_.ToggleSettings(project_id, user_id, 1 /*filter*/,0 /*Done*/);
 
-        _TodoNotes_Settings_.showStatusDone = !_TodoNotes_Settings_.showStatusDone;
-            _TodoNotes_.RefreshShowStatus('Done', _TodoNotes_Settings_.showStatusDone);
+        _TodoNotes_Settings_.hideStatusDone = !_TodoNotes_Settings_.hideStatusDone;
+        _TodoNotes_.RefreshHideStatus('Done', _TodoNotes_Settings_.hideStatusDone);
 
         _TodoNotes_.AdjustAllNotesPlaceholders();
 
@@ -1107,19 +1107,19 @@ static #SettingsHandlers() {
 
 //------------------------------------------------
 // Refresh show Status
-static RefreshShowStatus(status, show) {
-    if (show) {
-        $(".settingsShowStatus" + status + " button").addClass( 'buttonToggled' );
-        $(".liNote").each(function() {
-            if ($(this).find(".buttonStatus").children().hasClass('status' + status)) {
-                $(this).removeClass( 'hideMe' );
-            }
-        });
-    } else {
-        $(".settingsShowStatus" + status + " button").removeClass( 'buttonToggled' );
+static RefreshHideStatus(status, hide) {
+    if (hide) {
+        $(".settingsHideStatus" + status + " button").addClass( 'buttonToggled' );
         $(".liNote").each(function() {
             if ($(this).find(".buttonStatus").children().hasClass('status' + status)) {
                 $(this).addClass( 'hideMe' );
+            }
+        });
+    } else {
+        $(".settingsHideStatus" + status + " button").removeClass( 'buttonToggled' );
+        $(".liNote").each(function() {
+            if ($(this).find(".buttonStatus").children().hasClass('status' + status)) {
+                $(this).removeClass( 'hideMe' );
             }
         });
     }
@@ -1127,10 +1127,10 @@ static RefreshShowStatus(status, show) {
 
 //------------------------------------------------
 // Refresh show ALL Statuses
-static RefreshShowAllStatuses() {
-    _TodoNotes_.RefreshShowStatus('Open', _TodoNotes_Settings_.showStatusOpen);
-    _TodoNotes_.RefreshShowStatus('InProgress', _TodoNotes_Settings_.showStatusInProgress);
-    _TodoNotes_.RefreshShowStatus('Done', _TodoNotes_Settings_.showStatusDone);
+static RefreshHideAllStatuses() {
+    _TodoNotes_.RefreshHideStatus('Open', _TodoNotes_Settings_.hideStatusOpen);
+    _TodoNotes_.RefreshHideStatus('InProgress', _TodoNotes_Settings_.hideStatusInProgress);
+    _TodoNotes_.RefreshHideStatus('Done', _TodoNotes_Settings_.hideStatusDone);
 }
 
 //------------------------------------------------

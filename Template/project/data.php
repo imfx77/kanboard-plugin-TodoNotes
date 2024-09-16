@@ -120,31 +120,31 @@ print '<ul>';
 // hide some settings buttons in Archive View
 if (!$settings_showArchive) {
     // Toggle show All Open
-    print '<li class="settingsShowStatusOpen"';
+    print '<li class="settingsHideStatusOpen"';
     print ' data-id="0"';
     print ' data-project="' . $project_id . '"';
     print ' data-user="' . $user_id . '"';
     print '><button class="toolbarButton">';
     print '<i class="statusOpen" aria-hidden="true"></i>';
-    print'</button><a>&nbsp;&nbsp;' . t('TodoNotes__PROJECT_TOGGLE_SHOW_STATUS_OPEN') . '</a></li>';
+    print'</button><a>&nbsp;&nbsp;' . t('TodoNotes__PROJECT_TOGGLE_HIDE_STATUS_OPEN') . '</a></li>';
 
     // Toggle show All InProgress
-    print '<li class="settingsShowStatusInProgress"';
+    print '<li class="settingsHideStatusInProgress"';
     print ' data-id="0"';
     print ' data-project="' . $project_id . '"';
     print ' data-user="' . $user_id . '"';
     print '><button class="toolbarButton">';
     print '<i class="statusInProgress" aria-hidden="true"></i>';
-    print'</button><a>&nbsp;&nbsp;' . t('TodoNotes__PROJECT_TOGGLE_SHOW_STATUS_INPROGRESS') . '</a></li>';
+    print'</button><a>&nbsp;&nbsp;' . t('TodoNotes__PROJECT_TOGGLE_HIDE_STATUS_INPROGRESS') . '</a></li>';
 
     // Toggle show All Done
-    print '<li class="settingsShowStatusDone"';
+    print '<li class="settingsHideStatusDone"';
     print ' data-id="0"';
     print ' data-project="' . $project_id . '"';
     print ' data-user="' . $user_id . '"';
     print '><button class="toolbarButton">';
     print '<i class="statusDone" aria-hidden="true"></i>';
-    print'</button><a>&nbsp;&nbsp;' . t('TodoNotes__PROJECT_TOGGLE_SHOW_STATUS_DONE') . '</a></li>';
+    print'</button><a>&nbsp;&nbsp;' . t('TodoNotes__PROJECT_TOGGLE_HIDE_STATUS_DONE') . '</a></li>';
 
     // add divider between button groups
     print '<hr class="toolbarDivider">';
