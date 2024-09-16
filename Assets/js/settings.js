@@ -19,12 +19,17 @@ if (typeof(_TodoNotes_Settings_) === 'undefined') {
         //------------------------------------------------
         // Global vars for settings
         //------------------------------------------------
+        static showTabsStats = false;
+
+        static showStatusDone = false;
+        static showStatusOpen = false;
+        static showStatusInProgress = false;
         static showArchive = false;
+
+        static sortByStatus = false;
+
         static showCategoryColors = false;
         static showStandardStatusMarks = false;
-        static sortByStatus = false;
-        static showStatusDone = false;
-        static showTabsStats = false;
 
         //------------------------------------------------
         static Initialize() {
@@ -36,11 +41,14 @@ if (typeof(_TodoNotes_Settings_) === 'undefined') {
             $("#_TodoNotes_ProjectSettingsExportToJS_").remove();
 
             _TodoNotes_Settings_.showTabsStats              = _TodoNotes_Settings_.GetSettingsExportToJS(0 /*tabs*/, 0 /*Stats*/, true);
+
             _TodoNotes_Settings_.showStatusDone             = _TodoNotes_Settings_.GetSettingsExportToJS(1 /*filter*/, 0 /*Done*/);
             _TodoNotes_Settings_.showStatusOpen             = _TodoNotes_Settings_.GetSettingsExportToJS(1 /*filter*/, 1 /*Open*/);
             _TodoNotes_Settings_.showStatusInProgress       = _TodoNotes_Settings_.GetSettingsExportToJS(1 /*filter*/, 2 /*InProgress*/);
             _TodoNotes_Settings_.showArchive                = _TodoNotes_Settings_.GetSettingsExportToJS(1 /*filter*/, 3 /*Archived*/);
+
             _TodoNotes_Settings_.sortByStatus               = _TodoNotes_Settings_.GetSettingsExportToJS(2 /*sort*/, 1 /*Status*/);
+
             _TodoNotes_Settings_.showCategoryColors         = _TodoNotes_Settings_.GetSettingsExportToJS(3 /*view*/, 0 /*CategoryColors*/);
             _TodoNotes_Settings_.showStandardStatusMarks    = _TodoNotes_Settings_.GetSettingsExportToJS(3 /*view*/, 1 /*StandardStatusMarks*/);
         }

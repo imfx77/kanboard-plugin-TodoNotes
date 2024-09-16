@@ -589,10 +589,11 @@ static #NoteStatusHandlers() {
             $("#noteRefreshOrder-P" + project_id + "-" + id).removeClass( 'hideMe' );
         }
 
+        const noteCheckmark = $("#noteCheckmark-P" + project_id + "-" + id);
         const showNote =
-                ($(this).hasClass( 'statusOpen' ) && _TodoNotes_Settings_.showStatusOpen)
-            ||  ($(this).hasClass( 'statusInProgress' ) && _TodoNotes_Settings_.showStatusInProgress)
-            ||  ($(this).hasClass( 'statusDone' ) && _TodoNotes_Settings_.showStatusDone);
+                (noteCheckmark.hasClass( 'statusOpen' ) && _TodoNotes_Settings_.showStatusOpen)
+            ||  (noteCheckmark.hasClass( 'statusInProgress' ) && _TodoNotes_Settings_.showStatusInProgress)
+            ||  (noteCheckmark.hasClass( 'statusDone' ) && _TodoNotes_Settings_.showStatusDone);
 
         if (showNote) {
             $(this).parent().parent().removeClass( 'hideMe' );

@@ -27,7 +27,6 @@ static MoveNoteToArchive(project_id, user_id, id) {
             alert(e);
         }
     });
-    return false;
 }
 
 //------------------------------------------------
@@ -45,7 +44,6 @@ static MoveAllDoneNotesToArchive(project_id, user_id) {
             alert(e);
         }
     });
-    return false;
 }
 
 //------------------------------------------------
@@ -66,7 +64,6 @@ static RestoreNoteFromArchive(project_id, user_id, id, target_project_id) {
             alert(e);
         }
     });
-    return false;
 }
 
 //------------------------------------------------
@@ -86,7 +83,6 @@ static DeleteNoteFromArchive(project_id, user_id, id) {
             alert(e);
         }
     });
-    return false;
 }
 
 //------------------------------------------------
@@ -98,7 +94,7 @@ static AddNote(project_id, user_id) {
 
     if (!title) {
         alert( _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_NOTE_ADD_TITLE_EMPTY_MSG') );
-        return false;
+        return;
     }
 
     $.ajax({
@@ -120,7 +116,6 @@ static AddNote(project_id, user_id) {
             alert(e);
         }
     });
-    return false;
 }
 
 //------------------------------------------------
@@ -140,7 +135,6 @@ static DeleteNote(project_id, user_id, id) {
             alert(e);
         }
     });
-    return false;
 }
 
 //------------------------------------------------
@@ -158,7 +152,6 @@ static DeleteAllDoneNotes(project_id, user_id) {
             alert(e);
         }
     });
-    return false;
 }
 
 //------------------------------------------------
@@ -210,7 +203,6 @@ static UpdateNote(project_id, user_id, id) {
             alert(e);
         }
     });
-    return false;
 }
 
 //------------------------------------------------
@@ -243,7 +235,6 @@ static UpdateNoteStatus(project_id, user_id, id) {
             alert(e);
         }
     });
-    return false;
 }
 
 //------------------------------------------------
@@ -270,7 +261,6 @@ static UpdateNoteNotificationsAlertTimeAndOptions(project_id, user_id, id, notif
             alert(e);
         }
     });
-    return false;
 }
 
 //------------------------------------------------
@@ -293,7 +283,6 @@ static TestNoteNotifications(project_id, user_id, id) {
             alert(e);
         }
     });
-    return false;
 }
 
 //------------------------------------------------
@@ -313,7 +302,6 @@ static UpdateWebPNSubscription(user_id, subscription) {
             alert(e);
         }
     });
-    return false;
 }
 
 //------------------------------------------------
@@ -339,7 +327,6 @@ static UpdateNotesPositions(project_id, user_id, order) {
             alert(e);
         }
     });
-    return false;
 }
 
 //------------------------------------------------
@@ -361,7 +348,6 @@ static TransferNote(project_id, user_id, id, target_project_id) {
             alert(e);
         }
     });
-    return false;
 }
 
 //------------------------------------------------
@@ -563,7 +549,6 @@ static ToggleSettings(project_id, user_id, settings_group_key, settings_key) {
             alert(e);
         }
     });
-    return false;
 }
 
 //------------------------------------------------
@@ -583,7 +568,6 @@ static GetLastTimestamp(project_id, user_id) {
             alert(e);
         }
     });
-    return false;
 }
 
 //------------------------------------------------

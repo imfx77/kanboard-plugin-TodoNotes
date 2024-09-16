@@ -20,91 +20,100 @@ $num = "1";
 
 foreach ($data as $u) {
     $isNoteActive = intval($u['is_active']);
+    if ($isNoteActive == 0 && !$settings_showStatusDone) continue;
+    if ($isNoteActive == 1 && !$settings_showStatusOpen) continue;
+    if ($isNoteActive == 2 && !$settings_showStatusInProgress) continue;
 
-    if ($settings_showStatusDone || $isNoteActive != 0) {
-        print '<tr class="trReport" id="trReportNr' . $num . '">';
+    // ------------------------------------------
+    // BEGIN NOTE
+    // ------------------------------------------
 
-        print '<td class="tdReport tdReportNr">';
-        print '<div class="reportBkgr"></div>';
+    print '<tr class="trReport" id="trReportNr' . $num . '">';
 
-        // Hide button
-        print '<button id="reportHide" class="reportHide"';
-        print ' data-id="' . $num . '"';
-        print '>';
-        print '<i class="fa fa-minus-square-o" style="color:#CCCCCC" aria-hidden="true"';
-        print ' title="' . t('TodoNotes__REPORT_HIDE_ROW') . '">';
-        print '</i>';
-        print '</button>';
-        // Report #
-        print '<span class="fa-stack fa-lg">';
-        print '<i class="fa fa-circle-thin fa-stack-2x"></i>';
-        print '<i class="fa fa-inverse fa-stack-1x">' . $num . '</i>';
-        print '</span>';
-        print '</td>';
+    print '<td class="tdReport tdReportNr">';
+    print '<div class="reportBkgr"></div>';
 
-        // Report Info
-        print '<td class="tdReport tdReportInfo">';
-        print '<div class="reportBkgr"></div>';
+    // Hide button
+    print '<button id="reportHide" class="reportHide"';
+    print ' data-id="' . $num . '"';
+    print '>';
+    print '<i class="fa fa-minus-square-o" style="color:#CCCCCC" aria-hidden="true"';
+    print ' title="' . t('TodoNotes__REPORT_HIDE_ROW') . '">';
+    print '</i>';
+    print '</button>';
+    // Report #
+    print '<span class="fa-stack fa-lg">';
+    print '<i class="fa fa-circle-thin fa-stack-2x"></i>';
+    print '<i class="fa fa-inverse fa-stack-1x">' . $num . '</i>';
+    print '</span>';
+    print '</td>';
 
-        // Note title label
-        print '<label id="reportTitleLabel-P' . $u['project_id'] . '-' . $num . '"';
-        if ($isNoteActive == 0) {
-            print ' class="reportTitleLabel reportTitle noteDoneText">';
-        } else {
-            print ' class="reportTitleLabel reportTitle">';
-        }
-        print $u['title'];
-        print '</label>';
+    // Report Info
+    print '<td class="tdReport tdReportInfo">';
+    print '<div class="reportBkgr"></div>';
 
-        // Category label
-        print '<label class="catLabel containerFloatRight"';
-        print ' id="noteCatLabel-P' . $u['project_id'] . '-' . $num . '"';
-        print ' data-id="' . $num . '"';
-        print ' data-project="' . $u['project_id'] . '"';
-        print '>';
-        print $u['category'];
-        print '</label>';
-
-        // Note details
-        if (!empty($u['description'])) {
-            print '<div id="noteDetails-P' . $u['project_id'] . '-' . $num . '"';
-            print ' class="details reportDetails ui-corner-all">';
-
-            print '<span id="noteMarkdownDetails-P' . $u['project_id'] . '-' . $num . '"';
-            if ($isNoteActive == 0) {
-                print ' class="markdown markdownReportDetails reportTitle noteDoneMarkdown"';
-            } else {
-                print ' class="markdown markdownReportDetails reportTitle"';
-            }
-            print '>';
-            print $this->helper->text->markdown($u['description']);
-            print '</span>';
-
-            print '</div>';
-        }
-
-        print '</td>'; // report info
-
-        print '<td class="tdReport tdReportStatus reportTitle">';
-        print '<div class="reportBkgr"></div>';
-
-        if ($isNoteActive == 2) {
-            print '<i class="statusInProgress" aria-hidden="true"></i>';
-        }
-        //if ($isNoteActive == 1) {
-        //    print '<i class="statusOpen" aria-hidden="true"></i>';
-        //}
-        if ($isNoteActive == 0) {
-            print '<i class="statusDone" aria-hidden="true"></i>';
-        }
-
-        print '</td>';
-
-        print '</tr>';
-
-        // #
-        $num++;
+    // Note title label
+    print '<label id="reportTitleLabel-P' . $u['project_id'] . '-' . $num . '"';
+    if ($isNoteActive == 0) {
+        print ' class="reportTitleLabel reportTitle noteDoneText">';
+    } else {
+        print ' class="reportTitleLabel reportTitle">';
     }
+    print $u['title'];
+    print '</label>';
+
+    // Category label
+    print '<label class="catLabel containerFloatRight"';
+    print ' id="noteCatLabel-P' . $u['project_id'] . '-' . $num . '"';
+    print ' data-id="' . $num . '"';
+    print ' data-project="' . $u['project_id'] . '"';
+    print '>';
+    print $u['category'];
+    print '</label>';
+
+    // Note details
+    if (!empty($u['description'])) {
+        print '<div id="noteDetails-P' . $u['project_id'] . '-' . $num . '"';
+        print ' class="details reportDetails ui-corner-all">';
+
+        print '<span id="noteMarkdownDetails-P' . $u['project_id'] . '-' . $num . '"';
+        if ($isNoteActive == 0) {
+            print ' class="markdown markdownReportDetails reportTitle noteDoneMarkdown"';
+        } else {
+            print ' class="markdown markdownReportDetails reportTitle"';
+        }
+        print '>';
+        print $this->helper->text->markdown($u['description']);
+        print '</span>';
+
+        print '</div>';
+    }
+
+    print '</td>'; // report info
+
+    print '<td class="tdReport tdReportStatus reportTitle">';
+    print '<div class="reportBkgr"></div>';
+
+    if ($isNoteActive == 2) {
+        print '<i class="statusInProgress" aria-hidden="true"></i>';
+    }
+    //if ($isNoteActive == 1) {
+    //    print '<i class="statusOpen" aria-hidden="true"></i>';
+    //}
+    if ($isNoteActive == 0) {
+        print '<i class="statusDone" aria-hidden="true"></i>';
+    }
+
+    print '</td>';
+
+    print '</tr>';
+
+    // #
+    $num++;
+
+    // ------------------------------------------
+    // END NOTE
+    // ------------------------------------------
 }
 
 ?>
