@@ -117,15 +117,42 @@ print '</button>';
 // add some space between button groups
 print '<button class="toolbarSeparator">&nbsp;</button>';
 
+// Settings View
+print '<div class="dropdown">';
+print '<button id="settingsView" class="toolbarButton dropdown-menu"';
+print ' title="' . t('TodoNotes__PROJECT_SETTINGS_VIEW') . '"';
+print ' data-id="0"';
+print ' data-project="' . $project_id . '"';
+print ' data-user="' . $user_id . '"';
+print '>';
+print '<i class="fa fa-eye" aria-hidden="true"></i>';
+print '</button>';
+
+print '<ul>';
+
 // Toggle category colors
-print '<button id="settingsShowCategoryColors" class="toolbarButton"';
-print ' title="' . t('TodoNotes__PROJECT_TOGGLE_COLORIZE_BY_CATEGORY') . '"';
+print '<li class="settingsShowCategoryColors"';
 print ' data-id="0"';
 print ' data-project="' . $project_id . '"';
 print ' data-user="' .  $user_id . '"';
-print '>';
+print '><button class="toolbarButton">';
 print '<i class="fa fa-tags" aria-hidden="true"></i>';
-print '</button>';
+print'</button><a>&nbsp;&nbsp;' . t('TodoNotes__PROJECT_TOGGLE_COLORIZE_BY_CATEGORY') . '</a></li>';
+
+// hide some settings buttons in Archive View
+if (!$settings_showArchive) {
+// Toggle standard Status Marks
+    print '<li class="settingsShowStandardStatusMarks"';
+    print ' data-id="0"';
+    print ' data-project="' . $project_id . '"';
+    print ' data-user="' . $user_id . '"';
+    print '><button class="toolbarButton">';
+    print '<i class="fa fa-check" aria-hidden="true"></i>';
+    print'</button><a>&nbsp;&nbsp;' . t('TodoNotes__PROJECT_TOGGLE_STANDARD_STATUS_MARKS') . '</a></li>';
+}
+
+print '</ul>';
+print '</div>'; // Settings View
 
 // hide some settings buttons in Archive View
 if (!$settings_showArchive) {

@@ -31,27 +31,32 @@ if (typeof(_TodoNotes_Statuses_) === 'undefined') {
         static ExpandStatusAliases() {
             // console.log('_TodoNotes_Statuses_.ExpandStatusAliases');
 
-            const aliasStatus = _TodoNotes_Statuses_.#aliasStatusCasual;
-            //const aliasStatus = _TodoNotes_Statuses_.#aliasStatusStandard;
+            const aliasStatus = _TodoNotes_Settings_.showStandardStatusMarks
+                ? _TodoNotes_Statuses_.#aliasStatusStandard
+                : _TodoNotes_Statuses_.#aliasStatusCasual;
 
             $(".statusDone").each(function () {
                 $(this).removeClass();
                 $(this).addClass(aliasStatus.Done);
+                $(this).addClass('statusDone');
             });
 
             $(".statusOpen").each(function () {
                 $(this).removeClass();
                 $(this).addClass(aliasStatus.Open);
+                $(this).addClass('statusOpen');
             });
 
             $(".statusInProgress").each(function () {
                 $(this).removeClass();
                 $(this).addClass(aliasStatus.InProgress);
+                $(this).addClass('statusInProgress');
             });
 
             $(".statusSuspended").each(function () {
                 $(this).removeClass();
                 $(this).addClass(aliasStatus.Suspended);
+                $(this).addClass('statusSuspended');
             });
         }
 

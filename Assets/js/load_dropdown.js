@@ -37,6 +37,8 @@ static #refreshStatsWidget() {
 static prepareDocument() {
     // console.log('_TodoNotes_Dropdown_.prepareDocument');
 
+    _TodoNotes_Settings_.Initialize();
+
     _TodoNotes_Statuses_.ExpandStatusAliases();
 
     _TodoNotes_Dropdown_.#refreshStatsWidget();

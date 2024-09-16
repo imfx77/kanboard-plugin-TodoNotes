@@ -27,10 +27,12 @@ return array(
     'TodoNotes__PROJECT_NEW_NOTE_TEXT_REORDERING_DISABLED' => '⚠️ DISABLED list reordering by Status sort!',
     'TodoNotes__PROJECT_NEW_NOTE_TITLE_PLACEHOLDER' => 'What needs to be done',
     //
+    'TodoNotes__PROJECT_SETTINGS_VIEW' => 'View Options',
     'TodoNotes__PROJECT_SETTINGS_ACTIONS' => 'Notes Actions',
     //
     'TodoNotes__PROJECT_TOGGLE_ARCHIVE_VIEW' => 'Toggle Archive View',
     'TodoNotes__PROJECT_TOGGLE_COLORIZE_BY_CATEGORY' => 'Toggle Colorize by Category',
+    'TodoNotes__PROJECT_TOGGLE_STANDARD_STATUS_MARKS' => 'Toggle Standard Status Marks',
     'TodoNotes__PROJECT_TOGGLE_SHOW_STATUS_DONE' => 'Toggle Show Done Notes',
     'TodoNotes__PROJECT_TOGGLE_SORT_BY_STATUS' => 'Toggle Sort by Status',
     'TodoNotes__PROJECT_TOGGLE_TAB_STAT' => 'Toggle Show Stats',

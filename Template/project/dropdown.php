@@ -1,10 +1,19 @@
 <?php
 
+$user_id = $this->user->getId();
+if (isset($_SESSION['_TodoNotes_Cache_']) && array_key_exists('user_id', $_SESSION['_TodoNotes_Cache_'])) {
+    $user_id = $_SESSION['_TodoNotes_Cache_']['user_id'];
+}
+$project_id = $project['id'];
+
+require_once('settings.php');
+
 // export translations to JS
 print $this->render('TodoNotes:translations/export_to_js');
 // load all necessary CSS and JS
 print $this->asset->css('plugins/TodoNotes/Assets/css/project.css');
 print $this->asset->js('plugins/TodoNotes/Assets/js/statuses.js');
+print $this->asset->js('plugins/TodoNotes/Assets/js/settings.js');
 print $this->asset->js('plugins/TodoNotes/Assets/js/load_dropdown.js');
 
 ?>
@@ -40,12 +49,12 @@ li._TodoNotes_ProjectDropdown_Icon i.fa-wpforms::before {
         $statsWidget .= '<div class="_TodoNotes_ProjectDropdown_StatsWidget" data-project="';
         $statsWidget .= $project['id'];
         $statsWidget .= '">';
-        $statsWidget .= $this->render('TodoNotes:widgets/stats', array('stats_project_id' => $project['id']));
+        $statsWidget .= $this->render('TodoNotes:widgets/stats', array('stats_project_id' => $project_id));
         $statsWidget .= '</div>';
     ?>
 
     <?= $this->url->icon('wpforms', $linkTitle . $statsWidget, 'TodoNotesController', 'ShowProject', array(
-        'project_id' => $project['id'],
+        'project_id' => $project_id,
         'use_cached' => '1',
         'plugin' => 'TodoNotes',
     ), false, 'localTable') ?>
