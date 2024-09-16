@@ -105,8 +105,6 @@ print '<div class="liNewNoteBkgr"></div>';
 print '<div class="toolbarSettingsButtons containerNoWrap containerFloatRight disableEventsPropagation">';
 
 // Toggle Archive View
-//print '<div class="dropdown">';
-//print '<button id="settingsShowArchive" class="toolbarButton dropdown-menu"';
 print '<button id="settingsShowArchive" class="toolbarButton"';
 print ' title="' . t('TodoNotes__PROJECT_TOGGLE_ARCHIVE_VIEW') . '"';
 print ' data-id="0"';
@@ -115,8 +113,6 @@ print ' data-user="' .  $user_id . '"';
 print '>';
 print '<i class="fa fa-archive" aria-hidden="true"></i>';
 print '</button>';
-//print '<ul><li class="toolbarButton">123</li><li class="toolbarButton">456</li><hr class="toolbarDivider"><li class="toolbarButton">789</li></ul>';
-//print '</div>';
 
 // add some space between button groups
 print '<button class="toolbarSeparator">&nbsp;</button>';
@@ -157,74 +153,84 @@ if (!$settings_showArchive) {
 // add some space between button groups
 print '<button class="toolbarSeparator">&nbsp;</button>';
 
-// Expand all
-print '<button id="settingsExpandAll" class="toolbarButton"';
-print ' title="' . t('TodoNotes__PROJECT_EXPAND_ALL_NOTES') . '"';
+// Setting Actions
+print '<div class="dropdown">';
+print '<button id="settingsActions" class="toolbarButton dropdown-menu"';
+print ' title="' . t('TodoNotes__PROJECT_SETTINGS_ACTIONS') . '"';
 print ' data-id="0"';
 print ' data-project="' . $project_id . '"';
 print ' data-user="' . $user_id . '"';
 print '>';
-print '<i class="fa fa-plus-square" aria-hidden="true"></i>';
+print '<i class="fa fa-bars" aria-hidden="true"></i>';
 print '</button>';
 
-// Collapse all
-print '<button id="settingsCollapseAll" class="toolbarButton"';
-print ' title="' . t('TodoNotes__PROJECT_COLLAPSE_ALL_NOTES') . '"';
+print '<ul>';
+
+// Expand all
+print '<li class="settingsExpandAll"';
 print ' data-id="0"';
 print ' data-project="' . $project_id . '"';
 print ' data-user="' . $user_id . '"';
-print '>';
+print '><button class="toolbarButton">';
+print '<i class="fa fa-plus-square" aria-hidden="true"></i>';
+print '</button><a>&nbsp;&nbsp;' . t('TodoNotes__PROJECT_EXPAND_ALL_NOTES') . '</a></li>';
+
+// Collapse all
+print '<li class="settingsCollapseAll"';
+print ' data-id="0"';
+print ' data-project="' . $project_id . '"';
+print ' data-user="' . $user_id . '"';
+print '><button class="toolbarButton">';
 print '<i class="fa fa-minus-square" aria-hidden="true"></i>';
-print '</button>';
+print '</button><a>&nbsp;&nbsp;' . t('TodoNotes__PROJECT_COLLAPSE_ALL_NOTES') . '</a></li>';
 
 // exclude when in Overview Mode or in Archive View
 if (!$readonlyNotes && !$settings_showArchive) {
-    // add some space between button groups
-    print '<button class="toolbarSeparator">&nbsp;</button>';
-
-    // Open report
-    print '<button id="settingsReport" class="toolbarButton"';
-    print ' title="' . t('TodoNotes__PROJECT_CREATE_REPORT') . '"';
-    print ' data-id="0"';
-    print ' data-project="' . $project_id . '"';
-    print ' data-user="' . $user_id . '"';
-    print '>';
-    print '<i class="fa fa-file-text" aria-hidden="true"></i>';
-    print '</button>';
+    // add divider between button groups
+    print '<hr class="toolbarDivider">';
 
     // Settings stats
-    print '<button id="settingsStats" class="toolbarButton"';
-    print ' title="' . t('TodoNotes__PROJECT_NOTES_STATS') . '"';
+    print '<li class="settingsStats"';
     print ' data-id="0"';
     print ' data-project="' . $project_id . '"';
     print ' data-user="' . $user_id . '"';
-    print '>';
+    print '><button class="toolbarButton">';
     print '<i class="fa fa-pie-chart" aria-hidden="true"></i>';
-    print '</button>';
+    print '</button><a>&nbsp;&nbsp;' . t('TodoNotes__PROJECT_NOTES_STATS') . '</a></li>';
 
-    // add some space between button groups
-    print '<button class="toolbarSeparator">&nbsp;</button>';
-
-    // Settings delete all done
-    print '<button id="settingsDeleteAllDone" class="toolbarButton"';
-    print ' title="' . t('TodoNotes__PROJECT_DELETE_ALL_DONE_NOTES') . '"';
+    // Open report
+    print '<li class="settingsReport"';
     print ' data-id="0"';
     print ' data-project="' . $project_id . '"';
     print ' data-user="' . $user_id . '"';
-    print '>';
-    print '<i class="fa fa-trash" aria-hidden="true"></i>';
-    print'</button>';
+    print '><button class="toolbarButton">';
+    print '<i class="fa fa-file-text" aria-hidden="true"></i>';
+    print '</button><a>&nbsp;&nbsp;' . t('TodoNotes__PROJECT_CREATE_REPORT') . '</a></li>';
+
+    // add divider between button groups
+    print '<hr class="toolbarDivider">';
 
     // Settings archive all done
-    print '<button id="settingsArchiveAllDone" class="toolbarButton"';
-    print ' title="' . t('TodoNotes__PROJECT_ARCHIVE_ALL_DONE_NOTES') . '"';
+    print '<li class="settingsArchiveAllDone"';
     print ' data-id="0"';
     print ' data-project="' . $project_id . '"';
     print ' data-user="' . $user_id . '"';
-    print '>';
+    print '><button class="toolbarButton">';
     print '<i class="fa fa-file-archive-o" aria-hidden="true"></i>';
-    print'</button>';
+    print'</button><a>&nbsp;&nbsp;' . t('TodoNotes__PROJECT_ARCHIVE_ALL_DONE_NOTES') . '</a></li>';
+
+    // Settings delete all done
+    print '<li class="settingsDeleteAllDone"';
+    print ' data-id="0"';
+    print ' data-project="' . $project_id . '"';
+    print ' data-user="' . $user_id . '"';
+    print '><button class="toolbarButton">';
+    print '<i class="fa fa-trash" aria-hidden="true"></i>';
+    print'</button><a>&nbsp;&nbsp;' . t('TodoNotes__PROJECT_DELETE_ALL_DONE_NOTES') . '</a></li>';
+
 } // end exclude in Overview Mode
+print '</ul>';
+print '</div>'; // Settings Actions
 
 print '</div>'; // Settings Button Toolbar
 

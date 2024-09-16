@@ -259,6 +259,11 @@ label {
     cursor: default;
 }
 
+.toolbarDivider {
+    width: 95%;
+    border-top: 1px solid #C0C0C0;
+}
+
 .toolbarButton {
     appearance: none;
     -webkit-appearance: none;

@@ -851,50 +851,65 @@ static #ToggleList(project_id) {
 }
 
 //------------------------------------------------
-static #SettingsHandlers() {
-    //------------------------------------------------
-
+static #SettingsActionsHandlers() {
     // POST delete all done
-    $("#settingsDeleteAllDone").click(function() {
+    $(".settingsDeleteAllDone").unbind('click');
+    $(".settingsDeleteAllDone").click(function() {
         const project_id = $(this).attr('data-project');
         const user_id = $(this).attr('data-user');
         _TodoNotes_Modals_.DeleteAllDoneNotes(project_id, user_id);
     });
 
     // POST archive all done
-    $("#settingsArchiveAllDone").click(function() {
+    $(".settingsArchiveAllDone").unbind('click');
+    $(".settingsArchiveAllDone").click(function() {
         const project_id = $(this).attr('data-project');
         const user_id = $(this).attr('data-user');
         _TodoNotes_Modals_.MoveAllDoneNotesToArchive(project_id, user_id);
     });
 
     // POST stats
-    $("#settingsStats").click(function() {
+    $(".settingsStats").unbind('click');
+    $(".settingsStats").click(function() {
         const project_id = $(this).attr('data-project');
         const user_id = $(this).attr('data-user');
         _TodoNotes_Modals_.Stats(project_id, user_id);
     });
 
     // Sort and filter for report
-    $("#settingsReport").click(function() {
+    $(".settingsReport").unbind('click');
+    $(".settingsReport").click(function() {
         const project_id = $(this).attr('data-project');
         const user_id = $(this).attr('data-user');
         _TodoNotes_Modals_.Report(project_id, user_id);
     });
 
+    // Collapse ALL
+    $(".settingsCollapseAll").unbind('click');
+    $(".settingsCollapseAll").click(function() {
+        _TodoNotes_.#SettingsCollapseAll();
+    });
+
+    // Expand ALL
+    $(".settingsExpandAll").unbind('click');
+    $(".settingsExpandAll").click(function() {
+        _TodoNotes_.#SettingsExpandAll();
+    });
+}
+
+//------------------------------------------------
+static #SettingsHandlers() {
     //------------------------------------------------
 
-    $("#settingsCollapseAll").click(function() {
-        _TodoNotes_.#SettingsCollapseAll();
+    $("#settingsActions").click(function() {
+        setTimeout(function() {
+            _TodoNotes_.#SettingsActionsHandlers();
+        }, 100);
     });
 
     $(document).keydown(function(event) {
         if (event.keyCode !== 109) return; // [-] key
         _TodoNotes_.#SettingsCollapseAll();
-    });
-
-    $("#settingsExpandAll").click(function() {
-        _TodoNotes_.#SettingsExpandAll();
     });
 
     $(document).keydown(function(event) {

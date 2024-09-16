@@ -29,8 +29,8 @@ if (typeof(_TodoNotes_Settings_) === 'undefined') {
         static Initialize() {
             // console.log('_TodoNotes_Settings_.Initialize');
 
-            _TodoNotes_Settings_.#overview_settingsExportToJS = JSON.parse($("#_TodoNotes_OverviewSettingsExportToJS__").html());
-            $("#_TodoNotes_OverviewSettingsExportToJS__").remove();
+            _TodoNotes_Settings_.#overview_settingsExportToJS = JSON.parse($("#_TodoNotes_OverviewSettingsExportToJS_").html());
+            $("#_TodoNotes_OverviewSettingsExportToJS_").remove();
             _TodoNotes_Settings_.#project_settingsExportToJS = JSON.parse($("#_TodoNotes_ProjectSettingsExportToJS_").html());
             $("#_TodoNotes_ProjectSettingsExportToJS_").remove();
 

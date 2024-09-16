@@ -27,6 +27,8 @@ return array(
     'TodoNotes__PROJECT_NEW_NOTE_TEXT_REORDERING_DISABLED' => '⚠️ DISABLED list reordering by Status sort!',
     'TodoNotes__PROJECT_NEW_NOTE_TITLE_PLACEHOLDER' => 'What needs to be done',
     //
+    'TodoNotes__PROJECT_SETTINGS_ACTIONS' => 'Notes Actions',
+    //
     'TodoNotes__PROJECT_TOGGLE_ARCHIVE_VIEW' => 'Toggle Archive View',
     'TodoNotes__PROJECT_TOGGLE_COLORIZE_BY_CATEGORY' => 'Toggle Colorize by Category',
     'TodoNotes__PROJECT_TOGGLE_SHOW_STATUS_DONE' => 'Toggle Show Done Notes',

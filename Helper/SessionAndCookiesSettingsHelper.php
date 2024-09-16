@@ -47,7 +47,7 @@ class SessionAndCookiesSettingsHelper extends Base
         $cookie_value[$cookie_settings_key] = $settings;
 
         $cookie_options = array (
-            'expires' => time() + 60*60*24*30, // 30 days
+            'expires' => time() + (60 * 60 * 24 * 30), // 30 days
             //'expires' => time() - 3600, // reset cookie
             'path' => '/',
             'domain' => '',
