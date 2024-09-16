@@ -35,22 +35,23 @@ if (typeof(_TodoNotes_Settings_) === 'undefined') {
             _TodoNotes_Settings_.#project_settingsExportToJS = JSON.parse($("#_TodoNotes_ProjectSettingsExportToJS_").html());
             $("#_TodoNotes_ProjectSettingsExportToJS_").remove();
 
-            _TodoNotes_Settings_.showArchive = _TodoNotes_Settings_.GetSettingsExportToJS('archive', 'showArchive');
-            _TodoNotes_Settings_.showCategoryColors = _TodoNotes_Settings_.GetSettingsExportToJS('view', 'showCategoryColors');
-            _TodoNotes_Settings_.showStandardStatusMarks = _TodoNotes_Settings_.GetSettingsExportToJS('view', 'showStandardStatusMarks');
-            _TodoNotes_Settings_.sortByStatus = _TodoNotes_Settings_.GetSettingsExportToJS('sort', 'sortByStatus');
-            _TodoNotes_Settings_.showStatusDone = _TodoNotes_Settings_.GetSettingsExportToJS('filter', 'showStatusDone');
-            _TodoNotes_Settings_.showTabsStats = _TodoNotes_Settings_.GetSettingsExportToJS('tabs', 'showTabsStats', true);
+            _TodoNotes_Settings_.showTabsStats              = _TodoNotes_Settings_.GetSettingsExportToJS(0 /*tabs*/, 0 /*Stats*/, true);
+            _TodoNotes_Settings_.showStatusDone             = _TodoNotes_Settings_.GetSettingsExportToJS(1 /*filter*/, 0 /*Done*/);
+            _TodoNotes_Settings_.showStatusOpen             = _TodoNotes_Settings_.GetSettingsExportToJS(1 /*filter*/, 1 /*Open*/);
+            _TodoNotes_Settings_.showStatusInProgress       = _TodoNotes_Settings_.GetSettingsExportToJS(1 /*filter*/, 2 /*InProgress*/);
+            _TodoNotes_Settings_.showArchive                = _TodoNotes_Settings_.GetSettingsExportToJS(1 /*filter*/, 3 /*Archived*/);
+            _TodoNotes_Settings_.sortByStatus               = _TodoNotes_Settings_.GetSettingsExportToJS(2 /*sort*/, 1 /*Status*/);
+            _TodoNotes_Settings_.showCategoryColors         = _TodoNotes_Settings_.GetSettingsExportToJS(3 /*view*/, 0 /*CategoryColors*/);
+            _TodoNotes_Settings_.showStandardStatusMarks    = _TodoNotes_Settings_.GetSettingsExportToJS(3 /*view*/, 1 /*StandardStatusMarks*/);
         }
 
         //------------------------------------------------
-        static GetSettingsExportToJS(settings_group_name, settings_name, is_global = false) {
-            const settings = is_global
+        static GetSettingsExportToJS(settings_group_key, settings_key, is_overview = false) {
+            const settings = is_overview
                 ? _TodoNotes_Settings_.#overview_settingsExportToJS
                 : _TodoNotes_Settings_.#project_settingsExportToJS;
-            const settings_group = settings[settings_group_name]
-            const settings_value = settings_group ? settings_group[settings_name] : false;
-            return settings_value ? settings_value : false;
+            const settings_group = settings[settings_group_key]
+            return (Array.isArray(settings_group) && settings_group.includes(settings_key)) ? true : false;
         }
 
         //------------------------------------------------

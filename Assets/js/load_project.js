@@ -79,11 +79,11 @@ static #prepareDocument_ConfigureDashboardHandlers(skipDashboardHandlers = false
 
     _TodoNotes_Statuses_.ExpandStatusAliases();
 
+    _TodoNotes_.RefreshShowAllStatuses();
     _TodoNotes_.RefreshShowArchive();
     _TodoNotes_.RefreshShowCategoryColors();
     _TodoNotes_.RefreshShowStandardStatusMarks();
     _TodoNotes_.RefreshSortByStatus();
-    _TodoNotes_.RefreshShowStatusDone();
 
     _TodoNotes_.AttachAllHandlers();
 

@@ -589,10 +589,18 @@ static #NoteStatusHandlers() {
             $("#noteRefreshOrder-P" + project_id + "-" + id).removeClass( 'hideMe' );
         }
 
-        _TodoNotes_.#BlinkNote(project_id, id);
-        _TodoNotes_.RefreshShowStatusDone();
+        const showNote =
+                ($(this).hasClass( 'statusOpen' ) && _TodoNotes_Settings_.showStatusOpen)
+            ||  ($(this).hasClass( 'statusInProgress' ) && _TodoNotes_Settings_.showStatusInProgress)
+            ||  ($(this).hasClass( 'statusDone' ) && _TodoNotes_Settings_.showStatusDone);
 
-        _TodoNotes_.AdjustNotePlaceholders(project_id, id);
+        if (showNote) {
+            $(this).parent().parent().removeClass( 'hideMe' );
+            _TodoNotes_.#BlinkNote(project_id, id);
+            _TodoNotes_.AdjustNotePlaceholders(project_id, id);
+        } else {
+            $(this).parent().parent().addClass( 'hideMe' );
+        }
 
         setTimeout(function() {
             _TodoNotes_.AdjustScrollableContent();
@@ -853,6 +861,75 @@ static #ToggleList(project_id) {
 }
 
 //------------------------------------------------
+static #SettingsFilterHandlers() {
+    // Toggle status Open
+    $(".settingsShowStatusOpen").unbind('click');
+    $(".settingsShowStatusOpen").click(function() {
+        const project_id = $(this).attr('data-project');
+        const user_id = $(this).attr('data-user');
+
+        _TodoNotes_Requests_.ToggleSettings(project_id, user_id, 1 /*filter*/,1 /*Open*/);
+
+        _TodoNotes_Settings_.showStatusOpen = !_TodoNotes_Settings_.showStatusOpen;
+        _TodoNotes_.RefreshShowStatus('Open', _TodoNotes_Settings_.showStatusOpen);
+
+        _TodoNotes_.AdjustAllNotesPlaceholders();
+
+        setTimeout(function() {
+            _TodoNotes_.AdjustScrollableContent();
+        }, 100);
+    });
+
+    // Toggle status Done
+    $(".settingsShowStatusInProgress").unbind('click');
+    $(".settingsShowStatusInProgress").click(function() {
+        const project_id = $(this).attr('data-project');
+        const user_id = $(this).attr('data-user');
+
+        _TodoNotes_Requests_.ToggleSettings(project_id, user_id, 1 /*filter*/,2 /*InProgress*/);
+
+        _TodoNotes_Settings_.showStatusInProgress = !_TodoNotes_Settings_.showStatusInProgress;
+        _TodoNotes_.RefreshShowStatus('InProgress', _TodoNotes_Settings_.showStatusInProgress);
+
+        _TodoNotes_.AdjustAllNotesPlaceholders();
+
+        setTimeout(function() {
+            _TodoNotes_.AdjustScrollableContent();
+        }, 100);
+    });
+
+    // Toggle status Done
+    $(".settingsShowStatusDone").unbind('click');
+    $(".settingsShowStatusDone").click(function() {
+        const project_id = $(this).attr('data-project');
+        const user_id = $(this).attr('data-user');
+
+        _TodoNotes_Requests_.ToggleSettings(project_id, user_id, 1 /*filter*/,0 /*Done*/);
+
+        _TodoNotes_Settings_.showStatusDone = !_TodoNotes_Settings_.showStatusDone;
+            _TodoNotes_.RefreshShowStatus('Done', _TodoNotes_Settings_.showStatusDone);
+
+        _TodoNotes_.AdjustAllNotesPlaceholders();
+
+        setTimeout(function() {
+            _TodoNotes_.AdjustScrollableContent();
+        }, 100);
+    });
+
+    // Toggle Archive View
+    $(".settingsShowArchive").unbind('click');
+    $(".settingsShowArchive").click(function() {
+        const project_id = $(this).attr('data-project');
+        const user_id = $(this).attr('data-user');
+
+        _TodoNotes_Requests_.ToggleSettings(project_id, user_id, 1 /*filter*/, 3 /*Archived*/);
+
+        _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
+    });
+
+}
+
+//------------------------------------------------
 static #SettingsViewHandlers() {
     // Toggle colorize by Category
     $(".settingsShowCategoryColors").unbind('click');
@@ -860,7 +937,7 @@ static #SettingsViewHandlers() {
         const project_id = $(this).attr('data-project');
         const user_id = $(this).attr('data-user');
 
-        _TodoNotes_Requests_.ToggleSettings(project_id, user_id, 'view', 'showCategoryColors');
+        _TodoNotes_Requests_.ToggleSettings(project_id, user_id, 3 /*view*/, 0 /*CategoryColors*/);
 
         _TodoNotes_Settings_.showCategoryColors = !_TodoNotes_Settings_.showCategoryColors;
         _TodoNotes_.RefreshShowCategoryColors();
@@ -872,7 +949,7 @@ static #SettingsViewHandlers() {
         const project_id = $(this).attr('data-project');
         const user_id = $(this).attr('data-user');
 
-        _TodoNotes_Requests_.ToggleSettings(project_id, user_id, 'view', 'showStandardStatusMarks');
+        _TodoNotes_Requests_.ToggleSettings(project_id, user_id, 3 /*view*/, 1 /*StandardStatusMarks*/);
 
         _TodoNotes_Settings_.showStandardStatusMarks = !_TodoNotes_Settings_.showStandardStatusMarks;
         _TodoNotes_.RefreshShowStandardStatusMarks();
@@ -930,11 +1007,25 @@ static #SettingsActionsHandlers() {
 static #SettingsHandlers() {
     //------------------------------------------------
 
+    $("#settingsFilter").click(function() {
+        setTimeout(function() {
+            _TodoNotes_.#SettingsFilterHandlers();
+        }, 100);
+    });
+
+    $("#settingsView").click(function() {
+        setTimeout(function() {
+            _TodoNotes_.#SettingsViewHandlers();
+        }, 100);
+    });
+
     $("#settingsActions").click(function() {
         setTimeout(function() {
             _TodoNotes_.#SettingsActionsHandlers();
         }, 100);
     });
+
+    //------------------------------------------------
 
     $(document).keydown(function(event) {
         if (event.keyCode !== 109) return; // [-] key
@@ -948,44 +1039,11 @@ static #SettingsHandlers() {
 
     //------------------------------------------------
 
-    $("#settingsView").click(function() {
-        setTimeout(function() {
-            _TodoNotes_.#SettingsViewHandlers();
-        }, 100);
-    });
-
-    //------------------------------------------------
-
     $("#settingsSortByStatus").click(function() {
         const project_id = $(this).attr('data-project');
         const user_id = $(this).attr('data-user');
 
-        _TodoNotes_Requests_.ToggleSettings(project_id, user_id, 'sort', 'sortByStatus');
-
-        _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
-    });
-
-    $("#settingsShowStatusDone").click(function() {
-        const project_id = $(this).attr('data-project');
-        const user_id = $(this).attr('data-user');
-
-        _TodoNotes_Requests_.ToggleSettings(project_id, user_id, 'filter','showStatusDone');
-
-        _TodoNotes_Settings_.showStatusDone = !_TodoNotes_Settings_.showStatusDone;
-        _TodoNotes_.RefreshShowStatusDone();
-
-        _TodoNotes_.AdjustAllNotesPlaceholders();
-
-        setTimeout(function() {
-            _TodoNotes_.AdjustScrollableContent();
-        }, 100);
-    });
-
-    $("#settingsShowArchive").click(function() {
-        const project_id = $(this).attr('data-project');
-        const user_id = $(this).attr('data-user');
-
-        _TodoNotes_Requests_.ToggleSettings(project_id, user_id, 'archive', 'showArchive');
+        _TodoNotes_Requests_.ToggleSettings(project_id, user_id, 2 /*sort*/, 1 /*Status*/);
 
         _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
     });
@@ -1027,19 +1085,19 @@ static #SettingsHandlers() {
 //------------------------------------------------
 
 //------------------------------------------------
-// Refresh hide All Done
-static RefreshShowStatusDone() {
-    if (_TodoNotes_Settings_.showStatusDone) {
-        $("#settingsShowStatusDone").addClass( 'buttonToggled' );
+// Refresh show Status
+static RefreshShowStatus(status, show) {
+    if (show) {
+        $(".settingsShowStatus" + status + " button").addClass( 'buttonToggled' );
         $(".liNote").each(function() {
-            if ($(this).find(".buttonStatus").children().attr('data-id') === '0') {
+            if ($(this).find(".buttonStatus").children().hasClass('status' + status)) {
                 $(this).removeClass( 'hideMe' );
             }
         });
     } else {
-        $("#settingsShowStatusDone").removeClass( 'buttonToggled' );
+        $(".settingsShowStatus" + status + " button").removeClass( 'buttonToggled' );
         $(".liNote").each(function() {
-            if ($(this).find(".buttonStatus").children().attr('data-id') === '0') {
+            if ($(this).find(".buttonStatus").children().hasClass('status' + status)) {
                 $(this).addClass( 'hideMe' );
             }
         });
@@ -1047,12 +1105,20 @@ static RefreshShowStatusDone() {
 }
 
 //------------------------------------------------
+// Refresh show ALL Statuses
+static RefreshShowAllStatuses() {
+    _TodoNotes_.RefreshShowStatus('Open', _TodoNotes_Settings_.showStatusOpen);
+    _TodoNotes_.RefreshShowStatus('InProgress', _TodoNotes_Settings_.showStatusInProgress);
+    _TodoNotes_.RefreshShowStatus('Done', _TodoNotes_Settings_.showStatusDone);
+}
+
+//------------------------------------------------
 // Refresh Archive View
 static RefreshShowArchive() {
     if (_TodoNotes_Settings_.showArchive) {
-        $("#settingsShowArchive").addClass( 'buttonToggled' );
+        $(".settingsShowArchive button").addClass( 'buttonToggled' );
     } else {
-        $("#settingsShowArchive").removeClass( 'buttonToggled' );
+        $(".settingsShowArchive button").removeClass( 'buttonToggled' );
     }
 }
 

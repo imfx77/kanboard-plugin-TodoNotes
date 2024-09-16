@@ -97,8 +97,8 @@ class TodoNotesController extends BaseController
         $columns = $this->todoNotesModel->GetColumns($project_id);
         $swimlanes = $this->todoNotesModel->GetSwimlanes($project_id);
 
-        $doShowArchive = $this->helper->todonotesSessionAndCookiesSettingsHelper->GetToggleableSettings($user_id, $project_id, 'archive', 'showArchive');
-        $doSortByStatus = $this->helper->todonotesSessionAndCookiesSettingsHelper->GetToggleableSettings($user_id, $project_id, 'sort', 'sortByStatus');
+        $doShowArchive = $this->helper->todonotesSessionAndCookiesSettingsHelper->GetToggleableSettings($user_id, $project_id, 1 /*filter*/, 3 /*Archived*/);
+        $doSortByStatus = $this->helper->todonotesSessionAndCookiesSettingsHelper->GetToggleableSettings($user_id, $project_id, 2 /*sort*/, 1 /*Status*/);
 
         if ($project_id == 0) {
             $data = $doShowArchive
@@ -165,8 +165,8 @@ class TodoNotesController extends BaseController
             $swimlanes  = array();
         }
 
-        $doShowArchive = $this->helper->todonotesSessionAndCookiesSettingsHelper->GetToggleableSettings($user_id, $project_id, 'archive', 'showArchive');
-        $doSortByStatus = $this->helper->todonotesSessionAndCookiesSettingsHelper->GetToggleableSettings($user_id, $project_id, 'sort', 'sortByStatus');
+        $doShowArchive = $this->helper->todonotesSessionAndCookiesSettingsHelper->GetToggleableSettings($user_id, $project_id, 1 /*filter*/, 3 /*Archived*/);
+        $doSortByStatus = $this->helper->todonotesSessionAndCookiesSettingsHelper->GetToggleableSettings($user_id, $project_id, 2 /*sort*/, 1 /*Status*/);
 
         if ($project_id == 0) {
             $data = $doShowArchive
@@ -227,7 +227,7 @@ class TodoNotesController extends BaseController
 
         $note_id = $this->request->getStringParam('note_id');
 
-        $doShowArchive = $this->helper->todonotesSessionAndCookiesSettingsHelper->GetToggleableSettings($user_id, $project_id, 'archive', 'showArchive');
+        $doShowArchive = $this->helper->todonotesSessionAndCookiesSettingsHelper->GetToggleableSettings($user_id, $project_id, 1 /*filter*/, 3 /*Archived*/);
 
         return (!$doShowArchive) ? $this->todoNotesModel->DeleteNote($project_id, $user_id, $note_id) : null;
     }
@@ -361,7 +361,7 @@ class TodoNotesController extends BaseController
         $project = $this->ResolveProject($user_id);
         $project_id = $project['id'];
 
-        $doSortByStatus = $this->helper->todonotesSessionAndCookiesSettingsHelper->GetToggleableSettings($user_id, $project_id, 'sort', 'sortByStatus');
+        $doSortByStatus = $this->helper->todonotesSessionAndCookiesSettingsHelper->GetToggleableSettings($user_id, $project_id, 2 /*sort*/, 1 /*Status*/);
 
         $category = $this->request->getStringParam('category');
         $data = $this->todoNotesModel->GetReportNotesForUser($project_id, $user_id, $doSortByStatus, $category);
@@ -561,13 +561,10 @@ class TodoNotesController extends BaseController
         $user_id = $this->ResolveUserId();
         $project_id = intval($this->request->getStringParam('project_custom_id'));
 
-        $settings_group_name = $this->request->getStringParam('settings_group_name');
-        $settings_name = $this->request->getStringParam('settings_name');
-        if (empty($settings_group_name) || empty($settings_name)) {
-            return false;
-        }
+        $settings_group_key = intval($this->request->getStringParam('settings_group_key'));
+        $settings_key = intval($this->request->getStringParam('settings_key'));
 
-        $this->helper->todonotesSessionAndCookiesSettingsHelper->ToggleSettings($user_id, $project_id, $settings_group_name, $settings_name);
+        $this->helper->todonotesSessionAndCookiesSettingsHelper->ToggleSettings($user_id, $project_id, $settings_group_key, $settings_key);
         return true;
     }
 
@@ -577,7 +574,7 @@ class TodoNotesController extends BaseController
         $project = $this->ResolveProject($user_id);
         $project_id = $project['id'];
 
-        $doShowArchive = $this->helper->todonotesSessionAndCookiesSettingsHelper->GetToggleableSettings($user_id, $project_id, 'archive', 'showArchive');
+        $doShowArchive = $this->helper->todonotesSessionAndCookiesSettingsHelper->GetToggleableSettings($user_id, $project_id, 1 /*filter*/, 3 /*Archived*/);
 
         $lastTimestamps = $doShowArchive
             ? $this->todoNotesModel->GetLastArchivedTimestamp($project_id, $user_id)
@@ -627,7 +624,7 @@ class TodoNotesController extends BaseController
 
         $archived_note_id = $this->request->getStringParam('archived_note_id');
 
-        $doShowArchive = $this->helper->todonotesSessionAndCookiesSettingsHelper->GetToggleableSettings($user_id, $project_id, 'archive', 'showArchive');
+        $doShowArchive = $this->helper->todonotesSessionAndCookiesSettingsHelper->GetToggleableSettings($user_id, $project_id, 1 /*filter*/, 3 /*Archived*/);
 
         return ($doShowArchive) ? $this->todoNotesModel->DeleteNoteFromArchive($project_id, $user_id, $archived_note_id) : null;
     }

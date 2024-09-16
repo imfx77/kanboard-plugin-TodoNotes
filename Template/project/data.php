@@ -104,15 +104,76 @@ print '<div class="liNewNoteBkgr"></div>';
 // here goes the Settings Button Toolbar
 print '<div class="toolbarSettingsButtons containerNoWrap containerFloatRight disableEventsPropagation">';
 
+// Settings Filter
+print '<div class="dropdown">';
+print '<button id="settingsFilter" class="toolbarButton dropdown-menu"';
+print ' title="' . t('TodoNotes__PROJECT_SETTINGS_FILTER') . '"';
+print ' data-id="0"';
+print ' data-project="' . $project_id . '"';
+print ' data-user="' . $user_id . '"';
+print '>';
+print '<i class="fa fa-filter" aria-hidden="true"></i>';
+print '</button>';
+
+print '<ul>';
+
+// hide some settings buttons in Archive View
+if (!$settings_showArchive) {
+    // Toggle show All Open
+    print '<li class="settingsShowStatusOpen"';
+    print ' data-id="0"';
+    print ' data-project="' . $project_id . '"';
+    print ' data-user="' . $user_id . '"';
+    print '><button class="toolbarButton">';
+    print '<i class="statusOpen" aria-hidden="true"></i>';
+    print'</button><a>&nbsp;&nbsp;' . t('TodoNotes__PROJECT_TOGGLE_SHOW_STATUS_OPEN') . '</a></li>';
+
+    // Toggle show All InProgress
+    print '<li class="settingsShowStatusInProgress"';
+    print ' data-id="0"';
+    print ' data-project="' . $project_id . '"';
+    print ' data-user="' . $user_id . '"';
+    print '><button class="toolbarButton">';
+    print '<i class="statusInProgress" aria-hidden="true"></i>';
+    print'</button><a>&nbsp;&nbsp;' . t('TodoNotes__PROJECT_TOGGLE_SHOW_STATUS_INPROGRESS') . '</a></li>';
+
+    // Toggle show All Done
+    print '<li class="settingsShowStatusDone"';
+    print ' data-id="0"';
+    print ' data-project="' . $project_id . '"';
+    print ' data-user="' . $user_id . '"';
+    print '><button class="toolbarButton">';
+    print '<i class="statusDone" aria-hidden="true"></i>';
+    print'</button><a>&nbsp;&nbsp;' . t('TodoNotes__PROJECT_TOGGLE_SHOW_STATUS_DONE') . '</a></li>';
+
+    // add divider between button groups
+    print '<hr class="toolbarDivider">';
+}
+
 // Toggle Archive View
-print '<button id="settingsShowArchive" class="toolbarButton"';
-print ' title="' . t('TodoNotes__PROJECT_TOGGLE_ARCHIVE_VIEW') . '"';
+print '<li class="settingsShowArchive"';
 print ' data-id="0"';
 print ' data-project="' . $project_id . '"';
 print ' data-user="' .  $user_id . '"';
-print '>';
+print '><button class="toolbarButton">';
 print '<i class="fa fa-archive" aria-hidden="true"></i>';
-print '</button>';
+print'</button><a>&nbsp;&nbsp;' . t('TodoNotes__PROJECT_TOGGLE_ARCHIVE_VIEW') . '</a></li>';
+
+print '</ul>';
+print '</div>'; // Settings Filter
+
+// hide some settings buttons in Archive View
+if (!$settings_showArchive) {
+    // Toggle sort by status
+    print '<button id="settingsSortByStatus" class="toolbarButton"';
+    print ' title="' . t('TodoNotes__PROJECT_TOGGLE_SORT_BY_STATUS') . '"';
+    print ' data-id="0"';
+    print ' data-project="' . $project_id . '"';
+    print ' data-user="' . $user_id . '"';
+    print '>';
+    print '<i class="fa fa-sort" aria-hidden="true"></i>';
+    print '</button>';
+}
 
 // add some space between button groups
 print '<button class="toolbarSeparator">&nbsp;</button>';
@@ -125,7 +186,7 @@ print ' data-id="0"';
 print ' data-project="' . $project_id . '"';
 print ' data-user="' . $user_id . '"';
 print '>';
-print '<i class="fa fa-eye" aria-hidden="true"></i>';
+print '<i class="fa fa-sliders" aria-hidden="true"></i>';
 print '</button>';
 
 print '<ul>';
@@ -154,33 +215,10 @@ if (!$settings_showArchive) {
 print '</ul>';
 print '</div>'; // Settings View
 
-// hide some settings buttons in Archive View
-if (!$settings_showArchive) {
-    // Toggle show All Done
-    print '<button id="settingsShowStatusDone" class="toolbarButton"';
-    print ' title="' . t('TodoNotes__PROJECT_TOGGLE_SHOW_STATUS_DONE') . '"';
-    print ' data-id="0"';
-    print ' data-project="' . $project_id . '"';
-    print ' data-user="' . $user_id . '"';
-    print '>';
-    print '<i class="fa fa-check-square" aria-hidden="true"></i>';
-    print '</button>';
-
-    // Toggle sort by status
-    print '<button id="settingsSortByStatus" class="toolbarButton"';
-    print ' title="' . t('TodoNotes__PROJECT_TOGGLE_SORT_BY_STATUS') . '"';
-    print ' data-id="0"';
-    print ' data-project="' . $project_id . '"';
-    print ' data-user="' . $user_id . '"';
-    print '>';
-    print '<i class="fa fa-sort" aria-hidden="true"></i>';
-    print '</button>';
-}
-
 // add some space between button groups
 print '<button class="toolbarSeparator">&nbsp;</button>';
 
-// Setting Actions
+// Settings Actions
 print '<div class="dropdown">';
 print '<button id="settingsActions" class="toolbarButton dropdown-menu"';
 print ' title="' . t('TodoNotes__PROJECT_SETTINGS_ACTIONS') . '"';

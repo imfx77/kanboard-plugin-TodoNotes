@@ -110,7 +110,7 @@ static #TabsActionHandlers() {
     // toggle visibility of tabs stats widgets
     $("button" + "#settingsShowTabsStats").click(function() {
         const user_id = $(this).attr('data-user');
-        _TodoNotes_Requests_.ToggleSettings(0 /* overview */, user_id, 'tabs', 'showTabsStats');
+        _TodoNotes_Requests_.ToggleSettings(0 /* overview */, user_id, 0 /*tabs*/, 0 /*Stats*/);
 
         _TodoNotes_Settings_.showTabsStats = !_TodoNotes_Settings_.showTabsStats;
 

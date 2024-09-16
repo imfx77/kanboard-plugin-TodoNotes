@@ -14,12 +14,38 @@ class SessionAndCookiesSettingsHelper extends Base
 {
     private const SETTINGS_KEY_NAME = '_KB_plugin_TodoNotes_user_Settings_';
 
+    private const DEFAULT_SETTINGS = array(
+        1 /*filter*/ => [1 /*Open*/, 2 /*InProgress*/, 0 /*Done*/],
+        3 /*view*/ => [0 /*CategoryColors*/],
+    );
+
+    private const URL_ENCODE_MAP = array(
+        '{' => 'a',
+        '}' => 'b',
+        '[' => 'c',
+        ']' => 'd',
+        '|' => 'x',
+        ':' => 'y',
+        ',' => 'z',
+        '"' => 'q',
+    );
+    private const URL_DECODE_MAP = array(
+        'a' => '{',
+        'b' => '}',
+        'c' => '[',
+        'd' => ']',
+        'x' => '|',
+        'y' => ':',
+        'z' => ',',
+        'q' => '"',
+    );
+
     public function GetSettings($user_id, $project_id)
     {
         // obtain from cookie
         $cookie = (isset($_COOKIE[self::SETTINGS_KEY_NAME])) ? $_COOKIE[self::SETTINGS_KEY_NAME] : '';
-        $cookie_value = json_decode($cookie, true);
-        $cookie_settings_key = 'user=' . $user_id . ';project=' . $project_id . ';';
+        $cookie_value = json_decode(strtr($cookie, self::URL_DECODE_MAP), true);
+        $cookie_settings_key = $user_id . '|' . $project_id;
 
         $settings = (is_array($cookie_value) && array_key_exists($cookie_settings_key, $cookie_value))
             ? $cookie_value[$cookie_settings_key]
@@ -27,7 +53,7 @@ class SessionAndCookiesSettingsHelper extends Base
 
         // else obtain from session
         if (!isset($settings)) {
-            $settings = (isset($_SESSION[self::SETTINGS_KEY_NAME])) ? $_SESSION[self::SETTINGS_KEY_NAME] : array();
+            $settings = (isset($_SESSION[self::SETTINGS_KEY_NAME])) ? $_SESSION[self::SETTINGS_KEY_NAME] : self::DEFAULT_SETTINGS;
         }
 
         return $settings;
@@ -39,11 +65,12 @@ class SessionAndCookiesSettingsHelper extends Base
 
         // store to session
         $_SESSION[self::SETTINGS_KEY_NAME] = $settings;
+        //unset($_SESSION[self::SETTINGS_KEY_NAME]);
 
         // store to cookie
         $cookie = (isset($_COOKIE[self::SETTINGS_KEY_NAME])) ? $_COOKIE[self::SETTINGS_KEY_NAME] : '';
-        $cookie_value = json_decode($cookie, true);
-        $cookie_settings_key = 'user=' . $user_id . ';project=' . $project_id . ';';
+        $cookie_value = json_decode(strtr($cookie, self::URL_DECODE_MAP), true);
+        $cookie_settings_key = $user_id . '|' . $project_id;
         $cookie_value[$cookie_settings_key] = $settings;
 
         $cookie_options = array (
@@ -55,43 +82,50 @@ class SessionAndCookiesSettingsHelper extends Base
             'httponly' => true,
             'samesite' => 'Strict',
         );
-        setcookie(self::SETTINGS_KEY_NAME, json_encode($cookie_value), $cookie_options);
+        setcookie(self::SETTINGS_KEY_NAME, strtr(json_encode($cookie_value), self::URL_ENCODE_MAP), $cookie_options);
     }
 
-    public function GetToggleableSettings($user_id, $project_id, $settings_group_name, $settings_name): bool
+    public function GetToggleableSettings($user_id, $project_id, $settings_group_key, $settings_key): bool
     {
         $settings = $this->GetSettings($user_id, $project_id);
 
-        // settings groups are expected to be arrays
-        $settings_group = (array_key_exists($settings_group_name, $settings) && is_array($settings[$settings_group_name]))
-            ? $settings[$settings_group_name]
-            : array();
+        $settings_group = (array_key_exists($settings_group_key, $settings) && is_array($settings[$settings_group_key]))
+            ? $settings[$settings_group_key]
+            : [];
 
-        // toggle settings are expected to be boolean i.e. to only have values of 'true' of 'false'
-        $settings_value = (array_key_exists($settings_name, $settings_group) && is_bool($settings_group[$settings_name]))
-            ? $settings_group[$settings_name]
-            : false;
+        $settings_value = in_array($settings_key, $settings_group) ? true : false;
 
         return $settings_value;
     }
 
-    private function SetToggleableSettings($user_id, $project_id, $settings_group_name, $settings_name, $settings_value)
+    private function SetToggleableSettings($user_id, $project_id, $settings_group_key, $settings_key, $settings_value)
     {
         $settings = $this->GetSettings($user_id, $project_id);
 
-        $settings_group = (array_key_exists($settings_group_name, $settings) && is_array($settings[$settings_group_name]))
-            ? $settings[$settings_group_name]
-            : array();
+        $settings_group = (array_key_exists($settings_group_key, $settings) && is_array($settings[$settings_group_key]))
+            ? $settings[$settings_group_key]
+            : [];
 
-        $settings_group[$settings_name] = $settings_value;
-        $settings[$settings_group_name] = $settings_group;
+        $hasValue = in_array($settings_key, $settings_group);
+        if ($settings_value && !$hasValue) {
+            $settings_group[] = $settings_key;
+        }
+        if (!$settings_value && $hasValue) {
+            array_splice($settings_group, array_search($settings_key, $settings_group), 1);
+        }
+        
+        if (count($settings_group) > 0) {
+            $settings[$settings_group_key] = $settings_group;
+        } else {
+            unset($settings[$settings_group_key]);
+        }
 
         $this->SetSettings($user_id, $project_id, $settings);
     }
 
-    public function ToggleSettings($user_id, $project_id, $settings_group_name, $settings_name)
+    public function ToggleSettings($user_id, $project_id, $settings_group_key, $settings_key)
     {
-        $settings_value = $this->GetToggleableSettings($user_id, $project_id, $settings_group_name, $settings_name);
-        $this->SetToggleableSettings($user_id, $project_id, $settings_group_name, $settings_name, !$settings_value);
+        $settings_value = $this->GetToggleableSettings($user_id, $project_id, $settings_group_key, $settings_key);
+        $this->SetToggleableSettings($user_id, $project_id, $settings_group_key, $settings_key, !$settings_value);
     }
 }
