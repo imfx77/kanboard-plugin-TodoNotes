@@ -93,13 +93,31 @@ class SessionAndCookiesSettingsHelper extends Base
         //echo json_encode($cookie_value);
     }
 
-    public function GetToggleableSettings($user_id, $project_id, $settings_group_key, $settings_key): bool
+    private function GetGroupSettings($user_id, $project_id, $settings_group_key): array
     {
         $settings = $this->GetSettings($user_id, $project_id);
 
-        $settings_group = (array_key_exists($settings_group_key, $settings) && is_array($settings[$settings_group_key]))
+        return (array_key_exists($settings_group_key, $settings) && is_array($settings[$settings_group_key]))
             ? $settings[$settings_group_key]
             : [];
+    }
+
+    private function SetGroupSettings($user_id, $project_id, $settings_group_key, $settings_group)
+    {
+        $settings = $this->GetSettings($user_id, $project_id);
+
+        if (count($settings_group) > 0) {
+            $settings[$settings_group_key] = $settings_group;
+        } else {
+            unset($settings[$settings_group_key]);
+        }
+
+        $this->SetSettings($user_id, $project_id, $settings);
+    }
+
+    public function GetToggleableSettings($user_id, $project_id, $settings_group_key, $settings_key): bool
+    {
+        $settings_group = $this->GetGroupSettings($user_id, $project_id, $settings_group_key);
 
         $settings_value = in_array($settings_key, $settings_group) ? true : false;
 
@@ -108,11 +126,9 @@ class SessionAndCookiesSettingsHelper extends Base
 
     private function SetToggleableSettings($user_id, $project_id, $settings_group_key, $settings_key, $settings_value, $settings_exclusive)
     {
-        $settings = $this->GetSettings($user_id, $project_id);
-
-        $settings_group = [];
-        if (!$settings_exclusive && array_key_exists($settings_group_key, $settings) && is_array($settings[$settings_group_key])) {
-            $settings_group = $settings[$settings_group_key];
+        $settings_group = $this->GetGroupSettings($user_id, $project_id, $settings_group_key);
+        if ($settings_exclusive) {
+            $settings_group = [];
         }
 
         $hasValue = in_array($settings_key, $settings_group);
@@ -123,13 +139,7 @@ class SessionAndCookiesSettingsHelper extends Base
             array_splice($settings_group, array_search($settings_key, $settings_group), 1);
         }
         
-        if (count($settings_group) > 0) {
-            $settings[$settings_group_key] = $settings_group;
-        } else {
-            unset($settings[$settings_group_key]);
-        }
-
-        $this->SetSettings($user_id, $project_id, $settings);
+        $this->SetGroupSettings($user_id, $project_id, $settings_group_key, $settings_group);
     }
 
     public function ToggleSettings($user_id, $project_id, $settings_group_key, $settings_key, $settings_exclusive)
