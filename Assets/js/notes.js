@@ -1110,6 +1110,7 @@ static #SettingsHandlers() {
 static RefreshHideStatus(status, hide) {
     if (hide) {
         $(".settingsHideStatus" + status + " button").addClass( 'buttonToggled' );
+        $(".settingsHideStatus" + status + " a").addClass( 'buttonToggled' );
         $(".liNote").each(function() {
             if ($(this).find(".buttonStatus").children().hasClass('status' + status)) {
                 $(this).addClass( 'hideMe' );
@@ -1117,6 +1118,7 @@ static RefreshHideStatus(status, hide) {
         });
     } else {
         $(".settingsHideStatus" + status + " button").removeClass( 'buttonToggled' );
+        $(".settingsHideStatus" + status + " a").removeClass( 'buttonToggled' );
         $(".liNote").each(function() {
             if ($(this).find(".buttonStatus").children().hasClass('status' + status)) {
                 $(this).removeClass( 'hideMe' );
@@ -1138,8 +1140,10 @@ static RefreshHideAllStatuses() {
 static RefreshShowArchive() {
     if (_TodoNotes_Settings_.showArchive) {
         $(".settingsShowArchive button").addClass( 'buttonToggled' );
+        $(".settingsShowArchive a").addClass( 'buttonToggled' );
     } else {
         $(".settingsShowArchive button").removeClass( 'buttonToggled' );
+        $(".settingsShowArchive a").removeClass( 'buttonToggled' );
     }
 }
 
@@ -1148,13 +1152,17 @@ static RefreshShowArchive() {
 static RefreshSortMenuItems() {
     if (_TodoNotes_Settings_.sortManual) {
         $(".settingsSortManual button").addClass( 'buttonToggled' );
+        $(".settingsSortManual a").addClass( 'buttonToggled' );
     } else {
         $(".settingsSortManual button").removeClass( 'buttonToggled' );
+        $(".settingsSortManual a").removeClass( 'buttonToggled' );
     }
     if (_TodoNotes_Settings_.sortByStatus) {
         $(".settingsSortByStatus button").addClass( 'buttonToggled' );
+        $(".settingsSortByStatus a").addClass( 'buttonToggled' );
     } else {
         $(".settingsSortByStatus button").removeClass( 'buttonToggled' );
+        $(".settingsSortByStatus a").removeClass( 'buttonToggled' );
     }
 }
 
@@ -1163,6 +1171,7 @@ static RefreshSortMenuItems() {
 static RefreshShowCategoryColors() {
     if (_TodoNotes_Settings_.showCategoryColors) {
         $(".settingsShowCategoryColors button").addClass( 'buttonToggled' );
+        $(".settingsShowCategoryColors a").addClass( 'buttonToggled' );
         $(".tdReport .reportBkgr").addClass( 'task-board' );
         $(".liNote .liNoteBkgr").addClass( 'task-board' );
         // avoid the ugly empty category label boxes
@@ -1173,6 +1182,7 @@ static RefreshShowCategoryColors() {
         });
     } else {
         $(".settingsShowCategoryColors button").removeClass( 'buttonToggled' );
+        $(".settingsShowCategoryColors a").removeClass( 'buttonToggled' );
         $(".tdReport .reportBkgr").removeClass( 'task-board' );
         $(".liNote .liNoteBkgr").removeClass( 'task-board' );
         $(".catLabel").removeClass( 'task-board-category' );
@@ -1201,10 +1211,12 @@ static RefreshShowStandardStatusMarks() {
         $(".settingsShowStandardStatusMarks button").addClass( 'buttonToggled' );
         $(".settingsShowStandardStatusMarks button i").removeClass( 'fa-check' );
         $(".settingsShowStandardStatusMarks button i").addClass( 'fa-check-square-o' );
+        $(".settingsShowStandardStatusMarks a").addClass( 'buttonToggled' );
     } else {
         $(".settingsShowStandardStatusMarks button").removeClass( 'buttonToggled' );
         $(".settingsShowStandardStatusMarks button i").removeClass( 'fa-check-square-o' );
         $(".settingsShowStandardStatusMarks button i").addClass( 'fa-check' );
+        $(".settingsShowStandardStatusMarks a").removeClass( 'buttonToggled' );
     }
 
     _TodoNotes_Statuses_.ExpandStatusAliases();
