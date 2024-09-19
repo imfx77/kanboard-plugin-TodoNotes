@@ -869,7 +869,9 @@ static #SettingsFilterHandlers() {
         const project_id = $(this).attr('data-project');
         const user_id = $(this).attr('data-user');
 
-        _TodoNotes_Requests_.ToggleSettings(project_id, user_id, 1 /*filter*/,1 /*Open*/);
+        _TodoNotes_Requests_.ToggleSettings(project_id, user_id,
+            _TodoNotes_Settings_.GROUP.FILTER,
+            _TodoNotes_Settings_.FILTER.OPEN);
 
         _TodoNotes_Settings_.hideStatusOpen = !_TodoNotes_Settings_.hideStatusOpen;
         _TodoNotes_.RefreshHideStatus('Open', _TodoNotes_Settings_.hideStatusOpen);
@@ -887,7 +889,9 @@ static #SettingsFilterHandlers() {
         const project_id = $(this).attr('data-project');
         const user_id = $(this).attr('data-user');
 
-        _TodoNotes_Requests_.ToggleSettings(project_id, user_id, 1 /*filter*/,2 /*InProgress*/);
+        _TodoNotes_Requests_.ToggleSettings(project_id, user_id,
+            _TodoNotes_Settings_.GROUP.FILTER,
+            _TodoNotes_Settings_.FILTER.IN_PROGRESS);
 
         _TodoNotes_Settings_.hideStatusInProgress = !_TodoNotes_Settings_.hideStatusInProgress;
         _TodoNotes_.RefreshHideStatus('InProgress', _TodoNotes_Settings_.hideStatusInProgress);
@@ -905,7 +909,9 @@ static #SettingsFilterHandlers() {
         const project_id = $(this).attr('data-project');
         const user_id = $(this).attr('data-user');
 
-        _TodoNotes_Requests_.ToggleSettings(project_id, user_id, 1 /*filter*/,0 /*Done*/);
+        _TodoNotes_Requests_.ToggleSettings(project_id, user_id,
+            _TodoNotes_Settings_.GROUP.FILTER,
+            _TodoNotes_Settings_.FILTER.DONE);
 
         _TodoNotes_Settings_.hideStatusDone = !_TodoNotes_Settings_.hideStatusDone;
         _TodoNotes_.RefreshHideStatus('Done', _TodoNotes_Settings_.hideStatusDone);
@@ -923,11 +929,12 @@ static #SettingsFilterHandlers() {
         const project_id = $(this).attr('data-project');
         const user_id = $(this).attr('data-user');
 
-        _TodoNotes_Requests_.ToggleSettings(project_id, user_id, 1 /*filter*/, 3 /*Archived*/);
+        _TodoNotes_Requests_.ToggleSettings(project_id, user_id,
+            _TodoNotes_Settings_.GROUP.FILTER,
+            _TodoNotes_Settings_.FILTER.ARCHIVED);
 
         _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
     });
-
 }
 
 //------------------------------------------------
@@ -938,7 +945,9 @@ static #SettingsSortHandlers() {
         const project_id = $(this).attr('data-project');
         const user_id = $(this).attr('data-user');
 
-        _TodoNotes_Requests_.ToggleSettings(project_id, user_id, 2 /*sort*/, 0 /*Manual*/, true);
+        _TodoNotes_Requests_.ToggleSettings(project_id, user_id,
+            _TodoNotes_Settings_.GROUP.SORT,
+            _TodoNotes_Settings_.SORT.MANUAL, true);
 
         _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
     });
@@ -949,7 +958,9 @@ static #SettingsSortHandlers() {
         const project_id = $(this).attr('data-project');
         const user_id = $(this).attr('data-user');
 
-        _TodoNotes_Requests_.ToggleSettings(project_id, user_id, 2 /*sort*/, 1 /*Status*/, true);
+        _TodoNotes_Requests_.ToggleSettings(project_id, user_id,
+            _TodoNotes_Settings_.GROUP.SORT,
+            _TodoNotes_Settings_.SORT.STATUS, true);
 
         _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
     });
@@ -963,7 +974,9 @@ static #SettingsViewHandlers() {
         const project_id = $(this).attr('data-project');
         const user_id = $(this).attr('data-user');
 
-        _TodoNotes_Requests_.ToggleSettings(project_id, user_id, 3 /*view*/, 0 /*CategoryColors*/);
+        _TodoNotes_Requests_.ToggleSettings(project_id, user_id,
+            _TodoNotes_Settings_.GROUP.VIEW,
+            _TodoNotes_Settings_.VIEW.CATEGORY_COLORS);
 
         _TodoNotes_Settings_.showCategoryColors = !_TodoNotes_Settings_.showCategoryColors;
         _TodoNotes_.RefreshShowCategoryColors();
@@ -975,7 +988,9 @@ static #SettingsViewHandlers() {
         const project_id = $(this).attr('data-project');
         const user_id = $(this).attr('data-user');
 
-        _TodoNotes_Requests_.ToggleSettings(project_id, user_id, 3 /*view*/, 1 /*StandardStatusMarks*/);
+        _TodoNotes_Requests_.ToggleSettings(project_id, user_id,
+            _TodoNotes_Settings_.GROUP.VIEW,
+            _TodoNotes_Settings_.VIEW.STANDARD_STATUS_MARKS);
 
         _TodoNotes_Settings_.showStandardStatusMarks = !_TodoNotes_Settings_.showStandardStatusMarks;
         _TodoNotes_.RefreshShowStandardStatusMarks();

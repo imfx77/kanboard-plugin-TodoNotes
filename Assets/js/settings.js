@@ -17,6 +17,41 @@ if (typeof(_TodoNotes_Settings_) === 'undefined') {
         static #project_settingsExportToJS;
 
         //------------------------------------------------
+        // Global constants for settings
+        //------------------------------------------------
+        static GROUP = {
+            TABS: 0,
+            FILTER: 1,
+            SORT: 2,
+            VIEW: 3,
+        };
+        static TABS = {
+            STATS: 0,
+            GLOBAL: 1,
+            PRIVATE: 2,
+            REGULAR: 3,
+        };
+        static FILTER = {
+            DONE: 0,
+            OPEN: 1,
+            IN_PROGRESS: 2,
+            ARCHIVED: 3,
+        };
+        static SORT = {
+            MANUAL: 0,
+            STATUS: 1,
+            DATE_CREATED: 2,
+            DATE_MODIFIED: 3,
+            DATE_NOTIFIED: 4,
+            DATE_LAST_NOTIFIED: 5,
+            DATE_ARCHIVED: 6,
+            DATE_RESTORED: 7,
+        };
+        static VIEW = {
+            CATEGORY_COLORS: 0,
+            STANDARD_STATUS_MARKS: 1,
+        };
+        //------------------------------------------------
         // Global vars for settings
         //------------------------------------------------
         static showTabsStats = false;
@@ -44,21 +79,21 @@ if (typeof(_TodoNotes_Settings_) === 'undefined') {
             _TodoNotes_Settings_.#project_settingsExportToJS = JSON.parse($("#_TodoNotes_ProjectSettingsExportToJS_").html());
             $("#_TodoNotes_ProjectSettingsExportToJS_").remove();
 
-            _TodoNotes_Settings_.showTabsStats              = _TodoNotes_Settings_.GetSettingsExportToJS(0 /*tabs*/, 0 /*Stats*/, true);
-            _TodoNotes_Settings_.hideTabsGlobal             = _TodoNotes_Settings_.GetSettingsExportToJS(0 /*tabs*/, 1 /*Global*/, true);
-            _TodoNotes_Settings_.hideTabsPrivate            = _TodoNotes_Settings_.GetSettingsExportToJS(0 /*tabs*/, 2 /*Private*/, true);
-            _TodoNotes_Settings_.hideTabsRegular            = _TodoNotes_Settings_.GetSettingsExportToJS(0 /*tabs*/, 3 /*Regular*/, true);
+            _TodoNotes_Settings_.showTabsStats              = _TodoNotes_Settings_.GetSettingsExportToJS(_TodoNotes_Settings_.GROUP.TABS, _TodoNotes_Settings_.TABS.STATS, true);
+            _TodoNotes_Settings_.hideTabsGlobal             = _TodoNotes_Settings_.GetSettingsExportToJS(_TodoNotes_Settings_.GROUP.TABS, _TodoNotes_Settings_.TABS.GLOBAL, true);
+            _TodoNotes_Settings_.hideTabsPrivate            = _TodoNotes_Settings_.GetSettingsExportToJS(_TodoNotes_Settings_.GROUP.TABS, _TodoNotes_Settings_.TABS.PRIVATE, true);
+            _TodoNotes_Settings_.hideTabsRegular            = _TodoNotes_Settings_.GetSettingsExportToJS(_TodoNotes_Settings_.GROUP.TABS, _TodoNotes_Settings_.TABS.REGULAR, true);
 
-            _TodoNotes_Settings_.hideStatusDone             = _TodoNotes_Settings_.GetSettingsExportToJS(1 /*filter*/, 0 /*Done*/);
-            _TodoNotes_Settings_.hideStatusOpen             = _TodoNotes_Settings_.GetSettingsExportToJS(1 /*filter*/, 1 /*Open*/);
-            _TodoNotes_Settings_.hideStatusInProgress       = _TodoNotes_Settings_.GetSettingsExportToJS(1 /*filter*/, 2 /*InProgress*/);
-            _TodoNotes_Settings_.showArchive                = _TodoNotes_Settings_.GetSettingsExportToJS(1 /*filter*/, 3 /*Archived*/);
+            _TodoNotes_Settings_.hideStatusDone             = _TodoNotes_Settings_.GetSettingsExportToJS(_TodoNotes_Settings_.GROUP.FILTER, _TodoNotes_Settings_.FILTER.DONE);
+            _TodoNotes_Settings_.hideStatusOpen             = _TodoNotes_Settings_.GetSettingsExportToJS(_TodoNotes_Settings_.GROUP.FILTER, _TodoNotes_Settings_.FILTER.OPEN);
+            _TodoNotes_Settings_.hideStatusInProgress       = _TodoNotes_Settings_.GetSettingsExportToJS(_TodoNotes_Settings_.GROUP.FILTER, _TodoNotes_Settings_.FILTER.IN_PROGRESS);
+            _TodoNotes_Settings_.showArchive                = _TodoNotes_Settings_.GetSettingsExportToJS(_TodoNotes_Settings_.GROUP.FILTER, _TodoNotes_Settings_.FILTER.ARCHIVED);
 
-            _TodoNotes_Settings_.sortManual                 = _TodoNotes_Settings_.GetSettingsExportToJS(2 /*sort*/, 0 /*Manual*/);
-            _TodoNotes_Settings_.sortByStatus               = _TodoNotes_Settings_.GetSettingsExportToJS(2 /*sort*/, 1 /*Status*/);
+            _TodoNotes_Settings_.sortManual                 = _TodoNotes_Settings_.GetSettingsExportToJS(_TodoNotes_Settings_.GROUP.SORT, _TodoNotes_Settings_.SORT.MANUAL);
+            _TodoNotes_Settings_.sortByStatus               = _TodoNotes_Settings_.GetSettingsExportToJS(_TodoNotes_Settings_.GROUP.SORT, _TodoNotes_Settings_.SORT.STATUS);
 
-            _TodoNotes_Settings_.showCategoryColors         = _TodoNotes_Settings_.GetSettingsExportToJS(3 /*view*/, 0 /*CategoryColors*/);
-            _TodoNotes_Settings_.showStandardStatusMarks    = _TodoNotes_Settings_.GetSettingsExportToJS(3 /*view*/, 1 /*StandardStatusMarks*/);
+            _TodoNotes_Settings_.showCategoryColors         = _TodoNotes_Settings_.GetSettingsExportToJS(_TodoNotes_Settings_.GROUP.VIEW, _TodoNotes_Settings_.VIEW.CATEGORY_COLORS);
+            _TodoNotes_Settings_.showStandardStatusMarks    = _TodoNotes_Settings_.GetSettingsExportToJS(_TodoNotes_Settings_.GROUP.VIEW, _TodoNotes_Settings_.VIEW.STANDARD_STATUS_MARKS);
         }
 
         //------------------------------------------------

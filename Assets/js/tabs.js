@@ -120,7 +120,9 @@ static #TabsActionHandlers() {
     // toggle visibility of tabs stats widgets
     $("button" + "#settingsShowTabsStats").click(function() {
         const user_id = $(this).attr('data-user');
-        _TodoNotes_Requests_.ToggleSettings(0 /* overview */, user_id, 0 /*tabs*/, 0 /*Stats*/);
+        _TodoNotes_Requests_.ToggleSettings(0 /* overview */, user_id,
+            _TodoNotes_Settings_.GROUP.TABS,
+            _TodoNotes_Settings_.TABS.STATS);
 
         _TodoNotes_Settings_.showTabsStats = !_TodoNotes_Settings_.showTabsStats;
 
@@ -213,15 +215,21 @@ static #ToggleTabGroup(group) {
 static #ToggleTabGroupSettings(group) {
     const user_id = $("#refProjectId").attr('data-user');
     if (group === 'Global') {
-        _TodoNotes_Requests_.ToggleSettings(0 /* overview */, user_id, 0 /*tabs*/, 1 /*Global*/);
+        _TodoNotes_Requests_.ToggleSettings(0 /* overview */, user_id,
+            _TodoNotes_Settings_.GROUP.TABS,
+            _TodoNotes_Settings_.TABS.GLOBAL);
         _TodoNotes_Settings_.hideTabsGlobal = !_TodoNotes_Settings_.hideTabsGlobal;
     }
     if (group === 'Private') {
-        _TodoNotes_Requests_.ToggleSettings(0 /* overview */, user_id, 0 /*tabs*/, 2 /*Private*/);
+        _TodoNotes_Requests_.ToggleSettings(0 /* overview */, user_id,
+            _TodoNotes_Settings_.GROUP.TABS,
+            _TodoNotes_Settings_.TABS.PRIVATE);
         _TodoNotes_Settings_.showTabsPrivate = !_TodoNotes_Settings_.showTabsPrivate;
     }
     if (group === 'Regular') {
-        _TodoNotes_Requests_.ToggleSettings(0 /* overview */, user_id, 0 /*tabs*/, 3 /*Regular*/);
+        _TodoNotes_Requests_.ToggleSettings(0 /* overview */, user_id,
+            _TodoNotes_Settings_.GROUP.TABS,
+            _TodoNotes_Settings_.TABS.REGULAR);
         _TodoNotes_Settings_.showTabsRegular = !_TodoNotes_Settings_.showTabsRegular;
     }
 }
