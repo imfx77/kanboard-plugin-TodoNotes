@@ -1052,8 +1052,7 @@ class TodoNotesModel extends Base
 
         // force sorting
         if ($isArchive) {
-            if (
-                   $sortKey == $todonotesSettingsHelper::SETTINGS_SORT_MANUAL
+            if ($sortKey == $todonotesSettingsHelper::SETTINGS_SORT_MANUAL
                 || $sortKey == $todonotesSettingsHelper::SETTINGS_SORT_STATUS
                 || $sortKey == $todonotesSettingsHelper::SETTINGS_SORT_DATE_RESTORED
             ) {
