@@ -93,7 +93,7 @@ class SessionAndCookiesSettingsHelper extends Base
         return $settings;
     }
 
-    private function SetSettings($user_id, $project_id, $settings)
+    private function SetSettings($user_id, $project_id, $settings, $to_session_only = false)
     {
         //print_r($settings);
         $settings_key = $user_id . '|' . $project_id;
@@ -105,22 +105,24 @@ class SessionAndCookiesSettingsHelper extends Base
         //unset($_SESSION[self::SETTINGS_KEY_NAME]);
 
         // store to cookie
-        $cookie = (isset($_COOKIE[self::SETTINGS_KEY_NAME])) ? $_COOKIE[self::SETTINGS_KEY_NAME] : '';
-        $cookie_value = json_decode(strtr($cookie, self::URL_DECODE_MAP), true);
-        $cookie_value[$settings_key] = $settings;
+        if (!$to_session_only) {
+            $cookie = (isset($_COOKIE[self::SETTINGS_KEY_NAME])) ? $_COOKIE[self::SETTINGS_KEY_NAME] : '';
+            $cookie_value = json_decode(strtr($cookie, self::URL_DECODE_MAP), true);
+            $cookie_value[$settings_key] = $settings;
 
-        $cookie_options = array (
-            'expires' => time() + (60 * 60 * 24 * 30), // 30 days
-            //'expires' => time() - 3600, // reset cookie
-            'path' => '/',
-            'domain' => '',
-            'secure' => true,
-            'httponly' => true,
-            'samesite' => 'Strict',
-        );
-        setcookie(self::SETTINGS_KEY_NAME, strtr(json_encode($cookie_value), self::URL_ENCODE_MAP), $cookie_options);
+            $cookie_options = array(
+                'expires' => time() + (60 * 60 * 24 * 30), // 30 days
+                //'expires' => time() - 3600, // reset cookie
+                'path' => '/',
+                'domain' => '',
+                'secure' => true,
+                'httponly' => true,
+                'samesite' => 'Strict',
+            );
+            setcookie(self::SETTINGS_KEY_NAME, strtr(json_encode($cookie_value), self::URL_ENCODE_MAP), $cookie_options);
 
-        //echo json_encode($cookie_value);
+            //echo json_encode($cookie_value);
+        }
     }
 
     public function GetGroupSettings($user_id, $project_id, $settings_group_key, $from_session = false): array
@@ -132,7 +134,7 @@ class SessionAndCookiesSettingsHelper extends Base
             : [];
     }
 
-    private function SetGroupSettings($user_id, $project_id, $settings_group_key, $settings_group)
+    private function SetGroupSettings($user_id, $project_id, $settings_group_key, $settings_group, $to_session_only = false)
     {
         $settings = $this->GetSettings($user_id, $project_id);
 
@@ -142,19 +144,17 @@ class SessionAndCookiesSettingsHelper extends Base
             unset($settings[$settings_group_key]);
         }
 
-        $this->SetSettings($user_id, $project_id, $settings);
+        $this->SetSettings($user_id, $project_id, $settings, $to_session_only);
     }
 
     public function GetToggleableSettings($user_id, $project_id, $settings_group_key, $settings_key, $from_session = false): bool
     {
         $settings_group = $this->GetGroupSettings($user_id, $project_id, $settings_group_key, $from_session);
 
-        $settings_value = in_array($settings_key, $settings_group) ? true : false;
-
-        return $settings_value;
+       return in_array($settings_key, $settings_group);
     }
 
-    private function SetToggleableSettings($user_id, $project_id, $settings_group_key, $settings_key, $settings_value, $settings_exclusive)
+    private function SetToggleableSettings($user_id, $project_id, $settings_group_key, $settings_key, $settings_value, $settings_exclusive, $to_session_only = false)
     {
         $settings_group = $this->GetGroupSettings($user_id, $project_id, $settings_group_key);
         if ($settings_exclusive) {
@@ -169,12 +169,12 @@ class SessionAndCookiesSettingsHelper extends Base
             array_splice($settings_group, array_search($settings_key, $settings_group), 1);
         }
         
-        $this->SetGroupSettings($user_id, $project_id, $settings_group_key, $settings_group);
+        $this->SetGroupSettings($user_id, $project_id, $settings_group_key, $settings_group, $to_session_only);
     }
 
-    public function ToggleSettings($user_id, $project_id, $settings_group_key, $settings_key, $settings_exclusive)
+    public function ToggleSettings($user_id, $project_id, $settings_group_key, $settings_key, $settings_exclusive, $to_session_only = false)
     {
-        $settings_value = $settings_exclusive ? false : $this->GetToggleableSettings($user_id, $project_id, $settings_group_key, $settings_key);
-        $this->SetToggleableSettings($user_id, $project_id, $settings_group_key, $settings_key, !$settings_value, $settings_exclusive);
+        $settings_value = !$settings_exclusive && $this->GetToggleableSettings($user_id, $project_id, $settings_group_key, $settings_key);
+        $this->SetToggleableSettings($user_id, $project_id, $settings_group_key, $settings_key, !$settings_value, $settings_exclusive, $to_session_only);
     }
 }
