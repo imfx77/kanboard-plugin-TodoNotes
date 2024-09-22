@@ -44,7 +44,7 @@ class SessionAndCookiesSettingsHelperTest extends \Base
             false,
             true
         );
-        $this->assertEquals(false, $helper->GetToggleableSettings(
+        $this->assertEquals(true, $helper->GetToggleableSettings(
             1,
             0,
             $helper::SETTINGS_GROUP_FILTER,
