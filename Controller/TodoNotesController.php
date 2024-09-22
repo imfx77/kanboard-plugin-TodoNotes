@@ -104,21 +104,15 @@ class TodoNotesController extends BaseController
             $todonotesSettingsHelper::SETTINGS_GROUP_FILTER,
             $todonotesSettingsHelper::SETTINGS_FILTER_ARCHIVED
         );
-        $doSortExplicit = !$todonotesSettingsHelper->GetToggleableSettings(
-            $user_id,
-            $project_id,
-            $todonotesSettingsHelper::SETTINGS_GROUP_SORT,
-            $todonotesSettingsHelper::SETTINGS_SORT_MANUAL
-        );
 
         if ($project_id == 0) {
             $data = $doShowArchive
                 ? $this->todoNotesModel->GetAllArchivedNotesForUser($projectsAccess, $user_id)
-                : $this->todoNotesModel->GetAllNotesForUser($projectsAccess, $user_id, $doSortExplicit);
+                : $this->todoNotesModel->GetAllNotesForUser($projectsAccess, $user_id);
         } else {
             $data = $doShowArchive
                 ? $this->todoNotesModel->GetArchivedProjectNotesForUser($project_id, $user_id)
-                : $this->todoNotesModel->GetProjectNotesForUser($project_id, $user_id, $doSortExplicit);
+                : $this->todoNotesModel->GetProjectNotesForUser($project_id, $user_id);
         }
 
         return $this->response->html($this->helper->layout->app('TodoNotes:project/data', array(
@@ -183,21 +177,15 @@ class TodoNotesController extends BaseController
             $todonotesSettingsHelper::SETTINGS_GROUP_FILTER,
             $todonotesSettingsHelper::SETTINGS_FILTER_ARCHIVED
         );
-        $doSortExplicit = !$todonotesSettingsHelper->GetToggleableSettings(
-            $user_id,
-            $project_id,
-            $todonotesSettingsHelper::SETTINGS_GROUP_SORT,
-            $todonotesSettingsHelper::SETTINGS_SORT_MANUAL
-        );
 
         if ($project_id == 0) {
             $data = $doShowArchive
                 ? $this->todoNotesModel->GetAllArchivedNotesForUser($projectsAccess, $user_id)
-                : $this->todoNotesModel->GetAllNotesForUser($projectsAccess, $user_id, $doSortExplicit);
+                : $this->todoNotesModel->GetAllNotesForUser($projectsAccess, $user_id);
         } else {
             $data = $doShowArchive
                 ? $this->todoNotesModel->GetArchivedProjectNotesForUser($project_id, $user_id)
-                : $this->todoNotesModel->GetProjectNotesForUser($project_id, $user_id, $doSortExplicit);
+                : $this->todoNotesModel->GetProjectNotesForUser($project_id, $user_id);
         }
 
         return $this->response->html($this->helper->layout->dashboard('TodoNotes:dashboard/data', array(
@@ -389,16 +377,8 @@ class TodoNotesController extends BaseController
         $project = $this->ResolveProject($user_id);
         $project_id = $project['id'];
 
-        $todonotesSettingsHelper = $this->helper->todonotesSessionAndCookiesSettingsHelper;
-        $doSortExplicit = !$todonotesSettingsHelper->GetToggleableSettings(
-            $user_id,
-            $project_id,
-            $todonotesSettingsHelper::SETTINGS_GROUP_SORT,
-            $todonotesSettingsHelper::SETTINGS_SORT_MANUAL
-        );
-
         $category = $this->request->getStringParam('category');
-        $data = $this->todoNotesModel->GetReportNotesForUser($project_id, $user_id, $doSortExplicit, $category);
+        $data = $this->todoNotesModel->GetReportNotesForUser($project_id, $user_id, $category);
 
         return $this->response->html($this->helper->layout->app('TodoNotes:project/report', array(
             'title' => $project['name'], // rather keep the project name as title

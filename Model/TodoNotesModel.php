@@ -105,14 +105,18 @@ class TodoNotesModel extends Base
     }
 
     // Get notes related to user and project
-    public function GetProjectNotesForUser($project_id, $user_id, $doSortByStatus)
+    public function GetProjectNotesForUser($project_id, $user_id)
     {
+        $paramsSoring = $this->EvaluateSorting($project_id, $user_id);
+
         $result = $this->db->table(self::TABLE_NOTES_ENTRIES);
         $result = $result->eq('user_id', $user_id);
         $result = $result->eq('project_id', $project_id);
         $result = $result->gte('is_active', 0); // -1 == deleted
-        if ($doSortByStatus) {
-            $result = $result->desc('is_active');
+        if ($paramsSoring['asc']) {
+            $result = $result->asc($paramsSoring['sort'] . '=0, ' . $paramsSoring['sort']);
+        } else {
+            $result = $result->desc($paramsSoring['sort']);
         }
         $result = $result->desc('position');
         $result = $result->findAll();
@@ -127,7 +131,7 @@ class TodoNotesModel extends Base
     }
 
     // Get all notes related to user
-    public function GetAllNotesForUser($projectsAccess, $user_id, $doSortByStatus)
+    public function GetAllNotesForUser($projectsAccess, $user_id)
     {
         $projectsAccessList = array();
         $orderCaseClause = 'CASE project_id';
@@ -139,13 +143,17 @@ class TodoNotesModel extends Base
         }
         $orderCaseClause .= ' END';
 
+        $paramsSoring = $this->EvaluateSorting(0 /*overview*/, $user_id);
+
         $result = $this->db->table(self::TABLE_NOTES_ENTRIES);
         $result = $result->eq('user_id', $user_id);
         $result = $result->in('project_id', $projectsAccessList);
         $result = $result->gte('is_active', 0); // -1 == deleted
         $result = $result->orderBy($orderCaseClause); // order notes by projects as listed in $projectsAccess
-        if ($doSortByStatus) {
-            $result = $result->desc('is_active');
+        if ($paramsSoring['asc']) {
+            $result = $result->asc($paramsSoring['sort'] . '=0, ' . $paramsSoring['sort']);
+        } else {
+            $result = $result->desc($paramsSoring['sort']);
         }
         $result = $result->desc('position');
         $result = $result->findAll();
@@ -181,10 +189,17 @@ class TodoNotesModel extends Base
     // Get archived notes related to user and project
     public function GetArchivedProjectNotesForUser($project_id, $user_id)
     {
+        $paramsSoring = $this->EvaluateSorting($project_id, $user_id);
+
         $result = $this->db->table(self::TABLE_NOTES_ARCHIVE_ENTRIES);
         $result = $result->eq('user_id', $user_id);
         $result = $result->eq('project_id', $project_id);
         $result = $result->gte('date_modified', 0); // -1 == deleted
+        if ($paramsSoring['asc']) {
+            $result = $result->asc($paramsSoring['sort'] . '=0, ' . $paramsSoring['sort']);
+        } else {
+            $result = $result->desc($paramsSoring['sort']);
+        }
         $result = $result->desc('date_archived');
         $result = $result->findAll();
 
@@ -210,11 +225,18 @@ class TodoNotesModel extends Base
         }
         $orderCaseClause .= ' END';
 
+        $paramsSoring = $this->EvaluateSorting(0 /*overview*/, $user_id);
+
         $result = $this->db->table(self::TABLE_NOTES_ARCHIVE_ENTRIES);
         $result = $result->eq('user_id', $user_id);
         $result = $result->in('project_id', $projectsAccessList);
         $result = $result->gte('date_modified', 0); // -1 == deleted
         $result = $result->orderBy($orderCaseClause); // order notes by projects as listed in $projectsAccess
+        if ($paramsSoring['asc']) {
+            $result = $result->asc($paramsSoring['sort'] . '=0, ' . $paramsSoring['sort']);
+        } else {
+            $result = $result->desc($paramsSoring['sort']);
+        }
         $result = $result->desc('date_archived');
         $result = $result->findAll();
 
@@ -228,8 +250,10 @@ class TodoNotesModel extends Base
     }
 
     // Get notes related to user project report
-    public function GetReportNotesForUser($project_id, $user_id, $doSortByStatus, $category)
+    public function GetReportNotesForUser($project_id, $user_id, $category)
     {
+        $paramsSoring = $this->EvaluateSorting($project_id, $user_id);
+
         $result = $this->db->table(self::TABLE_NOTES_ENTRIES);
         $result = $result->eq('user_id', $user_id);
         $result = $result->eq('project_id', $project_id);
@@ -237,8 +261,10 @@ class TodoNotesModel extends Base
             $result = $result->eq('category', $category);
         }
         $result = $result->gte('is_active', 0); // -1 == deleted
-        if ($doSortByStatus) {
-            $result = $result->desc('is_active');
+        if ($paramsSoring['asc']) {
+            $result = $result->asc($paramsSoring['sort'] . '=0, ' . $paramsSoring['sort']);
+        } else {
+            $result = $result->desc($paramsSoring['sort']);
         }
         $result = $result->desc('position');
         $result = $result->findAll();
@@ -1005,6 +1031,89 @@ class TodoNotesModel extends Base
             'notes' => $timestampNotes,
             'projects' => $timestampProjects,
             'max' => max($timestampNotes, $timestampProjects),
+        );
+    }
+
+    private function EvaluateSorting($project_id, $user_id)
+    {
+        $todonotesSettingsHelper = $this->helper->todonotesSessionAndCookiesSettingsHelper;
+        $isArchive = $todonotesSettingsHelper->GetToggleableSettings(
+            $user_id,
+            $project_id,
+            $todonotesSettingsHelper::SETTINGS_GROUP_FILTER,
+            $todonotesSettingsHelper::SETTINGS_FILTER_ARCHIVED
+        );
+        $sortGroup = $todonotesSettingsHelper->GetGroupSettings(
+            $user_id,
+            $project_id,
+            $todonotesSettingsHelper::SETTINGS_GROUP_SORT
+        );
+        $sortKey = (count($sortGroup) > 0) ? $sortGroup[0] : $todonotesSettingsHelper::SETTINGS_SORT_MANUAL;
+
+        // force sorting
+        if ($isArchive) {
+            if (
+                   $sortKey == $todonotesSettingsHelper::SETTINGS_SORT_MANUAL
+                || $sortKey == $todonotesSettingsHelper::SETTINGS_SORT_STATUS
+                || $sortKey == $todonotesSettingsHelper::SETTINGS_SORT_DATE_RESTORED
+            ) {
+                $todonotesSettingsHelper->ToggleSettings(
+                    $user_id,
+                    $project_id,
+                    $todonotesSettingsHelper::SETTINGS_GROUP_SORT,
+                    $todonotesSettingsHelper::SETTINGS_SORT_DATE_ARCHIVED,
+                    true /*settings_exclusive*/
+                );
+                $sortKey = $todonotesSettingsHelper::SETTINGS_SORT_DATE_ARCHIVED;
+            }
+        } else {
+            if ($sortKey == $todonotesSettingsHelper::SETTINGS_SORT_DATE_ARCHIVED) {
+                $todonotesSettingsHelper->ToggleSettings(
+                    $user_id,
+                    $project_id,
+                    $todonotesSettingsHelper::SETTINGS_GROUP_SORT,
+                    $todonotesSettingsHelper::SETTINGS_SORT_MANUAL,
+                    true /*settings_exclusive*/
+                );
+                $sortKey = $todonotesSettingsHelper::SETTINGS_SORT_MANUAL;
+            }
+        }
+
+        // evaluate the sorting parameters
+        $sortField = 'date_created';
+        $sortAscending = false;
+        switch ($sortKey) {
+            case $todonotesSettingsHelper::SETTINGS_SORT_STATUS:
+                $sortField = 'is_active';
+                break;
+            case $todonotesSettingsHelper::SETTINGS_SORT_DATE_CREATED:
+                $sortField = 'date_created';
+                break;
+            case $todonotesSettingsHelper::SETTINGS_SORT_DATE_MODIFIED:
+                $sortField = 'date_modified';
+                break;
+            case $todonotesSettingsHelper::SETTINGS_SORT_DATE_NOTIFIED:
+                $sortField = 'date_notified';
+                $sortAscending = true;
+                break;
+            case $todonotesSettingsHelper::SETTINGS_SORT_DATE_LAST_NOTIFIED:
+                $sortField = 'last_notified';
+                break;
+            case $todonotesSettingsHelper::SETTINGS_SORT_DATE_ARCHIVED:
+                $sortField = 'date_archived';
+                break;
+            case $todonotesSettingsHelper::SETTINGS_SORT_DATE_RESTORED:
+                $sortField = 'date_restored';
+                break;
+            case $todonotesSettingsHelper::SETTINGS_SORT_MANUAL:
+            default:
+                $sortField = 'position';
+                break;
+        }
+
+        return array(
+            'sort' => $sortField,
+            'asc' => $sortAscending,
         );
     }
 }
