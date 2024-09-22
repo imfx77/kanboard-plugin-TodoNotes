@@ -199,6 +199,69 @@ if (!$settings_showArchive) {
     print '<hr class="toolbarDivider">';
 }
 
+// Toggle sort by DateCreated
+print '<li class="settingsSortByDateCreated"';
+print ' data-id="0"';
+print ' data-project="' . $project_id . '"';
+print ' data-user="' . $user_id . '"';
+print '><button class="toolbarButton">';
+print '<i class="fa fa-calendar-o" aria-hidden="true"></i>';
+print'</button><a>&nbsp;&nbsp;' . t('TodoNotes__PROJECT_TOGGLE_SORT_BY_DATE_CREATED') . '</a></li>';
+
+// Toggle sort by DateModified
+print '<li class="settingsSortByDateModified"';
+print ' data-id="0"';
+print ' data-project="' . $project_id . '"';
+print ' data-user="' . $user_id . '"';
+print '><button class="toolbarButton">';
+print '<i class="fa fa-calendar-check-o" aria-hidden="true"></i>';
+print'</button><a>&nbsp;&nbsp;' . t('TodoNotes__PROJECT_TOGGLE_SORT_BY_DATE_MODIFIED') . '</a></li>';
+
+// add divider between button groups
+print '<hr class="toolbarDivider">';
+
+// Toggle sort by DateNotified
+print '<li class="settingsSortByDateNotified"';
+print ' data-id="0"';
+print ' data-project="' . $project_id . '"';
+print ' data-user="' . $user_id . '"';
+print '><button class="toolbarButton">';
+print '<i class="fa fa-bell-o" aria-hidden="true"></i>';
+print'</button><a>&nbsp;&nbsp;' . t('TodoNotes__PROJECT_TOGGLE_SORT_BY_DATE_NOTIFIED') . '</a></li>';
+
+// Toggle sort by DateLastNotified
+print '<li class="settingsSortByDateLastNotified"';
+print ' data-id="0"';
+print ' data-project="' . $project_id . '"';
+print ' data-user="' . $user_id . '"';
+print '><button class="toolbarButton">';
+print '<i class="fa fa-bell" aria-hidden="true"></i>';
+print'</button><a>&nbsp;&nbsp;' . t('TodoNotes__PROJECT_TOGGLE_SORT_BY_DATE_LAST_NOTIFIED') . '</a></li>';
+
+// add divider between button groups
+print '<hr class="toolbarDivider">';
+
+// hide some settings buttons in Archive View
+if ($settings_showArchive) {
+    // Toggle sort by DateArchived
+    print '<li class="settingsSortByDateArchived"';
+    print ' data-id="0"';
+    print ' data-project="' . $project_id . '"';
+    print ' data-user="' . $user_id . '"';
+    print '><button class="toolbarButton">';
+    print '<i class="fa fa-file-archive-o" aria-hidden="true"></i>';
+    print'</button><a>&nbsp;&nbsp;' . t('TodoNotes__PROJECT_TOGGLE_SORT_BY_DATE_ARCHIVED') . '</a></li>';
+} else {
+    // Toggle sort by DateRestored
+    print '<li class="settingsSortByDateRestored"';
+    print ' data-id="0"';
+    print ' data-project="' . $project_id . '"';
+    print ' data-user="' . $user_id . '"';
+    print '><button class="toolbarButton">';
+    print '<i class="fa fa-undo" aria-hidden="true"></i>';
+    print'</button><a>&nbsp;&nbsp;' . t('TodoNotes__PROJECT_TOGGLE_SORT_BY_DATE_RESTORED') . '</a></li>';
+}
+
 print '</ul>';
 print '</div>'; // Settings Sort
 

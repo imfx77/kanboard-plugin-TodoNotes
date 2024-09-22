@@ -970,6 +970,102 @@ static #SettingsSortHandlers() {
             _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
         }, 500);
     });
+
+    // Toggle sort by DateCreated
+    $(".settingsSortByDateCreated").unbind('click');
+    $(".settingsSortByDateCreated").click(function() {
+        const project_id = $(this).attr('data-project');
+        const user_id = $(this).attr('data-user');
+
+        _TodoNotes_Requests_.ToggleSettings(project_id, user_id,
+            _TodoNotes_Settings_.GROUP.SORT,
+            _TodoNotes_Settings_.SORT.DATE_CREATED,
+            true);
+
+        setTimeout(function() {
+            _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
+        }, 500);
+    });
+
+    // Toggle sort by DateModified
+    $(".settingsSortByDateModified").unbind('click');
+    $(".settingsSortByDateModified").click(function() {
+        const project_id = $(this).attr('data-project');
+        const user_id = $(this).attr('data-user');
+
+        _TodoNotes_Requests_.ToggleSettings(project_id, user_id,
+            _TodoNotes_Settings_.GROUP.SORT,
+            _TodoNotes_Settings_.SORT.DATE_MODIFIED,
+            true);
+
+        setTimeout(function() {
+            _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
+        }, 500);
+    });
+
+    // Toggle sort by DateNotified
+    $(".settingsSortByDateNotified").unbind('click');
+    $(".settingsSortByDateNotified").click(function() {
+        const project_id = $(this).attr('data-project');
+        const user_id = $(this).attr('data-user');
+
+        _TodoNotes_Requests_.ToggleSettings(project_id, user_id,
+            _TodoNotes_Settings_.GROUP.SORT,
+            _TodoNotes_Settings_.SORT.DATE_NOTIFIED,
+            true);
+
+        setTimeout(function() {
+            _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
+        }, 500);
+    });
+
+    // Toggle sort by DateLastNotified
+    $(".settingsSortByDateLastNotified").unbind('click');
+    $(".settingsSortByDateLastNotified").click(function() {
+        const project_id = $(this).attr('data-project');
+        const user_id = $(this).attr('data-user');
+
+        _TodoNotes_Requests_.ToggleSettings(project_id, user_id,
+            _TodoNotes_Settings_.GROUP.SORT,
+            _TodoNotes_Settings_.SORT.DATE_LAST_NOTIFIED,
+            true);
+
+        setTimeout(function() {
+            _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
+        }, 500);
+    });
+
+    // Toggle sort by DateArchived
+    $(".settingsSortByDateArchived").unbind('click');
+    $(".settingsSortByDateArchived").click(function() {
+        const project_id = $(this).attr('data-project');
+        const user_id = $(this).attr('data-user');
+
+        _TodoNotes_Requests_.ToggleSettings(project_id, user_id,
+            _TodoNotes_Settings_.GROUP.SORT,
+            _TodoNotes_Settings_.SORT.DATE_ARCHIVED,
+            true);
+
+        setTimeout(function() {
+            _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
+        }, 500);
+    });
+
+    // Toggle sort by DateRestored
+    $(".settingsSortByDateRestored").unbind('click');
+    $(".settingsSortByDateRestored").click(function() {
+        const project_id = $(this).attr('data-project');
+        const user_id = $(this).attr('data-user');
+
+        _TodoNotes_Requests_.ToggleSettings(project_id, user_id,
+            _TodoNotes_Settings_.GROUP.SORT,
+            _TodoNotes_Settings_.SORT.DATE_RESTORED,
+            true);
+
+        setTimeout(function() {
+            _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
+        }, 500);
+    });
 }
 
 //------------------------------------------------
@@ -1184,6 +1280,48 @@ static RefreshSortMenuItems() {
     } else {
         $(".settingsSortByStatus button").removeClass( 'buttonToggled' );
         $(".settingsSortByStatus a").removeClass( 'buttonToggled' );
+    }
+    if (_TodoNotes_Settings_.sortByDateCreated) {
+        $(".settingsSortByDateCreated button").addClass( 'buttonToggled' );
+        $(".settingsSortByDateCreated a").addClass( 'buttonToggled' );
+    } else {
+        $(".settingsSortByDateCreated button").removeClass( 'buttonToggled' );
+        $(".settingsSortByDateCreated a").removeClass( 'buttonToggled' );
+    }
+    if (_TodoNotes_Settings_.sortByDateModified) {
+        $(".settingsSortByDateModified button").addClass( 'buttonToggled' );
+        $(".settingsSortByDateModified a").addClass( 'buttonToggled' );
+    } else {
+        $(".settingsSortByDateModified button").removeClass( 'buttonToggled' );
+        $(".settingsSortByDateModified a").removeClass( 'buttonToggled' );
+    }
+    if (_TodoNotes_Settings_.sortByDateNotified) {
+        $(".settingsSortByDateNotified button").addClass( 'buttonToggled' );
+        $(".settingsSortByDateNotified a").addClass( 'buttonToggled' );
+    } else {
+        $(".settingsSortByDateNotified button").removeClass( 'buttonToggled' );
+        $(".settingsSortByDateNotified a").removeClass( 'buttonToggled' );
+    }
+    if (_TodoNotes_Settings_.sortByDateLastNotified) {
+        $(".settingsSortByDateLastNotified button").addClass( 'buttonToggled' );
+        $(".settingsSortByDateLastNotified a").addClass( 'buttonToggled' );
+    } else {
+        $(".settingsSortByDateLastNotified button").removeClass( 'buttonToggled' );
+        $(".settingsSortByDateLastNotified a").removeClass( 'buttonToggled' );
+    }
+    if (_TodoNotes_Settings_.sortByDateArchived) {
+        $(".settingsSortByDateArchived button").addClass( 'buttonToggled' );
+        $(".settingsSortByDateArchived a").addClass( 'buttonToggled' );
+    } else {
+        $(".settingsSortByDateArchived button").removeClass( 'buttonToggled' );
+        $(".settingsSortByDateArchived a").removeClass( 'buttonToggled' );
+    }
+    if (_TodoNotes_Settings_.sortByDateRestored) {
+        $(".settingsSortByDateRestored button").addClass( 'buttonToggled' );
+        $(".settingsSortByDateRestored a").addClass( 'buttonToggled' );
+    } else {
+        $(".settingsSortByDateRestored button").removeClass( 'buttonToggled' );
+        $(".settingsSortByDateRestored a").removeClass( 'buttonToggled' );
     }
 }
 

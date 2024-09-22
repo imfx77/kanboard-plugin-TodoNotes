@@ -66,6 +66,12 @@ if (typeof(_TodoNotes_Settings_) === 'undefined') {
 
         static sortManual = false;
         static sortByStatus = false;
+        static sortByDateCreated = false;
+        static sortByDateModified = false;
+        static sortByDateNotified = false;
+        static sortByDateLastNotified = false;
+        static sortByDateArchived = false;
+        static sortByDateRestored = false;
 
         static showCategoryColors = false;
         static showStandardStatusMarks = false;
@@ -75,8 +81,10 @@ if (typeof(_TodoNotes_Settings_) === 'undefined') {
             // console.log('_TodoNotes_Settings_.Initialize');
 
             _TodoNotes_Settings_.#overview_settingsExportToJS = JSON.parse($("#_TodoNotes_OverviewSettingsExportToJS_").html());
+            // console.log($("#_TodoNotes_OverviewSettingsExportToJS_").html());
             $("#_TodoNotes_OverviewSettingsExportToJS_").remove();
             _TodoNotes_Settings_.#project_settingsExportToJS = JSON.parse($("#_TodoNotes_ProjectSettingsExportToJS_").html());
+            // console.log($("#_TodoNotes_ProjectSettingsExportToJS_").html());
             $("#_TodoNotes_ProjectSettingsExportToJS_").remove();
 
             _TodoNotes_Settings_.showTabsStats              = _TodoNotes_Settings_.GetSettingsExportToJS(_TodoNotes_Settings_.GROUP.TABS, _TodoNotes_Settings_.TABS.STATS, true);
@@ -91,6 +99,12 @@ if (typeof(_TodoNotes_Settings_) === 'undefined') {
 
             _TodoNotes_Settings_.sortManual                 = _TodoNotes_Settings_.GetSettingsExportToJS(_TodoNotes_Settings_.GROUP.SORT, _TodoNotes_Settings_.SORT.MANUAL);
             _TodoNotes_Settings_.sortByStatus               = _TodoNotes_Settings_.GetSettingsExportToJS(_TodoNotes_Settings_.GROUP.SORT, _TodoNotes_Settings_.SORT.STATUS);
+            _TodoNotes_Settings_.sortByDateCreated          = _TodoNotes_Settings_.GetSettingsExportToJS(_TodoNotes_Settings_.GROUP.SORT, _TodoNotes_Settings_.SORT.DATE_CREATED);
+            _TodoNotes_Settings_.sortByDateModified         = _TodoNotes_Settings_.GetSettingsExportToJS(_TodoNotes_Settings_.GROUP.SORT, _TodoNotes_Settings_.SORT.DATE_MODIFIED);
+            _TodoNotes_Settings_.sortByDateNotified         = _TodoNotes_Settings_.GetSettingsExportToJS(_TodoNotes_Settings_.GROUP.SORT, _TodoNotes_Settings_.SORT.DATE_NOTIFIED);
+            _TodoNotes_Settings_.sortByDateLastNotified     = _TodoNotes_Settings_.GetSettingsExportToJS(_TodoNotes_Settings_.GROUP.SORT, _TodoNotes_Settings_.SORT.DATE_LAST_NOTIFIED);
+            _TodoNotes_Settings_.sortByDateArchived         = _TodoNotes_Settings_.GetSettingsExportToJS(_TodoNotes_Settings_.GROUP.SORT, _TodoNotes_Settings_.SORT.DATE_ARCHIVED);
+            _TodoNotes_Settings_.sortByDateRestored         = _TodoNotes_Settings_.GetSettingsExportToJS(_TodoNotes_Settings_.GROUP.SORT, _TodoNotes_Settings_.SORT.DATE_RESTORED);
 
             _TodoNotes_Settings_.showCategoryColors         = _TodoNotes_Settings_.GetSettingsExportToJS(_TodoNotes_Settings_.GROUP.VIEW, _TodoNotes_Settings_.VIEW.CATEGORY_COLORS);
             _TodoNotes_Settings_.showStandardStatusMarks    = _TodoNotes_Settings_.GetSettingsExportToJS(_TodoNotes_Settings_.GROUP.VIEW, _TodoNotes_Settings_.VIEW.STANDARD_STATUS_MARKS);
