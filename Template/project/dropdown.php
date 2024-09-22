@@ -6,14 +6,19 @@ if (isset($_SESSION['_TodoNotes_Cache_']) && array_key_exists('user_id', $_SESSI
 }
 $project_id = $project['id'];
 
-require_once('settings.php');
+// dropdown needs to initialize translations and settings on its own
+// ONLY if opened alongside any page that in NOT a TodoNotes view !!!
+if (!str_starts_with($_SERVER['REQUEST_URI'], '/todonotes/')) {
+    // export translations to JS
+    print $this->render('TodoNotes:translations/export_to_js');
+    // export settings to JS
+    require_once('settings.php');
+    print $this->asset->js('plugins/TodoNotes/Assets/js/settings.js');
+}
 
-// export translations to JS
-print $this->render('TodoNotes:translations/export_to_js');
 // load all necessary CSS and JS
 print $this->asset->css('plugins/TodoNotes/Assets/css/project.css');
 print $this->asset->js('plugins/TodoNotes/Assets/js/statuses.js');
-print $this->asset->js('plugins/TodoNotes/Assets/js/settings.js');
 print $this->asset->js('plugins/TodoNotes/Assets/js/load_dropdown.js');
 
 ?>

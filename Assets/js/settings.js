@@ -80,12 +80,19 @@ if (typeof(_TodoNotes_Settings_) === 'undefined') {
         static Initialize() {
             // console.log('_TodoNotes_Settings_.Initialize');
 
-            _TodoNotes_Settings_.#overview_settingsExportToJS = JSON.parse($("#_TodoNotes_OverviewSettingsExportToJS_").html());
-            // console.log($("#_TodoNotes_OverviewSettingsExportToJS_").html());
-            $("#_TodoNotes_OverviewSettingsExportToJS_").remove();
-            _TodoNotes_Settings_.#project_settingsExportToJS = JSON.parse($("#_TodoNotes_ProjectSettingsExportToJS_").html());
-            // console.log($("#_TodoNotes_ProjectSettingsExportToJS_").html());
-            $("#_TodoNotes_ProjectSettingsExportToJS_").remove();
+            const overviewSettings = $("#_TodoNotes_OverviewSettingsExportToJS_");
+            if (overviewSettings.length === 1) {
+                // console.log(overviewSettings.html());
+                _TodoNotes_Settings_.#overview_settingsExportToJS = JSON.parse(overviewSettings.html());
+                overviewSettings.remove();
+            }
+
+            const projectSettings = $("#_TodoNotes_ProjectSettingsExportToJS_");
+            if (projectSettings.length === 1) {
+                // console.log(projectSettings.html());
+                _TodoNotes_Settings_.#project_settingsExportToJS = JSON.parse(projectSettings.html());
+                projectSettings.remove();
+            }
 
             _TodoNotes_Settings_.showTabsStats              = _TodoNotes_Settings_.GetSettingsExportToJS(_TodoNotes_Settings_.GROUP.TABS, _TodoNotes_Settings_.TABS.STATS, true);
             _TodoNotes_Settings_.hideTabsGlobal             = _TodoNotes_Settings_.GetSettingsExportToJS(_TodoNotes_Settings_.GROUP.TABS, _TodoNotes_Settings_.TABS.GLOBAL, true);

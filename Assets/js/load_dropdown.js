@@ -8,6 +8,8 @@ class _TodoNotes_Dropdown_ {
 
 //------------------------------------------------
 static #refreshStatsWidget() {
+    // console.log('_TodoNotes_Dropdown_.refreshStatsWidget');
+
     // refresh ONLY if the opened dropdown has stats widget and it is visible
     if ( ($("._TodoNotes_ProjectDropdown_StatsWidget").length === 2) &&
          ($("._TodoNotes_ProjectDropdown_StatsWidget:last").is(":visible")) ) {
