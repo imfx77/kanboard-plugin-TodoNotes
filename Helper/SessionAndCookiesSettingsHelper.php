@@ -67,17 +67,20 @@ class SessionAndCookiesSettingsHelper extends Base
         'q' => '"',
     );
 
-    public function GetSettings($user_id, $project_id)
+    public function GetSettings($user_id, $project_id, $from_session = false)
     {
         $settings_key = $user_id . '|' . $project_id;
+        $settings = null;
 
         // obtain from cookie
-        $cookie = (isset($_COOKIE[self::SETTINGS_KEY_NAME])) ? $_COOKIE[self::SETTINGS_KEY_NAME] : '';
-        $cookie_value = json_decode(strtr($cookie, self::URL_DECODE_MAP), true);
+        if (!$from_session) {
+            $cookie = (isset($_COOKIE[self::SETTINGS_KEY_NAME])) ? $_COOKIE[self::SETTINGS_KEY_NAME] : '';
+            $cookie_value = json_decode(strtr($cookie, self::URL_DECODE_MAP), true);
 
-        $settings = (is_array($cookie_value) && array_key_exists($settings_key, $cookie_value))
-            ? $cookie_value[$settings_key]
-            : null;
+            if (is_array($cookie_value) && array_key_exists($settings_key, $cookie_value)) {
+                $settings = $cookie_value[$settings_key];
+            }
+        }
 
         // else obtain from session
         if (!isset($settings)) {
@@ -120,9 +123,9 @@ class SessionAndCookiesSettingsHelper extends Base
         //echo json_encode($cookie_value);
     }
 
-    private function GetGroupSettings($user_id, $project_id, $settings_group_key): array
+    public function GetGroupSettings($user_id, $project_id, $settings_group_key, $from_session = false): array
     {
-        $settings = $this->GetSettings($user_id, $project_id);
+        $settings = $this->GetSettings($user_id, $project_id, $from_session);
 
         return (array_key_exists($settings_group_key, $settings) && is_array($settings[$settings_group_key]))
             ? $settings[$settings_group_key]
@@ -142,9 +145,9 @@ class SessionAndCookiesSettingsHelper extends Base
         $this->SetSettings($user_id, $project_id, $settings);
     }
 
-    public function GetToggleableSettings($user_id, $project_id, $settings_group_key, $settings_key): bool
+    public function GetToggleableSettings($user_id, $project_id, $settings_group_key, $settings_key, $from_session = false): bool
     {
-        $settings_group = $this->GetGroupSettings($user_id, $project_id, $settings_group_key);
+        $settings_group = $this->GetGroupSettings($user_id, $project_id, $settings_group_key, $from_session);
 
         $settings_value = in_array($settings_key, $settings_group) ? true : false;
 
