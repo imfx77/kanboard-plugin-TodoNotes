@@ -151,7 +151,7 @@ class SessionAndCookiesSettingsHelper extends Base
     {
         $settings_group = $this->GetGroupSettings($user_id, $project_id, $settings_group_key, $from_session);
 
-       return in_array($settings_key, $settings_group);
+        return in_array($settings_key, $settings_group);
     }
 
     private function SetToggleableSettings($user_id, $project_id, $settings_group_key, $settings_key, $settings_value, $settings_exclusive, $to_session_only = false)
