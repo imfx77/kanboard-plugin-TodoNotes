@@ -933,7 +933,9 @@ static #SettingsFilterHandlers() {
             _TodoNotes_Settings_.GROUP.FILTER,
             _TodoNotes_Settings_.FILTER.ARCHIVED);
 
-        _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
+        setTimeout(function() {
+            _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
+        }, 500);
     });
 }
 
@@ -949,7 +951,9 @@ static #SettingsSortHandlers() {
             _TodoNotes_Settings_.GROUP.SORT,
             _TodoNotes_Settings_.SORT.MANUAL, true);
 
-        _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
+        setTimeout(function() {
+            _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
+        }, 500);
     });
 
     // Toggle sort by Status
@@ -962,7 +966,9 @@ static #SettingsSortHandlers() {
             _TodoNotes_Settings_.GROUP.SORT,
             _TodoNotes_Settings_.SORT.STATUS, true);
 
-        _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
+        setTimeout(function() {
+            _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
+        }, 500);
     });
 }
 

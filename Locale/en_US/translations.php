@@ -14,6 +14,7 @@ return array(
     'TodoNotes__PROJECT_NOT_FOUND' => '⚠️ Project NOT found!',
     //
     'TodoNotes__PROJECT_TITLE' => 'Notes',
+    'TodoNotes__PROJECT_EMPTY' => 'No Entries!',
     'TodoNotes__PROJECT_OVERVIEW_MODE_TITLE' => 'Overview Mode',
     'TodoNotes__PROJECT_OVERVIEW_MODE_TEXT' => '⚠️ ONLY manage notes Status, Alerts and lists order!',
     'TodoNotes__PROJECT_OVERVIEW_MODE_TEXT_REORDERING_DISABLED' => '⚠️ ONLY manage notes Status and Alerts!

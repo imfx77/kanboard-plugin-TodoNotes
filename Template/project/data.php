@@ -188,7 +188,6 @@ if (!$settings_showArchive) {
 
     // Toggle sort by Status
     print '<li class="settingsSortByStatus"';
-    print ' title="' . t('TodoNotes__PROJECT_TOGGLE_SORT_BY_STATUS') . '"';
     print ' data-id="0"';
     print ' data-project="' . $project_id . '"';
     print ' data-user="' . $user_id . '"';
@@ -230,7 +229,7 @@ print'</button><a>&nbsp;&nbsp;' . t('TodoNotes__PROJECT_TOGGLE_COLORIZE_BY_CATEG
 
 // hide some settings buttons in Archive View
 if (!$settings_showArchive) {
-// Toggle standard Status Marks
+    // Toggle standard Status Marks
     print '<li class="settingsShowStandardStatusMarks"';
     print ' data-id="0"';
     print ' data-project="' . $project_id . '"';
@@ -320,8 +319,8 @@ if (!$readonlyNotes && !$settings_showArchive) {
     print '><button class="toolbarButton">';
     print '<i class="fa fa-trash" aria-hidden="true"></i>';
     print'</button><a>&nbsp;&nbsp;' . t('TodoNotes__PROJECT_DELETE_ALL_DONE_NOTES') . '</a></li>';
-
 } // end exclude in Overview Mode
+
 print '</ul>';
 print '</div>'; // Settings Actions
 
@@ -354,6 +353,7 @@ if ($readonlyNotes) {
         }
     }
 }
+
 print '</div>'; // Title row
 
 // here goes the space Placeholder
@@ -474,6 +474,11 @@ print '<ul class="ulNotes sortableList accordionShow" id="sortableList-P' . $pro
 print ' data-project="' . $project_id . '"';
 print '>';
 
+//----------------------------------------
+if (count($data) == 0) {
+    // empty project list
+    print '<div class="spinnerMsg" align="center"><i class="fa fa-times " aria-hidden="true"></i>  ' . t('TodoNotes__PROJECT_EMPTY') . '</div>';
+}
 //----------------------------------------
 
 $num = 1;
@@ -603,7 +608,7 @@ foreach ($data as $u) {
 
     // disable reorder related functionality in Archive View
     if (!$settings_showArchive) {
-        // Refresh order button (shown on changed status in sortByStatus mode only)
+        // Refresh order button (shown on changed status in explicit sort mode only)
         print '<button id="noteRefreshOrder-P' . $u['project_id'] . '-' . $num . '"';
         print ' class="hideMe toolbarButton buttonToggled buttonBigger disableEventsPropagation noteRefreshOrder"';
         print ' title="' . t('TodoNotes__PROJECT_NOTE_REFRESH_ORDER') . '"';
