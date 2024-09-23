@@ -1037,6 +1037,8 @@ class TodoNotesModel extends Base
     private function EvaluateSorting($project_id, $user_id)
     {
         $todonotesSettingsHelper = $this->helper->todonotesSessionAndCookiesSettingsHelper;
+        $todonotesSettingsHelper->SyncSettingsToSession($user_id, $project_id);
+
         $isArchive = $todonotesSettingsHelper->GetToggleableSettings(
             $user_id,
             $project_id,

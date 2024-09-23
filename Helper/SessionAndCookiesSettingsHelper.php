@@ -125,6 +125,16 @@ class SessionAndCookiesSettingsHelper extends Base
         }
     }
 
+    public function SyncSettingsToSession($user_id, $project_id)
+    {
+        $this->SetSettings(
+            $user_id,
+            $project_id,
+            $this->GetSettings($user_id, $project_id),
+            true
+        );
+    }
+
     public function GetGroupSettings($user_id, $project_id, $settings_group_key, $from_session = false): array
     {
         $settings = $this->GetSettings($user_id, $project_id, $from_session);
