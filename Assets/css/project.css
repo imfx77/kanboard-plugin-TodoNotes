@@ -150,6 +150,19 @@ label {
     clear: both !important;
 }
 
+.containerGithubButtons {
+    white-space: nowrap;
+    width: 736px;
+    position: absolute;
+    bottom: 5px;
+}
+
+.containerGithubButtonsMobile {
+    white-space: nowrap;
+    width: auto;
+    transform: scale(0.5);
+}
+
 .textNonSelectable {
     -webkit-user-select: none; /* Safari */
     -moz-user-select: none; /* Firefox */

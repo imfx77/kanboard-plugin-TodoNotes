@@ -1068,5 +1068,11 @@ if (!$is_refresh) { // print only once per project !!!
     //---------------------------------------------
 
     print '</section>';
+
+    //---------------------------------------------
+    // include github buttons
+    print $this->render('TodoNotes:widgets/github_buttons', array());
+    //---------------------------------------------
+
     print '</div>';
 } // if (!$is_refresh)

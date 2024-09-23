@@ -67,6 +67,7 @@ static #prepareDocument_ConfigureDashboardHandlers(skipDashboardHandlers = false
     if(isMobile) {
         // choose mobile view
         $("#mainholderP" + project_id).removeClass( 'mainholder' ).addClass( 'mainholderMobile' );
+        $("#containerGithubButtons").removeClass( 'containerGithubButtons' ).addClass( 'containerGithubButtonsMobile' );
 
         // show all Save buttons
         if (!readonlyNotes ) { // if NOT in Overview Mode
