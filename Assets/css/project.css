@@ -161,7 +161,7 @@ label {
     white-space: nowrap;
     width: auto;
     margin-top: 10px;
-    transform: scale(0.75);
+    transform: scale(.75);
 }
 
 .textNonSelectable {

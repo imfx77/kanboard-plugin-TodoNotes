@@ -1,4 +1,4 @@
-<script src="/plugins/TodoNotes/Assets/github/buttons.min.js"></script>
+<?= $this->asset->js('plugins/TodoNotes/Assets/github/buttons.min.js') ?>
 
 <div id="containerGithubButtons" class="containerGithubButtons hideMe">
 <!-- Issue -->
