@@ -160,7 +160,8 @@ label {
 .containerGithubButtonsMobile {
     white-space: nowrap;
     width: auto;
-    transform: scale(0.5);
+    margin-top: 10px;
+    transform: scale(0.75);
 }
 
 .textNonSelectable {

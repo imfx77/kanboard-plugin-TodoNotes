@@ -67,13 +67,20 @@ static #prepareDocument_ConfigureDashboardHandlers(skipDashboardHandlers = false
     if(isMobile) {
         // choose mobile view
         $("#mainholderP" + project_id).removeClass( 'mainholder' ).addClass( 'mainholderMobile' );
-        $("#containerGithubButtons").removeClass( 'containerGithubButtons' ).addClass( 'containerGithubButtonsMobile' );
 
         // show all Save buttons
         if (!readonlyNotes ) { // if NOT in Overview Mode
             $(".saveNewNote").removeClass( 'hideMe' );
             $(".noteSave").removeClass( 'hideMe' );
         }
+
+        // show mobile GitHub buttons
+        $("#containerGithubButtons").remove();
+        $("#containerGithubButtonsMobile").removeClass( 'hideMe' );
+    } else {
+        // show desktop GitHub buttons
+        $("#containerGithubButtonsMobile").remove();
+        $("#containerGithubButtons").removeClass( 'hideMe' );
     }
 
     _TodoNotes_Project_.resizeDocument();
