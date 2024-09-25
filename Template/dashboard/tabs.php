@@ -224,6 +224,20 @@ foreach ($projectsAccess as $o) {
             print '>';
             print '<i class="fa fa-trash-o" aria-hidden="true"></i>';
             print '</button>';
+
+            // Share button
+            print '<button id="customNoteListShareGlobal-P' . $o['project_id'] . '"';
+            print $isAdmin
+                ? ' class="toolbarButton buttonToggled customNoteListShareGlobal"'
+                : ' class="toolbarButton buttonDisabled customNoteListShareGlobal"';
+            print $isAdmin
+                ? ' title="' . t('TodoNotes__DASHBOARD_SHARE_CUSTOM_GLOBAL_LIST') . '"'
+                : ' title="' . t('TodoNotes__DASHBOARD_SHARE_CUSTOM_GLOBAL_LIST') . ' ' . t('TodoNotes__DASHBOARD_ADMIN_ONLY') . '"';
+            print ' data-project="' . $o['project_id'] . '"';
+            print ' data-user="' . $user_id . '"';
+            print '>';
+            print '<i class="fa fa-share-alt" aria-hidden="true"></i>';
+            print '</button>';
             //----------------------------------------
         } elseif ($o['is_owner']) {
             // managing custom PRIVATE lists is available to each user for their owned lists
@@ -257,6 +271,16 @@ foreach ($projectsAccess as $o) {
             print '>';
             print '<a><i class="fa fa-trash-o" aria-hidden="true"></i></a>';
             print '</button>';
+
+            // Share button
+            print '<button id="customNoteListSharePrivate-P' . $o['project_id'] . '"';
+            print ' class="toolbarButton customNoteListSharePrivate"';
+            print ' title="' . t('TodoNotes__DASHBOARD_SHARE_CUSTOM_PRIVATE_LIST') . '"';
+            print ' data-project="' . $o['project_id'] . '"';
+            print ' data-user="' . $user_id . '"';
+            print '>';
+            print '<a><i class="fa fa-share-alt" aria-hidden="true"></i></a>';
+            print '</button>';
             //----------------------------------------
         }
     } else {
@@ -273,7 +297,7 @@ foreach ($projectsAccess as $o) {
         print ' data-project="' . $o['project_id'] . '"';
         print ' data-user="' . $user_id . '"';
         print '>';
-        print $this->url->icon('th', '', 'BoardViewController', 'show', array('project_id' => $o['project_id']), false, 'view-board', t('Board') . ' ⇗');
+        print $this->url->icon('th', '', 'BoardViewController', 'show', array('project_id' => $o['project_id']), false, 'view-board', t('Board') . ' ⇗', true);
         print '</button>';
 
         // goto Tasks button
@@ -283,7 +307,21 @@ foreach ($projectsAccess as $o) {
         print ' data-project="' . $o['project_id'] . '"';
         print ' data-user="' . $user_id . '"';
         print '>';
-        print $this->url->icon('list', '', 'TaskListController', 'show', array('project_id' => $o['project_id']), false, 'view-listing', t('List') . ' ⇗');
+        print $this->url->icon('list', '', 'TaskListController', 'show', array('project_id' => $o['project_id']), false, 'view-listing', t('List') . ' ⇗', true);
+        print '</button>';
+
+        // Share button
+        print '<button id="customNoteListShareRegular-P' . $o['project_id'] . '"';
+        print $isAdmin
+            ? ' class="toolbarButton buttonToggled customNoteListShareRegular"'
+            : ' class="toolbarButton buttonDisabled customNoteListShareRegular"';
+        print $isAdmin
+            ? ' title="' . t('TodoNotes__DASHBOARD_SHARE_CUSTOM_REGULAR_LIST') . '"'
+            : ' title="' . t('TodoNotes__DASHBOARD_SHARE_CUSTOM_REGULAR_LIST') . ' ' . t('TodoNotes__DASHBOARD_ADMIN_ONLY') . '"';
+        print ' data-project="' . $o['project_id'] . '"';
+        print ' data-user="' . $user_id . '"';
+        print '>';
+        print '<i class="fa fa-share-alt" aria-hidden="true"></i>';
         print '</button>';
         //----------------------------------------
     }
