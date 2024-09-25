@@ -396,8 +396,8 @@ label {
     padding: 0 4px 0 4px;
     border: 0;
     border-radius: 5px;
-    color: rgba(255, 255, 255, .5);
-    background: rgba(0, 0, 0, .25);
+    color: rgba(255, 255, 255, .75);
+    background: rgba(0, 0, 0, .15);
     font-size: 1em !important;
 }
 
@@ -406,6 +406,7 @@ label {
     border: 1px solid;
     margin: 0 4px 0 0;
     color: #FFFFFF;
+    background: rgba(0, 0, 0, .25);
 }
 
 .dateLabelComplete {
