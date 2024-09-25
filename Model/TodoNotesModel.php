@@ -72,6 +72,22 @@ class TodoNotesModel extends Base
         return false;
     }
 
+    // Check custom project owner
+    public function IsCustomProjectOwner($project_id, $user_id): bool
+    {
+        if ($project_id >= 0) { // custom projects have negative Ids
+            return false;
+        }
+        $result = $this->db->table(self::TABLE_NOTES_CUSTOM_PROJECTS)
+            ->eq('id', -$project_id)
+            ->findOneColumn('owner_id');
+
+        if ($result == $user_id) {
+            return true;
+        }
+        return false;
+    }
+
     // Get the name of a project related to user
     public function GetProjectNameForUser($project_id, $user_id): string
     {

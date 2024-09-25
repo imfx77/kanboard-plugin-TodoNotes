@@ -489,6 +489,7 @@ class TodoNotesController extends BaseController
         $custom_note_list_name = $this->request->getStringParam('custom_note_list_name');
 
         $is_global = $this->todoNotesModel->IsCustomGlobalProject($project_id);
+        $is_owner = $this->todoNotesModel->IsCustomProjectOwner($project_id, $user_id);
 
         if (empty($custom_note_list_name) || $project_id >= 0) {
             // empty name or non-custom project!
@@ -496,12 +497,15 @@ class TodoNotesController extends BaseController
         } elseif ($is_global && !$this->userModel->isAdmin($user_id)) {
             // non-Admin attempting to rename a Global note list !
             $this->flash->failure(t('TodoNotes__DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('TodoNotes__DASHBOARD_NO_ADMIN_PRIVILEGES'));
-        } else {
+        } elseif (!$is_global && $is_owner) {
             $validation = $this->todoNotesModel->RenameCustomNoteList($project_id, $custom_note_list_name);
             if ($validation) {
                 $this->todoNotesModel->EmulateForceRefresh();
             }
             $this->CustomNoteListOperationNotification($validation, $is_global);
+        } elseif (!$is_global && !$is_owner) {
+            // non-Owner attempting to rename a Private note list !
+            $this->flash->failure(t('TodoNotes__DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('TodoNotes__DASHBOARD_NO_OWNER_PRIVILEGES'));
         }
 
         $this->response->redirect($this->helper->url->to('TodoNotesController', 'ShowDashboard', array(
@@ -518,19 +522,23 @@ class TodoNotesController extends BaseController
         $project_id = intval($this->request->getStringParam('project_custom_id'));
 
         $is_global = $this->todoNotesModel->IsCustomGlobalProject($project_id);
+        $is_owner = $this->todoNotesModel->IsCustomProjectOwner($project_id, $user_id);
 
         if ($project_id >= 0) {
             // non-custom project!
             $this->flash->failure(t('TodoNotes__DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('TodoNotes__DASHBOARD_INVALID_OR_EMPTY_PARAMETER'));
         } elseif ($is_global && !$this->userModel->isAdmin($user_id)) {
-            // non-Admin attempting to rename a Global note list !
+            // non-Admin attempting to delete a Global note list !
             $this->flash->failure(t('TodoNotes__DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('TodoNotes__DASHBOARD_NO_ADMIN_PRIVILEGES'));
-        } else {
+        } elseif (!$is_global && $is_owner) {
             $validation = $this->todoNotesModel->DeleteCustomNoteList($project_id);
             if ($validation) {
                 $this->todoNotesModel->EmulateForceRefresh();
             }
             $this->CustomNoteListOperationNotification($validation, $is_global);
+        } elseif (!$is_global && !$is_owner) {
+            // non-Owner attempting to delete a Private note list !
+            $this->flash->failure(t('TodoNotes__DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('TodoNotes__DASHBOARD_NO_OWNER_PRIVILEGES'));
         }
 
         $this->response->redirect($this->helper->url->to('TodoNotesController', 'ShowDashboard', array(
@@ -548,19 +556,23 @@ class TodoNotesController extends BaseController
 
         $project_id = intval($customListsPositions[0]); // use the first project_id in the array as reference
         $is_global = $this->todoNotesModel->IsCustomGlobalProject($project_id);
+        $is_owner = $this->todoNotesModel->IsCustomProjectOwner($project_id, $user_id);
 
         if ($project_id >= 0) {
             // non-custom project!
             $this->flash->failure(t('TodoNotes__DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('TodoNotes__DASHBOARD_INVALID_OR_EMPTY_PARAMETER'));
         } elseif ($is_global && !$this->userModel->isAdmin($user_id)) {
-            // non-Admin attempting to rename a Global note list !
+            // non-Admin attempting to reorder a Global note list !
             $this->flash->failure(t('TodoNotes__DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('TodoNotes__DASHBOARD_NO_ADMIN_PRIVILEGES'));
-        } else {
+        } elseif (!$is_global && $is_owner) {
             $validation = $this->todoNotesModel->UpdateCustomNoteListsPositions(!$is_global ? $user_id : 0, $customListsPositions);
             if ($validation) {
                 $this->todoNotesModel->EmulateForceRefresh();
             }
             $this->CustomNoteListOperationNotification($validation, $is_global);
+        } elseif (!$is_global && !$is_owner) {
+            // non-Owner attempting to reorder a Private note list !
+            $this->flash->failure(t('TodoNotes__DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('TodoNotes__DASHBOARD_NO_OWNER_PRIVILEGES'));
         }
 
         $this->response->redirect($this->helper->url->to('TodoNotesController', 'ShowDashboard', array(

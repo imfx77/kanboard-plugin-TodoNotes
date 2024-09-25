@@ -37,12 +37,13 @@ class TranslationsExportToJSHelperTest extends \Base
             'TodoNotes__DASHBOARD_MY_NOTES',
             'TodoNotes__DASHBOARD_ALL_TAB',
             'TodoNotes__DASHBOARD_NO_ADMIN_PRIVILEGES',
+            'TodoNotes__DASHBOARD_NO_OWNER_PRIVILEGES',
             'TodoNotes__JS_LOADING_MSG',
             'TodoNotes__JS_REINDEXING_MSG',
         );
 
         $result = $helper->export($translationTextIds);
 
-        $this->assertEquals($result, '{"TodoNotes__DASHBOARD_MY_NOTES":"My notes","TodoNotes__DASHBOARD_ALL_TAB":"All Lists","TodoNotes__DASHBOARD_NO_ADMIN_PRIVILEGES":"\u26a0\ufe0f Current user has no Admin privileges!","TodoNotes__JS_LOADING_MSG":"Loading ...","TodoNotes__JS_REINDEXING_MSG":"Reindexing ..."}');
+        $this->assertEquals($result, '{"TodoNotes__DASHBOARD_MY_NOTES":"My notes","TodoNotes__DASHBOARD_ALL_TAB":"All Lists","TodoNotes__DASHBOARD_NO_ADMIN_PRIVILEGES":"\u26a0\ufe0f Current user has no Admin privileges!","TodoNotes__DASHBOARD_NO_OWNER_PRIVILEGES":"\u26a0\ufe0f Current user has no Owner privileges!","TodoNotes__JS_LOADING_MSG":"Loading ...","TodoNotes__JS_REINDEXING_MSG":"Reindexing ..."}');
     }
 }

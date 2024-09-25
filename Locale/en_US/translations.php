@@ -88,6 +88,7 @@ Might be waiting for an unsubmitted New Note data input!',
     //
     'TodoNotes__DASHBOARD_ADMIN_ONLY' => '(Admin only)',
     'TodoNotes__DASHBOARD_NO_ADMIN_PRIVILEGES' => '⚠️ Current user has no Admin privileges!',
+    'TodoNotes__DASHBOARD_NO_OWNER_PRIVILEGES' => '⚠️ Current user has no Owner privileges!',
     'TodoNotes__DASHBOARD_INVALID_OR_EMPTY_PARAMETER' => '⚠️ There was an Invalid or Empty parameter to the request!',
     //
     'TodoNotes__DASHBOARD_REINDEX' => '⚠️ Reindex Notes and Lists!',
