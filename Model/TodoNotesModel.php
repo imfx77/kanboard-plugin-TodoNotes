@@ -19,22 +19,23 @@ use Kanboard\Plugin\TodoNotes\Plugin;
 
 class TodoNotesModel extends Base
 {
-    public const TABLE_NOTES_CUSTOM_PROJECTS    = 'todonotes_custom_projects';
-    public const TABLE_NOTES_ENTRIES            = 'todonotes_entries';
-    public const TABLE_NOTES_ARCHIVE_ENTRIES    = 'todonotes_archive_entries';
+    public const TABLE_NOTES_CUSTOM_PROJECTS        = 'todonotes_custom_projects';
+    public const TABLE_NOTES_SHARING_PERMISSIONS    = 'todonotes_sharing_permissions';
+    public const TABLE_NOTES_ENTRIES                = 'todonotes_entries';
+    public const TABLE_NOTES_ARCHIVE_ENTRIES        = 'todonotes_archive_entries';
 
-    private const TABLE_PROJECTS                = ProjectModel::TABLE;
-    private const TABLE_COLUMNS                 = ColumnModel::TABLE;
-    private const TABLE_SWIMLANES               = SwimlaneModel::TABLE;
-    private const TABLE_CATEGORIES              = CategoryModel::TABLE;
-    private const TABLE_ACCESS                  = ProjectUserRoleModel::TABLE;
+    private const TABLE_PROJECTS                    = ProjectModel::TABLE;
+    private const TABLE_COLUMNS                     = ColumnModel::TABLE;
+    private const TABLE_SWIMLANES                   = SwimlaneModel::TABLE;
+    private const TABLE_CATEGORIES                  = CategoryModel::TABLE;
+    private const TABLE_ACCESS                      = ProjectUserRoleModel::TABLE;
 
-    public const PROJECT_TYPE_NONE              = 0;
-    public const PROJECT_TYPE_NATIVE            = 1;
-    public const PROJECT_TYPE_CUSTOM_GLOBAL     = 2;
-    public const PROJECT_TYPE_CUSTOM_PRIVATE    = 3;
+    public const PROJECT_TYPE_NONE                  = 0;
+    public const PROJECT_TYPE_NATIVE                = 1;
+    public const PROJECT_TYPE_CUSTOM_GLOBAL         = 2;
+    public const PROJECT_TYPE_CUSTOM_PRIVATE        = 3;
 
-    private const REINDEX_USLEEP_INTERVAL       = 250000; // 0.25s
+    private const REINDEX_USLEEP_INTERVAL           = 250000; // 0.25s
 
     // Check unique note
     public function IsUniqueNote($project_id, $user_id, $note_id): bool
@@ -721,6 +722,11 @@ class TodoNotesModel extends Base
             ->eq('project_id', $project_id)
             ->remove();
 
+        // delete sharing permissions
+        return $this->db->table(self::TABLE_NOTES_SHARING_PERMISSIONS)
+            ->eq('project_id', $project_id)
+            ->remove();
+
         // delete custom list
         return $this->db->table(self::TABLE_NOTES_CUSTOM_PROJECTS)
             ->eq('id', -$project_id)
@@ -833,10 +839,12 @@ class TodoNotesModel extends Base
             'Reindex_AddAndUpdate_OldProjectIds',
             'Reindex_CreateAndInsert_NewShrunkCustomProjects',
             'Reindex_CrossUpdate_ReindexedProjectIds',
+            'Reindex_CreateAndInsert_NewShrunkSharingPermissions',
             'Reindex_CreateAndInsert_NewShrunkEntries',
             'Reindex_CreateAndInsert_NewShrunkArchiveEntries',
             'Reindex_Drop_OldTables',
             'Reindex_RecreateIndices_CustomProjects',
+            'Reindex_RecreateIndices_SharingPermissions',
             'Reindex_RecreateIndices_Entries',
             'Reindex_RecreateIndices_ArchiveEntries',
         );
@@ -852,6 +860,7 @@ class TodoNotesModel extends Base
                     $this->db->startTransaction();
                     $this->db->getDriver()->disableForeignKeys();
 
+                    //error_log($reindexRoutine);
                     if ($doWriteProgress) {
                         $this->WriteReindexProgress($reindexRoutine);
                     }

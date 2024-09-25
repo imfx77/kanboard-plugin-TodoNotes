@@ -40,6 +40,15 @@ function version_1(PDO $pdo)
     $pdo->exec('CREATE INDEX todonotes_custom_projects_owner_ix ON todonotes_custom_projects(owner_id)');
     $pdo->exec('CREATE INDEX todonotes_custom_projects_position_ix ON todonotes_custom_projects(position)');
 
+    // create+index sharing permissions
+    $pdo->exec('CREATE TABLE IF NOT EXISTS todonotes_sharing_permissions (
+                    project_id INTEGER NOT NULL,
+                    user_id INTEGER NOT NULL,
+                    permissions INTEGER NOT NULL
+                )');
+    $pdo->exec('CREATE INDEX todonotes_sharing_permissions_project_ix ON todonotes_sharing_permissions(project_id)');
+    $pdo->exec('CREATE INDEX todonotes_sharing_permissions_user_ix ON todonotes_sharing_permissions(user_id)');
+
     // create+insert+index entries
     $pdo->exec('CREATE TABLE IF NOT EXISTS todonotes_entries (
                     id INTEGER PRIMARY KEY,
@@ -112,6 +121,7 @@ function version_1(PDO $pdo)
 function Reindex_Rename_OldTables_1(PDO $pdo)
 {
     $pdo->exec('ALTER TABLE todonotes_custom_projects RENAME TO todonotes_custom_projects_OLD');
+    $pdo->exec('ALTER TABLE todonotes_sharing_permissions RENAME TO todonotes_sharing_permissions_OLD');
     $pdo->exec('ALTER TABLE todonotes_entries RENAME TO todonotes_entries_OLD');
     $pdo->exec('ALTER TABLE todonotes_archive_entries RENAME TO todonotes_archive_entries_OLD');
 }
@@ -121,6 +131,9 @@ function Reindex_AddAndUpdate_OldProjectIds_1(PDO $pdo)
     $pdo->exec('ALTER TABLE todonotes_custom_projects_OLD ADD old_project_id INTEGER');
     $pdo->exec('UPDATE todonotes_custom_projects_OLD SET old_project_id = id');
     
+    $pdo->exec('ALTER TABLE todonotes_sharing_permissions_OLD ADD old_project_id INTEGER');
+    $pdo->exec('UPDATE todonotes_sharing_permissions_OLD SET old_project_id = project_id');
+
     $pdo->exec('ALTER TABLE todonotes_entries_OLD ADD old_project_id INTEGER');
     $pdo->exec('UPDATE todonotes_entries_OLD SET old_project_id = project_id');
     
@@ -155,6 +168,13 @@ function Reindex_CreateAndInsert_NewShrunkCustomProjects_1(PDO $pdo)
 
 function Reindex_CrossUpdate_ReindexedProjectIds_1(PDO $pdo)
 {
+    $pdo->exec('UPDATE todonotes_sharing_permissions_OLD
+                    SET project_id = -
+                        (SELECT tProjects.id FROM todonotes_custom_projects_REINDEX tProjects
+                        WHERE todonotes_sharing_permissions_OLD.old_project_id = -tProjects.old_project_id)
+                    WHERE EXISTS (SELECT tProjects.id FROM todonotes_custom_projects_REINDEX tProjects
+                        WHERE todonotes_sharing_permissions_OLD.old_project_id = -tProjects.old_project_id)
+                ');
     $pdo->exec('UPDATE todonotes_entries_OLD
                     SET project_id = -
                         (SELECT tProjects.id FROM todonotes_custom_projects_REINDEX tProjects
@@ -168,6 +188,21 @@ function Reindex_CrossUpdate_ReindexedProjectIds_1(PDO $pdo)
                         WHERE todonotes_archive_entries_OLD.old_project_id = -tProjects.old_project_id)
                     WHERE EXISTS (SELECT tProjects.id FROM todonotes_custom_projects_REINDEX tProjects
                         WHERE todonotes_archive_entries_OLD.old_project_id = -tProjects.old_project_id)
+                ');
+}
+
+function Reindex_CreateAndInsert_NewShrunkSharingPermissions_1(PDO $pdo)
+{
+    $pdo->exec('CREATE TABLE todonotes_sharing_permissions (
+                    project_id INTEGER NOT NULL,
+                    user_id INTEGER NOT NULL,
+                    permissions INTEGER NOT NULL
+                )');
+    $pdo->exec('INSERT INTO todonotes_sharing_permissions
+                    (project_id, user_id, permissions)
+                    SELECT project_id, user_id, permissions
+                    FROM todonotes_sharing_permissions_OLD
+                    WHERE project_id <> 0 AND user_id > 0 AND permissions > 0
                 ');
 }
 
@@ -233,6 +268,7 @@ function Reindex_Drop_OldTables_1(PDO $pdo)
     $pdo->exec('DROP TABLE todonotes_custom_projects_REINDEX');
     
     $pdo->exec('DROP TABLE todonotes_custom_projects_OLD');
+    $pdo->exec('DROP TABLE todonotes_sharing_permissions_OLD');
     $pdo->exec('DROP TABLE todonotes_entries_OLD');
     $pdo->exec('DROP TABLE todonotes_archive_entries_OLD');
 }
@@ -241,6 +277,12 @@ function Reindex_RecreateIndices_CustomProjects_1(PDO $pdo)
 {
     $pdo->exec('CREATE INDEX todonotes_custom_projects_owner_ix ON todonotes_custom_projects(owner_id)');
     $pdo->exec('CREATE INDEX todonotes_custom_projects_position_ix ON todonotes_custom_projects(position)');
+}
+
+function Reindex_RecreateIndices_SharingPermissions_1(PDO $pdo)
+{
+    $pdo->exec('CREATE INDEX todonotes_sharing_permissions_project_ix ON todonotes_sharing_permissions(project_id)');
+    $pdo->exec('CREATE INDEX todonotes_sharing_permissions_user_ix ON todonotes_sharing_permissions(user_id)');
 }
 
 function Reindex_RecreateIndices_Entries_1(PDO $pdo)
