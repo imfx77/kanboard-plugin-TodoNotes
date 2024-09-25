@@ -330,6 +330,7 @@ class TodoNotesModel extends Base
         foreach ($projectIds as &$projectId) {
             $projectId['is_custom'] = false;
             $projectId['is_global'] = false;
+            $projectId['is_owner'] = false;
         }
         return $projectIds;
     }
@@ -346,11 +347,12 @@ class TodoNotesModel extends Base
             $projectId['project_id'] = -$projectId['project_id']; // custom project Ids are denoted as NEGATIVE values !!!
             $projectId['is_custom'] = true;
             $projectId['is_global'] = true;
+            $projectId['is_owner'] = false;
         }
         return $projectIdsGlobal;
     }
 
-    // Get all project_id where each user has custom Private access
+    // Get all project_id where the user has custom Private access
     public function GetCustomPrivateProjectIds($user_id)
     {
         $projectIdsPrivate = $this->db->table(self::TABLE_NOTES_CUSTOM_PROJECTS)
@@ -362,6 +364,7 @@ class TodoNotesModel extends Base
             $projectId['project_id'] = -$projectId['project_id']; // custom project Ids are denoted as NEGATIVE values !!!
             $projectId['is_custom'] = true;
             $projectId['is_global'] = false;
+            $projectId['is_owner'] = true;
         }
         return $projectIdsPrivate;
     }
@@ -1059,7 +1062,7 @@ class TodoNotesModel extends Base
             $project_id,
             $todonotesSettingsHelper::SETTINGS_GROUP_SORT
         );
-        $sortKey = (count($sortGroup) > 0) ? $sortGroup[0] : $todonotesSettingsHelper::SETTINGS_SORT_MANUAL;
+        $sortKey = (count($sortGroup) == 1) ? $sortGroup[0] : $todonotesSettingsHelper::SETTINGS_SORT_MANUAL;
 
         // force sorting
         if ($isArchive) {

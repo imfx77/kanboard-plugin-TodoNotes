@@ -27,6 +27,9 @@ static UpdateTabs() {
     if (_TodoNotes_Settings_.hideTabsPrivate) {
         _TodoNotes_Tabs_.#ToggleTabGroup( 'Private' );
     }
+    if (_TodoNotes_Settings_.hideTabsShared) {
+        _TodoNotes_Tabs_.#ToggleTabGroup( 'Shared' );
+    }
     if (_TodoNotes_Settings_.hideTabsRegular) {
         _TodoNotes_Tabs_.#ToggleTabGroup( 'Regular' );
     }
@@ -49,14 +52,20 @@ static UpdateTabsStats() {
 static #UpdateTabsContainer() {
     const tabHeight = $("#tabs li:eq(0)").outerHeight();
 
-    const numListsGlobal = parseInt( $("#groupGlobal li").length );
+    const numListsGlobal  = parseInt( $("#groupGlobal li").length );
     const numListsPrivate = parseInt( $("#groupPrivate li").length );
+    const numListsShared  = parseInt( $("#groupShared li").length );
     const numListsRegular = parseInt( $("#groupRegular li").length );
 
-    const numTabs = 1 + 3 * 1.5 // ALL tab + 3x group headers
-        + ($("#groupGlobal").hasClass( 'accordionHide' ) ? -0.25 : numListsGlobal)     // conditional on groupGlobal visibility
-        + ($("#groupPrivate").hasClass( 'accordionHide' ) ? -0.25 : numListsPrivate)   // conditional on groupPrivate visibility
-        + ($("#groupRegular").hasClass( 'accordionHide' ) ? -0.25 : numListsRegular);  // conditional on groupRegular visibility
+    const numTabs = 1 // ALL tab + 4x group headers  + number of lists in each visible group
+        + ((numListsGlobal > 0)  ? 1.5 : 0)  // conditional on numListsGlobal
+        + ((numListsPrivate > 0) ? 1.5 : 0)  // conditional on numListsPrivate
+        + ((numListsShared > 0)  ? 1.5 : 0)  // conditional on numListsShared
+        + ((numListsRegular > 0) ? 1.5 : 0)  // conditional on numListsRegular
+        + ($("#groupGlobal").hasClass( 'accordionHide' )  ? -0.25 : numListsGlobal)     // conditional on groupGlobal visibility
+        + ($("#groupPrivate").hasClass( 'accordionHide' ) ? -0.25 : numListsPrivate)    // conditional on groupPrivate visibility
+        + ($("#groupShared").hasClass( 'accordionHide' )  ? -0.25 : numListsShared)     // conditional on groupShared visibility
+        + ($("#groupRegular").hasClass( 'accordionHide' ) ? -0.25 : numListsRegular);   // conditional on groupRegular visibility
 
     $("#tabs").height(numTabs * tabHeight);
 }
@@ -224,13 +233,19 @@ static #ToggleTabGroupSettings(group) {
         _TodoNotes_Requests_.ToggleSettings(0 /* overview */, user_id,
             _TodoNotes_Settings_.GROUP.TABS,
             _TodoNotes_Settings_.TABS.PRIVATE);
-        _TodoNotes_Settings_.showTabsPrivate = !_TodoNotes_Settings_.showTabsPrivate;
+        _TodoNotes_Settings_.hideTabsPrivate = !_TodoNotes_Settings_.hideTabsPrivate;
+    }
+    if (group === 'Shared') {
+        _TodoNotes_Requests_.ToggleSettings(0 /* overview */, user_id,
+            _TodoNotes_Settings_.GROUP.TABS,
+            _TodoNotes_Settings_.TABS.SHARED);
+        _TodoNotes_Settings_.hideTabsShared = !_TodoNotes_Settings_.hideTabsShared;
     }
     if (group === 'Regular') {
         _TodoNotes_Requests_.ToggleSettings(0 /* overview */, user_id,
             _TodoNotes_Settings_.GROUP.TABS,
             _TodoNotes_Settings_.TABS.REGULAR);
-        _TodoNotes_Settings_.showTabsRegular = !_TodoNotes_Settings_.showTabsRegular;
+        _TodoNotes_Settings_.hideTabsRegular = !_TodoNotes_Settings_.hideTabsRegular;
     }
 }
 
@@ -263,6 +278,7 @@ static #TabsGroupHandlers() {
     // toggle visibility of tab groups
     _TodoNotes_Tabs_.#HandleTabGroup( 'Global' );
     _TodoNotes_Tabs_.#HandleTabGroup( 'Private' );
+    _TodoNotes_Tabs_.#HandleTabGroup( 'Shared' );
     _TodoNotes_Tabs_.#HandleTabGroup( 'Regular' );
 }
 

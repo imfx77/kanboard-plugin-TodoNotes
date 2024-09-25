@@ -14,32 +14,34 @@ class SessionAndCookiesSettingsHelper extends Base
 {
     private const SETTINGS_KEY_NAME = '_KB_plugin_TodoNotes_user_Settings_';
 
-    public const SETTINGS_GROUP_TABS = 0;
-    public const SETTINGS_GROUP_FILTER = 1;
-    public const SETTINGS_GROUP_SORT = 2;
-    public const SETTINGS_GROUP_VIEW = 3;
+    public const SETTINGS_GROUP_TABS                    = 0;
+    public const SETTINGS_GROUP_USER                    = 1;
+    public const SETTINGS_GROUP_FILTER                  = 2;
+    public const SETTINGS_GROUP_SORT                    = 3;
+    public const SETTINGS_GROUP_VIEW                    = 4;
 
-    public const SETTINGS_TABS_STATS = 0;
-    public const SETTINGS_TABS_GLOBAL = 1;
-    public const SETTINGS_TABS_PRIVATE = 2;
-    public const SETTINGS_TABS_REGULAR = 3;
+    public const SETTINGS_TABS_STATS                    = 0;
+    public const SETTINGS_TABS_GLOBAL                   = 1;
+    public const SETTINGS_TABS_PRIVATE                  = 2;
+    public const SETTINGS_TABS_SHARED                   = 3;
+    public const SETTINGS_TABS_REGULAR                  = 4;
 
-    public const SETTINGS_FILTER_DONE = 0;
-    public const SETTINGS_FILTER_OPEN = 1;
-    public const SETTINGS_FILTER_IN_PROGRESS = 2;
-    public const SETTINGS_FILTER_ARCHIVED = 3;
+    public const SETTINGS_FILTER_DONE                   = 0;
+    public const SETTINGS_FILTER_OPEN                   = 1;
+    public const SETTINGS_FILTER_IN_PROGRESS            = 2;
+    public const SETTINGS_FILTER_ARCHIVED               = 3;
 
-    public const SETTINGS_SORT_MANUAL = 0;
-    public const SETTINGS_SORT_STATUS = 1;
-    public const SETTINGS_SORT_DATE_CREATED = 2;
-    public const SETTINGS_SORT_DATE_MODIFIED = 3;
-    public const SETTINGS_SORT_DATE_NOTIFIED = 4;
-    public const SETTINGS_SORT_DATE_LAST_NOTIFIED = 5;
-    public const SETTINGS_SORT_DATE_ARCHIVED = 6;
-    public const SETTINGS_SORT_DATE_RESTORED = 7;
+    public const SETTINGS_SORT_MANUAL                   = 0;
+    public const SETTINGS_SORT_STATUS                   = 1;
+    public const SETTINGS_SORT_DATE_CREATED             = 2;
+    public const SETTINGS_SORT_DATE_MODIFIED            = 3;
+    public const SETTINGS_SORT_DATE_NOTIFIED            = 4;
+    public const SETTINGS_SORT_DATE_LAST_NOTIFIED       = 5;
+    public const SETTINGS_SORT_DATE_ARCHIVED            = 6;
+    public const SETTINGS_SORT_DATE_RESTORED            = 7;
 
-    public const SETTINGS_VIEW_CATEGORY_COLORS = 0;
-    public const SETTINGS_VIEW_STANDARD_STATUS_MARKS = 1;
+    public const SETTINGS_VIEW_CATEGORY_COLORS          = 0;
+    public const SETTINGS_VIEW_STANDARD_STATUS_MARKS    = 1;
 
     private const DEFAULT_SETTINGS = array(
         self::SETTINGS_GROUP_SORT => [self::SETTINGS_SORT_MANUAL],

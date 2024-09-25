@@ -82,6 +82,7 @@ Might be waiting for an unsubmitted New Note data input!',
     'TodoNotes__DASHBOARD_ALL_TAB' => 'All Lists',
     'TodoNotes__DASHBOARD_LIST_GROUP_GLOBAL' => 'Global Custom Lists',
     'TodoNotes__DASHBOARD_LIST_GROUP_PRIVATE' => 'Private Custom Lists',
+    'TodoNotes__DASHBOARD_LIST_GROUP_SHARED' => 'Shared Custom Lists',
     'TodoNotes__DASHBOARD_LIST_GROUP_REGULAR' => 'Regular Projects Lists',
     'TodoNotes__DASHBOARD_TOGGLE_LIST_GROUP' => 'Toggle List Group',
     //

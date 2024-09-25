@@ -84,6 +84,7 @@ $num++;
 //----------------------------------------
 $separatorPlacedGlobal = false;
 $separatorPlacedPrivate = false;
+$separatorPlacedShared = false;
 $separatorPlacedRegular = false;
 
 //----------------------------------------
@@ -106,7 +107,7 @@ foreach ($projectsAccess as $o) {
     }
 
     // separator header for custom PRIVATE lists
-    if (!$separatorPlacedPrivate && $o['is_custom'] && !$o['is_global']) {
+    if (!$separatorPlacedPrivate && $o['is_custom'] && !$o['is_global'] && $o['is_owner']) {
         print '</ul>';
         print '<hr class="hrTabs">';
         print '<h4 id="headerGroupPrivate" class="tabGroupHeader localTable textNonSelectable disableTabsEventsPropagation">';
@@ -120,6 +121,23 @@ foreach ($projectsAccess as $o) {
         print '</button></div></h4>';
         $separatorPlacedPrivate = true;
         print '<ul id="groupPrivate" class="ulLists accordionShow">';
+    }
+
+    // separator header for custom SHARED lists
+    if (!$separatorPlacedShared && $o['is_custom'] && !$o['is_global'] && !$o['is_owner']) {
+        print '</ul>';
+        print '<hr class="hrTabs">';
+        print '<h4 id="headerGroupShared" class="tabGroupHeader localTable textNonSelectable disableTabsEventsPropagation">';
+        print '<div class="localTableCell">' . t('TodoNotes__DASHBOARD_LIST_GROUP_SHARED') . '</div>';
+        // collapse/expand lists group button
+        print '<div class="localTableCellExpandRight">';
+        print '<button class="toolbarSeparator">&nbsp;</button>';
+        print '<button id="toggleGroupShared" class="toolbarButton buttonHeader disableTabsEventsPropagation"';
+        print ' title="' . t('TodoNotes__DASHBOARD_TOGGLE_LIST_GROUP') . '">';
+        print '<a><i class="fa fa-chevron-circle-up " aria-hidden="true"></i></a>';
+        print '</button></div></h4>';
+        $separatorPlacedShared = true;
+        print '<ul id="groupShared" class="ulLists accordionShow">';
     }
 
     // separator header for regular projects
@@ -207,7 +225,7 @@ foreach ($projectsAccess as $o) {
             print '<i class="fa fa-trash-o" aria-hidden="true"></i>';
             print '</button>';
             //----------------------------------------
-        } else {
+        } elseif ($o['is_owner']) {
             // managing custom PRIVATE lists is available to each user for their owned lists
             //----------------------------------------
 
