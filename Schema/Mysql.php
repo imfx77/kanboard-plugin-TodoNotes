@@ -44,11 +44,13 @@ function version_1(PDO $pdo)
     // create+index sharing permissions
     $pdo->exec('CREATE TABLE IF NOT EXISTS `todonotes_sharing_permissions` (
                     `project_id` INT NOT NULL,
-                    `user_id` INT NOT NULL,
+                    `shared_from_user_id` INT NOT NULL,
+                    `shared_to_user_id` INT NOT NULL,
                     `permissions` INT NOT NULL
                 ) ENGINE=InnoDB CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci');
     $pdo->exec('CREATE INDEX todonotes_sharing_permissions_project_ix ON todonotes_sharing_permissions(project_id)');
-    $pdo->exec('CREATE INDEX todonotes_sharing_permissions_user_ix ON todonotes_sharing_permissions(user_id)');
+    $pdo->exec('CREATE INDEX todonotes_sharing_permissions_shared_from_user_ix ON todonotes_sharing_permissions(shared_from_user_id)');
+    $pdo->exec('CREATE INDEX todonotes_sharing_permissions_shared_to_user_ix ON todonotes_sharing_permissions(shared_to_user_id)');
 
     // create+insert+index entries
     $pdo->exec('CREATE TABLE IF NOT EXISTS `todonotes_entries` (
@@ -192,14 +194,15 @@ function Reindex_CreateAndInsert_NewShrunkSharingPermissions_1(PDO $pdo)
 {
     $pdo->exec('CREATE TABLE `todonotes_sharing_permissions` (
                     `project_id` INT NOT NULL,
-                    `user_id` INT NOT NULL,
+                    `shared_from_user_id` INT NOT NULL,
+                    `shared_to_user_id` INT NOT NULL,
                     `permissions` INT NOT NULL
                 ) ENGINE=InnoDB CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci');
     $pdo->exec('INSERT INTO `todonotes_sharing_permissions`
-                    (`project_id`, `user_id`, `permissions`)
-                    SELECT `project_id`, `user_id`, `permissions`
+                    (`project_id`, `shared_from_user_id`, `shared_to_user_id`, `permissions`)
+                    SELECT `project_id`, `shared_from_user_id`, `shared_to_user_id`, `permissions`
                     FROM `todonotes_sharing_permissions_OLD`
-                    WHERE `project_id` <> 0 AND `user_id` > 0 AND `permissions` > 0
+                    WHERE `project_id` <> 0 AND `shared_from_user_id` > 0 AND `shared_to_user_id` > 0 AND `permissions` > 0
                 ');
 }
 
@@ -281,7 +284,8 @@ function Reindex_RecreateIndices_CustomProjects_1(PDO $pdo)
 function Reindex_RecreateIndices_SharingPermissions_1(PDO $pdo)
 {
     $pdo->exec('CREATE INDEX todonotes_sharing_permissions_project_ix ON todonotes_sharing_permissions(project_id)');
-    $pdo->exec('CREATE INDEX todonotes_sharing_permissions_user_ix ON todonotes_sharing_permissions(user_id)');
+    $pdo->exec('CREATE INDEX todonotes_sharing_permissions_shared_from_user_ix ON todonotes_sharing_permissions(shared_from_user_id)');
+    $pdo->exec('CREATE INDEX todonotes_sharing_permissions_shared_to_user_ix ON todonotes_sharing_permissions(shared_to_user_id)');
 }
 
 function Reindex_RecreateIndices_Entries_1(PDO $pdo)
