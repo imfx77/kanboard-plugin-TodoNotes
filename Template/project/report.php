@@ -19,6 +19,8 @@ require_once('settings.php');
 $num = "1";
 
 foreach ($data as $u) {
+    $curr_project_id = $u['project_id'];
+
     $isNoteActive = intval($u['is_active']);
     if ($isNoteActive == 0 && $settings_hideStatusDone) {
         continue;
@@ -59,7 +61,7 @@ foreach ($data as $u) {
     print '<div class="reportBkgr"></div>';
 
     // Note title label
-    print '<label id="reportTitleLabel-P' . $u['project_id'] . '-' . $num . '"';
+    print '<label id="reportTitleLabel-P' . $curr_project_id . '-' . $num . '"';
     if ($isNoteActive == 0) {
         print ' class="reportTitleLabel reportTitle noteDoneText">';
     } else {
@@ -70,19 +72,19 @@ foreach ($data as $u) {
 
     // Category label
     print '<label class="catLabel containerFloatRight"';
-    print ' id="noteCatLabel-P' . $u['project_id'] . '-' . $num . '"';
+    print ' id="noteCatLabel-P' . $curr_project_id . '-' . $num . '"';
     print ' data-id="' . $num . '"';
-    print ' data-project="' . $u['project_id'] . '"';
+    print ' data-project="' . $curr_project_id . '"';
     print '>';
     print $u['category'];
     print '</label>';
 
     // Note details
     if (!empty($u['description'])) {
-        print '<div id="noteDetails-P' . $u['project_id'] . '-' . $num . '"';
+        print '<div id="noteDetails-P' . $curr_project_id . '-' . $num . '"';
         print ' class="details reportDetails ui-corner-all">';
 
-        print '<span id="noteMarkdownDetails-P' . $u['project_id'] . '-' . $num . '"';
+        print '<span id="noteMarkdownDetails-P' . $curr_project_id . '-' . $num . '"';
         if ($isNoteActive == 0) {
             print ' class="markdown markdownReportDetails reportTitle noteDoneMarkdown"';
         } else {
