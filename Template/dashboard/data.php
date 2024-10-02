@@ -42,6 +42,7 @@ if ($tab_id > 0) {
     'projectsAccess' => $projectsAccess,
     'project' => $project,
     'project_id' => $project['id'],
+    'usersAccess' => $usersAccess,
     'user' => $user,
     'user_id' => $user_id,
     'user_datetime_format' => $user_datetime_format,

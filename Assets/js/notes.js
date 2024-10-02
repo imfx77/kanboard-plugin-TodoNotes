@@ -862,6 +862,28 @@ static #ToggleList(project_id) {
 }
 
 //------------------------------------------------
+static #SettingsUserHandlers() {
+    // Toggle Selected list User
+    $(".settingsListUser").unbind('click');
+    $(".settingsListUser").click(function() {
+        const project_id = $(this).attr('data-project');
+        const user_id = $(this).attr('data-user');
+        const list_user_id = $(this).attr('data-list-user');
+
+        _TodoNotes_Requests_.ToggleSettings(project_id, user_id,
+            _TodoNotes_Settings_.GROUP.USER,
+            list_user_id,
+            true);
+
+        _TodoNotes_Settings_.selectedUser = list_user_id;
+
+        setTimeout(function() {
+            _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
+        }, 500);
+    });
+}
+
+//------------------------------------------------
 static #SettingsFilterHandlers() {
     // Toggle status Open
     $(".settingsHideStatusOpen").unbind('click');
@@ -1150,6 +1172,12 @@ static #SettingsActionsHandlers() {
 static #SettingsHandlers() {
     //------------------------------------------------
 
+    $("#settingsUser").click(function() {
+        setTimeout(function() {
+            _TodoNotes_.#SettingsUserHandlers();
+        }, 100);
+    });
+
     $("#settingsFilter").click(function() {
         setTimeout(function() {
             _TodoNotes_.#SettingsFilterHandlers();
@@ -1219,11 +1247,22 @@ static #SettingsHandlers() {
 }
 
 //------------------------------------------------
-// Refresh hide/sort/colorizing routines
+// Refresh user/filter/sort/colorizing routines
 //------------------------------------------------
 
 //------------------------------------------------
-// Refresh show Status
+// Refresh selected User
+static RefreshSelectedUser() {
+    // reset all list users
+    $(".settingsListUser button").removeClass( 'buttonToggled' );
+    $(".settingsListUser a").removeClass( 'buttonToggled' );
+    // only highlight the selected user
+    $("#settingsListUser-" + _TodoNotes_Settings_.selectedUser + " button").addClass( 'buttonToggled' );
+    $("#settingsListUser-" + _TodoNotes_Settings_.selectedUser + " a").addClass( 'buttonToggled' );
+}
+
+//------------------------------------------------
+// Refresh hide Status
 static RefreshHideStatus(status, hide) {
     if (hide) {
         $(".settingsHideStatus" + status + " button").addClass( 'buttonToggled' );
@@ -1245,7 +1284,7 @@ static RefreshHideStatus(status, hide) {
 }
 
 //------------------------------------------------
-// Refresh show ALL Statuses
+// Refresh hide ALL Statuses
 static RefreshHideAllStatuses() {
     _TodoNotes_.RefreshHideStatus('Open', _TodoNotes_Settings_.hideStatusOpen);
     _TodoNotes_.RefreshHideStatus('InProgress', _TodoNotes_Settings_.hideStatusInProgress);

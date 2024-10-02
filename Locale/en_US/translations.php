@@ -28,6 +28,7 @@ return array(
     'TodoNotes__PROJECT_NEW_NOTE_TEXT_REORDERING_DISABLED' => '⚠️ DISABLED list reordering by explicit sort!',
     'TodoNotes__PROJECT_NEW_NOTE_TITLE_PLACEHOLDER' => 'What needs to be done',
     //
+    'TodoNotes__PROJECT_SETTINGS_USER' => 'User',
     'TodoNotes__PROJECT_SETTINGS_FILTER' => 'Filter',
     'TodoNotes__PROJECT_SETTINGS_SORT' => 'Sort',
     'TodoNotes__PROJECT_SETTINGS_VIEW' => 'View',

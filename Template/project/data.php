@@ -104,6 +104,77 @@ print '<div class="liNewNoteBkgr"></div>';
 // here goes the Settings Button Toolbar
 print '<div class="toolbarSettingsButtons containerNoWrap containerFloatRight disableEventsPropagation">';
 
+//----------------------------------------
+// Settings User
+print '<div class="dropdown">';
+print '<button id="settingsUser" class="toolbarButton dropdown-menu"';
+print ' title="' . t('TodoNotes__PROJECT_SETTINGS_USER') . '"';
+print ' data-id="0"';
+print ' data-project="' . $project_id . '"';
+print ' data-user="' . $user_id . '"';
+print '>';
+print '<i class="fa fa-user" aria-hidden="true"></i>';
+print '</button>';
+
+print '<ul>';
+
+// Current User, always show first
+$list_user = $this->model->userModel->getById($user_id);
+print '<li class="settingsListUser" id="settingsListUser-' . $user_id . '"';
+print ' data-id="0"';
+print ' data-project="' . $project_id . '"';
+print ' data-user="' .  $user_id . '"';
+print ' data-list-user="' .  $user_id . '"';
+print '><button class="toolbarButton">';
+print '<i class="fa fa-user-circle-o" aria-hidden="true"></i>';
+print'</button><a>&nbsp;&nbsp;';
+print $this->text->e($list_user['name'] ?: $list_user['username']);
+print '<div class="containerFloatRight">';
+print $this->avatar->small(
+    $list_user['id'],
+    $list_user['username'],
+    $list_user['name'],
+    $list_user['email'],
+    $list_user['avatar_path'],
+    'avatar-inline'
+);
+print '</div></a></li>';
+
+// List of Sharing Users (if any)
+if (count($usersAccess) > 0) {
+    // add divider between button groups
+    print '<hr class="toolbarDivider">';
+
+    foreach ($usersAccess as $list_user_id) {
+        // Accessible User
+        $list_user = $this->model->userModel->getById($list_user_id);
+        print '<li class="settingsListUser" id="settingsListUser-' . $list_user_id . '"';
+        print ' data-id="0"';
+        print ' data-project="' . $project_id . '"';
+        print ' data-user="' .  $user_id . '"';
+        print ' data-list-user="' .  $list_user_id . '"';
+        print '><button class="toolbarButton">';
+        print '<i class="fa fa-user-circle-o" aria-hidden="true"></i>';
+        print'</button><a>&nbsp;&nbsp;';
+        print $this->text->e($list_user['name'] ?: $list_user['username']);
+        print '<div class="containerFloatRight">';
+        print $this->avatar->small(
+            $list_user['id'],
+            $list_user['username'],
+            $list_user['name'],
+            $list_user['email'],
+            $list_user['avatar_path'],
+            'avatar-inline'
+        );
+        print '</div></a></li>';
+    }
+}
+
+
+print '</ul>';
+print '</div>'; // Settings User
+
+//----------------------------------------
 // Settings Filter
 print '<div class="dropdown">';
 print '<button id="settingsFilter" class="toolbarButton dropdown-menu"';
@@ -162,6 +233,7 @@ print'</button><a>&nbsp;&nbsp;' . t('TodoNotes__PROJECT_TOGGLE_ARCHIVE_VIEW') . 
 print '</ul>';
 print '</div>'; // Settings Filter
 
+//----------------------------------------
 // Settings Sort
 print '<div class="dropdown">';
 print '<button id="settingsSort" class="toolbarButton dropdown-menu"';
@@ -268,6 +340,7 @@ print '</div>'; // Settings Sort
 // add some space between button groups
 print '<button class="toolbarSeparator">&nbsp;</button>';
 
+//----------------------------------------
 // Settings View
 print '<div class="dropdown">';
 print '<button id="settingsView" class="toolbarButton dropdown-menu"';
@@ -308,6 +381,7 @@ print '</div>'; // Settings View
 // add some space between button groups
 print '<button class="toolbarSeparator">&nbsp;</button>';
 
+//----------------------------------------
 // Settings Actions
 print '<div class="dropdown">';
 print '<button id="settingsActions" class="toolbarButton dropdown-menu"';

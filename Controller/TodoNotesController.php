@@ -120,6 +120,7 @@ class TodoNotesController extends BaseController
             'projectsAccess' => $projectsAccess,
             'project' => $project,
             'project_id' => $project_id,
+            'usersAccess' => array(),
             'user' => $user,
             'user_id' => $user_id,
             'user_datetime_format' => $this->dateParser->getUserDateTimeFormat(),
@@ -190,12 +191,14 @@ class TodoNotesController extends BaseController
 
         return $this->response->html($this->helper->layout->dashboard('TodoNotes:dashboard/data', array(
             'title' => t('TodoNotes__DASHBOARD_TITLE', $this->helper->user->getFullname($user)),
+            'projectsAccess' => $projectsAccess,
+            'usersAccess' => array(),
             'user' => $user,
             'user_id' => $user_id,
             'user_datetime_format' => $this->dateParser->getUserDateTimeFormat(),
+
             'tab_id' => $tab_id,
             'note_id' => $this->request->getStringParam('note_id') ?: '0',
-            'projectsAccess' => $projectsAccess,
 
             'categories' => $categories,
             'columns' => $columns,

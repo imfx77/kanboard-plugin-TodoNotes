@@ -87,6 +87,7 @@ static #prepareDocument_ConfigureDashboardHandlers(skipDashboardHandlers = false
 
     _TodoNotes_Statuses_.ExpandStatusAliases();
 
+    _TodoNotes_.RefreshSelectedUser();
     _TodoNotes_.RefreshHideAllStatuses();
     _TodoNotes_.RefreshShowArchive();
     _TodoNotes_.RefreshShowCategoryColors();
