@@ -31,6 +31,7 @@ $settings_hideStatusInProgress = $todonotesSettingsHelper->GetToggleableSettings
     $todonotesSettingsHelper::SETTINGS_FILTER_IN_PROGRESS,
     true /*from_session*/
 );
+
 $settings_showArchive = $todonotesSettingsHelper->GetToggleableSettings(
     $user_id,
     $project_id,
@@ -38,6 +39,7 @@ $settings_showArchive = $todonotesSettingsHelper->GetToggleableSettings(
     $todonotesSettingsHelper::SETTINGS_FILTER_ARCHIVED,
     true /*from_session*/
 );
+
 $settings_sortExplicit = !$todonotesSettingsHelper->GetToggleableSettings(
     $user_id,
     $project_id,
@@ -45,3 +47,9 @@ $settings_sortExplicit = !$todonotesSettingsHelper->GetToggleableSettings(
     $todonotesSettingsHelper::SETTINGS_SORT_MANUAL,
     true /*from_session*/
 );
+
+$settings_selectedUser = $todonotesSettingsHelper->GetGroupSettings(
+    $user_id,
+    $project_id,
+    $todonotesSettingsHelper::SETTINGS_GROUP_USER
+)[0];

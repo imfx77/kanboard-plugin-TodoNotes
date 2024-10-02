@@ -26,7 +26,7 @@ if (!$is_refresh && !$is_dashboard_view) {
 
 $current_time = time();
 
-$readonlyNotes = ($project_id == 0); // Overview Mode
+$isOverviewMode = ($project_id == 0); // Overview Mode
 
 $tab_id = 1;
 $projectsTabsById = array();
@@ -106,6 +106,7 @@ print '<div class="toolbarSettingsButtons containerNoWrap containerFloatRight di
 
 //----------------------------------------
 // Settings User
+$list_user_details = $this->model->userModel->getById($settings_selectedUser);
 print '<div class="dropdown">';
 print '<button id="settingsUser" class="toolbarButton dropdown-menu"';
 print ' title="' . t('TodoNotes__PROJECT_SETTINGS_USER') . '"';
@@ -113,60 +114,78 @@ print ' data-id="0"';
 print ' data-project="' . $project_id . '"';
 print ' data-user="' . $user_id . '"';
 print '>';
-print '<i class="fa fa-user" aria-hidden="true"></i>';
-print '</button>';
+print '<i class="fa fa-user" aria-hidden="true"></i> <a class="buttonToggled">';
+print $this->text->e($list_user_details['name'] ?: $list_user_details['username']);
+print '</a></button>';
 
 print '<ul>';
 
 // Current User, always show first
-$list_user = $this->model->userModel->getById($user_id);
+$list_user_details = $this->model->userModel->getById($user_id);
 print '<li class="settingsListUser" id="settingsListUser-' . $user_id . '"';
 print ' data-id="0"';
 print ' data-project="' . $project_id . '"';
 print ' data-user="' .  $user_id . '"';
 print ' data-list-user="' .  $user_id . '"';
-print '><button class="toolbarButton">';
-print '<i class="fa fa-user-circle-o" aria-hidden="true"></i>';
-print'</button><a>&nbsp;&nbsp;';
-print $this->text->e($list_user['name'] ?: $list_user['username']);
-print '<div class="containerFloatRight">';
+print '>';
 print $this->avatar->small(
-    $list_user['id'],
-    $list_user['username'],
-    $list_user['name'],
-    $list_user['email'],
-    $list_user['avatar_path'],
+    $list_user_details['id'],
+    $list_user_details['username'],
+    $list_user_details['name'],
+    $list_user_details['email'],
+    $list_user_details['avatar_path'],
     'avatar-inline'
 );
-print '</div></a></li>';
+print '<a>'. $this->text->e($list_user_details['name'] ?: $list_user_details['username']) . '</a>';
+print '<div class="containerFloatRight">';
+print '<button class="toolbarButton">';
+print '<i class="fa fa-user-circle-o" aria-hidden="true"></i>';
+print '</button></div></li>';
 
 // List of Sharing Users (if any)
 if (count($usersAccess) > 0) {
     // add divider between button groups
     print '<hr class="toolbarDivider">';
 
-    foreach ($usersAccess as $list_user_id) {
+    foreach ($usersAccess as $permission) {
+        $list_user_id = $permission['user_id'];
+        // skip the current user, as already listed on top
+        // shouldn't appear in this list but anyway check it
+        if ($list_user_id == $user_id) {
+            continue;
+        }
+
         // Accessible User
-        $list_user = $this->model->userModel->getById($list_user_id);
+        $list_user_details = $this->model->userModel->getById($list_user_id);
         print '<li class="settingsListUser" id="settingsListUser-' . $list_user_id . '"';
         print ' data-id="0"';
         print ' data-project="' . $project_id . '"';
         print ' data-user="' .  $user_id . '"';
         print ' data-list-user="' .  $list_user_id . '"';
-        print '><button class="toolbarButton">';
-        print '<i class="fa fa-user-circle-o" aria-hidden="true"></i>';
-        print'</button><a>&nbsp;&nbsp;';
-        print $this->text->e($list_user['name'] ?: $list_user['username']);
-        print '<div class="containerFloatRight">';
+        print '>';
         print $this->avatar->small(
-            $list_user['id'],
-            $list_user['username'],
-            $list_user['name'],
-            $list_user['email'],
-            $list_user['avatar_path'],
+            $list_user_details['id'],
+            $list_user_details['username'],
+            $list_user_details['name'],
+            $list_user_details['email'],
+            $list_user_details['avatar_path'],
             'avatar-inline'
         );
-        print '</div></a></li>';
+        print '<a>'. $this->text->e($list_user_details['name'] ?: $list_user_details['username']) . '</a>';
+        print '<div class="containerFloatRight">';
+        print '<button class="toolbarButton">';
+        switch($permission['permissions']) {
+            case $this->model->todoNotesModel::PROJECT_SHARING_PERMISSION_VIEW:
+                print '<i class="fa fa-eye" aria-hidden="true"></i>';
+                break;
+            case $this->model->todoNotesModel::PROJECT_SHARING_PERMISSION_EDIT:
+                print '<i class="fa fa-pencil" aria-hidden="true"></i>';
+                break;
+            default:
+                print '<i class="fa fa-question" aria-hidden="true"></i>';
+                break;
+        }
+        print '</button></div></li>';
     }
 }
 
@@ -414,7 +433,7 @@ print '<i class="fa fa-minus-square" aria-hidden="true"></i>';
 print '</button><a>&nbsp;&nbsp;' . t('TodoNotes__PROJECT_COLLAPSE_ALL_NOTES') . '</a></li>';
 
 // exclude when in Overview Mode or in Archive View
-if (!$readonlyNotes && !$settings_showArchive) {
+if (!$isOverviewMode && !$settings_showArchive) {
     // add divider between button groups
     print '<hr class="toolbarDivider">';
 
@@ -465,7 +484,7 @@ print '</div>'; // Settings Button Toolbar
 
 // here goes the Title row
 print '<div class="containerNoWrap containerFloatLeft disableEventsPropagation">';
-if ($readonlyNotes) {
+if ($isOverviewMode) {
     if ($settings_showArchive) {
         print '<label class="labelNewNote">' . t('TodoNotes__PROJECT_ARCHIVE_OVERVIEW_MODE_TITLE') . '</label>';
         print '<span class="textNewNote">' . t('TodoNotes__PROJECT_ARCHIVE_OVERVIEW_MODE_TEXT') . '</label>';
@@ -497,7 +516,7 @@ print '</div>'; // Title row
 print '<div class="hideMe containerFloatClear" id="placeholderNewNote"></div>';
 
 // exclude when in Overview Mode or in Archive View
-if (!$readonlyNotes && !$settings_showArchive) {
+if (!$isOverviewMode && !$settings_showArchive) {
     // Newline after heading and top settings
     print '<br>';
 
@@ -626,7 +645,7 @@ foreach ($data as $u) {
     }
 
     // show project name links in Overview Mode
-    if ($readonlyNotes && $last_project_id != $u['project_id']) {
+    if ($isOverviewMode && $last_project_id != $u['project_id']) {
         print '</ul>';
 
         // reset project and number of notes
@@ -764,7 +783,7 @@ foreach ($data as $u) {
 
     // hide all the utility buttons when viewing notes as readonly
     // just allow for note status change
-    if (!$readonlyNotes) {
+    if (!$isOverviewMode) {
         // hide some utility buttons in Archive View
         if (!$settings_showArchive) {
             // Link button (in detailed view)
@@ -912,7 +931,7 @@ foreach ($data as $u) {
         print ' data-id="' . $num . '"';
         print ' data-project="' . $u['project_id'] . '"';
         print ' data-user="' . $user_id . '"';
-        if ($readonlyNotes) {
+        if ($isOverviewMode) {
             print ' disabled';
         }
         print '>';
@@ -929,7 +948,7 @@ foreach ($data as $u) {
     print ' data-id="' . $num . '"';
     print ' data-project="' . $u['project_id'] . '"';
     print ' data-user="' . $user_id . '"';
-    if ($readonlyNotes || $settings_showArchive) {
+    if ($isOverviewMode || $settings_showArchive) {
         print ' data-disabled="true"';
     }
     print '>';
@@ -957,12 +976,12 @@ foreach ($data as $u) {
     print ' data-id="' . $num . '"';
     print ' data-project="' . $u['project_id'] . '"';
     print ' data-user="' . $user_id . '"';
-    if ($readonlyNotes || $settings_showArchive) {
+    if ($isOverviewMode || $settings_showArchive) {
         print ' disabled';
     }
     print '>';
 
-    if ($readonlyNotes || $settings_showArchive) {
+    if ($isOverviewMode || $settings_showArchive) {
         // just preserve the existing category data from the note
         print '<option selected="selected">' . $u['category'] . '</option>';
     } else {
@@ -1038,7 +1057,7 @@ foreach ($data as $u) {
     // Markdown Details
     print '<div class="containerFloatClear">';
 
-    if (!$readonlyNotes && !$settings_showArchive) {
+    if (!$isOverviewMode && !$settings_showArchive) {
         // here goes the Note Edit Button
         print '<div class="containerNoWrap buttonEditMarkdown disableEventsPropagation">';
 
@@ -1057,7 +1076,7 @@ foreach ($data as $u) {
     }
 
     // Markdown Preview
-    if ((!$readonlyNotes && !$settings_showArchive) || !empty($u['description'])) {
+    if ((!$isOverviewMode && !$settings_showArchive) || !empty($u['description'])) {
         print '<div id="noteMarkdownDetails-P' . $u['project_id'] . '-' . $num . '_Preview"';
         print ' class="markdown noteDetailsMarkdown disableEventsPropagation';
         if (!$settings_showArchive && $u['is_active'] == 0) {
@@ -1075,7 +1094,7 @@ foreach ($data as $u) {
     }
 
     // Markdown Editor
-    if (!$readonlyNotes && !$settings_showArchive) {
+    if (!$isOverviewMode && !$settings_showArchive) {
         print '<div id="noteMarkdownDetails-P' . $u['project_id'] . '-' . $num . '_Editor"';
         print ' class="hideMe noteDetailsMarkdown noteEditorMarkdown disableEventsPropagation"';
         print ' data-id="' . $num . '"';

@@ -34,6 +34,11 @@ class TodoNotesModel extends Base
     public const PROJECT_TYPE_NATIVE                = 1;
     public const PROJECT_TYPE_CUSTOM_GLOBAL         = 2;
     public const PROJECT_TYPE_CUSTOM_PRIVATE        = 3;
+    public const PROJECT_TYPE_CUSTOM_SHARED         = 4;
+
+    public const PROJECT_SHARING_PERMISSION_NONE    = 0;
+    public const PROJECT_SHARING_PERMISSION_VIEW    = 1;
+    public const PROJECT_SHARING_PERMISSION_EDIT    = 2;
 
     private const REINDEX_USLEEP_INTERVAL           = 250000; // 0.25s
 
@@ -122,8 +127,9 @@ class TodoNotesModel extends Base
     }
 
     // Get notes related to user and project
-    public function GetProjectNotesForUser($project_id, $user_id)
+    public function GetProjectNotesForUser($project_id, $user_id, $usersAccess)
     {
+        $selectedUser = $this->EvaluateSharing($project_id, $user_id, $usersAccess);
         $paramsSoring = $this->EvaluateSorting($project_id, $user_id);
 
         $result = $this->db->table(self::TABLE_NOTES_ENTRIES);
@@ -148,7 +154,7 @@ class TodoNotesModel extends Base
     }
 
     // Get all notes related to user
-    public function GetAllNotesForUser($projectsAccess, $user_id)
+    public function GetAllNotesForUser($user_id, $projectsAccess)
     {
         $projectsAccessList = array();
         $orderCaseClause = 'CASE project_id';
@@ -160,6 +166,7 @@ class TodoNotesModel extends Base
         }
         $orderCaseClause .= ' END';
 
+        $selectedUser = $this->EvaluateSharing(0 /*overview*/, $user_id, array() /*no user sharing*/);
         $paramsSoring = $this->EvaluateSorting(0 /*overview*/, $user_id);
 
         $result = $this->db->table(self::TABLE_NOTES_ENTRIES);
@@ -204,8 +211,9 @@ class TodoNotesModel extends Base
     }
 
     // Get archived notes related to user and project
-    public function GetArchivedProjectNotesForUser($project_id, $user_id)
+    public function GetArchivedProjectNotesForUser($project_id, $user_id, $usersAccess)
     {
+        $selectedUser = $this->EvaluateSharing($project_id, $user_id, $usersAccess);
         $paramsSoring = $this->EvaluateSorting($project_id, $user_id);
 
         $result = $this->db->table(self::TABLE_NOTES_ARCHIVE_ENTRIES);
@@ -230,7 +238,7 @@ class TodoNotesModel extends Base
     }
 
     // Get all archived notes related to user
-    public function GetAllArchivedNotesForUser($projectsAccess, $user_id)
+    public function GetAllArchivedNotesForUser($user_id, $projectsAccess)
     {
         $projectsAccessList = array();
         $orderCaseClause = 'CASE project_id';
@@ -242,6 +250,7 @@ class TodoNotesModel extends Base
         }
         $orderCaseClause .= ' END';
 
+        $selectedUser = $this->EvaluateSharing(0 /*overview*/, $user_id, array() /*no user sharing*/);
         $paramsSoring = $this->EvaluateSorting(0 /*overview*/, $user_id);
 
         $result = $this->db->table(self::TABLE_NOTES_ARCHIVE_ENTRIES);
@@ -267,8 +276,9 @@ class TodoNotesModel extends Base
     }
 
     // Get notes related to user project report
-    public function GetReportNotesForUser($project_id, $user_id, $category)
+    public function GetReportNotesForUser($project_id, $user_id, $usersAccess, $category)
     {
+        $selectedUser = $this->EvaluateSharing($project_id, $user_id, $usersAccess);
         $paramsSoring = $this->EvaluateSorting($project_id, $user_id);
 
         $result = $this->db->table(self::TABLE_NOTES_ENTRIES);
@@ -421,6 +431,18 @@ class TodoNotesModel extends Base
         }
         // if nothing found leave 0
         return 0;
+    }
+
+    // Get all user_id which have shared view/edit permissions for given project
+    public function GetSharingPermissions($project_id, $user_id)
+    {
+        return $this->db->table(self::TABLE_NOTES_SHARING_PERMISSIONS)
+            ->columns('shared_from_user_id AS user_id, permissions')
+            ->eq('project_id', $project_id)
+            ->eq('shared_to_user_id', $user_id)
+            ->gt('permissions', self::PROJECT_SHARING_PERMISSION_NONE)
+            ->asc('user_id')
+            ->findAll();
     }
 
     // Get a list of categories for a project
@@ -1060,6 +1082,42 @@ class TodoNotesModel extends Base
             'projects' => $timestampProjects,
             'max' => max($timestampNotes, $timestampProjects),
         );
+    }
+
+    private function EvaluateSharing($project_id, $user_id, $usersAccess)
+    {
+        $todonotesSettingsHelper = $this->helper->todonotesSessionAndCookiesSettingsHelper;
+        $todonotesSettingsHelper->SyncSettingsToSession($user_id, $project_id);
+
+        $userGroup = $todonotesSettingsHelper->GetGroupSettings(
+            $user_id,
+            $project_id,
+            $todonotesSettingsHelper::SETTINGS_GROUP_USER
+        );
+        $selectedUser = (count($userGroup) == 1) ? $userGroup[0] : 0;
+
+        // check accessibility for selected user
+        $isSelectedUserAccessible = false;
+        foreach ($usersAccess as $permission) {
+            if ($permission['user_id'] == $selectedUser && $permission['permissions'] > self::PROJECT_SHARING_PERMISSION_NONE) {
+                $isSelectedUserAccessible = true;
+                break;
+            }
+        }
+
+        // force set selected user
+        if (!$isSelectedUserAccessible) {
+            $todonotesSettingsHelper->ToggleSettings(
+                $user_id,
+                $project_id,
+                $todonotesSettingsHelper::SETTINGS_GROUP_USER,
+                $user_id,
+                true /*settings_exclusive*/
+            );
+            $selectedUser = $user_id;
+        }
+
+        return $selectedUser;
     }
 
     private function EvaluateSorting($project_id, $user_id)

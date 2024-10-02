@@ -16,13 +16,13 @@ return array(
     'TodoNotes__PROJECT_TITLE' => 'Notes',
     'TodoNotes__PROJECT_EMPTY' => 'No Entries!',
     'TodoNotes__PROJECT_OVERVIEW_MODE_TITLE' => 'Overview Mode',
-    'TodoNotes__PROJECT_OVERVIEW_MODE_TEXT' => '⚠️ ONLY manage notes Status, Alerts and lists order!',
-    'TodoNotes__PROJECT_OVERVIEW_MODE_TEXT_REORDERING_DISABLED' => '⚠️ ONLY manage notes Status and Alerts!
+    'TodoNotes__PROJECT_OVERVIEW_MODE_TEXT' => '⚠️ ONLY manage own notes Status, Alerts and lists order!',
+    'TodoNotes__PROJECT_OVERVIEW_MODE_TEXT_REORDERING_DISABLED' => '⚠️ ONLY manage own notes Status and Alerts!
 ⚠️ DISABLED list reordering by Status sort!',
     'TodoNotes__PROJECT_ARCHIVE_TITLE' => 'Archive',
     'TodoNotes__PROJECT_ARCHIVE_TEXT' => '⚠️ ONLY Delete or Restore archived notes!',
     'TodoNotes__PROJECT_ARCHIVE_OVERVIEW_MODE_TITLE' => 'Archive Overview Mode',
-    'TodoNotes__PROJECT_ARCHIVE_OVERVIEW_MODE_TEXT' => '⚠️ ONLY browse archived notes!',
+    'TodoNotes__PROJECT_ARCHIVE_OVERVIEW_MODE_TEXT' => '⚠️ ONLY browse own archived notes!',
     //
     'TodoNotes__PROJECT_NEW_NOTE_LABEL' => 'Create New Note',
     'TodoNotes__PROJECT_NEW_NOTE_TEXT_REORDERING_DISABLED' => '⚠️ DISABLED list reordering by explicit sort!',

@@ -88,6 +88,7 @@ class TodoNotesController extends BaseController
         $project_id = $project['id'];
 
         $projectsAccess = $this->todoNotesModel->GetAllProjectIds($user_id);
+        $usersAccess = $this->todoNotesModel->GetSharingPermissions($project_id, $user_id);
 
         if ($project['is_custom']) {
             $categories = $this->todoNotesModel->GetAllCategories();
@@ -107,12 +108,12 @@ class TodoNotesController extends BaseController
 
         if ($project_id == 0) {
             $data = $doShowArchive
-                ? $this->todoNotesModel->GetAllArchivedNotesForUser($projectsAccess, $user_id)
-                : $this->todoNotesModel->GetAllNotesForUser($projectsAccess, $user_id);
+                ? $this->todoNotesModel->GetAllArchivedNotesForUser($user_id, $projectsAccess)
+                : $this->todoNotesModel->GetAllNotesForUser($user_id, $projectsAccess);
         } else {
             $data = $doShowArchive
-                ? $this->todoNotesModel->GetArchivedProjectNotesForUser($project_id, $user_id)
-                : $this->todoNotesModel->GetProjectNotesForUser($project_id, $user_id);
+                ? $this->todoNotesModel->GetArchivedProjectNotesForUser($project_id, $user_id, $usersAccess)
+                : $this->todoNotesModel->GetProjectNotesForUser($project_id, $user_id, $usersAccess);
         }
 
         return $this->response->html($this->helper->layout->app('TodoNotes:project/data', array(
@@ -120,7 +121,7 @@ class TodoNotesController extends BaseController
             'projectsAccess' => $projectsAccess,
             'project' => $project,
             'project_id' => $project_id,
-            'usersAccess' => array(),
+            'usersAccess' => $usersAccess,
             'user' => $user,
             'user_id' => $user_id,
             'user_datetime_format' => $this->dateParser->getUserDateTimeFormat(),
@@ -158,8 +159,8 @@ class TodoNotesController extends BaseController
         }
 
         $projectsAccess = $this->todoNotesModel->GetAllProjectIds($user_id);
-
         $project_id = ($tab_id > 0) ? $projectsAccess[$tab_id - 1]['project_id'] : 0;
+        $usersAccess = $this->todoNotesModel->GetSharingPermissions($project_id, $user_id);
 
         if ($tab_id > 0 && !$projectsAccess[$tab_id - 1]['is_custom']) {
             $categories = $this->todoNotesModel->GetCategories($project_id);
@@ -181,18 +182,18 @@ class TodoNotesController extends BaseController
 
         if ($project_id == 0) {
             $data = $doShowArchive
-                ? $this->todoNotesModel->GetAllArchivedNotesForUser($projectsAccess, $user_id)
-                : $this->todoNotesModel->GetAllNotesForUser($projectsAccess, $user_id);
+                ? $this->todoNotesModel->GetAllArchivedNotesForUser( $user_id, $projectsAccess)
+                : $this->todoNotesModel->GetAllNotesForUser($user_id, $projectsAccess);
         } else {
             $data = $doShowArchive
-                ? $this->todoNotesModel->GetArchivedProjectNotesForUser($project_id, $user_id)
-                : $this->todoNotesModel->GetProjectNotesForUser($project_id, $user_id);
+                ? $this->todoNotesModel->GetArchivedProjectNotesForUser($project_id, $user_id, $usersAccess)
+                : $this->todoNotesModel->GetProjectNotesForUser($project_id, $user_id, $usersAccess);
         }
 
         return $this->response->html($this->helper->layout->dashboard('TodoNotes:dashboard/data', array(
             'title' => t('TodoNotes__DASHBOARD_TITLE', $this->helper->user->getFullname($user)),
             'projectsAccess' => $projectsAccess,
-            'usersAccess' => array(),
+            'usersAccess' => $usersAccess,
             'user' => $user,
             'user_id' => $user_id,
             'user_datetime_format' => $this->dateParser->getUserDateTimeFormat(),
@@ -380,8 +381,10 @@ class TodoNotesController extends BaseController
         $project = $this->ResolveProject($user_id);
         $project_id = $project['id'];
 
+        $usersAccess = $this->todoNotesModel->GetSharingPermissions($project_id, $user_id);
+
         $category = $this->request->getStringParam('category');
-        $data = $this->todoNotesModel->GetReportNotesForUser($project_id, $user_id, $category);
+        $data = $this->todoNotesModel->GetReportNotesForUser($project_id, $user_id, $usersAccess, $category);
 
         return $this->response->html($this->helper->layout->app('TodoNotes:project/report', array(
             'title' => $project['name'], // rather keep the project name as title

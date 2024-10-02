@@ -1254,11 +1254,11 @@ static #SettingsHandlers() {
 // Refresh selected User
 static RefreshSelectedUser() {
     // reset all list users
-    $(".settingsListUser button").removeClass( 'buttonToggled' );
     $(".settingsListUser a").removeClass( 'buttonToggled' );
+    $(".settingsListUser div button").removeClass( 'buttonToggled' );
     // only highlight the selected user
-    $("#settingsListUser-" + _TodoNotes_Settings_.selectedUser + " button").addClass( 'buttonToggled' );
     $("#settingsListUser-" + _TodoNotes_Settings_.selectedUser + " a").addClass( 'buttonToggled' );
+    $("#settingsListUser-" + _TodoNotes_Settings_.selectedUser + " div button").addClass( 'buttonToggled' );
 }
 
 //------------------------------------------------

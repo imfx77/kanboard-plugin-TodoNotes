@@ -69,6 +69,8 @@ class SessionAndCookiesSettingsHelper extends Base
         'q' => '"',
     );
 
+    private $hasSessionSync = false;
+
     public function GetSettings($user_id, $project_id, $from_session = false)
     {
         $settings_key = $user_id . '|' . $project_id;
@@ -129,12 +131,16 @@ class SessionAndCookiesSettingsHelper extends Base
 
     public function SyncSettingsToSession($user_id, $project_id)
     {
-        $this->SetSettings(
-            $user_id,
-            $project_id,
-            $this->GetSettings($user_id, $project_id),
-            true
-        );
+        // only sync to session once per request !!!
+        if (!$this->hasSessionSync) {
+            $this->SetSettings(
+                $user_id,
+                $project_id,
+                $this->GetSettings($user_id, $project_id),
+                true
+            );
+            $this->hasSessionSync = true;
+        }
     }
 
     public function GetGroupSettings($user_id, $project_id, $settings_group_key, $from_session = false): array
