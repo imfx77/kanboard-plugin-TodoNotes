@@ -436,13 +436,20 @@ class TodoNotesModel extends Base
     // Get all user_id which have shared view/edit permissions for given project
     public function GetSharingPermissions($project_id, $user_id)
     {
-        return $this->db->table(self::TABLE_NOTES_SHARING_PERMISSIONS)
+        $sharing_permissions = $this->db->table(self::TABLE_NOTES_SHARING_PERMISSIONS)
             ->columns('shared_from_user_id AS user_id, permissions')
             ->eq('project_id', $project_id)
             ->eq('shared_to_user_id', $user_id)
             ->gt('permissions', self::PROJECT_SHARING_PERMISSION_NONE)
             ->asc('user_id')
             ->findAll();
+
+        $usersAccess = array();
+        foreach ($sharing_permissions as $sharing_permission) {
+            $usersAccess[$sharing_permission['user_id']] = $sharing_permission['permissions'];
+        }
+
+        return $usersAccess;
     }
 
     // Get a list of categories for a project
@@ -1097,13 +1104,7 @@ class TodoNotesModel extends Base
         $selectedUser = (count($userGroup) == 1) ? $userGroup[0] : 0;
 
         // check accessibility for selected user
-        $isSelectedUserAccessible = false;
-        foreach ($usersAccess as $permission) {
-            if ($permission['user_id'] == $selectedUser && $permission['permissions'] > self::PROJECT_SHARING_PERMISSION_NONE) {
-                $isSelectedUserAccessible = true;
-                break;
-            }
-        }
+        $isSelectedUserAccessible = array_key_exists($selectedUser, $usersAccess) && $usersAccess[$selectedUser]['permissions'] > self::PROJECT_SHARING_PERMISSION_NONE;
 
         // force set selected user
         if (!$isSelectedUserAccessible) {

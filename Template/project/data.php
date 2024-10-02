@@ -149,6 +149,7 @@ if (count($usersAccess) > 0) {
 
     foreach ($usersAccess as $permission) {
         $list_user_id = $permission['user_id'];
+    foreach ($usersAccess as $list_user_id => $permission) {
         // skip the current user, as already listed on top
         // shouldn't appear in this list but anyway check it
         if ($list_user_id == $user_id) {
@@ -174,7 +175,7 @@ if (count($usersAccess) > 0) {
         print '<a>'. $this->text->e($list_user_details['name'] ?: $list_user_details['username']) . '</a>';
         print '<div class="containerFloatRight">';
         print '<button class="toolbarButton">';
-        switch($permission['permissions']) {
+        switch($permission) {
             case $this->model->todoNotesModel::PROJECT_SHARING_PERMISSION_VIEW:
                 print '<i class="fa fa-eye" aria-hidden="true"></i>';
                 break;
