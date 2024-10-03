@@ -61,16 +61,8 @@ class TodoNotesController extends BaseController
             $projectAccess = $projectsAccess[0];
         }
 
-        if ($projectAccess['is_custom']) {
-            // assemble a fake custom list
-            return array("id" => $project_id, "name" => $projectAccess['project_name'], "is_custom" => true, "is_global" => false);
-        } else {
-            // get all the data of existing project and mark it as NOT custom
-            $project = $this->todoNotesModel->GetRegularProjectById($project_id);
-            $project['is_custom'] = false;
-            $project['is_global'] = false;
-            return $project;
-        }
+        // assemble project
+        return array("id" => $project_id, 'tab_id' => $projectAccess['tab_id'], 'name' => $projectAccess['project_name']);
     }
 
     private function ShowProjectWithRefresh($is_refresh)
@@ -82,15 +74,14 @@ class TodoNotesController extends BaseController
             $project = $this->ResolveProject($user_id);
         } else {
             $project = $this->getProject();
-            $project['is_custom'] = false;
-            $project['is_global'] = false;
+            $project['tab_id'] = $this->todoNotesModel->GetTabForProject($project['id'], $user_id);
         }
         $project_id = $project['id'];
 
         $projectsAccess = $this->todoNotesModel->GetAllProjectIds($user_id);
         $usersAccess = $this->todoNotesModel->GetSharingPermissions($project_id, $user_id);
 
-        if ($project['is_custom']) {
+        if ($projectsAccess[$project['tab_id']]['is_custom']) {
             $categories = $this->todoNotesModel->GetAllCategories();
         } else {
             $categories = $this->todoNotesModel->GetCategories($project_id);

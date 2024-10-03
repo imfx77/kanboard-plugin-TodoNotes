@@ -336,16 +336,8 @@ class TodoNotesModel extends Base
         );
     }
 
-    // Get regular project data by project_id
-    public function GetRegularProjectById($project_id)
-    {
-        return $this->db->table(self::TABLE_PROJECTS)
-            ->eq('id', $project_id)
-            ->findOne();
-    }
-
     // Get all project_id where user has regular access
-    public function GetRegularProjectIds($user_id)
+    private function GetRegularProjectIds($user_id)
     {
         $projectIds = $this->db->table(self::TABLE_ACCESS)
             ->columns(self::TABLE_ACCESS . '.project_id', 'alias_projects_table.name AS project_name')
@@ -362,7 +354,7 @@ class TodoNotesModel extends Base
     }
 
     // Get all project_id where all users have custom Global access
-    public function GetCustomGlobalProjectIds()
+    private function GetCustomGlobalProjectIds()
     {
         $projectIdsGlobal = $this->db->table(self::TABLE_NOTES_CUSTOM_PROJECTS)
             ->columns('id AS project_id', 'project_name')
@@ -379,7 +371,7 @@ class TodoNotesModel extends Base
     }
 
     // Get all project_id where the user has custom Private access
-    public function GetCustomPrivateProjectIds($user_id)
+    private function GetCustomPrivateProjectIds($user_id)
     {
         $projectIdsPrivate = $this->db->table(self::TABLE_NOTES_CUSTOM_PROJECTS)
             ->columns('id AS project_id', 'project_name')
@@ -396,7 +388,7 @@ class TodoNotesModel extends Base
     }
 
     // Get all project_id where user has custom access
-    public function GetCustomProjectIds($user_id)
+    private function GetCustomProjectIds($user_id)
     {
         return array_merge($this->GetCustomGlobalProjectIds(), $this->GetCustomPrivateProjectIds($user_id));
     }
@@ -404,7 +396,15 @@ class TodoNotesModel extends Base
     // Get all project_id where user has regular or custom access
     public function GetAllProjectIds($user_id)
     {
-        return array_merge($this->GetCustomProjectIds($user_id), $this->GetRegularProjectIds($user_id));
+        $projectsAccess = array_merge($this->GetCustomProjectIds($user_id), $this->GetRegularProjectIds($user_id));
+
+        $tab_id = 1;
+        foreach ($projectsAccess as &$projectId) {
+            $projectId['tab_id'] = $tab_id;
+            $tab_id++;
+        }
+
+        return $projectsAccess;
     }
 
     // Get projects count by type
@@ -420,14 +420,12 @@ class TodoNotesModel extends Base
     // Get the tab number of certain project
     public function GetTabForProject($project_id, $user_id): int
     {
-        $count = 1;
-        $all_user_projects = $this->GetAllProjectIds($user_id);
+        $projectsAccess = $this->GetAllProjectIds($user_id);
         // recover the tab_id of the requested project_id
-        foreach ($all_user_projects as $project) {
-            if ($project_id == $project['project_id']) {
-                return $count;
+        foreach ($projectsAccess as $projectAccess) {
+            if ($project_id == $projectAccess['project_id']) {
+                return $projectAccess['tab_id'];
             }
-            $count++;
         }
         // if nothing found leave 0
         return 0;
@@ -436,7 +434,7 @@ class TodoNotesModel extends Base
     // Get all user_id which have shared view/edit permissions for given project
     public function GetSharingPermissions($project_id, $user_id)
     {
-        $sharing_permissions = $this->db->table(self::TABLE_NOTES_SHARING_PERMISSIONS)
+        $sharingPermissions = $this->db->table(self::TABLE_NOTES_SHARING_PERMISSIONS)
             ->columns('shared_from_user_id AS user_id, permissions')
             ->eq('project_id', $project_id)
             ->eq('shared_to_user_id', $user_id)
@@ -445,7 +443,7 @@ class TodoNotesModel extends Base
             ->findAll();
 
         $usersAccess = array();
-        foreach ($sharing_permissions as $sharing_permission) {
+        foreach ($sharingPermissions as $sharing_permission) {
             $usersAccess[$sharing_permission['user_id']] = $sharing_permission['permissions'];
         }
 

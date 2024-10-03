@@ -28,11 +28,9 @@ $current_time = time();
 
 $isOverviewMode = ($project_id == 0); // Overview Mode
 
-$tab_id = 1;
 $projectsTabsById = array();
 foreach ($projectsAccess as $projectAccess) {
-    $projectsTabsById[ $projectAccess['project_id'] ] = array('tab_id' => $tab_id, 'name' => $projectAccess['project_name']);
-    $tab_id++;
+    $projectsTabsById[ $projectAccess['project_id'] ] = array('tab_id' => $projectAccess['tab_id'], 'name' => $projectAccess['project_name']);
 }
 //----------------------------------------
 
@@ -809,7 +807,7 @@ foreach ($data as $u) {
             print '</button>';
 
             // notes from custom lists obviously CANNOT create tasks from notes
-            if (!$project['is_custom']) {
+            if (!$projectsAccess[$projectsTabsById[$curr_project_id]['tab_id']]['is_custom']) {
                 // Add note to tasks table (in detailed view)
                 print '<button id="noteCreateTask-P' . $curr_project_id . '-' . $num . '"';
                 print ' class="hideMe toolbarButton noteCreateTask"';
