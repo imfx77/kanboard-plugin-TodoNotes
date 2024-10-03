@@ -227,16 +227,12 @@ foreach ($projectsAccess as $o) {
 
             // Share button
             print '<button id="customNoteListShareGlobal-P' . $o['project_id'] . '"';
-            print $isAdmin
-                ? ' class="toolbarButton buttonToggled customNoteListShareGlobal"'
-                : ' class="toolbarButton buttonDisabled customNoteListShareGlobal"';
-            print $isAdmin
-                ? ' title="' . t('TodoNotes__DASHBOARD_SHARE_CUSTOM_GLOBAL_LIST') . '"'
-                : ' title="' . t('TodoNotes__DASHBOARD_SHARE_CUSTOM_GLOBAL_LIST') . ' ' . t('TodoNotes__DASHBOARD_ADMIN_ONLY') . '"';
+            print ' class="toolbarButton customNoteListShareGlobal"';
+            print ' title="' . t('TodoNotes__PROJECT_SHARING_PERMISSIONS') . '"';
             print ' data-project="' . $o['project_id'] . '"';
             print ' data-user="' . $user_id . '"';
             print '>';
-            print '<i class="fa fa-share-alt" aria-hidden="true"></i>';
+            print '<a><i class="fa fa-share-alt" aria-hidden="true"></i></a>';
             print '</button>';
             //----------------------------------------
         } elseif ($o['is_owner']) {
@@ -275,7 +271,7 @@ foreach ($projectsAccess as $o) {
             // Share button
             print '<button id="customNoteListSharePrivate-P' . $o['project_id'] . '"';
             print ' class="toolbarButton customNoteListSharePrivate"';
-            print ' title="' . t('TodoNotes__DASHBOARD_SHARE_CUSTOM_PRIVATE_LIST') . '"';
+            print ' title="' . t('TodoNotes__PROJECT_SHARING_PERMISSIONS') . '"';
             print ' data-project="' . $o['project_id'] . '"';
             print ' data-user="' . $user_id . '"';
             print '>';
@@ -312,16 +308,12 @@ foreach ($projectsAccess as $o) {
 
         // Share button
         print '<button id="customNoteListShareRegular-P' . $o['project_id'] . '"';
-        print $isAdmin
-            ? ' class="toolbarButton buttonToggled customNoteListShareRegular"'
-            : ' class="toolbarButton buttonDisabled customNoteListShareRegular"';
-        print $isAdmin
-            ? ' title="' . t('TodoNotes__DASHBOARD_SHARE_CUSTOM_REGULAR_LIST') . '"'
-            : ' title="' . t('TodoNotes__DASHBOARD_SHARE_CUSTOM_REGULAR_LIST') . ' ' . t('TodoNotes__DASHBOARD_ADMIN_ONLY') . '"';
+        print ' class="toolbarButton customNoteListShareRegular"';
+        print ' title="' . t('TodoNotes__PROJECT_SHARING_PERMISSIONS') . '"';
         print ' data-project="' . $o['project_id'] . '"';
         print ' data-user="' . $user_id . '"';
         print '>';
-        print '<i class="fa fa-share-alt" aria-hidden="true"></i>';
+        print '<a><i class="fa fa-share-alt" aria-hidden="true"></i></a>';
         print '</button>';
         //----------------------------------------
     }

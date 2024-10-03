@@ -12,9 +12,16 @@ return array(
     // Template/project
     //
     'TodoNotes__PROJECT_NOT_FOUND' => '⚠️ Project NOT found!',
+    'TodoNotes__PROJECT_NO_ENTRIES' => 'No Entries!',
+    //
+    'TodoNotes__PROJECT_SHARING_PERMISSIONS' => 'Sharing Permissions',
+    'TodoNotes__PROJECT_SHARING_PERMISSIONS_OWN' => '[own]',
+    'TodoNotes__PROJECT_SHARING_PERMISSIONS_USE' => '[use]',
+    'TodoNotes__PROJECT_SHARING_PERMISSIONS_VIEW' => '[view]',
+    'TodoNotes__PROJECT_SHARING_PERMISSIONS_EDIT' => '[edit]',
+    'TodoNotes__PROJECT_SHARING_PERMISSIONS_UNKNOWN' => '[unknown]',
     //
     'TodoNotes__PROJECT_TITLE' => 'Notes',
-    'TodoNotes__PROJECT_EMPTY' => 'No Entries!',
     'TodoNotes__PROJECT_OVERVIEW_MODE_TITLE' => 'Overview Mode',
     'TodoNotes__PROJECT_OVERVIEW_MODE_TEXT' => '⚠️ ONLY manage own notes Status, Alerts and lists order!',
     'TodoNotes__PROJECT_OVERVIEW_MODE_TEXT_REORDERING_DISABLED' => '⚠️ ONLY manage own notes Status and Alerts!
@@ -102,9 +109,6 @@ Might be waiting for an unsubmitted New Note data input!',
     'TodoNotes__DASHBOARD_DELETE_CUSTOM_GLOBAL_LIST' => '⚠️ Delete custom global note list!',
     'TodoNotes__DASHBOARD_RENAME_CUSTOM_PRIVATE_LIST' => 'Rename custom private note list',
     'TodoNotes__DASHBOARD_DELETE_CUSTOM_PRIVATE_LIST' => 'Delete custom private note list',
-    'TodoNotes__DASHBOARD_SHARE_CUSTOM_GLOBAL_LIST' => '⚠️ Share custom global note list!',
-    'TodoNotes__DASHBOARD_SHARE_CUSTOM_PRIVATE_LIST' => 'Share custom private note list',
-    'TodoNotes__DASHBOARD_SHARE_CUSTOM_REGULAR_LIST' => '⚠️ Share regular note list',
     //
     'TodoNotes__DASHBOARD_OPERATION_CUSTOM_NOTE_LISTPRIVATE_SUCCESS' => 'Private custom note list operation succeeded.',
     'TodoNotes__DASHBOARD_OPERATION_CUSTOM_NOTE_LISTPRIVATE_FAILURE' => '⚠️ Private custom note list operation failed!',

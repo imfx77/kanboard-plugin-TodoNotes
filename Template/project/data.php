@@ -137,8 +137,16 @@ print $this->avatar->small(
 print '<a>'. $this->text->e($list_user_details['name'] ?: $list_user_details['username']) . '</a>';
 print '<div class="containerFloatRight">';
 print '<button class="toolbarButton">';
-print '<i class="fa fa-user-circle-o" aria-hidden="true"></i>';
+if ($isOverviewMode || $projectsAccess[$projectsTabsById[$project_id]['tab_id']]['is_owner']) {
+    print t('TodoNotes__PROJECT_SHARING_PERMISSIONS_OWN') . ' <i class="fa fa-user-circle" aria-hidden="true"></i>';
+} else {
+    print t('TodoNotes__PROJECT_SHARING_PERMISSIONS_USE') . ' <i class="fa fa-user-circle-o" aria-hidden="true"></i>';
+}
 print '</button></div></li>';
+
+// add divider between button groups
+print '<hr class="toolbarDivider">';
+print '<li><div align="center"><b>' . t('TodoNotes__PROJECT_SHARING_PERMISSIONS') . '</b></div></li>';
 
 // List of Sharing Users (if any)
 if (count($usersAccess) == 0) {
@@ -172,13 +180,13 @@ if (count($usersAccess) == 0) {
         print '<button class="toolbarButton">';
         switch($permission) {
             case $this->model->todoNotesModel::PROJECT_SHARING_PERMISSION_VIEW:
-                print '<i class="fa fa-eye" aria-hidden="true"></i>';
+                print t('TodoNotes__PROJECT_SHARING_PERMISSIONS_VIEW') . ' <i class="fa fa-eye" aria-hidden="true"></i>';
                 break;
             case $this->model->todoNotesModel::PROJECT_SHARING_PERMISSION_EDIT:
-                print '<i class="fa fa-pencil" aria-hidden="true"></i>';
+                print t('TodoNotes__PROJECT_SHARING_PERMISSIONS_EDIT') . ' <i class="fa fa-pencil" aria-hidden="true"></i>';
                 break;
             default:
-                print '<i class="fa fa-question" aria-hidden="true"></i>';
+                print t('TodoNotes__PROJECT_SHARING_PERMISSIONS_UNKNOWN') . ' <i class="fa fa-question" aria-hidden="true"></i>';
                 break;
         }
         print '</button></div></li>';
@@ -629,7 +637,7 @@ print '>';
 //----------------------------------------
 if (count($data) == 0) {
     // empty project list
-    print '<div class="spinnerMsg" align="center"><i class="fa fa-times " aria-hidden="true"></i>  ' . t('TodoNotes__PROJECT_EMPTY') . '</div>';
+    print '<div class="spinnerMsg" align="center"><i class="fa fa-times " aria-hidden="true"></i>  ' . t('TodoNotes__PROJECT_NO_ENTRIES') . '</div>';
 }
 //----------------------------------------
 

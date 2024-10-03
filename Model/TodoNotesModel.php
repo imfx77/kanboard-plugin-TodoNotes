@@ -1102,7 +1102,7 @@ class TodoNotesModel extends Base
         $selectedUser = (count($userGroup) == 1) ? $userGroup[0] : 0;
 
         // check accessibility for selected user
-        $isSelectedUserAccessible = array_key_exists($selectedUser, $usersAccess) && $usersAccess[$selectedUser]['permissions'] > self::PROJECT_SHARING_PERMISSION_NONE;
+        $isSelectedUserAccessible = array_key_exists($selectedUser, $usersAccess) && $usersAccess[$selectedUser] > self::PROJECT_SHARING_PERMISSION_NONE;
 
         // force set selected user
         if (!$isSelectedUserAccessible) {

@@ -208,12 +208,6 @@ static #TabsActionHandlers() {
 
     // share custom list (global)
     $("button" + ".customNoteListShareGlobal").click(function() {
-        const isAdmin = $("#tabId").attr('data-admin');
-        if (isAdmin !== '1') {
-            alert( _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__DASHBOARD_NO_ADMIN_PRIVILEGES') );
-            return;
-        }
-
         const user_id = $(this).attr('data-user');
         const project_id = $(this).attr('data-project');
         // const default_name = $(this).closest('.singleTab').find('a').text();
@@ -230,12 +224,6 @@ static #TabsActionHandlers() {
 
     // share regular list
     $("button" + ".customNoteListShareRegular").click(function() {
-        const isAdmin = $("#tabId").attr('data-admin');
-        if (isAdmin !== '1') {
-            alert( _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__DASHBOARD_NO_ADMIN_PRIVILEGES') );
-            return;
-        }
-
         const user_id = $(this).attr('data-user');
         const project_id = $(this).attr('data-project');
         // const default_name = $(this).closest('.singleTab').find('a').text();
