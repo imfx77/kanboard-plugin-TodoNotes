@@ -11,8 +11,13 @@ return array(
     //
     // Template/project
     //
-    'TodoNotes__PROJECT_NOT_FOUND' => '⚠️ Project NOT found!',
-    'TodoNotes__PROJECT_NO_ENTRIES' => 'No Entries!',
+    //
+    'TodoNotes__GENERIC_NO_ENTRIES' => 'No Entries!',
+    'TodoNotes__GENERIC_NO_SHARING_PERMISSIONS' => '⚠️ Current user has no Sharing permissions!',
+    'TodoNotes__GENERIC_NO_OWNER_PRIVILEGES' => '⚠️ Current user has no Owner privileges!',
+    'TodoNotes__GENERIC_NO_ADMIN_PRIVILEGES' => '⚠️ Current user has no Admin privileges!',
+    'TodoNotes__GENERIC_ADMIN_ONLY' => '(Admin only)',
+    'TodoNotes__GENERIC_INVALID_OR_EMPTY_PARAMETER' => '⚠️ There was an Invalid or Empty parameter to the request!',
     //
     'TodoNotes__PROJECT_SHARING_PERMISSIONS' => 'Sharing Permissions',
     'TodoNotes__PROJECT_SHARING_PERMISSIONS_OWN' => '[own]',
@@ -22,6 +27,7 @@ return array(
     'TodoNotes__PROJECT_SHARING_PERMISSIONS_UNKNOWN' => '[unknown]',
     //
     'TodoNotes__PROJECT_TITLE' => 'Notes',
+    'TodoNotes__PROJECT_NOT_FOUND' => '⚠️ Project NOT found!',
     'TodoNotes__PROJECT_OVERVIEW_MODE_TITLE' => 'Overview Mode',
     'TodoNotes__PROJECT_OVERVIEW_MODE_TEXT' => '⚠️ ONLY manage own notes Status, Alerts and lists order!',
     'TodoNotes__PROJECT_OVERVIEW_MODE_TEXT_REORDERING_DISABLED' => '⚠️ ONLY manage own notes Status and Alerts!
@@ -94,11 +100,6 @@ Might be waiting for an unsubmitted New Note data input!',
     'TodoNotes__DASHBOARD_LIST_GROUP_SHARED' => 'Shared Custom Lists',
     'TodoNotes__DASHBOARD_LIST_GROUP_REGULAR' => 'Regular Projects Lists',
     'TodoNotes__DASHBOARD_TOGGLE_LIST_GROUP' => 'Toggle List Group',
-    //
-    'TodoNotes__DASHBOARD_ADMIN_ONLY' => '(Admin only)',
-    'TodoNotes__DASHBOARD_NO_ADMIN_PRIVILEGES' => '⚠️ Current user has no Admin privileges!',
-    'TodoNotes__DASHBOARD_NO_OWNER_PRIVILEGES' => '⚠️ Current user has no Owner privileges!',
-    'TodoNotes__DASHBOARD_INVALID_OR_EMPTY_PARAMETER' => '⚠️ There was an Invalid or Empty parameter to the request!',
     //
     'TodoNotes__DASHBOARD_REINDEX' => '⚠️ Reindex Notes and Lists!',
     'TodoNotes__DASHBOARD_REINDEX_SUCCESS' => 'Reindexing Notes and Lists finished successfully.',

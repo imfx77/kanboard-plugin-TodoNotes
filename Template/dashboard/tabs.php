@@ -57,7 +57,7 @@ print $isAdmin
     : ' class="toolbarButton buttonDisabled"';
 print $isAdmin
     ? ' title="' . t('TodoNotes__DASHBOARD_REINDEX') . '"'
-    : ' title="' . t('TodoNotes__DASHBOARD_REINDEX') . ' ' . t('TodoNotes__DASHBOARD_ADMIN_ONLY') . '"';
+    : ' title="' . t('TodoNotes__DASHBOARD_REINDEX') . ' ' . t('TodoNotes__GENERIC_ADMIN_ONLY') . '"';
 print ' data-user="' . $user_id . '"';
 print '>';
 print '<i class="fa fa-fw fa-recycle" aria-hidden="true"></i>';
@@ -204,7 +204,7 @@ foreach ($projectsAccess as $o) {
                 : ' class="toolbarButton buttonDisabled customNoteListRenameGlobal"';
             print $isAdmin
                 ? ' title="' . t('TodoNotes__DASHBOARD_RENAME_CUSTOM_GLOBAL_LIST') . '"'
-                : ' title="' . t('TodoNotes__DASHBOARD_RENAME_CUSTOM_GLOBAL_LIST') . ' ' . t('TodoNotes__DASHBOARD_ADMIN_ONLY') . '"';
+                : ' title="' . t('TodoNotes__DASHBOARD_RENAME_CUSTOM_GLOBAL_LIST') . ' ' . t('TodoNotes__GENERIC_ADMIN_ONLY') . '"';
             print ' data-project="' . $o['project_id'] . '"';
             print ' data-user="' . $user_id . '"';
             print '>';
@@ -218,7 +218,7 @@ foreach ($projectsAccess as $o) {
                 : ' class="toolbarButton buttonDisabled customNoteListDeleteGlobal"';
             print $isAdmin
                 ? ' title="' . t('TodoNotes__DASHBOARD_DELETE_CUSTOM_GLOBAL_LIST') . '"'
-                : ' title="' . t('TodoNotes__DASHBOARD_DELETE_CUSTOM_GLOBAL_LIST') . ' ' . t('TodoNotes__DASHBOARD_ADMIN_ONLY') . '"';
+                : ' title="' . t('TodoNotes__DASHBOARD_DELETE_CUSTOM_GLOBAL_LIST') . ' ' . t('TodoNotes__GENERIC_ADMIN_ONLY') . '"';
             print ' data-project="' . $o['project_id'] . '"';
             print ' data-user="' . $user_id . '"';
             print '>';

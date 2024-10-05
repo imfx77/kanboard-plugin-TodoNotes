@@ -180,7 +180,7 @@ if (!$isOverviewMode && (!$projectAccess['is_custom'] || $projectAccess['is_glob
 
 // List of Sharing Users (if any)
     if (count($usersAccess) == 0) {
-        print '<li><div class="spinnerMsg" align="center"><i class="fa fa-times " aria-hidden="true"></i>  ' . t('TodoNotes__PROJECT_NO_ENTRIES') . '</div></li>';
+        print '<li><div class="spinnerMsg" align="center"><i class="fa fa-times " aria-hidden="true"></i>  ' . t('TodoNotes__GENERIC_NO_ENTRIES') . '</div></li>';
     } else {
         foreach ($usersAccess as $list_user_id => $permission) {
             // skip the current user, as already listed on top
@@ -675,7 +675,7 @@ print '>';
 //----------------------------------------
 if (count($data) == 0) {
     // empty project list
-    print '<div class="spinnerMsg" align="center"><i class="fa fa-times " aria-hidden="true"></i>  ' . t('TodoNotes__PROJECT_NO_ENTRIES') . '</div>';
+    print '<div class="spinnerMsg" align="center"><i class="fa fa-times " aria-hidden="true"></i>  ' . t('TodoNotes__GENERIC_NO_ENTRIES') . '</div>';
 }
 //----------------------------------------
 

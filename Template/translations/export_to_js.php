@@ -2,10 +2,10 @@
 
 // list here ALL the required translationTextIds for use with JS
 $translationTextIds = array(
+    'TodoNotes__GENERIC_NO_OWNER_PRIVILEGES',
+    'TodoNotes__GENERIC_NO_ADMIN_PRIVILEGES',
     'TodoNotes__DASHBOARD_MY_NOTES',
     'TodoNotes__DASHBOARD_ALL_TAB',
-    'TodoNotes__DASHBOARD_NO_ADMIN_PRIVILEGES',
-    'TodoNotes__DASHBOARD_NO_OWNER_PRIVILEGES',
     'TodoNotes__PROJECT_NOTE_DETAILS_SAVE_HINT',
     'TodoNotes__NOTE_DATE_CREATED',
     'TodoNotes__NOTE_DATE_MODIFIED',
