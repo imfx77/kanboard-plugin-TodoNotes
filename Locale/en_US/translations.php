@@ -26,6 +26,7 @@ return array(
     'TodoNotes__PROJECT_OVERVIEW_MODE_TEXT' => '⚠️ ONLY manage own notes Status, Alerts and lists order!',
     'TodoNotes__PROJECT_OVERVIEW_MODE_TEXT_REORDERING_DISABLED' => '⚠️ ONLY manage own notes Status and Alerts!
 ⚠️ DISABLED list reordering by Status sort!',
+    'TodoNotes__PROJECT_READONLY_MODE_TEXT' => '⚠️ ReadOnly Mode due to Sharing Permissions!',
     'TodoNotes__PROJECT_ARCHIVE_TITLE' => 'Archive',
     'TodoNotes__PROJECT_ARCHIVE_TEXT' => '⚠️ ONLY Delete or Restore archived notes!',
     'TodoNotes__PROJECT_ARCHIVE_OVERVIEW_MODE_TITLE' => 'Archive Overview Mode',
@@ -46,7 +47,7 @@ return array(
     'TodoNotes__PROJECT_TOGGLE_HIDE_STATUS_INPROGRESS' => 'Hide In Progress',
     'TodoNotes__PROJECT_TOGGLE_HIDE_STATUS_DONE' => 'Hide Done',
     'TodoNotes__PROJECT_TOGGLE_ARCHIVE_VIEW' => 'Archive View',
-    'TodoNotes__PROJECT_TOGGLE_SORT_MANUAL' => 'Manual Reorder',
+    'TodoNotes__PROJECT_TOGGLE_SORT_MANUAL' => 'Sort by Manual Order',
     'TodoNotes__PROJECT_TOGGLE_SORT_BY_STATUS' => 'Sort by Status',
     'TodoNotes__PROJECT_TOGGLE_SORT_BY_DATE_CREATED' => 'Sort by Date Created',
     'TodoNotes__PROJECT_TOGGLE_SORT_BY_DATE_MODIFIED' => 'Sort by Date Modified',

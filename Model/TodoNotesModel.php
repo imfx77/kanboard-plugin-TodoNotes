@@ -182,7 +182,7 @@ class TodoNotesModel extends Base
         $paramsSoring = $this->EvaluateSorting($project_id, $user_id);
 
         $result = $this->db->table(self::TABLE_NOTES_ENTRIES);
-        $result = $result->eq('user_id', $user_id);
+        $result = $result->eq('user_id', $selectedUser);
         $result = $result->eq('project_id', $project_id);
         $result = $result->gte('is_active', 0); // -1 == deleted
         if ($paramsSoring['asc']) {
@@ -219,7 +219,7 @@ class TodoNotesModel extends Base
         $paramsSoring = $this->EvaluateSorting(0 /*overview*/, $user_id);
 
         $result = $this->db->table(self::TABLE_NOTES_ENTRIES);
-        $result = $result->eq('user_id', $user_id);
+        $result = $result->eq('user_id', $selectedUser);
         $result = $result->in('project_id', $projectsAccessList);
         $result = $result->gte('is_active', 0); // -1 == deleted
         $result = $result->orderBy($orderCaseClause); // order notes by projects as listed in $projectsAccess
@@ -266,7 +266,7 @@ class TodoNotesModel extends Base
         $paramsSoring = $this->EvaluateSorting($project_id, $user_id);
 
         $result = $this->db->table(self::TABLE_NOTES_ARCHIVE_ENTRIES);
-        $result = $result->eq('user_id', $user_id);
+        $result = $result->eq('user_id', $selectedUser);
         $result = $result->eq('project_id', $project_id);
         $result = $result->gte('date_modified', 0); // -1 == deleted
         if ($paramsSoring['asc']) {
@@ -303,7 +303,7 @@ class TodoNotesModel extends Base
         $paramsSoring = $this->EvaluateSorting(0 /*overview*/, $user_id);
 
         $result = $this->db->table(self::TABLE_NOTES_ARCHIVE_ENTRIES);
-        $result = $result->eq('user_id', $user_id);
+        $result = $result->eq('user_id', $selectedUser);
         $result = $result->in('project_id', $projectsAccessList);
         $result = $result->gte('date_modified', 0); // -1 == deleted
         $result = $result->orderBy($orderCaseClause); // order notes by projects as listed in $projectsAccess
@@ -331,7 +331,7 @@ class TodoNotesModel extends Base
         $paramsSoring = $this->EvaluateSorting($project_id, $user_id);
 
         $result = $this->db->table(self::TABLE_NOTES_ENTRIES);
-        $result = $result->eq('user_id', $user_id);
+        $result = $result->eq('user_id', $selectedUser);
         $result = $result->eq('project_id', $project_id);
         if (!empty($category)) {
             $result = $result->eq('category', $category);
@@ -523,7 +523,7 @@ class TodoNotesModel extends Base
         return 0;
     }
 
-    // Get all user_id which have shared view/edit permissions for given project
+    // Get all owners with view/edit permissions for given project and user
     public function GetSharingPermissions($project_id, $user_id)
     {
         $sharingPermissions = $this->db->table(self::TABLE_NOTES_SHARING_PERMISSIONS)
@@ -540,6 +540,20 @@ class TodoNotesModel extends Base
         }
 
         return $usersAccess;
+    }
+
+    // Get the sharing permission for given project and user by specific owner
+    public function GetSharingPermissionsByOwner($project_id, $user_id, $owner_id)
+    {
+        $sharingPermissions = $this->db->table(self::TABLE_NOTES_SHARING_PERMISSIONS)
+            ->columns('permissions')
+            ->eq('project_id', $project_id)
+            ->eq('shared_to_user_id', $user_id)
+            ->eq('shared_from_user_id', $owner_id)
+            ->gt('permissions', self::PROJECT_SHARING_PERMISSION_NONE)
+            ->findAll();
+
+        return (count($sharingPermissions) == 1) ? $sharingPermissions[0]['permissions'] : self::PROJECT_SHARING_PERMISSION_NONE;
     }
 
     // Get a list of categories for a project

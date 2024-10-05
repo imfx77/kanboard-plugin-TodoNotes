@@ -490,8 +490,19 @@ static #NoteDetailsHandlers() {
     $("label" + ".noteNotificationsDetails").click(function() {
         const project_id = $(this).attr('data-project');
         const id = $(this).attr('data-id');
-        // just forward click handling to the noteNotificationsLabel
-        $("#noteNotificationsLabel-P" + project_id + "-" + id).trigger('click');
+        const isReadOnly = $("#refProjectId").attr('data-readonly');
+
+        if (!isReadOnly) {
+            // just forward click handling to the noteNotificationsLabel
+            $("#noteNotificationsLabel-P" + project_id + "-" + id).trigger('click');
+            return;
+        }
+
+        _TodoNotes_.#ToggleDetails(project_id, id);
+
+        setTimeout(function() {
+            _TodoNotes_.AdjustScrollableContent();
+        }, 100);
     });
 
     //------------------------------------------------
@@ -810,11 +821,15 @@ static #NoteActionHandlers() {
     $(".noteNotificationsSetup").click(function() {
         const user_id = $(this).attr('data-user');
         const project_id = $(this).attr('data-project');
-        const id = $(this).attr('data-id');
-        const notifications_alert_timestring = $(this).attr('data-notifications-alert-timestring');
-        const notifications_alert_timestamp = $(this).attr('data-notifications-alert-timestamp');
-        const notification_options_bitflags = parseInt($(this).attr('data-notifications-options-bitflags'));
-        _TodoNotes_Modals_.NotificationsSetup(project_id, id, user_id, notifications_alert_timestring, notifications_alert_timestamp, notification_options_bitflags);
+        const isReadOnly = $("#refProjectId").attr('data-readonly');
+
+        if (!isReadOnly) {
+            const id = $(this).attr('data-id');
+            const notifications_alert_timestring = $(this).attr('data-notifications-alert-timestring');
+            const notifications_alert_timestamp = $(this).attr('data-notifications-alert-timestamp');
+            const notification_options_bitflags = parseInt($(this).attr('data-notifications-options-bitflags'));
+            _TodoNotes_Modals_.NotificationsSetup(project_id, id, user_id, notifications_alert_timestring, notifications_alert_timestamp, notification_options_bitflags);
+        }
     });
 
     //------------------------------------------------
@@ -1635,9 +1650,10 @@ static ScheduleCheckModifications() {
 
         const project_id = $("#refProjectId").attr('data-project');
         const user_id = $("#refProjectId").attr('data-user');
+        const isReadOnly = $("#refProjectId").attr('data-readonly');
 
         const is_project = ($(".liNewNote").length === 1);
-        const has_new_note = (is_project && project_id !== '0' && !_TodoNotes_Settings_.showArchive);
+        const has_new_note = (is_project && project_id !== '0' && !isReadOnly && !_TodoNotes_Settings_.showArchive);
         const title = has_new_note ? $("#inputNewNote").val().trim() : '';
         const description = has_new_note ? $('[name="editorMarkdownDetailsNewNote"]').val() : '';
 

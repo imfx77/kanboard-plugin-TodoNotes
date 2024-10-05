@@ -28,11 +28,13 @@ $current_time = time();
 
 $isOverviewMode = ($project_id == 0); // Overview Mode
 
+//----------------------------------------
+
 $projectsTabsById = array();
 foreach ($projectsAccess as $projectAccess) {
     $projectsTabsById[ $projectAccess['project_id'] ] = array('tab_id' => $projectAccess['tab_id'], 'name' => $projectAccess['project_name']);
 }
-$tab_id = $isOverviewMode ? 0 : $projectsTabsById[$project_id]['tab_id'];
+$projectAccess = $isOverviewMode ? $projectsAccess[0] : $projectsAccess[$projectsTabsById[$project_id]['tab_id'] - 1];
 
 //----------------------------------------
 
@@ -94,6 +96,12 @@ if (!$is_refresh) { // print only once per project !!!
 
 require_once('settings.php');
 
+$isReadOnlyMode = false;
+if (!$isOverviewMode && $settings_selectedUser != $user_id) {
+    $sharingPermission = $this->model->todoNotesModel->GetSharingPermissionsByOwner($project_id, $user_id, $settings_selectedUser);
+    $isReadOnlyMode = ($sharingPermission != $this->model->todoNotesModel::PROJECT_SHARING_PERMISSION_EDIT);
+}
+
 //////////////////////////////////////////
 ////    NEW NOTE / OVERVIEW MODE TITLE
 //////////////////////////////////////////
@@ -123,15 +131,15 @@ print '<ul>';
 // Owner/User, always show first
 $list_user_id = 0;
 $list_user_permission = '';
-if ($isOverviewMode || $projectsAccess[$tab_id - 1]['is_owner']) {
+if ($isOverviewMode || $projectAccess['is_owner']) {
     $list_user_id = $user_id;
     $list_user_permission = t('TodoNotes__PROJECT_SHARING_PERMISSIONS_OWN') . ' <i class="fa fa-user-circle" aria-hidden="true"></i>';
-} elseif (!$projectsAccess[$tab_id - 1]['is_custom'] || $projectsAccess[$tab_id - 1]['is_global']) {
+} elseif (!$projectAccess['is_custom'] || $projectAccess['is_global']) {
     $list_user_id = $user_id;
     $list_user_permission = t('TodoNotes__PROJECT_SHARING_PERMISSIONS_USE') . ' <i class="fa fa-user-circle-o" aria-hidden="true"></i>';
 } else {
-    $list_user_id = $projectsAccess[$tab_id - 1]['owner_id'];
-    switch ($projectsAccess[$tab_id - 1]['permissions']) {
+    $list_user_id = $projectAccess['owner_id'];
+    switch ($projectAccess['permissions']) {
         case $this->model->todoNotesModel::PROJECT_SHARING_PERMISSION_VIEW:
             $list_user_permission = t('TodoNotes__PROJECT_SHARING_PERMISSIONS_VIEW') . ' <i class="fa fa-eye" aria-hidden="true"></i>';
             break;
@@ -165,7 +173,7 @@ print $list_user_permission;
 print '</button></div></li>';
 
 // Sharing Permissions for Regular and Global projects ONLY
-if (!$isOverviewMode && (!$projectsAccess[$tab_id - 1]['is_custom'] || $projectsAccess[$tab_id - 1]['is_global'])) {
+if (!$isOverviewMode && (!$projectAccess['is_custom'] || $projectAccess['is_global'])) {
 // add divider between button groups
     print '<hr class="toolbarDivider">';
     print '<li><div align="center"><b>' . t('TodoNotes__PROJECT_SHARING_PERMISSIONS') . '</b></div></li>';
@@ -525,14 +533,22 @@ if ($isOverviewMode) {
 } else {
     if ($settings_showArchive) {
         print '<label class="labelNewNote">' . t('TodoNotes__PROJECT_ARCHIVE_TITLE') . '</label>';
-        print '<span class="textNewNote">' . t('TodoNotes__PROJECT_ARCHIVE_TEXT') . '</label>';
-    } else {
-        print '<label class="labelNewNote">' . t('TodoNotes__PROJECT_NEW_NOTE_LABEL') . '</label>';
-        if ($settings_sortExplicit) {
-            print '<span class="textNewNote">' . t('TodoNotes__PROJECT_NEW_NOTE_TEXT_REORDERING_DISABLED') . '</span>';
+        print '<span class="textNewNote">';
+        if ($isReadOnlyMode) {
+            print t('TodoNotes__PROJECT_READONLY_MODE_TEXT');
         } else {
-            print '<span class="textNewNote"></span>';
+            print t('TodoNotes__PROJECT_ARCHIVE_TEXT') . '</label>';
         }
+    } else {
+        print '<label class="labelNewNote">' . (!$isReadOnlyMode ? t('TodoNotes__PROJECT_NEW_NOTE_LABEL') : '') . '</label>';
+        print '<span class="textNewNote">';
+        if ($isReadOnlyMode) {
+            print t('TodoNotes__PROJECT_READONLY_MODE_TEXT');
+        }
+        else if ($settings_sortExplicit) {
+            print t('TodoNotes__PROJECT_NEW_NOTE_TEXT_REORDERING_DISABLED');
+        }
+        print '</span>';
     }
 }
 
@@ -541,8 +557,8 @@ print '</div>'; // Title row
 // here goes the space Placeholder
 print '<div class="hideMe containerFloatClear" id="placeholderNewNote"></div>';
 
-// exclude when in Overview Mode or in Archive View
-if (!$isOverviewMode && !$settings_showArchive) {
+// exclude when in ReadOnly Mode / Overview Mode / Archive View
+if (!$isReadOnlyMode && !$isOverviewMode && !$settings_showArchive) {
     // Newline after heading and top settings
     print '<br>';
 
@@ -748,7 +764,7 @@ foreach ($data as $u) {
     print $u['category'];
     print '</label>';
 
-    // Date details
+    // Date details (in simple view)
     print '<label id="noteDatesDetails-P' . $curr_project_id . '-' . $num . '"';
     print ' class="dateLabel dateLabelClickable disableEventsPropagation noteDatesDetails"';
     if ($settings_showArchive) {
@@ -763,7 +779,7 @@ foreach ($data as $u) {
     print '<i class="fa fa-calendar-check-o" aria-hidden="true"></i>';
     print '</label>';
 
-    // Notifications details
+    // Notifications details (in simple view)
     $hasNotifications = ($u['notifications_alert_timestamp'] > 0);
     $noteNotificationsStyleExtra = '';
     // Expired notifications
@@ -790,8 +806,8 @@ foreach ($data as $u) {
 
     print '</span>'; // Note Label Toolbar
 
-    // disable reorder related functionality in Archive View
-    if (!$settings_showArchive) {
+    // disable reorder related functionality in ReadOnly Mode and Archive View
+    if (!$isReadOnlyMode && !$settings_showArchive) {
         // Refresh order button (shown on changed status in explicit sort mode only)
         print '<button id="noteRefreshOrder-P' . $curr_project_id . '-' . $num . '"';
         print ' class="hideMe toolbarButton buttonToggled buttonBigger disableEventsPropagation noteRefreshOrder"';
@@ -809,9 +825,8 @@ foreach ($data as $u) {
         print '</button>';
     }
 
-    // hide all the utility buttons when viewing notes as readonly
-    // just allow for note status change
-    if (!$isOverviewMode) {
+    // hide all the utility buttons when viewing notes in ReadOnly Mode / Overview Mode
+    if (!$isReadOnlyMode && !$isOverviewMode) {
         // hide some utility buttons in Archive View
         if (!$settings_showArchive) {
             // Link button (in detailed view)
@@ -936,6 +951,9 @@ foreach ($data as $u) {
         print ' data-id="' . $num . '"';
         print ' data-project="' . $curr_project_id . '"';
         print ' data-user="' . $user_id . '"';
+        if ($isReadOnlyMode || $settings_showArchive) {
+            print ' disabled';
+        }
         print '>';
         print '<i id="noteCheckmark-P' . $curr_project_id . '-' . $num . '"';
         print ' data-id="' . $isNoteActive . '"';
@@ -959,7 +977,7 @@ foreach ($data as $u) {
         print ' data-id="' . $num . '"';
         print ' data-project="' . $curr_project_id . '"';
         print ' data-user="' . $user_id . '"';
-        if ($isOverviewMode) {
+        if ($isReadOnlyMode || $isOverviewMode || $settings_showArchive) {
             print ' disabled';
         }
         print '>';
@@ -976,7 +994,7 @@ foreach ($data as $u) {
     print ' data-id="' . $num . '"';
     print ' data-project="' . $curr_project_id . '"';
     print ' data-user="' . $user_id . '"';
-    if ($isOverviewMode || $settings_showArchive) {
+    if ($isReadOnlyMode || $isOverviewMode || $settings_showArchive) {
         print ' data-disabled="true"';
     }
     print '>';
@@ -1004,12 +1022,12 @@ foreach ($data as $u) {
     print ' data-id="' . $num . '"';
     print ' data-project="' . $curr_project_id . '"';
     print ' data-user="' . $user_id . '"';
-    if ($isOverviewMode || $settings_showArchive) {
+    if ($isReadOnlyMode || $isOverviewMode || $settings_showArchive) {
         print ' disabled';
     }
     print '>';
 
-    if ($isOverviewMode || $settings_showArchive) {
+    if ($isReadOnlyMode || $isOverviewMode || $settings_showArchive) {
         // just preserve the existing category data from the note
         print '<option selected="selected">' . $u['category'] . '</option>';
     } else {
@@ -1085,7 +1103,7 @@ foreach ($data as $u) {
     // Markdown Details
     print '<div class="containerFloatClear">';
 
-    if (!$isOverviewMode && !$settings_showArchive) {
+    if (!$isReadOnlyMode && !$isOverviewMode && !$settings_showArchive) {
         // here goes the Note Edit Button
         print '<div class="containerNoWrap buttonEditMarkdown disableEventsPropagation">';
 
@@ -1104,7 +1122,7 @@ foreach ($data as $u) {
     }
 
     // Markdown Preview
-    if ((!$isOverviewMode && !$settings_showArchive) || !empty($u['description'])) {
+    if ((!$isReadOnlyMode && !$isOverviewMode && !$settings_showArchive) || !empty($u['description'])) {
         print '<div id="noteMarkdownDetails-P' . $curr_project_id . '-' . $num . '_Preview"';
         print ' class="markdown noteDetailsMarkdown disableEventsPropagation';
         if (!$settings_showArchive && $u['is_active'] == 0) {
@@ -1122,7 +1140,7 @@ foreach ($data as $u) {
     }
 
     // Markdown Editor
-    if (!$isOverviewMode && !$settings_showArchive) {
+    if (!$isReadOnlyMode && !$isOverviewMode && !$settings_showArchive) {
         print '<div id="noteMarkdownDetails-P' . $curr_project_id . '-' . $num . '_Editor"';
         print ' class="hideMe noteDetailsMarkdown noteEditorMarkdown disableEventsPropagation"';
         print ' data-id="' . $num . '"';
@@ -1160,6 +1178,7 @@ print '</div>'; // scrollableContent
 print '<div class="hideMe" id="refProjectId"';
 print ' data-user="' . $user_id . '"';
 print ' data-project="' . $project_id . '"';
+print ' data-readonly="' . $isReadOnlyMode . '"';
 print ' data-note="' . (isset($note_id) ? $note_id : 0) . '"';
 print ' data-timestamp="' . $current_time . '"';
 print '></div>';

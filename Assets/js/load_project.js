@@ -23,6 +23,7 @@ static #prepareDocument_ConfigureDashboardHandlers(skipDashboardHandlers = false
 
     const project_id = $("#refProjectId").attr('data-project');
     const user_id = $("#refProjectId").attr('data-user');
+    const isReadOnly = $("#refProjectId").attr('data-readonly');
     const isMobile = _TodoNotes_.IsMobile();
     const readonlyNotes = (project_id === '0'); // Overview Mode
 
@@ -31,7 +32,7 @@ static #prepareDocument_ConfigureDashboardHandlers(skipDashboardHandlers = false
     $('.input-addon-item').addClass( 'hideMe' );
 
     // notes reordering is disabled when in Archive View or explicitly sorted by Status
-    if (!_TodoNotes_Settings_.showArchive && _TodoNotes_Settings_.sortManual) {
+    if (!isReadOnly && !_TodoNotes_Settings_.showArchive && _TodoNotes_Settings_.sortManual) {
         $(".sortableList").each(function() {
             const sortable_project_id = $(this).attr('data-project');
 
