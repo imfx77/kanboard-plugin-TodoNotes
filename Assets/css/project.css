@@ -295,7 +295,13 @@ label {
 }
 
 .buttonDisabled {
+    cursor: default;
     color: rgba(136, 136, 136, .3) !important;
+}
+
+.buttonNonClickable {
+    cursor: default;
+    color: #CD650A !important;
 }
 
 .buttonBigger {

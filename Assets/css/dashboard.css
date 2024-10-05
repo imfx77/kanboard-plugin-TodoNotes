@@ -58,6 +58,10 @@
     text-align: right;
 }
 
+.localTableCellExpandRight button div img{
+    vertical-align: middle;
+}
+
 .ulLists li {
     min-height: 16px;
 }

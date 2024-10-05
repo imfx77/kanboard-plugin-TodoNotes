@@ -61,7 +61,40 @@ class TodoNotesModel extends Base
         return true;
     }
 
-    // Check global project
+    // Check regular project
+    public function IsRegularProject($project_id): bool
+    {
+        if ($project_id <= 0) { // regular projects have positive Ids
+            return false;
+        }
+        $result = $this->db->table(self::TABLE_PROJECTS)
+            ->eq('id', $project_id)
+            ->eq('is_active', 1)
+            ->findOneColumn('id');
+
+        if ($result == $project_id) {
+            return true;
+        }
+        return false;
+    }
+
+    // Check custom project
+    public function IsCustomProject($project_id): bool
+    {
+        if ($project_id >= 0) { // custom projects have negative Ids
+            return false;
+        }
+        $result = $this->db->table(self::TABLE_NOTES_CUSTOM_PROJECTS)
+            ->eq('id', -$project_id)
+            ->findOneColumn('id');
+
+        if ($result == -$project_id) {
+            return true;
+        }
+        return false;
+    }
+
+    // Check custom global project
     public function IsCustomGlobalProject($project_id): bool
     {
         if ($project_id >= 0) { // custom projects have negative Ids
@@ -72,6 +105,22 @@ class TodoNotesModel extends Base
             ->findOneColumn('owner_id');
 
         if ($result == 0) {
+            return true;
+        }
+        return false;
+    }
+
+    // Check custom private project
+    public function IsCustomPrivateProject($project_id): bool
+    {
+        if ($project_id >= 0) { // custom projects have negative Ids
+            return false;
+        }
+        $result = $this->db->table(self::TABLE_NOTES_CUSTOM_PROJECTS)
+            ->eq('id', -$project_id)
+            ->findOneColumn('owner_id');
+
+        if ($result != 0) {
             return true;
         }
         return false;
@@ -127,9 +176,9 @@ class TodoNotesModel extends Base
     }
 
     // Get notes related to user and project
-    public function GetProjectNotesForUser($project_id, $user_id, $usersAccess)
+    public function GetProjectNotesForUser($project_id, $user_id, $projectsAccess, $usersAccess)
     {
-        $selectedUser = $this->EvaluateSharing($project_id, $user_id, $usersAccess);
+        $selectedUser = $this->EvaluateSharing($project_id, $user_id, $projectsAccess, $usersAccess);
         $paramsSoring = $this->EvaluateSorting($project_id, $user_id);
 
         $result = $this->db->table(self::TABLE_NOTES_ENTRIES);
@@ -166,7 +215,7 @@ class TodoNotesModel extends Base
         }
         $orderCaseClause .= ' END';
 
-        $selectedUser = $this->EvaluateSharing(0 /*overview*/, $user_id, array() /*no user sharing*/);
+        $selectedUser = $this->EvaluateSharing(0 /*overview*/, $user_id, $projectsAccess, array() /*no user sharing*/);
         $paramsSoring = $this->EvaluateSorting(0 /*overview*/, $user_id);
 
         $result = $this->db->table(self::TABLE_NOTES_ENTRIES);
@@ -211,9 +260,9 @@ class TodoNotesModel extends Base
     }
 
     // Get archived notes related to user and project
-    public function GetArchivedProjectNotesForUser($project_id, $user_id, $usersAccess)
+    public function GetArchivedProjectNotesForUser($project_id, $user_id, $projectsAccess, $usersAccess)
     {
-        $selectedUser = $this->EvaluateSharing($project_id, $user_id, $usersAccess);
+        $selectedUser = $this->EvaluateSharing($project_id, $user_id, $projectsAccess, $usersAccess);
         $paramsSoring = $this->EvaluateSorting($project_id, $user_id);
 
         $result = $this->db->table(self::TABLE_NOTES_ARCHIVE_ENTRIES);
@@ -250,7 +299,7 @@ class TodoNotesModel extends Base
         }
         $orderCaseClause .= ' END';
 
-        $selectedUser = $this->EvaluateSharing(0 /*overview*/, $user_id, array() /*no user sharing*/);
+        $selectedUser = $this->EvaluateSharing(0 /*overview*/, $user_id, $projectsAccess, array() /*no user sharing*/);
         $paramsSoring = $this->EvaluateSorting(0 /*overview*/, $user_id);
 
         $result = $this->db->table(self::TABLE_NOTES_ARCHIVE_ENTRIES);
@@ -276,9 +325,9 @@ class TodoNotesModel extends Base
     }
 
     // Get notes related to user project report
-    public function GetReportNotesForUser($project_id, $user_id, $usersAccess, $category)
+    public function GetReportNotesForUser($project_id, $user_id, $projectsAccess, $usersAccess, $category)
     {
-        $selectedUser = $this->EvaluateSharing($project_id, $user_id, $usersAccess);
+        $selectedUser = $this->EvaluateSharing($project_id, $user_id, $projectsAccess, $usersAccess);
         $paramsSoring = $this->EvaluateSorting($project_id, $user_id);
 
         $result = $this->db->table(self::TABLE_NOTES_ENTRIES);
@@ -387,10 +436,52 @@ class TodoNotesModel extends Base
         return $projectIdsPrivate;
     }
 
+    // Get all project_id where the user has custom Shared access
+    private function GetCustomSharedProjectIds($user_id)
+    {
+        $sharingPermissions = $this->db->table(self::TABLE_NOTES_SHARING_PERMISSIONS)
+            ->columns('project_id', 'permissions')
+            ->eq('shared_to_user_id', $user_id)
+            ->gt('permissions', self::PROJECT_SHARING_PERMISSION_NONE)
+            ->findAll();
+
+        $projectsSharedList = array();
+        $projectsSharedMap = array();
+        foreach ($sharingPermissions as $u) {
+            if (!array_key_exists($u['project_id'], $projectsSharedMap)) {
+                $projectsSharedList[] = -$u['project_id'];
+                $projectsSharedMap[$u['project_id']] = $u['permissions'];
+            }
+        }
+
+        $projectIdsShared = $this->db->table(self::TABLE_NOTES_CUSTOM_PROJECTS)
+            ->columns('id AS project_id', 'project_name', 'owner_id')
+            ->in('project_id', $projectsSharedList)
+            ->neq('owner_id', 0)        // exclude GLOBAL custom projects
+            ->neq('owner_id', $user_id) // exclude PRIVATE custom projects, managed by this user
+            ->asc('owner_id')
+            ->asc('position')
+            ->findAll();
+
+        foreach ($projectIdsShared as &$projectId) {
+            $projectId['project_id'] = -$projectId['project_id']; // custom project Ids are denoted as NEGATIVE values !!!
+            $projectId['is_custom'] = true;
+            $projectId['is_global'] = false;
+            $projectId['is_owner'] = false;
+            $projectId['permissions'] = $projectsSharedMap[$projectId['project_id']];
+        }
+
+        return $projectIdsShared;
+    }
+
     // Get all project_id where user has custom access
     private function GetCustomProjectIds($user_id)
     {
-        return array_merge($this->GetCustomGlobalProjectIds(), $this->GetCustomPrivateProjectIds($user_id));
+        return array_merge(
+            $this->GetCustomGlobalProjectIds(),
+            $this->GetCustomPrivateProjectIds($user_id),
+            $this->GetCustomSharedProjectIds($user_id)
+        );
     }
 
     // Get all project_id where user has regular or custom access
@@ -414,6 +505,7 @@ class TodoNotesModel extends Base
         $numProjects[self::PROJECT_TYPE_NATIVE] = count($this->GetRegularProjectIds($user_id));
         $numProjects[self::PROJECT_TYPE_CUSTOM_GLOBAL] = count($this->GetCustomGlobalProjectIds());
         $numProjects[self::PROJECT_TYPE_CUSTOM_PRIVATE] = count($this->GetCustomPrivateProjectIds($user_id));
+        $numProjects[self::PROJECT_TYPE_CUSTOM_SHARED] = count($this->GetCustomSharedProjectIds($user_id));
         return $numProjects;
     }
 
@@ -1089,7 +1181,7 @@ class TodoNotesModel extends Base
         );
     }
 
-    private function EvaluateSharing($project_id, $user_id, $usersAccess)
+    private function EvaluateSharing($project_id, $user_id, $projectsAccess, $usersAccess)
     {
         $todonotesSettingsHelper = $this->helper->todonotesSessionAndCookiesSettingsHelper;
         $todonotesSettingsHelper->SyncSettingsToSession($user_id, $project_id);
@@ -1106,14 +1198,31 @@ class TodoNotesModel extends Base
 
         // force set selected user
         if (!$isSelectedUserAccessible) {
+            // search requested project VS access
+            foreach ($projectsAccess as $projectAccess) {
+                if ($project_id == $projectAccess['project_id']) {
+                    break;
+                }
+            }
+
+            // if requested project is a shared one, switch to its owner user
+            if ($projectAccess['project_id'] == $project_id
+                && $projectAccess['is_custom']
+                && !$projectAccess['is_global']
+                && !$projectAccess['is_owner']
+            ) {
+                $selectedUser = $projectAccess['owner_id'];
+            } else {
+                $selectedUser = $user_id;
+            }
+
             $todonotesSettingsHelper->ToggleSettings(
                 $user_id,
                 $project_id,
                 $todonotesSettingsHelper::SETTINGS_GROUP_USER,
-                $user_id,
+                $selectedUser,
                 true /*settings_exclusive*/
             );
-            $selectedUser = $user_id;
         }
 
         return $selectedUser;

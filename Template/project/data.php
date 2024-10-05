@@ -32,6 +32,8 @@ $projectsTabsById = array();
 foreach ($projectsAccess as $projectAccess) {
     $projectsTabsById[ $projectAccess['project_id'] ] = array('tab_id' => $projectAccess['tab_id'], 'name' => $projectAccess['project_name']);
 }
+$tab_id = $isOverviewMode ? 0 : $projectsTabsById[$project_id]['tab_id'];
+
 //----------------------------------------
 
 $listCategoriesById = '';
@@ -118,13 +120,35 @@ print '</a></button>';
 
 print '<ul>';
 
-// Current User, always show first
-$list_user_details = $this->model->userModel->getById($user_id);
-print '<li class="settingsListUser" id="settingsListUser-' . $user_id . '"';
+// Owner/User, always show first
+$list_user_id = 0;
+$list_user_permission = '';
+if ($isOverviewMode || $projectsAccess[$tab_id - 1]['is_owner']) {
+    $list_user_id = $user_id;
+    $list_user_permission = t('TodoNotes__PROJECT_SHARING_PERMISSIONS_OWN') . ' <i class="fa fa-user-circle" aria-hidden="true"></i>';
+} elseif (!$projectsAccess[$tab_id - 1]['is_custom'] || $projectsAccess[$tab_id - 1]['is_global']) {
+    $list_user_id = $user_id;
+    $list_user_permission = t('TodoNotes__PROJECT_SHARING_PERMISSIONS_USE') . ' <i class="fa fa-user-circle-o" aria-hidden="true"></i>';
+} else {
+    $list_user_id = $projectsAccess[$tab_id - 1]['owner_id'];
+    switch ($projectsAccess[$tab_id - 1]['permissions']) {
+        case $this->model->todoNotesModel::PROJECT_SHARING_PERMISSION_VIEW:
+            $list_user_permission = t('TodoNotes__PROJECT_SHARING_PERMISSIONS_VIEW') . ' <i class="fa fa-eye" aria-hidden="true"></i>';
+            break;
+        case $this->model->todoNotesModel::PROJECT_SHARING_PERMISSION_EDIT:
+            $list_user_permission = t('TodoNotes__PROJECT_SHARING_PERMISSIONS_EDIT') . ' <i class="fa fa-pencil" aria-hidden="true"></i>';
+            break;
+        default:
+            $list_user_permission = t('TodoNotes__PROJECT_SHARING_PERMISSIONS_UNKNOWN') . ' <i class="fa fa-question" aria-hidden="true"></i>';
+            break;
+    }
+}
+$list_user_details = $this->model->userModel->getById($list_user_id);
+print '<li class="settingsListUser" id="settingsListUser-' . $list_user_id . '"';
 print ' data-id="0"';
 print ' data-project="' . $project_id . '"';
 print ' data-user="' .  $user_id . '"';
-print ' data-list-user="' .  $user_id . '"';
+print ' data-list-user="' .  $list_user_id . '"';
 print '>';
 print $this->avatar->small(
     $list_user_details['id'],
@@ -137,62 +161,60 @@ print $this->avatar->small(
 print '<a>'. $this->text->e($list_user_details['name'] ?: $list_user_details['username']) . '</a>';
 print '<div class="containerFloatRight">';
 print '<button class="toolbarButton">';
-if ($isOverviewMode || $projectsAccess[$projectsTabsById[$project_id]['tab_id']]['is_owner']) {
-    print t('TodoNotes__PROJECT_SHARING_PERMISSIONS_OWN') . ' <i class="fa fa-user-circle" aria-hidden="true"></i>';
-} else {
-    print t('TodoNotes__PROJECT_SHARING_PERMISSIONS_USE') . ' <i class="fa fa-user-circle-o" aria-hidden="true"></i>';
-}
+print $list_user_permission;
 print '</button></div></li>';
 
+// Sharing Permissions for Regular and Global projects ONLY
+if (!$isOverviewMode && (!$projectsAccess[$tab_id - 1]['is_custom'] || $projectsAccess[$tab_id - 1]['is_global'])) {
 // add divider between button groups
-print '<hr class="toolbarDivider">';
-print '<li><div align="center"><b>' . t('TodoNotes__PROJECT_SHARING_PERMISSIONS') . '</b></div></li>';
+    print '<hr class="toolbarDivider">';
+    print '<li><div align="center"><b>' . t('TodoNotes__PROJECT_SHARING_PERMISSIONS') . '</b></div></li>';
 
 // List of Sharing Users (if any)
-if (count($usersAccess) == 0) {
-    print '<li><div class="spinnerMsg" align="center"><i class="fa fa-times " aria-hidden="true"></i>  ' . t('TodoNotes__PROJECT_NO_ENTRIES') . '</div></li>';
-} else {
-    foreach ($usersAccess as $list_user_id => $permission) {
-        // skip the current user, as already listed on top
-        // shouldn't appear in this list but anyway check it
-        if ($list_user_id == $user_id) {
-            continue;
-        }
+    if (count($usersAccess) == 0) {
+        print '<li><div class="spinnerMsg" align="center"><i class="fa fa-times " aria-hidden="true"></i>  ' . t('TodoNotes__PROJECT_NO_ENTRIES') . '</div></li>';
+    } else {
+        foreach ($usersAccess as $list_user_id => $permission) {
+            // skip the current user, as already listed on top
+            // shouldn't appear in this list but anyway check it
+            if ($list_user_id == $user_id) {
+                continue;
+            }
 
-        // Accessible User
-        $list_user_details = $this->model->userModel->getById($list_user_id);
-        print '<li class="settingsListUser" id="settingsListUser-' . $list_user_id . '"';
-        print ' data-id="0"';
-        print ' data-project="' . $project_id . '"';
-        print ' data-user="' .  $user_id . '"';
-        print ' data-list-user="' .  $list_user_id . '"';
-        print '>';
-        print $this->avatar->small(
-            $list_user_details['id'],
-            $list_user_details['username'],
-            $list_user_details['name'],
-            $list_user_details['email'],
-            $list_user_details['avatar_path'],
-            'avatar-inline'
-        );
-        print '<a>'. $this->text->e($list_user_details['name'] ?: $list_user_details['username']) . '</a>';
-        print '<div class="containerFloatRight">';
-        print '<button class="toolbarButton">';
-        switch($permission) {
-            case $this->model->todoNotesModel::PROJECT_SHARING_PERMISSION_VIEW:
-                print t('TodoNotes__PROJECT_SHARING_PERMISSIONS_VIEW') . ' <i class="fa fa-eye" aria-hidden="true"></i>';
-                break;
-            case $this->model->todoNotesModel::PROJECT_SHARING_PERMISSION_EDIT:
-                print t('TodoNotes__PROJECT_SHARING_PERMISSIONS_EDIT') . ' <i class="fa fa-pencil" aria-hidden="true"></i>';
-                break;
-            default:
-                print t('TodoNotes__PROJECT_SHARING_PERMISSIONS_UNKNOWN') . ' <i class="fa fa-question" aria-hidden="true"></i>';
-                break;
+            // Accessible User
+            $list_user_details = $this->model->userModel->getById($list_user_id);
+            print '<li class="settingsListUser" id="settingsListUser-' . $list_user_id . '"';
+            print ' data-id="0"';
+            print ' data-project="' . $project_id . '"';
+            print ' data-user="' . $user_id . '"';
+            print ' data-list-user="' . $list_user_id . '"';
+            print '>';
+            print $this->avatar->small(
+                $list_user_details['id'],
+                $list_user_details['username'],
+                $list_user_details['name'],
+                $list_user_details['email'],
+                $list_user_details['avatar_path'],
+                'avatar-inline'
+            );
+            print '<a>' . $this->text->e($list_user_details['name'] ?: $list_user_details['username']) . '</a>';
+            print '<div class="containerFloatRight">';
+            print '<button class="toolbarButton">';
+            switch ($permission) {
+                case $this->model->todoNotesModel::PROJECT_SHARING_PERMISSION_VIEW:
+                    print t('TodoNotes__PROJECT_SHARING_PERMISSIONS_VIEW') . ' <i class="fa fa-eye" aria-hidden="true"></i>';
+                    break;
+                case $this->model->todoNotesModel::PROJECT_SHARING_PERMISSION_EDIT:
+                    print t('TodoNotes__PROJECT_SHARING_PERMISSIONS_EDIT') . ' <i class="fa fa-pencil" aria-hidden="true"></i>';
+                    break;
+                default:
+                    print t('TodoNotes__PROJECT_SHARING_PERMISSIONS_UNKNOWN') . ' <i class="fa fa-question" aria-hidden="true"></i>';
+                    break;
+            }
+            print '</button></div></li>';
         }
-        print '</button></div></li>';
     }
 }
-
 
 print '</ul>';
 print '</div>'; // Settings User
@@ -663,7 +685,7 @@ foreach ($data as $u) {
             $projectsTabsById[ $last_project_id ]['name'],
             'TodoNotesController',
             'ShowDashboard',
-            array('plugin' => 'TodoNotes', 'user_id' => $user_id, 'tab_id' => $projectsTabsById[ $last_project_id ]['tab_id']),
+            array('plugin' => 'TodoNotes', 'user_id' => $user_id, 'tab_id' => $projectsTabsById[$last_project_id]['tab_id']),
         );
         // collapse/expand project button
         print '<div class="containerNoWrap containerFloatRight">';
@@ -815,7 +837,7 @@ foreach ($data as $u) {
             print '</button>';
 
             // notes from custom lists obviously CANNOT create tasks from notes
-            if (!$projectsAccess[$projectsTabsById[$curr_project_id]['tab_id']]['is_custom']) {
+            if (!$projectsAccess[$projectsTabsById[$curr_project_id]['tab_id'] - 1]['is_custom']) {
                 // Add note to tasks table (in detailed view)
                 print '<button id="noteCreateTask-P' . $curr_project_id . '-' . $num . '"';
                 print ' class="hideMe toolbarButton noteCreateTask"';

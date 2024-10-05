@@ -278,6 +278,41 @@ foreach ($projectsAccess as $o) {
             print '<a><i class="fa fa-share-alt" aria-hidden="true"></i></a>';
             print '</button>';
             //----------------------------------------
+        } elseif (!$o['is_owner']) {
+            // managing custom SHARED lists is available to each user ONLY for PRIVATE custom lists owned and shared by other users
+            //----------------------------------------
+
+            // button space
+            print '<button class="toolbarSeparator">&nbsp;</button>';
+
+            // Permissions icon
+            print '<button class="toolbarButton buttonNonClickable">';
+            switch($o['permissions']) {
+                case $this->model->todoNotesModel::PROJECT_SHARING_PERMISSION_VIEW:
+                    print '<i class="fa fa-eye" aria-hidden="true" title="' . t('TodoNotes__PROJECT_SHARING_PERMISSIONS_VIEW') . '"></i>';
+                    break;
+                case $this->model->todoNotesModel::PROJECT_SHARING_PERMISSION_EDIT:
+                    print '<i class="fa fa-pencil" aria-hidden="true" title="' . t('TodoNotes__PROJECT_SHARING_PERMISSIONS_EDIT') . '"></i>';
+                    break;
+                default:
+                    print '<i class="fa fa-question" aria-hidden="true" title="' . t('TodoNotes__PROJECT_SHARING_PERMISSIONS_UNKNOWN') . '"></i>';
+                    break;
+            }
+            print '</button>';
+
+            // Owner avatar
+            print '<button class="toolbarButton buttonDisabled">';
+            $owner_details = $this->model->userModel->getById($o['owner_id']);
+            print $this->avatar->small(
+                $owner_details['id'],
+                $owner_details['username'],
+                $owner_details['name'],
+                $owner_details['email'],
+                $owner_details['avatar_path'],
+                'avatar-inline'
+            );
+            print '</button>';
+            //----------------------------------------
         }
     } else {
         // shortcut buttons for regular projects ONLY
