@@ -184,6 +184,7 @@ static CreateTaskFromNote(project_id, user_id, id, is_active, title, description
         resizable: false,
         height: "auto",
         modal: true,
+        title: _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__PROJECT_NOTE_CREATE_TASK'),
         buttons: [
             {
                 text : _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_DIALOG_CREATE_BTN'),

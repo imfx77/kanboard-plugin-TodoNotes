@@ -7,6 +7,7 @@ $translationTextIds = array(
     'TodoNotes__DASHBOARD_MY_NOTES',
     'TodoNotes__DASHBOARD_ALL_TAB',
     'TodoNotes__PROJECT_NOTE_DETAILS_SAVE_HINT',
+    'TodoNotes__PROJECT_NOTE_CREATE_TASK',
     'TodoNotes__NOTE_DATE_CREATED',
     'TodoNotes__NOTE_DATE_MODIFIED',
     'TodoNotes__NOTE_DATE_ARCHIVED',

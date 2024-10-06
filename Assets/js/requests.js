@@ -253,8 +253,12 @@ static UpdateNoteNotificationsAlertTimeAndOptions(project_id, user_id, id, notif
             + '&notification_options_bitflags=' + notification_options_bitflags,
         success: function(response) {
             const notificationsAlertTimeAndOptions = JSON.parse(response);
-            _TodoNotes_.RefreshNoteNotificationsAlertTimeAndOptions(notificationsAlertTimeAndOptions, project_id, id);
-            _TodoNotes_.RefreshNoteNotificationsState(project_id, id);
+            if (notificationsAlertTimeAndOptions.timestamp >= 0) {
+                _TodoNotes_.RefreshNoteNotificationsAlertTimeAndOptions(notificationsAlertTimeAndOptions, project_id, id);
+                _TodoNotes_.RefreshNoteNotificationsState(project_id, id);
+            } else {
+                _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
+            }
         },
         error: function(xhr,textStatus,e) {
             alert('_TodoNotes_Requests_.UpdateNoteNotificationsAlertTimeAndOptions');

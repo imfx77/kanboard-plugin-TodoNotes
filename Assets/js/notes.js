@@ -130,8 +130,10 @@ static #showTitleInput(project_id, id, show_title_input) {
         noteTitleLabel.addClass( 'hideMe' );
         noteTitleInput.removeClass( 'hideMe' );
         noteTitleInput.focus();
-        noteTitleInput[0].selectionStart = 0;
-        noteTitleInput[0].selectionEnd = 0;
+        if (noteTitleInput.length > 0) {
+            noteTitleInput[0].selectionStart = 0;
+            noteTitleInput[0].selectionEnd = 0;
+        }
 
         const liNote = noteTitleInput.parent().parent();
         let inputWidth = liNote.width() - $("#buttonStatus-P" + project_id + "-" + id).outerWidth() - 20;

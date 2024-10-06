@@ -466,7 +466,7 @@ print '><button class="toolbarButton">';
 print '<i class="fa fa-minus-square" aria-hidden="true"></i>';
 print '</button><a>&nbsp;&nbsp;' . t('TodoNotes__PROJECT_COLLAPSE_ALL_NOTES') . '</a></li>';
 
-// exclude when in Overview Mode or in Archive View
+// exclude when in Overview Mode / Archive View
 if (!$isOverviewMode && !$settings_showArchive) {
     // add divider between button groups
     print '<hr class="toolbarDivider">';
@@ -489,27 +489,30 @@ if (!$isOverviewMode && !$settings_showArchive) {
     print '<i class="fa fa-file-text" aria-hidden="true"></i>';
     print '</button><a>&nbsp;&nbsp;' . t('TodoNotes__PROJECT_CREATE_REPORT') . '</a></li>';
 
-    // add divider between button groups
-    print '<hr class="toolbarDivider">';
+    // exclude when in ReadOnly Mode
+    if (!$isReadOnlyMode) {
+        // add divider between button groups
+        print '<hr class="toolbarDivider">';
 
-    // Settings archive all done
-    print '<li class="settingsArchiveAllDone"';
-    print ' data-id="0"';
-    print ' data-project="' . $project_id . '"';
-    print ' data-user="' . $user_id . '"';
-    print '><button class="toolbarButton">';
-    print '<i class="fa fa-file-archive-o" aria-hidden="true"></i>';
-    print'</button><a>&nbsp;&nbsp;' . t('TodoNotes__PROJECT_ARCHIVE_ALL_DONE_NOTES') . '</a></li>';
+        // Settings archive all done
+        print '<li class="settingsArchiveAllDone"';
+        print ' data-id="0"';
+        print ' data-project="' . $project_id . '"';
+        print ' data-user="' . $user_id . '"';
+        print '><button class="toolbarButton">';
+        print '<i class="fa fa-file-archive-o" aria-hidden="true"></i>';
+        print'</button><a>&nbsp;&nbsp;' . t('TodoNotes__PROJECT_ARCHIVE_ALL_DONE_NOTES') . '</a></li>';
 
-    // Settings delete all done
-    print '<li class="settingsDeleteAllDone"';
-    print ' data-id="0"';
-    print ' data-project="' . $project_id . '"';
-    print ' data-user="' . $user_id . '"';
-    print '><button class="toolbarButton">';
-    print '<i class="fa fa-trash" aria-hidden="true"></i>';
-    print'</button><a>&nbsp;&nbsp;' . t('TodoNotes__PROJECT_DELETE_ALL_DONE_NOTES') . '</a></li>';
-} // end exclude in Overview Mode
+        // Settings delete all done
+        print '<li class="settingsDeleteAllDone"';
+        print ' data-id="0"';
+        print ' data-project="' . $project_id . '"';
+        print ' data-user="' . $user_id . '"';
+        print '><button class="toolbarButton">';
+        print '<i class="fa fa-trash" aria-hidden="true"></i>';
+        print'</button><a>&nbsp;&nbsp;' . t('TodoNotes__PROJECT_DELETE_ALL_DONE_NOTES') . '</a></li>';
+    } // end exclude
+} // end exclude
 
 print '</ul>';
 print '</div>'; // Settings Actions
@@ -840,30 +843,33 @@ foreach ($data as $u) {
             print '<i class="fa fa-link" aria-hidden="true"></i>';
             print '</button>';
 
-            // Transfer button (in detailed view)
-            print '<button id="noteTransfer-P' . $curr_project_id . '-' . $num . '"';
-            print ' class="hideMe toolbarButton noteTransfer"';
-            print ' title="' . t('TodoNotes__PROJECT_NOTE_MOVE_TO_PROJECT') . '"';
-            print ' data-id="' . $num . '"';
-            print ' data-project="' . $curr_project_id . '"';
-            print ' data-user="' . $user_id . '"';
-            print '>';
-            print '<i class="fa fa-exchange" aria-hidden="true"></i>';
-            print '</button>';
-
-            // notes from custom lists obviously CANNOT create tasks from notes
-            if (!$projectsAccess[$projectsTabsById[$curr_project_id]['tab_id'] - 1]['is_custom']) {
-                // Add note to tasks table (in detailed view)
-                print '<button id="noteCreateTask-P' . $curr_project_id . '-' . $num . '"';
-                print ' class="hideMe toolbarButton noteCreateTask"';
-                print ' title="' . t('TodoNotes__PROJECT_NOTE_CREATE_TASK') . '"';
+            // exclude Transfer/CreateTask in shared mode
+            if ($settings_selectedUser == $user_id) {
+                // Transfer button (in detailed view)
+                print '<button id="noteTransfer-P' . $curr_project_id . '-' . $num . '"';
+                print ' class="hideMe toolbarButton noteTransfer"';
+                print ' title="' . t('TodoNotes__PROJECT_NOTE_MOVE_TO_PROJECT') . '"';
                 print ' data-id="' . $num . '"';
                 print ' data-project="' . $curr_project_id . '"';
                 print ' data-user="' . $user_id . '"';
                 print '>';
-                print '<i class="fa fa-share-square-o" aria-hidden="true"></i>';
+                print '<i class="fa fa-exchange" aria-hidden="true"></i>';
                 print '</button>';
-            }
+
+                // notes from custom lists obviously CANNOT create tasks from notes
+                if (!$projectAccess['is_custom']) {
+                    // Add note to tasks table (in detailed view)
+                    print '<button id="noteCreateTask-P' . $curr_project_id . '-' . $num . '"';
+                    print ' class="hideMe toolbarButton noteCreateTask"';
+                    print ' title="' . t('TodoNotes__PROJECT_NOTE_CREATE_TASK') . '"';
+                    print ' data-id="' . $num . '"';
+                    print ' data-project="' . $curr_project_id . '"';
+                    print ' data-user="' . $user_id . '"';
+                    print '>';
+                    print '<i class="fa fa-share-square-o" aria-hidden="true"></i>';
+                    print '</button>';
+                }
+            } // exclude Transfer/CreateTask
 
             // add some space between button groups
             print '<button id="toolbarSeparator-P' . $curr_project_id . '-' . $num . '"';
@@ -1186,6 +1192,7 @@ print '></div>';
 print '<span id="refreshIcon" class="refreshIcon hideMe">';
 print '&nbsp;<i class="fa fa-refresh fa-spin" title="' . t('TodoNotes__PROJECT_NOTE_BUSY_ICON_HINT') . '"></i></span>';
 
+print $this->app->flashMessage();
 
 //----------------------------------------
 // ACTUAL CONTENT ENDS HERE !!!
