@@ -216,12 +216,19 @@ class TodoNotesController extends BaseController
         $project = $this->ResolveProject($user_id);
         $project_id = $project['id'];
 
+        $selectedUser = $this->todoNotesModel->VerifySharingPermissions($project_id, $user_id);
+        if ($selectedUser == 0) {
+            $this->flash->failure(t('TodoNotes__GENERIC_NO_OWNER_PRIVILEGES') . ' ' . t('TodoNotes__GENERIC_NO_SHARING_PERMISSIONS'));
+            return null;
+        }
+
         $is_active = $this->request->getStringParam('is_active'); // Not needed when new is added
         $title = $this->request->getStringParam('title');
         $description = $this->request->getStringParam('description');
         $category = $this->request->getStringParam('category');
 
-        return $this->todoNotesModel->AddNote($project_id, $user_id, $is_active, $title, $description, $category);
+        //return $this->todoNotesModel->AddNote($project_id, $user_id, $is_active, $title, $description, $category);
+        return $this->todoNotesModel->AddNote($project_id, $selectedUser, $is_active, $title, $description, $category);
     }
 
     public function DeleteNote()
@@ -229,6 +236,12 @@ class TodoNotesController extends BaseController
         $user_id = $this->ResolveUserId();
         $project = $this->ResolveProject($user_id);
         $project_id = $project['id'];
+
+        $selectedUser = $this->todoNotesModel->VerifySharingPermissions($project_id, $user_id);
+        if ($selectedUser == 0) {
+            $this->flash->failure(t('TodoNotes__GENERIC_NO_OWNER_PRIVILEGES') . ' ' . t('TodoNotes__GENERIC_NO_SHARING_PERMISSIONS'));
+            return null;
+        }
 
         $note_id = $this->request->getStringParam('note_id');
 
@@ -240,7 +253,8 @@ class TodoNotesController extends BaseController
             $todonotesSettingsHelper::SETTINGS_FILTER_ARCHIVED
         );
 
-        return (!$doShowArchive) ? $this->todoNotesModel->DeleteNote($project_id, $user_id, $note_id) : null;
+        //return (!$doShowArchive) ? $this->todoNotesModel->DeleteNote($project_id, $user_id, $note_id) : null;
+        return (!$doShowArchive) ? $this->todoNotesModel->DeleteNote($project_id, $selectedUser, $note_id) : null;
     }
 
     public function DeleteAllDoneNotes()
@@ -249,7 +263,14 @@ class TodoNotesController extends BaseController
         $project = $this->ResolveProject($user_id);
         $project_id = $project['id'];
 
-        return $this->todoNotesModel->DeleteAllDoneNotes($project_id, $user_id);
+        $selectedUser = $this->todoNotesModel->VerifySharingPermissions($project_id, $user_id);
+        if ($selectedUser == 0) {
+            $this->flash->failure(t('TodoNotes__GENERIC_NO_OWNER_PRIVILEGES') . ' ' . t('TodoNotes__GENERIC_NO_SHARING_PERMISSIONS'));
+            return null;
+        }
+
+        //return $this->todoNotesModel->DeleteAllDoneNotes($project_id, $user_id);
+        return $this->todoNotesModel->DeleteAllDoneNotes($project_id, $selectedUser);
     }
 
     public function UpdateNote()
@@ -258,6 +279,13 @@ class TodoNotesController extends BaseController
         $project = $this->ResolveProject($user_id);
         $project_id = $project['id'];
 
+        $selectedUser = $this->todoNotesModel->VerifySharingPermissions($project_id, $user_id);
+        if ($selectedUser == 0) {
+            $this->flash->failure(t('TodoNotes__GENERIC_NO_OWNER_PRIVILEGES') . ' ' . t('TodoNotes__GENERIC_NO_SHARING_PERMISSIONS'));
+            echo(json_encode(array('timestamp' => -1)));
+            return -1;
+        }
+
         $note_id = $this->request->getStringParam('note_id');
 
         $is_active = $this->request->getStringParam('is_active');
@@ -265,7 +293,8 @@ class TodoNotesController extends BaseController
         $description = $this->request->getStringParam('description');
         $category = $this->request->getStringParam('category');
 
-        $timestamp = $this->todoNotesModel->UpdateNote($project_id, $user_id, $note_id, $is_active, $title, $description, $category);
+        //$timestamp = $this->todoNotesModel->UpdateNote($project_id, $user_id, $note_id, $is_active, $title, $description, $category);
+        $timestamp = $this->todoNotesModel->UpdateNote($project_id, $selectedUser, $note_id, $is_active, $title, $description, $category);
         echo(json_encode(array('timestamp' => $timestamp,
                                'timestring' => date($this->dateParser->getUserDateTimeFormat(), $timestamp))));
         return $timestamp;
@@ -277,11 +306,19 @@ class TodoNotesController extends BaseController
         $project = $this->ResolveProject($user_id);
         $project_id = $project['id'];
 
+        $selectedUser = $this->todoNotesModel->VerifySharingPermissions($project_id, $user_id);
+        if ($selectedUser == 0) {
+            $this->flash->failure(t('TodoNotes__GENERIC_NO_OWNER_PRIVILEGES') . ' ' . t('TodoNotes__GENERIC_NO_SHARING_PERMISSIONS'));
+            echo(json_encode(array('timestamp' => -1)));
+            return -1;
+        }
+
         $note_id = $this->request->getStringParam('note_id');
 
         $is_active = $this->request->getStringParam('is_active');
 
-        $timestamp = $this->todoNotesModel->UpdateNoteStatus($project_id, $user_id, $note_id, $is_active);
+        //$timestamp = $this->todoNotesModel->UpdateNoteStatus($project_id, $user_id, $note_id, $is_active);
+        $timestamp = $this->todoNotesModel->UpdateNoteStatus($project_id, $selectedUser, $note_id, $is_active);
         print(json_encode(array('timestamp' => $timestamp,
                                 'timestring' => date($this->dateParser->getUserDateTimeFormat(), $timestamp))));
         return $timestamp;
@@ -293,12 +330,20 @@ class TodoNotesController extends BaseController
         $project = $this->ResolveProject($user_id);
         $project_id = $project['id'];
 
+        $selectedUser = $this->todoNotesModel->VerifySharingPermissions($project_id, $user_id);
+        if ($selectedUser == 0) {
+            $this->flash->failure(t('TodoNotes__GENERIC_NO_OWNER_PRIVILEGES') . ' ' . t('TodoNotes__GENERIC_NO_SHARING_PERMISSIONS'));
+            echo(json_encode(array('timestamp' => -1)));
+            return -1;
+        }
+
         $note_id = $this->request->getStringParam('note_id');
 
         $notifications_alert_timestring = $this->request->getStringParam('notifications_alert_timestring');
         $notification_options_bitflags = intval($this->request->getStringParam('notification_options_bitflags'));
 
-        $notifications_alert_timestamp = $this->todoNotesModel->UpdateNoteNotificationsAlertTimeAndOptions($project_id, $user_id, $note_id, $notifications_alert_timestring, $notification_options_bitflags);
+        //$notifications_alert_timestamp = $this->todoNotesModel->UpdateNoteNotificationsAlertTimeAndOptions($project_id, $user_id, $note_id, $notifications_alert_timestring, $notification_options_bitflags);
+        $notifications_alert_timestamp = $this->todoNotesModel->UpdateNoteNotificationsAlertTimeAndOptions($project_id, $selectedUser, $note_id, $notifications_alert_timestring, $notification_options_bitflags);
         print(json_encode(array('timestamp' => $notifications_alert_timestamp,
                                 'timestring' => ($notifications_alert_timestamp > 0) ? date($this->dateParser->getUserDateTimeFormat(), $notifications_alert_timestamp) : '',
                                 'options_bitflags' => $notification_options_bitflags)));
@@ -310,9 +355,18 @@ class TodoNotesController extends BaseController
         $user_id = $this->ResolveUserId();
         $project = $this->ResolveProject($user_id);
         $project_id = $project['id'];
+
+        $selectedUser = $this->todoNotesModel->VerifySharingPermissions($project_id, $user_id);
+        if ($selectedUser == 0) {
+            $this->flash->failure(t('TodoNotes__GENERIC_NO_OWNER_PRIVILEGES') . ' ' . t('TodoNotes__GENERIC_NO_SHARING_PERMISSIONS'));
+            echo(json_encode(array('timestamp' => -1)));
+            return -1;
+        }
+
         $notesPositions = array_map('intval', explode(',', $this->request->getStringParam('order')));
 
-        $timestamp = $this->todoNotesModel->UpdateNotesPositions($project_id, $user_id, $notesPositions);
+        //$timestamp = $this->todoNotesModel->UpdateNotesPositions($project_id, $user_id, $notesPositions);
+        $timestamp = $this->todoNotesModel->UpdateNotesPositions($project_id, $selectedUser, $notesPositions);
         print(json_encode(array('timestamp' => $timestamp,
                                 'timestring' => date($this->dateParser->getUserDateTimeFormat(), $timestamp))));
         return $timestamp;
@@ -323,6 +377,12 @@ class TodoNotesController extends BaseController
         $user_id = $this->ResolveUserId();
         $project = $this->ResolveProject($user_id);
         $project_id = $project['id'];
+
+        $selectedUser = $this->todoNotesModel->VerifySharingPermissions($project_id, $user_id);
+        if ($selectedUser != $user_id) { // NOT allowed with shared projects
+            $this->flash->failure(t('TodoNotes__GENERIC_NO_OWNER_PRIVILEGES') . ' ' . t('TodoNotes__GENERIC_NO_SHARING_PERMISSIONS'));
+            return null;
+        }
 
         $note_id = $this->request->getStringParam('note_id');
         $target_project_id = $this->request->getStringParam('target_project_id');
@@ -335,6 +395,12 @@ class TodoNotesController extends BaseController
         $user_id = $this->ResolveUserId();
         $project = $this->ResolveProject($user_id);
         $project_id = $project['id'];
+
+        $selectedUser = $this->todoNotesModel->VerifySharingPermissions($project_id, $user_id);
+        if ($selectedUser != $user_id) { // NOT allowed with shared projects
+            $this->flash->failure(t('TodoNotes__GENERIC_NO_OWNER_PRIVILEGES') . ' ' . t('TodoNotes__GENERIC_NO_SHARING_PERMISSIONS'));
+            return $this->response->html($this->helper->layout->app('TodoNotes:widgets/flash_msg', array()));
+        }
 
         $task_title = $this->request->getStringParam('task_title');
         $task_description = $this->request->getStringParam('task_description');
@@ -372,11 +438,18 @@ class TodoNotesController extends BaseController
         $project = $this->ResolveProject($user_id);
         $project_id = $project['id'];
 
+        $selectedUser = $this->todoNotesModel->VerifySharingPermissions($project_id, $user_id, $this->todoNotesModel::PROJECT_SHARING_PERMISSION_VIEW);
+        if ($selectedUser == 0) {
+            $this->flash->failure(t('TodoNotes__GENERIC_NO_OWNER_PRIVILEGES') . ' ' . t('TodoNotes__GENERIC_NO_SHARING_PERMISSIONS'));
+            return $this->RefreshProject();
+        }
+
+        $category = $this->request->getStringParam('category');
         $projectsAccess = $this->todoNotesModel->GetAllProjectIds($user_id);
         $usersAccess = $this->todoNotesModel->GetSharingPermissions($project_id, $user_id);
 
-        $category = $this->request->getStringParam('category');
-        $data = $this->todoNotesModel->GetReportNotesForUser($project_id, $user_id, $projectsAccess, $usersAccess, $category);
+        //$data = $this->todoNotesModel->GetReportNotesForUser($project_id, $user_id, $projectsAccess, $usersAccess, $category);
+        $data = $this->todoNotesModel->GetReportNotesForUser($project_id, $selectedUser, $projectsAccess, $usersAccess, $category);
 
         return $this->response->html($this->helper->layout->app('TodoNotes:project/report', array(
             'title' => $project['name'], // rather keep the project name as title
@@ -393,7 +466,14 @@ class TodoNotesController extends BaseController
         $project = $this->ResolveProject($user_id);
         $project_id = $project['id'];
 
-        $statsData = $this->todoNotesModel->GetProjectStatsForUser($project_id, $user_id);
+        $selectedUser = $this->todoNotesModel->VerifySharingPermissions($project_id, $user_id, $this->todoNotesModel::PROJECT_SHARING_PERMISSION_VIEW);
+        if ($selectedUser == 0) {
+            $this->flash->failure(t('TodoNotes__GENERIC_NO_OWNER_PRIVILEGES') . ' ' . t('TodoNotes__GENERIC_NO_SHARING_PERMISSIONS'));
+            return $this->response->html($this->helper->layout->app('TodoNotes:widgets/flash_msg', array()));
+        }
+
+        //$statsData = $this->todoNotesModel->GetProjectStatsForUser($project_id, $user_id);
+        $statsData = $this->todoNotesModel->GetProjectStatsForUser($project_id, $selectedUser);
 
         return $this->response->html($this->helper->layout->app('TodoNotes:project/stats', array(
             //'title' => t('Stats'),
@@ -612,10 +692,16 @@ class TodoNotesController extends BaseController
             $todonotesSettingsHelper::SETTINGS_GROUP_FILTER,
             $todonotesSettingsHelper::SETTINGS_FILTER_ARCHIVED
         );
+        $userGroup = $todonotesSettingsHelper->GetGroupSettings(
+            $user_id,
+            $project_id,
+            $todonotesSettingsHelper::SETTINGS_GROUP_USER
+        );
+        $selectedUser = (count($userGroup) == 1) ? $userGroup[0] : 0;
 
         $lastTimestamps = $doShowArchive
-            ? $this->todoNotesModel->GetLastArchivedTimestamp($project_id, $user_id)
-            : $this->todoNotesModel->GetLastModifiedTimestamp($project_id, $user_id);
+            ? $this->todoNotesModel->GetLastArchivedTimestamp($project_id, $selectedUser)
+            : $this->todoNotesModel->GetLastModifiedTimestamp($project_id, $selectedUser);
         print(json_encode($lastTimestamps));
 
         return $lastTimestamps;
@@ -627,9 +713,16 @@ class TodoNotesController extends BaseController
         $project = $this->ResolveProject($user_id);
         $project_id = $project['id'];
 
+        $selectedUser = $this->todoNotesModel->VerifySharingPermissions($project_id, $user_id);
+        if ($selectedUser == 0) {
+            $this->flash->failure(t('TodoNotes__GENERIC_NO_OWNER_PRIVILEGES') . ' ' . t('TodoNotes__GENERIC_NO_SHARING_PERMISSIONS'));
+            return null;
+        }
+
         $note_id = $this->request->getStringParam('note_id');
 
-        return $this->todoNotesModel->MoveNoteToArchive($project_id, $user_id, $note_id);
+        //return $this->todoNotesModel->MoveNoteToArchive($project_id, $user_id, $note_id);
+        return $this->todoNotesModel->MoveNoteToArchive($project_id, $selectedUser, $note_id);
     }
 
     public function MoveAllDoneNotesToArchive()
@@ -638,7 +731,14 @@ class TodoNotesController extends BaseController
         $project = $this->ResolveProject($user_id);
         $project_id = $project['id'];
 
-        return $this->todoNotesModel->MoveAllDoneNotesToArchive($project_id, $user_id);
+        $selectedUser = $this->todoNotesModel->VerifySharingPermissions($project_id, $user_id);
+        if ($selectedUser == 0) {
+            $this->flash->failure(t('TodoNotes__GENERIC_NO_OWNER_PRIVILEGES') . ' ' . t('TodoNotes__GENERIC_NO_SHARING_PERMISSIONS'));
+            return null;
+        }
+
+        //return $this->todoNotesModel->MoveAllDoneNotesToArchive($project_id, $user_id);
+        return $this->todoNotesModel->MoveAllDoneNotesToArchive($project_id, $selectedUser);
     }
 
     public function RestoreNoteFromArchive()
@@ -647,10 +747,17 @@ class TodoNotesController extends BaseController
         $project = $this->ResolveProject($user_id);
         $project_id = $project['id'];
 
+        $selectedUser = $this->todoNotesModel->VerifySharingPermissions($project_id, $user_id);
+        if ($selectedUser == 0) {
+            $this->flash->failure(t('TodoNotes__GENERIC_NO_OWNER_PRIVILEGES') . ' ' . t('TodoNotes__GENERIC_NO_SHARING_PERMISSIONS'));
+            return null;
+        }
+
         $archived_note_id = $this->request->getStringParam('archived_note_id');
         $target_project_id = $this->request->getStringParam('target_project_id');
 
-        return $this->todoNotesModel->RestoreNoteFromArchive($project_id, $user_id, $archived_note_id, $target_project_id);
+        //return $this->todoNotesModel->RestoreNoteFromArchive($project_id, $user_id, $archived_note_id, $target_project_id);
+        return $this->todoNotesModel->RestoreNoteFromArchive($project_id, $selectedUser, $archived_note_id, $target_project_id);
     }
 
     public function DeleteNoteFromArchive()
@@ -658,6 +765,12 @@ class TodoNotesController extends BaseController
         $user_id = $this->ResolveUserId();
         $project = $this->ResolveProject($user_id);
         $project_id = $project['id'];
+
+        $selectedUser = $this->todoNotesModel->VerifySharingPermissions($project_id, $user_id);
+        if ($selectedUser == 0) {
+            $this->flash->failure(t('TodoNotes__GENERIC_NO_OWNER_PRIVILEGES') . ' ' . t('TodoNotes__GENERIC_NO_SHARING_PERMISSIONS'));
+            return null;
+        }
 
         $archived_note_id = $this->request->getStringParam('archived_note_id');
 
@@ -669,6 +782,7 @@ class TodoNotesController extends BaseController
             $todonotesSettingsHelper::SETTINGS_FILTER_ARCHIVED
         );
 
-        return ($doShowArchive) ? $this->todoNotesModel->DeleteNoteFromArchive($project_id, $user_id, $archived_note_id) : null;
+        //return ($doShowArchive) ? $this->todoNotesModel->DeleteNoteFromArchive($project_id, $user_id, $archived_note_id) : null;
+        return ($doShowArchive) ? $this->todoNotesModel->DeleteNoteFromArchive($project_id, $selectedUser, $archived_note_id) : null;
     }
 }

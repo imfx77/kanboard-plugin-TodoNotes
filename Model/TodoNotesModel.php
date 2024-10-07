@@ -454,14 +454,17 @@ class TodoNotesModel extends Base
             }
         }
 
-        $projectIdsShared = $this->db->table(self::TABLE_NOTES_CUSTOM_PROJECTS)
-            ->columns('id AS project_id', 'project_name', 'owner_id')
-            ->in('project_id', $projectsSharedList)
-            ->neq('owner_id', 0)        // exclude GLOBAL custom projects
-            ->neq('owner_id', $user_id) // exclude PRIVATE custom projects, managed by this user
-            ->asc('owner_id')
-            ->asc('position')
-            ->findAll();
+        $projectIdsShared = array();
+        if (count($projectsSharedList) > 0) {
+            $projectIdsShared = $this->db->table(self::TABLE_NOTES_CUSTOM_PROJECTS)
+                ->columns('id AS project_id', 'project_name', 'owner_id')
+                ->in('project_id', $projectsSharedList)
+                ->neq('owner_id', 0)        // exclude GLOBAL custom projects
+                ->neq('owner_id', $user_id) // exclude PRIVATE custom projects, managed by this user
+                ->asc('owner_id')
+                ->asc('position')
+                ->findAll();
+        }
 
         foreach ($projectIdsShared as &$projectId) {
             $projectId['project_id'] = -$projectId['project_id']; // custom project Ids are denoted as NEGATIVE values !!!
@@ -543,7 +546,7 @@ class TodoNotesModel extends Base
     }
 
     // Get the sharing permission for given project and user by specific owner
-    public function GetSharingPermissionsByOwner($project_id, $user_id, $owner_id)
+    public function GetSharingPermissionsByOwner($project_id, $user_id, $owner_id): int
     {
         $sharingPermissions = $this->db->table(self::TABLE_NOTES_SHARING_PERMISSIONS)
             ->columns('permissions')
@@ -1195,7 +1198,33 @@ class TodoNotesModel extends Base
         );
     }
 
-    private function EvaluateSharing($project_id, $user_id, $projectsAccess, $usersAccess)
+    public function VerifySharingPermissions($project_id, $user_id, $permissions = self::PROJECT_SHARING_PERMISSION_EDIT) : int
+    {
+        $todonotesSettingsHelper = $this->helper->todonotesSessionAndCookiesSettingsHelper;
+        $userGroup = $todonotesSettingsHelper->GetGroupSettings(
+            $user_id,
+            $project_id,
+            $todonotesSettingsHelper::SETTINGS_GROUP_USER
+        );
+        $selectedUser = (count($userGroup) == 1) ? $userGroup[0] : 0;
+
+        // when accessing project for editing with curren user
+        if ($selectedUser == $user_id) {
+            return ($this->IsRegularProject($project_id)
+                || $this->IsCustomGlobalProject($project_id)
+                || $this->IsCustomProjectOwner($project_id, $user_id)
+            )
+                ? $selectedUser
+                : 0;
+        }
+
+        // check current user for the required permission with selected user and shared project contents
+        return ($this->GetSharingPermissionsByOwner($project_id, $user_id, $selectedUser) >= $permissions)
+            ? $selectedUser
+            : 0;
+    }
+
+    private function EvaluateSharing($project_id, $user_id, $projectsAccess, $usersAccess): int
     {
         $todonotesSettingsHelper = $this->helper->todonotesSessionAndCookiesSettingsHelper;
         $todonotesSettingsHelper->SyncSettingsToSession($user_id, $project_id);
