@@ -66,11 +66,12 @@ function version_1(PDO $pdo)
                     date_notified INTEGER,
                     last_notified INTEGER,
                     flags_notified INTEGER,
-                    date_restored INTEGER
+                    date_restored INTEGER,
+                    last_change_user_id INTEGER
                 )');
     $pdo->exec('INSERT INTO todonotes_entries
-                    (project_id, user_id, position, is_active, date_created, date_modified, date_notified, last_notified, flags_notified, date_restored)
-                    VALUES (0, 0, 0, -1, 0, 0, 0, 0, 0, 0)
+                    (project_id, user_id, position, is_active, date_created, date_modified, date_notified, last_notified, flags_notified, date_restored, last_change_user_id)
+                    VALUES (0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0)
                 ');
     $pdo->exec('CREATE INDEX todonotes_entries_project_ix ON todonotes_entries(project_id)');
     $pdo->exec('CREATE INDEX todonotes_entries_user_ix ON todonotes_entries(user_id)');
@@ -94,11 +95,12 @@ function version_1(PDO $pdo)
                     date_modified INTEGER,
                     date_notified INTEGER,
                     last_notified INTEGER,
-                    date_archived INTEGER
+                    date_archived INTEGER,
+                    last_change_user_id INTEGER
                 )');
     $pdo->exec('INSERT INTO todonotes_archive_entries
-                    (project_id, user_id, date_created, date_modified, date_notified, last_notified, date_archived)
-                    VALUES (0, 0, 0, -1, 0, 0, 0)
+                    (project_id, user_id, date_created, date_modified, date_notified, last_notified, date_archived, last_change_user_id)
+                    VALUES (0, 0, 0, -1, 0, 0, 0, 0)
                 ');
     $pdo->exec('CREATE INDEX todonotes_archive_entries_project_ix ON todonotes_archive_entries(project_id)');
     $pdo->exec('CREATE INDEX todonotes_archive_entries_user_ix ON todonotes_archive_entries(user_id)');
@@ -225,15 +227,16 @@ function Reindex_CreateAndInsert_NewShrunkEntries_1(PDO $pdo)
                     date_notified INTEGER,
                     last_notified INTEGER,
                     flags_notified INTEGER,
-                    date_restored INTEGER
+                    date_restored INTEGER,
+                    last_change_user_id INTEGER
                 )');
     $pdo->exec('INSERT INTO todonotes_entries
-                    (project_id, user_id, position, is_active, date_created, date_modified, date_notified, last_notified, flags_notified, date_restored)
-                    VALUES (0, 0, 0, -1, 0, 0, 0, 0, 0, 0)
+                    (project_id, user_id, position, is_active, date_created, date_modified, date_notified, last_notified, flags_notified, date_restored, last_change_user_id)
+                    VALUES (0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0)
                 ');
     $pdo->exec('INSERT INTO todonotes_entries
-                    (project_id, user_id, position, is_active, title, category, description, date_created, date_modified, date_notified, last_notified, flags_notified, date_restored)
-                    SELECT project_id, user_id, position, is_active, title, category, description, date_created, date_modified, date_notified, last_notified, flags_notified, date_restored
+                    (project_id, user_id, position, is_active, title, category, description, date_created, date_modified, date_notified, last_notified, flags_notified, date_restored, last_change_user_id)
+                    SELECT project_id, user_id, position, is_active, title, category, description, date_created, date_modified, date_notified, last_notified, flags_notified, date_restored, last_change_user_id
                     FROM todonotes_entries_OLD
                     WHERE project_id <> 0 AND user_id > 0 AND position > 0 AND is_active >= 0
                 ');
@@ -252,15 +255,16 @@ function Reindex_CreateAndInsert_NewShrunkArchiveEntries_1(PDO $pdo)
                     date_modified INTEGER,
                     date_notified INTEGER,
                     last_notified INTEGER,
-                    date_archived INTEGER
+                    date_archived INTEGER,
+                    last_change_user_id INTEGER
                 )');
     $pdo->exec('INSERT INTO todonotes_archive_entries
-                    (project_id, user_id, date_created, date_modified, date_notified, last_notified, date_archived)
-                    VALUES (0, 0, 0, -1, 0, 0, 0)
+                    (project_id, user_id, date_created, date_modified, date_notified, last_notified, date_archived, last_change_user_id)
+                    VALUES (0, 0, 0, -1, 0, 0, 0, 0)
                 ');
     $pdo->exec('INSERT INTO todonotes_archive_entries
-                    (project_id, user_id, title, category, description, date_created, date_modified, date_notified, last_notified, date_archived)
-                    SELECT project_id, user_id, title, category, description, date_created, date_modified, date_notified, last_notified, date_archived
+                    (project_id, user_id, title, category, description, date_created, date_modified, date_notified, last_notified, date_archived, last_change_user_id)
+                    SELECT project_id, user_id, title, category, description, date_created, date_modified, date_notified, last_notified, date_archived, last_change_user_id
                     FROM todonotes_archive_entries_OLD
                     WHERE project_id <> 0 AND user_id > 0 AND date_modified > 0 AND date_archived > 0
                 ');
