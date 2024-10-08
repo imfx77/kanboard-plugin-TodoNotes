@@ -201,6 +201,7 @@ Might be waiting for an unsubmitted New Note data input!',
     'TodoNotes__NOTE_DATE_RESTORED' => 'Restored: ',
     'TodoNotes__NOTE_DATE_NOTIFIED' => 'Notifications: ',
     'TodoNotes__NOTE_DATE_LAST_NOTIFIED' => 'Last Notified: ',
+    'TodoNotes__NOTE_LAST_CHANGE_USER' => 'Last Change by: ',
     //
     // Specific EXPORTS FOR JS
     //

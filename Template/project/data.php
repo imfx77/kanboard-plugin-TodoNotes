@@ -1063,29 +1063,45 @@ foreach ($data as $u) {
     print '</select>';
     print '</div>'; // Category dropdown
 
-    // Dates and Notifications panel
+    // Dates, User and Notifications panel
     print '<div class="containerFloatRight disableEventsPropagation" style="text-align: right">';
-    print '<label  id="noteCreatedLabel-P' . $curr_project_id . '-' . $num . '" class="dateLabel">';
+    print '<label id="noteCreatedLabel-P' . $curr_project_id . '-' . $num . '" class="dateLabel">';
     print '<i class="fa fa-calendar-o" aria-hidden="true"> ' . t('TodoNotes__NOTE_DATE_CREATED') . $u['date_created'] . '</i></label><br>';
-    print '<label  id="noteModifiedLabel-P' . $curr_project_id . '-' . $num . '" class="dateLabel">';
+    print '<label id="noteModifiedLabel-P' . $curr_project_id . '-' . $num . '" class="dateLabel">';
     print '<i class="fa fa-calendar-check-o" aria-hidden="true"> ' . t('TodoNotes__NOTE_DATE_MODIFIED') . $u['date_modified'] . '</i></label><br>';
 
     if (!empty($u['date_archived'])) {
-        print '<label  id="noteArchivedLabel-P' . $curr_project_id . '-' . $num . '" class="dateLabel">';
+        print '<label id="noteArchivedLabel-P' . $curr_project_id . '-' . $num . '" class="dateLabel">';
         print '<i class="fa fa-file-archive-o" aria-hidden="true"> ' . t('TodoNotes__NOTE_DATE_ARCHIVED') . $u['date_archived'] . '</i></label><br>';
     }
 
     if (!empty($u['date_restored'])) {
-        print '<label  id="noteRestoredLabel-P' . $curr_project_id . '-' . $num . '" class="dateLabel">';
+        print '<label id="noteRestoredLabel-P' . $curr_project_id . '-' . $num . '" class="dateLabel">';
         print '<i class="fa fa-undo" aria-hidden="true"> ' . t('TodoNotes__NOTE_DATE_RESTORED') . $u['date_restored'] . '</i></label><br>';
     }
 
+    // userinfo
+    $user_details = $this->model->userModel->getById($u['last_change_user_id']);
+    print '<span id="noteUserInfo-P' . $curr_project_id . '-' . $num . '" ' . ($u['last_change_user_id'] == $u['user_id'] ? ' class="hideMe"' : '') . '>';
+    print '<label id="noteUserInfoLabel-P' . $curr_project_id . '-' . $num . '" class="dateLabel">';
+    print '<i class="fa fa-user" aria-hidden="true"> ' . t('TodoNotes__NOTE_LAST_CHANGE_USER');
+    print $this->avatar->small(
+        $user_details['id'],
+        $user_details['username'],
+        $user_details['name'],
+        $user_details['email'],
+        $user_details['avatar_path'],
+        'avatar-inline'
+    );
+    print $this->text->e($user_details['name'] ?: $user_details['username']);
+    print '</i></label><br></span>';
+
     if (!empty($u['last_notified'])) {
-        print '<label  id="noteLastNotifiedLabel-P' . $curr_project_id . '-' . $num . '" class="dateLabel">';
+        print '<label id="noteLastNotifiedLabel-P' . $curr_project_id . '-' . $num . '" class="dateLabel">';
         print '<i class="fa fa-bell" aria-hidden="true"> ' . t('TodoNotes__NOTE_DATE_LAST_NOTIFIED') . $u['last_notified'] . '</i></label><br>';
     }
 
-    print '<label  id="noteNotificationsLabel-P' . $curr_project_id . '-' . $num . '"';
+    print '<label id="noteNotificationsLabel-P' . $curr_project_id . '-' . $num . '"';
     if (!$settings_showArchive) {
         print 'class="dateLabel dateLabelClickable' . $noteNotificationsStyleExtra . ' noteNotificationsSetup"';
     } else {

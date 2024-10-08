@@ -14,6 +14,7 @@ $translationTextIds = array(
     'TodoNotes__NOTE_DATE_RESTORED',
     'TodoNotes__NOTE_DATE_NOTIFIED',
     'TodoNotes__NOTE_DATE_LAST_NOTIFIED',
+    'TodoNotes__NOTE_LAST_CHANGE_USER',
     'TodoNotes__JS_LOADING_MSG',
     'TodoNotes__JS_REINDEXING_MSG',
     'TodoNotes__JS_NOTE_ADD_TITLE_EMPTY_MSG',
