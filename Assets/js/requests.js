@@ -185,6 +185,7 @@ static UpdateNote(project_id, user_id, id) {
             const lastModified = JSON.parse(response);
             if (lastModified.timestamp > 0) {
                 _TodoNotes_.UpdateNoteTimestamps(lastModified, project_id, id);
+                _TodoNotes_.UpdateNoteUserInfo(lastModified, project_id, user_id, id);
                 _TodoNotes_.RefreshNoteNotificationsState(project_id, id);
                 // refresh and render the details markdown preview
                 $("#noteMarkdownDetails-P" + project_id + "-" + id + "_Preview").html(_TodoNotes_Translations_.msgLoadingSpinner);
@@ -223,6 +224,7 @@ static UpdateNoteStatus(project_id, user_id, id) {
             const lastModified = JSON.parse(response);
             if (lastModified.timestamp > 0) {
                 _TodoNotes_.UpdateNoteTimestamps(lastModified, project_id, id);
+                _TodoNotes_.UpdateNoteUserInfo(lastModified, project_id, user_id, id);
                 _TodoNotes_.RefreshNoteNotificationsState(project_id, id);
             } else {
                 alert( _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_NOTE_UPDATE_INVALID_MSG') );
@@ -322,6 +324,7 @@ static UpdateNotesPositions(project_id, user_id, order) {
             const lastModified = JSON.parse(response);
             if (lastModified.timestamp > 0) {
                 _TodoNotes_.UpdateAllNotesTimestamps(lastModified, project_id);
+                _TodoNotes_.UpdateAllNotesUserInfo(lastModified, project_id, user_id);
             } else {
                 _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
             }

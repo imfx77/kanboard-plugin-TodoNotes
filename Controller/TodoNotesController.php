@@ -65,6 +65,21 @@ class TodoNotesController extends BaseController
         return array("id" => $project_id, 'tab_id' => $projectAccess['tab_id'], 'name' => $projectAccess['project_name']);
     }
 
+    private function GetUserIconAndName($user_id): string
+    {
+        $user_details = $this->userModel->getById($user_id);
+        $icon = $this->helper->avatar->small(
+            $user_details['id'],
+            $user_details['username'],
+            $user_details['name'],
+            $user_details['email'],
+            $user_details['avatar_path'],
+            'avatar-inline'
+        );
+        $name = $this->helper->text->e($user_details['name'] ?: $user_details['username']);
+        return $icon . $name;
+    }
+
     private function ShowProjectWithRefresh($is_refresh)
     {
         $user = $this->getUser();
@@ -292,7 +307,8 @@ class TodoNotesController extends BaseController
 
         $timestamp = $this->todoNotesModel->UpdateNote($project_id, $selectedUser, $user_id, $note_id, $is_active, $title, $description, $category);
         echo(json_encode(array('timestamp' => $timestamp,
-                               'timestring' => date($this->dateParser->getUserDateTimeFormat(), $timestamp))));
+                               'timestring' => date($this->dateParser->getUserDateTimeFormat(), $timestamp),
+                               'userinfo' => $this->GetUserIconAndName($user_id))));
         return $timestamp;
     }
 
@@ -315,7 +331,8 @@ class TodoNotesController extends BaseController
 
         $timestamp = $this->todoNotesModel->UpdateNoteStatus($project_id, $selectedUser, $user_id, $note_id, $is_active);
         print(json_encode(array('timestamp' => $timestamp,
-                                'timestring' => date($this->dateParser->getUserDateTimeFormat(), $timestamp))));
+                                'timestring' => date($this->dateParser->getUserDateTimeFormat(), $timestamp),
+                                'userinfo' => $this->GetUserIconAndName($user_id))));
         return $timestamp;
     }
 
@@ -361,7 +378,8 @@ class TodoNotesController extends BaseController
 
         $timestamp = $this->todoNotesModel->UpdateNotesPositions($project_id, $selectedUser, $user_id, $notesPositions);
         print(json_encode(array('timestamp' => $timestamp,
-                                'timestring' => date($this->dateParser->getUserDateTimeFormat(), $timestamp))));
+                                'timestring' => date($this->dateParser->getUserDateTimeFormat(), $timestamp),
+                                'userinfo' => $this->GetUserIconAndName($user_id))));
         return $timestamp;
     }
 

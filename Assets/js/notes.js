@@ -1438,6 +1438,36 @@ static RefreshShowStandardStatusMarks() {
 }
 
 //------------------------------------------------
+// Update UserInfo routines
+//------------------------------------------------
+
+//------------------------------------------------
+// note update userinfo
+static UpdateNoteUserInfo(lastModified, project_id, user_id, id) {
+    const updatedUserInfo = _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__NOTE_LAST_CHANGE_USER') + lastModified.userinfo;
+    $("#noteUserInfoLabel-P" + project_id + "-" + id + " i").html(' ' + updatedUserInfo);
+
+    if (_TodoNotes_Settings_.selectedUser != user_id) {
+        $("#noteUserInfo-P" + project_id + "-" + id).removeClass( 'hideMe' );
+    } else {
+        $("#noteUserInfo-P" + project_id + "-" + id).addClass( 'hideMe' );
+    }
+}
+
+//------------------------------------------------
+// all notes update userinfo
+static UpdateAllNotesUserInfo(lastModified, project_id, user_id) {
+    const updatedUserInfo = _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__NOTE_LAST_CHANGE_USER') + lastModified.userinfo;
+    $("[id^=noteUserInfoLabel-P" + project_id + "] i").html(' ' + updatedUserInfo);
+
+    if (_TodoNotes_Settings_.selectedUser != user_id) {
+        $("[id^=noteUserInfo-P" + project_id + "]").removeClass( 'hideMe' );
+    } else {
+        $("[id^=noteUserInfo-P" + project_id + "]").addClass( 'hideMe' );
+    }
+}
+
+//------------------------------------------------
 // Update Timestamp routines
 //------------------------------------------------
 
