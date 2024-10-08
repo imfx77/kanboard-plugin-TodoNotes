@@ -616,7 +616,7 @@ class TodoNotesModel extends Base
     }
 
     // Add note
-    public function AddNote($project_id, $user_id, $is_active, $title, $description, $category)
+    public function AddNote($project_id, $user_id, $requested_user_id, $is_active, $title, $description, $category)
     {
         // Get last position
         $lastPosition = $this->GetLastNotePosition($project_id, $user_id) + 1;
@@ -638,7 +638,8 @@ class TodoNotesModel extends Base
             'date_notified' => 0,
             'last_notified' => 0,
             'flags_notified' => 0,
-            'date_restored' => 0
+            'date_restored' => 0,
+            'last_change_user_id' => $requested_user_id,
         );
 
         return $this->db->table(self::TABLE_NOTES_ENTRIES)
@@ -646,7 +647,7 @@ class TodoNotesModel extends Base
     }
 
     // Delete note
-    public function DeleteNote($project_id, $user_id, $note_id)
+    public function DeleteNote($project_id, $user_id, $requested_user_id, $note_id)
     {
         // purge previously marked as deleted notes
         $purged = $this->PurgeNotes($project_id, $user_id);
@@ -658,6 +659,7 @@ class TodoNotesModel extends Base
             'is_active' => -1,
             'position' => -1,
             'date_modified' => $timestamp,
+            'last_change_user_id' => $requested_user_id,
         );
 
         // mark note as deleted
@@ -671,7 +673,7 @@ class TodoNotesModel extends Base
     }
 
     // Delete ALL done notes
-    public function DeleteAllDoneNotes($project_id, $user_id)
+    public function DeleteAllDoneNotes($project_id, $user_id, $requested_user_id)
     {
         // purge previously marked as deleted notes
         $purged = $this->PurgeNotes($project_id, $user_id);
@@ -683,6 +685,7 @@ class TodoNotesModel extends Base
             'is_active' => -1,
             'position' => -1,
             'date_modified' => $timestamp,
+            'last_change_user_id' => $requested_user_id,
         );
 
         // mark done notes as deleted
@@ -706,7 +709,7 @@ class TodoNotesModel extends Base
     }
 
     // Update note
-    public function UpdateNote($project_id, $user_id, $note_id, $is_active, $title, $description, $category)
+    public function UpdateNote($project_id, $user_id, $requested_user_id, $note_id, $is_active, $title, $description, $category)
     {
         $is_unique = $this->IsUniqueNote($project_id, $user_id, $note_id);
         if (!$is_unique) {
@@ -722,6 +725,7 @@ class TodoNotesModel extends Base
             'description' => $description,
             'category' => $category,
             'date_modified' => $timestamp,
+            'last_change_user_id' => $requested_user_id,
         );
 
         return ($this->db->table(self::TABLE_NOTES_ENTRIES)
@@ -732,7 +736,7 @@ class TodoNotesModel extends Base
     }
 
     // Update note Status
-    public function UpdateNoteStatus($project_id, $user_id, $note_id, $is_active)
+    public function UpdateNoteStatus($project_id, $user_id, $requested_user_id, $note_id, $is_active)
     {
         $is_unique = $this->IsUniqueNote($project_id, $user_id, $note_id);
         if (!$is_unique) {
@@ -745,6 +749,7 @@ class TodoNotesModel extends Base
         $values = array(
             'is_active' => $is_active,
             'date_modified' => $timestamp,
+            'last_change_user_id' => $requested_user_id,
         );
 
         return ($this->db->table(self::TABLE_NOTES_ENTRIES)
@@ -755,7 +760,7 @@ class TodoNotesModel extends Base
     }
 
     // Update note Notifications Alert Time
-    public function UpdateNoteNotificationsAlertTimeAndOptions($project_id, $user_id, $note_id, $notifications_alert_timestring, $notification_options_bitflags)
+    public function UpdateNoteNotificationsAlertTimeAndOptions($project_id, $user_id, $requested_user_id, $note_id, $notifications_alert_timestring, $notification_options_bitflags)
     {
         $is_unique = $this->IsUniqueNote($project_id, $user_id, $note_id);
         if (!$is_unique) {
@@ -766,7 +771,7 @@ class TodoNotesModel extends Base
 
         $values = array(
             'date_notified' => $notifications_alert_timestamp,
-            'flags_notified' => $notification_options_bitflags,
+            'flags_notified' => $notification_options_bitflags
         );
 
         return ($this->db->table(self::TABLE_NOTES_ENTRIES)
@@ -777,7 +782,7 @@ class TodoNotesModel extends Base
     }
 
     // Update notes positions
-    public function UpdateNotesPositions($project_id, $user_id, $notesPositions)
+    public function UpdateNotesPositions($project_id, $user_id, $requested_user_id, $notesPositions)
     {
         $num = count($notesPositions);
         $timestamp = time();
@@ -788,6 +793,7 @@ class TodoNotesModel extends Base
             $values = array(
                 'position' => $num,
                 'date_modified' => $timestamp,
+                'last_change_user_id' => $requested_user_id,
             );
 
             $result = $result && $this->db->table(self::TABLE_NOTES_ENTRIES)
@@ -1048,7 +1054,7 @@ class TodoNotesModel extends Base
     }
 
     // Move note to Archive
-    public function MoveNoteToArchive($project_id, $user_id, $note_id)
+    public function MoveNoteToArchive($project_id, $user_id, $requested_user_id, $note_id)
     {
         // Get current unixtime
         $timestamp = time();
@@ -1065,18 +1071,19 @@ class TodoNotesModel extends Base
             'date_notified' => $note['date_notified'],
             'last_notified' => $note['last_notified'],
             'date_archived' => $timestamp,
+            'last_change_user_id' => $requested_user_id,
         );
 
         $is_archived = $this->db->table(self::TABLE_NOTES_ARCHIVE_ENTRIES)
             ->insert($values) ? true : false;
 
         if ($is_archived) {
-            $this->DeleteNote($project_id, $user_id, $note_id);
+            $this->DeleteNote($project_id, $user_id, $requested_user_id, $note_id);
         }
     }
 
     // Move ALL done notes to Archive
-    public function MoveAllDoneNotesToArchive($project_id, $user_id)
+    public function MoveAllDoneNotesToArchive($project_id, $user_id, $requested_user_id)
     {
         // select done notes in default order
         $done_notes = $this->db->table(self::TABLE_NOTES_ENTRIES)
@@ -1087,12 +1094,12 @@ class TodoNotesModel extends Base
             ->findAll();
 
         foreach ($done_notes as $note) {
-            $this->MoveNoteToArchive($project_id, $user_id, $note['id']);
+            $this->MoveNoteToArchive($project_id, $user_id, $requested_user_id, $note['id']);
         }
     }
 
     // Restore note from Archive
-    public function RestoreNoteFromArchive($project_id, $user_id, $archived_note_id, $target_project_id)
+    public function RestoreNoteFromArchive($project_id, $user_id, $requested_user_id, $archived_note_id, $target_project_id)
     {
         // Get last position number for target project
         $lastPosition = $this->GetLastNotePosition($target_project_id, $user_id) + 1;
@@ -1115,20 +1122,21 @@ class TodoNotesModel extends Base
             'last_notified' => $archived_note['last_notified'],
             'flags_notified' => 0,
             'date_restored' => $timestamp,
+            'last_change_user_id' => $requested_user_id,
         );
 
         $is_restored = $this->db->table(self::TABLE_NOTES_ENTRIES)
             ->insert($values) ? true : false;
 
         if ($is_restored) {
-            $this->DeleteNoteFromArchive($project_id, $user_id, $archived_note_id);
+            $this->DeleteNoteFromArchive($project_id, $user_id, $requested_user_id, $archived_note_id);
         }
 
         $this->EmulateForceRefresh();
     }
 
     // Delete archived note
-    public function DeleteNoteFromArchive($project_id, $user_id, $archived_note_id)
+    public function DeleteNoteFromArchive($project_id, $user_id, $requested_user_id, $archived_note_id)
     {
         // purge previously marked as deleted archive notes
         $purged = $this->PurgeNotesFromArchive($project_id, $user_id);
@@ -1139,6 +1147,7 @@ class TodoNotesModel extends Base
         $values = array(
             'date_modified' => -1,
             'date_archived' => $timestamp,
+            'last_change_user_id' => $requested_user_id,
         );
 
         // mark archive note as deleted

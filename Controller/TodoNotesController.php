@@ -227,8 +227,7 @@ class TodoNotesController extends BaseController
         $description = $this->request->getStringParam('description');
         $category = $this->request->getStringParam('category');
 
-        //return $this->todoNotesModel->AddNote($project_id, $user_id, $is_active, $title, $description, $category);
-        return $this->todoNotesModel->AddNote($project_id, $selectedUser, $is_active, $title, $description, $category);
+        return $this->todoNotesModel->AddNote($project_id, $selectedUser, $user_id, $is_active, $title, $description, $category);
     }
 
     public function DeleteNote()
@@ -253,8 +252,7 @@ class TodoNotesController extends BaseController
             $todonotesSettingsHelper::SETTINGS_FILTER_ARCHIVED
         );
 
-        //return (!$doShowArchive) ? $this->todoNotesModel->DeleteNote($project_id, $user_id, $note_id) : null;
-        return (!$doShowArchive) ? $this->todoNotesModel->DeleteNote($project_id, $selectedUser, $note_id) : null;
+        return (!$doShowArchive) ? $this->todoNotesModel->DeleteNote($project_id, $selectedUser, $user_id, $note_id) : null;
     }
 
     public function DeleteAllDoneNotes()
@@ -269,8 +267,7 @@ class TodoNotesController extends BaseController
             return null;
         }
 
-        //return $this->todoNotesModel->DeleteAllDoneNotes($project_id, $user_id);
-        return $this->todoNotesModel->DeleteAllDoneNotes($project_id, $selectedUser);
+        return $this->todoNotesModel->DeleteAllDoneNotes($project_id, $selectedUser, $user_id);
     }
 
     public function UpdateNote()
@@ -293,8 +290,7 @@ class TodoNotesController extends BaseController
         $description = $this->request->getStringParam('description');
         $category = $this->request->getStringParam('category');
 
-        //$timestamp = $this->todoNotesModel->UpdateNote($project_id, $user_id, $note_id, $is_active, $title, $description, $category);
-        $timestamp = $this->todoNotesModel->UpdateNote($project_id, $selectedUser, $note_id, $is_active, $title, $description, $category);
+        $timestamp = $this->todoNotesModel->UpdateNote($project_id, $selectedUser, $user_id, $note_id, $is_active, $title, $description, $category);
         echo(json_encode(array('timestamp' => $timestamp,
                                'timestring' => date($this->dateParser->getUserDateTimeFormat(), $timestamp))));
         return $timestamp;
@@ -317,8 +313,7 @@ class TodoNotesController extends BaseController
 
         $is_active = $this->request->getStringParam('is_active');
 
-        //$timestamp = $this->todoNotesModel->UpdateNoteStatus($project_id, $user_id, $note_id, $is_active);
-        $timestamp = $this->todoNotesModel->UpdateNoteStatus($project_id, $selectedUser, $note_id, $is_active);
+        $timestamp = $this->todoNotesModel->UpdateNoteStatus($project_id, $selectedUser, $user_id, $note_id, $is_active);
         print(json_encode(array('timestamp' => $timestamp,
                                 'timestring' => date($this->dateParser->getUserDateTimeFormat(), $timestamp))));
         return $timestamp;
@@ -342,8 +337,7 @@ class TodoNotesController extends BaseController
         $notifications_alert_timestring = $this->request->getStringParam('notifications_alert_timestring');
         $notification_options_bitflags = intval($this->request->getStringParam('notification_options_bitflags'));
 
-        //$notifications_alert_timestamp = $this->todoNotesModel->UpdateNoteNotificationsAlertTimeAndOptions($project_id, $user_id, $note_id, $notifications_alert_timestring, $notification_options_bitflags);
-        $notifications_alert_timestamp = $this->todoNotesModel->UpdateNoteNotificationsAlertTimeAndOptions($project_id, $selectedUser, $note_id, $notifications_alert_timestring, $notification_options_bitflags);
+        $notifications_alert_timestamp = $this->todoNotesModel->UpdateNoteNotificationsAlertTimeAndOptions($project_id, $selectedUser, $user_id, $note_id, $notifications_alert_timestring, $notification_options_bitflags);
         print(json_encode(array('timestamp' => $notifications_alert_timestamp,
                                 'timestring' => ($notifications_alert_timestamp > 0) ? date($this->dateParser->getUserDateTimeFormat(), $notifications_alert_timestamp) : '',
                                 'options_bitflags' => $notification_options_bitflags)));
@@ -365,8 +359,7 @@ class TodoNotesController extends BaseController
 
         $notesPositions = array_map('intval', explode(',', $this->request->getStringParam('order')));
 
-        //$timestamp = $this->todoNotesModel->UpdateNotesPositions($project_id, $user_id, $notesPositions);
-        $timestamp = $this->todoNotesModel->UpdateNotesPositions($project_id, $selectedUser, $notesPositions);
+        $timestamp = $this->todoNotesModel->UpdateNotesPositions($project_id, $selectedUser, $user_id, $notesPositions);
         print(json_encode(array('timestamp' => $timestamp,
                                 'timestring' => date($this->dateParser->getUserDateTimeFormat(), $timestamp))));
         return $timestamp;
@@ -448,7 +441,6 @@ class TodoNotesController extends BaseController
         $projectsAccess = $this->todoNotesModel->GetAllProjectIds($user_id);
         $usersAccess = $this->todoNotesModel->GetSharingPermissions($project_id, $user_id);
 
-        //$data = $this->todoNotesModel->GetReportNotesForUser($project_id, $user_id, $projectsAccess, $usersAccess, $category);
         $data = $this->todoNotesModel->GetReportNotesForUser($project_id, $selectedUser, $projectsAccess, $usersAccess, $category);
 
         return $this->response->html($this->helper->layout->app('TodoNotes:project/report', array(
@@ -472,7 +464,6 @@ class TodoNotesController extends BaseController
             return $this->response->html($this->helper->layout->app('TodoNotes:widgets/flash_msg', array()));
         }
 
-        //$statsData = $this->todoNotesModel->GetProjectStatsForUser($project_id, $user_id);
         $statsData = $this->todoNotesModel->GetProjectStatsForUser($project_id, $selectedUser);
 
         return $this->response->html($this->helper->layout->app('TodoNotes:project/stats', array(
@@ -721,8 +712,7 @@ class TodoNotesController extends BaseController
 
         $note_id = $this->request->getStringParam('note_id');
 
-        //return $this->todoNotesModel->MoveNoteToArchive($project_id, $user_id, $note_id);
-        return $this->todoNotesModel->MoveNoteToArchive($project_id, $selectedUser, $note_id);
+        return $this->todoNotesModel->MoveNoteToArchive($project_id, $selectedUser, $user_id, $note_id);
     }
 
     public function MoveAllDoneNotesToArchive()
@@ -737,8 +727,7 @@ class TodoNotesController extends BaseController
             return null;
         }
 
-        //return $this->todoNotesModel->MoveAllDoneNotesToArchive($project_id, $user_id);
-        return $this->todoNotesModel->MoveAllDoneNotesToArchive($project_id, $selectedUser);
+        return $this->todoNotesModel->MoveAllDoneNotesToArchive($project_id, $selectedUser, $user_id);
     }
 
     public function RestoreNoteFromArchive()
@@ -756,8 +745,7 @@ class TodoNotesController extends BaseController
         $archived_note_id = $this->request->getStringParam('archived_note_id');
         $target_project_id = $this->request->getStringParam('target_project_id');
 
-        //return $this->todoNotesModel->RestoreNoteFromArchive($project_id, $user_id, $archived_note_id, $target_project_id);
-        return $this->todoNotesModel->RestoreNoteFromArchive($project_id, $selectedUser, $archived_note_id, $target_project_id);
+        return $this->todoNotesModel->RestoreNoteFromArchive($project_id, $selectedUser, $user_id, $archived_note_id, $target_project_id);
     }
 
     public function DeleteNoteFromArchive()
@@ -782,7 +770,6 @@ class TodoNotesController extends BaseController
             $todonotesSettingsHelper::SETTINGS_FILTER_ARCHIVED
         );
 
-        //return ($doShowArchive) ? $this->todoNotesModel->DeleteNoteFromArchive($project_id, $user_id, $archived_note_id) : null;
-        return ($doShowArchive) ? $this->todoNotesModel->DeleteNoteFromArchive($project_id, $selectedUser, $archived_note_id) : null;
+        return ($doShowArchive) ? $this->todoNotesModel->DeleteNoteFromArchive($project_id, $selectedUser, $user_id, $archived_note_id) : null;
     }
 }
