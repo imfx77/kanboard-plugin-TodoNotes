@@ -895,6 +895,7 @@ static #SettingsUserHandlers() {
         _TodoNotes_Settings_.selectedUser = list_user_id;
 
         setTimeout(function() {
+            _TodoNotes_Requests_.RefreshTabs(user_id);
             _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
         }, 500);
     });

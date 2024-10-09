@@ -603,5 +603,5 @@ label {
 }
 
 .statShared {
-    filter: brightness(30%);
+    filter: brightness(50%) grayscale(50%);
 }

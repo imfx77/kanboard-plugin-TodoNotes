@@ -1,5 +1,7 @@
 <?php
 
+$todonotesSettingsHelper = $this->helper->todonotesSessionAndCookiesSettingsHelper;
+
 $num = 0;
 
 $isAdmin = $this->user->isAdmin();
@@ -90,6 +92,14 @@ $separatorPlacedRegular = false;
 
 //----------------------------------------
 foreach ($projectsAccess as $o) {
+    $curr_project_id = $o['project_id'];
+
+    $selectedUserForProject = $todonotesSettingsHelper->GetGroupSettings(
+        $user_id,
+        $curr_project_id,
+        $todonotesSettingsHelper::SETTINGS_GROUP_USER
+    )[0];
+
     // separator header for custom GLOBAL lists
     if (!$separatorPlacedGlobal && $o['is_custom'] && $o['is_global']) {
         print '</ul>';
@@ -159,9 +169,9 @@ foreach ($projectsAccess as $o) {
     }
 
     //----------------------------------------
-    print '<li class="singleTab" id="singleTab-P' . $o['project_id'] . '"';
+    print '<li class="singleTab" id="singleTab-P' . $curr_project_id . '"';
     print ' data-id="' . $num . '"';
-    print ' data-project="' . $o['project_id'] . '"';
+    print ' data-project="' . $curr_project_id . '"';
     print '>';
 
     // single tab title row container
@@ -180,7 +190,7 @@ foreach ($projectsAccess as $o) {
 
     // buttons for single tabs
     //----------------------------------------
-    $hasGrantedSharingPermissions = $this->model->todoNotesModel->HasGrantedSharingPermissions($o['project_id'], $user_id);
+    $hasGrantedSharingPermissions = $this->model->todoNotesModel->HasGrantedSharingPermissions($curr_project_id, $user_id);
 
     print '<div class="localTableCellExpandRight">';
 
@@ -201,38 +211,38 @@ foreach ($projectsAccess as $o) {
             print '<button class="toolbarSeparator">&nbsp;</button>';
 
             // Rename button
-            print '<button id="customNoteListRenameGlobal-P' . $o['project_id'] . '"';
+            print '<button id="customNoteListRenameGlobal-P' . $curr_project_id . '"';
             print $isAdmin
                 ? ' class="toolbarButton buttonToggled customNoteListRenameGlobal"'
                 : ' class="toolbarButton buttonDisabled customNoteListRenameGlobal"';
             print $isAdmin
                 ? ' title="' . t('TodoNotes__DASHBOARD_RENAME_CUSTOM_GLOBAL_LIST') . '"'
                 : ' title="' . t('TodoNotes__DASHBOARD_RENAME_CUSTOM_GLOBAL_LIST') . ' ' . t('TodoNotes__GENERIC_ADMIN_ONLY') . '"';
-            print ' data-project="' . $o['project_id'] . '"';
+            print ' data-project="' . $curr_project_id . '"';
             print ' data-user="' . $user_id . '"';
             print '>';
             print '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>';
             print '</button>';
 
             // Delete button
-            print '<button id="customNoteListDeleteGlobal-P' . $o['project_id'] . '"';
+            print '<button id="customNoteListDeleteGlobal-P' . $curr_project_id . '"';
             print $isAdmin
                 ? ' class="toolbarButton buttonToggled customNoteListDeleteGlobal"'
                 : ' class="toolbarButton buttonDisabled customNoteListDeleteGlobal"';
             print $isAdmin
                 ? ' title="' . t('TodoNotes__DASHBOARD_DELETE_CUSTOM_GLOBAL_LIST') . '"'
                 : ' title="' . t('TodoNotes__DASHBOARD_DELETE_CUSTOM_GLOBAL_LIST') . ' ' . t('TodoNotes__GENERIC_ADMIN_ONLY') . '"';
-            print ' data-project="' . $o['project_id'] . '"';
+            print ' data-project="' . $curr_project_id . '"';
             print ' data-user="' . $user_id . '"';
             print '>';
             print '<i class="fa fa-trash-o" aria-hidden="true"></i>';
             print '</button>';
 
             // Share button
-            print '<button id="customNoteListShareGlobal-P' . $o['project_id'] . '"';
+            print '<button id="customNoteListShareGlobal-P' . $curr_project_id . '"';
             print ' class="toolbarButton customNoteListShareGlobal"';
             print ' title="' . t('TodoNotes__PROJECT_SHARING_PERMISSIONS') . '"';
-            print ' data-project="' . $o['project_id'] . '"';
+            print ' data-project="' . $curr_project_id . '"';
             print ' data-user="' . $user_id . '"';
             print '>';
             print '<a><i class="fa fa-share-alt' . ($hasGrantedSharingPermissions ? ' buttonHighlighted' : '') . '" aria-hidden="true"></i></a>';
@@ -252,30 +262,30 @@ foreach ($projectsAccess as $o) {
             print '<button class="toolbarSeparator">&nbsp;</button>';
 
             // Rename button
-            print '<button id="customNoteListRenamePrivate-P' . $o['project_id'] . '"';
+            print '<button id="customNoteListRenamePrivate-P' . $curr_project_id . '"';
             print ' class="toolbarButton customNoteListRenamePrivate"';
             print ' title="' . t('TodoNotes__DASHBOARD_RENAME_CUSTOM_PRIVATE_LIST') . '"';
-            print ' data-project="' . $o['project_id'] . '"';
+            print ' data-project="' . $curr_project_id . '"';
             print ' data-user="' . $user_id . '"';
             print '>';
             print '<a><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>';
             print '</button>';
 
             // Delete button
-            print '<button id="customNoteListDeletePrivate-P' . $o['project_id'] . '"';
+            print '<button id="customNoteListDeletePrivate-P' . $curr_project_id . '"';
             print ' class="toolbarButton customNoteListDeletePrivate"';
             print ' title="' . t('TodoNotes__DASHBOARD_DELETE_CUSTOM_PRIVATE_LIST') . '"';
-            print ' data-project="' . $o['project_id'] . '"';
+            print ' data-project="' . $curr_project_id . '"';
             print ' data-user="' . $user_id . '"';
             print '>';
             print '<a><i class="fa fa-trash-o" aria-hidden="true"></i></a>';
             print '</button>';
 
             // Share button
-            print '<button id="customNoteListSharePrivate-P' . $o['project_id'] . '"';
+            print '<button id="customNoteListSharePrivate-P' . $curr_project_id . '"';
             print ' class="toolbarButton customNoteListSharePrivate"';
             print ' title="' . t('TodoNotes__PROJECT_SHARING_PERMISSIONS') . '"';
-            print ' data-project="' . $o['project_id'] . '"';
+            print ' data-project="' . $curr_project_id . '"';
             print ' data-user="' . $user_id . '"';
             print '>';
             print '<a><i class="fa fa-share-alt' . ($hasGrantedSharingPermissions ? ' buttonHighlighted' : '') . '" aria-hidden="true"></i></a>';
@@ -325,30 +335,30 @@ foreach ($projectsAccess as $o) {
         print '<button class="toolbarSeparator">&nbsp;</button>';
 
         // goto Board button
-        print '<button id="gotoProjectBoard-P' . $o['project_id'] . '"';
+        print '<button id="gotoProjectBoard-P' . $curr_project_id . '"';
         print ' class="toolbarButton gotoProjectBoard"';
         print ' title="' . t('Board') . ' ⇗' . '"';
-        print ' data-project="' . $o['project_id'] . '"';
+        print ' data-project="' . $curr_project_id . '"';
         print ' data-user="' . $user_id . '"';
         print '>';
-        print $this->url->icon('th', '', 'BoardViewController', 'show', array('project_id' => $o['project_id']), false, 'view-board', t('Board') . ' ⇗', true);
+        print $this->url->icon('th', '', 'BoardViewController', 'show', array('project_id' => $curr_project_id), false, 'view-board', t('Board') . ' ⇗', true);
         print '</button>';
 
         // goto Tasks button
-        print '<button id="gotoProjectTasks-P' . $o['project_id'] . '"';
+        print '<button id="gotoProjectTasks-P' . $curr_project_id . '"';
         print ' class="toolbarButton gotoProjectTasks"';
         print ' title="' . t('List') . ' ⇗' . '"';
-        print ' data-project="' . $o['project_id'] . '"';
+        print ' data-project="' . $curr_project_id . '"';
         print ' data-user="' . $user_id . '"';
         print '>';
-        print $this->url->icon('list', '', 'TaskListController', 'show', array('project_id' => $o['project_id']), false, 'view-listing', t('List') . ' ⇗', true);
+        print $this->url->icon('list', '', 'TaskListController', 'show', array('project_id' => $curr_project_id), false, 'view-listing', t('List') . ' ⇗', true);
         print '</button>';
 
         // Share button
-        print '<button id="customNoteListShareRegular-P' . $o['project_id'] . '"';
+        print '<button id="customNoteListShareRegular-P' . $curr_project_id . '"';
         print ' class="toolbarButton customNoteListShareRegular"';
         print ' title="' . t('TodoNotes__PROJECT_SHARING_PERMISSIONS') . '"';
-        print ' data-project="' . $o['project_id'] . '"';
+        print ' data-project="' . $curr_project_id . '"';
         print ' data-user="' . $user_id . '"';
         print '>';
         print '<a><i class="fa fa-share-alt' . ($hasGrantedSharingPermissions ? ' buttonHighlighted' : '') . '" aria-hidden="true"></i></a>';
@@ -362,9 +372,9 @@ foreach ($projectsAccess as $o) {
     //----------------------------------------
     print '<div class="hideMe localTableCell tabStatsWidget">';
     print $this->render('TodoNotes:widgets/stats', array(
-         'stats_project_id' => $o['project_id'],
-        'stats_project_id' => $o['project_id'],
-        'stats_user_id' => $user_id,
+        'stats_project_id' => $curr_project_id,
+        'stats_user_id' => $selectedUserForProject,
+        'stats_is_shared' => ($selectedUserForProject != $user_id),
     ));
     print '</div>'; // stats widget for single tabs
 
