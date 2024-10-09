@@ -34,6 +34,7 @@
 .tabGroupHeader {
     color: #444444;
     background-color: rgba(192, 192, 192, .5);
+    margin-bottom: 2px;
 }
 
 .hrTabs {
@@ -60,6 +61,10 @@
 
 .localTableCellExpandRight button div img{
     vertical-align: middle;
+}
+
+.singleTab.active {
+    box-shadow: 0 0 15px #777777 inset;
 }
 
 .ulLists li {

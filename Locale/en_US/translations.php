@@ -124,8 +124,8 @@ Might be waiting for an unsubmitted New Note data input!',
     // Template dialogs
     //
     'TodoNotes__DIALOG_REINDEX_MSG' => 'This routine optimizes the Notes and Note Lists tables by shrinking the deleted records and reindexing all list and note Ids.
-&#10;⚠️ BE AWARE that it rewrites those tables from scratch, so it may take some time, during which the routine MUST NOT be interrupted!
-&#10;⚠️ This operation will affect BOTH the Notes and the Archived Notes tables for each list!
+&#10;⚠️ BE AWARE that it rewrites all tables from scratch, so it may take some time, during which the routine MUST NOT be interrupted!
+&#10;⚠️ This operation will affect BOTH the Notes and the Archived Notes for all lists of all users!
 &#10;Continue?',
     //
     'TodoNotes__DIALOG_DELETE_NOTE_MSG' => '⚠️ This note will be permanently deleted and cannot be recovered!

@@ -128,9 +128,9 @@ static #TabsStatsHandlers() {
 
         // update progress icons
         const statusAliasAll =  (statsWidgetAll.find(".statProgress b").text() !== '0') ? 'statusInProgress' : 'statusSuspended';
-        statsWidgetAll.find(".statProgress i").addClass(statusAliasAll);
+        statsWidgetAll.find(".statProgress i").removeClass(). addClass(statusAliasAll);
         const statusAliasCurrent =  (statsWidgetCurrent.find(".statProgress b").text() !== '0') ? 'statusInProgress' : 'statusSuspended';
-        statsWidgetCurrent.find(".statProgress i").addClass(statusAliasCurrent);
+        statsWidgetCurrent.find(".statProgress i").removeClass().addClass(statusAliasCurrent);
 
         _TodoNotes_Statuses_.ExpandStatusAliases();
     });

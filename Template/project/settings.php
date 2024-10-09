@@ -48,8 +48,9 @@ $settings_sortExplicit = !$todonotesSettingsHelper->GetToggleableSettings(
     true /*from_session*/
 );
 
-$settings_selectedUser = $todonotesSettingsHelper->GetGroupSettings(
+$settings_UserGroup = $todonotesSettingsHelper->GetGroupSettings(
     $user_id,
     $project_id,
     $todonotesSettingsHelper::SETTINGS_GROUP_USER
-)[0];
+);
+$settings_selectedUser = (count($settings_UserGroup) == 1) ? $settings_UserGroup[0] : $user_id;

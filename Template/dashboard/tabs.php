@@ -94,11 +94,12 @@ $separatorPlacedRegular = false;
 foreach ($projectsAccess as $o) {
     $curr_project_id = $o['project_id'];
 
-    $selectedUserForProject = $todonotesSettingsHelper->GetGroupSettings(
+    $selectedUserGroup = $todonotesSettingsHelper->GetGroupSettings(
         $user_id,
         $curr_project_id,
         $todonotesSettingsHelper::SETTINGS_GROUP_USER
-    )[0];
+    );
+    $selectedUser = (count($selectedUserGroup) == 1) ? $selectedUserGroup[0] : $user_id;
 
     // separator header for custom GLOBAL lists
     if (!$separatorPlacedGlobal && $o['is_custom'] && $o['is_global']) {
@@ -373,8 +374,8 @@ foreach ($projectsAccess as $o) {
     print '<div class="hideMe localTableCell tabStatsWidget">';
     print $this->render('TodoNotes:widgets/stats', array(
         'stats_project_id' => $curr_project_id,
-        'stats_user_id' => $selectedUserForProject,
-        'stats_is_shared' => ($selectedUserForProject != $user_id),
+        'stats_user_id' => $selectedUser,
+        'stats_is_shared' => ($selectedUser != $user_id),
     ));
     print '</div>'; // stats widget for single tabs
 
