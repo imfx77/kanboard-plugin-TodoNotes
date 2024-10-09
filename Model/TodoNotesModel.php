@@ -559,6 +559,19 @@ class TodoNotesModel extends Base
         return (count($sharingPermissions) == 1) ? $sharingPermissions[0]['permissions'] : self::PROJECT_SHARING_PERMISSION_NONE;
     }
 
+    // Check if the user has granted sharing permissions for given project to anyone else
+    public function HasGrantedSharingPermissions($project_id, $user_id): bool
+    {
+        $sharingPermissions = $this->db->table(self::TABLE_NOTES_SHARING_PERMISSIONS)
+            ->columns('permissions')
+            ->eq('project_id', $project_id)
+            ->eq('shared_from_user_id', $user_id)
+            ->gt('permissions', self::PROJECT_SHARING_PERMISSION_NONE)
+            ->findAll();
+
+        return (count($sharingPermissions) > 0);
+    }
+
     // Get a list of categories for a project
     public function GetCategories($project_id)
     {

@@ -179,6 +179,8 @@ foreach ($projectsAccess as $o) {
 
     // buttons for single tabs
     //----------------------------------------
+    $hasGrantedSharingPermissions = $this->model->todoNotesModel->HasGrantedSharingPermissions($o['project_id'], $user_id);
+
     print '<div class="localTableCellExpandRight">';
 
     if ($o['is_custom']) {
@@ -232,7 +234,7 @@ foreach ($projectsAccess as $o) {
             print ' data-project="' . $o['project_id'] . '"';
             print ' data-user="' . $user_id . '"';
             print '>';
-            print '<a><i class="fa fa-share-alt" aria-hidden="true"></i></a>';
+            print '<a><i class="fa fa-share-alt' . ($hasGrantedSharingPermissions ? ' buttonHighlighted' : '') . '" aria-hidden="true"></i></a>';
             print '</button>';
             //----------------------------------------
         } elseif ($o['is_owner']) {
@@ -275,7 +277,7 @@ foreach ($projectsAccess as $o) {
             print ' data-project="' . $o['project_id'] . '"';
             print ' data-user="' . $user_id . '"';
             print '>';
-            print '<a><i class="fa fa-share-alt" aria-hidden="true"></i></a>';
+            print '<a><i class="fa fa-share-alt' . ($hasGrantedSharingPermissions ? ' buttonHighlighted' : '') . '" aria-hidden="true"></i></a>';
             print '</button>';
             //----------------------------------------
         } elseif (!$o['is_owner']) {
@@ -348,7 +350,7 @@ foreach ($projectsAccess as $o) {
         print ' data-project="' . $o['project_id'] . '"';
         print ' data-user="' . $user_id . '"';
         print '>';
-        print '<a><i class="fa fa-share-alt" aria-hidden="true"></i></a>';
+        print '<a><i class="fa fa-share-alt' . ($hasGrantedSharingPermissions ? ' buttonHighlighted' : '') . '" aria-hidden="true"></i></a>';
         print '</button>';
         //----------------------------------------
     }
