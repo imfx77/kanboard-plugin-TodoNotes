@@ -69,7 +69,8 @@ print '</div>'; // buttons for ALL tab
 //----------------------------------------
 print '<div class="hideMe localTableCell tabStatsWidget">';
 print $this->render('TodoNotes:widgets/stats', array(
-     'stats_project_id' => 0,
+    'stats_project_id' => 0,
+    'stats_user_id' => $user_id,
 ));
 print '</div>'; // stats widget for ALL tab
 
@@ -362,6 +363,8 @@ foreach ($projectsAccess as $o) {
     print '<div class="hideMe localTableCell tabStatsWidget">';
     print $this->render('TodoNotes:widgets/stats', array(
          'stats_project_id' => $o['project_id'],
+        'stats_project_id' => $o['project_id'],
+        'stats_user_id' => $user_id,
     ));
     print '</div>'; // stats widget for single tabs
 

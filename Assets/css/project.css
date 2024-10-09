@@ -601,3 +601,7 @@ label {
     color:#F7F7F7 !important;
     margin-right: 4px !important;
 }
+
+.statShared {
+    filter: brightness(30%);
+}

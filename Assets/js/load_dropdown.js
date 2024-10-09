@@ -15,13 +15,15 @@ static #refreshStatsWidget() {
          ($("._TodoNotes_ProjectDropdown_StatsWidget:last").is(":visible")) ) {
 
         const project_id = $("._TodoNotes_ProjectDropdown_StatsWidget:last").attr('data-project');
+        const user_id = $("._TodoNotes_ProjectDropdown_StatsWidget:last").attr('data-user');
 
         // don't cache ajax or content won't be fresh
         $.ajaxSetup ({
           cache: false
         });
         const loadUrl = '/?controller=TodoNotesController&action=RefreshStatsWidget&plugin=TodoNotes'
-                    + '&stats_project_id=' + project_id;
+                    + '&stats_project_id=' + project_id
+                    + '&stats_user_id=' + user_id;
         $("._TodoNotes_ProjectDropdown_StatsWidget:last").html(_TodoNotes_Translations_.msgLoadingSpinner);
         $("._TodoNotes_ProjectDropdown_StatsWidget:last").load(loadUrl,
             function() {

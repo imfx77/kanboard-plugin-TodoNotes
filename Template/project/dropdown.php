@@ -51,10 +51,14 @@ li._TodoNotes_ProjectDropdown_Icon i.fa-wpforms::before {
         $linkTitle = '<div class="localTableCell">' . t('TodoNotes__PROJECT_TITLE') . '</div>';
 
         $statsWidget = '';
-        $statsWidget .= '<div class="_TodoNotes_ProjectDropdown_StatsWidget" data-project="';
-        $statsWidget .= $project['id'];
-        $statsWidget .= '">';
-        $statsWidget .= $this->render('TodoNotes:widgets/stats', array('stats_project_id' => $project_id));
+        $statsWidget .= '<div class="_TodoNotes_ProjectDropdown_StatsWidget"';
+        $statsWidget .= ' data-project="' . $project_id . '"';
+        $statsWidget .= ' data-user="' . $user_id . '"';
+        $statsWidget .= '>';
+        $statsWidget .= $this->render('TodoNotes:widgets/stats', array(
+            'stats_project_id' => $project_id,
+            'stats_user_id' => $user_id
+        ));
         $statsWidget .= '</div>';
     ?>
 

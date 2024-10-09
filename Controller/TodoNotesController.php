@@ -493,8 +493,10 @@ class TodoNotesController extends BaseController
     public function RefreshStatsWidget()
     {
         $stats_project_id = $this->request->getIntegerParam('stats_project_id');
+        $stats_user_id = $this->request->getIntegerParam('stats_user_id');
         return $this->response->html($this->helper->layout->app('TodoNotes:widgets/stats', array(
             'stats_project_id' => $stats_project_id,
+            'stats_user_id' => $stats_user_id,
         )));
     }
 
