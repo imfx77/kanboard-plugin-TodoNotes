@@ -47,8 +47,8 @@
 }
 
 .localTableCell {
-    display: table-cell;
     white-space: nowrap;
+    text-align: right;
 }
 
 .localTableCellExpandRight {

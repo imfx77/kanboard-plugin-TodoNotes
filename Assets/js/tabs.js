@@ -40,6 +40,13 @@ static UpdateTabsStats() {
     if (_TodoNotes_Settings_.showTabsStats) {
         $("#settingsShowTabsStats").find("a i").addClass( 'buttonToggled' );
         $(".tabStatsWidget").removeClass( 'hideMe' );
+
+        // align all widgets' width
+        let maxStatsWidgetWidth = 0;
+        $(".tabStatsWidget").each(function() {
+            maxStatsWidgetWidth = Math.max(maxStatsWidgetWidth, $(this).outerWidth());
+        });
+        $(".tabStatsWidget").width(maxStatsWidgetWidth);
     } else {
         $("#settingsShowTabsStats").find("a i").removeClass( 'buttonToggled' );
         $(".tabStatsWidget").addClass( 'hideMe' );
