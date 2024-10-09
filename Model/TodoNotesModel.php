@@ -42,6 +42,10 @@ class TodoNotesModel extends Base
 
     private const REINDEX_USLEEP_INTERVAL           = 250000; // 0.25s
 
+    // cached projects access
+    private $isCachedProjectsAccess = false;
+    private $cachedProjectsAccess = array();
+
     // Check unique note
     public function IsUniqueNote($project_id, $user_id, $note_id): bool
     {
@@ -490,6 +494,11 @@ class TodoNotesModel extends Base
     // Get all project_id where user has regular or custom access
     public function GetAllProjectIds($user_id)
     {
+        // use cached, saving DB queries
+        if ($this->isCachedProjectsAccess) {
+            return $this->cachedProjectsAccess;
+        }
+
         $projectsAccess = array_merge($this->GetCustomProjectIds($user_id), $this->GetRegularProjectIds($user_id));
 
         $tab_id = 1;
@@ -497,6 +506,10 @@ class TodoNotesModel extends Base
             $projectId['tab_id'] = $tab_id;
             $tab_id++;
         }
+
+        // cache
+        $this->cachedProjectsAccess = $projectsAccess;
+        $this->isCachedProjectsAccess = true;
 
         return $projectsAccess;
     }
