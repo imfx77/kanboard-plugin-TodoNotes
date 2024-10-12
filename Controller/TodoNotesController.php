@@ -170,12 +170,12 @@ class TodoNotesController extends BaseController
 
         if ($tab_id > 0 && !$projectsAccess[$tab_id - 1]['is_custom']) {
             $categories = $this->todoNotesModel->GetCategories($project_id);
-            $columns  = $this->todoNotesModel->GetColumns($project_id);
-            $swimlanes  = $this->todoNotesModel->GetSwimlanes($project_id);
+            $columns = $this->todoNotesModel->GetColumns($project_id);
+            $swimlanes = $this->todoNotesModel->GetSwimlanes($project_id);
         } else {
             $categories = $this->todoNotesModel->GetAllCategories();
-            $columns  = array();
-            $swimlanes  = array();
+            $columns = array();
+            $swimlanes = array();
         }
 
         $todonotesSettingsHelper = $this->helper->todonotesSessionAndCookiesSettingsHelper;
@@ -188,7 +188,7 @@ class TodoNotesController extends BaseController
 
         if ($project_id == 0) {
             $data = $doShowArchive
-                ? $this->todoNotesModel->GetAllArchivedNotesForUser( $user_id, $projectsAccess)
+                ? $this->todoNotesModel->GetAllArchivedNotesForUser($user_id, $projectsAccess)
                 : $this->todoNotesModel->GetAllNotesForUser($user_id, $projectsAccess);
         } else {
             $data = $doShowArchive
@@ -306,9 +306,11 @@ class TodoNotesController extends BaseController
         $category = $this->request->getStringParam('category');
 
         $timestamp = $this->todoNotesModel->UpdateNote($project_id, $selectedUser, $user_id, $note_id, $is_active, $title, $description, $category);
-        echo(json_encode(array('timestamp' => $timestamp,
-                               'timestring' => date($this->dateParser->getUserDateTimeFormat(), $timestamp),
-                               'userinfo' => $this->GetUserIconAndName($user_id))));
+        echo(json_encode(array(
+            'timestamp' => $timestamp,
+            'timestring' => date($this->dateParser->getUserDateTimeFormat(), $timestamp),
+            'userinfo' => $this->GetUserIconAndName($user_id)
+        )));
         return $timestamp;
     }
 
@@ -330,9 +332,11 @@ class TodoNotesController extends BaseController
         $is_active = $this->request->getStringParam('is_active');
 
         $timestamp = $this->todoNotesModel->UpdateNoteStatus($project_id, $selectedUser, $user_id, $note_id, $is_active);
-        print(json_encode(array('timestamp' => $timestamp,
-                                'timestring' => date($this->dateParser->getUserDateTimeFormat(), $timestamp),
-                                'userinfo' => $this->GetUserIconAndName($user_id))));
+        print(json_encode(array(
+            'timestamp' => $timestamp,
+            'timestring' => date($this->dateParser->getUserDateTimeFormat(), $timestamp),
+            'userinfo' => $this->GetUserIconAndName($user_id)
+        )));
         return $timestamp;
     }
 
@@ -355,9 +359,11 @@ class TodoNotesController extends BaseController
         $notification_options_bitflags = intval($this->request->getStringParam('notification_options_bitflags'));
 
         $notifications_alert_timestamp = $this->todoNotesModel->UpdateNoteNotificationsAlertTimeAndOptions($project_id, $selectedUser, $user_id, $note_id, $notifications_alert_timestring, $notification_options_bitflags);
-        print(json_encode(array('timestamp' => $notifications_alert_timestamp,
-                                'timestring' => ($notifications_alert_timestamp > 0) ? date($this->dateParser->getUserDateTimeFormat(), $notifications_alert_timestamp) : '',
-                                'options_bitflags' => $notification_options_bitflags)));
+        print(json_encode(array(
+            'timestamp' => $notifications_alert_timestamp,
+            'timestring' => ($notifications_alert_timestamp > 0) ? date($this->dateParser->getUserDateTimeFormat(), $notifications_alert_timestamp) : '',
+            'options_bitflags' => $notification_options_bitflags
+        )));
         return $notifications_alert_timestamp;
     }
 
@@ -377,9 +383,11 @@ class TodoNotesController extends BaseController
         $notesPositions = array_map('intval', explode(',', $this->request->getStringParam('order')));
 
         $timestamp = $this->todoNotesModel->UpdateNotesPositions($project_id, $selectedUser, $user_id, $notesPositions);
-        print(json_encode(array('timestamp' => $timestamp,
-                                'timestring' => date($this->dateParser->getUserDateTimeFormat(), $timestamp),
-                                'userinfo' => $this->GetUserIconAndName($user_id))));
+        print(json_encode(array(
+            'timestamp' => $timestamp,
+            'timestring' => date($this->dateParser->getUserDateTimeFormat(), $timestamp),
+            'userinfo' => $this->GetUserIconAndName($user_id)
+        )));
         return $timestamp;
     }
 
@@ -420,10 +428,10 @@ class TodoNotesController extends BaseController
         $swimlane_id = $this->request->getStringParam('swimlane_id');
 
         $task_id = $this->taskCreationModel->create(array(
-            'project_id'  => $project_id,
-            'creator_id'  => $user_id,
-            'owner_id'    => $user_id,
-            'title'       => $task_title,
+            'project_id' => $project_id,
+            'creator_id' => $user_id,
+            'owner_id' => $user_id,
+            'title' => $task_title,
             'description' => $task_description,
             'category_id' => $category_id,
             'column_id' => $column_id,
@@ -573,96 +581,99 @@ class TodoNotesController extends BaseController
     public function RenameCustomNoteList()
     {
         $user_id = $this->ResolveUserId();
-        $project_tab_id = intval($this->request->getStringParam('project_tab_id'));
         $project_id = intval($this->request->getStringParam('project_custom_id'));
         $custom_note_list_name = $this->request->getStringParam('custom_note_list_name');
 
         $is_global = $this->todoNotesModel->IsCustomGlobalProject($project_id);
         $is_owner = $this->todoNotesModel->IsCustomProjectOwner($project_id, $user_id);
+        $is_admin = $this->userModel->isAdmin($user_id);
 
         if (empty($custom_note_list_name) || $project_id >= 0) {
-            // empty name or non-custom project!
+            // empty name or non-custom project !
             $this->flash->failure(t('TodoNotes__DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('TodoNotes__GENERIC_INVALID_OR_EMPTY_PARAMETER'));
-        } elseif ($is_global && !$this->userModel->isAdmin($user_id)) {
+        } elseif ($is_global && !$is_admin) {
             // non-Admin attempting to rename a Global note list !
             $this->flash->failure(t('TodoNotes__DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('TodoNotes__GENERIC_NO_ADMIN_PRIVILEGES'));
-        } elseif (!$is_global && $is_owner) {
+        } elseif (!$is_global && !$is_owner) {
+            // non-Owner attempting to rename a Private note list !
+            $this->flash->failure(t('TodoNotes__DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('TodoNotes__GENERIC_NO_OWNER_PRIVILEGES'));
+        } elseif (($is_global && $is_admin) || (!$is_global && $is_owner)) {
+            // Admin attempting to rename Global OR Owner attempting to rename a Private note list !
             $validation = $this->todoNotesModel->RenameCustomNoteList($project_id, $custom_note_list_name);
             if ($validation) {
                 $this->todoNotesModel->EmulateForceRefresh();
             }
             $this->CustomNoteListOperationNotification($validation, $is_global);
-        } elseif (!$is_global && !$is_owner) {
-            // non-Owner attempting to rename a Private note list !
-            $this->flash->failure(t('TodoNotes__DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('TodoNotes__GENERIC_NO_OWNER_PRIVILEGES'));
         }
 
-        $this->response->redirect($this->helper->url->to('TodoNotesController', 'ShowDashboard', array(
-            'plugin' => 'TodoNotes',
-            'user_id' => $user_id,
-            'tab_id' => $this->todoNotesModel->GetTabForProject($project_tab_id, $user_id),
-        )));
+        $this->RefreshAll();
     }
 
     public function DeleteCustomNoteList()
     {
         $user_id = $this->ResolveUserId();
-        $project_tab_id = intval($this->request->getStringParam('project_tab_id'));
         $project_id = intval($this->request->getStringParam('project_custom_id'));
 
         $is_global = $this->todoNotesModel->IsCustomGlobalProject($project_id);
         $is_owner = $this->todoNotesModel->IsCustomProjectOwner($project_id, $user_id);
+        $is_admin = $this->userModel->isAdmin($user_id);
 
         if ($project_id >= 0) {
             // non-custom project!
             $this->flash->failure(t('TodoNotes__DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('TodoNotes__GENERIC_INVALID_OR_EMPTY_PARAMETER'));
-        } elseif ($is_global && !$this->userModel->isAdmin($user_id)) {
+        } elseif ($is_global && !$is_admin) {
             // non-Admin attempting to delete a Global note list !
             $this->flash->failure(t('TodoNotes__DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('TodoNotes__GENERIC_NO_ADMIN_PRIVILEGES'));
-        } elseif (!$is_global && $is_owner) {
+        } elseif (!$is_global && !$is_owner) {
+            // non-Owner attempting to delete a Private note list !
+            $this->flash->failure(t('TodoNotes__DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('TodoNotes__GENERIC_NO_OWNER_PRIVILEGES'));
+        } elseif (($is_global && $is_admin) || (!$is_global && $is_owner)) {
+            // Admin attempting to delete Global OR Owner attempting to delete a Private note list !
             $validation = $this->todoNotesModel->DeleteCustomNoteList($project_id);
             if ($validation) {
                 $this->todoNotesModel->EmulateForceRefresh();
             }
             $this->CustomNoteListOperationNotification($validation, $is_global);
-        } elseif (!$is_global && !$is_owner) {
-            // non-Owner attempting to delete a Private note list !
-            $this->flash->failure(t('TodoNotes__DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('TodoNotes__GENERIC_NO_OWNER_PRIVILEGES'));
         }
 
-        $this->response->redirect($this->helper->url->to('TodoNotesController', 'ShowDashboard', array(
-            'plugin' => 'TodoNotes',
-            'user_id' => $user_id,
-            'tab_id' => $this->todoNotesModel->GetTabForProject($project_tab_id, $user_id),
-        )));
+        $this->RefreshAll();
     }
 
     public function UpdateCustomNoteListsPositions()
     {
         $user_id = $this->ResolveUserId();
-        $project_tab_id = intval($this->request->getStringParam('project_tab_id'));
         $customListsPositions = array_map('intval', explode(',', $this->request->getStringParam('order')));
 
         $project_id = intval($customListsPositions[0]); // use the first project_id in the array as reference
         $is_global = $this->todoNotesModel->IsCustomGlobalProject($project_id);
         $is_owner = $this->todoNotesModel->IsCustomProjectOwner($project_id, $user_id);
+        $is_admin = $this->userModel->isAdmin($user_id);
 
         if ($project_id >= 0) {
             // non-custom project!
             $this->flash->failure(t('TodoNotes__DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('TodoNotes__GENERIC_INVALID_OR_EMPTY_PARAMETER'));
-        } elseif ($is_global && !$this->userModel->isAdmin($user_id)) {
+        } elseif ($is_global && !$is_admin) {
             // non-Admin attempting to reorder a Global note list !
             $this->flash->failure(t('TodoNotes__DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('TodoNotes__GENERIC_NO_ADMIN_PRIVILEGES'));
-        } elseif (!$is_global && $is_owner) {
+        } elseif (!$is_global && !$is_owner) {
+            // non-Owner attempting to reorder a Private note list !
+            $this->flash->failure(t('TodoNotes__DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('TodoNotes__GENERIC_NO_OWNER_PRIVILEGES'));
+        } elseif (($is_global && $is_admin) || (!$is_global && $is_owner)) {
+            // Admin attempting to reorder Global OR Owner attempting to reorder a Private note list !
             $validation = $this->todoNotesModel->UpdateCustomNoteListsPositions(!$is_global ? $user_id : 0, $customListsPositions);
             if ($validation) {
                 $this->todoNotesModel->EmulateForceRefresh();
             }
             $this->CustomNoteListOperationNotification($validation, $is_global);
-        } elseif (!$is_global && !$is_owner) {
-            // non-Owner attempting to reorder a Private note list !
-            $this->flash->failure(t('TodoNotes__DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE') . ' => ' . t('TodoNotes__GENERIC_NO_OWNER_PRIVILEGES'));
         }
+
+        $this->RefreshAll();
+    }
+
+    public function RefreshAll()
+    {
+        $user_id = $this->ResolveUserId();
+        $project_tab_id = intval($this->request->getStringParam('project_tab_id'));
 
         $this->response->redirect($this->helper->url->to('TodoNotesController', 'ShowDashboard', array(
             'plugin' => 'TodoNotes',

@@ -910,7 +910,7 @@ class TodoNotesModel extends Base
             ->remove();
 
         // delete sharing permissions
-        return $this->db->table(self::TABLE_NOTES_SHARING_PERMISSIONS)
+        $this->db->table(self::TABLE_NOTES_SHARING_PERMISSIONS)
             ->eq('project_id', $project_id)
             ->remove();
 
