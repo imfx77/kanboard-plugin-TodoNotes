@@ -68,20 +68,24 @@ print '<select id="listCatCreateTask-P' . $project_id . '">';
 // Only allow blank select if there's other selectable options
 if (!empty($listCategoriesById)) {
     print '<option></option>';
+    print $listCategoriesById;
 }
-print $listCategoriesById;
 print '</select>';
 print '<br>';
 
 print '<label for="listColCreateTask-P' . $project_id . '">' . t('Column') . ' : &nbsp;</label>';
 print '<select id="listColCreateTask-P' . $project_id . '">';
-print $listColumnsById;
+if (!empty($listColumnsById)) {
+    print $listColumnsById;
+}
 print '</select>';
 print '<br>';
 
 print '<label for="listSwimCreateTask-P' . $project_id . '">' . t('Swimlane') . ' : &nbsp;</label>';
 print '<select id="listSwimCreateTask-P' . $project_id . '">';
-print $listSwimlanesById;
+if (!empty($listSwimlanesById)) {
+    print $listSwimlanesById;
+}
 print '</select>';
 print '<br>';
 

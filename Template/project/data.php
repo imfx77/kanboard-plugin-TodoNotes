@@ -84,7 +84,7 @@ if (!empty($swimlanes)) {
 //----------------------------------------
 
 if (!$is_refresh) { // print only once per project !!!
-    print '<div align="center">';
+    print '<div class="containerCenter">';
     print '<section class="mainholder" id="mainholderP' . $project_id . '">';
     print '<div align="left" id="result' . $project_id . '">';
 }
@@ -176,11 +176,11 @@ print '</button></div></li>';
 if (!$isOverviewMode && (!$projectAccess['is_custom'] || $projectAccess['is_global'])) {
 // add divider between button groups
     print '<hr class="toolbarDivider">';
-    print '<li><div align="center"><b>' . t('TodoNotes__PROJECT_SHARING_PERMISSIONS') . '</b></div></li>';
+    print '<li><div class="containerCenter"><b>' . t('TodoNotes__PROJECT_SHARING_PERMISSIONS') . '</b></div></li>';
 
 // List of Sharing Users (if any)
     if (count($usersAccess) == 0) {
-        print '<li><div class="spinnerMsg" align="center"><i class="fa fa-times " aria-hidden="true"></i>  ' . t('TodoNotes__GENERIC_NO_ENTRIES') . '</div></li>';
+        print '<li><div class="spinnerMsg containerCenter"><i class="fa fa-times " aria-hidden="true"></i>  ' . t('TodoNotes__GENERIC_NO_ENTRIES') . '</div></li>';
     } else {
         foreach ($usersAccess as $list_user_id => $permission) {
             // skip the current user, as already listed on top
@@ -678,7 +678,7 @@ print '>';
 //----------------------------------------
 if (count($data) == 0) {
     // empty project list
-    print '<div class="spinnerMsg" align="center"><i class="fa fa-times " aria-hidden="true"></i>  ' . t('TodoNotes__GENERIC_NO_ENTRIES') . '</div>';
+    print '<div class="spinnerMsg containerCenter"><i class="fa fa-times " aria-hidden="true"></i>  ' . t('TodoNotes__GENERIC_NO_ENTRIES') . '</div>';
 }
 //----------------------------------------
 
