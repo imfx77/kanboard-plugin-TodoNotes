@@ -150,6 +150,11 @@ label {
     clear: both !important;
 }
 
+.containerCenter {
+    margin: auto;
+    width: fit-content;
+}
+
 .containerGithubButtons {
     white-space: nowrap;
     width: 736px;

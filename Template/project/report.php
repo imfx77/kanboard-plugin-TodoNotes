@@ -132,6 +132,9 @@ foreach ($data as $u) {
 <?php
 
 //----------------------------------------
+print '<div class="containerCenter">';
+print '<button id="closeReport" class="btn">' . t('TodoNotes__JS_DIALOG_CLOSE_BTN') . '</button>';
+print '</div>';
 
 // hidden reference for project_id and user_id of the currently active page
 print '<div class="hideMe" id="refProjectId"';

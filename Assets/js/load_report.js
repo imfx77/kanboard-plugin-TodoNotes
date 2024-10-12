@@ -26,6 +26,10 @@ static prepareDocument() {
 
     _TodoNotes_.AttachAllHandlers();
 
+    $("#closeReport").click(function() {
+        location.reload();
+    });
+
     setTimeout(function() {
         // resize the report table to fit in screen height so to scroll its contents
         const scrollableTable = $(".tableReport");
