@@ -533,6 +533,23 @@ static RefreshTabs(user_id) {
 }
 
 //------------------------------------------------
+static RefreshAll(project_id, user_id) {
+    const project_tab_id = $("#tabId").attr('data-project');
+
+    // don't cache ajax or content won't be fresh
+    $.ajaxSetup ({
+        cache: false
+    });
+    const loadUrl = '/?controller=TodoNotesController&action=RefreshAll&plugin=TodoNotes'
+                + '&user_id=' + user_id
+                + '&project_tab_id=' + project_tab_id
+                + '&project_custom_id=' + project_id;
+    setTimeout(function() {
+        location.replace(loadUrl);
+    }, 50);
+}
+
+//------------------------------------------------
 // General requests
 //------------------------------------------------
 

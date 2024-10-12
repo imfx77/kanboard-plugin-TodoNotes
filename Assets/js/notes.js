@@ -1710,11 +1710,16 @@ static CheckAndTriggerRefresh(lastModifiedTimestamp) {
     const lastRefreshedTimestamp = $("#refProjectId").attr('data-timestamp');
 
     const is_project = ($(".liNewNote").length === 1);
-    if (is_project && lastRefreshedTimestamp < lastModifiedTimestamp.notes) {
+    const is_sharing = ($("#closeSharing").length === 1);
+
+    if (!is_sharing && lastRefreshedTimestamp < lastModifiedTimestamp.projects) {
+        _TodoNotes_Requests_.RefreshTabs(user_id);
+    }
+    if (is_project && !is_sharing && lastRefreshedTimestamp < lastModifiedTimestamp.notes) {
         _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
     }
-    if (lastRefreshedTimestamp < lastModifiedTimestamp.projects) {
-        _TodoNotes_Requests_.RefreshTabs(user_id);
+    if (is_sharing && !is_project && lastRefreshedTimestamp < lastModifiedTimestamp.max) {
+        _TodoNotes_Requests_.RefreshAll(project_id, user_id);
     }
     if (lastRefreshedTimestamp < lastModifiedTimestamp.max) {
         $("#refProjectId").attr('data-timestamp', lastModifiedTimestamp.max);

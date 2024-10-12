@@ -206,11 +206,55 @@ class TodoNotesController extends BaseController
 
             'tab_id' => $tab_id,
             'note_id' => $this->request->getStringParam('note_id') ?: '0',
+            'is_sharing_view' => 0,
 
             'categories' => $categories,
             'columns' => $columns,
             'swimlanes' => $swimlanes,
             'data' => $data,
+        )));
+    }
+
+    public function ShowDashboardSharing()
+    {
+        $user = $this->getUser();
+        $user_id = $this->ResolveUserId();
+
+        $tab_id = $this->request->getStringParam('tab_id');
+        if (empty($tab_id)) {
+            $tab_id = 0;
+        } else {
+            $tab_id = intval($tab_id);
+        }
+
+        // NO sharing for overview mode
+        if ($tab_id == 0) {
+            return $this->response->redirect($this->helper->url->to('TodoNotesController', 'ShowDashboard', array(
+                'plugin' => 'TodoNotes',
+                'user_id' => $user_id,
+                'tab_id' => $tab_id,
+            )));
+        }
+
+        $projectsAccess = $this->todoNotesModel->GetAllProjectIds($user_id);
+        $project_id = $projectsAccess[$tab_id - 1]['project_id'];
+        $usersAccess = $this->todoNotesModel->GetSharingPermissions($project_id, $user_id);
+
+//            $data = $doShowArchive
+//                ? $this->todoNotesModel->GetArchivedProjectNotesForUser($project_id, $user_id, $projectsAccess, $usersAccess)
+//                : $this->todoNotesModel->GetProjectNotesForUser($project_id, $user_id, $projectsAccess, $usersAccess);
+
+        return $this->response->html($this->helper->layout->dashboard('TodoNotes:dashboard/data', array(
+            'title' => t('TodoNotes__DASHBOARD_TITLE', $this->helper->user->getFullname($user)),
+            'projectsAccess' => $projectsAccess,
+            'usersAccess' => $usersAccess,
+            'user' => $user,
+            'user_id' => $user_id,
+
+            'tab_id' => $tab_id,
+            'is_sharing_view' => 1,
+
+//            'data' => $data,
         )));
     }
 

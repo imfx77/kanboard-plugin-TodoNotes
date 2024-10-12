@@ -12,13 +12,13 @@ class _TodoNotes_Tabs_ {
 
 //------------------------------------------------
 static UpdateTabs() {
-    const project_tab_id = $("#tabId").attr('data-project');
+    const project_id = $("#tabId").attr('data-project');
 
     $(".singleTab").removeClass( 'active' );
-    $("#singleTab-P" + project_tab_id).addClass( 'active' );
+    $("#singleTab-P" + project_id).addClass( 'active' );
     $("#myNotesHeader h2").text(
         _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__DASHBOARD_MY_NOTES')
-        + ' > ' + $("#singleTab-P" + project_tab_id + " a").text()
+        + ' > ' + $("#singleTab-P" + project_id + " a").text()
     );
 
     if (_TodoNotes_Settings_.hideTabsGlobal) {
@@ -222,30 +222,13 @@ static #TabsActionHandlers() {
 
     //------------------------------------------------
 
-    // share custom list (global)
-    $("button" + ".customNoteListShareGlobal").click(function() {
+    // share list button
+    $("button" + ".customNoteListShare").click(function() {
         const user_id = $(this).attr('data-user');
-        const project_id = $(this).attr('data-project');
-        // const default_name = $(this).closest('.singleTab').find('a').text();
-        // _TodoNotes_Modals_.ShareCustomNoteList(user_id, project_id, default_name);
+        const id = $(this).attr('data-id');
+        const sharingUrl = location.origin + '/dashboard/' + user_id + '/todonotesSharing/' + id;
+        location.replace(sharingUrl);
     });
-
-    // share custom list (private)
-    $("button" + ".customNoteListSharePrivate").click(function() {
-        const user_id = $(this).attr('data-user');
-        const project_id = $(this).attr('data-project');
-        // const default_name = $(this).closest('.singleTab').find('a').text();
-        // _TodoNotes_Modals_.ShareCustomNoteList(user_id, project_id, default_name);
-    });
-
-    // share regular list
-    $("button" + ".customNoteListShareRegular").click(function() {
-        const user_id = $(this).attr('data-user');
-        const project_id = $(this).attr('data-project');
-        // const default_name = $(this).closest('.singleTab').find('a').text();
-        // _TodoNotes_Modals_.ShareCustomNoteList(user_id, project_id, default_name);
-    });
-
 }
 
 //------------------------------------------------

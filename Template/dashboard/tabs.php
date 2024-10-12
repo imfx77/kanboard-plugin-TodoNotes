@@ -240,11 +240,12 @@ foreach ($projectsAccess as $o) {
             print '</button>';
 
             // Share button
-            print '<button id="customNoteListShareGlobal-P' . $curr_project_id . '"';
-            print ' class="toolbarButton customNoteListShareGlobal"';
+            print '<button id="customNoteListShare-P' . $curr_project_id . '"';
+            print ' class="toolbarButton customNoteListShare"';
             print ' title="' . t('TodoNotes__PROJECT_SHARING_PERMISSIONS') . '"';
             print ' data-project="' . $curr_project_id . '"';
             print ' data-user="' . $user_id . '"';
+            print ' data-id="' . $num . '"';
             print '>';
             print '<a><i class="fa fa-share-alt' . ($hasGrantedSharingPermissions ? ' buttonHighlighted' : '') . '" aria-hidden="true"></i></a>';
             print '</button>';
@@ -283,11 +284,12 @@ foreach ($projectsAccess as $o) {
             print '</button>';
 
             // Share button
-            print '<button id="customNoteListSharePrivate-P' . $curr_project_id . '"';
-            print ' class="toolbarButton customNoteListSharePrivate"';
+            print '<button id="customNoteListShare-P' . $curr_project_id . '"';
+            print ' class="toolbarButton customNoteListShare"';
             print ' title="' . t('TodoNotes__PROJECT_SHARING_PERMISSIONS') . '"';
             print ' data-project="' . $curr_project_id . '"';
             print ' data-user="' . $user_id . '"';
+            print ' data-id="' . $num . '"';
             print '>';
             print '<a><i class="fa fa-share-alt' . ($hasGrantedSharingPermissions ? ' buttonHighlighted' : '') . '" aria-hidden="true"></i></a>';
             print '</button>';
@@ -356,11 +358,12 @@ foreach ($projectsAccess as $o) {
         print '</button>';
 
         // Share button
-        print '<button id="customNoteListShareRegular-P' . $curr_project_id . '"';
-        print ' class="toolbarButton customNoteListShareRegular"';
+        print '<button id="customNoteListShare-P' . $curr_project_id . '"';
+        print ' class="toolbarButton customNoteListShare"';
         print ' title="' . t('TodoNotes__PROJECT_SHARING_PERMISSIONS') . '"';
         print ' data-project="' . $curr_project_id . '"';
         print ' data-user="' . $user_id . '"';
+        print ' data-id="' . $num . '"';
         print '>';
         print '<a><i class="fa fa-share-alt' . ($hasGrantedSharingPermissions ? ' buttonHighlighted' : '') . '" aria-hidden="true"></i></a>';
         print '</button>';

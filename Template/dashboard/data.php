@@ -36,26 +36,42 @@ if ($tab_id > 0) {
                      'is_custom' => $projectAccess['is_custom']);
 }
 
+if ($is_sharing_view) {
+    print $this->render('TodoNotes:project/sharing', array(
+        'projectsAccess' => $projectsAccess,
+        'project' => $project,
+        'project_id' => $project['id'],
+        'usersAccess' => $usersAccess,
+        'user' => $user,
+        'user_id' => $user_id,
+
+        'is_dashboard_view' => 1,
+        'is_sharing_view' => $is_sharing_view,
+
+//        'data' => $data,
+    ));
+} else {
+    print $this->render('TodoNotes:project/data', array(
+        'projectsAccess' => $projectsAccess,
+        'project' => $project,
+        'project_id' => $project['id'],
+        'usersAccess' => $usersAccess,
+        'user' => $user,
+        'user_id' => $user_id,
+        'user_datetime_format' => $user_datetime_format,
+        'note_id' => $note_id,
+
+        'is_refresh' => false,
+        'is_dashboard_view' => 1,
+        'is_sharing_view' => $is_sharing_view,
+
+        'categories' => $categories,
+        'columns' => $columns,
+        'swimlanes' => $swimlanes,
+        'data' => $data,
+    ));
+}
 ?>
-
-<?= $this->render('TodoNotes:project/data', array(
-    'projectsAccess' => $projectsAccess,
-    'project' => $project,
-    'project_id' => $project['id'],
-    'usersAccess' => $usersAccess,
-    'user' => $user,
-    'user_id' => $user_id,
-    'user_datetime_format' => $user_datetime_format,
-    'note_id' => $note_id,
-
-    'is_refresh' => false,
-    'is_dashboard_view' => 1,
-
-    'categories' => $categories,
-    'columns' => $columns,
-    'swimlanes' => $swimlanes,
-    'data' => $data,
-)) ?>
 
 </div>
 
@@ -76,5 +92,6 @@ $isAdmin = $this->user->isAdmin();
 print '<div class="hideMe" id="tabId"';
 print ' data-tab="' . $tab_id  . '"';
 print ' data-project="' . $project['id'] . '"';
+print ' data-user="' . $user_id . '"';
 print ' data-admin="' . ($isAdmin ? '1' : '0') . '"';
 print '></div>';
