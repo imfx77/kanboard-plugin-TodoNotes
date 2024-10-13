@@ -43,8 +43,9 @@ class TodoNotesModel extends Base
     private const REINDEX_USLEEP_INTERVAL           = 250000; // 0.25s
 
     // cached projects access
-    private $isCachedProjectsAccess = false;
-    private $cachedProjectsAccess = array();
+    private bool $isCachedProjectsAccess = false;
+    private array $cachedProjectsAccess = array();
+
 
     // Check unique note
     public function IsUniqueNote($project_id, $user_id, $note_id): bool
@@ -607,7 +608,7 @@ class TodoNotesModel extends Base
                     ->eq('shared_from_user_id', $user_id)
                     ->eq('shared_to_user_id', $shared_user_id)
                     ->findAll()
-                ) > 0;
+            ) > 0;
 
             if ($hasRecord) {
                 $values = array(
@@ -1279,7 +1280,7 @@ class TodoNotesModel extends Base
         );
     }
 
-    public function VerifySharingPermissions($project_id, $user_id, $permissions = self::PROJECT_SHARING_PERMISSION_EDIT) : int
+    public function VerifySharingPermissions($project_id, $user_id, $permissions = self::PROJECT_SHARING_PERMISSION_EDIT): int
     {
         $todonotesSettingsHelper = $this->helper->todonotesSessionAndCookiesSettingsHelper;
         $userGroup = $todonotesSettingsHelper->GetGroupSettings(

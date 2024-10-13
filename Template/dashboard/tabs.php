@@ -303,7 +303,7 @@ foreach ($projectsAccess as $o) {
 
             // Permissions icon
             print '<button class="toolbarButton buttonNonClickable">';
-            switch($o['permissions']) {
+            switch ($o['permissions']) {
                 case $this->model->todoNotesModel::PROJECT_SHARING_PERMISSION_VIEW:
                     print '<i class="fa fa-eye" aria-hidden="true" title="' . t('TodoNotes__PROJECT_SHARING_PERMISSIONS_VIEW') . '"></i>';
                     break;

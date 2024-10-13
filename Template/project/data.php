@@ -166,7 +166,7 @@ print $this->avatar->small(
     $list_user_details['avatar_path'],
     'avatar-inline'
 );
-print '<a>'. $this->text->e($list_user_details['name'] ?: $list_user_details['username']) . '</a>';
+print '<a>' . $this->text->e($list_user_details['name'] ?: $list_user_details['username']) . '</a>';
 print '<div class="containerFloatRight">';
 print '<button class="toolbarButton">';
 print $list_user_permission;
@@ -547,8 +547,7 @@ if ($isOverviewMode) {
         print '<span class="textNewNote">';
         if ($isReadOnlyMode) {
             print t('TodoNotes__PROJECT_READONLY_MODE_TEXT');
-        }
-        else if ($settings_sortExplicit) {
+        } elseif ($settings_sortExplicit) {
             print t('TodoNotes__PROJECT_NEW_NOTE_TEXT_REORDERING_DISABLED');
         }
         print '</span>';

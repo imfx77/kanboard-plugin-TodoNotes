@@ -259,7 +259,7 @@ static #FormatDate(format, date){
 		s = date.getSeconds();  // seconds (0-59)
 
 	for (var i = 0, len = format.length; i < len; i++) {
-		switch(format[i])
+		switch (format[i])
 		{
 			case 'j': // Day of the month without leading zeros  (1 to 31)
 				string+= d;
@@ -368,7 +368,7 @@ static #UpdateNotificationsSetupPostponeTime() {
     $("#form-alert_time_NotificationsSetup").attr('placeholder', _TodoNotes_Modals_.#FormatDate(datetimeFormat, postponeTime));
 
     const postponeType = parseInt($("#postpone_type_NotificationsSetup").val());
-    switch(postponeType)
+    switch (postponeType)
     {
         case 1: // seconds
             postponeTime.setSeconds(postponeTime.getSeconds() + postponeValue);

@@ -47,24 +47,28 @@ li._TodoNotes_ProjectDropdown_Icon i.fa-wpforms::before {
 </style>
 
 <li class="_TodoNotes_ProjectDropdown_Icon">
-    <?php
-        $linkTitle = '<div class="localTableCell">' . t('TodoNotes__PROJECT_TITLE') . '</div>';
 
-        $statsWidget = '';
-        $statsWidget .= '<div class="_TodoNotes_ProjectDropdown_StatsWidget"';
-        $statsWidget .= ' data-project="' . $project_id . '"';
-        $statsWidget .= ' data-user="' . $user_id . '"';
-        $statsWidget .= '>';
-        $statsWidget .= $this->render('TodoNotes:widgets/stats', array(
-            'stats_project_id' => $project_id,
-            'stats_user_id' => $user_id
-        ));
-        $statsWidget .= '</div>';
-    ?>
+<?php
 
-    <?= $this->url->icon('wpforms', $linkTitle . $statsWidget, 'TodoNotesController', 'ShowProject', array(
-        'project_id' => $project_id,
-        'use_cached' => '1',
-        'plugin' => 'TodoNotes',
-    ), false, 'localTable') ?>
+$linkTitle = '<div class="localTableCell">' . t('TodoNotes__PROJECT_TITLE') . '</div>';
+
+$statsWidget = '';
+$statsWidget .= '<div class="_TodoNotes_ProjectDropdown_StatsWidget"';
+$statsWidget .= ' data-project="' . $project_id . '"';
+$statsWidget .= ' data-user="' . $user_id . '"';
+$statsWidget .= '>';
+$statsWidget .= $this->render('TodoNotes:widgets/stats', array(
+    'stats_project_id' => $project_id,
+    'stats_user_id' => $user_id
+));
+$statsWidget .= '</div>';
+
+?>
+
+<?= $this->url->icon('wpforms', $linkTitle . $statsWidget, 'TodoNotesController', 'ShowProject', array(
+    'project_id' => $project_id,
+    'use_cached' => '1',
+    'plugin' => 'TodoNotes',
+), false, 'localTable') ?>
+
 </li>

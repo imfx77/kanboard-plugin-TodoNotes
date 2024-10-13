@@ -45,6 +45,7 @@
         </properties>
     </rule>
     <rule ref="Squiz.WhiteSpace.MemberVarSpacing">
+        <type>warning</type>
         <properties>
             <property name="spacing" value="2" />
             <property name="spacingBeforeFirst" value="0" />
