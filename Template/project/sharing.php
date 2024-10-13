@@ -15,7 +15,7 @@ print $this->asset->js('plugins/TodoNotes/Assets/js/load_sharing.js');
 
 print '<div class="containerCenter">';
 print '<section class="mainholder" id="mainholderP' . $project_id . '">';
-print '<div align="left" style="width: fit-content;" id="result' . $project_id . '">';
+print '<div align="left" style="width: fit-content" id="result' . $project_id . '">';
 
 ?>
 
@@ -23,7 +23,7 @@ print '<div align="left" style="width: fit-content;" id="result' . $project_id .
     <h2><?= t('TodoNotes__PROJECT_SHARING_PERMISSIONS') ?></h2>
 </div>
 
-<table>
+<table class="tableSharing">
 <tbody>
 
 <?php
@@ -32,13 +32,14 @@ foreach ($this->model->userModel->getAll() as $u) {
     // skip the current user
     $curr_user_id = $u['id'];
     if ($user_id == $curr_user_id) {
-      continue;
+        continue;
     }
 
     print '<tr>';
 
     // User Info
-        print '<td class="buttonHighlighted">';
+    print '<td class="tdSharing">';
+    print '<h3>';
     print $this->avatar->small(
         $u['id'],
         $u['username'],
@@ -49,39 +50,55 @@ foreach ($this->model->userModel->getAll() as $u) {
     );
     print $this->text->e($u['name'] ?: $u['username']);
     print '<button class="toolbarSeparator">&nbsp;</button>';
+    print '<button class="toolbarSeparator">&nbsp;</button>';
+    print '</h3>';
     print '</td>';
 
     // Permissions option
-    print '<td  class="buttonHighlighted">';
+    print '<td class="tdSharing">';
+    print '<button class="toolbarSeparator">&nbsp;</button>';
     print '<button class="toolbarSeparator">&nbsp;</button>';
 
     print '<input type="radio" name="permission-U' . $curr_user_id . '" class="listPermission" id="listPermissionNone-U' . $curr_user_id . '"';
-    print ' data-user="' . $curr_user_id . '"';
+    print ' data-shared-user="' . $curr_user_id . '"';
+    print ' data-shared-permission="' . $this->model->todoNotesModel::PROJECT_SHARING_PERMISSION_NONE . '"';
     print ((!array_key_exists($curr_user_id, $data) || $data[$curr_user_id] == $this->model->todoNotesModel::PROJECT_SHARING_PERMISSION_NONE) ? ' checked' : '') . '>';
     print '<label class="buttonPermissions" for="listPermissionNone-U' . $curr_user_id . '">&nbsp;';
     print '<i class="fa fa-ban" aria-hidden="true"></i> ' . t('TodoNotes__PROJECT_SHARING_PERMISSIONS_NONE') . '</label>';
     print '&nbsp;&nbsp;';
 
     print '<input type="radio" name="permission-U' . $curr_user_id . '" class="listPermission" id="listPermissionView-U' . $curr_user_id . '"';
-    print ' data-user="' . $curr_user_id . '"';
+    print ' data-shared-user="' . $curr_user_id . '"';
+    print ' data-shared-permission="' . $this->model->todoNotesModel::PROJECT_SHARING_PERMISSION_VIEW . '"';
     print ((array_key_exists($curr_user_id, $data) && $data[$curr_user_id] == $this->model->todoNotesModel::PROJECT_SHARING_PERMISSION_VIEW) ? ' checked' : '') . '>';
     print '<label class="buttonPermissions" for="listPermissionView-U' . $curr_user_id . '">&nbsp;';
     print '<i class="fa fa-eye" aria-hidden="true"></i> ' . t('TodoNotes__PROJECT_SHARING_PERMISSIONS_VIEW') . '</label>';
     print '&nbsp;&nbsp;';
 
     print '<input type="radio" name="permission-U' . $curr_user_id . '" class="listPermission" id="listPermissionEdit-U' . $curr_user_id . '"';
-    print ' data-user="' . $curr_user_id . '"';
+    print ' data-shared-user="' . $curr_user_id . '"';
+    print ' data-shared-permission="' . $this->model->todoNotesModel::PROJECT_SHARING_PERMISSION_EDIT . '"';
     print ((array_key_exists($curr_user_id, $data) && $data[$curr_user_id] == $this->model->todoNotesModel::PROJECT_SHARING_PERMISSION_EDIT) ? ' checked' : '') . '>';
     print '<label class="buttonPermissions" for="listPermissionEdit-U' . $curr_user_id . '">&nbsp;';
     print '<i class="fa fa-pencil" aria-hidden="true"></i> ' . t('TodoNotes__PROJECT_SHARING_PERMISSIONS_EDIT') . '</label>';
 
     print '<button class="toolbarSeparator">&nbsp;</button>';
+    print '<button class="toolbarSeparator">&nbsp;</button>';
     print '</td>';
 
     // Change button
-    print '<td>';
+    print '<td class="tdSharing">';
     print '<button class="toolbarSeparator">&nbsp;</button>';
-    print '<button id="setSharing-U' . $curr_user_id .  '" class="btn" disabled>' . t('TodoNotes__JS_DIALOG_SET_BTN') . '</button>';
+    print '<button class="toolbarSeparator">&nbsp;</button>';
+    print '<button id="setSharing-U' . $curr_user_id . '" class="btn" disabled';
+    print ' data-project="' . $project_id . '"';
+    print ' data-user="' . $user_id . '"';
+    print ' data-shared-user="' . $curr_user_id . '"';
+    print '>' . t('TodoNotes__JS_DIALOG_SET_BTN') . '</button>';
+    print '<button class="toolbarSeparator">&nbsp;</button>';
+    print '<button class="toolbarSeparator">&nbsp;</button>';
+    print '<button class="toolbarSeparator">&nbsp;</button>';
+    print '<button class="toolbarSeparator">&nbsp;</button>';
     print '</td>';
 
     print '</tr>';

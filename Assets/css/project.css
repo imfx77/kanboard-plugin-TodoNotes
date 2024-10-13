@@ -499,6 +499,21 @@ label {
     z-index: -100;
 }
 
+.tableSharing {
+    border: none;
+    display: block;
+    width: fit-content;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-color: rgba(192, 192, 192, .5) rgba(0, 0, 0, .1);
+}
+
+.tdSharing {
+    border: none;
+    padding: 0;
+    white-space: nowrap;
+}
+
 .tableReport {
     border-bottom: none;
     border-left: 1px solid #CCCCCC;
@@ -547,7 +562,7 @@ label {
     padding: 10px 10px 10px 10px;
     background-color: rgba(0, 0, 0, .3);
     border: 0;
-    white-space:pre-wrap;
+    white-space: pre-wrap;
 }
 
 

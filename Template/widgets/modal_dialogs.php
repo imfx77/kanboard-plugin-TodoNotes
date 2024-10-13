@@ -9,7 +9,7 @@ $isAdmin = $this->user->isAdmin();
 //---------------------------------------------
 
 print '<div class="hideMe" id="dialogMoveNoteToArchive" title="' . t('TodoNotes__PROJECT_NOTE_ARCHIVE') . '">';
-print '<p style="white-space: pre-wrap;">';
+print '<p style="white-space: pre-wrap">';
 print t('TodoNotes__DIALOG_ARCHIVE_NOTE_MSG');
 print '</p>';
 print '</div>';
@@ -17,7 +17,7 @@ print '</div>';
 //---------------------------------------------
 
 print '<div class="hideMe" id="dialogMoveAllDoneNotesToArchive" title="' . t('TodoNotes__PROJECT_ARCHIVE_ALL_DONE_NOTES') . '">';
-print '<p style="white-space: pre-wrap;">';
+print '<p style="white-space: pre-wrap">';
 print t('TodoNotes__DIALOG_ARCHIVE_ALL_DONE_MSG');
 print '</p>';
 print '</div>';
@@ -36,7 +36,7 @@ foreach ($projectsTabsById as $key => $projectTab) {
 }
 print '</select>';
 print '<br><br>';
-print '<p style="white-space: pre-wrap;">';
+print '<p style="white-space: pre-wrap">';
 print t('TodoNotes__DIALOG_RESTORE_NOTE_MSG');
 print '</p>';
 print '</div>';
@@ -44,7 +44,7 @@ print '</div>';
 //---------------------------------------------
 
 print '<div class="hideMe" id="dialogDeleteNote" title="' . t('TodoNotes__PROJECT_NOTE_DELETE') . '">';
-print '<p style="white-space: pre-wrap;">';
+print '<p style="white-space: pre-wrap">';
 print t('TodoNotes__DIALOG_DELETE_NOTE_MSG');
 print '</p>';
 print '</div>';
@@ -52,7 +52,7 @@ print '</div>';
 //---------------------------------------------
 
 print '<div class="hideMe" id="dialogDeleteAllDone" title="' . t('TodoNotes__PROJECT_DELETE_ALL_DONE_NOTES') . '">';
-print '<p style="white-space: pre-wrap;">';
+print '<p style="white-space: pre-wrap">';
 print t('TodoNotes__DIALOG_DELETE_ALL_DONE_MSG');
 print '</p>';
 print '</div>';
@@ -114,7 +114,7 @@ foreach ($projectsTabsById as $key => $projectTab) {
 }
 print '</select>';
 print '<br><br>';
-print '<p style="white-space: pre-wrap;">';
+print '<p style="white-space: pre-wrap">';
 print t('TodoNotes__DIALOG_TRANSFER_NOTE_MSG');
 print '</p>';
 
@@ -228,7 +228,7 @@ print '</div>';
 
 print '<div class="hideMe" id="dialogReindexNotesAndLists" title="' . t('TodoNotes__DASHBOARD_REINDEX') . '">';
 
-print '<p style="white-space: pre-wrap;">';
+print '<p style="white-space: pre-wrap">';
 print t('TodoNotes__DIALOG_REINDEX_MSG');
 print '</p>';
 
@@ -252,7 +252,7 @@ if ($isAdmin) {
     print '<label for="globalCreateCustomNoteList">&nbsp;&nbsp;' . t('TodoNotes__DIALOG_CREATE_CUSTOM_NOTE_LIST_GLOBAL_CHECKBOX') . ' ' . t('TodoNotes__GENERIC_ADMIN_ONLY') . '</label>';
 }
 print '<br><br>';
-print '<p style="white-space: pre-wrap;">';
+print '<p style="white-space: pre-wrap">';
 print t('TodoNotes__DIALOG_CREATE_CUSTOM_NOTE_LIST_MSG');
 print '</p>';
 
@@ -264,7 +264,7 @@ print '<div class="hideMe" id="dialogRenameCustomNoteList" title="' . t('TodoNot
 
 print '<input type="text" id="nameRenameCustomNoteList">';
 print '<br><br>';
-print '<p style="white-space: pre-wrap;">';
+print '<p style="white-space: pre-wrap">';
 print t('TodoNotes__DIALOG_RENAME_CUSTOM_NOTE_LIST_MSG');
 print '</p>';
 
@@ -274,7 +274,7 @@ print '</div>';
 
 print '<div class="hideMe" id="dialogDeleteCustomNoteList" title="' . t('TodoNotes__DIALOG_DELETE_CUSTOM_NOTE_LIST_TITLE') . '">';
 
-print '<p style="white-space: pre-wrap;">';
+print '<p style="white-space: pre-wrap">';
 print t('TodoNotes__DIALOG_DELETE_CUSTOM_NOTE_LIST_MSG');
 print '</p>';
 
@@ -284,7 +284,7 @@ print '</div>';
 
 print '<div class="hideMe" id="dialogReorderCustomNoteList" title="' . t('TodoNotes__DIALOG_REORDER_CUSTOM_NOTE_LIST_TITLE') . '">';
 
-print '<p style="white-space: pre-wrap;">';
+print '<p style="white-space: pre-wrap">';
 print t('TodoNotes__DIALOG_REORDER_CUSTOM_NOTE_LIST_MSG');
 print '</p>';
 
