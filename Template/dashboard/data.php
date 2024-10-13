@@ -48,7 +48,7 @@ if ($is_sharing_view) {
         'is_dashboard_view' => 1,
         'is_sharing_view' => $is_sharing_view,
 
-//        'data' => $data,
+        'data' => $data,
     ));
 } else {
     print $this->render('TodoNotes:project/data', array(

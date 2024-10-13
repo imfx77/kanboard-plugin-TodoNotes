@@ -240,9 +240,7 @@ class TodoNotesController extends BaseController
         $project_id = $projectsAccess[$tab_id - 1]['project_id'];
         $usersAccess = $this->todoNotesModel->GetSharingPermissions($project_id, $user_id);
 
-//            $data = $doShowArchive
-//                ? $this->todoNotesModel->GetArchivedProjectNotesForUser($project_id, $user_id, $projectsAccess, $usersAccess)
-//                : $this->todoNotesModel->GetProjectNotesForUser($project_id, $user_id, $projectsAccess, $usersAccess);
+        $data = $this->todoNotesModel->GetGrantedSharingPermissions($project_id, $user_id);
 
         return $this->response->html($this->helper->layout->dashboard('TodoNotes:dashboard/data', array(
             'title' => t('TodoNotes__DASHBOARD_TITLE', $this->helper->user->getFullname($user)),
@@ -254,7 +252,7 @@ class TodoNotesController extends BaseController
             'tab_id' => $tab_id,
             'is_sharing_view' => 1,
 
-//            'data' => $data,
+            'data' => $data,
         )));
     }
 

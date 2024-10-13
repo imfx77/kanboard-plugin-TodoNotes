@@ -343,6 +343,11 @@ label {
     font-size: 1.3em;
 }
 
+.buttonPermissions {
+    margin : 0;
+    color: #CD650A;
+}
+
 .noteDoneText {
     color: #444444;
     text-decoration: line-through;

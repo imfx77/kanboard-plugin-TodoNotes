@@ -191,7 +191,7 @@ foreach ($projectsAccess as $o) {
 
     // buttons for single tabs
     //----------------------------------------
-    $hasGrantedSharingPermissions = $this->model->todoNotesModel->HasGrantedSharingPermissions($curr_project_id, $user_id);
+    $hasGrantedSharingPermissions = (count($this->model->todoNotesModel->GetGrantedSharingPermissions($curr_project_id, $user_id)) > 0);
 
     print '<div class="localTableCellExpandRight">';
 

@@ -20,6 +20,7 @@ return array(
     'TodoNotes__GENERIC_INVALID_OR_EMPTY_PARAMETER' => '⚠️ There was an Invalid or Empty parameter to the request!',
     //
     'TodoNotes__PROJECT_SHARING_PERMISSIONS' => 'Sharing Permissions',
+    'TodoNotes__PROJECT_SHARING_PERMISSIONS_NONE' => '[none]',
     'TodoNotes__PROJECT_SHARING_PERMISSIONS_OWN' => '[own]',
     'TodoNotes__PROJECT_SHARING_PERMISSIONS_USE' => '[use]',
     'TodoNotes__PROJECT_SHARING_PERMISSIONS_VIEW' => '[view]',

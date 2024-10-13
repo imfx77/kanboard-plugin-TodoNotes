@@ -21,13 +21,6 @@ static prepareDocument() {
         // }
     }
 
-    $("#closeSharing").click(function() {
-        const user_id = $("#tabId").attr('data-user');
-        const id = $("#tabId").attr('data-tab');
-        const notesUrl = location.origin + '/dashboard/' + user_id + '/todonotes/' + id;
-        location.replace(notesUrl);
-    });
-
     const isMobile = _TodoNotes_.IsMobile();
     if(isMobile) {
         // show mobile GitHub buttons
@@ -38,6 +31,26 @@ static prepareDocument() {
         $("#containerGithubButtonsMobile").remove();
         $("#containerGithubButtons").removeClass( 'hideMe' );
     }
+
+    _TodoNotes_Sharing_.AttachAllHandlers();
+}
+
+//------------------------------------------------
+static AttachAllHandlers() {
+    // console.log('_TodoNotes_Sharing_.AttachAllHandlers');
+
+    // close btn
+    $("#closeSharing").click(function() {
+        const user_id = $("#tabId").attr('data-user');
+        const id = $("#tabId").attr('data-tab');
+        const notesUrl = location.origin + '/dashboard/' + user_id + '/todonotes/' + id;
+        location.replace(notesUrl);
+    });
+
+    $(".listPermission").change(function() {
+        const user_id = $(this).attr('data-user');
+        $("#setSharing-U" + user_id).prop('disabled', false);
+    });
 }
 
 } // class _TodoNotes_Sharing_

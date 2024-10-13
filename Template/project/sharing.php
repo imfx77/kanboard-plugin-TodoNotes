@@ -13,25 +13,79 @@ print $this->asset->js('plugins/TodoNotes/Assets/js/requests.js');
 print $this->asset->js('plugins/TodoNotes/Assets/js/notes.js');
 print $this->asset->js('plugins/TodoNotes/Assets/js/load_sharing.js');
 
+print '<div class="containerCenter">';
+print '<section class="mainholder" id="mainholderP' . $project_id . '">';
+print '<div align="left" style="width: fit-content;" id="result' . $project_id . '">';
+
 ?>
 
 <div class="page-header">
     <h2><?= t('TodoNotes__PROJECT_SHARING_PERMISSIONS') ?></h2>
 </div>
 
-<table class="tableReport">
-<thead class="theadReport">
-<tr>
-<th class="thReport thReportNr">#</th>
-<th class="thReport"><?= t('Information') ?></th>
-<th class="thReport thReportStatus"><?= t('Status') ?></th>
-</tr>
-</thead>
+<table>
 <tbody>
 
 <?php
 
-// TODO: table contents
+foreach ($this->model->userModel->getAll() as $u) {
+    // skip the current user
+    $curr_user_id = $u['id'];
+    if ($user_id == $curr_user_id) {
+      continue;
+    }
+
+    print '<tr>';
+
+    // User Info
+        print '<td class="buttonHighlighted">';
+    print $this->avatar->small(
+        $u['id'],
+        $u['username'],
+        $u['name'],
+        $u['email'],
+        $u['avatar_path'],
+        'avatar-inline'
+    );
+    print $this->text->e($u['name'] ?: $u['username']);
+    print '<button class="toolbarSeparator">&nbsp;</button>';
+    print '</td>';
+
+    // Permissions option
+    print '<td  class="buttonHighlighted">';
+    print '<button class="toolbarSeparator">&nbsp;</button>';
+
+    print '<input type="radio" name="permission-U' . $curr_user_id . '" class="listPermission" id="listPermissionNone-U' . $curr_user_id . '"';
+    print ' data-user="' . $curr_user_id . '"';
+    print ((!array_key_exists($curr_user_id, $data) || $data[$curr_user_id] == $this->model->todoNotesModel::PROJECT_SHARING_PERMISSION_NONE) ? ' checked' : '') . '>';
+    print '<label class="buttonPermissions" for="listPermissionNone-U' . $curr_user_id . '">&nbsp;';
+    print '<i class="fa fa-ban" aria-hidden="true"></i> ' . t('TodoNotes__PROJECT_SHARING_PERMISSIONS_NONE') . '</label>';
+    print '&nbsp;&nbsp;';
+
+    print '<input type="radio" name="permission-U' . $curr_user_id . '" class="listPermission" id="listPermissionView-U' . $curr_user_id . '"';
+    print ' data-user="' . $curr_user_id . '"';
+    print ((array_key_exists($curr_user_id, $data) && $data[$curr_user_id] == $this->model->todoNotesModel::PROJECT_SHARING_PERMISSION_VIEW) ? ' checked' : '') . '>';
+    print '<label class="buttonPermissions" for="listPermissionView-U' . $curr_user_id . '">&nbsp;';
+    print '<i class="fa fa-eye" aria-hidden="true"></i> ' . t('TodoNotes__PROJECT_SHARING_PERMISSIONS_VIEW') . '</label>';
+    print '&nbsp;&nbsp;';
+
+    print '<input type="radio" name="permission-U' . $curr_user_id . '" class="listPermission" id="listPermissionEdit-U' . $curr_user_id . '"';
+    print ' data-user="' . $curr_user_id . '"';
+    print ((array_key_exists($curr_user_id, $data) && $data[$curr_user_id] == $this->model->todoNotesModel::PROJECT_SHARING_PERMISSION_EDIT) ? ' checked' : '') . '>';
+    print '<label class="buttonPermissions" for="listPermissionEdit-U' . $curr_user_id . '">&nbsp;';
+    print '<i class="fa fa-pencil" aria-hidden="true"></i> ' . t('TodoNotes__PROJECT_SHARING_PERMISSIONS_EDIT') . '</label>';
+
+    print '<button class="toolbarSeparator">&nbsp;</button>';
+    print '</td>';
+
+    // Change button
+    print '<td>';
+    print '<button class="toolbarSeparator">&nbsp;</button>';
+    print '<button id="setSharing-U' . $curr_user_id .  '" class="btn" disabled>' . t('TodoNotes__JS_DIALOG_SET_BTN') . '</button>';
+    print '</td>';
+
+    print '</tr>';
+}
 
 ?>
 
@@ -41,12 +95,6 @@ print $this->asset->js('plugins/TodoNotes/Assets/js/load_sharing.js');
 <?php
 
 //----------------------------------------
-print $this->app->flashMessage();
-
-print '<div class="containerCenter">';
-print '<button id="closeSharing" class="btn">' . t('TodoNotes__JS_DIALOG_CLOSE_BTN') . '</button>';
-print '</div>';
-
 // hidden reference for project_id and user_id of the currently active page
 print '<div class="hideMe" id="refProjectId"';
 print ' data-project="' . $project_id . '"';
@@ -54,6 +102,18 @@ print ' data-user="' . $user_id . '"';
 print ' data-readonly=""';
 print ' data-timestamp="' . time() . '"';
 print '></div>';
+
+print '<span id="refreshIcon" class="refreshIcon hideMe">';
+print '&nbsp;<i class="fa fa-refresh fa-spin" title="' . t('TodoNotes__PROJECT_NOTE_BUSY_ICON_HINT') . '"></i></span>';
+
+print $this->app->flashMessage();
+
+//----------------------------------------
+print '<div class="containerCenter">';
+print '<button id="closeSharing" class="btn">' . t('TodoNotes__JS_DIALOG_CLOSE_BTN') . '</button>';
+print '</div>';
+
+print '</div>'; // id='result'
 
 //---------------------------------------------
 // include modal dialogs
@@ -67,10 +127,12 @@ print $this->render('TodoNotes:widgets/modal_dialogs', array(
 ));
 //---------------------------------------------
 
+print '</section>';
+
 //---------------------------------------------
 // include github buttons
 print $this->render('TodoNotes:widgets/github_buttons', array());
 //---------------------------------------------
 
-print '<span id="refreshIcon" class="refreshIcon hideMe">';
-print '&nbsp;<i class="fa fa-refresh fa-spin" title="' . t('TodoNotes__PROJECT_NOTE_BUSY_ICON_HINT') . '"></i></span>';
+print '</div>';
+
