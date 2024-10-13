@@ -591,6 +591,46 @@ class TodoNotesModel extends Base
         return $grantedPermissions;
     }
 
+    // Set sharing permission for a project From user To user
+    public function SetSharingPermission($project_id, $user_id, $shared_user_id, $shared_permission)
+    {
+        if ($shared_permission == self::PROJECT_SHARING_PERMISSION_NONE) {
+            $this->db->table(self::TABLE_NOTES_SHARING_PERMISSIONS)
+                ->eq('project_id', $project_id)
+                ->eq('shared_from_user_id', $user_id)
+                ->eq('shared_to_user_id', $shared_user_id)
+                ->remove();
+        } else {
+            $hasRecord = count(
+                $this->db->table(self::TABLE_NOTES_SHARING_PERMISSIONS)
+                    ->eq('project_id', $project_id)
+                    ->eq('shared_from_user_id', $user_id)
+                    ->eq('shared_to_user_id', $shared_user_id)
+                    ->findAll()
+                ) > 0;
+
+            if ($hasRecord) {
+                $values = array(
+                    'permissions' => $shared_permission,
+                );
+                $this->db->table(self::TABLE_NOTES_SHARING_PERMISSIONS)
+                    ->eq('project_id', $project_id)
+                    ->eq('shared_from_user_id', $user_id)
+                    ->eq('shared_to_user_id', $shared_user_id)
+                    ->update($values);
+            } else {
+                $values = array(
+                    'project_id' => $project_id,
+                    'shared_from_user_id' => $user_id,
+                    'shared_to_user_id' => $shared_user_id,
+                    'permissions' => $shared_permission,
+                );
+                $this->db->table(self::TABLE_NOTES_SHARING_PERMISSIONS)
+                    ->insert($values);
+            }
+        }
+    }
+
     // Get a list of categories for a project
     public function GetCategories($project_id)
     {
@@ -955,20 +995,20 @@ class TodoNotesModel extends Base
         // Get current unixtime
         $timestamp = time();
 
-        $notes_entries = $this->db->table(self::TABLE_NOTES_ENTRIES)
+        $this->db->table(self::TABLE_NOTES_ENTRIES)
             ->eq('project_id', 0)
             ->eq('user_id', 0)
             ->eq('position', 0)
             ->eq('is_active', -1)
             ->update(array('date_modified' => $timestamp));
 
-        $notes_archive_entries = $this->db->table(self::TABLE_NOTES_ARCHIVE_ENTRIES)
+        $this->db->table(self::TABLE_NOTES_ARCHIVE_ENTRIES)
             ->eq('project_id', 0)
             ->eq('user_id', 0)
             ->eq('date_modified', -1)
             ->update(array('date_archived' => $timestamp));
 
-        return $notes_entries && $notes_archive_entries;
+        return $timestamp;
     }
 
     // Get last modified timestamp

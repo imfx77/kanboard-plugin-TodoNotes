@@ -66,9 +66,20 @@ static AttachAllHandlers() {
     });
 
     $(".listPermission").change(function() {
-        const user_id = $(this).attr('data-shared-user');
-        $("#setSharing-U" + user_id).prop('disabled', false);
-        $("#setSharing-U" + user_id).attr('data-shared-permission', $(this).attr('data-shared-permission'));
+        const shared_user_id = $(this).attr('data-shared-user');
+        $("#setSharingPermission-U" + shared_user_id).prop('disabled', false);
+        $("#setSharingPermission-U" + shared_user_id).attr('data-shared-permission', $(this).attr('data-shared-permission'));
+    });
+
+    $(".setSharingPermission").click(function() {
+        const project_id = $(this).attr('data-project');
+        const user_id = $(this).attr('data-user');
+        const shared_user_id = $(this).attr('data-shared-user');
+        const shared_permission = $(this).attr('data-shared-permission');
+
+        _TodoNotes_Requests_.SetSharingPermission(project_id, user_id, shared_user_id, shared_permission);
+
+        $(this).prop('disabled', true);
     });
 }
 

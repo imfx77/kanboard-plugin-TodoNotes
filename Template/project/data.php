@@ -1200,6 +1200,9 @@ print '</div>'; // scrollableContent
 print '<div class="hideMe" id="refProjectId"';
 print ' data-user="' . $user_id . '"';
 print ' data-project="' . $project_id . '"';
+print ' data-is-custom="' . $projectAccess['is_custom'] . '"';
+print ' data-is-global="' . $projectAccess['is_global'] . '"';
+print ' data-is-owner="' . $projectAccess['is_owner'] . '"';
 print ' data-readonly="' . $isReadOnlyMode . '"';
 print ' data-note="' . (isset($note_id) ? $note_id : 0) . '"';
 print ' data-timestamp="' . $current_time . '"';

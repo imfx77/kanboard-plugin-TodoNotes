@@ -351,7 +351,7 @@ class TodoNotesController extends BaseController
         echo(json_encode(array(
             'timestamp' => $timestamp,
             'timestring' => date($this->dateParser->getUserDateTimeFormat(), $timestamp),
-            'userinfo' => $this->GetUserIconAndName($user_id)
+            'userinfo' => $this->GetUserIconAndName($user_id),
         )));
         return $timestamp;
     }
@@ -374,10 +374,10 @@ class TodoNotesController extends BaseController
         $is_active = $this->request->getStringParam('is_active');
 
         $timestamp = $this->todoNotesModel->UpdateNoteStatus($project_id, $selectedUser, $user_id, $note_id, $is_active);
-        print(json_encode(array(
+        echo(json_encode(array(
             'timestamp' => $timestamp,
             'timestring' => date($this->dateParser->getUserDateTimeFormat(), $timestamp),
-            'userinfo' => $this->GetUserIconAndName($user_id)
+            'userinfo' => $this->GetUserIconAndName($user_id),
         )));
         return $timestamp;
     }
@@ -401,10 +401,10 @@ class TodoNotesController extends BaseController
         $notification_options_bitflags = intval($this->request->getStringParam('notification_options_bitflags'));
 
         $notifications_alert_timestamp = $this->todoNotesModel->UpdateNoteNotificationsAlertTimeAndOptions($project_id, $selectedUser, $user_id, $note_id, $notifications_alert_timestring, $notification_options_bitflags);
-        print(json_encode(array(
+        echo(json_encode(array(
             'timestamp' => $notifications_alert_timestamp,
             'timestring' => ($notifications_alert_timestamp > 0) ? date($this->dateParser->getUserDateTimeFormat(), $notifications_alert_timestamp) : '',
-            'options_bitflags' => $notification_options_bitflags
+            'options_bitflags' => $notification_options_bitflags,
         )));
         return $notifications_alert_timestamp;
     }
@@ -425,10 +425,10 @@ class TodoNotesController extends BaseController
         $notesPositions = array_map('intval', explode(',', $this->request->getStringParam('order')));
 
         $timestamp = $this->todoNotesModel->UpdateNotesPositions($project_id, $selectedUser, $user_id, $notesPositions);
-        print(json_encode(array(
+        echo(json_encode(array(
             'timestamp' => $timestamp,
             'timestring' => date($this->dateParser->getUserDateTimeFormat(), $timestamp),
-            'userinfo' => $this->GetUserIconAndName($user_id)
+            'userinfo' => $this->GetUserIconAndName($user_id),
         )));
         return $timestamp;
     }
@@ -716,11 +716,42 @@ class TodoNotesController extends BaseController
     {
         $user_id = $this->ResolveUserId();
         $project_tab_id = intval($this->request->getStringParam('project_tab_id'));
+        $is_sharing = intval($this->request->getStringParam('is_sharing'));
 
-        $this->response->redirect($this->helper->url->to('TodoNotesController', 'ShowDashboard', array(
+        $this->response->redirect($this->helper->url->to('TodoNotesController', ($is_sharing ? 'ShowDashboardSharing' : 'ShowDashboard'), array(
             'plugin' => 'TodoNotes',
             'user_id' => $user_id,
             'tab_id' => $this->todoNotesModel->GetTabForProject($project_tab_id, $user_id),
+        )));
+    }
+
+    public function SetSharingPermission()
+    {
+        $user_id = $this->ResolveUserId();
+        $project_id = intval($this->request->getStringParam('project_custom_id'));
+        $shared_user_id = intval($this->request->getStringParam('shared_user_id'));
+        $shared_permission = intval($this->request->getStringParam('shared_permission'));
+
+        $is_private = $this->todoNotesModel->IsCustomPrivateProject($project_id);
+        $is_owner = $this->todoNotesModel->IsCustomProjectOwner($project_id, $user_id);
+
+        $timestamp = 0;
+        if ($user_id == $shared_user_id) {
+            // trying to share to self !
+            $this->flash->failure(t('TodoNotes__DASHBOARD_OPERATION_SHARING_NOTE_LIST_FAILURE') . ' => ' . t('TodoNotes__GENERIC_INVALID_OR_EMPTY_PARAMETER'));
+        } elseif ($is_private && !$is_owner) {
+            // trying to share permissions for non-Owned Private note list !
+            $this->flash->failure(t('TodoNotes__DASHBOARD_OPERATION_SHARING_NOTE_LIST_FAILURE') . ' => ' . t('TodoNotes__GENERIC_NO_OWNER_PRIVILEGES'));
+        } else {
+            // All other cases Global/Private+Owner/Regular should be valid for sharing !
+            $this->todoNotesModel->SetSharingPermission($project_id, $user_id, $shared_user_id, $shared_permission);
+            $timestamp = $this->todoNotesModel->EmulateForceRefresh();
+            $this->flash->success(t('TodoNotes__DASHBOARD_OPERATION_SHARING_NOTE_LIST_SUCCESS'));
+        }
+
+        echo(json_encode(array(
+            'timestamp' => $timestamp,
+            'flash_msg' => $this->helper->app->flashMessage(),
         )));
     }
 
@@ -766,7 +797,7 @@ class TodoNotesController extends BaseController
         $lastTimestamps = $doShowArchive
             ? $this->todoNotesModel->GetLastArchivedTimestamp($project_id, $selectedUser)
             : $this->todoNotesModel->GetLastModifiedTimestamp($project_id, $selectedUser);
-        print(json_encode($lastTimestamps));
+        echo(json_encode($lastTimestamps));
 
         return $lastTimestamps;
     }

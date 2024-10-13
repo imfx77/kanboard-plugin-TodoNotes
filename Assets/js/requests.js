@@ -533,7 +533,7 @@ static RefreshTabs(user_id) {
 }
 
 //------------------------------------------------
-static RefreshAll(project_id, user_id) {
+static RefreshAll(project_id, user_id, is_sharing) {
     const project_tab_id = $("#tabId").attr('data-project');
 
     // don't cache ajax or content won't be fresh
@@ -543,10 +543,41 @@ static RefreshAll(project_id, user_id) {
     const loadUrl = '/?controller=TodoNotesController&action=RefreshAll&plugin=TodoNotes'
                 + '&user_id=' + user_id
                 + '&project_tab_id=' + project_tab_id
-                + '&project_custom_id=' + project_id;
+                + '&project_custom_id=' + project_id
+                + '&is_sharing=' + (is_sharing ? 1 : 0);
     setTimeout(function() {
         location.replace(loadUrl);
     }, 50);
+}
+
+//------------------------------------------------
+// Sharing Permissions requests
+//------------------------------------------------
+
+//------------------------------------------------
+// set sharing permission for a project From user To user
+static SetSharingPermission(project_id, user_id, shared_user_id, shared_permission) {
+    $.ajax({
+        cache: false,
+        type: "POST",
+        url: '/?controller=TodoNotesController&action=SetSharingPermission&plugin=TodoNotes'
+            + '&project_custom_id=' + project_id
+            + '&user_id=' + user_id
+            + '&shared_user_id=' + shared_user_id
+            + '&shared_permission=' + shared_permission,
+        success: function(response) {
+            const permissionModified = JSON.parse(response);
+            if (permissionModified.timestamp > 0) {
+                $("#refProjectId").attr('data-timestamp', permissionModified.timestamp);
+            }
+            $("#containerFlashMessage").html(permissionModified.flash_msg);
+            _TodoNotes_Requests_.RefreshTabs(user_id);
+        },
+        error: function(xhr,textStatus,e) {
+            alert('_TodoNotes_Requests_.SetSharingPermission');
+            alert(e);
+        }
+    });
 }
 
 //------------------------------------------------
@@ -556,7 +587,6 @@ static RefreshAll(project_id, user_id) {
 //------------------------------------------------
 // toggle & store settings variable into the session
 static ToggleSettings(project_id, user_id, settings_group_key, settings_key, settings_exclusive = false) {
-    // $("#result" + project_id).html(_TodoNotes_Translations_.msgLoadingSpinner);
     $.ajax({
         cache: false,
         type: "POST",

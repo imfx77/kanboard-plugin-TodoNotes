@@ -118,6 +118,9 @@ Might be waiting for an unsubmitted New Note data input!',
     'TodoNotes__DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_SUCCESS' => 'Global custom note list operation succeeded.',
     'TodoNotes__DASHBOARD_OPERATION_CUSTOM_NOTE_LISTGLOBAL_FAILURE' => '⚠️ Global custom note list operation failed!',
     //
+    'TodoNotes__DASHBOARD_OPERATION_SHARING_NOTE_LIST_SUCCESS' => 'Sharing permissions for note list operation succeeded.',
+    'TodoNotes__DASHBOARD_OPERATION_SHARING_NOTE_LIST_FAILURE' => '⚠️ Sharing permissions for note list operation failed!',
+    //
     // Template/report
     //
     'TodoNotes__REPORT_HIDE_ROW' => 'Hide this Row',

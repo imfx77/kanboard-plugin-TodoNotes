@@ -90,7 +90,7 @@ foreach ($this->model->userModel->getAll() as $u) {
     print '<td class="tdSharing">';
     print '<button class="toolbarSeparator">&nbsp;</button>';
     print '<button class="toolbarSeparator">&nbsp;</button>';
-    print '<button id="setSharing-U' . $curr_user_id . '" class="btn" disabled';
+    print '<button class="setSharingPermission btn" id="setSharingPermission-U' . $curr_user_id . '" disabled';
     print ' data-project="' . $project_id . '"';
     print ' data-user="' . $user_id . '"';
     print ' data-shared-user="' . $curr_user_id . '"';
@@ -116,14 +116,15 @@ foreach ($this->model->userModel->getAll() as $u) {
 print '<div class="hideMe" id="refProjectId"';
 print ' data-project="' . $project_id . '"';
 print ' data-user="' . $user_id . '"';
-print ' data-readonly=""';
 print ' data-timestamp="' . time() . '"';
 print '></div>';
 
 print '<span id="refreshIcon" class="refreshIcon hideMe">';
 print '&nbsp;<i class="fa fa-refresh fa-spin" title="' . t('TodoNotes__PROJECT_NOTE_BUSY_ICON_HINT') . '"></i></span>';
 
+print '<div id="containerFlashMessage">';
 print $this->app->flashMessage();
+print '</div>';
 
 //----------------------------------------
 print '<div class="containerCenter">';

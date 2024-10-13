@@ -1712,14 +1712,24 @@ static CheckAndTriggerRefresh(lastModifiedTimestamp) {
     const is_project = ($(".liNewNote").length === 1);
     const is_sharing = ($("#closeSharing").length === 1);
 
-    if (!is_sharing && lastRefreshedTimestamp < lastModifiedTimestamp.projects) {
-        _TodoNotes_Requests_.RefreshTabs(user_id);
-    }
+    //console.log(lastModifiedTimestamp);
+    //console.log(lastRefreshedTimestamp);
+
     if (is_project && !is_sharing && lastRefreshedTimestamp < lastModifiedTimestamp.notes) {
         _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
     }
+    if (!is_sharing && lastRefreshedTimestamp < lastModifiedTimestamp.projects) {
+        const is_custom = $("#refProjectId").attr('data-is-custom');
+        const is_global = $("#refProjectId").attr('data-is-global');
+        const is_owner = $("#refProjectId").attr('data-is-owner');
+        if (is_custom && !is_global && !is_owner) {
+            _TodoNotes_Requests_.RefreshAll(project_id, user_id, is_sharing);
+        } else {
+            _TodoNotes_Requests_.RefreshTabs(user_id);
+        }
+    }
     if (is_sharing && !is_project && lastRefreshedTimestamp < lastModifiedTimestamp.max) {
-        _TodoNotes_Requests_.RefreshAll(project_id, user_id);
+        _TodoNotes_Requests_.RefreshAll(project_id, user_id, is_sharing);
     }
     if (lastRefreshedTimestamp < lastModifiedTimestamp.max) {
         $("#refProjectId").attr('data-timestamp', lastModifiedTimestamp.max);
