@@ -991,7 +991,7 @@ class TodoNotesModel extends Base
     }
 
     // Emulate a global force refresh by updating a modified/archived timestamp to the special `zero` entry
-    public function EmulateForceRefresh()
+    public function EmulateForceRefresh($type = 'projects')
     {
         // Get current unixtime
         $timestamp = time();
@@ -1001,13 +1001,13 @@ class TodoNotesModel extends Base
             ->eq('user_id', 0)
             ->eq('position', 0)
             ->eq('is_active', -1)
-            ->update(array('date_modified' => $timestamp));
+            ->update(array('category' => $type, 'date_modified' => $timestamp));
 
         $this->db->table(self::TABLE_NOTES_ARCHIVE_ENTRIES)
             ->eq('project_id', 0)
             ->eq('user_id', 0)
             ->eq('date_modified', -1)
-            ->update(array('date_archived' => $timestamp));
+            ->update(array('category' => $type, 'date_archived' => $timestamp));
 
         return $timestamp;
     }
@@ -1031,7 +1031,7 @@ class TodoNotesModel extends Base
         }
 
         $forceRefresh = $this->db->table(self::TABLE_NOTES_ENTRIES)
-            ->columns('date_modified')
+            ->columns('date_modified', 'category')
             ->eq('project_id', 0)
             ->eq('user_id', 0)
             ->eq('position', 0)
@@ -1039,13 +1039,20 @@ class TodoNotesModel extends Base
             ->findOne();
 
         $timestampProjects = 0;
-        if ($forceRefresh && count($forceRefresh) == 1) {
-            $timestampProjects = $forceRefresh['date_modified'];
+        $timestampPermissions = 0;
+        if ($forceRefresh && count($forceRefresh) == 2) {
+            if ($forceRefresh['category'] == "projects") {
+                $timestampProjects = $forceRefresh['date_modified'];
+            }
+            if ($forceRefresh['category'] == 'permissions') {
+                $timestampPermissions = $forceRefresh['date_modified'];
+            }
         }
 
         return array(
             'notes' => $timestampNotes,
             'projects' => $timestampProjects,
+            'permissions' => $timestampPermissions,
             'max' => max($timestampNotes, $timestampProjects),
         );
     }
@@ -1262,20 +1269,27 @@ class TodoNotesModel extends Base
         }
 
         $forceRefresh = $this->db->table(self::TABLE_NOTES_ARCHIVE_ENTRIES)
-            ->columns('date_archived')
+            ->columns('date_archived', 'category')
             ->eq('project_id', 0)
             ->eq('user_id', 0)
             ->eq('date_modified', -1)
             ->findOne();
 
         $timestampProjects = 0;
-        if ($forceRefresh && count($forceRefresh) == 1) {
-            $timestampProjects = $forceRefresh['date_archived'];
+        $timestampPermissions = 0;
+        if ($forceRefresh && count($forceRefresh) == 2) {
+            if ($forceRefresh['category'] == 'projects') {
+                $timestampProjects = $forceRefresh['date_archived'];
+            }
+            if ($forceRefresh['category'] == 'permissions') {
+                $timestampPermissions = $forceRefresh['date_archived'];
+            }
         }
 
         return array(
             'notes' => $timestampNotes,
             'projects' => $timestampProjects,
+            'permissions' => $timestampPermissions,
             'max' => max($timestampNotes, $timestampProjects),
         );
     }

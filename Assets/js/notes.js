@@ -1715,22 +1715,29 @@ static CheckAndTriggerRefresh(lastModifiedTimestamp) {
     //console.log(lastModifiedTimestamp);
     //console.log(lastRefreshedTimestamp);
 
-    if (is_project && !is_sharing && lastRefreshedTimestamp < lastModifiedTimestamp.notes) {
-        _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
-    }
-    if (!is_sharing && lastRefreshedTimestamp < lastModifiedTimestamp.projects) {
-        const is_custom = $("#refProjectId").attr('data-is-custom');
-        const is_global = $("#refProjectId").attr('data-is-global');
-        const is_owner = $("#refProjectId").attr('data-is-owner');
-        if (is_custom && !is_global && !is_owner) {
+    if (is_sharing) {
+        // Sharing permissions view
+        if (!is_project && (lastRefreshedTimestamp < lastModifiedTimestamp.projects || lastRefreshedTimestamp < lastModifiedTimestamp.permissions)) {
+            //alert('RefreshAll sharing');
             _TodoNotes_Requests_.RefreshAll(project_id, user_id, is_sharing);
+        }
+    } else {
+        // Note list view
+        if (lastRefreshedTimestamp < lastModifiedTimestamp.permissions) {
+                //alert('RefreshAll notes');
+                _TodoNotes_Requests_.RefreshAll(project_id, user_id, is_sharing);
         } else {
-            _TodoNotes_Requests_.RefreshTabs(user_id);
+            if (is_project && lastRefreshedTimestamp < lastModifiedTimestamp.notes) {
+                //alert('RefreshNotes');
+                _TodoNotes_Requests_.RefreshNotes(project_id, user_id);
+            }
+            if (lastRefreshedTimestamp < lastModifiedTimestamp.projects) {
+                //alert('RefreshTabs');
+                _TodoNotes_Requests_.RefreshTabs(user_id);
+            }
         }
     }
-    if (is_sharing && !is_project && lastRefreshedTimestamp < lastModifiedTimestamp.max) {
-        _TodoNotes_Requests_.RefreshAll(project_id, user_id, is_sharing);
-    }
+
     if (lastRefreshedTimestamp < lastModifiedTimestamp.max) {
         $("#refProjectId").attr('data-timestamp', lastModifiedTimestamp.max);
     }

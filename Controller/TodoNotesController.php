@@ -745,7 +745,7 @@ class TodoNotesController extends BaseController
         } else {
             // All other cases Global/Private+Owner/Regular should be valid for sharing !
             $this->todoNotesModel->SetSharingPermission($project_id, $user_id, $shared_user_id, $shared_permission);
-            $timestamp = $this->todoNotesModel->EmulateForceRefresh();
+            $timestamp = $this->todoNotesModel->EmulateForceRefresh('permissions');
             $this->flash->success(t('TodoNotes__DASHBOARD_OPERATION_SHARING_NOTE_LIST_SUCCESS'));
         }
 
