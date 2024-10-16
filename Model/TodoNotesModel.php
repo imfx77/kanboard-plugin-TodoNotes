@@ -1306,7 +1306,19 @@ class TodoNotesModel extends Base
             : 0;
     }
 
-    private function EvaluateSharing($project_id, $user_id, $projectsAccess, $usersAccess): int
+    public function EvaluateSharingForAllUserProjects($user_id)
+    {
+        $projectsAccess = $this->GetAllProjectIds($user_id);
+        foreach ($projectsAccess as $projectAccess) {
+            $project_id = $projectAccess['project_id'];
+            $usersAccess = $this->GetSharingPermissions($project_id, $user_id);
+            $this->EvaluateSharing($project_id, $user_id, $projectsAccess, $usersAccess, true);
+        }
+
+        return $projectsAccess;
+    }
+
+    private function EvaluateSharing($project_id, $user_id, $projectsAccess, $usersAccess, $to_session_only = false): int
     {
         $todonotesSettingsHelper = $this->helper->todonotesSessionAndCookiesSettingsHelper;
         $todonotesSettingsHelper->SyncSettingsToSession($user_id, $project_id);
@@ -1346,7 +1358,8 @@ class TodoNotesModel extends Base
                 $project_id,
                 $todonotesSettingsHelper::SETTINGS_GROUP_USER,
                 $selectedUser,
-                true /*settings_exclusive*/
+                true /*settings_exclusive*/,
+                $to_session_only
             );
         }
 

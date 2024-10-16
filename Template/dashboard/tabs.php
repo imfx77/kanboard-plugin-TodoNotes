@@ -97,7 +97,8 @@ foreach ($projectsAccess as $o) {
     $selectedUserGroup = $todonotesSettingsHelper->GetGroupSettings(
         $user_id,
         $curr_project_id,
-        $todonotesSettingsHelper::SETTINGS_GROUP_USER
+        $todonotesSettingsHelper::SETTINGS_GROUP_USER,
+        true /*from_session*/
     );
     $selectedUser = (count($selectedUserGroup) == 1) ? $selectedUserGroup[0] : $user_id;
 
