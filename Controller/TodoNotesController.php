@@ -164,7 +164,7 @@ class TodoNotesController extends BaseController
             $tab_id = intval($tab_id);
         }
 
-        $projectsAccess = $this->todoNotesModel->GetAllProjectIds($user_id);
+        $projectsAccess = $this->todoNotesModel->EvaluateSharingForAllUserProjects($user_id);
         $project_id = ($tab_id > 0) ? $projectsAccess[$tab_id - 1]['project_id'] : 0;
         $usersAccess = $this->todoNotesModel->GetSharingPermissions($project_id, $user_id);
 
@@ -236,7 +236,7 @@ class TodoNotesController extends BaseController
             )));
         }
 
-        $projectsAccess = $this->todoNotesModel->GetAllProjectIds($user_id);
+        $projectsAccess = $this->todoNotesModel->EvaluateSharingForAllUserProjects($user_id);
         $project_id = $projectsAccess[$tab_id - 1]['project_id'];
         $usersAccess = $this->todoNotesModel->GetSharingPermissions($project_id, $user_id);
 
@@ -259,7 +259,7 @@ class TodoNotesController extends BaseController
     public function RefreshTabs()
     {
         $user_id = $this->ResolveUserId();
-        $projectsAccess = $this->todoNotesModel->GetAllProjectIds($user_id);
+        $projectsAccess = $this->todoNotesModel->EvaluateSharingForAllUserProjects($user_id);
 
         return $this->response->html($this->helper->layout->app('TodoNotes:dashboard/tabs', array(
             'user_id' => $user_id,
