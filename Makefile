@@ -5,4 +5,4 @@ version = $(call extract, getPluginVersion)
 
 all:
 	@echo "Build archive for plugin ${plugin} version=${version}"
-	@git archive HEAD . :!build :!.github :!Screenshots :!Test :!changelog.md :!INSTALL.md :!README.md :!Makefile --prefix=${plugin}/ --format=zip -9 -o .build/${plugin}-${version}.zip
+	@git archive HEAD . :!build :!.github :!.gitignore :!Screenshots :!Test :!changelog.md :!INSTALL.md :!README.md :!composer.* :!Makefile --prefix=${plugin}/ --format=zip -9 -o .build/${plugin}-${version}.zip

@@ -8,8 +8,6 @@ use Kanboard\Plugin\TodoNotes\Console\NotificationsHeartbeatCommand;
 
 class Plugin extends Base
 {
-    public const NAME = 'TodoNotes';
-
     public function initialize()
     {
         //HELPER
@@ -63,9 +61,16 @@ class Plugin extends Base
         );
     }
 
+    public const NAME = 'TodoNotes';
+
     public function getPluginName()
     {
-        return self::NAME;
+        return 'TodoNotes';
+    }
+
+    public function getPluginDescription()
+    {
+        return t('TodoNotes__PLUGIN_DESCRIPTION');
     }
 
     public function getPluginAuthor()
@@ -75,12 +80,12 @@ class Plugin extends Base
 
     public function getPluginVersion()
     {
-        return '0.0.6';
+        return '1.0.0';
     }
 
-    public function getPluginDescription()
+    public function getCompatibleVersion()
     {
-        return t('TodoNotes__PLUGIN_DESCRIPTION');
+        return '>=1.2.33';
     }
 
     public function getPluginHomepage()

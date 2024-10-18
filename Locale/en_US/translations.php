@@ -5,9 +5,8 @@ return array(
     // GENERAL
     //
     'TodoNotes__PLUGIN_DESCRIPTION' => 'The plugin allows to keep TODO-style notes on every KB project and as standalone lists.
-                                        The notes that may appear unsuitable for creating board tasks are totally fine on the custom TODO list.
-                                        They are easy and fast to create, change and rearrange, with convenient visual aids.
-                                        Every user can privately see and operate ONLY his own notes, even if notes of multiple users are are bound to the same project.',
+                                        The notes that may appear unsuitable for creating board tasks are totally fine for a custom TODO list.
+                                        They are easy and fast to create, change and rearrange, with convenient visual aids and multiple useful features.',
     //
     // Template/project
     //
