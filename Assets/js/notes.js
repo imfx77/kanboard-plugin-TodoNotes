@@ -1141,6 +1141,13 @@ static #SettingsViewHandlers() {
 
 //------------------------------------------------
 static #SettingsActionsHandlers() {
+    // open README in new windows
+    $(".settingsViewReadme").unbind('click');
+    $(".settingsViewReadme").click(function() {
+        const blank = window.open('https://github.com/imfx77/kanboard-plugin-TodoNotes/blob/master/README.md', '_blank');
+        if (blank) blank.focus();
+    });
+
     // POST delete all done
     $(".settingsDeleteAllDone").unbind('click');
     $(".settingsDeleteAllDone").click(function() {

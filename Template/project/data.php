@@ -514,6 +514,18 @@ if (!$isOverviewMode && !$settings_showArchive) {
     } // end exclude
 } // end exclude
 
+// add divider between button groups
+print '<hr class="toolbarDivider">';
+
+// View README
+print '<li class="settingsViewReadme"';
+print ' data-id="0"';
+print ' data-project="' . $project_id . '"';
+print ' data-user="' . $user_id . '"';
+print '><button class="toolbarButton">';
+print '<i class="fa fa-question-circle" aria-hidden="true"></i>';
+print'</button><a>&nbsp;&nbsp;' . t('TodoNotes__PROJECT_VIEW_README') . '</a></li>';
+
 print '</ul>';
 print '</div>'; // Settings Actions
 
