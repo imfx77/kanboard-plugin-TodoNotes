@@ -946,6 +946,8 @@ class TodoNotesModel extends Base
     // Delete Custom Note List
     public function DeleteCustomNoteList($project_id)
     {
+        $validation = array();
+
         // delete notes
         $this->db->table(self::TABLE_NOTES_ENTRIES)
             ->eq('project_id', $project_id)
@@ -957,14 +959,16 @@ class TodoNotesModel extends Base
             ->remove();
 
         // delete sharing permissions
-        $this->db->table(self::TABLE_NOTES_SHARING_PERMISSIONS)
+        $validation['permissions'] = $this->db->table(self::TABLE_NOTES_SHARING_PERMISSIONS)
             ->eq('project_id', $project_id)
             ->remove();
 
         // delete custom list
-        return $this->db->table(self::TABLE_NOTES_CUSTOM_PROJECTS)
+        $validation['projects'] =  $this->db->table(self::TABLE_NOTES_CUSTOM_PROJECTS)
             ->eq('id', -$project_id)
             ->remove();
+
+        return $validation;
     }
 
     // Update Custom Note Lists Positions

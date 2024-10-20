@@ -672,8 +672,8 @@ class TodoNotesController extends BaseController
         } elseif (($is_global && $is_admin) || (!$is_global && $is_owner)) {
             // Admin attempting to delete Global OR Owner attempting to delete a Private note list !
             $validation = $this->todoNotesModel->DeleteCustomNoteList($project_id);
-            if ($validation) {
-                $this->todoNotesModel->EmulateForceRefresh();
+            if ($validation['projects']) {
+                $this->todoNotesModel->EmulateForceRefresh($validation['permissions'] ? 'permissions' : 'projects');
             }
             $this->CustomNoteListOperationNotification($validation, $is_global);
         }
