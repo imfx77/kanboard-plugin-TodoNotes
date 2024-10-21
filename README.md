@@ -59,6 +59,8 @@ Regardless of the types of note lists that you would use, your notes are ONLY av
 to view, edit and manage. You can, of course, consider sharing any of them with other users
 with explicit View or Edit permissions per user, and also remove those permissions at any time later.
 
+<img src="https://img.shields.io/badge/⭐-If%20Useful-BC4E99?style=for-the-badge" alt="Star Badge">
+
 <p align="right">[<a href="#user-content-readme-bottom">&#8595; Bottom</a>] [<a href="#user-content-readme-top">&#8593; Top</a>]</p>
 
 ## Features and Usage (with Screenshots)
