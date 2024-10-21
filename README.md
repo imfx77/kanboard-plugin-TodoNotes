@@ -201,14 +201,14 @@ and each of them will have this list, but they cannot see each others notes unle
 * **Custom** - these lists are standalone, they can be only created accessed and manipulated through the `Dashboard > My notes`
 interface of the TodoNotes plugin. They are highly flexible and customizable to match various purposes.
 * * **Global** - those lists are globally accessible for all users, and much like the **Regular** lists
-every user can see and manage just his won notes. The specific is that **Global Custom** lists can be managed by Admin only
+every user can see and manage just his own notes. The specific is that **Global Custom** lists can be managed by Admin only
 (create/rename/delete/reorder), and the users can manipulate their own notes and consider sharing them.
 The plugin initially pre-creates `Global Notes` and `Global TODO` global lists, you can leave them or remove them at wish. 
 * * **Private** - as the name suggests those are the personal user lists. Everyone can create and manage any number of private lists as he needs.
 They are visible only to the owner (unless shared). Those would be the most expendable lists as they would come and go on demand.
 * * **Shared** - those are other users' private list that have been shared with you. You can access them
 with the corresponding Vew/Edit permissions. Apparently, with View permission you see a readonly list,
-and with Edit permission you can touch the notes on users behalf.
+and with Edit permission you can touch the notes on user's behalf.
 
 </details>
 
@@ -217,7 +217,7 @@ and with Edit permission you can touch the notes on users behalf.
 
 ![Manage Custom Lists](Screenshots/manage-lists-02.png)
 
-As numbered on the above picture, these are manipulations with list that you can do:
+As numbered on the above picture, these are the manipulations to list that you can do:
 * (1) _Create custom note list_ - if you have Admin privileges, you can create **Global** lists, otherwise only **Private**
 * (2) _Rename/Delete custom global note list!_ - Admin only
 * (3) _Sharing Permissions_ - if button is highlighted there are existing permissions for this list.
@@ -239,7 +239,7 @@ The collapse/expand state of each group is remembered and the visuals will remai
 <details>
 <summary><strong>Share Notes with other Users</strong></summary>
 
-To share your notes form a **Global/Regular** list or to share a whole **Private** list
+To share your notes from a **Global/Regular** list or to share a whole **Private** list
 click the corresponding _Sharing Permissions_ button (1) and it will bring up
 a page that lists users and permissions.
 
@@ -319,7 +319,7 @@ By using the _Show Stats_ button you can toggle ON / OFF the visibility of
 the statistics widgets for all lists. They show the number of Open / In Progress / Done
 notes for each list, and a total on top.
 
-_Attention_, if you are viewing someone else's [Shared notes](#-share-notes-with-other-users)
+_Attention_, if you are viewing someone else's [Shared notes](#-manage-lists)
 for a specific list, the shown stats will be grayed out to denote that those are not the counts of your notes
 and that they don't contribute to the total!
 
@@ -344,12 +344,12 @@ When the `In Progress` count for a list is `0` then the widget icon would stop s
 <summary><strong>Users</strong></summary>
 
 The **User** menu (1) shows the currently selected user whose note are being viewed.
-The default user (2) is always on the top of the menu, the icons on his right (3) show its role or permissions.
+The default user (2) is always on the top of the menu, the icon on his right (3) shows its role or permissions.
 * The _Sharing Permissions_ section of the menu appears for **Global/Regular** lists.
 It will hold users that have shared their notes for this list with you (4) along with their corresponding permissions.
 * For the **Private/Shared** lists there is always a single user - the list OWNER - you or the sharer. 
 
-When there are multiple users to select from in this menu, the selected user is highlighted in RED.
+When there are multiple users in this menu to select from, the selected user is highlighted in RED.
 Switching users will switch the set of notes, and the list may become readonly depending on the permissions.
 
 ![Settings Users](Screenshots/settings-users.png)
@@ -422,12 +422,12 @@ On the **Actions** (1) from top to bottom are:
 <summary><strong>Keeping the Settings</strong></summary>
 
 All the settings from the above menus are attempted to be remembered for each list separately,
-thus providing maximum customization to the user on every single client.
+thus providing maximum customization to the user in every single client.
 The persistence mechanism uses the SESSION variable while the user is online
-and COOKIES to store the settings on the client browser between the sessions.
+and COOKIES to store the settings in the client browser between the sessions.
 
 If you have disabled cookies for the KB domain, then every time you start a new session
-the settings for all list will be default, and whatever you set during the session
+the settings for all lists will be default, and whatever you set during the session
 will be lost when you disconnect or close the client.
 
 </details>
@@ -443,11 +443,11 @@ Different scenarios might occur, in which simultaneous editing from multiple par
 or simultaneous editing from one party and watching from other parties, will concern the same data - a note or a whole list.
 
 * I might view/edit the same note/list both in my desktop and mobile browser on different devices.
-* I might have shared a note list for view/edit, and me and the other user are trying to view/edit something at the same time.
+* I might have shared a note list for view/edit, and me and the other user are trying to view/edit some note at the same time.
 * Or even I just have a dedicated screen that is permanently open to some list in order to continuously keep track of tasks.
 
 In all the cases, a mechanism is needed to keep the data up to date,
-and propagate any remote changes to all watchers/editors clients.
+and propagate any remote changes to all watcher/editor clients.
 
 </details>
 
@@ -486,17 +486,100 @@ And as a matter of precedence, whichever the first change submitted it triggers 
 ### 🔳 Notifications
 
 <details>
-<summary><strong>Setting Alerts per Note</strong></summary>
+<summary><strong>Alerts per Note</strong></summary>
+
+The plugin allows you to configure an alert for each separate note.
+You can open the notification setup dialog either by clicking the `Notifications` label (1)
+in the detailed note view or by directly clicking the alert button on the toolbar (2) while note is collapsed.
+
+As you may notice, the alert icon indicates the state of the alert:
+* **slashed white bell** - no alert configured
+* **white bell** - configured alert, pending
+* **slashed grayed bell** - no alert configured, disabled due Done state
+* **grayed bell** - configured alert, disabled due Done state
+* **red bell** - configured alert, overdue
+
+![Notification Setup](Screenshots/notifications-setup.png)
+
+</details>
+
+<details>
+<summary><strong>Setup Alert</strong></summary>
+
+On the above picture, in the dialog, you can select the Date/Time in two ways:
+* either by explicitly using the calendar control (3)
+* or by clicking the `Postpone` checkbox (4) and using an offset to the currently set date
+(in order to use the calendar again you must explicitly uncheck `Postpone`)
+  
+The `Alert Options` determine how to execute the notifications.
+You must first select the type of the notification (5).
+If you choose none => then no notification will be triggered, 
+this could be useful when you need to just temporarily stop the notification trigger without resetting its parameters.
+* **eMail** - uses the KB backend to send mails
+* **WebPN** - the plugin provides means to push browser notifications on multiple clients subscribed
+* you can check both of them, of course
+
+The `Remind` options allow for additional notifications, respectively:
+* **Remind before** (6) - a single reminder prior to the alert date
+* **Remind after** (7) - infinite repetitive reminders after the alert date
+
+And finally, use **Set** button (8) to apply all the changes.
+Or you can **Reset** (9) the entire alert, which will remove all settings and will disable the notification trigger.
 
 </details>
 
 <details>
 <summary><strong>Allowing EMails and WebPNs</strong></summary>
 
+To be able to use **eMail** notifications you need two things:
+* a valid email configured in your KB profile
+* the plugin utilizes the KB backend for sending mails - so, you need to have the
+[KB server settings](https://docs.kanboard.org/v1/admin/email/#server-settings)
+properly configured to allow this
+
+For the **WebPNs** to work you must enable in your browser(s) the push notifications
+for the KB domain that you use. Check how to do this for your specific browser,
+then just load any page that shows a TodoNotes list, and you will be automatically subscribed.
+* You may subscribe in several browsers on different devices (including mobile), and when the alert is due
+you will get notified on all of them.
+* If you wish to stop receiving **WebPNs** on a specific device,
+simply disable the notifications for the KB domain in the browser of use on that specific device. 
+
+![Notification Setup](Screenshots/notifications-allow.png)
+
 </details>
 
 <details>
 <summary><strong>Heartbeat to Schedule Alerts</strong></summary>
+
+Finally, for any notification to be triggered, we need a scheduler that will periodically check which of the alerts are due.
+KB provides a mechanism to schedule jobs (e.g. the **“Daily background job for tasks”**) through
+[cronjob configuration](https://docs.kanboard.org/v1/admin/cronjob/).
+
+The **cron** file for the daily event usually looks something like this:
+```
+0 8 * * * cd /var/www/app && ./cli cronjob >/dev/null 2>&1
+```
+
+Unfortunately, a trigger once a day is quite far from what we want for notifications.
+Hence, the plugin provides a specific command to trigger a heartbeat for notifications.
+It would look like this in the **cron** file:   
+```
+*/15 * * * * cd /var/www/app && ./cli TodoNotes:NotificationsHeartbeat
+```
+As you can see, the notifications will be triggered in chunks depending on the interval and NOT on the exact note alarm time.
+A fair interval to set is **15 minutes**.
+* The smaller the value (e.g. 1 min) => the more precise the alert trigger, but more burden on the server.
+* The lager the value (e.g. 30 mins) => more relaxed on the server, but greater delay for notifications.
+
+If you don't have access to the system beneath KB, or if you are uncomfortable to mangle it - the plugin
+provides one more way to receive a heartbeat. Yet it is NOT recommended unless absolutely no other options.
+* The ServiceWorker on the client that handles the push notifications from the server sends back a periodic emulated heartbeat.
+* Thus, having clients performing requests to the server in a way provides soft heartbeat, but sporadic in nature as the clients connect and disconnect.
+* In order to emulate a stable soft heartbeat, you need to **keep alive a dedicated browser client** on some device, and a page with TodoNotes list opened in it, for the SW to be active.
+
+The heartbeat defined through the **cron** command has higher priority anyway.
+So even if there are multiple clients generating a soft heartbeat, this won't burden the server, you can safely have the both.
 
 </details>
 
