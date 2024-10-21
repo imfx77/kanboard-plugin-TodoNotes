@@ -964,7 +964,7 @@ class TodoNotesModel extends Base
             ->remove();
 
         // delete custom list
-        $validation['projects'] =  $this->db->table(self::TABLE_NOTES_CUSTOM_PROJECTS)
+        $validation['projects'] = $this->db->table(self::TABLE_NOTES_CUSTOM_PROJECTS)
             ->eq('id', -$project_id)
             ->remove();
 

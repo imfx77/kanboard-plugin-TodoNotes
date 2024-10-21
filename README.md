@@ -66,7 +66,7 @@ with explicit View or Edit permissions per user, and also remove those permissio
 While I believe that the most of the features and functionality of the plugin are quite simple straightforward and intuitive,
 and even though there are self explanatory hints and hover helpers in most places to aid the users
 => it is still better to have all the features thoroughly described in one place,
-so to avoid inconsistencies and possible confusion. 
+so to avoid inconsistencies and possible confusion.
 
 Might you excuse my custom dark theme and the rainbow colored categories in the screenshots provided throughout this section,
 yet those demonstrate very well the visuals of the plugin ✨😝
@@ -174,11 +174,11 @@ _Attention_, for mobile there is an explicit button in the note's toolbar to ser
 On the next picture, the note toolbar buttons are listed from left to right as follows:
 * _Get Link to Note_ - copy a link to this note to the clipboard
 * _Move Note to Project_ - transfers this note to any other of the available lists
-* _Create Task from Note_ - apparently, it is only available for notes in [Regular lists](#-manage-custom-notes-lists),
+* _Create Task from Note_ - apparently, it is only available for notes in [Regular lists](#-manage-lists),
 creates a task on the corresponding KB project with specific Category, Column, Swimlane
-* _Delete Note_ - permanently remove the note from the list! 
+* _Delete Note_ - permanently remove the note from the list!
 * _Move Note to Archive_ - archives the note (in separate DB table)
-* _Save Note_ - store all note changes to the DB 
+* _Save Note_ - store all note changes to the DB
 
 ![Note Toolbar Buttons](Screenshots/manage-notes-07.png)
 
@@ -200,13 +200,13 @@ even though all the notes will remain intact. There might be multiple users that
 and each of them will have this list, but they cannot see each others notes unless they explicitly share them.
 * **Custom** - these lists are standalone, they can be only created accessed and manipulated through the `Dashboard > My notes`
 interface of the TodoNotes plugin. They are highly flexible and customizable to match various purposes.
-* * **Global** - those lists are globally accessible for all users, and much like the **Regular** lists
+  * **Global** - those lists are globally accessible for all users, and much like the **Regular** lists
 every user can see and manage just his own notes. The specific is that **Global Custom** lists can be managed by Admin only
 (create/rename/delete/reorder), and the users can manipulate their own notes and consider sharing them.
-The plugin initially pre-creates `Global Notes` and `Global TODO` global lists, you can leave them or remove them at wish. 
-* * **Private** - as the name suggests those are the personal user lists. Everyone can create and manage any number of private lists as he needs.
+The plugin initially pre-creates `Global Notes` and `Global TODO` global lists, you can leave them or remove them at wish.
+  * **Private** - as the name suggests those are the personal user lists. Everyone can create and manage any number of private lists as he needs.
 They are visible only to the owner (unless shared). Those would be the most expendable lists as they would come and go on demand.
-* * **Shared** - those are other users' private list that have been shared with you. You can access them
+  * **Shared** - those are other users' private list that have been shared with you. You can access them
 with the corresponding Vew/Edit permissions. Apparently, with View permission you see a readonly list,
 and with Edit permission you can touch the notes on user's behalf.
 
@@ -261,7 +261,7 @@ If you want to remove the sharing permissions, simply select the `[none]` option
 When you open the `Dashboard > My notes` by default you land on the `All Lists` item
 which effectively represents the **Overview Mode**. Its idea is to be able
 to quickly browse and review all available notes from all available owned lists (according to the set filters, of course).
-The order of lists in the overview follows their order from the tabs pane on the left. 
+The order of lists in the overview follows their order from the tabs pane on the left.
 
 You can surely expand and collapse notes' details, but you are only allowed
 to change note _Status_ and _Alert_ and to reorder notes within a list.
@@ -347,7 +347,7 @@ The **User** menu (1) shows the currently selected user whose note are being vie
 The default user (2) is always on the top of the menu, the icon on his right (3) shows its role or permissions.
 * The _Sharing Permissions_ section of the menu appears for **Global/Regular** lists.
 It will hold users that have shared their notes for this list with you (4) along with their corresponding permissions.
-* For the **Private/Shared** lists there is always a single user - the list OWNER - you or the sharer. 
+* For the **Private/Shared** lists there is always a single user - the list OWNER - you or the sharer.
 
 When there are multiple users in this menu to select from, the selected user is highlighted in RED.
 Switching users will switch the set of notes, and the list may become readonly depending on the permissions.
@@ -395,7 +395,7 @@ and will be replaced by `Sort by Date Archived`.
 The **View** menu (1) presents some visual options.
 When an option is turned ON it is highlighted in RED.
 * the `Colorize by Category` (2) switches on/off the category colors in notes
-* the `Use Standard Status Marks` (3) switches between two sets of marks for the _Status_ buttons 
+* the `Use Standard Status Marks` (3) switches between two sets of marks for the _Status_ buttons
 
 ![Settings Options 1](Screenshots/settings-options1.png)
 ![Settings Options 2](Screenshots/settings-options2.png)
@@ -412,7 +412,7 @@ On the **Actions** (1) from top to bottom are:
 * _Create Report_ - generates a flat expanded non-editable view of the note list, can filter by specific category
 * _Archive ALL Done Notes!_ - moves in bulk all Done notes to Archive
 * _! Delete ALL Done Notes!_ - permanently removes in bulk all Done notes
-* _View README_ - view this README document online 
+* _View README_ - view this README document online
 
 ![Settings Actions](Screenshots/settings-actions.png)
 
@@ -477,7 +477,7 @@ the final change in a quite short interval. That is just meant to prevent contin
 
 You might be doing some changes when AutoRefresh happens, and you will lose them as you get interrupted.
 But then, again, the AutoRefresh initially happened because the data you are editing was changed while you are still doing it.
-And as a matter of precedence, whichever the first change submitted it triggers the refresh to get itself propagated and keep a consistent state of the data. 
+And as a matter of precedence, whichever the first change submitted it triggers the refresh to get itself propagated and keep a consistent state of the data.
 
 </details>
 
@@ -513,7 +513,7 @@ On the above picture, in the dialog, you can select the Date/Time in two ways:
   
 The `Alert Options` determine how to execute the notifications.
 You must first select the type of the notification (5).
-If you choose none => then no notification will be triggered, 
+If you choose none => then no notification will be triggered,
 this could be useful when you need to just temporarily stop the notification trigger without resetting its parameters.
 * **eMail** - uses the KB backend to send mails
 * **WebPN** - the plugin provides means to push browser notifications on multiple clients subscribed
@@ -543,7 +543,7 @@ then just load any page that shows a TodoNotes list, and you will be automatical
 * You may subscribe in several browsers on different devices (including mobile), and when the alert is due
 you will get notified on all of them.
 * If you wish to stop receiving **WebPNs** on a specific device,
-simply disable the notifications for the KB domain in the browser of use on that specific device. 
+simply disable the notifications for the KB domain in the browser of use on that specific device.
 
 ![Notification Setup](Screenshots/notifications-allow.png)
 
@@ -557,20 +557,25 @@ KB provides a mechanism to schedule jobs (e.g. the **“Daily background job for
 [cronjob configuration](https://docs.kanboard.org/v1/admin/cronjob/).
 
 The **cron** file for the daily event usually looks something like this:
-```
+
+```bash
 0 8 * * * cd /var/www/app && ./cli cronjob >/dev/null 2>&1
 ```
 
 Unfortunately, a trigger once a day is quite far from what we want for notifications.
 Hence, the plugin provides a specific command to trigger a heartbeat for notifications.
-It would look like this in the **cron** file:   
-```
+It would look like this in the **cron** file:
+
+```bash
 */15 * * * * cd /var/www/app && ./cli TodoNotes:NotificationsHeartbeat
 ```
+
 As you can see, the notifications will be triggered in chunks depending on the interval and NOT on the exact note alarm time.
 A fair interval to set is **15 minutes**.
 * The smaller the value (e.g. 1 min) => the more precise the alert trigger, but more burden on the server.
 * The lager the value (e.g. 30 mins) => more relaxed on the server, but greater delay for notifications.
+
+Additional delays in delivering the **WebPNs** might take place depending on the specific platform, client, and the media transport.
 
 If you don't have access to the system beneath KB, or if you are uncomfortable to mangle it - the plugin
 provides one more way to receive a heartbeat. Yet it is NOT recommended unless absolutely no other options.
@@ -590,19 +595,19 @@ So even if there are multiple clients generating a soft heartbeat, this won't bu
 <details>
 <summary><strong>Installation</strong></summary>
 
-- Install via the **Kanboard Plugin Directory** or see [INSTALL.md](INSTALL.md)
-- Read the full [**Changelog**](changelog.md "See changes") to see the latest updates
+* Install via the **Kanboard Plugin Directory** or see [INSTALL.md](INSTALL.md)
+* Read the full [**Changelog**](changelog.md "See changes") to see the latest updates
 
 </details>
 <details>
 <summary><strong>Compatibility</strong></summary>
 
-- Requires [Kanboard](https://github.com/kanboard/kanboard "Kanboard - Kanban Project Management Software") ≥`1.2.33`
-- **Other Plugins & Action Plugins**
-  - _No known issues_
-- **Core Files & Templates**
-  - `0` Template overrides
-  - `5` _New database tables_ to serve the purposes of the **TodoNotes plugin**
+* Requires [Kanboard](https://github.com/kanboard/kanboard "Kanboard - Kanban Project Management Software") ≥`1.2.33`
+* **Other Plugins & Action Plugins**
+  * _No known issues_
+* **Core Files & Templates**
+  * `0` Template overrides
+  * `5` _New database tables_ to serve the purposes of the **TodoNotes plugin**
 
 </details>
 <details>
