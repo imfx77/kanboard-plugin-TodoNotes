@@ -613,7 +613,7 @@ So even if there are multiple clients generating a soft heartbeat, this won't bu
 <details>
 <summary><strong>Translations</strong></summary>
 
-- _Translation for `en_US` is the default_, currently there are no other translation packs.
+* _Translation for `en_US` is the default_, currently there are no other translation packs.
 
 </details>
 
@@ -621,8 +621,8 @@ So even if there are multiple clients generating a soft heartbeat, this won't bu
 
 ## Authors & Contributors
 
-- [Im[F(x)]](https://github.com/imfx77) - Author
-- Contributors welcome _for translations_ !
+* [Im[F(x)]](https://github.com/imfx77) - Author
+* Contributors welcome _for translations_ !
 
 <p align="right">[<a href="#user-content-readme-bottom">&#8595; Bottom</a>] [<a href="#user-content-readme-top">&#8593; Top</a>]</p>
 
@@ -631,14 +631,14 @@ So even if there are multiple clients generating a soft heartbeat, this won't bu
 This project was initially forked from the [BoardNotes](https://github.com/aljawaid/BoardNotes) plugin and I tried contributing to it for a while.
 Eventually, things grew much bigger, this repo was split, and its current code has nothing in common with the original.
 Yet, the following credits are mentioned out of courtesy:
-- [TTJ](https://github.com/ThomasTJdev) (c) 2016-2023
-- [aljawaid](https://github.com/aljawaid) (c) 2023
+* [TTJ](https://github.com/ThomasTJdev) (c) 2016-2023
+* [aljawaid](https://github.com/aljawaid) (c) 2023
 
 <p align="right">[<a href="#user-content-readme-bottom">&#8595; Bottom</a>] [<a href="#user-content-readme-top">&#8593; Top</a>]</p>
 
 ## License
 
-- This project is distributed under the [MIT License](LICENSE "Read The MIT license")
+* This project is distributed under the [MIT License](LICENSE "Read The MIT license")
 
 <p align="right">[<a href="#user-content-readme-top">&#8593; Top</a>]</p>
 
