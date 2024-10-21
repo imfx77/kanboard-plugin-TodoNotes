@@ -4,7 +4,6 @@
 ## v1.0.0
 
 _(most recent changes are listed on top):_  
-
 * Initial release of the TodoNotes ! 🥳
 
 ---
