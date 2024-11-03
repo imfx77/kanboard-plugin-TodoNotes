@@ -207,7 +207,7 @@ foreach ($projectsAccess as $o) {
             print $isAdmin
                 ? '<button class="hideMe toolbarButton buttonBigger buttonToggled sortableGroupHandle">'
                 : '<button class="hideMe toolbarButton buttonBigger buttonDisabled sortableGroupHandle">';
-            print '<i class="fa fa-arrows-alt" aria-hidden="true"></i>';
+            print '<i class="fa fa-arrows" aria-hidden="true"></i>';
             print '</button>';
             // button space
             print '<button class="toolbarSeparator">&nbsp;</button>';
@@ -259,7 +259,7 @@ foreach ($projectsAccess as $o) {
             print '<button class="toolbarSeparator">&nbsp;</button>';
             // explicit reorder handle for mobile
             print '<button class="hideMe toolbarButton buttonBigger sortableGroupHandle">';
-            print '<a><i class="fa fa-arrows-alt" aria-hidden="true"></i></a>';
+            print '<a><i class="fa fa-arrows" aria-hidden="true"></i></a>';
             print '</button>';
             // button space
             print '<button class="toolbarSeparator">&nbsp;</button>';

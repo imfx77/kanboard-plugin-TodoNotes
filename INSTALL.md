@@ -12,7 +12,7 @@
 - **Install via repository [Code](https://github.com/imfx77/kanboard-plugin-Wysiwyg-MD-Editor)**
   - Click the `<> Code` button &#10562; `Download ZIP` to obtain the entire source
   - Decompress everything under the `/plugins` directory of your **Kanboard** instance
-  - Rename the extracted folder from the `.zip` to be exactly `WysiwygMDEditor` (_must not contain branch name or version!_)
+  - Rename the extracted folder from the `.zip` to be exactly `TodoNotes` (_must not contain branch name or version!_)
 
 _Note: The `/plugins` folder is case-sensitive._
 

@@ -597,7 +597,7 @@ So even if there are multiple clients generating a soft heartbeat, this won't bu
 <details>
 <summary><strong>Installation</strong></summary>
 
-* Install via the **Kanboard Plugin Directory** or see [INSTALL.md](INSTALL.md)
+* Install via the **Kanboard Plugin Directory** or see [**Plugin Installation**](INSTALL.md)
 * Read the full [**Changelog**](changelog.md "See changes") to see the latest updates
 
 </details>
