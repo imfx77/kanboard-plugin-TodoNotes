@@ -33,6 +33,10 @@ static initializeSortableGroup(group) {
         });
         // show explicit reorder handles for mobile
         $(".sortableGroupHandle").removeClass( 'hideMe' );
+    } else {
+        $("#group" + group).sortable({
+            handle: ".tabMoveable",
+        });
     }
 }
 

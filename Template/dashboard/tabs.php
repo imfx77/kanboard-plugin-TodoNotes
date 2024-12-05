@@ -194,6 +194,10 @@ foreach ($projectsAccess as $o) {
     //----------------------------------------
     $hasGrantedSharingPermissions = (count($this->model->todoNotesModel->GetGrantedSharingPermissions($curr_project_id, $user_id)) > 0);
 
+    $isMoveableTab = $o['is_custom'] && ($isAdmin || $o['is_owner']);
+    $tabSeparatorStyle = 'toolbarSeparator' . ($isMoveableTab ? ' tabMoveable' : '');
+
+    print '<div class="localTableCellExpandRight' . ($isMoveableTab ? ' tabMoveable' : '') . '"></div>';
     print '<div class="localTableCellExpandRight">';
 
     if ($o['is_custom']) {
@@ -202,7 +206,7 @@ foreach ($projectsAccess as $o) {
             //----------------------------------------
 
             // button space
-            print '<button class="toolbarSeparator">&nbsp;</button>';
+            print '<button class="' . $tabSeparatorStyle . '">&nbsp;</button>';
             // explicit reorder handle for mobile
             print $isAdmin
                 ? '<button class="hideMe toolbarButton buttonBigger buttonToggled sortableGroupHandle">'
@@ -210,7 +214,7 @@ foreach ($projectsAccess as $o) {
             print '<i class="fa fa-arrows" aria-hidden="true"></i>';
             print '</button>';
             // button space
-            print '<button class="toolbarSeparator">&nbsp;</button>';
+            print '<button class="' . $tabSeparatorStyle . '">&nbsp;</button>';
 
             // Rename button
             print '<button id="customNoteListRenameGlobal-P' . $curr_project_id . '"';
@@ -256,13 +260,13 @@ foreach ($projectsAccess as $o) {
             //----------------------------------------
 
             // button space
-            print '<button class="toolbarSeparator">&nbsp;</button>';
+            print '<button class="' . $tabSeparatorStyle . '">&nbsp;</button>';
             // explicit reorder handle for mobile
             print '<button class="hideMe toolbarButton buttonBigger sortableGroupHandle">';
             print '<a><i class="fa fa-arrows" aria-hidden="true"></i></a>';
             print '</button>';
             // button space
-            print '<button class="toolbarSeparator">&nbsp;</button>';
+            print '<button class="' . $tabSeparatorStyle . '">&nbsp;</button>';
 
             // Rename button
             print '<button id="customNoteListRenamePrivate-P' . $curr_project_id . '"';

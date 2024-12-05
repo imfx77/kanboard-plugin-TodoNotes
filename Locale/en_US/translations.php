@@ -82,6 +82,7 @@ return array(
     'TodoNotes__PROJECT_NOTE_RESTORE' => 'Restore Note from Archive',
     'TodoNotes__PROJECT_NOTE_TOGGLE_DETAILS' => 'Toggle Details',
     //
+    'TodoNotes__PROJECT_NOTE_EMPTY_BODY_HINT' => 'Double click to toggle details. Drag to reorder.',
     'TodoNotes__PROJECT_NOTE_SWITCH_STATUS' => 'Switch Status',
     'TodoNotes__PROJECT_NOTE_TITLE_EDIT_HINT' => 'Edit Title',
     'TodoNotes__PROJECT_NOTE_TITLE_SAVE_HINT' => 'Press ENTER to save changes, or Press TAB to edit details',

@@ -750,7 +750,7 @@ foreach ($data as $u) {
             print ' color-' . $category_color; // append category color class
         }
     }
-    print '"></div>';
+    print '" title="' . t('TodoNotes__PROJECT_NOTE_EMPTY_BODY_HINT') . '"></div>';
 
     // here goes the Note Button Toolbar
     print '<div class="toolbarNoteButtons containerNoWrap containerFloatRight">';
