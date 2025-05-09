@@ -194,7 +194,8 @@ static CreateTaskFromNote(project_id, user_id, id, is_active, title, description
                     const swimlaneCreateTask = $("#listSwimCreateTask-P" + project_id + " option:selected").val();
                     const removeNote = $("#removeNote-P" + project_id).is(':checked');
 
-                    const loadUrl = '/?controller=TodoNotesController&action=CreateTaskFromNote&plugin=TodoNotes'
+                    const loadUrl = _TodoNotes_Settings_.baseAppDir
+                                + '?controller=TodoNotesController&action=CreateTaskFromNote&plugin=TodoNotes'
                                 + '&project_custom_id=' + project_id
                                 + '&user_id=' + user_id
                                 + '&task_title=' + encodeURIComponent(title)
@@ -619,7 +620,8 @@ static Stats(project_id, user_id) {
     $.ajaxSetup ({
         cache: false
     });
-    const loadUrl = '/?controller=TodoNotesController&action=ShowStats&plugin=TodoNotes'
+    const loadUrl = _TodoNotes_Settings_.baseAppDir
+                + '?controller=TodoNotesController&action=ShowStats&plugin=TodoNotes'
                 + '&project_custom_id=' + project_id
                 + '&user_id=' + user_id;
     $("#dialogStatsInside").html(_TodoNotes_Translations_.msgLoadingSpinner);
@@ -657,7 +659,8 @@ static Report(project_id, user_id) {
                 text : _TodoNotes_Translations_.GetTranslationExportToJS('TodoNotes__JS_DIALOG_CREATE_BTN'),
                 click: function() {
                     const category = $("#catReport-P" + project_id + " option:selected").text();
-                    const loadUrl = "/?controller=TodoNotesController&action=ShowReport&plugin=TodoNotes"
+                    const loadUrl = _TodoNotes_Settings_.baseAppDir
+                                + "?controller=TodoNotesController&action=ShowReport&plugin=TodoNotes"
                                 + "&project_custom_id=" + project_id
                                 + "&user_id=" + user_id
                                 + "&category=" + encodeURIComponent(category);
