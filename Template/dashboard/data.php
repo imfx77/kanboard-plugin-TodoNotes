@@ -44,6 +44,7 @@ if ($is_sharing_view) {
         'usersAccess' => $usersAccess,
         'user' => $user,
         'user_id' => $user_id,
+        'tab_id' => $tab_id,
 
         'is_dashboard_view' => 1,
         'is_sharing_view' => $is_sharing_view,

@@ -251,6 +251,7 @@ foreach ($projectsAccess as $o) {
             print ' data-project="' . $curr_project_id . '"';
             print ' data-user="' . $user_id . '"';
             print ' data-id="' . $num . '"';
+            print ' data-url="' . $this->url->href('TodoNotesController', 'ShowDashboardSharing', array('plugin' => 'TodoNotes', 'user_id' => $user_id, 'tab_id' => $num)) . '"';
             print '>';
             print '<a><i class="fa fa-share-alt' . ($hasGrantedSharingPermissions ? ' buttonHighlighted' : '') . '" aria-hidden="true"></i></a>';
             print '</button>';
@@ -295,6 +296,7 @@ foreach ($projectsAccess as $o) {
             print ' data-project="' . $curr_project_id . '"';
             print ' data-user="' . $user_id . '"';
             print ' data-id="' . $num . '"';
+            print ' data-url="' . $this->url->href('TodoNotesController', 'ShowDashboardSharing', array('plugin' => 'TodoNotes', 'user_id' => $user_id, 'tab_id' => $num)) . '"';
             print '>';
             print '<a><i class="fa fa-share-alt' . ($hasGrantedSharingPermissions ? ' buttonHighlighted' : '') . '" aria-hidden="true"></i></a>';
             print '</button>';
@@ -369,6 +371,7 @@ foreach ($projectsAccess as $o) {
         print ' data-project="' . $curr_project_id . '"';
         print ' data-user="' . $user_id . '"';
         print ' data-id="' . $num . '"';
+        print ' data-url="' . $this->url->href('TodoNotesController', 'ShowDashboardSharing', array('plugin' => 'TodoNotes', 'user_id' => $user_id, 'tab_id' => $num)) . '"';
         print '>';
         print '<a><i class="fa fa-share-alt' . ($hasGrantedSharingPermissions ? ' buttonHighlighted' : '') . '" aria-hidden="true"></i></a>';
         print '</button>';

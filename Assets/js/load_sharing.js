@@ -59,10 +59,7 @@ static AttachAllHandlers() {
 
     // close btn
     $("#closeSharing").click(function() {
-        const user_id = $("#tabId").attr('data-user');
-        const id = $("#tabId").attr('data-tab');
-        const notesUrl = location.origin + '/dashboard/' + user_id + '/todonotes/' + id;
-        location.replace(notesUrl);
+        location.replace($(this).attr('data-url'));
     });
 
     $(".listPermission").change(function() {

@@ -224,10 +224,7 @@ static #TabsActionHandlers() {
 
     // share list button
     $("button" + ".customNoteListShare").click(function() {
-        const user_id = $(this).attr('data-user');
-        const id = $(this).attr('data-id');
-        const sharingUrl = location.origin + '/dashboard/' + user_id + '/todonotesSharing/' + id;
-        location.replace(sharingUrl);
+        location.replace($(this).attr('data-url'));
     });
 }
 

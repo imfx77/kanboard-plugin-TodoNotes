@@ -128,7 +128,11 @@ print '</div>';
 
 //----------------------------------------
 print '<div class="containerCenter">';
-print '<button id="closeSharing" class="btn">' . t('TodoNotes__JS_DIALOG_CLOSE_BTN') . '</button>';
+print '<button id="closeSharing" class="btn"';
+print ' data-url="' . $this->url->href('TodoNotesController', 'ShowDashboard', array('plugin' => 'TodoNotes', 'user_id' => $user_id, 'tab_id' => $tab_id)) . '"';
+print '>';
+print t('TodoNotes__JS_DIALOG_CLOSE_BTN');
+print '</button>';
 print '</div>';
 
 print '</div>'; // id='result'
