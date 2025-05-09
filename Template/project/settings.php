@@ -2,6 +2,9 @@
 
 $todonotesSettingsHelper = $this->helper->todonotesSessionAndCookiesSettingsHelper;
 
+// _TodoNotes_BaseAppDir_ (hidden reference for base URL)
+print '<div class="hideMe" id="_TodoNotes_BaseAppDir_">' . $this->url->dir() . '</div>';
+
 $_TodoNotes_OverviewSettings_ = $todonotesSettingsHelper->GetSettings($user_id, 0 /*overview*/, true /*from_session*/);
 // _TodoNotes_OverviewSettingsExportToJS_ (hidden reference for session settings)
 print '<div class="hideMe" id="_TodoNotes_OverviewSettingsExportToJS_">' . json_encode($_TodoNotes_OverviewSettings_) . '</div>';

@@ -17,6 +17,11 @@ if (typeof(_TodoNotes_Settings_) === 'undefined') {
         static #project_settingsExportToJS;
 
         //------------------------------------------------
+        // Global base app URL
+        //------------------------------------------------
+        static baseAppDir;
+
+        //------------------------------------------------
         // Global constants for settings
         //------------------------------------------------
         static GROUP = {
@@ -53,6 +58,7 @@ if (typeof(_TodoNotes_Settings_) === 'undefined') {
             CATEGORY_COLORS: 0,
             STANDARD_STATUS_MARKS: 1,
         };
+
         //------------------------------------------------
         // Global vars for settings
         //------------------------------------------------
@@ -84,6 +90,13 @@ if (typeof(_TodoNotes_Settings_) === 'undefined') {
         //------------------------------------------------
         static Initialize() {
             // console.log('_TodoNotes_Settings_.Initialize');
+
+            const baseAppDirField = $("#_TodoNotes_BaseAppDir_");
+            if (baseAppDirField.length === 1) {
+                // console.log(baseAppDirField.html());
+                _TodoNotes_Settings_.baseAppDir = baseAppDirField.html();
+                baseAppDirField.remove();
+            }
 
             const overviewSettings = $("#_TodoNotes_OverviewSettingsExportToJS_");
             if (overviewSettings.length === 1) {
