@@ -1597,7 +1597,7 @@ static RequestBrowserNotificationsPermission() {
 
     Notification.requestPermission();
 
-    navigator.serviceWorker.register(location.origin + '/plugins/TodoNotes/Template/notifications/service_worker.php', { scope: '/' })
+    navigator.serviceWorker.register(_TodoNotes_Settings_.baseAppDir + 'plugins/TodoNotes/Template/notifications/service_worker.php', { scope: '/' })
     .then(function (sw) {
         console.info('[SW] Service worker has been registered');
         _TodoNotes_.#swRegistration = sw;
@@ -1605,7 +1605,7 @@ static RequestBrowserNotificationsPermission() {
         navigator.serviceWorker.ready
             .then(function(sw) {
                 console.info('[SW] Service worker is ready');
-                sw.active.postMessage('heartbeat');
+                sw.active.postMessage({'type': 'heartbeat', 'baseAppDir': _TodoNotes_Settings_.baseAppDir});
                 return sw.pushManager.getSubscription();
             })
             .then(subscriptionExisting => {
@@ -1655,8 +1655,8 @@ static ShowBrowserNotification(title, content, link, timestamp_ms) {
     } else {
         const options = {
             body: content,
-            icon: location.origin + '/plugins/TodoNotes/Assets/img/icon.png',
-            badge: location.origin + '/plugins/TodoNotes/Assets/img/badge.png',
+            icon: _TodoNotes_Settings_.baseAppDir + 'plugins/TodoNotes/Assets/img/icon.png',
+            badge: _TodoNotes_Settings_.baseAppDir + 'plugins/TodoNotes/Assets/img/badge.png',
             data: { url: link },
             timestamp: timestamp_ms,
             vibrate: [200, 100, 200, 100, 200, 100, 200],
@@ -1784,7 +1784,10 @@ static AttachAllHandlers() {
 
 //////////////////////////////////////////////////
 $(function() {
+    _TodoNotes_Settings_.Initialize();
+
     _TodoNotes_.InitializeLocalTimeOffset();
+
     // start the recursive check sequence on load page
     _TodoNotes_.ScheduleCheckModifications();
 

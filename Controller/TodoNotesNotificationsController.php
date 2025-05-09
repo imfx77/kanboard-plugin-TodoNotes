@@ -105,7 +105,7 @@ class TodoNotesNotificationsController extends BaseController
         $note = $this->todoNotesModel->GetProjectNoteForUser($project_id, $user_id, $note_id);
         $note_project_name = $this->todoNotesModel->GetProjectNameForUser($note['project_id'], $user_id);
         $note_project_tab = $this->todoNotesModel->GetTabForProject($note['project_id'], $user_id);
-        $notification_link = $this->helper->url->base() . 'dashboard/' . $user_id . '/todonotes/' . $note_project_tab . '/' . $note_id;
+        $notification_link = $this->helper->url->to('TodoNotesController', 'ShowDashboard', array('plugin' => 'TodoNotes', 'user_id' => $user_id, 'tab_id' => $note_project_tab, 'note_id' => $note_id), '', true);
 
         //---------------------------------------------------
         // email notification
@@ -127,7 +127,7 @@ class TodoNotesNotificationsController extends BaseController
             $project_id = $notification['project_id'];
             $note_project_name = $this->todoNotesModel->GetProjectNameForUser($project_id, $user_id);
             $note_project_tab = $this->todoNotesModel->GetTabForProject($project_id, $user_id);
-            $notification_link = $this->helper->url->base() . 'dashboard/' . $user_id . '/todonotes/' . $note_project_tab . '/' . $notification['id'];
+            $notification_link = $this->helper->url->to('TodoNotesController', 'ShowDashboard', array('plugin' => 'TodoNotes', 'user_id' => $user_id, 'tab_id' => $note_project_tab, 'note_id' => $notification['id']), '', true);
 
             //---------------------------------------------------
             // email notification
