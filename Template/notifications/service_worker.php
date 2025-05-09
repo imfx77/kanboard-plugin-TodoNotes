@@ -5,6 +5,8 @@ header('Service-Worker-Allowed: /');
 
 ?>
 
+var _SW_TodoNotes_BaseAppDir_ = '/';
+
 self.addEventListener('push', function (event) {
     if (!Notification) {
         console.warn('Notifications are not available in your browser.');
@@ -17,8 +19,8 @@ self.addEventListener('push', function (event) {
         const notification_data = event.data.json();
         const options = {
             body: notification_data.content,
-            icon: location.origin + '/plugins/TodoNotes/Assets/img/icon.png',
-            badge: location.origin + '/plugins/TodoNotes/Assets/img/badge.png',
+            icon: _SW_TodoNotes_BaseAppDir_ + 'plugins/TodoNotes/Assets/img/icon.png',
+            badge: _SW_TodoNotes_BaseAppDir_ + 'plugins/TodoNotes/Assets/img/badge.png',
             data: {url: notification_data.link},
             timestamp: notification_data.timestamp * 1000,
             vibrate: [200, 100, 200, 100, 200, 100, 200],
@@ -57,8 +59,11 @@ self.addEventListener('notificationclick', function(event) {
 var _SW_TodoNotes_Heartbeat_ = false;
 
 self.addEventListener('message', function(event) {
+    //console.log(event.data);
+    _SW_TodoNotes_BaseAppDir_ = event.data.baseAppDir;
+
     function heartbeat() {
-        fetch('/?controller=TodoNotesNotificationsController&action=Heartbeat&plugin=TodoNotes', { method: 'POST' })
+        fetch(_SW_TodoNotes_BaseAppDir_ + '?controller=TodoNotesNotificationsController&action=Heartbeat&plugin=TodoNotes', { method: 'POST' })
             .then(function(/*response*/) {
                 //response.text().then(function(text) {
                 //    console.log(text);
@@ -69,7 +74,7 @@ self.addEventListener('message', function(event) {
             });
     }
 
-    if (!_SW_TodoNotes_Heartbeat_ && event.data === 'heartbeat') {
+    if (!_SW_TodoNotes_Heartbeat_ && event.data.type === 'heartbeat') {
         heartbeat();
         //setInterval(heartbeat, 15 * 1000); // 15 sec
         setInterval(heartbeat, 5 * 60 * 1000); // 5 min
