@@ -19,8 +19,8 @@ self.addEventListener('push', function (event) {
         const notification_data = event.data.json();
         const options = {
             body: notification_data.content,
-            icon: _SW_TodoNotes_BaseAppDir_ + 'plugins/TodoNotes/Assets/img/icon.png',
-            badge: _SW_TodoNotes_BaseAppDir_ + 'plugins/TodoNotes/Assets/img/badge.png',
+            icon: location.origin + _SW_TodoNotes_BaseAppDir_ + 'plugins/TodoNotes/Assets/img/icon.png',
+            badge: location.origin + _SW_TodoNotes_BaseAppDir_ + 'plugins/TodoNotes/Assets/img/badge.png',
             data: {url: notification_data.link},
             timestamp: notification_data.timestamp * 1000,
             vibrate: [200, 100, 200, 100, 200, 100, 200],

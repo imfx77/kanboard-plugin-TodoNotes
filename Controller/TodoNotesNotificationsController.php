@@ -34,8 +34,10 @@ class TodoNotesNotificationsController extends BaseController
         }
 
         //---------------------------------------------------
+        // check if WysiwygMDEditor plugin is the actually registered helper for markdown rendering
+        $isWysiwygMDEditorRendering = ($this->configModel->get('WysiwygMDEditor_enable_easymde_rendering', '0') == '1')
+            && (get_class($this->helper->getHelper('text')) == 'Kanboard\Plugin\WysiwygMDEditor\Helper\WysiwygMDEditorHelper');
         // workaround for WysiwygMDEditor plugin markdown rendering (which is in JS)
-        $isWysiwygMDEditorRendering = ($this->configModel->get('WysiwygMDEditor_enable_easymde_rendering', '0') == '1');
         $descriptionPrefix = $isWysiwygMDEditorRendering ? '__{WysiwygMDEditor_FORCE_FALLBACK_IMPL}__' : '';
 
         $notification_title = t('TodoNotes__NOTIFICATIONS_EMAIL_TITLE');

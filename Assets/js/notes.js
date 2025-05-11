@@ -1655,8 +1655,8 @@ static ShowBrowserNotification(title, content, link, timestamp_ms) {
     } else {
         const options = {
             body: content,
-            icon: _TodoNotes_Settings_.baseAppDir + 'plugins/TodoNotes/Assets/img/icon.png',
-            badge: _TodoNotes_Settings_.baseAppDir + 'plugins/TodoNotes/Assets/img/badge.png',
+            icon: location.origin + _TodoNotes_Settings_.baseAppDir + 'plugins/TodoNotes/Assets/img/icon.png',
+            badge: location.origin + _TodoNotes_Settings_.baseAppDir + 'plugins/TodoNotes/Assets/img/badge.png',
             data: { url: link },
             timestamp: timestamp_ms,
             vibrate: [200, 100, 200, 100, 200, 100, 200],
