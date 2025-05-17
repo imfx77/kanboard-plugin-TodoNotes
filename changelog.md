@@ -1,6 +1,12 @@
 # Changelog
 
 
+## v1.0.2
+
+_(most recent changes are listed on top):_  
+* fixed issues in order to handle KB installed in a subfolder
+* fixed email notifications to properly workaround the WysiwygMDEditor rendering
+
 ## v1.0.1
 
 _(most recent changes are listed on top):_  
