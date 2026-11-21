@@ -82,7 +82,7 @@ jobs:
     #container: kanboard/tests:latest
     services:
       mariadb:
-        image: mariadb:latest
+        image: mariadb:11.4
         env:
           MYSQL_ROOT_PASSWORD: secret
           MARIADB_ROOT_PASSWORD: secret
