@@ -85,17 +85,25 @@ class TodoNotesController extends BaseController
         $user = $this->getUser();
         $user_id = $this->ResolveUserId();
 
+        $access_user_id = $user_id;
+
         if ($is_refresh) {
             $project = $this->ResolveProject($user_id);
+            $description = "";
         } else {
             $project = $this->getProject();
-            $project['tab_id'] = $this->todoNotesModel->GetTabForProject($project['id'], $user_id);
+            $description = $this->helper->projectHeader->getDescription($project);
+            if ($this->userModel->isAdmin($user_id)) {
+                $access_user_id = $project['owner_id'];
+            }
+            $project['tab_id'] = $this->todoNotesModel->GetTabForProject($project['id'], $access_user_id);
         }
         $project_id = $project['id'];
 
-        $projectsAccess = $this->todoNotesModel->GetAllProjectIds($user_id);
-        $usersAccess = $this->todoNotesModel->GetSharingPermissions($project_id, $user_id);
+        $projectsAccess = $this->todoNotesModel->GetAllProjectIds($access_user_id);
+        $usersAccess = $this->todoNotesModel->GetSharingPermissions($project_id, $access_user_id);
 
+        // print_r($project);
         if ($projectsAccess[$project['tab_id'] - 1]['is_custom']) {
             $categories = $this->todoNotesModel->GetAllCategories();
         } else {
@@ -106,7 +114,7 @@ class TodoNotesController extends BaseController
 
         $todonotesSettingsHelper = $this->helper->todonotesSessionAndCookiesSettingsHelper;
         $doShowArchive = $todonotesSettingsHelper->GetToggleableSettings(
-            $user_id,
+            $access_user_id,
             $project_id,
             $todonotesSettingsHelper::SETTINGS_GROUP_FILTER,
             $todonotesSettingsHelper::SETTINGS_FILTER_ARCHIVED
@@ -114,22 +122,23 @@ class TodoNotesController extends BaseController
 
         if ($project_id == 0) {
             $data = $doShowArchive
-                ? $this->todoNotesModel->GetAllArchivedNotesForUser($user_id, $projectsAccess)
-                : $this->todoNotesModel->GetAllNotesForUser($user_id, $projectsAccess);
+                ? $this->todoNotesModel->GetAllArchivedNotesForUser($access_user_id, $projectsAccess)
+                : $this->todoNotesModel->GetAllNotesForUser($access_user_id, $projectsAccess);
         } else {
             $data = $doShowArchive
-                ? $this->todoNotesModel->GetArchivedProjectNotesForUser($project_id, $user_id, $projectsAccess, $usersAccess)
-                : $this->todoNotesModel->GetProjectNotesForUser($project_id, $user_id, $projectsAccess, $usersAccess);
+                ? $this->todoNotesModel->GetArchivedProjectNotesForUser($project_id, $access_user_id, $projectsAccess, $usersAccess)
+                : $this->todoNotesModel->GetProjectNotesForUser($project_id, $access_user_id, $projectsAccess, $usersAccess);
         }
 
         return $this->response->html($this->helper->layout->app('TodoNotes:project/data', array(
             'title' => $project['name'], // rather keep the project name as title
+            'description' => $description,
             'projectsAccess' => $projectsAccess,
             'project' => $project,
             'project_id' => $project_id,
             'usersAccess' => $usersAccess,
             'user' => $user,
-            'user_id' => $user_id,
+            'user_id' => $access_user_id,
             'user_datetime_format' => $this->dateParser->getUserDateTimeFormat(),
 
             'categories' => $categories,
