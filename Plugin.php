@@ -29,6 +29,9 @@ class Plugin extends Base
         $this->route->addRoute('dashboard/:user_id/todonotesSharing', 'TodoNotesController', 'ShowDashboardSharing', 'TodoNotes');
         $this->route->addRoute('dashboard/:user_id/todonotesSharing/:tab_id', 'TodoNotesController', 'ShowDashboardSharing', 'TodoNotes');
 
+        // CSS + JS
+        $this->hook->on('template:layout:js', array('template' => 'plugins/TodoNotes/Assets/js/shortcuts.js'));
+
         // COMMANDS [ ./cli TodoNotes:NotificationsHeartbeat ]
         $this->cli->add(new NotificationsHeartbeatCommand($this->container));
     }
@@ -80,7 +83,7 @@ class Plugin extends Base
 
     public function getPluginVersion()
     {
-        return '1.0.2';
+        return '1.1.0';
     }
 
     public function getCompatibleVersion()

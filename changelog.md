@@ -1,6 +1,16 @@
 # Changelog
 
 
+## v1.1.0
+
+_(most recent changes are listed on top):_  
+* implemented properly accessing the users' note lists through their dashboards when using ADMIN privileges
+* multiple style fixes for visual consistency
+* fixed properly hiding the KB filters toolbar
+* adjustment for drag & drop sensitivity when reordering note lists or notes
+* added "v n" keyboard shortcut in project header for switching to `Notes` tab
+* fixed the reference links in the INSTALL instructions
+
 ## v1.0.2
 
 _(most recent changes are listed on top):_  
