@@ -8,12 +8,13 @@
 
 namespace Kanboard\Plugin\TodoNotes\Test\Controller;
 
-require_once __DIR__ . '/../../../../tests/units/Base.php';
+require_once 'tests/units/Base.php';
 
+use KanboardTests\units\Base;
 use Kanboard\Core\Plugin\Loader;
-use Kanboard\Plugin\TodoNotes\Controller\TodoNotesController;
+//use Kanboard\Plugin\TodoNotes\Controller\TodoNotesController;
 
-class TodoNotesControllerTest extends \Base
+class TodoNotesControllerTest extends Base
 {
     protected $loader;
 

@@ -8,11 +8,12 @@
 
 namespace Kanboard\Plugin\TodoNotes\Test;
 
-require_once __DIR__ . '/../../../tests/units/Base.php';
+require_once 'tests/units/Base.php';
 
+use KanboardTests\units\Base;
 use Kanboard\Plugin\TodoNotes\Plugin;
 
-class PluginTest extends \Base
+class PluginTest extends Base
 {
     public function testPlugin()
     {

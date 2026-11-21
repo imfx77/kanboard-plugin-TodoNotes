@@ -8,13 +8,14 @@
 
 namespace Kanboard\Plugin\TodoNotes\Test\Helper;
 
-require_once __DIR__ . '/../../../../tests/units/Base.php';
+require_once 'tests/units/Base.php';
 
+use KanboardTests\units\Base;
 use Kanboard\Core\Plugin\Loader;
 use Kanboard\Plugin\TodoNotes\Helper\TranslationsExportToJSHelper;
 use Kanboard\Plugin\TodoNotes\Plugin;
 
-class TranslationsExportToJSHelperTest extends \Base
+class TranslationsExportToJSHelperTest extends Base
 {
     protected $loader;
 
