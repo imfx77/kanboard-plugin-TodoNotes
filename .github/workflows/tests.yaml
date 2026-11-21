@@ -51,7 +51,8 @@ jobs:
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: postgres
+          POSTGRES_DB: kanboard_unit_test
+          POSTGRES_HOST_AUTH_METHOD: trust
         ports:
         - 5432:5432
         options: >-
@@ -73,7 +74,7 @@ jobs:
     - name: Unit tests with Postgres
       run: ./vendor/bin/phpunit -c tests/units.postgres.xml plugins/TodoNotes/Test/
       env:
-        DB_HOSTNAME: postgres
+        DB_HOSTNAME: localhost
         DB_PORT: ${{ job.services.postgres.ports[5432] }}
 
   MariaDB:
@@ -84,6 +85,9 @@ jobs:
         image: mariadb:latest
         env:
           MYSQL_ROOT_PASSWORD: secret
+          MARIADB_ROOT_PASSWORD: secret
+          MARIADB_USER: root
+          MARIADB_DATABASE: kanboard_unit_test
         ports:
         - 3306:3306
         options: >-
@@ -105,6 +109,7 @@ jobs:
     - name: Unit tests with MariaDB
       run: ./vendor/bin/phpunit -c tests/units.mysql.xml plugins/TodoNotes/Test/
       env:
-        DB_HOSTNAME: mariadb
+        DB_HOSTNAME: 127.0.0.1
         DB_PASSWORD: secret
+        DB_USERNAME: root
         DB_PORT: ${{ job.services.mariadb.ports[3306] }}
