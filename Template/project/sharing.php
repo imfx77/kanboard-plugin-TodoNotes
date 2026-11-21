@@ -13,7 +13,7 @@ print $this->asset->js('plugins/TodoNotes/Assets/js/requests.js');
 print $this->asset->js('plugins/TodoNotes/Assets/js/notes.js');
 print $this->asset->js('plugins/TodoNotes/Assets/js/load_sharing.js');
 
-print '<div class="containerCenter">';
+print '<div class="containerCenter containerFloatClear">';
 print '<section class="mainholder" id="mainholderP' . $project_id . '">';
 print '<div align="left" style="width: fit-content" id="result' . $project_id . '">';
 

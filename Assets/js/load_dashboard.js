@@ -12,6 +12,7 @@ static initializeSortableGroup(group) {
     $("#group" + group).sortable({
         placeholder: "ui-state-highlight",
         items: 'li.singleTab',
+        distance: 10,
         cancel: '.disableEventsPropagation',
         update: function() {
             // handle lists reordering

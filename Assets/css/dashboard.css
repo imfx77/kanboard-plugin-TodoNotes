@@ -27,8 +27,9 @@
 }
 
 .tabs {
-    max-width: 200%;
     min-width: auto;
+    max-width: 200%;
+    width: 200%;
 }
 
 .tabMoveable {
@@ -70,9 +71,20 @@
 .singleTab.active {
     box-shadow: 0 0 15px #777777 inset;
 }
+.singleTab.active a {
+    font-weight: bold !important;
+}
 
-.ulLists li {
-    min-height: 16px;
+.ulLists, .ulLists li, .ulLists li.active {
+    min-height: 16px !important;
+    border: 0px !important;
+    padding: 0 0 0 5px !important;
+}
+.ulLists::before {
+    content: "" !important;
+    margin: 0px !important;
+    padding: 0px !important;
+    border: 0px !important;
 }
 
 /* desktop browser styles override */

@@ -28,8 +28,8 @@ static #prepareDocument_ConfigureDashboardHandlers(skipDashboardHandlers = false
     const readonlyNotes = (project_id === '0'); // Overview Mode
 
     // hide the KB filters toolbar
-    $('.input-addon-field').addClass( 'hideMe' );
-    $('.input-addon-item').addClass( 'hideMe' );
+    $('.filter-box').remove();
+    $('.filter-box-component').addClass( 'containerFloatClear' );
 
     // notes reordering is disabled when in Archive View or explicitly sorted by Status
     if (!isReadOnly && !_TodoNotes_Settings_.showArchive && _TodoNotes_Settings_.sortManual) {
@@ -39,6 +39,7 @@ static #prepareDocument_ConfigureDashboardHandlers(skipDashboardHandlers = false
             $("#sortableList-P" + sortable_project_id).sortable({
                 placeholder: "ui-state-highlight",
                 items: 'li.liNote', // exclude the NewNote
+                distance: 10,
                 cancel: '.disableEventsPropagation',
                 update: function() {
                     // handle notes reordering
