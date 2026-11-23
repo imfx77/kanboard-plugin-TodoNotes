@@ -1597,7 +1597,7 @@ static RequestBrowserNotificationsPermission() {
 
     Notification.requestPermission();
 
-    navigator.serviceWorker.register(_TodoNotes_Settings_.baseAppDir + 'plugins/TodoNotes/Template/notifications/service_worker.php', { scope: '/' })
+    navigator.serviceWorker.register(_TodoNotes_Settings_.baseAppDir + 'notifications/service_worker', { method: 'GET' })
     .then(function (sw) {
         console.info('[SW] Service worker has been registered');
         _TodoNotes_.#swRegistration = sw;

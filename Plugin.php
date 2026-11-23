@@ -29,6 +29,9 @@ class Plugin extends Base
         $this->route->addRoute('dashboard/:user_id/todonotesSharing', 'TodoNotesController', 'ShowDashboardSharing', 'TodoNotes');
         $this->route->addRoute('dashboard/:user_id/todonotesSharing/:tab_id', 'TodoNotesController', 'ShowDashboardSharing', 'TodoNotes');
 
+        // EXPLICIT ROUTE FOR THE SERVICE WORKER!
+        $this->route->addRoute('notifications/service_worker', 'TodoNotesNotificationsController', 'GetServiceWorker', 'TodoNotes');
+
         // CSS + JS
         $this->hook->on('template:layout:js', array('template' => 'plugins/TodoNotes/Assets/js/shortcuts.js'));
 

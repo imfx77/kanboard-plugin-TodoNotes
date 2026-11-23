@@ -1,10 +1,3 @@
-<?php
-
-header('Content-Type: application/javascript');
-header('Service-Worker-Allowed: /');
-
-?>
-
 var _SW_TodoNotes_BaseAppDir_ = '/';
 
 self.addEventListener('push', function (event) {

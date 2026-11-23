@@ -145,6 +145,16 @@ class TodoNotesNotificationsController extends BaseController
         }
     }
 
+    public  function GetServiceWorker()
+    {
+        header('Content-Type: application/javascript');
+        header('Service-Worker-Allowed: /');
+
+        echo file_get_contents(
+            __DIR__.'/../Assets/js/service_worker.js'
+        );
+    }
+
     public function Heartbeat()
     {
         $this->HeartbeatInternal(false);
