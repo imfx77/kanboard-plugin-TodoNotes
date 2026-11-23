@@ -1,6 +1,11 @@
 # Changelog
 
 
+## v1.1.1
+
+_(most recent changes are listed on top):_  
+* due to newer and tightened security restrictions within the `nginx.conf` of the KB docker image after **v1.2.54**, it was necessary to reimplement the way that the notes notifications' `service_worker` script is deployed and registered on the client
+
 ## v1.1.0
 
 _(most recent changes are listed on top):_  
